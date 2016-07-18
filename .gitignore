@@ -1,0 +1,15 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+jspm_packages/
+tmp
+.DS_Store
+
+## Webstorm user specific files:
+.idea/workspace.xml
+.idea/tasks.xml
+
+## Babel target directory
+dist/
+

@@ -1,0 +1,22 @@
+{
+  "name": "node-metaed",
+  "private": true,
+  "version": "0.0.0",
+  "description": "MetaEd in Node",
+  "repository": "https://github.com/bradbanister/node-metaed",
+  "license": "private",
+  "dependencies": {
+    "antlr4": "^4.5.3",
+    "handlebars": "^4.0.5",
+    "systemjs": "^0.19.31"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "dirty-chai": "^1.2.2",
+    "mocha": "^2.4.5"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "test": "mocha"
+  }
+}
