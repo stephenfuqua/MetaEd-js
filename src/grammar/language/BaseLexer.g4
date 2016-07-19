@@ -4,44 +4,47 @@ ABSTRACT_ENTITY :       'Abstract Entity';
 ASSOCIATION :           'Association';
 BEGIN_NAMESPACE :       'Begin Namespace';
 END_NAMESPACE :         'End Namespace';
-CHOICE_TYPE :           'Choice Common Type';
-COMMON_TYPE :           'Common Type';
-COMMON_DECIMAL :        'Common Decimal';
-COMMON_INTEGER :        'Common Integer';
-COMMON_SHORT :          'Common Short';
-COMMON_STRING :         'Common String';
-DESCRIPTOR_ENTITY :     'Descriptor';
+CHOICE :                'Choice';
+COMMON :                'Common';
+DESCRIPTOR :            'Descriptor';
 DOMAIN :                'Domain';
 DOMAIN_ENTITY :         'Domain Entity';
-ENUMERATION_ENTITY :    'Enumeration';
+ENUMERATION :           'Enumeration';
 INLINE :                'Inline';
 INTERCHANGE :           'Interchange';
-INLINE_COMMON_TYPE :    'Inline Common Type';
+INLINE_COMMON :         'Inline Common';
+SHARED_DECIMAL :        'Shared Decimal';
+SHARED_INTEGER :        'Shared Integer';
+SHARED_SHORT :          'Shared Short';
+SHARED_STRING :         'Shared String';
 SUBDOMAIN :             'Subdomain';
 TYPE :                  'Type';
 
-CORE :                      'core';
-ASSOCIATION_DOMAIN_ENTITY : 'domain entity';
+ASSOCIATION_KEYWORD :       'association';
+ASSOCIATION_IDENTITY :      'association identity';
 BOOLEAN :                   'bool';
+CHOICE_KEYWORD :            'choice';
+COMMON_KEYWORD :            'common';
+COMMON_EXTENSION :          'common extension';
 CURRENCY :                  'currency';
 DATE :                      'date';
 DECIMAL :                   'decimal';
-DESCRIPTOR :                'descriptor';
+DESCRIPTOR_KEYWORD :        'descriptor';
+DOMAIN_ENTITY_KEYWORD :     'domain entity';
+DOMAIN_ENTITY_IDENTITY:     'domain entity identity';
 DOMAIN_ITEM :               'domain item';
 DURATION :                  'duration';
 ELEMENT :                   'element';
-ENUMERATION :               'enumeration';
-ENUMERATION_ITEM :          'item' -> pushMode(ENUMERATION_ITEM_MODE);
-IDENTITY_TEMPLATE :         'identity template';
-INCLUDE :                   'include';
-INCLUDE_EXTENSION :         'include extension';
+ENUMERATION_KEYWORD :       'enumeration';
+ENUMERATION_ITEM :          'item';
+INLINE_COMMON_KEYWORD :     'inline common';
 INTEGER :                   'integer';
 PERCENT :                   'percent';
 REFERENCE :                 'reference';
-SHARED_DECIMAL :            'shared decimal';
-SHARED_INTEGER :            'shared integer';
-SHARED_SHORT :              'shared short';
-SHARED_STRING :             'shared string';
+SHARED_DECIMAL_KEYWORD :    'shared decimal';
+SHARED_INTEGER_KEYWORD :    'shared integer';
+SHARED_SHORT_KEYWORD :      'shared short';
+SHARED_STRING_KEYWORD :     'shared string';
 SHARED_NAMED :              'named';
 SHORT :                     'short';
 STRING :                    'string';
@@ -50,6 +53,7 @@ YEAR :                      'year';
 
 ADDITIONS :             'additions';
 BASED_ON :              'based on';
+CORE :                  'core';
 CASCADE_UPDATE :        'allow primary key updates';
 DECIMAL_PLACES :        'decimal places';
 IDENTITY :              'is part of identity';
@@ -76,10 +80,10 @@ WITH_OPTIONAL_MAP_TYPE : 'with optional map type';
 WITH_MAP_TYPE :         'with map type';
 
 DOCUMENTATION:              'documentation';
+INHERITED:                  'inherited';
 EXTENDED_DOCUMENTATION :    'extended documentation';
 USE_CASE_DOCUMENTATION :    'use case documentation';
 FOOTER_DOCUMENTATION :      'footer documentation';
-DOCUMENTATION_START :       ['] -> pushMode(DOCUMENTATION_MODE);
 
 fragment DIGIT :		[0-9];
 fragment UPPER_CASE :   [A-Z];
@@ -90,10 +94,10 @@ fragment INT_FRAG :     ([0] | [1-9] [0-9]*);
 
 ID : UPPER_CASE (ALPHANUMERIC)* ;
 NAMESPACE_ID : LOWER_CASE+;
-NAMESPACE_EXTENSION : MIXED_CASE+;
 
 UNSIGNED_INT : INT_FRAG;
 DECIMAL_VALUE : '-'? INT_FRAG '.' [0-9]* ;
+TEXT : '"' ( '""' | ~["] )* '"';
 
 fragment METAED_ID_START : '[';
 fragment METAED_ID_END : ']';
@@ -106,19 +110,3 @@ PERIOD : '.';
 LINE_COMMENT : '//' .*? '\r'? '\n' -> skip ; // Match "//" stuff '\n'
 
 WS : [ \t\n\r]+ -> skip ;
-
-fragment EOL : [\n\r]+;
-
-mode DOCUMENTATION_MODE;
-DOCUMENTATION_LINE : ~[\n\r]+ -> popMode;
-DOCUMENTATION_EOL : EOL -> popMode;
-
-mode ENUMERATION_ITEM_MODE;
-ENUMERATION_ITEM_VALUE
-    : (~[\r\[\]\n\t ]
-    | ~[\r\[\]\n\t ](~[\r\[\]\n])*(~[\r\[\]\n\t ]))
-    -> popMode
-    ;
-ENUMERATION_ITEM_WS : [ \t]+ -> skip ;
-
-ENUMERATION_ERROR_CHARACTER : . -> popMode ;

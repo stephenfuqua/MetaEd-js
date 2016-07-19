@@ -13,28 +13,26 @@ namespace
       END_NAMESPACE
     ;
 
-namespaceType : CORE | namespaceProjectExtension;
-
-namespaceProjectExtension : ID | NAMESPACE_EXTENSION;
+namespaceType : CORE | ID;
 
 topLevelEntity
     : abstractEntity
     | association
     | associationExtension
     | associationSubclass
-    | choiceType
-    | commonDecimal
-    | commonInteger
-    | commonShort
-    | commonString
-    | commonType
-    | commonTypeExtension
+    | choice
+    | sharedDecimal
+    | sharedInteger
+    | sharedShort
+    | sharedString
+    | common
+    | commonExtension
     | descriptor
     | domainEntity
     | domainEntityExtension
     | domainEntitySubclass
     | enumeration
-    | inlineCommonType
+    | inlineCommon
     | interchange
     | interchangeExtension
     | domain
@@ -44,12 +42,19 @@ topLevelEntity
 // Documentation
 
 documentation
-    : DOCUMENTATION (DOCUMENTATION_START documentationLine)+
+    : DOCUMENTATION TEXT
     ;
 
-documentationLine
-    : DOCUMENTATION_LINE
-    | DOCUMENTATION_EOL
+enumerationItemDocumentation
+    : DOCUMENTATION TEXT
+    ;
+
+mapTypeDocumentation
+    : DOCUMENTATION TEXT
+    ;
+
+propertyDocumentation
+    : DOCUMENTATION (TEXT | INHERITED)
     ;
 
 // Abstract Entity
@@ -82,14 +87,14 @@ association
     ;
 
 firstDomainEntity
-    :  ASSOCIATION_DOMAIN_ENTITY propertyName metaEdId?
-       documentation
+    :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
+       propertyDocumentation
        withContext?
     ;
 
 secondDomainEntity
-    :  ASSOCIATION_DOMAIN_ENTITY propertyName metaEdId?
-       documentation
+    :  DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
+       propertyDocumentation
        withContext?
     ;
 
@@ -108,18 +113,18 @@ associationSubclass
       property+
    ;
 
-// ChoiceType
+// Choice
 
-choiceType
-     : CHOICE_TYPE choiceName metaEdId?
+choice
+     : CHOICE choiceName metaEdId?
       documentation
       property+
     ;
 
-// CommonDecimal
+// SharedDecimal
 
-commonDecimal
-     : COMMON_DECIMAL commonDecimalName metaEdId?
+sharedDecimal
+     : SHARED_DECIMAL sharedDecimalName metaEdId?
       documentation
       totalDigits
       decimalPlaces
@@ -128,28 +133,28 @@ commonDecimal
     ;
 
 
-// CommonInteger
+// SharedInteger
 
-commonInteger
-     : COMMON_INTEGER commonIntegerName metaEdId?
+sharedInteger
+     : SHARED_INTEGER sharedIntegerName metaEdId?
       documentation
       minValue?
       maxValue?
     ;
 
-// CommonShort
+// SharedShort
 
-commonShort
-     : COMMON_SHORT commonShortName metaEdId?
+sharedShort
+     : SHARED_SHORT sharedShortName metaEdId?
       documentation
       minValue?
       maxValue?
     ;
 
-// CommonString
+// SharedString
 
-commonString
-     : COMMON_STRING commonStringName metaEdId?
+sharedString
+     : SHARED_STRING sharedStringName metaEdId?
       documentation
       minLength?
       maxLength
@@ -157,23 +162,23 @@ commonString
 
 // CommonType
 
-commonType
-    : COMMON_TYPE commonName metaEdId?
+common
+    : COMMON commonName metaEdId?
       documentation
       property+
     ;
 
-// CommonTypeExtension
+// CommonExtension
 
-commonTypeExtension
-    : COMMON_TYPE extendeeName ADDITIONS metaEdId?
+commonExtension
+    : COMMON extendeeName ADDITIONS metaEdId?
       property+
     ;
 
 // Descriptor
 
 descriptor
-    : DESCRIPTOR_ENTITY descriptorName metaEdId?
+    : DESCRIPTOR descriptorName metaEdId?
       documentation
       property*
       withMapType?
@@ -181,7 +186,7 @@ descriptor
 
 withMapType
     : (requiredMapType | optionalMapType)
-      documentation
+      mapTypeDocumentation
       enumerationItem+
     ;
 
@@ -199,11 +204,11 @@ domain
     ;
 
 domainItem
-    : DOMAIN_ITEM ID metaEdId?
+    : (ASSOCIATION_KEYWORD | DOMAIN_ENTITY_KEYWORD | COMMON_KEYWORD | INLINE_COMMON_KEYWORD | DESCRIPTOR_KEYWORD) ID metaEdId?
     ;
 
 footerDocumentation
-    : FOOTER_DOCUMENTATION (DOCUMENTATION_START documentationLine)+
+    : FOOTER_DOCUMENTATION TEXT
     ;
 
 //  DomainEntity
@@ -229,21 +234,21 @@ domainEntitySubclass
 // Enumeration
 
 enumeration
-	: ENUMERATION_ENTITY enumerationName metaEdId?
+	: ENUMERATION enumerationName metaEdId?
 	  documentation
 	  enumerationItem+
 	;
 
 enumerationItem
     : ENUMERATION_ITEM shortDescription metaEdId?
-      documentation?
+      enumerationItemDocumentation?
       ;
 
-shortDescription : ENUMERATION_ITEM_VALUE ;
+shortDescription : TEXT ;
 
-// InlineCommonType
-inlineCommonType
-     : INLINE_COMMON_TYPE inlineCommonName metaEdId?
+// InlineCommon
+inlineCommon
+     : INLINE_COMMON inlineCommonName metaEdId?
       documentation
       property+
     ;
@@ -259,23 +264,23 @@ interchange
       ;
 
 extendedDocumentation
-    : EXTENDED_DOCUMENTATION (DOCUMENTATION_START documentationLine)+
+    : EXTENDED_DOCUMENTATION TEXT
     ;
 
 useCaseDocumentation
-    : USE_CASE_DOCUMENTATION (DOCUMENTATION_START documentationLine)+
+    : USE_CASE_DOCUMENTATION TEXT
     ;
 
 interchangeComponent
-    : interchangeIdentityTemplate* interchangeElement (interchangeElement | interchangeIdentityTemplate)*
+    : interchangeIdentity* interchangeElement (interchangeElement | interchangeIdentity)*
     ;
 
 interchangeElement
-    : ELEMENT ID metaEdId?
+    : (ASSOCIATION_KEYWORD | DOMAIN_ENTITY_KEYWORD) ID metaEdId?
     ;
 
-interchangeIdentityTemplate
-    : IDENTITY_TEMPLATE ID metaEdId?
+interchangeIdentity
+    : (ASSOCIATION_IDENTITY | DOMAIN_ENTITY_IDENTITY) ID metaEdId?
     ;
 
 interchangeExtension
@@ -284,7 +289,7 @@ interchangeExtension
 	  ;
 
 interchangeExtensionComponent
-	: (interchangeElement | interchangeIdentityTemplate)+
+	: (interchangeElement | interchangeIdentity)+
 	;
 
 // Subdomain
@@ -316,7 +321,7 @@ totalDigits : TOTAL_DIGITS UNSIGNED_INT ;
 
 decimalPlaces : DECIMAL_PLACES UNSIGNED_INT ;
 
-includeExtensionOverride : INCLUDE_EXTENSION;
+commonExtensionOverride : COMMON_EXTENSION;
 
 propertyAnnotation : (identity | identityRename | required | optional | collection | isQueryableOnly) ;
 
@@ -337,7 +342,7 @@ optionalCollection : OPTIONAL_COLLECTION ;
 isQueryableOnly : IS_QUERYABLE_ONLY ;
 
 propertyComponents
-    : documentation
+    : propertyDocumentation
       propertyAnnotation
       withContext?
       isQueryableField?
@@ -354,17 +359,20 @@ minLength : MIN_LENGTH UNSIGNED_INT;
 maxLength : MAX_LENGTH UNSIGNED_INT;
 
 property
-    : booleanProperty
+    : associationProperty
+    | booleanProperty
+    | choiceProperty
+    | commonProperty
     | currencyProperty
     | dateProperty
     | decimalProperty
     | descriptorProperty
+    | domainEntityProperty
     | durationProperty
     | enumerationProperty
-    | includeProperty
+    | inlineCommonProperty
     | integerProperty
     | percentProperty
-    | referenceProperty
     | sharedDecimalProperty
     | sharedIntegerProperty
     | sharedShortProperty
@@ -383,33 +391,48 @@ dateProperty : DATE propertyName metaEdId? propertyComponents;
 
 decimalProperty : DECIMAL propertyName metaEdId? propertyComponents totalDigits decimalPlaces minValueDecimal? maxValueDecimal? ;
 
-descriptorProperty : DESCRIPTOR propertyName metaEdId? propertyComponents ;
+descriptorProperty : DESCRIPTOR_KEYWORD propertyName metaEdId? propertyComponents ;
 
 durationProperty :DURATION propertyName metaEdId? propertyComponents;
 
-enumerationProperty : ENUMERATION propertyName metaEdId? propertyComponents ;
+enumerationProperty : ENUMERATION_KEYWORD propertyName metaEdId? propertyComponents ;
 
-includeProperty : (INCLUDE | includeExtensionOverride) propertyName metaEdId? propertyComponents ;
+commonProperty : (COMMON_KEYWORD | commonExtensionOverride) propertyName metaEdId?
+            propertyComponents
+            mergePartOfReference* ;
+
+inlineCommonProperty : INLINE_COMMON_KEYWORD propertyName metaEdId?
+            propertyComponents
+            mergePartOfReference* ;
+
+choiceProperty : CHOICE_KEYWORD propertyName metaEdId?
+            propertyComponents
+            mergePartOfReference* ;
 
 integerProperty : INTEGER propertyName metaEdId? propertyComponents minValue? maxValue? ;
 
 percentProperty : PERCENT propertyName metaEdId? propertyComponents ;
 
-referenceProperty : REFERENCE propertyName metaEdId?
+associationProperty : ASSOCIATION_KEYWORD propertyName metaEdId?
             propertyComponents
             isWeakReference?
             mergePartOfReference* ;
 
-sharedDecimalProperty : SHARED_DECIMAL sharedPropertyType SHARED_NAMED propertyName metaEdId?
+domainEntityProperty : DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
+            propertyComponents
+            isWeakReference?
+            mergePartOfReference* ;
+
+sharedDecimalProperty : SHARED_DECIMAL_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
             propertyComponents ;
 
-sharedIntegerProperty : SHARED_INTEGER sharedPropertyType SHARED_NAMED propertyName metaEdId?
+sharedIntegerProperty : SHARED_INTEGER_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
             propertyComponents ;
 
-sharedShortProperty : SHARED_SHORT sharedPropertyType SHARED_NAMED propertyName metaEdId?
+sharedShortProperty : SHARED_SHORT_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
             propertyComponents ;
 
-sharedStringProperty : SHARED_STRING sharedPropertyType SHARED_NAMED propertyName metaEdId?
+sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
             propertyComponents ;
 
 shortProperty : SHORT propertyName metaEdId?
@@ -462,11 +485,11 @@ associationName : ID;
 baseKeyName : ID;
 baseName : ID;
 choiceName : ID;
-commonDecimalName : ID;
-commonIntegerName : ID;
+sharedDecimalName : ID;
+sharedIntegerName : ID;
 commonName : ID;
-commonShortName : ID;
-commonStringName : ID;
+sharedShortName : ID;
+sharedStringName : ID;
 descriptorName : ID;
 domainName : ID ;
 entityName : ID;

@@ -1,0 +1,16 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-base",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "arrow-parens": "off",
+    "max-len": "off",
+    "no-underscore-dangle": "off",
+    "no-duplicate-imports": "off"
+  }
+}
