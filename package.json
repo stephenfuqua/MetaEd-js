@@ -1,7 +1,7 @@
 {
   "name": "metaed-js",
   "main": "dist/index.js",
-  "version": "0.9.11-dev.9",
+  "version": "1.0.0-pre.0",
   "description": "MetaEd for JavaScript",
   "license": "private",
   "publishConfig": {
@@ -43,7 +43,7 @@
     "eslint": "eslint src",
     "eslint:tests": "eslint test && eslint test-integration",
     "release:version-dev": "standard-version --prerelease dev",
-    "release:push-master-tags": "git push --follow-tags",
-    "release:publish-dev": "yarn run release:push-master-tags && npm publish --tag=dev"
+    "release:push-tags": "git push --follow-tags",
+    "release:publish-dev": "yarn run release:push-tags && npm publish --tag=dev"
   }
 }
