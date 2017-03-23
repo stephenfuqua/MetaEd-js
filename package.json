@@ -32,11 +32,12 @@
     "flow-typed": "^2.0.0",
     "mocha": "^2.5.3",
     "mock-fs": "^3.12.1",
+    "rimraf": "^2.6.1",
     "standard-version": "^4.0.0"
   },
   "scripts": {
     "test": "mocha --compilers js:babel-register \"test/**/*Tests.js\" \"test-integration/**/*Tests.js\"",
-    "build": "babel src -d dist --source-maps",
+    "build": "rimraf dist/ && babel src -d dist --source-maps",
     "lint": "yarn run flow && yarn run eslint && yarn run eslint:tests",
     "flow": "flow check",
     "eslint": "eslint src",
