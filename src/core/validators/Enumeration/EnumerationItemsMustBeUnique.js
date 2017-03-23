@@ -3,7 +3,7 @@ import type SymbolTable from '../SymbolTable';
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
-import { findDuplicates, exceptionPath } from '../ValidationHelper';
+import { findDuplicates, exceptionPath, invalidContextArray } from '../ValidationHelper';
 import type { ValidatableResult } from '../ValidationTypes';
 
 function getShortDescriptions(ruleContext: any) {
@@ -14,6 +14,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   const validatorName = 'EnumerationItemsMustBeUnique';
   let invalidPath: ?string[] = exceptionPath(['enumerationItem'], ruleContext);
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.enumerationItem())) return { invalidPath: ['enumerationItem'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const enumerationItem of ruleContext.enumerationItem()) {

@@ -1,6 +1,6 @@
 // @flow
 import type SymbolTable from '../SymbolTable';
-import { findDuplicates, exceptionPath } from '../ValidationHelper';
+import { findDuplicates, exceptionPath, invalidContextArray } from '../ValidationHelper';
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
@@ -17,6 +17,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   let invalidPath: ?string[] = exceptionPath(['withMapType', 'enumerationItem'], ruleContext);
 
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.withMapType().enumerationItem())) return { invalidPath: ['enumerationItem'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const enumerationItem of ruleContext.withMapType().enumerationItem()) {

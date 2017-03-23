@@ -2,7 +2,7 @@
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
-import { exceptionPath } from '../ValidationHelper';
+import { exceptionPath, invalidContextArray } from '../ValidationHelper';
 import { validForDuplicates, failureMessageForDuplicates } from '../ValidatorShared/MustNotDuplicate';
 import type { ValidatableResult } from '../ValidationTypes';
 
@@ -14,6 +14,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   const validatorName = 'InterchangeMustNotDuplicateIdentityName';
   let invalidPath: ?string[] = exceptionPath(['interchangeComponent', 'interchangeIdentity'], ruleContext);
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.interchangeComponent().interchangeIdentity())) return { invalidPath: ['interchangeIdentity'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const interchangeIdentity of ruleContext.interchangeComponent().interchangeIdentity()) {

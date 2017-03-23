@@ -3,7 +3,7 @@ import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
 import { validForDuplicates, failureMessageForDuplicates } from '../ValidatorShared/MustNotDuplicate';
-import { exceptionPath } from '../ValidationHelper';
+import { exceptionPath, invalidContextArray } from '../ValidationHelper';
 import type { ValidatableResult } from '../ValidationTypes';
 
 function idsToCheck(ruleContext: any) {
@@ -14,6 +14,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   const validatorName = 'DomainMustNotDuplicateDomainItems';
   let invalidPath: ?string[] = exceptionPath(['domainName', 'ID'], ruleContext);
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.domainItem())) return { invalidPath: ['domainItem'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const domainItem of ruleContext.domainItem()) {

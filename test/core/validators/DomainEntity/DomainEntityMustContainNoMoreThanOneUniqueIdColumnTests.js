@@ -128,4 +128,22 @@ describe('DomainEntityMustContainNoMoreThanOneUniqueIdColumnTests', () => {
       validatorName.should.exist;
     });
   });
+
+  describe('When validating domain entity with nothing after documentation keyword', () => {
+    const helper: ValidatorTestHelper = new ValidatorTestHelper();
+    before(() => {
+      const metaEdText = MetaEdTextBuilder.build()
+        .withBeginNamespace('edfi')
+        .withStartDomainEntity('NothingAfterDocumentationKeyword')
+        .withTrailingText(' documentation ')
+        .withEndDomainEntity()
+        .withEndNamespace()
+        .toString();
+      helper.setup(metaEdText, validatorListener);
+    });
+
+    it('should_have_no_validation_failures()', () => {
+      helper.errorMessages().should.be.empty;
+    });
+  });
 });

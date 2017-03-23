@@ -4,7 +4,7 @@ import type SymbolTable from '../SymbolTable';
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
-import { namespaceAncestorContext, getProperty, exceptionPath, isExtensionNamespace, getPropertyThenPropertyName } from '../ValidationHelper';
+import { namespaceAncestorContext, getProperty, exceptionPath, invalidContextArray, isExtensionNamespace, getPropertyThenPropertyName } from '../ValidationHelper';
 import type { ValidatableResult } from '../ValidationTypes';
 
 export function validatable(ruleContext: any): ValidatableResult {
@@ -12,6 +12,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   let invalidPath: ?string[] = exceptionPath(['property'], ruleContext);
 
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.property())) return { invalidPath: ['property'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const property of ruleContext.property()) {

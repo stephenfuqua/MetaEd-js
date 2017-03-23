@@ -125,6 +125,9 @@ const scanForException = (acc: ScanAccumulator, pathElement: string): ScanAccumu
   return acc;
 };
 
+// tests contextArray
+export const invalidContextArray = R.any(ruleContext => ruleContext == null || ruleContext.exception);
+
 // traverse a rule context path, defined as a string[], looking for an exception
 // returns the path to the exception or null
 export const exceptionPath = (ruleContextPath: string[], ruleContext: any): ?string[] => {

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { exceptionPath, getProperty } from '../ValidationHelper';
+import { exceptionPath, getProperty, invalidContextArray } from '../ValidationHelper';
 import type SymbolTable from '../SymbolTable';
 import type { ValidatableResult } from '../ValidationTypes';
 
@@ -19,6 +19,8 @@ export const validatable = R.curry(
 
     if (invalidPath) return { invalidPath, validatorName };
 
+    if (invalidContextArray(ruleContext.property())) return { invalidPath: ['property'], validatorName };
+
     // eslint-disable-next-line no-restricted-syntax
     for (const property of ruleContext.property()) {
       const concreteProperty = getProperty(property);
@@ -26,6 +28,8 @@ export const validatable = R.curry(
       if (invalidPath) return { invalidPath, validatorName };
 
       const identityRenames = ruleContext.property().map(p => getProperty(p).propertyComponents().propertyAnnotation().identityRename()).filter(x => x != null);
+
+      if (invalidContextArray(identityRenames)) return { invalidPath: ['identityRenames'], validatorName };
 
       // eslint-disable-next-line no-restricted-syntax
       for (const identityRename of identityRenames) {

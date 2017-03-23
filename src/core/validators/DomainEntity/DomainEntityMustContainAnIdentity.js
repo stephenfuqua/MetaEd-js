@@ -1,5 +1,5 @@
 // @flow
-import { getProperty, exceptionPath } from '../ValidationHelper';
+import { getProperty, exceptionPath, invalidContextArray } from '../ValidationHelper';
 import type SymbolTable from '../SymbolTable';
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
@@ -12,6 +12,8 @@ export function validatable(ruleContext: any): ValidatableResult {
   let invalidPath: ?string[] = exceptionPath(['property'], ruleContext);
 
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.property())) return { invalidPath: ['property'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const property of ruleContext.property()) {

@@ -1,5 +1,5 @@
 // @flow
-import { exceptionPath, validPath, getProperty } from '../ValidationHelper';
+import { exceptionPath, validPath, getProperty, invalidContextArray } from '../ValidationHelper';
 import { errorRuleBase } from '../ValidationRuleBase';
 import { includeRuleBase } from '../ValidationRuleRepository';
 import { MetaEdGrammar } from '../../../grammar/gen/MetaEdGrammar';
@@ -14,6 +14,8 @@ export function validatable(ruleContext: any): ValidatableResult {
 
   invalidPath = exceptionPath(['entityName'], ruleContext);
   if (invalidPath) return { invalidPath, validatorName };
+
+  if (invalidContextArray(ruleContext.property())) return { invalidPath: ['property'], validatorName };
 
   // eslint-disable-next-line no-restricted-syntax
   for (const property of ruleContext.property()) {
