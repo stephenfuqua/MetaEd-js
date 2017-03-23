@@ -8,7 +8,7 @@ import { namespaceAncestorContext, getProperty, exceptionPath, isExtensionNamesp
 import type { ValidatableResult } from '../ValidationTypes';
 
 export function validatable(ruleContext: any): ValidatableResult {
-  const validatorName = 'AbstractEntityMustContainAnIdentity';
+  const validatorName = 'DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
   let invalidPath: ?string[] = exceptionPath(['property'], ruleContext);
 
   if (invalidPath) return { invalidPath, validatorName };

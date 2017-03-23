@@ -7,6 +7,7 @@ import MetaEdErrorListener from './MetaEdErrorListener';
 function errorListeningParser(metaEdErrorListener: MetaEdErrorListener, metaEdContents: string): MetaEdGrammar {
   const lexer = new BaseLexer(new antlr4.InputStream(metaEdContents));
   const parser = new MetaEdGrammar(new antlr4.CommonTokenStream(lexer, undefined));
+  lexer.removeErrorListeners();
   lexer.addErrorListener(metaEdErrorListener);
   parser.removeErrorListeners();
   parser.addErrorListener(metaEdErrorListener);
@@ -15,7 +16,9 @@ function errorListeningParser(metaEdErrorListener: MetaEdErrorListener, metaEdCo
 
 function errorIgnoringParser(metaEdErrorListener: MetaEdErrorListener, metaEdContents: string): MetaEdGrammar {
   const lexer = new BaseLexer(new antlr4.InputStream(metaEdContents));
+  lexer.removeErrorListeners();
   const parser = new MetaEdGrammar(new antlr4.CommonTokenStream(lexer, undefined));
+  parser.removeErrorListeners();
   parser.Interpreter.PredictionMode = antlr4.atn.PredictionMode.SLL;
   parser.Interpreter.tail_call_preserves_sll = false;
   parser.ErrorHandler = new antlr4.error.ErrorStrategy();
