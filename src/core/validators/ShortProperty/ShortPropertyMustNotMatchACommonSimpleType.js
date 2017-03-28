@@ -16,7 +16,7 @@ export function validatable(ruleContext: any): ValidatableResult {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Short property '${ruleContext.propertyName().ID().getText()}' has the same name as a common decimal, integer, short or string.  If intentional, use a shared property instead.`;
+  return `Short property '${ruleContext.propertyName().ID().getText()}' has the same name as a Shared Decimal, Integer, Short or String.  If intentional, use a shared property instead.`;
 }
 
 const validationRule = errorRuleBase(validatable, propertyMustNotMatchACommonSimpleType, failureMessage);

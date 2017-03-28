@@ -66,7 +66,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -105,7 +105,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -146,7 +146,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -252,7 +252,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -292,7 +292,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -334,7 +334,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');
@@ -376,7 +376,7 @@ describe('IncludePropertyWithExtensionOverrideRestrictedToDomainEntityAndAssocia
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('include extension');
+      helper.errorMessages()[0].message.should.include('common extension');
       helper.errorMessages()[0].message.should.include(propertyName);
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('invalid');

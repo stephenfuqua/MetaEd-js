@@ -14,4 +14,4 @@ export const validForDomainEntityOrAssociationOrSubclass = (ruleContext: any, sy
 
 // eslint-disable-next-line no-unused-vars
 export const failureMessageForEntityTitle = R.curry((entityTitle: string, ruleContext: any, symbolTable: SymbolTable): string =>
-  `${entityTitle} '${ruleContext.ID().getText()}' does not match any declared domain entity or subclass, association or subclass.`);
+  `${entityTitle} '${ruleContext.ID().getText()}' does not match any declared Domain Entity or subclass, Association or subclass.`);

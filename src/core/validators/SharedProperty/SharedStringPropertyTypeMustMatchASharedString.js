@@ -14,6 +14,6 @@ export function validatable(ruleContext: any): ValidatableResult {
   return { validatorName };
 }
 
-const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedString()), failureMessageForShared('common string'));
+const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedString()), failureMessageForShared('shared string'));
 // eslint-disable-next-line import/prefer-default-export
 export const includeRule = includeRuleBase(MetaEdGrammar.RULE_sharedStringProperty, validationRule);

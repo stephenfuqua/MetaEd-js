@@ -35,7 +35,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
   const parentEntity = topLevelEntityAncestorContext(ruleContext);
   const parentPropertyName = propertyAncestorContext(ruleContext).propertyName().ID().getText();
-  return `'include extension' is invalid for property ${parentPropertyName} on ${entityIdentifier(parentEntity)} '${entityName(parentEntity)}'.  'include extension' is only valid for referencing common type extensions.`;
+  return `'common extension' is invalid for property ${parentPropertyName} on ${entityIdentifier(parentEntity)} '${entityName(parentEntity)}'.  'common extension' is only valid for referencing Common extensions.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

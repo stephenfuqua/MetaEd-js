@@ -54,7 +54,7 @@ describe('CommonTypeExtensionIdentifierMustMatchACommonTypeTests', () => {
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('Common Type additions');
+      helper.errorMessages()[0].message.should.include('Common additions');
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('does not match');
     });

@@ -23,7 +23,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Common Type additions '${ruleContext.extendeeName().getText()}' does not match any declared Common Type.`;
+  return `Common additions '${ruleContext.extendeeName().getText()}' does not match any declared Common.`;
 }
 
 const validationRule = errorRuleBase(validatable('CommonTypeExtensionIdentifierMustMatchACommonType'), valid, failureMessage);

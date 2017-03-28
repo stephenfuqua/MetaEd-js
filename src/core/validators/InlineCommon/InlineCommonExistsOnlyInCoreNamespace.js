@@ -26,7 +26,7 @@ export function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
   const parentNamespaceContext = namespaceAncestorContext(ruleContext);
-  return `Inline Common Type '${ruleContext.inlineCommonName().ID().getText()}' is not valid in extension namespace '${namespaceNameFor(parentNamespaceContext)}`;
+  return `Inline Common '${ruleContext.inlineCommonName().ID().getText()}' is not valid in extension namespace '${namespaceNameFor(parentNamespaceContext)}`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

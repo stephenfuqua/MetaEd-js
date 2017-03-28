@@ -32,7 +32,7 @@ export function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Common String '${ruleContext.sharedStringName().getText()}' has min length greater than max length.`;
+  return `Shared String '${ruleContext.sharedStringName().getText()}' has min length greater than max length.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

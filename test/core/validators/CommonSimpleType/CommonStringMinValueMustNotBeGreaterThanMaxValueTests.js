@@ -71,7 +71,7 @@ describe('CommonStringMinLengthMustNotBeGreaterThanMaxLengthTests', () => {
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('Common String');
+      helper.errorMessages()[0].message.should.include('Shared String');
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('min length greater than max length');
     });

@@ -29,7 +29,7 @@ export function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Common Decimal '${ruleContext.sharedDecimalName().getText()} has decimal places greater than total digits.`;
+  return `Shared Decimal '${ruleContext.sharedDecimalName().getText()} has decimal places greater than total digits.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

@@ -26,7 +26,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Domain Entity '${ruleContext.entityName().getText()}' based on '${ruleContext.baseName().getText()}' does not match any declared domain or abstract entity.`;
+  return `Domain Entity '${ruleContext.entityName().getText()}' based on '${ruleContext.baseName().getText()}' does not match any declared Domain Entity.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

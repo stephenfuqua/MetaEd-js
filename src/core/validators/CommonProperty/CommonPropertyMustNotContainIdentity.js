@@ -33,7 +33,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
   const parentEntity = topLevelEntityAncestorContext(ruleContext);
-  return `Include property '${ruleContext.propertyName().ID().getText()}' is invalid to be used for the identity of ${entityIdentifier(parentEntity)} '${entityName(parentEntity)}'`;
+  return `Common property '${ruleContext.propertyName().ID().getText()}' is invalid to be used for the identity of ${entityIdentifier(parentEntity)} '${entityName(parentEntity)}'`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

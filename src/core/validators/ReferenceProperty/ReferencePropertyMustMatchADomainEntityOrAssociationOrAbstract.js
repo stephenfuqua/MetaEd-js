@@ -26,7 +26,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Reference property '${ruleContext.propertyName().ID().getText()}' does not match any declared domain entity or subclass, association or subclass, or abstract entity.`;
+  return `Reference property '${ruleContext.propertyName().ID().getText()}' does not match any declared Domain Entity or subclass, Association or subclass, or Abstract Entity.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

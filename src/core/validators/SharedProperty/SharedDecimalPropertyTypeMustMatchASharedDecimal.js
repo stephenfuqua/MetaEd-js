@@ -14,6 +14,6 @@ export function validatable(ruleContext: any): ValidatableResult {
   return { validatorName };
 }
 
-const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedDecimal()), failureMessageForShared('common decimal'));
+const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedDecimal()), failureMessageForShared('shared decimal'));
 // eslint-disable-next-line import/prefer-default-export
 export const includeRule = includeRuleBase(MetaEdGrammar.RULE_sharedDecimalProperty, validationRule);

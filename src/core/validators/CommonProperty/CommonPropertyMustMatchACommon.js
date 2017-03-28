@@ -24,7 +24,7 @@ function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Include property '${ruleContext.propertyName().ID().getText()}' does not match any declared common type, inline common type, or choice type.`;
+  return `Common property '${ruleContext.propertyName().ID().getText()}' does not match any declared Common, Inline Common, or Choice.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);

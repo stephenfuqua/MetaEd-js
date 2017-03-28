@@ -30,7 +30,7 @@ export function validatable(ruleContext: any): ValidatableResult {
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
   const topLevelEntityContext = topLevelEntityAncestorContext(ruleContext);
-  return `Domain item '${ruleContext.ID().getText()}' under ${entityIdentifier(topLevelEntityContext)} '${entityName(topLevelEntityContext)}' does not match any declared abstract entity, domain entity or subclass, association or subclass, or common type.`;
+  return `Domain item '${ruleContext.ID().getText()}' under ${entityIdentifier(topLevelEntityContext)} '${entityName(topLevelEntityContext)}' does not match any declared Domain Entity or subclass, Association or subclass, or Common.`;
 }
 
 const validationRule = errorRuleBase(validatable, contextMustMatchATopLevelEntity, failureMessage);

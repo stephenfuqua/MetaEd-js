@@ -34,5 +34,5 @@ export const failureMessage = R.curry(
   (entityTitle: string, entityKey: string, extensionKey: string, ruleContext: any, symbolTable: SymbolTable): string => {
     const duplicatePropertyIdentifierList =
       propertyRuleContextsForDuplicates(entityKey, extensionKey, ruleContext, symbolTable).map(x => propertyName(x));
-    return `${entityTitle} additions '${ruleContext.extendeeName().getText()}' declares '${duplicatePropertyIdentifierList.join(',')}' already in property list of {entityTitle}.`;
+    return `${entityTitle} additions '${ruleContext.extendeeName().getText()}' declares '${duplicatePropertyIdentifierList.join(',')}' already in property list of ${entityTitle}.`;
   });

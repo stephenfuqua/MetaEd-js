@@ -53,7 +53,7 @@ describe('InlineCommonTypeExistsOnlyInCoreNamespace', () => {
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('Inline Common Type');
+      helper.errorMessages()[0].message.should.include('Inline Common');
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('is not valid in extension namespace');
       helper.errorMessages()[0].message.should.include(extensionNamespace);

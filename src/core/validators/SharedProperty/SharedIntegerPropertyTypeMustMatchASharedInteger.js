@@ -14,6 +14,6 @@ export function validatable(ruleContext: any): ValidatableResult {
   return { validatorName };
 }
 
-const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedInteger()), failureMessageForShared('common integer'));
+const validationRule = errorRuleBase(validatable, validForShared(SymbolTableEntityType.sharedInteger()), failureMessageForShared('shared integer'));
 // eslint-disable-next-line import/prefer-default-export
 export const includeRule = includeRuleBase(MetaEdGrammar.RULE_sharedIntegerProperty, validationRule);

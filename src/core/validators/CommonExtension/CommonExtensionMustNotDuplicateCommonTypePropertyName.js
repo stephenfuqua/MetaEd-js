@@ -30,7 +30,7 @@ function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
   const propertyRuleContextsForDuplicates =
     symbolTable.contextsForMatchingPropertyIdentifiers(SymbolTableEntityType.commonExtension(), identifier, commonPropertyIdentifiers);
   const duplicatePropertyIdentifierList = propertyRuleContextsForDuplicates.map(x => x.propertyName().ID().getText());
-  return `Common Type additions '${identifier}' declares '${duplicatePropertyIdentifierList.join(',')}' already in property list of Common Type.`;
+  return `Common additions '${identifier}' declares '${duplicatePropertyIdentifierList.join(',')}' already in property list of Common.`;
 }
 
 const validationRule = errorRuleBase(validatable('CommonTypeExtensionMustNotDuplicateCommonTypePropertyName'), valid, failureMessage);

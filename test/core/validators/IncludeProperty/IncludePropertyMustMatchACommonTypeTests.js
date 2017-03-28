@@ -110,7 +110,7 @@ describe('IncludePropertyMustMatchACommonType', () => {
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('Include');
+      helper.errorMessages()[0].message.should.include('Common');
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('does not match');
     });

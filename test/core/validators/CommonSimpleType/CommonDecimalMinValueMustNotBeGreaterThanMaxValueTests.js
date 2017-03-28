@@ -118,7 +118,7 @@ describe('CommonDecimalMinValueMustNotBeGreaterThanMaxValue', () => {
     });
 
     it('should_have_validation_failure_message()', () => {
-      helper.errorMessages()[0].message.should.include('Common Decimal');
+      helper.errorMessages()[0].message.should.include('Shared Decimal');
       helper.errorMessages()[0].message.should.include(entityName);
       helper.errorMessages()[0].message.should.include('min value greater than max value');
     });

@@ -61,7 +61,7 @@ describe('CommonDecimalDecimalPlacesMustNotBeGreaterThanTotalDigitsTests', () =>
     });
 
     it('should_have_validation_failure_message', () => {
-      helper.errorMessages()[0].message.should.contain('Common Decimal');
+      helper.errorMessages()[0].message.should.contain('Shared Decimal');
       helper.errorMessages()[0].message.should.contain(entityName);
       helper.errorMessages()[0].message.should.contain('decimal places greater than total digits');
     });

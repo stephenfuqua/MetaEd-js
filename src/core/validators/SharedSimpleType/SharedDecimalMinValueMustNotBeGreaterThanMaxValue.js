@@ -32,7 +32,7 @@ export function valid(ruleContext: any, symbolTable: SymbolTable): boolean {
 
 // eslint-disable-next-line no-unused-vars
 function failureMessage(ruleContext: any, symbolTable: SymbolTable): string {
-  return `Common Decimal '${ruleContext.sharedDecimalName().getText()}' has min value greater than max value.`;
+  return `Shared Decimal '${ruleContext.sharedDecimalName().getText()}' has min value greater than max value.`;
 }
 
 const validationRule = errorRuleBase(validatable, valid, failureMessage);
