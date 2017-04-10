@@ -1,3 +1,4 @@
+// @flow
 import antlr4 from 'antlr4';
 import { Trees } from 'antlr4/tree/Trees';
 import BaseLexer from './../../../src/grammar/gen/BaseLexer';

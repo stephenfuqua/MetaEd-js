@@ -1,6 +1,6 @@
 // @flow
 import winston from 'winston';
-import { startingFromFileLoad } from '../core/tasks/Pipeline';
+import { startingFromFileLoad } from '../core/task/Pipeline';
 import { StateInstance } from '../core/State';
 import type { State } from '../core/State';
 
@@ -22,7 +22,7 @@ winston.level = 'info';
 winston.info(`Executing MetaEd Console on core ${argv.edfi} and extension ${argv.ext}.`);
 winston.info('');
 
-// $FlowFixMe -- doesn't like constructor call on Immutable.Record
+// $FlowIgnore -- doesn't like constructor call on Immutable.Record
 const state: State = new StateInstance({
   inputDirectories: [
     {

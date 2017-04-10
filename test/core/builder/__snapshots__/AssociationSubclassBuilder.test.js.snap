@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building association subclass with invalid trailing text should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 17, line: 8, token: TrailingText",
+]
+`;
+
+exports[`when building association subclass with lowercase association subclass name should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+]
+`;
+
+exports[`when building association subclass with lowercase based on name should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'base' expecting ID, column: 34, line: 2, token: base",
+]
+`;
+
+exports[`when building association subclass with missing association subclass name should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationbased on', column: 15, line: 2, token: based on",
+]
+`;
+
+exports[`when building association subclass with missing based on name should have missing id error 1`] = `
+Array [
+  "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+]
+`;
+
+exports[`when building association subclass with missing documentation should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+]
+`;
+
+exports[`when building association subclass with missing property should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+]
+`;

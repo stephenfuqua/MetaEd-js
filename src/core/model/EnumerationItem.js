@@ -1,0 +1,25 @@
+// @flow
+import { ModelBase, ModelBaseSourceMap } from './ModelBase';
+import { namespaceInfoFactory } from './NamespaceInfo';
+import type { SourceMap } from './ModelBase';
+
+export class EnumerationItemSourceMap extends ModelBaseSourceMap {
+  shortDescription: ?SourceMap;
+}
+
+export class EnumerationItem extends ModelBase {
+  shortDescription: string;
+  sourceMap: EnumerationItemSourceMap;
+}
+
+export function enumerationItemFactory(): EnumerationItem {
+  return Object.assign(new EnumerationItem(), {
+    type: 'enumerationItem',
+    documentation: '',
+    metaEdName: '',
+    metaEdId: '',
+    namespaceInfo: namespaceInfoFactory(),
+    shortDescription: '',
+    sourceMap: new EnumerationItemSourceMap(),
+  });
+}

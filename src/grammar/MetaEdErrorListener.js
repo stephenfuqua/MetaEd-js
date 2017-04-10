@@ -1,8 +1,9 @@
 // @flow
 import antlr4 from 'antlr4';
-import type { ValidationMessage } from '../core/validators/ValidationTypes';
-import type { FileIndex, FilenameAndLineNumber } from '../core/tasks/FileIndex';
-import { getFilenameAndLineNumber } from '../core/tasks/FileIndex';
+import type { FileIndex, FilenameAndLineNumber } from '../core/task/FileIndex';
+import { getFilenameAndLineNumber } from '../core/task/FileIndex';
+
+type ValidationMessage = any;
 
 export default class MetaEdErrorListener {
   _messageCollection: ValidationMessage[];

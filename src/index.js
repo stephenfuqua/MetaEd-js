@@ -1,10 +1,11 @@
+// @flow
+
 export { StateInstance } from './core/State';
-export { startingFromFileLoad, startingFromFileLoadP } from './core/tasks/Pipeline';
-export { createMetaEdFile } from './core/tasks/MetaEdFile';
-export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './core/tasks/BufferFileLoader';
+export { startingFromFileLoad, startingFromFileLoadP } from './core/task/Pipeline';
+export { createMetaEdFile } from './core/task/MetaEdFile';
+export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './core/task/BufferFileLoader';
 
 export type { State } from './core/State';
-export type { ValidationMessage } from './core/validators/ValidationTypes';
-export type { InputDirectory } from './core/tasks/FileSystemFilenameLoader';
-export type { FileSet, MetaEdFile } from './core/tasks/MetaEdFile';
-export type { FileIndex } from './core/tasks/FileIndex';
+export type { InputDirectory } from './core/task/FileSystemFilenameLoader';
+export type { FileSet, MetaEdFile } from './core/task/MetaEdFile';
+export type { FileIndex } from './core/task/FileIndex';

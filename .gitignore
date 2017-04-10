@@ -3,12 +3,16 @@ logs/*
 node_modules/
 bower_components/
 jspm_packages/
+coverage/
 tmp
 .DS_Store
 npm-debug.log
 
 ## Webstorm user specific files:
 .idea/
+
+## VSCode user specific files:
+.vscode/
 
 ## Babel target directory
 dist/

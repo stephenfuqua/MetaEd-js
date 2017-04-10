@@ -1,12 +1,14 @@
 // @flow
 import R from 'ramda';
 import { List, Map, Record, Set } from 'immutable';
-import SymbolTable from './validators/SymbolTable';
-import type { ValidationMessage, ValidationProblem } from './validators/ValidationTypes';
-import type { InputDirectory } from './tasks/FileSystemFilenameLoader';
-import type { FileSet } from './tasks/MetaEdFile';
-import type { FileIndex } from './tasks/FileIndex';
+import type { InputDirectory } from './task/FileSystemFilenameLoader';
+import type { FileSet } from './task/MetaEdFile';
+import type { FileIndex } from './task/FileIndex';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+
+// temporary
+type ValidationMessage = any;
+type ValidationProblem = any;
 
 type StateRecord = {
   // every function/object that changes the state must append their name here
@@ -35,7 +37,7 @@ type StateRecord = {
   fileIndex: FileIndex,
 
   // the symbol table created by SymbolTableBuilder
-  symbolTable: ?SymbolTable,
+  symbolTable: ?any,
 
   // the ANTLR parse tree of the concatenated .metaed files
   parseTree: ?MetaEdGrammar,
@@ -92,5 +94,5 @@ export const setParseTree = R.curry((parseTree: ?MetaEdGrammar, state: State): S
 export const setValidatorData = R.curry((validatorData: Map<string, string>, state: State): State =>
   state.set('validatorData', validatorData));
 
-export const setSymbolTable = R.curry((symbolTable: ?SymbolTable, state: State): State =>
+export const setSymbolTable = R.curry((symbolTable: ?any, state: State): State =>
   state.set('symbolTable', symbolTable));

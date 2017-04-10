@@ -204,7 +204,11 @@ domain
     ;
 
 domainItem
-    : (ASSOCIATION_KEYWORD | DOMAIN_ENTITY_KEYWORD | COMMON_KEYWORD | INLINE_COMMON_KEYWORD | DESCRIPTOR_KEYWORD) ID metaEdId?
+    : (ASSOCIATION_KEYWORD
+     | COMMON_KEYWORD
+     | DOMAIN_ENTITY_KEYWORD
+     | DESCRIPTOR_KEYWORD
+     | INLINE_COMMON_KEYWORD) ID metaEdId?
     ;
 
 footerDocumentation
@@ -276,7 +280,7 @@ interchangeComponent
     ;
 
 interchangeElement
-    : (ASSOCIATION_KEYWORD | DOMAIN_ENTITY_KEYWORD) ID metaEdId?
+    : (ASSOCIATION_KEYWORD | DESCRIPTOR_KEYWORD | DOMAIN_ENTITY_KEYWORD) ID metaEdId?
     ;
 
 interchangeIdentity

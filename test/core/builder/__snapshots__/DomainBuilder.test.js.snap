@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building domain with invalid trailing text should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 6, token: TrailingText",
+]
+`;
+
+exports[`when building domain with lowercase domain name should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'domain' expecting ID, column: 9, line: 2, token: domain",
+]
+`;
+
+exports[`when building domain with missing documentation should have mismatched input error 1`] = `
+Array [
+  "mismatched input 'domain entity' expecting 'documentation', column: 4, line: 3, token: domain entity",
+]
+`;
+
+exports[`when building domain with missing domain item should have mismatched input error 1`] = `
+Array [
+  "mismatched input 'footer documentation' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: footer documentation",
+]
+`;
+
+exports[`when building domain with missing domain name should have missing id error 1`] = `
+Array [
+  "missing ID at '[1]', column: 10, line: 2, token: [1]",
+]
+`;
+
+exports[`when building domain with missing text in footer documentation should have missing text error 1`] = `
+Array [
+  "missing TEXT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+]
+`;
+
+exports[`when building subdomain with invalid trailing text should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 6, token: TrailingText",
+]
+`;
+
+exports[`when building subdomain with lowercase parent domain name should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'parent' expecting ID, column: 26, line: 2, token: parent",
+]
+`;
+
+exports[`when building subdomain with lowercase subdomain name should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'domain' expecting ID, column: 12, line: 2, token: domain",
+]
+`;
+
+exports[`when building subdomain with missing documentation should have mismatched input error 1`] = `
+Array [
+  "extraneous input 'parent' expecting ID, column: 26, line: 2, token: parent",
+  "mismatched input 'domain entity' expecting 'documentation', column: 4, line: 3, token: domain entity",
+]
+`;
+
+exports[`when building subdomain with missing domain item should have mismatched input error 1`] = `
+Array [
+  "mismatched input 'position' expecting {'association', 'common', 'descriptor', 'domain entity', 'inline common'}, column: 4, line: 5, token: position",
+]
+`;
+
+exports[`when building subdomain with missing parent domain name should have missing id error 1`] = `
+Array [
+  "missing ID at '[10]', column: 27, line: 2, token: [10]",
+]
+`;
+
+exports[`when building subdomain with missing subdomain name should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'of' expecting ID, column: 13, line: 2, token: of",
+  "mismatched input '[10]' expecting 'of', column: 33, line: 2, token: [10]",
+]
+`;
+
+exports[`when building subdomain with missing unsigned int in position should have missing unsigned int error 1`] = `
+Array [
+  "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
+]
+`;

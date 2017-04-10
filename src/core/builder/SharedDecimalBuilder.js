@@ -1,0 +1,46 @@
+// @flow
+import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
+import SharedSimpleBuilder from './SharedSimpleBuilder';
+import { sharedDecimalFactory } from '../model/SharedDecimal';
+import type { SharedDecimal } from '../model/SharedDecimal';
+
+export default class SharedDecimalBuilder extends SharedSimpleBuilder {
+  // eslint-disable-next-line no-unused-vars
+  enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
+    this.enteringSharedSimple(sharedDecimalFactory);
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  exitSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
+    this.exitingSharedSimple();
+  }
+
+  enterSharedDecimalName(context: MetaEdGrammar.SharedDecimalNameContext) {
+    if (context.exception || context.ID() == null || context.ID().exception) return;
+    this.enteringName(context.ID().getText());
+  }
+
+  enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
+    if (this.currentSharedSimple == null) return;
+    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    ((this.currentSharedSimple: any): SharedDecimal).decimalPlaces = context.UNSIGNED_INT().getText();
+  }
+
+  enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
+    if (this.currentSharedSimple == null) return;
+    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    ((this.currentSharedSimple: any): SharedDecimal).totalDigits = context.UNSIGNED_INT().getText();
+  }
+
+  enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
+    if (this.currentSharedSimple == null) return;
+    if (context.decimalValue() == null || context.decimalValue().exception) return;
+    ((this.currentSharedSimple: any): SharedDecimal).minValue = context.decimalValue().getText();
+  }
+
+  enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
+    if (this.currentSharedSimple == null) return;
+    if (context.decimalValue() == null || context.decimalValue().exception) return;
+    ((this.currentSharedSimple: any): SharedDecimal).maxValue = context.decimalValue().getText();
+  }
+}

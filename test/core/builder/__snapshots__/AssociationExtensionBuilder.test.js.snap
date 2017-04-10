@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building association extension with invalid trailing text should have extranous input error 1`] = `
+Array [
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
+]
+`;
+
+exports[`when building association extension with lowercase association extension name should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+]
+`;
+
+exports[`when building association extension with missing association extension name should have no viable alternative error 1`] = `
+Array [
+  "no viable alternative at input 'Associationadditions', column: 15, line: 2, token: additions",
+]
+`;
+
+exports[`when building association extension with missing property should have mismatched input error 1`] = `
+Array [
+  "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 3, token: End Namespace",
+]
+`;
