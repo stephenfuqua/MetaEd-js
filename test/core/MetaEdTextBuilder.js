@@ -19,7 +19,7 @@ export default class MetaEdTextBuilder {
 
   sendToListener(listener: MetaEdGrammarListener): MetaEdTextBuilder {
     const metaEdText = this.toString();
-    this.errorMessages = listen(metaEdText, listener);
+    this.errorMessages.push(...listen(metaEdText, listener));
     return this;
   }
 

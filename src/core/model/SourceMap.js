@@ -7,14 +7,8 @@ export type SourceMap = {
   tokenText: string;
 }
 
-export function sourceMapFrom(context: ParserRuleContext): SourceMap {
-  if (context.start == null) {
-    return {
-      line: 0,
-      column: 0,
-      tokenText: '',
-    };
-  }
+export function sourceMapFrom(context: ParserRuleContext): ?SourceMap {
+  if (context.start == null) return null;
 
   return {
     line: context.start.line,

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`message 1`] = `"Domain Entity EntityName does not have an identity specified."`;
+
+exports[`sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
+`;
