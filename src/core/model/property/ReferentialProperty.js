@@ -1,6 +1,6 @@
 // @flow
 import { EntityProperty, EntityPropertySourceMap, defaultEntityPropertyFields } from './EntityProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 import { defaultTopLevelEntity, TopLevelEntity } from './../TopLevelEntity';
 import { MergedProperty } from './MergedProperty';
 

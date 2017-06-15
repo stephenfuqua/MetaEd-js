@@ -1,6 +1,6 @@
 // @flow
 import { EntityProperty, EntityPropertySourceMap, defaultEntityPropertyFields } from './EntityProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 import { defaultSharedSimple, SharedSimple } from './../SharedSimple';
 
 export class SimplePropertySourceMap extends EntityPropertySourceMap {

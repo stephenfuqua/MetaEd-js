@@ -2,7 +2,7 @@
 import { namespaceInfoFactory } from './NamespaceInfo';
 import { ModelBase } from './ModelBase';
 import type { ModelType } from './ModelType';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class SharedSimpleSourceMap {
   type: ?ModelType;

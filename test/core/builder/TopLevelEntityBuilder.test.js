@@ -260,7 +260,7 @@ describe('when building a domain entity property', () => {
   it('should have domain entity property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domain entity');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domainEntity');
   });
 
   it('should have correct documentation', () => {
@@ -299,7 +299,7 @@ describe('when building a domain entity property with merge reference', () => {
   it('should have domain entity property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domain entity');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domainEntity');
   });
 
   it('should have merge a reference', () => {
@@ -346,7 +346,7 @@ describe('when building a domain entity property with multiple merge references'
   it('should have domain entity property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domain entity');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domainEntity');
   });
 
   it('should have merge references', () => {

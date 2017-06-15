@@ -2,9 +2,12 @@
 import type { EntityProperty } from './property/EntityProperty';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class TopLevelEntitySourceMap extends ModelBaseSourceMap {
+  properties: ?Array<SourceMap>;
+  identityProperties: ?Array<SourceMap>;
+  queryableFields: ?Array<SourceMap>;
   allowPrimaryKeyUpdates: ?SourceMap;
   baseEntityName: ?SourceMap;
   baseEntity: ?SourceMap;

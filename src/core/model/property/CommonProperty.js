@@ -1,6 +1,6 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 
 export class CommonPropertySourceMap extends ReferentialPropertySourceMap {
   isExtensionOverride: ?SourceMap;

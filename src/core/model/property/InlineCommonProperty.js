@@ -9,7 +9,7 @@ export class InlineCommonProperty extends ReferentialProperty {
 
 export function inlineCommonPropertyFactory(): InlineCommonProperty {
   return Object.assign(new InlineCommonProperty(), defaultReferentialProperty(), {
-    type: 'inline common',
+    type: 'inlineCommon',
     sourceMap: new InlineCommonPropertySourceMap(),
   });
 }

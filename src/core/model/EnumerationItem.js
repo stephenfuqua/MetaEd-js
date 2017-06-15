@@ -1,7 +1,7 @@
 // @flow
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class EnumerationItemSourceMap extends ModelBaseSourceMap {
   shortDescription: ?SourceMap;

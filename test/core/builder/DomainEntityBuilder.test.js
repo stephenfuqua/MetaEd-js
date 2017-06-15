@@ -260,7 +260,7 @@ describe('when building domain entity with inline common reference', () => {
   it('should have inline common property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('inline common');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('inlineCommon');
   });
 
   it('should have correct documentation', () => {
@@ -329,7 +329,7 @@ describe('when building domain entity with queryable only property', () => {
   it('should have queryable field separate', () => {
     expect(repository.domainEntity.get(entityName).queryableFields).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).queryableFields[0].metaEdName).toBe(queryableOnlyName);
-    expect(repository.domainEntity.get(entityName).queryableFields[0].type).toBe('domain entity');
+    expect(repository.domainEntity.get(entityName).queryableFields[0].type).toBe('domainEntity');
   });
 });
 
@@ -356,7 +356,7 @@ describe('when building domain entity with shared decimal reference', () => {
   it('should have shared decimal property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared decimal');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedDecimal');
   });
 
   it('should have correct referenced type', () => {
@@ -386,7 +386,7 @@ describe('when building domain entity with shared decimal reference without name
   it('should have shared decimal property named after type', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(sharedPropertyType);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared decimal');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedDecimal');
   });
 
   it('should have correct referenced type', () => {
@@ -417,7 +417,7 @@ describe('when building domain entity with shared integer reference', () => {
   it('should have shared integer property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared integer');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedInteger');
   });
 
   it('should have correct referenced type', () => {
@@ -447,7 +447,7 @@ describe('when building domain entity with shared integer reference without name
   it('should have shared integer property named after type', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(sharedPropertyType);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared integer');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedInteger');
   });
 
   it('should have correct referenced type', () => {
@@ -478,7 +478,7 @@ describe('when building domain entity with shared short reference', () => {
   it('should have shared short property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared short');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedShort');
   });
 
   it('should have correct referenced type', () => {
@@ -508,7 +508,7 @@ describe('when building domain entity with shared short reference without name',
   it('should have shared short property named after type', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(sharedPropertyType);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared short');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedShort');
   });
 
   it('should have correct referenced type', () => {
@@ -539,7 +539,7 @@ describe('when building domain entity with shared string reference', () => {
   it('should have shared string property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared string');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedString');
   });
 
   it('should have correct referenced type', () => {
@@ -569,7 +569,7 @@ describe('when building domain entity with shared string reference without name'
   it('should have shared string property named after type', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(sharedPropertyType);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared string');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedString');
   });
 
   it('should have correct referenced type', () => {
@@ -600,7 +600,7 @@ describe('when building domain entity with shared string reference inheriting do
   it('should have shared string property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('shared string');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('sharedString');
   });
 
   it('should have inherited flag set instead of documentation', () => {
@@ -631,7 +631,7 @@ describe('when building domain entity with domain entity reference inheriting do
   it('should have domain entity property', () => {
     expect(repository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(repository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domain entity');
+    expect(repository.domainEntity.get(entityName).properties[0].type).toBe('domainEntity');
   });
 
   it('should have inherited flag set instead of documentation', () => {

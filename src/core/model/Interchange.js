@@ -2,7 +2,7 @@
 import { InterchangeItem } from './InterchangeItem';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class InterchangeSourceMap extends ModelBaseSourceMap {
   elements: ?Array<SourceMap>;

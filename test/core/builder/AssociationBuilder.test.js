@@ -65,7 +65,7 @@ describe('when building association in extension namespace', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -74,7 +74,7 @@ describe('when building association in extension namespace', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -83,7 +83,7 @@ describe('when building association in extension namespace', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -92,7 +92,7 @@ describe('when building association in extension namespace', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -159,7 +159,7 @@ describe('when building association without extension', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -168,7 +168,7 @@ describe('when building association without extension', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -177,7 +177,7 @@ describe('when building association without extension', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -186,7 +186,7 @@ describe('when building association without extension', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
@@ -226,7 +226,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
@@ -234,7 +234,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
@@ -242,7 +242,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
@@ -250,7 +250,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
@@ -258,7 +258,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).properties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 
@@ -266,7 +266,7 @@ describe('when building association with additional identity property', () => {
     const domainEntityProperty = repository.association.get(entityName).identityProperties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
-    expect(domainEntityProperty.type).toBe('domain entity');
+    expect(domainEntityProperty.type).toBe('domainEntity');
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
   });
 });
@@ -394,7 +394,7 @@ describe('when building association with missing domain entity property', () => 
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
-      .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
+      .withStartProperty('domainEntity', firstDomainEntityName, firstDomainEntityMetaEdId)
       .withDocumentation(documentation2)
       .withContext(null)
       .withEndProperty()
@@ -430,7 +430,7 @@ describe('when building association with missing documentation in the first doma
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
-      .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
+      .withStartProperty('domainEntity', firstDomainEntityName, firstDomainEntityMetaEdId)
       .withContext(null)
       .withEndProperty()
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
@@ -467,7 +467,7 @@ describe('when building association with missing documentation in the second dom
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
-      .withStartProperty('domain entity', secondDomainEntityName, secondDomainEntityMetaEdId)
+      .withStartProperty('domainEntity', secondDomainEntityName, secondDomainEntityMetaEdId)
       .withContext(null)
       .withEndProperty()
       .withEndAssociation()

@@ -1,6 +1,6 @@
 // @flow
 import { SharedSimple, SharedSimpleSourceMap, defaultSharedSimple } from './SharedSimple';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class SharedDecimalSourceMap extends SharedSimpleSourceMap {
   totalDigits: ?SourceMap;

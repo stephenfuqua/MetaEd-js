@@ -1,6 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 import type { CommonExtension } from './CommonExtension';
 
 export class CommonSourceMap extends TopLevelEntitySourceMap {

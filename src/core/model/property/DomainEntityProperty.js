@@ -1,6 +1,6 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 
 export class DomainEntityPropertySourceMap extends ReferentialPropertySourceMap {
   isWeak: ?SourceMap;
@@ -13,7 +13,7 @@ export class DomainEntityProperty extends ReferentialProperty {
 
 export function domainEntityPropertyFactory(): DomainEntityProperty {
   return Object.assign(new DomainEntityProperty(), defaultReferentialProperty(), {
-    type: 'domain entity',
+    type: 'domainEntity',
     isWeak: false,
     sourceMap: new DomainEntityPropertySourceMap(),
   });

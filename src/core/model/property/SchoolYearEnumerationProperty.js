@@ -9,7 +9,7 @@ export class SchoolYearEnumerationProperty extends ReferentialProperty {
 
 export function schoolYearEnumerationPropertyFactory(): SchoolYearEnumerationProperty {
   return Object.assign(new SchoolYearEnumerationProperty(), defaultReferentialProperty(), {
-    type: 'school year enumeration',
+    type: 'schoolYearEnumeration',
     sourceMap: new SchoolYearEnumerationPropertySourceMap(),
   });
 }

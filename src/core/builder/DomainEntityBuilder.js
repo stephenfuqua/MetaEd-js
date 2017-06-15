@@ -3,7 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityFactory } from '../model/DomainEntity';
 import type { DomainEntity } from '../model/DomainEntity';
-import { sourceMapFrom } from '../model/ModelBase';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DomainEntityBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars

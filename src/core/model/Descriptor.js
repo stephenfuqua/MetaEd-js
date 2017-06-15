@@ -1,7 +1,7 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import { MapTypeEnumeration, mapTypeEnumerationFactory } from './Enumeration';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class DescriptorSourceMap extends TopLevelEntitySourceMap {
   isMapTypeRequired: ?SourceMap;

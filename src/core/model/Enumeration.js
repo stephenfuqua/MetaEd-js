@@ -1,7 +1,7 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import { EnumerationItem } from './EnumerationItem';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class EnumerationSourceMap extends TopLevelEntitySourceMap {
   enumerationItems: ?Array<SourceMap>;

@@ -1,6 +1,6 @@
 // @flow
 import type { EntityProperty } from './EntityProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 
 export class MergedPropertySourceMap {
   type: ?SourceMap;

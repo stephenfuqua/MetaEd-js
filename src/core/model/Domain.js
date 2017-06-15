@@ -1,7 +1,7 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 import { Subdomain } from './Subdomain';
 
 export class DomainSourceMap extends TopLevelEntitySourceMap {

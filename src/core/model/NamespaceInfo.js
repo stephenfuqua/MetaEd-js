@@ -1,5 +1,5 @@
 // @flow
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 
 export class NamespaceInfoSourceMap {
   type: ?SourceMap;

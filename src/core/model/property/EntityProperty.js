@@ -1,7 +1,7 @@
 // @flow
 import { NamespaceInfo, namespaceInfoFactory } from '../NamespaceInfo';
 import { TopLevelEntity, defaultTopLevelEntity } from '../TopLevelEntity';
-import type { SourceMap } from '../ModelBase';
+import type { SourceMap } from '../SourceMap';
 import type { PropertyType } from './PropertyType';
 
 export class EntityPropertySourceMap {

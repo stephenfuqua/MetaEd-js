@@ -7,26 +7,26 @@ export type PropertyType =
   'boolean' |
   'choice' |
   'common' |
-  'common extension' |
+  'commonExtension' |
   'currency' |
   'date' |
   'decimal' |
   'descriptor' |
-  'domain entity' |
+  'domainEntity' |
   'duration' |
   'enumeration' |
-  'inline common' |
+  'inlineCommon' |
   'integer' |
   'percent' |
-  'school year enumeration' |
-  'shared decimal' |
-  'shared integer' |
-  'shared short' |
-  'shared string' |
+  'schoolYearEnumeration' |
+  'sharedDecimal' |
+  'sharedInteger' |
+  'sharedShort' |
+  'sharedString' |
   'short' |
   'string' |
   'time' |
   'year';
 
-const sharedProperty: Array<string> = ['shared decimal', 'shared integer', 'shared short', 'shared string'];
+const sharedProperty: Array<PropertyType> = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
 export const isSharedProperty = (property: EntityProperty): boolean => sharedProperty.includes(property.type);

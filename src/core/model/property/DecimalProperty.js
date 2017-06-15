@@ -1,6 +1,6 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
-import type { SourceMap } from './../ModelBase';
+import type { SourceMap } from './../SourceMap';
 
 export class DecimalPropertySourceMap extends SimplePropertySourceMap {
   minValue: ?SourceMap;

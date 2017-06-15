@@ -1,6 +1,6 @@
 // @flow
 import { Domain, domainFactory } from './Domain';
-import type { SourceMap } from './ModelBase';
+import type { SourceMap } from './SourceMap';
 import { TopLevelEntity } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
 
