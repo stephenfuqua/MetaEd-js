@@ -36,6 +36,7 @@ import { yearPropertyFactory } from '../model/property/YearProperty';
 import { ReferentialProperty } from '../model/property/ReferentialProperty';
 import { ShortProperty, shortPropertyFactory } from '../model/property/ShortProperty';
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
+import { sourceMapFrom } from '../model/SourceMap';
 
 function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext) {
   if (R.any(token => token.exception)(context.ID())) return [];
@@ -61,6 +62,8 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo != null) return;
     this.namespaceInfo = namespaceInfoFactory();
+    // $FlowIgnore - already null guarded
+    this.namespaceInfo.sourceMap = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
@@ -95,6 +98,8 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentTopLevelEntity == null) return;
     // $FlowIgnore - already null guarded
     this.currentTopLevelEntity.documentation = extractDocumentation(context);
+    // $FlowIgnore - already null guarded - property not on TLE
+    this.currentTopLevelEntity.sourceMap.documentation = sourceMapFrom(context);
   }
 
   enteringName(name: string) {
@@ -108,9 +113,13 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty != null) {
       // $FlowIgnore - already null guarded
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      // $FlowIgnore - already null guarded - property not on TLE
+      this.currentProperty.sourceMap.metaEdId = sourceMapFrom(context);
     } else if (this.currentTopLevelEntity != null) {
       // $FlowIgnore - already null guarded
       this.currentTopLevelEntity.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      // $FlowIgnore - already null guarded - property not on TLE
+      this.currentTopLevelEntity.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
 

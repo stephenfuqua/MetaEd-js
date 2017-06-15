@@ -3,7 +3,6 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
-
 import { namespaceInfoFactory } from '../model/NamespaceInfo';
 
 export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: ?NamespaceInfo): NamespaceInfo {

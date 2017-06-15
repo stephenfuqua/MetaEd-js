@@ -1,5 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building domain entity should have a domain entity level source map with correct line, column, length date 1`] = `
+DomainEntitySourceMap {
+  "allowPrimaryKeyUpdates": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "allow primary key updates",
+  },
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "metaEdId": Object {
+    "column": 27,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain Entity",
+  },
+}
+`;
+
+exports[`when building domain entity should have a namespaceInfo level source map with correct line, column, length date 1`] = `
+Object {
+  "column": 0,
+  "line": 1,
+  "tokenText": "Begin Namespace",
+}
+`;
+
 exports[`when building domain entity with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 15, token: TrailingText",
