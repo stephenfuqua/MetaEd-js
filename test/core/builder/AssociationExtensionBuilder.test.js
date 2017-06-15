@@ -1,11 +1,11 @@
 // @noflow
 import AssociationExtensionBuilder from '../../../src/core/builder/AssociationExtensionBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building association extension in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -13,7 +13,7 @@ describe('when building association extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(repository);
+    const builder = new AssociationExtensionBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -25,32 +25,32 @@ describe('when building association extension in extension namespace', () => {
   });
 
   it('should build one association extension', () => {
-    expect(repository.associationExtension.size).toBe(1);
+    expect(entityRepository.associationExtension.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.associationExtension.get(entityName)).toBeDefined();
-    expect(repository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
+    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have extendee name', () => {
-    expect(repository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have one property', () => {
-    expect(repository.associationExtension.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = repository.associationExtension.get(entityName).properties[0];
+    const integerProperty = entityRepository.associationExtension.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -59,7 +59,7 @@ describe('when building association extension in extension namespace', () => {
 });
 
 describe('when building association extension with missing association extension name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -68,7 +68,7 @@ describe('when building association extension with missing association extension
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(repository);
+    const builder = new AssociationExtensionBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -85,7 +85,7 @@ describe('when building association extension with missing association extension
 });
 
 describe('when building association extension with lowercase association extension name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -94,7 +94,7 @@ describe('when building association extension with lowercase association extensi
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(repository);
+    const builder = new AssociationExtensionBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -111,7 +111,7 @@ describe('when building association extension with lowercase association extensi
 });
 
 describe('when building association extension with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -119,7 +119,7 @@ describe('when building association extension with missing property', () => {
   const entityName: string = 'EntityName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(repository);
+    const builder = new AssociationExtensionBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -135,7 +135,7 @@ describe('when building association extension with missing property', () => {
 });
 
 describe('when building association extension with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -145,7 +145,7 @@ describe('when building association extension with invalid trailing text', () =>
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(repository);
+    const builder = new AssociationExtensionBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

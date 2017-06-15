@@ -1,11 +1,11 @@
 // @noflow
 import EnumerationBuilder from '../../../src/core/builder/EnumerationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building single enumeration', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -17,7 +17,7 @@ describe('when building single enumeration', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -30,53 +30,53 @@ describe('when building single enumeration', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(repository.enumeration.size).toBe(1);
+    expect(entityRepository.enumeration.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.enumeration.get(entityName)).toBeDefined();
-    expect(repository.enumeration.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.enumeration.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct documentation', () => {
-    expect(repository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(repository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
+    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with correct short description', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with correct documentation', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with correct metaEdId ', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 });
 
 describe('when building enumeration without item documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -85,7 +85,7 @@ describe('when building enumeration without item documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -98,20 +98,20 @@ describe('when building enumeration without item documentation', () => {
   });
 
   it('should have correct documentation', () => {
-    expect(repository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have enumeration item with correct short description', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with no documentation', () => {
-    expect(repository.enumeration.get(entityName).enumerationItems[0].documentation).toBe('');
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe('');
   });
 });
 
 describe('when building multiple enumerations', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -121,7 +121,7 @@ describe('when building multiple enumerations', () => {
   const metaEdId2: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -139,25 +139,25 @@ describe('when building multiple enumerations', () => {
   });
 
   it('should build two enumerations', () => {
-    expect(repository.enumeration.size).toBe(2);
+    expect(entityRepository.enumeration.size).toBe(2);
   });
 
-  it('should both be found in repository', () => {
-    expect(repository.enumeration.get(entityName1)).toBeDefined();
-    expect(repository.enumeration.get(entityName1).metaEdName).toBe(entityName1);
+  it('should both be found in entityRepository', () => {
+    expect(entityRepository.enumeration.get(entityName1)).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName1).metaEdName).toBe(entityName1);
 
-    expect(repository.enumeration.get(entityName2)).toBeDefined();
-    expect(repository.enumeration.get(entityName2).metaEdName).toBe(entityName2);
+    expect(entityRepository.enumeration.get(entityName2)).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName2).metaEdName).toBe(entityName2);
   });
 
   it('should both have correct metaEdIds', () => {
-    expect(repository.enumeration.get(entityName1).metaEdId).toBe(metaEdId1);
-    expect(repository.enumeration.get(entityName2).metaEdId).toBe(metaEdId2);
+    expect(entityRepository.enumeration.get(entityName1).metaEdId).toBe(metaEdId1);
+    expect(entityRepository.enumeration.get(entityName2).metaEdId).toBe(metaEdId2);
   });
 });
 
 describe('when building enumeration with missing enumeration name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -167,7 +167,7 @@ describe('when building enumeration with missing enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -185,7 +185,7 @@ describe('when building enumeration with missing enumeration name', () => {
 });
 
 describe('when building enumeration with lowercase enumeration name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -195,7 +195,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -213,7 +213,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
 });
 
 describe('when building enumeration with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -222,7 +222,7 @@ describe('when building enumeration with missing documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -239,7 +239,7 @@ describe('when building enumeration with missing documentation', () => {
 });
 
 describe('when building enumeration with missing enumeration item', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -248,7 +248,7 @@ describe('when building enumeration with missing enumeration item', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -265,7 +265,7 @@ describe('when building enumeration with missing enumeration item', () => {
 });
 
 describe('when building enumeration with empty enumeration item description', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -275,7 +275,7 @@ describe('when building enumeration with empty enumeration item description', ()
   const itemShortDescription: string = '';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -293,7 +293,7 @@ describe('when building enumeration with empty enumeration item description', ()
 });
 
 describe('when building enumeration with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -304,7 +304,7 @@ describe('when building enumeration with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(repository);
+    const builder = new EnumerationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

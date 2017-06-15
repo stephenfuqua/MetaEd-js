@@ -1,11 +1,11 @@
 // @noflow
 import ChoiceBuilder from '../../../src/core/builder/ChoiceBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building choice in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -17,7 +17,7 @@ describe('when building choice in extension namespace', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -30,36 +30,36 @@ describe('when building choice in extension namespace', () => {
   });
 
   it('should build one choice', () => {
-    expect(repository.choice.size).toBe(1);
+    expect(entityRepository.choice.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.choice.get(entityName)).toBeDefined();
-    expect(repository.choice.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.choice.get(entityName)).toBeDefined();
+    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(entityRepository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct entity documentation', () => {
-    expect(repository.choice.get(entityName).documentation).toBe(entityDocumentation);
+    expect(entityRepository.choice.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(repository.choice.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.choice.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = repository.choice.get(entityName).properties[0];
+    const property = entityRepository.choice.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -70,7 +70,7 @@ describe('when building choice in extension namespace', () => {
 });
 
 describe('when building choice with missing choice name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -83,7 +83,7 @@ describe('when building choice with missing choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -101,7 +101,7 @@ describe('when building choice with missing choice name', () => {
 });
 
 describe('when building choice with lowercase choice name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -114,7 +114,7 @@ describe('when building choice with lowercase choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -132,7 +132,7 @@ describe('when building choice with lowercase choice name', () => {
 });
 
 describe('when building choice with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -144,7 +144,7 @@ describe('when building choice with missing documentation', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -161,7 +161,7 @@ describe('when building choice with missing documentation', () => {
 });
 
 describe('when building choice with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -171,7 +171,7 @@ describe('when building choice with missing property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -188,7 +188,7 @@ describe('when building choice with missing property', () => {
 });
 
 describe('when building choice with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -202,7 +202,7 @@ describe('when building choice with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(repository);
+    const builder = new ChoiceBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

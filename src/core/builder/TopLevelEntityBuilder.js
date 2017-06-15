@@ -7,7 +7,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty } from '../model/property/EntityProperty';
 import { MergedProperty, defaultMergedProperty } from '../model/property/MergedProperty';
 import { TopLevelEntity } from '../model/TopLevelEntity';
-import { Repository } from '../model/Repository';
+import type { EntityRepository } from '../model/Repository';
 import { NamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 
 import { isSharedProperty } from '../model/property/PropertyType';
@@ -48,10 +48,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   currentMergedProperty: ?MergedProperty;
   whenExitingProperty: Array<() => void>;
 
-  repository: Repository;
+  repository: EntityRepository;
   namespaceInfo: ?NamespaceInfo;
 
-  constructor(repository: Repository) {
+  constructor(repository: EntityRepository) {
     super();
     this.repository = repository;
     this.whenExitingProperty = [];

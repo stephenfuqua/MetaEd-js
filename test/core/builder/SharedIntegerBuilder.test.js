@@ -1,11 +1,11 @@
 // @noflow
 import SharedIntegerBuilder from '../../../src/core/builder/SharedIntegerBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building shared integer in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -16,7 +16,7 @@ describe('when building shared integer in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
@@ -28,45 +28,45 @@ describe('when building shared integer in extension namespace', () => {
   });
 
   it('should build one shared integer', () => {
-    expect(repository.sharedInteger.size).toBe(1);
+    expect(entityRepository.sharedInteger.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.sharedInteger.get(entityName)).toBeDefined();
-    expect(repository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.sharedInteger.get(entityName)).toBeDefined();
+    expect(entityRepository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.sharedInteger.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.sharedInteger.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.sharedInteger.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.sharedInteger.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(repository.sharedInteger.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.sharedInteger.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(repository.sharedInteger.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.sharedInteger.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have minValue', () => {
-    expect(repository.sharedInteger.get(entityName).minValue).toBe(minValue);
+    expect(entityRepository.sharedInteger.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(repository.sharedInteger.get(entityName).maxValue).toBe(maxValue);
+    expect(entityRepository.sharedInteger.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should not be a short', () => {
-    expect(repository.sharedInteger.get(entityName).isShort).toBe(false);
+    expect(entityRepository.sharedInteger.get(entityName).isShort).toBe(false);
   });
 });
 
 describe('when building shared short in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -77,7 +77,7 @@ describe('when building shared short in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
@@ -89,46 +89,46 @@ describe('when building shared short in extension namespace', () => {
   });
 
   it('should build one shared short', () => {
-    expect(repository.sharedInteger.size).toBe(1);
+    expect(entityRepository.sharedInteger.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.sharedInteger.get(entityName)).toBeDefined();
-    expect(repository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.sharedInteger.get(entityName)).toBeDefined();
+    expect(entityRepository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.sharedInteger.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.sharedInteger.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.sharedInteger.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.sharedInteger.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(repository.sharedInteger.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.sharedInteger.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(repository.sharedInteger.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.sharedInteger.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have minValue', () => {
-    expect(repository.sharedInteger.get(entityName).minValue).toBe(minValue);
+    expect(entityRepository.sharedInteger.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(repository.sharedInteger.get(entityName).maxValue).toBe(maxValue);
+    expect(entityRepository.sharedInteger.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should be a short', () => {
-    expect(repository.sharedInteger.get(entityName).isShort).toBe(true);
+    expect(entityRepository.sharedInteger.get(entityName).isShort).toBe(true);
   });
 });
 
 
 describe('when building shared integer with missing shared integer name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -140,7 +140,7 @@ describe('when building shared integer with missing shared integer name', () => 
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -158,7 +158,7 @@ describe('when building shared integer with missing shared integer name', () => 
 });
 
 describe('when building shared integer with lowercase shared integer name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -170,7 +170,7 @@ describe('when building shared integer with lowercase shared integer name', () =
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -188,7 +188,7 @@ describe('when building shared integer with lowercase shared integer name', () =
 });
 
 describe('when building shared integer with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -199,7 +199,7 @@ describe('when building shared integer with missing documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -216,7 +216,7 @@ describe('when building shared integer with missing documentation', () => {
 });
 
 describe('when building shared integer with missing min value', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -228,7 +228,7 @@ describe('when building shared integer with missing min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -246,7 +246,7 @@ describe('when building shared integer with missing min value', () => {
 });
 
 describe('when building shared integer with missing max value', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -258,7 +258,7 @@ describe('when building shared integer with missing max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -276,7 +276,7 @@ describe('when building shared integer with missing max value', () => {
 });
 
 describe('when building shared integer with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -289,7 +289,7 @@ describe('when building shared integer with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -308,7 +308,7 @@ describe('when building shared integer with invalid trailing text', () => {
 });
 
 describe('when building shared short with missing shared short name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -320,7 +320,7 @@ describe('when building shared short with missing shared short name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -338,7 +338,7 @@ describe('when building shared short with missing shared short name', () => {
 });
 
 describe('when building shared short with lowercase shared short name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -350,7 +350,7 @@ describe('when building shared short with lowercase shared short name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -368,7 +368,7 @@ describe('when building shared short with lowercase shared short name', () => {
 });
 
 describe('when building shared short with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -379,7 +379,7 @@ describe('when building shared short with missing documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -396,7 +396,7 @@ describe('when building shared short with missing documentation', () => {
 });
 
 describe('when building shared short with missing min value', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -408,7 +408,7 @@ describe('when building shared short with missing min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -426,7 +426,7 @@ describe('when building shared short with missing min value', () => {
 });
 
 describe('when building shared short with missing max value', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -438,7 +438,7 @@ describe('when building shared short with missing max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -456,7 +456,7 @@ describe('when building shared short with missing max value', () => {
 });
 
 describe('when building shared short with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -469,7 +469,7 @@ describe('when building shared short with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(repository);
+    const builder = new SharedIntegerBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

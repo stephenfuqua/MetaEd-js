@@ -1,11 +1,11 @@
 // @noflow
 import AssociationBuilder from '../../../src/core/builder/AssociationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building association in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -20,7 +20,7 @@ describe('when building association in extension namespace', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -34,35 +34,35 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should build one association', () => {
-    expect(repository.association.size).toBe(1);
+    expect(entityRepository.association.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.association.get(entityName)).toBeDefined();
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
   });
 
   it('should have correct namespace', () => {
-    expect(repository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct association documentation', () => {
-    expect(repository.association.get(entityName).documentation).toBe(documentation1);
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
   });
 
   it('should have two properties', () => {
-    expect(repository.association.get(entityName).properties).toHaveLength(2);
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
   });
 
   it('should have first domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -71,7 +71,7 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should have first domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -80,7 +80,7 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should have second domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -89,7 +89,7 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should have second domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -99,7 +99,7 @@ describe('when building association in extension namespace', () => {
 });
 
 describe('when building association without extension', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -113,7 +113,7 @@ describe('when building association without extension', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -127,36 +127,36 @@ describe('when building association without extension', () => {
   });
 
   it('should build one association', () => {
-    expect(repository.association.size).toBe(1);
+    expect(entityRepository.association.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.association.get(entityName)).toBeDefined();
-    expect(repository.association.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+    expect(entityRepository.association.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have no project extension', () => {
-    expect(repository.association.get(entityName).namespaceInfo.projectExtension).toBe('');
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe('');
   });
 
   it('should have correct association documentation', () => {
-    expect(repository.association.get(entityName).documentation).toBe(documentation1);
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
   });
 
   it('should have two properties', () => {
-    expect(repository.association.get(entityName).properties).toHaveLength(2);
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
   });
 
   it('should have first domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -165,7 +165,7 @@ describe('when building association without extension', () => {
   });
 
   it('should have first domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -174,7 +174,7 @@ describe('when building association without extension', () => {
   });
 
   it('should have second domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -183,7 +183,7 @@ describe('when building association without extension', () => {
   });
 
   it('should have second domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -194,7 +194,7 @@ describe('when building association without extension', () => {
 
 
 describe('when building association with additional identity property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -204,7 +204,7 @@ describe('when building association with additional identity property', () => {
 
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -219,11 +219,11 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have three properties', () => {
-    expect(repository.association.get(entityName).properties).toHaveLength(3);
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(3);
   });
 
   it('should have first domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -231,7 +231,7 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have first domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[0];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
 
     expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -239,7 +239,7 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have second domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -247,7 +247,7 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have second domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[1];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
 
     expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -255,7 +255,7 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have other domain entity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).properties[2];
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -263,7 +263,7 @@ describe('when building association with additional identity property', () => {
   });
 
   it('should have other domain entity property as identity property', () => {
-    const domainEntityProperty = repository.association.get(entityName).identityProperties[2];
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[2];
 
     expect(domainEntityProperty.metaEdName).toBe(identityProperty);
     expect(domainEntityProperty.type).toBe('domainEntity');
@@ -272,7 +272,7 @@ describe('when building association with additional identity property', () => {
 });
 
 describe('when building association with missing association name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -288,7 +288,7 @@ describe('when building association with missing association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -307,7 +307,7 @@ describe('when building association with missing association name', () => {
 });
 
 describe('when building association with lowercase association name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -323,7 +323,7 @@ describe('when building association with lowercase association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -342,7 +342,7 @@ describe('when building association with lowercase association name', () => {
 });
 
 describe('when building association with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -357,7 +357,7 @@ describe('when building association with missing documentation', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -375,7 +375,7 @@ describe('when building association with missing documentation', () => {
 });
 
 describe('when building association with missing domain entity property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -388,7 +388,7 @@ describe('when building association with missing domain entity property', () => 
   const documentation2: string = 'documentation2';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -409,7 +409,7 @@ describe('when building association with missing domain entity property', () => 
 });
 
 describe('when building association with missing documentation in the first domain entity', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -424,7 +424,7 @@ describe('when building association with missing documentation in the first doma
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -445,7 +445,7 @@ describe('when building association with missing documentation in the first doma
 });
 
 describe('when building association with missing documentation in the second domain entity', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -460,7 +460,7 @@ describe('when building association with missing documentation in the second dom
   const secondDomainEntityMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -481,7 +481,7 @@ describe('when building association with missing documentation in the second dom
 });
 
 describe('when building association with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -498,7 +498,7 @@ describe('when building association with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(repository);
+    const builder = new AssociationBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

@@ -1,11 +1,11 @@
 // @noflow
 import DomainEntitySubclassBuilder from '../../../src/core/builder/DomainEntitySubclassBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building domain entity subclass in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -16,7 +16,7 @@ describe('when building domain entity subclass in extension namespace', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -29,32 +29,32 @@ describe('when building domain entity subclass in extension namespace', () => {
   });
 
   it('should build one domain entity subclass', () => {
-    expect(repository.domainEntitySubclass.size).toBe(1);
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.domainEntitySubclass.get(entityName)).toBeDefined();
-    expect(repository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct base name', () => {
-    expect(repository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
   });
 
   it('should have one property', () => {
-    expect(repository.domainEntitySubclass.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = repository.domainEntitySubclass.get(entityName).properties[0];
+    const integerProperty = entityRepository.domainEntitySubclass.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -63,7 +63,7 @@ describe('when building domain entity subclass in extension namespace', () => {
 });
 
 describe('when building domain entity subclass with missing domain entity subclass name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -75,7 +75,7 @@ describe('when building domain entity subclass with missing domain entity subcla
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -93,7 +93,7 @@ describe('when building domain entity subclass with missing domain entity subcla
 });
 
 describe('when building domain entity subclass with lowercase domain entity subclass name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -105,7 +105,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -123,7 +123,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
 });
 
 describe('when building domain entity subclass with lowercase based on name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -135,7 +135,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -153,7 +153,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
 });
 
 describe('when building domain entity subclass with missing based on name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -165,7 +165,7 @@ describe('when building domain entity subclass with missing based on name', () =
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -183,7 +183,7 @@ describe('when building domain entity subclass with missing based on name', () =
 });
 
 describe('when building domain entity subclass with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -194,7 +194,7 @@ describe('when building domain entity subclass with missing documentation', () =
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -211,7 +211,7 @@ describe('when building domain entity subclass with missing documentation', () =
 });
 
 describe('when building domain entity subclass with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -221,7 +221,7 @@ describe('when building domain entity subclass with missing property', () => {
   const Documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -238,7 +238,7 @@ describe('when building domain entity subclass with missing property', () => {
 });
 
 describe('when building domain entity subclass with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -251,7 +251,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(repository);
+    const builder = new DomainEntitySubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

@@ -1,11 +1,11 @@
 // @noflow
 import AssociationSubclassBuilder from '../../../src/core/builder/AssociationSubclassBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building association subclass in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -14,7 +14,7 @@ describe('when building association subclass in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -27,32 +27,32 @@ describe('when building association subclass in extension namespace', () => {
   });
 
   it('should build one association subclass', () => {
-    expect(repository.associationSubclass.size).toBe(1);
+    expect(entityRepository.associationSubclass.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.associationSubclass.get(entityName)).toBeDefined();
-    expect(repository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct base name', () => {
-    expect(repository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
   });
 
   it('should have one property', () => {
-    expect(repository.associationSubclass.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = repository.associationSubclass.get(entityName).properties[0];
+    const integerProperty = entityRepository.associationSubclass.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -61,7 +61,7 @@ describe('when building association subclass in extension namespace', () => {
 });
 
 describe('when building association subclass with missing association subclass name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -71,7 +71,7 @@ describe('when building association subclass with missing association subclass n
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -89,7 +89,7 @@ describe('when building association subclass with missing association subclass n
 });
 
 describe('when building association subclass with lowercase association subclass name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -99,7 +99,7 @@ describe('when building association subclass with lowercase association subclass
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -117,7 +117,7 @@ describe('when building association subclass with lowercase association subclass
 });
 
 describe('when building association subclass with missing based on name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -127,7 +127,7 @@ describe('when building association subclass with missing based on name', () => 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -145,7 +145,7 @@ describe('when building association subclass with missing based on name', () => 
 });
 
 describe('when building association subclass with lowercase based on name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -155,7 +155,7 @@ describe('when building association subclass with lowercase based on name', () =
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -173,7 +173,7 @@ describe('when building association subclass with lowercase based on name', () =
 });
 
 describe('when building association subclass with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -183,7 +183,7 @@ describe('when building association subclass with missing documentation', () => 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -200,7 +200,7 @@ describe('when building association subclass with missing documentation', () => 
 });
 
 describe('when building association subclass with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -209,7 +209,7 @@ describe('when building association subclass with missing property', () => {
   const baseEntityName: string = 'BaseEntityName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -225,7 +225,7 @@ describe('when building association subclass with missing property', () => {
 });
 
 describe('when building association subclass with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -236,7 +236,7 @@ describe('when building association subclass with invalid trailing text', () => 
   const trailingText: string = 'TrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(repository);
+    const builder = new AssociationSubclassBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

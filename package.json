@@ -1,7 +1,7 @@
 {
   "name": "metaed-js",
   "main": "dist/index.js",
-  "version": "1.0.0-experimental",
+  "version": "1.1.0-dev",
   "description": "MetaEd for JavaScript",
   "license": "private",
   "publishConfig": {
@@ -49,20 +49,18 @@
       }
     }
   },
-  "quokka": {
-    "babel": true
-  },
   "scripts": {
     "test": "jest",
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:watch": "jest --watch",
     "build": "rimraf dist/ && babel src -d dist --source-maps",
-    "lint": "yarn run flow && yarn run eslint && yarn run eslint:tests",
     "flow": "flow check",
     "eslint": "eslint src",
     "eslint:tests": "eslint test && eslint test-integration",
-    "release:version-dev": "standard-version --prerelease dev",
+    "lint": "npm run flow && npm run eslint && npm run eslint:tests",
+    "lint-test": "npm run lint && npm test",
+    "release:version-dev": "npm run build && npm run lint-test && standard-version --prerelease dev",
     "release:push-tags": "git push --follow-tags",
-    "release:publish-dev": "yarn run build && yarn test && yarn run lint && yarn run release:push-tags && npm publish --tag=dev"
+    "release:publish-dev": "npm run release:push-tags && npm publish --tag=dev"
   }
 }

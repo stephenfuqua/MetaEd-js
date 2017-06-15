@@ -1,11 +1,11 @@
 // @noflow
 import CommonBuilder from '../../../src/core/builder/CommonBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building common in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -17,7 +17,7 @@ describe('when building common in extension namespace', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -30,40 +30,40 @@ describe('when building common in extension namespace', () => {
   });
 
   it('should build one common', () => {
-    expect(repository.common.size).toBe(1);
+    expect(entityRepository.common.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.common.get(entityName)).toBeDefined();
-    expect(repository.common.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should not be inlined in ODS', () => {
-    expect(repository.common.get(entityName).inlineInOds).toBe(false);
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(false);
   });
 
   it('should have correct entity documentation', () => {
-    expect(repository.common.get(entityName).documentation).toBe(entityDocumentation);
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(repository.common.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = repository.common.get(entityName).properties[0];
+    const property = entityRepository.common.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -74,7 +74,7 @@ describe('when building common in extension namespace', () => {
 });
 
 describe('when building inline common in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -87,7 +87,7 @@ describe('when building inline common in extension namespace', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -100,40 +100,40 @@ describe('when building inline common in extension namespace', () => {
   });
 
   it('should build one common', () => {
-    expect(repository.common.size).toBe(1);
+    expect(entityRepository.common.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.common.get(entityName)).toBeDefined();
-    expect(repository.common.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
-    expect(repository.common.get(entityName).inlineInOds).toBe(true);
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(true);
   });
 
   it('should have correct entity documentation', () => {
-    expect(repository.common.get(entityName).documentation).toBe(entityDocumentation);
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(repository.common.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = repository.common.get(entityName).properties[0];
+    const property = entityRepository.common.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -144,7 +144,7 @@ describe('when building inline common in extension namespace', () => {
 });
 
 describe('when building common with missing common name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -158,7 +158,7 @@ describe('when building common with missing common name', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -176,7 +176,7 @@ describe('when building common with missing common name', () => {
 });
 
 describe('when building common with lowercase common name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -190,7 +190,7 @@ describe('when building common with lowercase common name', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -208,7 +208,7 @@ describe('when building common with lowercase common name', () => {
 });
 
 describe('when building common with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -221,7 +221,7 @@ describe('when building common with missing documentation', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -238,7 +238,7 @@ describe('when building common with missing documentation', () => {
 });
 
 describe('when building common with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -248,7 +248,7 @@ describe('when building common with missing property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -265,7 +265,7 @@ describe('when building common with missing property', () => {
 });
 
 describe('when building common with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -279,7 +279,7 @@ describe('when building common with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -298,7 +298,7 @@ describe('when building common with invalid trailing text', () => {
 });
 
 describe('when building inline common with missing inline common name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -311,7 +311,7 @@ describe('when building inline common with missing inline common name', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -329,7 +329,7 @@ describe('when building inline common with missing inline common name', () => {
 });
 
 describe('when building inline common with lowercase inline common name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -342,7 +342,7 @@ describe('when building inline common with lowercase inline common name', () => 
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -360,7 +360,7 @@ describe('when building inline common with lowercase inline common name', () => 
 });
 
 describe('when building inline common with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -373,7 +373,7 @@ describe('when building inline common with missing documentation', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -390,7 +390,7 @@ describe('when building inline common with missing documentation', () => {
 });
 
 describe('when building inline common with missing property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -400,7 +400,7 @@ describe('when building inline common with missing property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -417,7 +417,7 @@ describe('when building inline common with missing property', () => {
 });
 
 describe('when building inline common with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -431,7 +431,7 @@ describe('when building inline common with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(repository);
+    const builder = new CommonBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

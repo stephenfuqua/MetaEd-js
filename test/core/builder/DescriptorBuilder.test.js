@@ -1,11 +1,11 @@
 // @noflow
 import DescriptorBuilder from '../../../src/core/builder/DescriptorBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building descriptor without map type', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -15,7 +15,7 @@ describe('when building descriptor without map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -28,48 +28,48 @@ describe('when building descriptor without map type', () => {
   });
 
   it('should build one descriptor', () => {
-    expect(repository.descriptor.size).toBe(1);
+    expect(entityRepository.descriptor.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.descriptor.get(entityName)).toBeDefined();
-    expect(repository.descriptor.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.descriptor.get(entityName)).toBeDefined();
+    expect(entityRepository.descriptor.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct documentation', () => {
-    expect(repository.descriptor.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.descriptor.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have one property', () => {
-    expect(repository.descriptor.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.descriptor.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    expect(repository.descriptor.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(repository.descriptor.get(entityName).properties[0].type).toBe('integer');
+    expect(entityRepository.descriptor.get(entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(entityRepository.descriptor.get(entityName).properties[0].type).toBe('integer');
   });
 
   it('should not have map type enumeration', () => {
-    expect(repository.descriptor.get(entityName).isMapTypeOptional).toBe(false);
-    expect(repository.descriptor.get(entityName).isMapTypeRequired).toBe(false);
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(0);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeOptional).toBe(false);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeRequired).toBe(false);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(0);
   });
 });
 
 describe('when building descriptor with optional map type', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -82,7 +82,7 @@ describe('when building descriptor with optional map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -98,70 +98,70 @@ describe('when building descriptor with optional map type', () => {
   });
 
   it('should build one descriptor', () => {
-    expect(repository.descriptor.size).toBe(1);
+    expect(entityRepository.descriptor.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.descriptor.get(entityName)).toBeDefined();
-    expect(repository.descriptor.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.descriptor.get(entityName)).toBeDefined();
+    expect(entityRepository.descriptor.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct documentation', () => {
-    expect(repository.descriptor.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.descriptor.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(repository.descriptor.get(entityName).properties).toHaveLength(0);
+    expect(entityRepository.descriptor.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have optional map type enumeration', () => {
-    expect(repository.descriptor.get(entityName).isMapTypeOptional).toBe(true);
-    expect(repository.descriptor.get(entityName).isMapTypeRequired).toBe(false);
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).not.toHaveLength(0);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeOptional).toBe(true);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeRequired).toBe(false);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).not.toHaveLength(0);
   });
 
-  it('should have map type enumeration in repository', () => {
-    expect(repository.mapTypeEnumeration.size).toBe(1);
-    expect(repository.mapTypeEnumeration.get(`${entityName}Map`)).toBeDefined();
-    expect(repository.mapTypeEnumeration.get(`${entityName}Map`).metaEdName).toBe(`${entityName}Map`);
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.metaEdName).toBe(`${entityName}Map`);
+  it('should have map type enumeration in entityRepository', () => {
+    expect(entityRepository.mapTypeEnumeration.size).toBe(1);
+    expect(entityRepository.mapTypeEnumeration.get(`${entityName}Map`)).toBeDefined();
+    expect(entityRepository.mapTypeEnumeration.get(`${entityName}Map`).metaEdName).toBe(`${entityName}Map`);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.metaEdName).toBe(`${entityName}Map`);
   });
 
   it('should have correct map type enumeration documentation', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.documentation).toBe(mapTypeDocumentation);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.documentation).toBe(mapTypeDocumentation);
   });
 
   it('should have map type enumeration with one enumeration item', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(1);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with correct short description', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with correct documentation', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with correct metaEdId ', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 });
 
 describe('when building descriptor with required map type', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -174,7 +174,7 @@ describe('when building descriptor with required map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -190,70 +190,70 @@ describe('when building descriptor with required map type', () => {
   });
 
   it('should build one descriptor', () => {
-    expect(repository.descriptor.size).toBe(1);
+    expect(entityRepository.descriptor.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.descriptor.get(entityName)).toBeDefined();
-    expect(repository.descriptor.get(entityName).metaEdName).toBe(entityName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.descriptor.get(entityName)).toBeDefined();
+    expect(entityRepository.descriptor.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
+    expect(entityRepository.descriptor.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.descriptor.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have correct documentation', () => {
-    expect(repository.descriptor.get(entityName).documentation).toBe(documentation);
+    expect(entityRepository.descriptor.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(repository.descriptor.get(entityName).properties).toHaveLength(0);
+    expect(entityRepository.descriptor.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have required map type enumeration', () => {
-    expect(repository.descriptor.get(entityName).isMapTypeOptional).toBe(false);
-    expect(repository.descriptor.get(entityName).isMapTypeRequired).toBe(true);
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).not.toHaveLength(0);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeOptional).toBe(false);
+    expect(entityRepository.descriptor.get(entityName).isMapTypeRequired).toBe(true);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).not.toHaveLength(0);
   });
 
-  it('should have map type enumeration in repository', () => {
-    expect(repository.mapTypeEnumeration.size).toBe(1);
-    expect(repository.mapTypeEnumeration.get(`${entityName}Map`)).toBeDefined();
-    expect(repository.mapTypeEnumeration.get(`${entityName}Map`).metaEdName).toBe(`${entityName}Map`);
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.metaEdName).toBe(`${entityName}Map`);
+  it('should have map type enumeration in entityRepository', () => {
+    expect(entityRepository.mapTypeEnumeration.size).toBe(1);
+    expect(entityRepository.mapTypeEnumeration.get(`${entityName}Map`)).toBeDefined();
+    expect(entityRepository.mapTypeEnumeration.get(`${entityName}Map`).metaEdName).toBe(`${entityName}Map`);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.metaEdName).toBe(`${entityName}Map`);
   });
 
   it('should have correct map type enumeration documentation', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.documentation).toBe(mapTypeDocumentation);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.documentation).toBe(mapTypeDocumentation);
   });
 
   it('should have map type enumeration with one enumeration item', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(1);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with correct short description', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with correct documentation', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with correct metaEdId ', () => {
-    expect(repository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(entityRepository.descriptor.get(entityName).mapTypeEnumeration.enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 });
 
 describe('when building descriptor with missing descriptor name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -263,7 +263,7 @@ describe('when building descriptor with missing descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -280,7 +280,7 @@ describe('when building descriptor with missing descriptor name', () => {
 });
 
 describe('when building descriptor with lowercase descriptor name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -290,7 +290,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -307,7 +307,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
 });
 
 describe('when building descriptor with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -316,7 +316,7 @@ describe('when building descriptor with missing documentation', () => {
   const metaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -332,7 +332,7 @@ describe('when building descriptor with missing documentation', () => {
 });
 
 describe('when building descriptor with missing documentation in map type', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -345,7 +345,7 @@ describe('when building descriptor with missing documentation in map type', () =
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -365,7 +365,7 @@ describe('when building descriptor with missing documentation in map type', () =
 });
 
 describe('when building descriptor with missing enumeration item in map type', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -376,7 +376,7 @@ describe('when building descriptor with missing enumeration item in map type', (
   const mapTypeDocumentation: string = 'MapTypeDocumentation';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -396,7 +396,7 @@ describe('when building descriptor with missing enumeration item in map type', (
 });
 
 describe('when building descriptor with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -407,7 +407,7 @@ describe('when building descriptor with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(repository);
+    const builder = new DescriptorBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

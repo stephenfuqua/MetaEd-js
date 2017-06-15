@@ -18,7 +18,7 @@ import type { SharedString } from './SharedString';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
 
-export class Repository {
+export class EntityRepository {
   association: Map<string, Association>;
   associationExtension: Map<string, AssociationExtension>;
   associationSubclass: Map<string, AssociationSubclass>;
@@ -41,8 +41,8 @@ export class Repository {
   subdomain: Map<string, Subdomain>;
 }
 
-export function repositoryFactory(): Repository {
-  return Object.assign(new Repository(), {
+export function entityRepositoryFactory(): EntityRepository {
+  return Object.assign(new EntityRepository(), {
     association: new Map(),
     associationExtension: new Map(),
     associationSubclass: new Map(),
@@ -63,5 +63,17 @@ export function repositoryFactory(): Repository {
     sharedInteger: new Map(),
     sharedString: new Map(),
     subdomain: new Map(),
+  });
+}
+
+export class Repository {
+  configuration: any;
+  entity: EntityRepository;
+}
+
+export function repositoryFactory(): Repository {
+  return Object.assign(new Repository(), {
+    configuration: null,
+    entity: entityRepositoryFactory(),
   });
 }

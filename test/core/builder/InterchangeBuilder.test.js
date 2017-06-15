@@ -1,11 +1,11 @@
 // @noflow
 import InterchangeBuilder from '../../../src/core/builder/InterchangeBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
+import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import type { EntityRepository } from '../../../src/core/model/Repository';
 
 describe('when building single interchange', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -20,7 +20,7 @@ describe('when building single interchange', () => {
   const interchangeIdentityTemplateMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -36,57 +36,57 @@ describe('when building single interchange', () => {
   });
 
   it('should build one interchange', () => {
-    expect(repository.interchange.size).toBe(1);
+    expect(entityRepository.interchange.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.interchange.get(interchangeName)).toBeDefined();
-    expect(repository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.interchange.get(interchangeName)).toBeDefined();
+    expect(entityRepository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.interchange.get(interchangeName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.interchange.get(interchangeName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.interchange.get(interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.interchange.get(interchangeName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.interchange.get(interchangeName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should not be an interchange extension', () => {
-    expect(repository.interchange.get(interchangeName).isExtension).toBe(false);
+    expect(entityRepository.interchange.get(interchangeName).isExtension).toBe(false);
   });
 
   it('should have correct interchange documentation', () => {
-    expect(repository.interchange.get(interchangeName).documentation).toBe(interchangeDocumentation);
+    expect(entityRepository.interchange.get(interchangeName).documentation).toBe(interchangeDocumentation);
   });
 
   it('should have correct extended documentation', () => {
-    expect(repository.interchange.get(interchangeName).extendedDocumentation).toBe(extendedDocumentation);
+    expect(entityRepository.interchange.get(interchangeName).extendedDocumentation).toBe(extendedDocumentation);
   });
 
   it('should have correct use case documentation', () => {
-    expect(repository.interchange.get(interchangeName).useCaseDocumentation).toBe(useCaseDocumentation);
+    expect(entityRepository.interchange.get(interchangeName).useCaseDocumentation).toBe(useCaseDocumentation);
   });
 
   it('should have one element', () => {
-    expect(repository.interchange.get(interchangeName).elements).toHaveLength(1);
-    expect(repository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(repository.interchange.get(interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).elements).toHaveLength(1);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have one identity template', () => {
-    expect(repository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
-    expect(repository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(repository.interchange.get(interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
   });
 });
 
 describe('when building single interchange extension', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -98,7 +98,7 @@ describe('when building single interchange extension', () => {
   const interchangeIdentityTemplateMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -111,45 +111,45 @@ describe('when building single interchange extension', () => {
   });
 
   it('should build one interchange', () => {
-    expect(repository.interchange.size).toBe(1);
+    expect(entityRepository.interchange.size).toBe(1);
   });
 
-  it('should be found in repository', () => {
-    expect(repository.interchange.get(interchangeName)).toBeDefined();
-    expect(repository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
+  it('should be found in entity repository', () => {
+    expect(entityRepository.interchange.get(interchangeName)).toBeDefined();
+    expect(entityRepository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have correct namespace', () => {
-    expect(repository.interchange.get(interchangeName).namespaceInfo.namespace).toBe(namespace);
+    expect(entityRepository.interchange.get(interchangeName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct metaEdId', () => {
-    expect(repository.interchange.get(interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have correct project extension', () => {
-    expect(repository.interchange.get(interchangeName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(entityRepository.interchange.get(interchangeName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should be an interchange extension', () => {
-    expect(repository.interchange.get(interchangeName).isExtension).toBe(true);
+    expect(entityRepository.interchange.get(interchangeName).isExtension).toBe(true);
   });
 
   it('should have one element', () => {
-    expect(repository.interchange.get(interchangeName).elements).toHaveLength(1);
-    expect(repository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(repository.interchange.get(interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).elements).toHaveLength(1);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have one identity template', () => {
-    expect(repository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
-    expect(repository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(repository.interchange.get(interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
   });
 });
 
 describe('when building interchange with missing interchange name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -161,7 +161,7 @@ describe('when building interchange with missing interchange name', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -179,7 +179,7 @@ describe('when building interchange with missing interchange name', () => {
 });
 
 describe('when building interchange with lowercase interchange name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -191,7 +191,7 @@ describe('when building interchange with lowercase interchange name', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -209,7 +209,7 @@ describe('when building interchange with lowercase interchange name', () => {
 });
 
 describe('when building interchange with missing documentation', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -220,7 +220,7 @@ describe('when building interchange with missing documentation', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -237,7 +237,7 @@ describe('when building interchange with missing documentation', () => {
 });
 
 describe('when building interchange with missing interchange component property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -247,7 +247,7 @@ describe('when building interchange with missing interchange component property'
   const interchangeDocumentation: string = 'InterchangeDocumentation';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -264,7 +264,7 @@ describe('when building interchange with missing interchange component property'
 });
 
 describe('when building interchange with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -277,7 +277,7 @@ describe('when building interchange with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -296,7 +296,7 @@ describe('when building interchange with invalid trailing text', () => {
 });
 
 describe('when building interchange extension with missing interchange extension name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -307,7 +307,7 @@ describe('when building interchange extension with missing interchange extension
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -324,7 +324,7 @@ describe('when building interchange extension with missing interchange extension
 });
 
 describe('when building interchange extension with lowercase interchange extension name', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -335,7 +335,7 @@ describe('when building interchange extension with lowercase interchange extensi
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -352,7 +352,7 @@ describe('when building interchange extension with lowercase interchange extensi
 });
 
 describe('when building interchange extension with missing element property', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -361,7 +361,7 @@ describe('when building interchange extension with missing element property', ()
   const interchangeMetaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -377,7 +377,7 @@ describe('when building interchange extension with missing element property', ()
 });
 
 describe('when building interchange extension with invalid trailing text', () => {
-  const repository: Repository = repositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -389,7 +389,7 @@ describe('when building interchange extension with invalid trailing text', () =>
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(repository);
+    const builder = new InterchangeBuilder(entityRepository);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

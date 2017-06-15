@@ -1,7 +1,7 @@
 // @flow
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
-import type { Repository } from '../model/Repository';
+import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { namespaceInfoFactory } from '../model/NamespaceInfo';
@@ -27,12 +27,12 @@ export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContex
 }
 
 export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
-  repository: Repository;
+  entityRepository: EntityRepository;
   namespaceInfo: ?NamespaceInfo;
 
-  constructor(repository: Repository) {
+  constructor(entityRepository: EntityRepository) {
     super();
-    this.repository = repository;
+    this.entityRepository = entityRepository;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -52,7 +52,7 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
   // eslint-disable-next-line no-unused-vars
   exitNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo == null) return;
-    this.repository.namespaceInfo.set(this.namespaceInfo.namespace, this.namespaceInfo);
+    this.entityRepository.namespaceInfo.set(this.namespaceInfo.namespace, this.namespaceInfo);
     this.namespaceInfo = null;
   }
 }
