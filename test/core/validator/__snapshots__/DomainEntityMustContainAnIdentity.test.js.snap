@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`message 1`] = `"Domain Entity EntityName does not have an identity specified."`;
+exports[`when validating domain entity with no identity fields -> message 1`] = `"Domain Entity EntityName does not have an identity specified."`;
 
-exports[`sourceMap 1`] = `
+exports[`when validating domain entity with no identity fields -> sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

@@ -1,6 +1,6 @@
 // @flow
-import { Repository } from '../model/Repository';
-import type { ValidationFailure } from './ValidationFailure';
+import { Repository } from '../../model/Repository';
+import type { ValidationFailure } from '../ValidationFailure';
 
 export function validate(repository: Repository): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

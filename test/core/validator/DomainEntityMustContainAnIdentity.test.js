@@ -3,7 +3,7 @@ import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { repositoryFactory } from '../../../src/core/model/Repository';
 import type { Repository } from '../../../src/core/model/Repository';
-import { validate } from '../../../src/core/validator/DomainEntityMustContainAnIdentity';
+import { validate } from '../../../src/core/validator/DomainEntity/DomainEntityMustContainAnIdentity';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity with identity fields', () => {
@@ -59,7 +59,7 @@ describe('when validating domain entity with no identity fields', () => {
     expect(failures.length).toBe(1);
     expect(failures[0].validatorName).toBe('DomainEntityMustContainAnIdentity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('message');
-    expect(failures[0].sourceMap).toMatchSnapshot('sourceMap');
+    expect(failures[0].message).toMatchSnapshot('when validating domain entity with no identity fields -> message');
+    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity with no identity fields -> sourceMap');
   });
 });
