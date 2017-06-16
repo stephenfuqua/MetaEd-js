@@ -89,6 +89,10 @@ describe('when building shared string with missing shared string name', () => {
   it('should have missing id error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
+
+  it('should not build a shared string', () => {
+    expect(entityRepository.sharedString.size).toBe(0);
+  });
 });
 
 describe('when building shared string with lowercase shared string name', () => {
@@ -119,6 +123,15 @@ describe('when building shared string with lowercase shared string name', () => 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
+
+  it('should build a shared string anyway', () => {
+    expect(entityRepository.sharedString.size).toBe(1);
+  });
+
+  it('should be found in entity repository but with lowercase prefix ignored', () => {
+    expect(entityRepository.sharedString.get('Name')).toBeDefined();
+    expect(entityRepository.sharedString.get('Name').metaEdName).toBe('Name');
+  });
 });
 
 describe('when building shared string with missing documentation', () => {
@@ -146,6 +159,30 @@ describe('when building shared string with missing documentation', () => {
 
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+
+  it('should have correct namespace', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have correct project extension', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have metaed id', () => {
+    expect(entityRepository.sharedString.get(entityName).metaEdId).toBe(metaEdId);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).documentation).toBe('');
+  });
+
+  it('should have min length', () => {
+    expect(entityRepository.sharedString.get(entityName).minLength).toBe(minLength);
+  });
+
+  it('should have max length', () => {
+    expect(entityRepository.sharedString.get(entityName).maxLength).toBe(maxLength);
   });
 });
 
@@ -177,6 +214,30 @@ describe('when building shared string with missing min length', () => {
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
+
+  it('should have correct namespace', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have correct project extension', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have metaed id', () => {
+    expect(entityRepository.sharedString.get(entityName).metaEdId).toBe(metaEdId);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have a min length because max length token was ignored', () => {
+    expect(entityRepository.sharedString.get(entityName).minLength).toBe(maxLength);
+  });
+
+  it('should have no max length', () => {
+    expect(entityRepository.sharedString.get(entityName).maxLength).toBe('');
+  });
 });
 
 describe('when building shared string with missing max length', () => {
@@ -206,6 +267,30 @@ describe('when building shared string with missing max length', () => {
 
   it('should have missing unsigned int error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+
+  it('should have correct namespace', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have correct project extension', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have metaed id', () => {
+    expect(entityRepository.sharedString.get(entityName).metaEdId).toBe(metaEdId);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have min length', () => {
+    expect(entityRepository.sharedString.get(entityName).minLength).toBe(minLength);
+  });
+
+  it('should have an empty max length', () => {
+    expect(entityRepository.sharedString.get(entityName).maxLength).toBe('');
   });
 });
 
@@ -238,5 +323,29 @@ describe('when building shared string with invalid trailing text', () => {
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+
+  it('should have correct namespace', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have correct project extension', () => {
+    expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have metaed id', () => {
+    expect(entityRepository.sharedString.get(entityName).metaEdId).toBe(metaEdId);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have min length', () => {
+    expect(entityRepository.sharedString.get(entityName).minLength).toBe(minLength);
+  });
+
+  it('should have max length', () => {
+    expect(entityRepository.sharedString.get(entityName).maxLength).toBe(maxLength);
   });
 });

@@ -9,7 +9,7 @@ import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { namespaceInfoFactory } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
-import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 
 export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   currentSharedSimple: ?SharedSimple;
@@ -50,8 +50,10 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
 
   exitingSharedSimple() {
     if (this.currentSharedSimple == null) return;
-    // $FlowIgnore - allowing currentSharedSimple.type to specify the repository Map property
-    this.repository[this.currentSharedSimple.type].set(this.currentSharedSimple.metaEdName, this.currentSharedSimple);
+    if (this.currentSharedSimple.metaEdName) {
+      // $FlowIgnore - allowing currentSharedSimple.type to specify the repository Map property
+      this.repository[this.currentSharedSimple.type].set(this.currentSharedSimple.metaEdName, this.currentSharedSimple);
+    }
     this.currentSharedSimple = null;
   }
 
@@ -68,11 +70,10 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
-
+    if (isErrorText(context.METAED_ID().getText())) return;
     if (this.currentSharedSimple != null) {
       // $FlowIgnore - already null guarded
       this.currentSharedSimple.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     }
   }
-
 }
