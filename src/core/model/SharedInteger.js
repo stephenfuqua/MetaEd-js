@@ -19,7 +19,7 @@ export class SharedInteger extends SharedSimple {
 export function sharedIntegerFactory(): SharedInteger {
   return Object.assign(new SharedInteger(), defaultSharedSimple(), {
     type: 'sharedInteger',
-    typeGroupHumanizedName: 'shared integer',
+    typeGroupHumanizedName: 'Shared Integer',
     isShort: false,
     minValue: '',
     maxValue: '',

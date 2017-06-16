@@ -17,7 +17,7 @@ export class Common extends TopLevelEntity {
 export function commonFactory(): Common {
   return Object.assign(new Common(), defaultTopLevelEntity(), {
     type: 'common',
-    typeGroupHumanizedName: 'common',
+    typeGroupHumanizedName: 'Common',
     extender: null,
     // belongs in artifact-specific once 'Inline Common' is replaced by heuristic
     inlineInOds: false,
@@ -28,7 +28,7 @@ export function commonFactory(): Common {
 export function inlineCommonFactory(): Common {
   return Object.assign(new Common(), defaultTopLevelEntity(), {
     type: 'common',
-    typeGroupHumanizedName: 'common',
+    typeGroupHumanizedName: 'Inline Common',
     extender: null,
     inlineInOds: true,
     sourceMap: new CommonSourceMap(),

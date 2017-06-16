@@ -10,7 +10,7 @@ export class Choice extends TopLevelEntity {
 export function choiceFactory(): Choice {
   return Object.assign(new Choice(), defaultTopLevelEntity(), {
     type: 'choice',
-    typeGroupHumanizedName: 'choice',
+    typeGroupHumanizedName: 'Choice',
     sourceMap: new ChoiceSourceMap(),
   });
 }

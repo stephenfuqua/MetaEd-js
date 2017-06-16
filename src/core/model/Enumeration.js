@@ -15,7 +15,7 @@ export class Enumeration extends TopLevelEntity {
 export function enumerationFactory(): Enumeration {
   return Object.assign(new Enumeration(), defaultTopLevelEntity(), {
     type: 'enumeration',
-    typeGroupHumanizedName: 'enumeration',
+    typeGroupHumanizedName: 'Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });
@@ -26,7 +26,7 @@ export class SchoolYearEnumeration extends Enumeration {}
 export function schoolYearEnumerationFactory(): SchoolYearEnumeration {
   return Object.assign(new SchoolYearEnumeration(), defaultTopLevelEntity(), {
     type: 'schoolYearEnumeration',
-    typeGroupHumanizedName: 'school year enumeration',
+    typeGroupHumanizedName: 'Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });
@@ -37,7 +37,7 @@ export class MapTypeEnumeration extends Enumeration {}
 export function mapTypeEnumerationFactory(): MapTypeEnumeration {
   return Object.assign(new MapTypeEnumeration(), defaultTopLevelEntity(), {
     type: 'mapTypeEnumeration',
-    typeGroupHumanizedName: 'enumeration map type',
+    typeGroupHumanizedName: 'Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });

@@ -1,10 +1,10 @@
 // @noflow
-import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../src/core/model/Repository';
-import type { Repository } from '../../../src/core/model/Repository';
-import { validate } from '../../../src/core/validator/DomainEntity/DomainEntityMustContainAnIdentity';
-import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
+import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../src/core/model/Repository';
+import type { Repository } from '../../../../src/core/model/Repository';
+import { validate } from '../../../../src/core/validator/DomainEntity/DomainEntityMustContainAnIdentity';
+import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity with identity fields', () => {
   const repository: Repository = repositoryFactory();

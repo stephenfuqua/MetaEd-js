@@ -10,7 +10,7 @@ export class DomainEntityExtension extends TopLevelEntity {
 export function domainEntityExtensionFactory(): DomainEntityExtension {
   return Object.assign(new DomainEntityExtension(), defaultTopLevelEntity(), {
     type: 'domainEntityExtension',
-    typeGroupHumanizedName: 'domain entity extension',
+    typeGroupHumanizedName: 'Domain Entity Extension',
     sourceMap: new DomainEntityExtensionSourceMap(),
   });
 }

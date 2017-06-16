@@ -1,11 +1,10 @@
 // @flow
 import { namespaceInfoFactory } from './NamespaceInfo';
 import { ModelBase } from './ModelBase';
-import type { ModelType } from './ModelType';
 import type { SourceMap } from './SourceMap';
 
 export class SharedSimpleSourceMap {
-  type: ?ModelType;
+  type: ?SourceMap;
   documentation: ?SourceMap;
   metaEdName: ?SourceMap;
   metaEdId: ?SourceMap;
