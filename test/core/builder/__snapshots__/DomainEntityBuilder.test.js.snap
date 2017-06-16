@@ -1,6 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building domain entity should have a domain entity level source map with correct line, column, length date 1`] = `
+exports[`when building domain entity namespace info source map should have correct line, column, text 1`] = `
+NamespaceInfoSourceMap {
+  "isExtension": Object {
+    "column": 26,
+    "line": 1,
+    "tokenText": "ProjectExtension",
+  },
+  "namespace": Object {
+    "column": 16,
+    "line": 1,
+    "tokenText": "namespace",
+  },
+  "projectExtension": Object {
+    "column": 26,
+    "line": 1,
+    "tokenText": "ProjectExtension",
+  },
+  "type": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+}
+`;
+
+exports[`when building domain entity source map should have correct line, column, text for each property 1`] = `
 DomainEntitySourceMap {
   "allowPrimaryKeyUpdates": Object {
     "column": 4,
@@ -27,14 +52,6 @@ DomainEntitySourceMap {
     "line": 2,
     "tokenText": "Domain Entity",
   },
-}
-`;
-
-exports[`when building domain entity should have a namespaceInfo level source map with correct line, column, length date 1`] = `
-Object {
-  "column": 0,
-  "line": 1,
-  "tokenText": "Begin Namespace",
 }
 `;
 

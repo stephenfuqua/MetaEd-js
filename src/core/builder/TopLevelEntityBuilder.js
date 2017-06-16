@@ -63,17 +63,21 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.namespaceInfo != null) return;
     this.namespaceInfo = namespaceInfoFactory();
     // $FlowIgnore - already null guarded
-    this.namespaceInfo.sourceMap = sourceMapFrom(context);
+    this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
     if (this.namespaceInfo == null) return;
     this.namespaceInfo = enteringNamespaceName(context, this.namespaceInfo);
+    // $FlowIgnore - already null guarded
+    this.namespaceInfo.sourceMap.namespace = sourceMapFrom(context);
   }
 
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
     if (this.namespaceInfo == null) return;
     this.namespaceInfo = enteringNamespaceType(context, this.namespaceInfo);
+    // $FlowIgnore - already null guarded
+    Object.assign(this.namespaceInfo.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });
   }
 
   // eslint-disable-next-line no-unused-vars

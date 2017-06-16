@@ -1100,7 +1100,7 @@ describe('when building domain entity with invalid trailing text', () => {
   });
 });
 
-describe('when building domain entity', () => {
+describe('when building domain entity source map', () => {
   const repository: Repository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1124,36 +1124,80 @@ describe('when building domain entity', () => {
       .sendToListener(builder);
   });
 
-  it('should have a domain entity level source map with type property', () => {
+  it('should have a type property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have a domain entity level source map with metaEdName property', () => {
+  it('should have a metaEdName property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap.metaEdName).toBeDefined();
     expect(repository.domainEntity.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
-  it('should have a domain entity level source map with metaEdId property', () => {
+  it('should have a metaEdId property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap.metaEdId).toBeDefined();
     expect(repository.domainEntity.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
-  it('should have a domain entity level source map with documentation property', () => {
+  it('should have a documentation property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have a domain entity level source map with allowPrimaryKeyUpdates property', () => {
+  it('should have a allowPrimaryKeyUpdates property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
   });
 
-  it('should have a domain entity level source map with correct line, column, length date', () => {
+  it('should have correct line, column, text for each property', () => {
     expect(repository.domainEntity.get(entityName).sourceMap).toMatchSnapshot();
   });
+});
 
-  it('should have a namespaceInfo level source map', () => {
+describe('when building domain entity namespace info source map', () => {
+  const repository: Repository = entityRepositoryFactory();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '1';
+  const documentation: string = 'Doc';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(repository);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withCascadeUpdate()
+      .withIntegerProperty(propertyName, 'Doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a source map', () => {
     expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap).toBeDefined();
   });
 
-  it('should have a namespaceInfo level source map with correct line, column, length date', () => {
+  it('should have a type property', () => {
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.type).toBeDefined();
+  });
+
+  it('should have a namespace property', () => {
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace).toBeDefined();
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace.tokenText).toBe(namespace);
+  });
+
+  it('should have a projectExtension property', () => {
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension).toBeDefined();
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(projectExtension);
+  });
+
+  it('should have a isExtension property', () => {
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension).toBeDefined();
+    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension.tokenText).toBe(projectExtension);
+  });
+
+  it('should have correct line, column, text', () => {
     expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap).toMatchSnapshot();
   });
 });

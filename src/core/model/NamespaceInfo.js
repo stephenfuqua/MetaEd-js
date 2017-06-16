@@ -1,5 +1,6 @@
 // @flow
 import type { SourceMap } from './SourceMap';
+import type { ModelType } from './ModelType';
 
 export class NamespaceInfoSourceMap {
   type: ?SourceMap;
@@ -10,6 +11,7 @@ export class NamespaceInfoSourceMap {
 }
 
 export class NamespaceInfo {
+  type: ModelType;
   namespace: string;
   isExtension: boolean;
   projectExtension: string;
@@ -21,6 +23,7 @@ export const DefaultExtensionEntitySuffix: string = 'Extension';
 
 export function defaultNamespaceInfoFields() {
   return {
+    type: 'namespaceInfo',
     namespace: '',
     isExtension: false,
     projectExtension: '',
