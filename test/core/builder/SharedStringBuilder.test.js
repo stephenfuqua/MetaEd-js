@@ -36,11 +36,11 @@ describe('when building shared string in extension namespace', () => {
     expect(entityRepository.sharedString.get(entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -61,7 +61,7 @@ describe('when building shared string in extension namespace', () => {
   });
 });
 
-describe('when building shared string with missing shared string name', () => {
+describe('when building shared string with no shared string name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -86,12 +86,12 @@ describe('when building shared string with missing shared string name', () => {
       .sendToListener(builder);
   });
 
-  it('should have missing id error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
+  it('should not build shared string', () => {
+    expect(entityRepository.sharedString.size).toBe(0);
   });
 
-  it('should not build a shared string', () => {
-    expect(entityRepository.sharedString.size).toBe(0);
+  it('should have missing id error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
@@ -120,11 +120,7 @@ describe('when building shared string with lowercase shared string name', () => 
       .sendToListener(builder);
   });
 
-  it('should have extraneous input error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-
-  it('should build a shared string anyway', () => {
+  it('should build one shared string', () => {
     expect(entityRepository.sharedString.size).toBe(1);
   });
 
@@ -132,9 +128,37 @@ describe('when building shared string with lowercase shared string name', () => 
     expect(entityRepository.sharedString.get('Name')).toBeDefined();
     expect(entityRepository.sharedString.get('Name').metaEdName).toBe('Name');
   });
+
+  it('should have namespace', () => {
+    expect(entityRepository.sharedString.get('Name').namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.sharedString.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have metaed id', () => {
+    expect(entityRepository.sharedString.get('Name').metaEdId).toBe(metaEdId);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get('Name').documentation).toBe(documentation);
+  });
+
+  it('should have min length', () => {
+    expect(entityRepository.sharedString.get('Name').minLength).toBe(minLength);
+  });
+
+  it('should have max length', () => {
+    expect(entityRepository.sharedString.get('Name').maxLength).toBe(maxLength);
+  });
+
+  it('should have extraneous input error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
 });
 
-describe('when building shared string with missing documentation', () => {
+describe('when building shared string with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -157,15 +181,11 @@ describe('when building shared string with missing documentation', () => {
       .sendToListener(builder);
   });
 
-  it('should have mismatched input error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -173,7 +193,7 @@ describe('when building shared string with missing documentation', () => {
     expect(entityRepository.sharedString.get(entityName).metaEdId).toBe(metaEdId);
   });
 
-  it('should have no documentation', () => {
+  it('should not have documentation', () => {
     expect(entityRepository.sharedString.get(entityName).documentation).toBe('');
   });
 
@@ -184,9 +204,13 @@ describe('when building shared string with missing documentation', () => {
   it('should have max length', () => {
     expect(entityRepository.sharedString.get(entityName).maxLength).toBe(maxLength);
   });
+
+  it('should have mismatched input error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
 });
 
-describe('when building shared string with missing min length', () => {
+describe('when building shared string with no min length', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -211,15 +235,11 @@ describe('when building shared string with missing min length', () => {
       .sendToListener(builder);
   });
 
-  it('should have extraneous input error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -235,12 +255,16 @@ describe('when building shared string with missing min length', () => {
     expect(entityRepository.sharedString.get(entityName).minLength).toBe(maxLength);
   });
 
-  it('should have no max length', () => {
+  it('should not have max length', () => {
     expect(entityRepository.sharedString.get(entityName).maxLength).toBe('');
+  });
+
+  it('should have extraneous input and mismatched input error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building shared string with missing max length', () => {
+describe('when building shared string with no max length', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -265,15 +289,11 @@ describe('when building shared string with missing max length', () => {
       .sendToListener(builder);
   });
 
-  it('should have missing unsigned int error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -289,8 +309,12 @@ describe('when building shared string with missing max length', () => {
     expect(entityRepository.sharedString.get(entityName).minLength).toBe(minLength);
   });
 
-  it('should have an empty max length', () => {
+  it('should no max length', () => {
     expect(entityRepository.sharedString.get(entityName).maxLength).toBe('');
+  });
+
+  it('should have missing unsigned int error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
@@ -321,15 +345,11 @@ describe('when building shared string with invalid trailing text', () => {
       .sendToListener(builder);
   });
 
-  it('should have extraneous input error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.sharedString.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -347,5 +367,9 @@ describe('when building shared string with invalid trailing text', () => {
 
   it('should have max length', () => {
     expect(entityRepository.sharedString.get(entityName).maxLength).toBe(maxLength);
+  });
+
+  it('should have extraneous input error', () => {
+    expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });

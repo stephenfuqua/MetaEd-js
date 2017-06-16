@@ -12,26 +12,25 @@ Array [
 ]
 `;
 
-exports[`when building shared integer with missing documentation should have extraneous input error 1`] = `
+exports[`when building shared integer with no documentation should have mismatched input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 17, line: 2, token: entity",
   "mismatched input 'min value' expecting 'documentation', column: 6, line: 3, token: min value",
 ]
 `;
 
-exports[`when building shared integer with missing max value should have mismatched input error 1`] = `
+exports[`when building shared integer with no max value should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {UNSIGNED_INT, '+', '-'}, column: 0, line: 7, token: End Namespace",
 ]
 `;
 
-exports[`when building shared integer with missing min value should have extraneous input error 1`] = `
+exports[`when building shared integer with no min value should have extraneous input error 1`] = `
 Array [
   "extraneous input 'max value' expecting {UNSIGNED_INT, '+', '-'}, column: 6, line: 6, token: max value",
 ]
 `;
 
-exports[`when building shared integer with missing shared integer name should have missing id error 1`] = `
+exports[`when building shared integer with no shared integer name should have missing id error 1`] = `
 Array [
   "missing ID at '[123]', column: 18, line: 2, token: [123]",
 ]
@@ -49,26 +48,25 @@ Array [
 ]
 `;
 
-exports[`when building shared short with missing documentation should have extraneous input error 1`] = `
+exports[`when building shared short with no documentation should have mismatched input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 15, line: 2, token: entity",
   "mismatched input 'min value' expecting 'documentation', column: 6, line: 3, token: min value",
 ]
 `;
 
-exports[`when building shared short with missing max value should have mismatched input error 1`] = `
+exports[`when building shared short with no max value should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {UNSIGNED_INT, '+', '-'}, column: 0, line: 7, token: End Namespace",
 ]
 `;
 
-exports[`when building shared short with missing min value should have extraneous input error 1`] = `
+exports[`when building shared short with no min value should have extraneous input error 1`] = `
 Array [
   "extraneous input 'max value' expecting {UNSIGNED_INT, '+', '-'}, column: 6, line: 6, token: max value",
 ]
 `;
 
-exports[`when building shared short with missing shared short name should have missing id error 1`] = `
+exports[`when building shared short with no shared short name should have missing id error 1`] = `
 Array [
   "missing ID at '[123]', column: 16, line: 2, token: [123]",
 ]

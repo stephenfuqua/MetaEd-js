@@ -12,26 +12,26 @@ Array [
 ]
 `;
 
-exports[`when building shared string with missing documentation should have mismatched input error 1`] = `
+exports[`when building shared string with no documentation should have mismatched input error 1`] = `
 Array [
   "mismatched input 'min length' expecting 'documentation', column: 6, line: 3, token: min length",
 ]
 `;
 
-exports[`when building shared string with missing max length should have missing unsigned int error 1`] = `
+exports[`when building shared string with no max length should have missing unsigned int error 1`] = `
 Array [
   "missing UNSIGNED_INT at 'End Namespace', column: 0, line: 7, token: End Namespace",
 ]
 `;
 
-exports[`when building shared string with missing min length should have extraneous input error 1`] = `
+exports[`when building shared string with no min length should have extraneous input and mismatched input error 1`] = `
 Array [
   "extraneous input 'max length' expecting UNSIGNED_INT, column: 6, line: 6, token: max length",
   "mismatched input 'End Namespace' expecting 'max length', column: 0, line: 7, token: End Namespace",
 ]
 `;
 
-exports[`when building shared string with missing shared string name should have missing id error 1`] = `
+exports[`when building shared string with no shared string name should have missing id error 1`] = `
 Array [
   "missing ID at '[123]', column: 17, line: 2, token: [123]",
 ]
