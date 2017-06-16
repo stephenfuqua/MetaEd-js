@@ -3,6 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import SharedSimpleBuilder from './SharedSimpleBuilder';
 import { sharedIntegerFactory } from '../model/SharedInteger';
 import type { SharedInteger } from '../model/SharedInteger';
+import { isErrorText } from './BuilderUtility';
 
 export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -27,24 +28,24 @@ export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   }
 
   enterSharedIntegerName(context: MetaEdGrammar.SharedIntegerNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 
   enterSharedShortName(context: MetaEdGrammar.SharedShortNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentSharedSimple == null) return;
-    if (context.signed_int() == null || context.signed_int().exception) return;
+    if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).minValue = context.signed_int().getText();
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentSharedSimple == null) return;
-    if (context.signed_int() == null || context.signed_int().exception) return;
+    if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).maxValue = context.signed_int().getText();
   }
 }

@@ -4,9 +4,10 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { namespaceInfoFactory } from '../model/NamespaceInfo';
+import { isErrorText } from './BuilderUtility';
 
 export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: ?NamespaceInfo): NamespaceInfo {
-  if (namespaceInfo == null) return namespaceInfoFactory();
+  if (namespaceInfo == null || isErrorText(context.NAMESPACE_ID().getText())) return namespaceInfoFactory();
 
   if (context.exception != null ||
     context.NAMESPACE_ID() == null ||
@@ -20,7 +21,7 @@ export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContex
   if (namespaceInfo == null) return namespaceInfo;
 
   if (context.CORE() != null) return namespaceInfo;
-  if (context.ID() == null || context.ID().exception != null) return namespaceInfo;
+  if (context.ID() == null || context.ID().exception != null || isErrorText(context.ID().getText())) return namespaceInfo;
 
   return Object.assign(namespaceInfo, { projectExtension: context.ID().getText(), isExtension: true });
 }

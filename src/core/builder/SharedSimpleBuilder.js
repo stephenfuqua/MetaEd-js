@@ -69,8 +69,7 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
-    if (isErrorText(context.METAED_ID().getText())) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
     if (this.currentSharedSimple != null) {
       // $FlowIgnore - already null guarded
       this.currentSharedSimple.metaEdId = squareBracketRemoval(context.METAED_ID().getText());

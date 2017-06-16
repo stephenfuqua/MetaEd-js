@@ -12,7 +12,7 @@ import { NamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 
 import { isSharedProperty } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
-import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { booleanPropertyFactory } from '../model/property/BooleanProperty';
 import { currencyPropertyFactory } from '../model/property/CurrencyProperty';
 import { datePropertyFactory } from '../model/property/DateProperty';
@@ -93,8 +93,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   exitingEntity() {
     if (this.currentTopLevelEntity == null) return;
-    // $FlowIgnore - allowing currentTopLevelEntity.type to specify the repository Map property
-    this.repository[this.currentTopLevelEntity.type].set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
+    if (this.currentTopLevelEntity.metaEdName) {
+      // $FlowIgnore - allowing currentTopLevelEntity.type to specify the repository Map property
+      this.repository[this.currentTopLevelEntity.type].set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
+    }
     this.currentTopLevelEntity = null;
   }
 
@@ -112,7 +114,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentProperty != null) {
       // $FlowIgnore - already null guarded
