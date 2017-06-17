@@ -3,6 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { commonExtensionFactory } from '../model/CommonExtension';
 import type { CommonExtension } from '../model/CommonExtension';
+import { NoTopLevelEntity } from '../model/TopLevelEntity';
 
 export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -16,7 +17,7 @@ export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
   }
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
 
     const extendeeName = context.ID().getText();

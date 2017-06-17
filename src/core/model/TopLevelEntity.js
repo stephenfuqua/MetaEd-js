@@ -41,3 +41,7 @@ export function defaultTopLevelEntity(): TopLevelEntity {
     baseEntity: null,
   });
 }
+
+export const NoTopLevelEntity: TopLevelEntity = Object.assign(defaultTopLevelEntity(), {
+  metaEdName: 'NoTopLevelEntity',
+});

@@ -30,3 +30,7 @@ export function domainFactory(): Domain {
     sourceMap: new DomainSourceMap(),
   });
 }
+
+export const NoDomain: Domain = Object.assign(domainFactory(), {
+  metaEdName: 'NoDomain',
+});

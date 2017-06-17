@@ -23,3 +23,8 @@ export function enumerationItemFactory(): EnumerationItem {
     sourceMap: new EnumerationItemSourceMap(),
   });
 }
+
+export const NoEnumerationItem: EnumerationItem = Object.assign(enumerationItemFactory(), {
+  metaEdName: 'NoEnumerationItem',
+  shortDescription: 'NoEnumerationItem',
+});

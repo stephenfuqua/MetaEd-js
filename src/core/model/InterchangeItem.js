@@ -24,3 +24,7 @@ export function interchangeItemFactory(): InterchangeItem {
     sourceMap: new InterchangeItemSourceMap(),
   });
 }
+
+export const NoInterchangeItem: InterchangeItem = Object.assign(interchangeItemFactory(), {
+  metaEdName: 'NoInterchangeItem',
+});

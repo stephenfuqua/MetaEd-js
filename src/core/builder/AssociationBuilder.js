@@ -3,6 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityPropertyFactory } from '../model/property/DomainEntityProperty';
 import { associationFactory } from '../model/Association';
+import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { Association } from '../model/Association';
 
 export default class AssociationBuilder extends TopLevelEntityBuilder {
@@ -23,20 +24,20 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
 
   // eslint-disable-next-line no-unused-vars
   enterCascadeUpdate(context: MetaEdGrammar.CascadeUpdateContext) {
-    if (this.currentTopLevelEntity != null) {
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       ((this.currentTopLevelEntity: any): Association).allowPrimaryKeyUpdates = true;
     }
   }
 
   // eslint-disable-next-line no-unused-vars
   enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = Object.assign(domainEntityPropertyFactory(), { isPartOfIdentity: true });
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = Object.assign(domainEntityPropertyFactory(), { isPartOfIdentity: true });
   }
 

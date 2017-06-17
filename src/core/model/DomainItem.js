@@ -18,3 +18,7 @@ export function domainItemFactory(): DomainItem {
     sourceMap: new DomainItemSourceMap(),
   });
 }
+
+export const NoDomainItem: DomainItem = Object.assign(domainItemFactory(), {
+  metaEdName: 'NoDomainItem',
+});

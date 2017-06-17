@@ -9,14 +9,17 @@ import type { Descriptor } from './Descriptor';
 import type { DomainEntity } from './DomainEntity';
 import type { DomainEntityExtension } from './DomainEntityExtension';
 import type { DomainEntitySubclass } from './DomainEntitySubclass';
-import type { Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from './Enumeration';
+import type { Enumeration } from './Enumeration';
 import type { Interchange } from './Interchange';
+import type { MapTypeEnumeration } from './MapTypeEnumeration';
 import type { NamespaceInfo } from './NamespaceInfo';
+import type { SchoolYearEnumeration } from './SchoolYearEnumeration';
 import type { SharedDecimal } from './SharedDecimal';
 import type { SharedInteger } from './SharedInteger';
 import type { SharedString } from './SharedString';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -67,12 +70,14 @@ export function entityRepositoryFactory(): EntityRepository {
 }
 
 export class Repository {
+  builderValidationFailure: Array<ValidationFailure>;
   configuration: any;
   entity: EntityRepository;
 }
 
 export function repositoryFactory(): Repository {
   return Object.assign(new Repository(), {
+    builderValidationFailure: [],
     configuration: null,
     entity: entityRepositoryFactory(),
   });

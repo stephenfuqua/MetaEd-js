@@ -1,14 +1,22 @@
 // @flow
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { enumerationFactory, schoolYearEnumerationFactory } from '../model/Enumeration';
+import { enumerationFactory } from '../model/Enumeration';
+import { schoolYearEnumerationFactory } from '../model/SchoolYearEnumeration';
 import type { Enumeration } from '../model/Enumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
-import { enumerationItemFactory } from '../model/EnumerationItem';
+import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval } from './BuilderUtility';
+import { NoTopLevelEntity } from '../model/TopLevelEntity';
+import { EntityRepository } from '../model/Repository';
 
 export default class EnumerationBuilder extends TopLevelEntityBuilder {
-  currentEnumerationItem: ?EnumerationItem;
+  currentEnumerationItem: EnumerationItem;
+
+  constructor(repository: EntityRepository) {
+    super(repository);
+    this.currentEnumerationItem = NoEnumerationItem;
+  }
 
   // eslint-disable-next-line no-unused-vars
   enterEnumeration(context: MetaEdGrammar.EnumerationContext) {
@@ -21,7 +29,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   }
 
   enterEnumerationName(context: MetaEdGrammar.EnumerationNameContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
     const enumerationName = context.ID().getText();
 
@@ -34,8 +42,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   }
 
   enterEnumerationItemDocumentation(context: MetaEdGrammar.EnumerationItemDocumentationContext) {
-    if (this.currentEnumerationItem == null) return;
-    // $FlowIgnore - already null guarded
+    if (this.currentEnumerationItem === NoEnumerationItem) return;
     this.currentEnumerationItem.documentation = extractDocumentation(context);
   }
 
@@ -46,15 +53,14 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
   // eslint-disable-next-line no-unused-vars
   exitEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
-    if (this.currentTopLevelEntity == null || this.currentEnumerationItem == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentEnumerationItem === NoEnumerationItem) return;
     ((this.currentTopLevelEntity: any): Enumeration).enumerationItems.push(this.currentEnumerationItem);
-    this.currentEnumerationItem = null;
+    this.currentEnumerationItem = NoEnumerationItem;
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
-    if (this.currentEnumerationItem != null) {
-      // $FlowIgnore - already null guarded
+    if (this.currentEnumerationItem !== NoEnumerationItem) {
       this.currentEnumerationItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     } else {
       super.enterMetaEdId(context);
@@ -62,8 +68,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   }
 
   enterShortDescription(context: MetaEdGrammar.ShortDescriptionContext) {
-    if (this.currentEnumerationItem == null) return;
-    // $FlowIgnore - already null guarded
+    if (this.currentEnumerationItem === NoEnumerationItem) return;
     this.currentEnumerationItem.shortDescription = extractShortDescription(context);
   }
 }

@@ -1,5 +1,6 @@
 // @flow
 import type { EntityProperty } from './EntityProperty';
+import { NoEntityProperty } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
 
 export class MergedPropertySourceMap {
@@ -27,3 +28,8 @@ export function defaultMergedProperty(): MergedProperty {
     sourceMap: new MergedPropertySourceMap(),
   });
 }
+
+export const NoMergedProperty: MergedProperty = Object.assign(defaultMergedProperty(), {
+  mergeProperty: NoEntityProperty,
+  targetProperty: NoEntityProperty,
+});

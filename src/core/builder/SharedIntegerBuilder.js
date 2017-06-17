@@ -4,6 +4,7 @@ import SharedSimpleBuilder from './SharedSimpleBuilder';
 import { sharedIntegerFactory } from '../model/SharedInteger';
 import type { SharedInteger } from '../model/SharedInteger';
 import { isErrorText } from './BuilderUtility';
+import { NoSharedSimple } from '../model/SharedSimple';
 
 export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -38,13 +39,13 @@ export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   }
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
-    if (this.currentSharedSimple == null) return;
+    if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).minValue = context.signed_int().getText();
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
-    if (this.currentSharedSimple == null) return;
+    if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).maxValue = context.signed_int().getText();
   }

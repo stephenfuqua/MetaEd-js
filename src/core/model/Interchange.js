@@ -42,3 +42,7 @@ export function interchangeFactory(): Interchange {
     sourceMap: new InterchangeSourceMap(),
   });
 }
+
+export const NoInterchange: Interchange = Object.assign(interchangeFactory(), {
+  metaEdName: 'NoInterchange',
+});

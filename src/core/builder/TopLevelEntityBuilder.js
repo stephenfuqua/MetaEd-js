@@ -3,13 +3,11 @@ import R from 'ramda';
 
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
-
-import { EntityProperty } from '../model/property/EntityProperty';
-import { MergedProperty, defaultMergedProperty } from '../model/property/MergedProperty';
-import { TopLevelEntity } from '../model/TopLevelEntity';
+import { EntityProperty, NoEntityProperty } from '../model/property/EntityProperty';
+import { defaultMergedProperty, MergedProperty, NoMergedProperty } from '../model/property/MergedProperty';
+import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
-import { NamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
-
+import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
@@ -44,148 +42,144 @@ function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext) {
 }
 
 export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
-  currentTopLevelEntity: ?TopLevelEntity;
-  currentProperty: ?EntityProperty;
-  currentMergedProperty: ?MergedProperty;
-  whenExitingProperty: Array<() => void>;
-
   repository: EntityRepository;
-  namespaceInfo: ?NamespaceInfo;
+  namespaceInfo: NamespaceInfo;
+  currentTopLevelEntity: TopLevelEntity;
+  currentProperty: EntityProperty;
+  currentMergedProperty: MergedProperty;
+  whenExitingPropertyCommand: Array<() => void>;
 
   constructor(repository: EntityRepository) {
     super();
     this.repository = repository;
-    this.whenExitingProperty = [];
+    this.namespaceInfo = NoNamespaceInfo;
+    this.currentTopLevelEntity = NoTopLevelEntity;
+    this.currentProperty = NoEntityProperty;
+    this.currentMergedProperty = NoMergedProperty;
+    this.whenExitingPropertyCommand = [];
   }
 
   // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
-    if (this.namespaceInfo != null) return;
+    if (this.namespaceInfo !== NoNamespaceInfo) return;
     this.namespaceInfo = namespaceInfoFactory();
-    // $FlowIgnore - already null guarded
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    if (this.namespaceInfo == null) return;
+    if (this.namespaceInfo === NoNamespaceInfo) return;
     this.namespaceInfo = enteringNamespaceName(context, this.namespaceInfo);
-    // $FlowIgnore - already null guarded
     this.namespaceInfo.sourceMap.namespace = sourceMapFrom(context);
   }
 
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
-    if (this.namespaceInfo == null) return;
+    if (this.namespaceInfo === NoNamespaceInfo) return;
     this.namespaceInfo = enteringNamespaceType(context, this.namespaceInfo);
-    // $FlowIgnore - already null guarded
     Object.assign(this.namespaceInfo.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });
   }
 
   // eslint-disable-next-line no-unused-vars
   exitNamespace(context: MetaEdGrammar.NamespaceContext) {
-    this.namespaceInfo = null;
+    this.namespaceInfo = NoNamespaceInfo;
   }
 
   enteringEntity(entityFactory: () => TopLevelEntity) {
-    if (this.namespaceInfo == null) return;
-    // $FlowIgnore - already null guarded
+    if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentTopLevelEntity = Object.assign(entityFactory(), { namespaceInfo: this.namespaceInfo });
   }
 
   exitingEntity() {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
       // $FlowIgnore - allowing currentTopLevelEntity.type to specify the repository Map property
       this.repository[this.currentTopLevelEntity.type].set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
     }
-    this.currentTopLevelEntity = null;
+    this.currentTopLevelEntity = NoTopLevelEntity;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
-    if (this.currentTopLevelEntity == null) return;
-    // $FlowIgnore - already null guarded
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.documentation = extractDocumentation(context);
-    // $FlowIgnore - already null guarded - property not on TLE
+    // $FlowIgnore - sourceMap property not on TLE
     this.currentTopLevelEntity.sourceMap.documentation = sourceMapFrom(context);
   }
 
   enteringName(name: string) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.metaEdName = name;
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
-    if (this.currentProperty != null) {
-      // $FlowIgnore - already null guarded
+    if (this.currentProperty !== NoEntityProperty) {
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - already null guarded - property not on TLE
+      // $FlowIgnore - sourceMap property not on TLE
       this.currentProperty.sourceMap.metaEdId = sourceMapFrom(context);
-    } else if (this.currentTopLevelEntity != null) {
-      // $FlowIgnore - already null guarded
+    } else if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - already null guarded - property not on TLE
+      // $FlowIgnore - sourceMap property not on TLE
       this.currentTopLevelEntity.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
 
   // eslint-disable-next-line no-unused-vars
   enterBooleanProperty(context: MetaEdGrammar.BooleanPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = booleanPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCurrencyProperty(context: MetaEdGrammar.CurrencyPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = currencyPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDateProperty(context: MetaEdGrammar.DatePropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = datePropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDecimalProperty(context: MetaEdGrammar.DecimalPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = decimalPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDescriptorProperty(context: MetaEdGrammar.DescriptorPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = descriptorPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDurationProperty(context: MetaEdGrammar.DurationPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = durationPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterEnumerationProperty(context: MetaEdGrammar.EnumerationPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = enumerationPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCommonProperty(context: MetaEdGrammar.CommonPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = commonPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterInlineCommonProperty(context: MetaEdGrammar.InlineCommonPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = inlineCommonPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterChoiceProperty(context: MetaEdGrammar.ChoicePropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = choicePropertyFactory();
   }
 
@@ -197,73 +191,73 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // eslint-disable-next-line no-unused-vars
   enterIntegerProperty(context: MetaEdGrammar.IntegerPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = integerPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterShortProperty(context: MetaEdGrammar.ShortPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = shortPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterPercentProperty(context: MetaEdGrammar.PercentPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = percentPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterAssociationProperty(context: MetaEdGrammar.AssociationPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = associationPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDomainEntityProperty(context: MetaEdGrammar.DomainEntityPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = domainEntityPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedDecimalProperty(context: MetaEdGrammar.SharedDecimalPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedDecimalPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedIntegerProperty(context: MetaEdGrammar.SharedIntegerPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedIntegerPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedShortProperty(context: MetaEdGrammar.SharedShortPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedShortPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedStringProperty(context: MetaEdGrammar.SharedStringPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedStringPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterStringProperty(context: MetaEdGrammar.StringPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = stringPropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterTimeProperty(context: MetaEdGrammar.TimePropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = timePropertyFactory();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterYearProperty(context: MetaEdGrammar.YearPropertyContext) {
-    if (this.currentTopLevelEntity == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = yearPropertyFactory();
   }
 
@@ -273,89 +267,75 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   exitingProperty() {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
 
     // Shared simple properties have propertyName as optional. If omitted, name is same as type being referenced
     if (!this.currentProperty.metaEdName && isSharedProperty(this.currentProperty)) {
       this.currentProperty.metaEdName = this.currentProperty.referencedType;
     }
 
-    if (this.currentTopLevelEntity != null) {
-      // $FlowIgnore - already null guarded
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       if (this.currentProperty.isPartOfIdentity || this.currentProperty.isIdentityRename) {
-        // $FlowIgnore - already null guarded
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
       }
 
-      // $FlowIgnore - already null guarded
       if (!this.currentProperty.isQueryableOnly) {
-        // $FlowIgnore - already null guarded
         this.currentTopLevelEntity.properties.push(this.currentProperty);
       }
 
-      while (this.whenExitingProperty.length > 0) {
-        this.whenExitingProperty.pop()();
+      while (this.whenExitingPropertyCommand.length > 0) {
+        this.whenExitingPropertyCommand.pop()();
       }
 
-      // $FlowIgnore - already null guarded
       this.currentProperty.parentEntityName = this.currentTopLevelEntity.metaEdName;
     }
 
-    this.currentProperty = null;
+    this.currentProperty = NoEntityProperty;
   }
 
   enterPropertyDocumentation(context: MetaEdGrammar.PropertyDocumentationContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
 
     if (context.INHERITED() != null && !context.INHERITED().exception) {
-      // $FlowIgnore - already null guarded
       this.currentProperty.documentationInherited = true;
     } else {
-      // $FlowIgnore - already null guarded
       this.currentProperty.documentation = extractDocumentation(context);
     }
   }
 
   enterWithContextName(context: MetaEdGrammar.WithContextNameContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.ID() == null || context.ID().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentProperty.withContext = context.ID().getText();
   }
 
   enterShortenToName(context: MetaEdGrammar.ShortenToNameContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.ID() == null || context.ID().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentProperty.shortenTo = context.ID().getText();
   }
 
   enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.ID() == null || context.ID().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentProperty.metaEdName = context.ID().getText();
 
-    // $FlowIgnore - already null guarded
     if (this.currentProperty.metaEdName === 'SchoolYear' && this.currentProperty.type === 'enumeration') {
-      // $FlowIgnore - already null guarded
-      this.currentProperty.type = 'school year enumeration';
+      this.currentProperty.type = 'schoolYearEnumeration';
     }
   }
 
   enterSharedPropertyType(context: MetaEdGrammar.SharedPropertyTypeContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.ID() == null || context.ID().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentProperty.referencedType = context.ID().getText();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterIsQueryableField(context: MetaEdGrammar.IsQueryableFieldContext) {
-    if (this.currentTopLevelEntity == null || this.currentProperty == null) return;
-    this.whenExitingProperty.push(
+    if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentProperty === NoEntityProperty) return;
+    this.whenExitingPropertyCommand.push(
       () => {
-        // $FlowIgnore - already null guarded
         this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
       },
     );
@@ -363,11 +343,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // eslint-disable-next-line no-unused-vars
   enterIsQueryableOnly(context: MetaEdGrammar.IsQueryableOnlyContext) {
-    if (this.currentTopLevelEntity == null || this.currentProperty == null) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isQueryableOnly = true;
-    this.whenExitingProperty.push(
+    this.whenExitingPropertyCommand.push(
       () => {
-        // $FlowIgnore - already null guarded
         this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
       },
     );
@@ -375,142 +354,131 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // eslint-disable-next-line no-unused-vars
   enterIdentity(context: MetaEdGrammar.IdentityContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isIdentityRename = true;
     this.currentProperty.isPartOfIdentity = true;
   }
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.ID() == null || context.ID().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentProperty.baseKeyName = context.ID().getText();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterRequired(context: MetaEdGrammar.RequiredContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isRequired = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterOptional(context: MetaEdGrammar.OptionalContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isOptional = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterRequiredCollection(context: MetaEdGrammar.RequiredCollectionContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isRequiredCollection = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterOptionalCollection(context: MetaEdGrammar.OptionalCollectionContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isOptionalCollection = true;
   }
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).minLength = context.UNSIGNED_INT().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).maxLength = context.UNSIGNED_INT().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).minValue = context.signed_int().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).maxValue = context.signed_int().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     if (context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
-    // $FlowIgnore - already null guarded
     this.currentProperty.hasRestriction = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterIsWeakReference(context: MetaEdGrammar.IsWeakReferenceContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     ((this.currentProperty: any): DomainEntityProperty | AssociationProperty).isWeak = true;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentMergedProperty = defaultMergedProperty();
   }
 
   enterMergePropertyPath(context: MetaEdGrammar.MergePropertyPathContext) {
-    if (this.currentMergedProperty == null) return;
+    if (this.currentMergedProperty === NoMergedProperty) return;
     if (context.propertyPath() == null || context.propertyPath().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentMergedProperty.mergePropertyPath = propertyPathFrom(context.propertyPath());
   }
 
   enterTargetPropertyPath(context: MetaEdGrammar.TargetPropertyPathContext) {
-    if (this.currentMergedProperty == null) return;
+    if (this.currentMergedProperty === NoMergedProperty) return;
     if (context.propertyPath() == null || context.propertyPath().exception) return;
-    // $FlowIgnore - already null guarded
     this.currentMergedProperty.targetPropertyPath = propertyPathFrom(context.propertyPath());
   }
 
   // eslint-disable-next-line no-unused-vars
   exitMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
-    if (this.currentProperty == null || this.currentMergedProperty == null) return;
+    if (this.currentProperty === NoEntityProperty || this.currentMergedProperty === NoMergedProperty) return;
     ((this.currentProperty: any): ReferentialProperty).mergedProperties.push(this.currentMergedProperty);
-    this.currentMergedProperty = null;
+    this.currentMergedProperty = NoMergedProperty;
   }
 }

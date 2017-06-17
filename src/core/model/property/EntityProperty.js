@@ -78,6 +78,10 @@ export function defaultEntityPropertyFields() {
   };
 }
 
-export function defaultEntityProperty() {
+export function defaultEntityProperty(): EntityProperty {
   return Object.assign(new EntityProperty(), defaultEntityPropertyFields());
 }
+
+export const NoEntityProperty: EntityProperty = Object.assign(defaultEntityProperty(), {
+  metaEdName: 'NoEntityProperty',
+});

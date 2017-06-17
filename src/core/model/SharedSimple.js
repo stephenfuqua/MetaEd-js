@@ -25,3 +25,7 @@ export function defaultSharedSimple(): SharedSimple {
     namespaceInfo: namespaceInfoFactory(),
   });
 }
+
+export const NoSharedSimple: SharedSimple = Object.assign(defaultSharedSimple(), {
+  metaEdName: 'NoSharedSimple',
+});
