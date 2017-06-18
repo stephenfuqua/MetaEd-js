@@ -3,9 +3,11 @@ import InterchangeBuilder from '../../../src/core/builder/InterchangeBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building single interchange', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -20,7 +22,7 @@ describe('when building single interchange', () => {
   const interchangeIdentityTemplateMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -42,6 +44,10 @@ describe('when building single interchange', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.interchange.get(interchangeName)).toBeDefined();
     expect(entityRepository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -85,8 +91,75 @@ describe('when building single interchange', () => {
   });
 });
 
+describe('when building duplicate interchanges', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const interchangeName: string = 'InterchangeName';
+  const interchangeMetaEdId: string = '1';
+  const interchangeDocumentation: string = 'InterchangeDocumentation';
+  const extendedDocumentation: string = 'ExtendedDocumentation';
+  const useCaseDocumentation: string = 'UseCaseDocumentation';
+  const interchangeElementName: string = 'InterchangeElementName';
+  const interchangeElementMetaEdId: string = '2';
+  const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
+  const interchangeIdentityTemplateMetaEdId: string = '3';
+
+  beforeAll(() => {
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartInterchange(interchangeName, interchangeMetaEdId)
+      .withDocumentation(interchangeDocumentation)
+      .withExtendedDocumentation(extendedDocumentation)
+      .withUseCaseDocumentation(useCaseDocumentation)
+      .withDomainEntityElement(interchangeElementName, interchangeElementMetaEdId)
+      .withDomainEntityIdentityTemplate(interchangeIdentityTemplateName, interchangeIdentityTemplateMetaEdId)
+      .withEndInterchange()
+
+      .withStartInterchange(interchangeName, interchangeMetaEdId)
+      .withDocumentation(interchangeDocumentation)
+      .withExtendedDocumentation(extendedDocumentation)
+      .withUseCaseDocumentation(useCaseDocumentation)
+      .withDomainEntityElement(interchangeElementName, interchangeElementMetaEdId)
+      .withDomainEntityIdentityTemplate(interchangeIdentityTemplateName, interchangeIdentityTemplateMetaEdId)
+      .withEndInterchange()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one interchange', () => {
+    expect(entityRepository.interchange.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.interchange.get(interchangeName)).toBeDefined();
+    expect(entityRepository.interchange.get(interchangeName).metaEdName).toBe(interchangeName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('InterchangeBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap');
+  });
+});
+
 describe('when building single interchange extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -98,7 +171,7 @@ describe('when building single interchange extension', () => {
   const interchangeIdentityTemplateMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -150,6 +223,7 @@ describe('when building single interchange extension', () => {
 
 describe('when building interchange with missing interchange name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -161,7 +235,7 @@ describe('when building interchange with missing interchange name', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -180,6 +254,7 @@ describe('when building interchange with missing interchange name', () => {
 
 describe('when building interchange with lowercase interchange name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -191,7 +266,7 @@ describe('when building interchange with lowercase interchange name', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -210,6 +285,7 @@ describe('when building interchange with lowercase interchange name', () => {
 
 describe('when building interchange with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -220,7 +296,7 @@ describe('when building interchange with missing documentation', () => {
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -238,6 +314,7 @@ describe('when building interchange with missing documentation', () => {
 
 describe('when building interchange with missing interchange component property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -247,7 +324,7 @@ describe('when building interchange with missing interchange component property'
   const interchangeDocumentation: string = 'InterchangeDocumentation';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -265,6 +342,7 @@ describe('when building interchange with missing interchange component property'
 
 describe('when building interchange with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -277,7 +355,7 @@ describe('when building interchange with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -297,6 +375,7 @@ describe('when building interchange with invalid trailing text', () => {
 
 describe('when building interchange extension with missing interchange extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -307,7 +386,7 @@ describe('when building interchange extension with missing interchange extension
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -325,6 +404,7 @@ describe('when building interchange extension with missing interchange extension
 
 describe('when building interchange extension with lowercase interchange extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -335,7 +415,7 @@ describe('when building interchange extension with lowercase interchange extensi
   const interchangeElementMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -353,6 +433,7 @@ describe('when building interchange extension with lowercase interchange extensi
 
 describe('when building interchange extension with missing element property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -361,7 +442,7 @@ describe('when building interchange extension with missing element property', ()
   const interchangeMetaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -378,6 +459,7 @@ describe('when building interchange extension with missing element property', ()
 
 describe('when building interchange extension with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -389,7 +471,7 @@ describe('when building interchange extension with invalid trailing text', () =>
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new InterchangeBuilder(entityRepository);
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

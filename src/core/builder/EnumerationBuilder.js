@@ -8,13 +8,14 @@ import type { EnumerationItem } from '../model/EnumerationItem';
 import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
-import { EntityRepository } from '../model/Repository';
+import type { EntityRepository } from '../model/Repository';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class EnumerationBuilder extends TopLevelEntityBuilder {
   currentEnumerationItem: EnumerationItem;
 
-  constructor(repository: EntityRepository) {
-    super(repository);
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+    super(entityRepository, validationFailures);
     this.currentEnumerationItem = NoEnumerationItem;
   }
 

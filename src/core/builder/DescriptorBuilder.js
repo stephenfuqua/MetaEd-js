@@ -10,13 +10,14 @@ import { NoEnumerationItem, enumerationItemFactory } from '../model/EnumerationI
 import { extractDocumentation, extractShortDescription, squareBracketRemoval } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class DescriptorBuilder extends TopLevelEntityBuilder {
   currentMapTypeEnumeration: MapTypeEnumeration;
   currentEnumerationItem: EnumerationItem;
 
-  constructor(repository: EntityRepository) {
-    super(repository);
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+    super(entityRepository, validationFailures);
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
     this.currentEnumerationItem = NoEnumerationItem;
   }
@@ -73,7 +74,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       ((this.currentTopLevelEntity: any): Descriptor).mapTypeEnumeration = this.currentMapTypeEnumeration;
     }
-    this.repository.mapTypeEnumeration.set(this.currentMapTypeEnumeration.metaEdName, this.currentMapTypeEnumeration);
+    this.entityRepository.mapTypeEnumeration.set(this.currentMapTypeEnumeration.metaEdName, this.currentMapTypeEnumeration);
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
   }
 

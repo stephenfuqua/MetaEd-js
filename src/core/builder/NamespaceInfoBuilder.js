@@ -5,6 +5,7 @@ import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 import { isErrorText } from './BuilderUtility';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
   if (namespaceInfo === NoNamespaceInfo || isErrorText(context.NAMESPACE_ID().getText())) return namespaceInfoFactory();
@@ -27,32 +28,51 @@ export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContex
 
 export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
-  namespaceInfo: NamespaceInfo;
+  currentNamespaceInfo: NamespaceInfo;
+  validationFailures: Array<ValidationFailure>;
 
-  constructor(entityRepository: EntityRepository) {
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
     super();
     this.entityRepository = entityRepository;
-    this.namespaceInfo = NoNamespaceInfo;
+    this.currentNamespaceInfo = NoNamespaceInfo;
+    this.validationFailures = validationFailures;
   }
 
   // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
-    if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    if (this.currentNamespaceInfo !== NoNamespaceInfo) return;
+    this.currentNamespaceInfo = namespaceInfoFactory();
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.namespaceInfo = enteringNamespaceName(context, this.namespaceInfo);
+    this.currentNamespaceInfo = enteringNamespaceName(context, this.currentNamespaceInfo);
   }
 
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
-    this.namespaceInfo = enteringNamespaceType(context, this.namespaceInfo);
+    this.currentNamespaceInfo = enteringNamespaceType(context, this.currentNamespaceInfo);
   }
 
   // eslint-disable-next-line no-unused-vars
   exitNamespace(context: MetaEdGrammar.NamespaceContext) {
-    if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.entityRepository.namespaceInfo.set(this.namespaceInfo.namespace, this.namespaceInfo);
-    this.namespaceInfo = NoNamespaceInfo;
+    if (this.currentNamespaceInfo === NoNamespaceInfo) return;
+    if (this.entityRepository.namespaceInfo.has(this.currentNamespaceInfo.namespace)) {
+      this.validationFailures.push({
+        validatorName: 'NamespaceInfoBuilder',
+        category: 'error',
+        message: `Namespace named ${this.currentNamespaceInfo.namespace} is a duplicate declaration of that name.`,
+        sourceMap: this.currentNamespaceInfo.sourceMap.type,
+      });
+      // $FlowIgnore - we ensure the key is in the map above
+      const duplicateEntity: NamespaceInfo = this.entityRepository.namespaceInfo.get(this.currentNamespaceInfo.namespace);
+      this.validationFailures.push({
+        validatorName: 'NamespaceInfoBuilder',
+        category: 'error',
+        message: `Namespace named ${duplicateEntity.namespace} is a duplicate declaration of that name.`,
+        sourceMap: duplicateEntity.sourceMap.type,
+      });
+    } else {
+      this.entityRepository.namespaceInfo.set(this.currentNamespaceInfo.namespace, this.currentNamespaceInfo);
+    }
+    this.currentNamespaceInfo = NoNamespaceInfo;
   }
 }

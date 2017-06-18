@@ -5,6 +5,7 @@ import { TopLevelEntity } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
 
 export class SubdomainSourceMap {
+  type: ?SourceMap;
   domainItems: ?Array<SourceMap>;
   entities: ?Array<SourceMap>;
   footerDocumentation: ?SourceMap;

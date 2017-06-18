@@ -6,7 +6,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { Domain } from '../model/Domain';
 import type { Subdomain } from '../model/Subdomain';
 import type { DomainItem } from '../model/DomainItem';
-import type { Repository } from '../model/Repository';
+import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 import { domainItemFactory, NoDomainItem } from '../model/DomainItem';
@@ -14,19 +14,22 @@ import { domainFactory, NoDomain } from '../model/Domain';
 import { subdomainFactory } from '../model/Subdomain';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class DomainBuilder extends MetaEdGrammarListener {
-  repository: Repository;
+  entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentDomain: Domain | Subdomain;
   currentDomainItem: DomainItem;
+  validationFailures: Array<ValidationFailure>;
 
-  constructor(repository: Repository) {
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
     super();
-    this.repository = repository;
+    this.entityRepository = entityRepository;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentDomain = NoDomain;
     this.currentDomainItem = NoDomainItem;
+    this.validationFailures = validationFailures;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -79,9 +82,27 @@ export default class DomainBuilder extends MetaEdGrammarListener {
   }
 
   exitingEntity() {
-    if (this.currentDomain === null) return;
-    // $FlowIgnore - allowing currentDomain.type to specify the repository Map property
-    this.repository[this.currentDomain.type].set(this.currentDomain.metaEdName, this.currentDomain);
+    if (this.currentDomain === NoDomain) return;
+    // $FlowIgnore - allowing currentDomain.type to specify the entityRepository Map property
+    const currentDomainRepository = this.entityRepository[this.currentDomain.type];
+    if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
+      this.validationFailures.push({
+        validatorName: 'DomainBuilder',
+        category: 'error',
+        message: `${this.currentDomain.typeGroupHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
+        sourceMap: this.currentDomain.sourceMap.type,
+      });
+      const duplicateEntity: Domain | Subdomain = currentDomainRepository.get(this.currentDomain.metaEdName);
+      this.validationFailures.push({
+        validatorName: 'DomainBuilder',
+        category: 'error',
+        message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+        sourceMap: duplicateEntity.sourceMap.type,
+      });
+    } else {
+      currentDomainRepository.set(this.currentDomain.metaEdName, this.currentDomain);
+    }
+
     this.currentDomain = NoDomain;
   }
 

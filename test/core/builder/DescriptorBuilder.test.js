@@ -3,9 +3,11 @@ import DescriptorBuilder from '../../../src/core/builder/DescriptorBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building descriptor without map type', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -15,7 +17,7 @@ describe('when building descriptor without map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -34,6 +36,10 @@ describe('when building descriptor without map type', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.descriptor.get(entityName)).toBeDefined();
     expect(entityRepository.descriptor.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -68,8 +74,64 @@ describe('when building descriptor without map type', () => {
   });
 });
 
+describe('when building multiple descriptors', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '1';
+  const documentation: string = 'Doc';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDescriptor(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndDescriptor()
+
+      .withStartDescriptor(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndDescriptor()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one descriptor', () => {
+    expect(entityRepository.descriptor.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.descriptor.get(entityName)).toBeDefined();
+    expect(entityRepository.descriptor.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('DescriptorBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('DescriptorBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap');
+  });
+});
+
 describe('when building descriptor with optional map type', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -82,7 +144,7 @@ describe('when building descriptor with optional map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -162,6 +224,7 @@ describe('when building descriptor with optional map type', () => {
 
 describe('when building descriptor with required map type', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -174,7 +237,7 @@ describe('when building descriptor with required map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -254,6 +317,7 @@ describe('when building descriptor with required map type', () => {
 
 describe('when building descriptor with missing descriptor name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -263,7 +327,7 @@ describe('when building descriptor with missing descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -281,6 +345,7 @@ describe('when building descriptor with missing descriptor name', () => {
 
 describe('when building descriptor with lowercase descriptor name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -290,7 +355,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -308,6 +373,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
 
 describe('when building descriptor with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -316,7 +382,7 @@ describe('when building descriptor with missing documentation', () => {
   const metaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -333,6 +399,7 @@ describe('when building descriptor with missing documentation', () => {
 
 describe('when building descriptor with missing documentation in map type', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -345,7 +412,7 @@ describe('when building descriptor with missing documentation in map type', () =
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -366,6 +433,7 @@ describe('when building descriptor with missing documentation in map type', () =
 
 describe('when building descriptor with missing enumeration item in map type', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -376,7 +444,7 @@ describe('when building descriptor with missing enumeration item in map type', (
   const mapTypeDocumentation: string = 'MapTypeDocumentation';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -397,6 +465,7 @@ describe('when building descriptor with missing enumeration item in map type', (
 
 describe('when building descriptor with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -407,7 +476,7 @@ describe('when building descriptor with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

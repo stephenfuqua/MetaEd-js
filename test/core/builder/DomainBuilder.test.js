@@ -3,9 +3,11 @@ import DomainBuilder from '../../../src/core/builder/DomainBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building domain in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
 
   const projectExtension: string = 'ProjectExtension';
@@ -17,7 +19,7 @@ describe('when building domain in extension namespace', () => {
   const footerDocumentation: string = 'FooterDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -37,6 +39,10 @@ describe('when building domain in extension namespace', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.domain.get(domainName)).toBeDefined();
     expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -67,8 +73,68 @@ describe('when building domain in extension namespace', () => {
   });
 });
 
+describe('when building duplicate domains', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+
+  const projectExtension: string = 'ProjectExtension';
+  const domainName: string = 'DomainName';
+  const domainMetaEdId: string = '1';
+  const entityDocumentation: string = 'EntityDocumentation';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+  const footerDocumentation: string = 'FooterDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomain(domainName, domainMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation(footerDocumentation)
+      .withEndDomain()
+
+      .withStartDomain(domainName, domainMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation(footerDocumentation)
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domain.get(domainName)).toBeDefined();
+    expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('DomainBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('DomainBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap');
+  });
+});
+
 describe('when building subdomain in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -81,7 +147,7 @@ describe('when building subdomain in extension namespace', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -132,6 +198,7 @@ describe('when building subdomain in extension namespace', () => {
 
 describe('when building domain with missing domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -144,7 +211,7 @@ describe('when building domain with missing domain name', () => {
   const footerDocumentation: string = 'FooterDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -164,6 +231,7 @@ describe('when building domain with missing domain name', () => {
 
 describe('when building domain with lowercase domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -176,7 +244,7 @@ describe('when building domain with lowercase domain name', () => {
   const footerDocumentation: string = 'FooterDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -196,6 +264,7 @@ describe('when building domain with lowercase domain name', () => {
 
 describe('when building domain with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -207,7 +276,7 @@ describe('when building domain with missing documentation', () => {
   const footerDocumentation: string = 'FooterDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -226,6 +295,7 @@ describe('when building domain with missing documentation', () => {
 
 describe('when building domain with missing domain item', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -236,7 +306,7 @@ describe('when building domain with missing domain item', () => {
   const footerDocumentation: string = 'FooterDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -255,6 +325,7 @@ describe('when building domain with missing domain item', () => {
 
 describe('when building domain with missing text in footer documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -267,7 +338,7 @@ describe('when building domain with missing text in footer documentation', () =>
   const footerDocumentation: string = '\r\nfooter documentation';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -287,6 +358,7 @@ describe('when building domain with missing text in footer documentation', () =>
 
 describe('when building domain with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
@@ -299,7 +371,7 @@ describe('when building domain with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -319,6 +391,7 @@ describe('when building domain with invalid trailing text', () => {
 
 describe('when building subdomain with missing subdomain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -332,7 +405,7 @@ describe('when building subdomain with missing subdomain name', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -352,6 +425,7 @@ describe('when building subdomain with missing subdomain name', () => {
 
 describe('when building subdomain with lowercase subdomain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -365,7 +439,7 @@ describe('when building subdomain with lowercase subdomain name', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -385,6 +459,7 @@ describe('when building subdomain with lowercase subdomain name', () => {
 
 describe('when building subdomain with missing parent domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -398,7 +473,7 @@ describe('when building subdomain with missing parent domain name', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -418,6 +493,7 @@ describe('when building subdomain with missing parent domain name', () => {
 
 describe('when building subdomain with lowercase parent domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -431,7 +507,7 @@ describe('when building subdomain with lowercase parent domain name', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -451,6 +527,7 @@ describe('when building subdomain with lowercase parent domain name', () => {
 
 describe('when building subdomain with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -463,7 +540,7 @@ describe('when building subdomain with missing documentation', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -482,6 +559,7 @@ describe('when building subdomain with missing documentation', () => {
 
 describe('when building subdomain with missing domain item', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -493,7 +571,7 @@ describe('when building subdomain with missing domain item', () => {
   const subdomainPosition: number = 1;
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -512,6 +590,7 @@ describe('when building subdomain with missing domain item', () => {
 
 describe('when building subdomain with missing unsigned int in position', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -525,7 +604,7 @@ describe('when building subdomain with missing unsigned int in position', () => 
   const subdomainPosition: string = '\r\nposition';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -545,6 +624,7 @@ describe('when building subdomain with missing unsigned int in position', () => 
 
 describe('when building subdomain with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -558,7 +638,7 @@ describe('when building subdomain with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainBuilder(entityRepository);
+    const builder = new DomainBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

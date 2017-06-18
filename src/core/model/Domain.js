@@ -5,6 +5,7 @@ import type { SourceMap } from './SourceMap';
 import { Subdomain } from './Subdomain';
 
 export class DomainSourceMap extends TopLevelEntitySourceMap {
+  type: ?SourceMap;
   domainItems: ?Array<SourceMap>;
   entities: ?Array<SourceMap>;
   footerDocumentation: ?SourceMap;

@@ -35,6 +35,7 @@ import { ReferentialProperty } from '../model/property/ReferentialProperty';
 import { ShortProperty, shortPropertyFactory } from '../model/property/ShortProperty';
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext) {
   if (R.any(token => token.exception)(context.ID())) return [];
@@ -42,21 +43,23 @@ function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext) {
 }
 
 export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
-  repository: EntityRepository;
+  entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentTopLevelEntity: TopLevelEntity;
   currentProperty: EntityProperty;
   currentMergedProperty: MergedProperty;
   whenExitingPropertyCommand: Array<() => void>;
+  validationFailures: Array<ValidationFailure>;
 
-  constructor(repository: EntityRepository) {
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
     super();
-    this.repository = repository;
+    this.entityRepository = entityRepository;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentTopLevelEntity = NoTopLevelEntity;
     this.currentProperty = NoEntityProperty;
     this.currentMergedProperty = NoMergedProperty;
     this.whenExitingPropertyCommand = [];
+    this.validationFailures = validationFailures;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -91,8 +94,27 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   exitingEntity() {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
-      // $FlowIgnore - allowing currentTopLevelEntity.type to specify the repository Map property
-      this.repository[this.currentTopLevelEntity.type].set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
+      // $FlowIgnore - allowing currentTopLevelEntity.type to specify the entityRepository Map property
+      const currentTopLevelEntityRepository = this.entityRepository[this.currentTopLevelEntity.type];
+      if (currentTopLevelEntityRepository.has(this.currentTopLevelEntity.metaEdName)) {
+        this.validationFailures.push({
+          validatorName: 'TopLevelEntityBuilder',
+          category: 'error',
+          message: `${this.currentTopLevelEntity.typeGroupHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
+          // $FlowIgnore - sourceMap property not on TLE
+          sourceMap: this.currentTopLevelEntity.sourceMap.type,
+        });
+        const duplicateEntity: TopLevelEntity = currentTopLevelEntityRepository.get(this.currentTopLevelEntity.metaEdName);
+        this.validationFailures.push({
+          validatorName: 'TopLevelEntityBuilder',
+          category: 'error',
+          message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          // $FlowIgnore - sourceMap property not on TLE
+          sourceMap: duplicateEntity.sourceMap.type,
+        });
+      } else {
+        currentTopLevelEntityRepository.set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
+      }
     }
     this.currentTopLevelEntity = NoTopLevelEntity;
   }

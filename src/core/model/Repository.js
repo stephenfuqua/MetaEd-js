@@ -19,7 +19,6 @@ import type { SharedInteger } from './SharedInteger';
 import type { SharedString } from './SharedString';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
-import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -70,14 +69,12 @@ export function entityRepositoryFactory(): EntityRepository {
 }
 
 export class Repository {
-  builderValidationFailure: Array<ValidationFailure>;
   configuration: any;
   entity: EntityRepository;
 }
 
 export function repositoryFactory(): Repository {
   return Object.assign(new Repository(), {
-    builderValidationFailure: [],
     configuration: null,
     entity: entityRepositoryFactory(),
   });

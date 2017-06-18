@@ -3,9 +3,11 @@ import AssociationSubclassBuilder from '../../../src/core/builder/AssociationSub
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building association subclass in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -14,7 +16,7 @@ describe('when building association subclass in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -33,6 +35,10 @@ describe('when building association subclass in extension namespace', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
     expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -60,8 +66,63 @@ describe('when building association subclass in extension namespace', () => {
   });
 });
 
+describe('when building duplicate association subclasses', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const baseEntityName: string = 'BaseEntityName';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociationSubclass(entityName, baseEntityName)
+      .withDocumentation('doc')
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationSubclass()
+
+      .withStartAssociationSubclass(entityName, baseEntityName)
+      .withDocumentation('doc')
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('AssociationSubclassBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('AssociationSubclassBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 2 sourceMap');
+  });
+});
+
 describe('when building association subclass with missing association subclass name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -71,7 +132,7 @@ describe('when building association subclass with missing association subclass n
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -90,6 +151,7 @@ describe('when building association subclass with missing association subclass n
 
 describe('when building association subclass with lowercase association subclass name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -99,7 +161,7 @@ describe('when building association subclass with lowercase association subclass
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -118,6 +180,7 @@ describe('when building association subclass with lowercase association subclass
 
 describe('when building association subclass with missing based on name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -127,7 +190,7 @@ describe('when building association subclass with missing based on name', () => 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -146,6 +209,7 @@ describe('when building association subclass with missing based on name', () => 
 
 describe('when building association subclass with lowercase based on name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -155,7 +219,7 @@ describe('when building association subclass with lowercase based on name', () =
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -174,6 +238,7 @@ describe('when building association subclass with lowercase based on name', () =
 
 describe('when building association subclass with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -183,7 +248,7 @@ describe('when building association subclass with missing documentation', () => 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -201,6 +266,7 @@ describe('when building association subclass with missing documentation', () => 
 
 describe('when building association subclass with missing property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -209,7 +275,7 @@ describe('when building association subclass with missing property', () => {
   const baseEntityName: string = 'BaseEntityName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -226,6 +292,7 @@ describe('when building association subclass with missing property', () => {
 
 describe('when building association subclass with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -236,7 +303,7 @@ describe('when building association subclass with invalid trailing text', () => 
   const trailingText: string = 'TrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository);
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

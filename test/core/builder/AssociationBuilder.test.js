@@ -3,9 +3,11 @@ import AssociationBuilder from '../../../src/core/builder/AssociationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building association in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -20,7 +22,7 @@ describe('when building association in extension namespace', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -39,6 +41,10 @@ describe('when building association in extension namespace', () => {
 
   it('should be found in entity repository', () => {
     expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -100,6 +106,7 @@ describe('when building association in extension namespace', () => {
 
 describe('when building association without extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -113,7 +120,7 @@ describe('when building association without extension', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -192,9 +199,70 @@ describe('when building association without extension', () => {
   });
 });
 
+describe('when building duplicate associations', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const entityMetaEdId: string = '1';
+  const documentation1: string = 'documentation1';
+  const firstDomainEntityName: string = 'FirstDomainEntityName';
+  const firstDomainEntityMetaEdId: string = '2';
+  const documentation2: string = 'documentation2';
+  const secondDomainEntityName: string = 'SecondDomainEntityName';
+  const secondDomainEntityMetaEdId: string = '3';
+  const documentation3: string = 'documentation3';
+
+  beforeAll(() => {
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociation(entityName, entityMetaEdId)
+      .withDocumentation(documentation1)
+      .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
+      .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
+      .withEndAssociation()
+
+      .withStartAssociation(entityName, entityMetaEdId)
+      .withDocumentation(documentation1)
+      .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
+      .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
+      .withEndAssociation()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures.length).toBe(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('AssociationBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('AssociationBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 2 sourceMap');
+  });
+});
 
 describe('when building association with additional identity property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -202,9 +270,8 @@ describe('when building association with additional identity property', () => {
   const secondDomainEntityName: string = 'SecondDomainEntityName';
   const identityProperty: string = 'IdentityProperty';
 
-
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -273,6 +340,7 @@ describe('when building association with additional identity property', () => {
 
 describe('when building association with missing association name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -288,7 +356,7 @@ describe('when building association with missing association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -308,6 +376,7 @@ describe('when building association with missing association name', () => {
 
 describe('when building association with lowercase association name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -323,7 +392,7 @@ describe('when building association with lowercase association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -343,6 +412,7 @@ describe('when building association with lowercase association name', () => {
 
 describe('when building association with missing documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -357,7 +427,7 @@ describe('when building association with missing documentation', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -376,6 +446,7 @@ describe('when building association with missing documentation', () => {
 
 describe('when building association with missing domain entity property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -388,7 +459,7 @@ describe('when building association with missing domain entity property', () => 
   const documentation2: string = 'documentation2';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -410,6 +481,7 @@ describe('when building association with missing domain entity property', () => 
 
 describe('when building association with missing documentation in the first domain entity', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -424,7 +496,7 @@ describe('when building association with missing documentation in the first doma
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -446,6 +518,7 @@ describe('when building association with missing documentation in the first doma
 
 describe('when building association with missing documentation in the second domain entity', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -460,7 +533,7 @@ describe('when building association with missing documentation in the second dom
   const secondDomainEntityMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -482,6 +555,7 @@ describe('when building association with missing documentation in the second dom
 
 describe('when building association with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -498,7 +572,7 @@ describe('when building association with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository);
+    const builder = new AssociationBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

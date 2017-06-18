@@ -3,9 +3,11 @@ import SharedDecimalBuilder from '../../../src/core/builder/SharedDecimalBuilder
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building shared decimal in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -18,7 +20,7 @@ describe('when building shared decimal in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -37,6 +39,10 @@ describe('when building shared decimal in extension namespace', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.sharedDecimal.get(entityName)).toBeDefined();
     expect(entityRepository.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have namespace', () => {
@@ -72,8 +78,67 @@ describe('when building shared decimal in extension namespace', () => {
   });
 });
 
+describe('when building duplicate shared decimals', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '123';
+  const documentation = 'doc';
+  const totalDigits = '10';
+  const decimalPlaces = '3';
+  const minValue = '2';
+  const maxValue = '100';
+
+  beforeAll(() => {
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartSharedDecimal(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
+      .withEndSharedDecimal()
+
+      .withStartSharedDecimal(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
+      .withEndSharedDecimal()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one shared decimal', () => {
+    expect(entityRepository.sharedDecimal.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.sharedDecimal.get(entityName)).toBeDefined();
+    expect(entityRepository.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('SharedDecimalBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('SharedDecimalBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 2 sourceMap');
+  });
+});
+
 describe('when building shared decimal with no shared decimal name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -87,7 +152,7 @@ describe('when building shared decimal with no shared decimal name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -110,6 +175,7 @@ describe('when building shared decimal with no shared decimal name', () => {
 
 describe('when building shared decimal with lowercase shared decimal name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -123,7 +189,7 @@ describe('when building shared decimal with lowercase shared decimal name', () =
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -183,6 +249,7 @@ describe('when building shared decimal with lowercase shared decimal name', () =
 
 describe('when building shared decimal with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -195,7 +262,7 @@ describe('when building shared decimal with no documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -245,6 +312,7 @@ describe('when building shared decimal with no documentation', () => {
 
 describe('when building shared decimal with no metaed id', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -258,7 +326,7 @@ describe('when building shared decimal with no metaed id', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -309,6 +377,7 @@ describe('when building shared decimal with no metaed id', () => {
 
 describe('when building shared decimal with no total digits property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -321,7 +390,7 @@ describe('when building shared decimal with no total digits property', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -374,6 +443,7 @@ describe('when building shared decimal with no total digits property', () => {
 
 describe('when building shared decimal with no total digits value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -387,7 +457,7 @@ describe('when building shared decimal with no total digits value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -441,6 +511,7 @@ describe('when building shared decimal with no total digits value', () => {
 
 describe('when building shared decimal with no decimal places property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -453,7 +524,7 @@ describe('when building shared decimal with no decimal places property', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -506,6 +577,7 @@ describe('when building shared decimal with no decimal places property', () => {
 
 describe('when building shared decimal with no min value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -519,7 +591,7 @@ describe('when building shared decimal with no min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -573,6 +645,7 @@ describe('when building shared decimal with no min value', () => {
 
 describe('when building shared decimal with no max value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -586,7 +659,7 @@ describe('when building shared decimal with no max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -640,6 +713,7 @@ describe('when building shared decimal with no max value', () => {
 
 describe('when building shared decimal with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -654,7 +728,7 @@ describe('when building shared decimal with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository);
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

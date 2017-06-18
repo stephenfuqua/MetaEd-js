@@ -4,7 +4,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
 import type { Interchange } from '../model/Interchange';
 import type { InterchangeItem } from '../model/InterchangeItem';
-import type { Repository } from '../model/Repository';
+import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { interchangeFactory, NoInterchange } from '../model/Interchange';
@@ -12,19 +12,22 @@ import { interchangeItemFactory, NoInterchangeItem } from '../model/InterchangeI
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class InterchangeBuilder extends MetaEdGrammarListener {
-  repository: Repository;
+  entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentInterchange: Interchange;
   currentInterchangeItem: InterchangeItem;
+  validationFailures: Array<ValidationFailure>;
 
-  constructor(repository: Repository) {
+  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
     super();
-    this.repository = repository;
+    this.entityRepository = entityRepository;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentInterchange = NoInterchange;
     this.currentInterchangeItem = NoInterchangeItem;
+    this.validationFailures = validationFailures;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -93,8 +96,24 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   exitingInterchange() {
     if (this.currentInterchange === NoInterchange) return;
-    // $FlowIgnore - allowing currentTopLevelEntity.type to specify the repository Map property
-    this.repository[this.currentInterchange.type].set(this.currentInterchange.metaEdName, this.currentInterchange);
+    if (this.entityRepository.interchange.has(this.currentInterchange.metaEdName)) {
+      this.validationFailures.push({
+        validatorName: 'InterchangeBuilder',
+        category: 'error',
+        message: `Interchange named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
+        sourceMap: this.currentInterchange.sourceMap.type,
+      });
+      // $FlowIgnore - we ensure the key is in the map above
+      const duplicateEntity: Interchange = this.entityRepository.interchange.get(this.currentInterchange.metaEdName);
+      this.validationFailures.push({
+        validatorName: 'InterchangeBuilder',
+        category: 'error',
+        message: `Interchange named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+        sourceMap: duplicateEntity.sourceMap.type,
+      });
+    } else {
+      this.entityRepository.interchange.set(this.currentInterchange.metaEdName, this.currentInterchange);
+    }
     this.currentInterchange = NoInterchange;
   }
 

@@ -3,9 +3,11 @@ import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building simple domain entity in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
@@ -15,7 +17,7 @@ describe('when building simple domain entity in extension namespace', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -35,6 +37,10 @@ describe('when building simple domain entity in extension namespace', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.domainEntity.get(entityName)).toBeDefined();
     expect(entityRepository.domainEntity.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have correct namespace', () => {
@@ -80,15 +86,73 @@ describe('when building simple domain entity in extension namespace', () => {
   });
 });
 
+describe('when building duplicate domain entities', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const metaEdId: string = '1';
+  const projectExtension: string = 'ProjectExtension';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const stringPropertyName: string = 'StringPropertyName';
+  const documentation: string = 'Doc';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one domain entity', () => {
+    expect(entityRepository.domainEntity.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntity.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('DomainEntityBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('DomainEntityBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 2 sourceMap');
+  });
+});
+
 describe('when building domain entity without extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
   const entityName: string = 'EntityName';
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -141,13 +205,14 @@ describe('when building domain entity without extension', () => {
 
 describe('when building domain entity with a with context', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const withContextName: string = 'WithContextName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -172,6 +237,7 @@ describe('when building domain entity with a with context', () => {
 
 describe('when building domain entity with a with context and shorten to', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -179,7 +245,7 @@ describe('when building domain entity with a with context and shorten to', () =>
   const shortenToName: string = 'ShortenToName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -208,13 +274,14 @@ describe('when building domain entity with a with context and shorten to', () =>
 
 describe('when building domain entity with choice', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -239,13 +306,14 @@ describe('when building domain entity with choice', () => {
 
 describe('when building domain entity with inline common reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -270,12 +338,13 @@ describe('when building domain entity with inline common reference', () => {
 
 describe('when building domain entity with queryable field', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -301,13 +370,14 @@ describe('when building domain entity with queryable field', () => {
 
 describe('when building domain entity with queryable only property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const queryableOnlyName: string = 'QueryableOnlyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -335,13 +405,14 @@ describe('when building domain entity with queryable only property', () => {
 
 describe('when building domain entity with shared decimal reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -366,12 +437,13 @@ describe('when building domain entity with shared decimal reference', () => {
 
 describe('when building domain entity with shared decimal reference without name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -396,13 +468,14 @@ describe('when building domain entity with shared decimal reference without name
 
 describe('when building domain entity with shared integer reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -427,12 +500,13 @@ describe('when building domain entity with shared integer reference', () => {
 
 describe('when building domain entity with shared integer reference without name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -457,13 +531,14 @@ describe('when building domain entity with shared integer reference without name
 
 describe('when building domain entity with shared short reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -488,12 +563,13 @@ describe('when building domain entity with shared short reference', () => {
 
 describe('when building domain entity with shared short reference without name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -518,13 +594,14 @@ describe('when building domain entity with shared short reference without name',
 
 describe('when building domain entity with shared string reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -549,12 +626,13 @@ describe('when building domain entity with shared string reference', () => {
 
 describe('when building domain entity with shared string reference without name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -579,13 +657,14 @@ describe('when building domain entity with shared string reference without name'
 
 describe('when building domain entity with shared string reference inheriting documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -611,12 +690,13 @@ describe('when building domain entity with shared string reference inheriting do
 
 describe('when building domain entity with domain entity reference inheriting documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -642,12 +722,13 @@ describe('when building domain entity with domain entity reference inheriting do
 
 describe('when building domain entity with cascading updates', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -666,6 +747,7 @@ describe('when building domain entity with cascading updates', () => {
 });
 
 describe('when building abstract entity in extension namespace', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -676,7 +758,7 @@ describe('when building abstract entity in extension namespace', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -743,6 +825,7 @@ describe('when building abstract entity in extension namespace', () => {
 
 describe('when building domain entity with no begin namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
 
   const entityName: string = 'EntityName';
@@ -752,7 +835,7 @@ describe('when building domain entity with no begin namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withStartDomainEntity(entityName, metaEdId)
@@ -774,6 +857,7 @@ describe('when building domain entity with no begin namespace', () => {
 
 describe('when building domain entity with no project extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = '';
@@ -785,7 +869,7 @@ describe('when building domain entity with no project extension', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -809,6 +893,7 @@ describe('when building domain entity with no project extension', () => {
 
 describe('when building domain entity with uppercase namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'Namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -820,7 +905,7 @@ describe('when building domain entity with uppercase namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -879,6 +964,7 @@ describe('when building domain entity with uppercase namespace', () => {
 
 describe('when building domain entity with lowercase project extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'projectExtension';
@@ -890,7 +976,7 @@ describe('when building domain entity with lowercase project extension', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -949,6 +1035,7 @@ describe('when building domain entity with lowercase project extension', () => {
 
 describe('when building domain entity with no namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = '';
   const projectExtension: string = 'ProjectExtension';
@@ -960,7 +1047,7 @@ describe('when building domain entity with no namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1010,6 +1097,7 @@ describe('when building domain entity with no namespace', () => {
 
 describe('when building domain entity with no end namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1021,7 +1109,7 @@ describe('when building domain entity with no end namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1070,6 +1158,7 @@ describe('when building domain entity with no end namespace', () => {
 
 describe('when building domain entity with no top level entity', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1079,7 +1168,7 @@ describe('when building domain entity with no top level entity', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1101,6 +1190,7 @@ describe('when building domain entity with no top level entity', () => {
 
 describe('when building domain entity with no domain entity name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1112,7 +1202,7 @@ describe('when building domain entity with no domain entity name', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1136,6 +1226,7 @@ describe('when building domain entity with no domain entity name', () => {
 
 describe('when building domain entity with lowercase domain entity name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1147,7 +1238,7 @@ describe('when building domain entity with lowercase domain entity name', () => 
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1171,6 +1262,7 @@ describe('when building domain entity with lowercase domain entity name', () => 
 
 describe('when building domain entity with no metaed id', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1182,7 +1274,7 @@ describe('when building domain entity with no metaed id', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1232,6 +1324,7 @@ describe('when building domain entity with no metaed id', () => {
 
 describe('when building domain entity with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1242,7 +1335,7 @@ describe('when building domain entity with no documentation', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1291,6 +1384,7 @@ describe('when building domain entity with no documentation', () => {
 
 describe('when building domain entity with no properties', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1300,7 +1394,7 @@ describe('when building domain entity with no properties', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1337,6 +1431,7 @@ describe('when building domain entity with no properties', () => {
 
 describe('when building domain entity with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1349,7 +1444,7 @@ describe('when building domain entity with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1399,7 +1494,8 @@ describe('when building domain entity with invalid trailing text', () => {
 });
 
 describe('when building domain entity source map', () => {
-  const repository: Repository = entityRepositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -1409,7 +1505,7 @@ describe('when building domain entity source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(repository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -1423,33 +1519,34 @@ describe('when building domain entity source map', () => {
   });
 
   it('should have a type property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap.metaEdName).toBeDefined();
-    expect(repository.domainEntity.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
   it('should have a metaEdId property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap.metaEdId).toBeDefined();
-    expect(repository.domainEntity.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
   it('should have a documentation property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap.documentation).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have a allowPrimaryKeyUpdates property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
   });
 
   it('should have correct line, column, text for each property', () => {
-    expect(repository.domainEntity.get(entityName).sourceMap).toMatchSnapshot();
+    expect(entityRepository.domainEntity.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when building domain entity namespace info source map', () => {
-  const repository: Repository = entityRepositoryFactory();
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -1459,7 +1556,7 @@ describe('when building domain entity namespace info source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(repository);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -1473,29 +1570,29 @@ describe('when building domain entity namespace info source map', () => {
   });
 
   it('should have a source map', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap).toBeDefined();
   });
 
   it('should have a type property', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.type).toBeDefined();
   });
 
   it('should have a namespace property', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace).toBeDefined();
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace.tokenText).toBe(namespace);
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.namespace.tokenText).toBe(namespace);
   });
 
   it('should have a projectExtension property', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension).toBeDefined();
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(projectExtension);
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(projectExtension);
   });
 
   it('should have a isExtension property', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension).toBeDefined();
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension.tokenText).toBe(projectExtension);
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap.isExtension.tokenText).toBe(projectExtension);
   });
 
   it('should have correct line, column, text', () => {
-    expect(repository.domainEntity.get(entityName).namespaceInfo.sourceMap).toMatchSnapshot();
+    expect(entityRepository.domainEntity.get(entityName).namespaceInfo.sourceMap).toMatchSnapshot();
   });
 });

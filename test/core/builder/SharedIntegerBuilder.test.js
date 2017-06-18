@@ -3,9 +3,11 @@ import SharedIntegerBuilder from '../../../src/core/builder/SharedIntegerBuilder
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building shared integer in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -16,7 +18,7 @@ describe('when building shared integer in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
@@ -34,6 +36,10 @@ describe('when building shared integer in extension namespace', () => {
   it('should be found in entity repository', () => {
     expect(entityRepository.sharedInteger.get(entityName)).toBeDefined();
     expect(entityRepository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
   });
 
   it('should have namespace', () => {
@@ -65,8 +71,9 @@ describe('when building shared integer in extension namespace', () => {
   });
 });
 
-describe('when building shared short in extension namespace', () => {
+describe('when building duplicate shared integers', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -77,7 +84,62 @@ describe('when building shared short in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartSharedInteger(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withNumericRestrictions(minValue, maxValue)
+      .withEndSharedInteger()
+
+      .withStartSharedInteger(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withNumericRestrictions(minValue, maxValue)
+      .withEndSharedInteger()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one shared integer', () => {
+    expect(entityRepository.sharedInteger.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.sharedInteger.get(entityName)).toBeDefined();
+    expect(entityRepository.sharedInteger.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('SharedIntegerBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('SharedIntegerBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 2 sourceMap');
+  });
+});
+
+describe('when building shared short in extension namespace', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '123';
+  const documentation = 'doc';
+  const minValue = '2';
+  const maxValue = '100';
+
+  beforeAll(() => {
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
@@ -129,6 +191,7 @@ describe('when building shared short in extension namespace', () => {
 
 describe('when building shared integer with no shared integer name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -140,7 +203,7 @@ describe('when building shared integer with no shared integer name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -163,6 +226,7 @@ describe('when building shared integer with no shared integer name', () => {
 
 describe('when building shared integer with lowercase shared integer name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -174,7 +238,7 @@ describe('when building shared integer with lowercase shared integer name', () =
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -230,6 +294,7 @@ describe('when building shared integer with lowercase shared integer name', () =
 
 describe('when building shared integer with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -240,7 +305,7 @@ describe('when building shared integer with no documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -286,6 +351,7 @@ describe('when building shared integer with no documentation', () => {
 
 describe('when building shared integer with no min value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -297,7 +363,7 @@ describe('when building shared integer with no min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -344,6 +410,7 @@ describe('when building shared integer with no min value', () => {
 
 describe('when building shared integer with no max value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -355,7 +422,7 @@ describe('when building shared integer with no max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -402,6 +469,7 @@ describe('when building shared integer with no max value', () => {
 
 describe('when building shared integer with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -414,7 +482,7 @@ describe('when building shared integer with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -462,6 +530,7 @@ describe('when building shared integer with invalid trailing text', () => {
 
 describe('when building shared short with no shared short name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -473,7 +542,7 @@ describe('when building shared short with no shared short name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -496,6 +565,7 @@ describe('when building shared short with no shared short name', () => {
 
 describe('when building shared short with lowercase shared short name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -507,7 +577,7 @@ describe('when building shared short with lowercase shared short name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -563,6 +633,7 @@ describe('when building shared short with lowercase shared short name', () => {
 
 describe('when building shared short with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -573,7 +644,7 @@ describe('when building shared short with no documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -619,6 +690,7 @@ describe('when building shared short with no documentation', () => {
 
 describe('when building shared short with no min value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -630,7 +702,7 @@ describe('when building shared short with no min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -677,6 +749,7 @@ describe('when building shared short with no min value', () => {
 
 describe('when building shared short with no max value', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -688,7 +761,7 @@ describe('when building shared short with no max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -735,6 +808,7 @@ describe('when building shared short with no max value', () => {
 
 describe('when building shared short with invalid trailing text', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -747,7 +821,7 @@ describe('when building shared short with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedIntegerBuilder(entityRepository);
+    const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
