@@ -7,7 +7,7 @@ import type { MapTypeEnumeration } from '../model/MapTypeEnumeration';
 import { mapTypeEnumerationFactory, NoMapTypeEnumeration } from '../model/MapTypeEnumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
 import { NoEnumerationItem, enumerationItemFactory } from '../model/EnumerationItem';
-import { extractDocumentation, extractShortDescription, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
@@ -37,7 +37,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterDescriptorName(context: MetaEdGrammar.DescriptorNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 
@@ -97,7 +97,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
     if (this.currentEnumerationItem !== NoEnumerationItem) {
       this.currentEnumerationItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     } else {
