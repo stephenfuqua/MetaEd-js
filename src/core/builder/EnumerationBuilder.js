@@ -10,12 +10,16 @@ import { extractDocumentation, extractShortDescription, squareBracketRemoval } f
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
+import type { PropertyType } from '../model/property/PropertyType';
+import type { EntityProperty } from '../model/property/EntityProperty';
 
 export default class EnumerationBuilder extends TopLevelEntityBuilder {
   currentEnumerationItem: EnumerationItem;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
-    super(entityRepository, validationFailures);
+  constructor(entityRepository: EntityRepository,
+    validationFailures: Array<ValidationFailure>,
+    propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
+    super(entityRepository, validationFailures, propertyIndex);
     this.currentEnumerationItem = NoEnumerationItem;
   }
 

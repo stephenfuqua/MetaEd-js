@@ -19,7 +19,7 @@ describe('when building single enumeration', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -95,7 +95,7 @@ describe('when building duplicate enumerations', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -149,7 +149,7 @@ describe('when building enumeration without item documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -186,7 +186,7 @@ describe('when building multiple enumerations', () => {
   const metaEdId2: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -233,7 +233,7 @@ describe('when building enumeration with missing enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -262,7 +262,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -290,7 +290,7 @@ describe('when building enumeration with missing documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -317,7 +317,7 @@ describe('when building enumeration with missing enumeration item', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -345,7 +345,7 @@ describe('when building enumeration with empty enumeration item description', ()
   const itemShortDescription: string = '';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -375,7 +375,7 @@ describe('when building enumeration with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures);
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

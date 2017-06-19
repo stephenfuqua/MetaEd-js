@@ -1,8 +1,11 @@
 // @flow
-import { Repository } from '../../model/Repository';
+import type { Repository } from '../../model/Repository';
 import type { ValidationFailure } from '../ValidationFailure';
+import type { PropertyType } from '../../model/property/PropertyType';
+import type { EntityProperty } from '../../model/property/EntityProperty';
 
-export function validate(repository: Repository): Array<ValidationFailure> {
+// eslint-disable-next-line no-unused-vars
+export function validate(repository: Repository, propertyIndex: Map<PropertyType, EntityProperty>): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   repository.entity.domainEntity.forEach(domainEntity => {
     if (domainEntity.identityProperties.length === 0) {

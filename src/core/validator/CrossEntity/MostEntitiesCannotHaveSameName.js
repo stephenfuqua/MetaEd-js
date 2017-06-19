@@ -1,42 +1,9 @@
 // @flow
-import { Repository } from '../../model/Repository';
+import { entitiesNeedingDuplicateChecking } from '../../model/Repository';
+import type { Repository, MostEntities } from '../../model/Repository';
 import type { ValidationFailure } from '../ValidationFailure';
-import { Association } from '../../model/Association';
-import { AssociationSubclass } from '../../model/AssociationSubclass';
-import { Choice } from '../../model/Choice';
-import { Common } from '../../model/Common';
-import { DomainEntity } from '../../model/DomainEntity';
-import { DomainEntitySubclass } from '../../model/DomainEntitySubclass';
-import { SharedDecimal } from '../../model/SharedDecimal';
-import { SharedInteger } from '../../model/SharedInteger';
-import { SharedString } from '../../model/SharedString';
-
-type MostEntities =
-  Association |
-  AssociationSubclass |
-  Choice |
-  Common |
-  DomainEntity |
-  DomainEntitySubclass |
-  SharedDecimal |
-  SharedInteger |
-  SharedString;
-
-// Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
-// and extension entities don't define a new identifier
-function entitiesNeedingDuplicateChecking(repository: Repository): Array<MostEntities> {
-  const result: Array<MostEntities> = [];
-  result.push(...repository.entity.association.values());
-  result.push(...repository.entity.associationSubclass.values());
-  result.push(...repository.entity.choice.values());
-  result.push(...repository.entity.common.values());
-  result.push(...repository.entity.domainEntity.values());
-  result.push(...repository.entity.domainEntitySubclass.values());
-  result.push(...repository.entity.sharedDecimal.values());
-  result.push(...repository.entity.sharedInteger.values());
-  result.push(...repository.entity.sharedString.values());
-  return result;
-}
+import type { PropertyType } from '../../model/property/PropertyType';
+import type { EntityProperty } from '../../model/property/EntityProperty';
 
 function groupByMetaEdName(entities: Array<MostEntities>): Map<string, Array<MostEntities>> {
   return entities.reduce((structure: Map<string, Array<MostEntities>>, entity: MostEntities) => {
@@ -47,7 +14,8 @@ function groupByMetaEdName(entities: Array<MostEntities>): Map<string, Array<Mos
   }, new Map());
 }
 
-export function validate(repository: Repository): Array<ValidationFailure> {
+// eslint-disable-next-line no-unused-vars
+export function validate(repository: Repository, propertyIndex: Map<PropertyType, EntityProperty>): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   groupByMetaEdName(entitiesNeedingDuplicateChecking(repository)).forEach((entities, metaEdName) => {

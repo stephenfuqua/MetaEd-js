@@ -33,8 +33,8 @@ describe('when entities have different names', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new AssociationBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -69,8 +69,8 @@ describe('when DE and Association have identical names', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new AssociationBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -114,8 +114,8 @@ describe('when DE has same name as DE extension', () => {
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -151,8 +151,8 @@ describe('when Association has same name as Association extension', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new AssociationBuilder(repository.entity))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity));
+      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -186,8 +186,8 @@ describe('when DE and SharedInteger have identical names', () => {
       .withEndSharedInteger()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new SharedIntegerBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new SharedIntegerBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -231,8 +231,8 @@ describe('when DE and Common have identical names', () => {
       .withEndCommon()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new CommonBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -276,8 +276,8 @@ describe('when DE has same name as descriptor', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new DescriptorBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -311,8 +311,8 @@ describe('when DE has same name as enumeration', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new EnumerationBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new EnumerationBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -346,8 +346,8 @@ describe('when DE has same name as interchange', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity))
-      .sendToListener(new InterchangeBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new InterchangeBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });

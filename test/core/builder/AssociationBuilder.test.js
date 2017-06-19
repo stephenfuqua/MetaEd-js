@@ -22,7 +22,7 @@ describe('when building association in extension namespace', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -120,7 +120,7 @@ describe('when building association without extension', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -216,7 +216,7 @@ describe('when building duplicate associations', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -271,7 +271,7 @@ describe('when building association with additional identity property', () => {
   const identityProperty: string = 'IdentityProperty';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -356,7 +356,7 @@ describe('when building association with missing association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -392,7 +392,7 @@ describe('when building association with lowercase association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -427,7 +427,7 @@ describe('when building association with missing documentation', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -459,7 +459,7 @@ describe('when building association with missing domain entity property', () => 
   const documentation2: string = 'documentation2';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -496,7 +496,7 @@ describe('when building association with missing documentation in the first doma
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -533,7 +533,7 @@ describe('when building association with missing documentation in the second dom
   const secondDomainEntityMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -572,7 +572,7 @@ describe('when building association with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures);
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

@@ -17,7 +17,7 @@ describe('when building descriptor without map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -86,7 +86,7 @@ describe('when building multiple descriptors', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -144,7 +144,7 @@ describe('when building descriptor with optional map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -237,7 +237,7 @@ describe('when building descriptor with required map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -327,7 +327,7 @@ describe('when building descriptor with missing descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -355,7 +355,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -382,7 +382,7 @@ describe('when building descriptor with missing documentation', () => {
   const metaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -412,7 +412,7 @@ describe('when building descriptor with missing documentation in map type', () =
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -444,7 +444,7 @@ describe('when building descriptor with missing enumeration item in map type', (
   const mapTypeDocumentation: string = 'MapTypeDocumentation';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -476,7 +476,7 @@ describe('when building descriptor with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures);
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

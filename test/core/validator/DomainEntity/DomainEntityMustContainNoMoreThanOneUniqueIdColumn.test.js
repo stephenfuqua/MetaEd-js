@@ -20,7 +20,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
       .withStringProperty('Property2', 'doc', true, false, 50)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -48,7 +48,7 @@ describe('when validating domain entity with one UniqueId field', () => {
       .withStringProperty('Property', 'doc', true, false, 50)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -77,7 +77,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
       .withStringProperty('Property', 'doc', true, false, 50)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -110,7 +110,7 @@ describe('when validating domain entity with two UniqueId fields in extension na
       .withStringProperty('Property', 'doc', true, false, 50)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });

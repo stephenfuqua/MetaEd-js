@@ -18,7 +18,7 @@ describe('when building domain entity subclass in extension namespace', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -81,7 +81,7 @@ describe('when building duplicate domain entity subclasses', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -138,7 +138,7 @@ describe('when building domain entity subclass with missing domain entity subcla
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -169,7 +169,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -200,7 +200,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -231,7 +231,7 @@ describe('when building domain entity subclass with missing based on name', () =
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -261,7 +261,7 @@ describe('when building domain entity subclass with missing documentation', () =
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -289,7 +289,7 @@ describe('when building domain entity subclass with missing property', () => {
   const Documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -320,7 +320,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

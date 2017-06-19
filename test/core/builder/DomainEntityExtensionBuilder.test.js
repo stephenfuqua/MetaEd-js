@@ -15,7 +15,7 @@ describe('when building domain entity extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -74,7 +74,7 @@ describe('when building duplicate domain entity extensions', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -128,7 +128,7 @@ describe('when building domain entity extension with missing domain entity exten
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -158,7 +158,7 @@ describe('when building domain entity extension with missing domain entity exten
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -187,7 +187,7 @@ describe('when building domain entity extension with lowercase domain entity ext
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -214,7 +214,7 @@ describe('when building domain entity extension with missing property', () => {
   const MetaEdId: string = '10';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -243,7 +243,7 @@ describe('when building domain entity extension with invalid trailing text', () 
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures);
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

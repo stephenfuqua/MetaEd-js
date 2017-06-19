@@ -15,7 +15,7 @@ describe('when building common extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -74,7 +74,7 @@ describe('when building multiple common extensions', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -126,7 +126,7 @@ describe('when building common extension with missing common extension name', ()
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -153,7 +153,7 @@ describe('when building common extension with lowercase common extension name', 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -179,7 +179,7 @@ describe('when building common extension with missing property', () => {
   const entityName: string = 'EntityName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -206,7 +206,7 @@ describe('when building common extension with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures);
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)

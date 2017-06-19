@@ -9,6 +9,7 @@ import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';
+import type { PropertyType } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { booleanPropertyFactory } from '../model/property/BooleanProperty';
@@ -37,9 +38,18 @@ import { sharedShortPropertyFactory } from '../model/property/SharedShortPropert
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
-function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext) {
+function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<string> {
   if (R.any(token => token.exception)(context.ID())) return [];
   return R.map(token => token.getText())(context.ID());
+}
+
+function addPropertyToPropertyIndex(entityProperty: EntityProperty, propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
+  if (entityProperty === NoEntityProperty) return;
+  if (!propertyIndex.has(entityProperty.type)) {
+    propertyIndex.set(entityProperty.type, []);
+  }
+  // $FlowIgnore - already ensured key exists in Map above
+  propertyIndex.get(entityProperty.type).push(entityProperty);
 }
 
 export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
@@ -51,8 +61,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   whenExitingPropertyCommand: Array<() => void>;
   validationFailures: Array<ValidationFailure>;
   currentTopLevelEntityPropertyLookup: Map<string, EntityProperty>;
+  propertyIndex: Map<PropertyType, Array<EntityProperty>>;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+  constructor(entityRepository: EntityRepository,
+    validationFailures: Array<ValidationFailure>,
+    propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
     super();
     this.entityRepository = entityRepository;
     this.namespaceInfo = NoNamespaceInfo;
@@ -62,6 +75,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.whenExitingPropertyCommand = [];
     this.validationFailures = validationFailures;
     this.currentTopLevelEntityPropertyLookup = new Map();
+    this.propertyIndex = propertyIndex;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -334,8 +348,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
       this.currentProperty.parentEntityName = this.currentTopLevelEntity.metaEdName;
 
+      // isQueryableOnly is XSD-specific and needs to be pulled out to artifact-specific configuration
       if (!this.currentProperty.isQueryableOnly && !this.propertyNameCollision()) {
         this.currentTopLevelEntity.properties.push(this.currentProperty);
+        addPropertyToPropertyIndex(this.currentProperty, this.propertyIndex);
       }
     }
 

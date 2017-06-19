@@ -3,9 +3,12 @@ import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
+import type { PropertyType } from '../../../src/core/model/property/PropertyType';
+import type { EntityProperty } from '../../../src/core/model/property/EntityProperty';
 
 describe('when building a decimal property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -19,7 +22,7 @@ describe('when building a decimal property', () => {
   const metaEdId: string = '123';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -35,6 +38,10 @@ describe('when building a decimal property', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
     expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
     expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('decimal');
+  });
+
+  it('should have decimal property in property index', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get('decimal')[0]);
   });
 
   it('should have correct documentation', () => {
@@ -69,7 +76,7 @@ describe('when building a string property', () => {
   const metaEdId: string = '123';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -117,7 +124,7 @@ describe('when building a integer property', () => {
   const metaEdId: string = '123';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -165,7 +172,7 @@ describe('when building a short property', () => {
   const metaEdId: string = '123';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -208,7 +215,7 @@ describe('when building a common property with extension override', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -245,7 +252,7 @@ describe('when building a domain entity property', () => {
   const metaEdId: string = '123';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -283,7 +290,7 @@ describe('when building a domain entity property with merge reference', () => {
   const targetPropertyPath: string = 'EntityC.PropertyD';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -329,7 +336,7 @@ describe('when building a domain entity property with multiple merge references'
   const targetPropertyPath2: string = 'PropertyD';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository);
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)

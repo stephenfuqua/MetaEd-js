@@ -19,7 +19,7 @@ describe('when validating domain entity with identity fields', () => {
       .withStringIdentity('Property1', 'doc2', 100)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
@@ -46,7 +46,7 @@ describe('when validating domain entity with no identity fields', () => {
       .withStringProperty('Property1', 'doc2', true, false, 100)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     failures = validate(repository);
   });
