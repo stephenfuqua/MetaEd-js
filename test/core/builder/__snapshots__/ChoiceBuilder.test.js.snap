@@ -12,19 +12,19 @@ Array [
 ]
 `;
 
-exports[`when building choice with missing choice name should have missing id error 1`] = `
+exports[`when building choice with no choice name should have missing id error 1`] = `
 Array [
   "missing ID at '[1]', column: 10, line: 2, token: [1]",
 ]
 `;
 
-exports[`when building choice with missing documentation should have mismatched input error 1`] = `
+exports[`when building choice with no documentation should have mismatched input error 1`] = `
 Array [
   "mismatched input 'integer' expecting 'documentation', column: 4, line: 3, token: integer",
 ]
 `;
 
-exports[`when building choice with missing property should have mismatched input error 1`] = `
+exports[`when building choice with no property should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 5, token: End Namespace",
 ]

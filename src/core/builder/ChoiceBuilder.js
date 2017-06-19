@@ -2,6 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { choiceFactory } from '../model/Choice';
+import { isErrorText } from './BuilderUtility';
 
 export default class ChoiceBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -15,7 +16,7 @@ export default class ChoiceBuilder extends TopLevelEntityBuilder {
   }
 
   enterChoiceName(context: MetaEdGrammar.ChoiceNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 }
