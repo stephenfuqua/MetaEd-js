@@ -43,11 +43,11 @@ describe('when building association extension in extension namespace', () => {
     expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -115,7 +115,7 @@ describe('when building duplicate association extensions', () => {
   });
 });
 
-describe('when building association extension with missing association extension name', () => {
+describe('when building association extension with no association extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -135,6 +135,10 @@ describe('when building association extension with missing association extension
       .withEndAssociationExtension()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build association extension', () => {
+    expect(entityRepository.associationExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -164,12 +168,16 @@ describe('when building association extension with lowercase association extensi
       .sendToListener(builder);
   });
 
+  it('should not build association extension', () => {
+    expect(entityRepository.associationExtension.size).toBe(0);
+  });
+
   it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association extension with missing property', () => {
+describe('when building association extension with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -187,6 +195,35 @@ describe('when building association extension with missing property', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association extension', () => {
+    expect(entityRepository.associationExtension.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
+    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have extendee name', () => {
+    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -216,6 +253,43 @@ describe('when building association extension with invalid trailing text', () =>
       .withEndAssociationExtension()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association extension', () => {
+    expect(entityRepository.associationExtension.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
+    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have extendee name', () => {
+    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.associationExtension.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have extraneous input error', () => {

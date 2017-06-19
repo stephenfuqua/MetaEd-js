@@ -12,13 +12,13 @@ Array [
 ]
 `;
 
-exports[`when building association extension with missing association extension name should have no viable alternative error 1`] = `
+exports[`when building association extension with no association extension name should have no viable alternative error 1`] = `
 Array [
   "no viable alternative at input 'Associationadditions', column: 15, line: 2, token: additions",
 ]
 `;
 
-exports[`when building association extension with missing property should have mismatched input error 1`] = `
+exports[`when building association extension with no property should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 3, token: End Namespace",
 ]

@@ -4,6 +4,7 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { associationExtensionFactory } from '../model/AssociationExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { AssociationExtension } from '../model/AssociationExtension';
+import { isErrorText } from './BuilderUtility';
 
 export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -18,7 +19,7 @@ export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
