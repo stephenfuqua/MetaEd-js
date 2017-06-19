@@ -5,6 +5,7 @@ import { domainEntityFactory } from '../model/DomainEntity';
 import type { DomainEntity } from '../model/DomainEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
+import { isErrorText } from './BuilderUtility';
 
 export default class DomainEntityBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -35,13 +36,13 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
   }
 
   enterAbstractEntityName(context: MetaEdGrammar.AbstractEntityNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
     ((this.currentTopLevelEntity: any): DomainEntity).sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterEntityName(context: MetaEdGrammar.EntityNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
     ((this.currentTopLevelEntity: any): DomainEntity).sourceMap.metaEdName = sourceMapFrom(context);
   }
