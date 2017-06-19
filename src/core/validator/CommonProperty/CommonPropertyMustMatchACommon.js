@@ -17,6 +17,7 @@ export function validate(repository: Repository, propertyIndex: Map<PropertyType
         message: `Common property '${property.metaEdName}' does not match any declared Common.`,
         // $FlowIgnore - sourceMap not on EntityProperty
         sourceMap: property.sourceMap.type,
+        fileMap: null,
       });
     }
   });

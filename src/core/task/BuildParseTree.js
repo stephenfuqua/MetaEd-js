@@ -1,29 +1,32 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { addAction, setParseTree } from '../State';
 import MetaEdErrorListener from '../../grammar/MetaEdErrorListener';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import type { State } from '../State';
-import { getAllContents } from './FileIndex';
+import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
 
-// eslint-disable-next-line import/prefer-default-export
 export const buildParseTree = R.curry(
   (parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
-    const errorMessages = [];
+    const validationFailures = [];
 
-    const errorListener = new MetaEdErrorListener(errorMessages, state.get('fileIndex'));
-    const parseTree = parseTreeBuilder(errorListener, getAllContents(state.get('fileIndex')));
+    const errorListener = new MetaEdErrorListener(validationFailures);
+    const parseTree = parseTreeBuilder(errorListener, getAllContents(state.fileIndex));
 
     if (parseTree == null) {
       winston.error('BuildParseTree: parse tree builder returned null for state metaEdFileIndex contents');
     }
 
-    if (errorMessages.length > 0) {
-      // TODO: maybe error out if errorMessages has a message
-//      winston.error(`BuildParseTree: errors during parsing ${errorMessages.join()}`);
-    }
+    validationFailures.forEach(failure => {
+      if (failure.sourceMap && state.fileIndex) {
+        // eslint-disable-next-line no-param-reassign
+        failure.fileMap = getFilenameAndLineNumber(state.fileIndex, failure.sourceMap.line);
+      }
+    });
 
-    // TODO: consider whether BuildParseTree should add errors, they would be the same as errors found in Validate Syntax
-    return R.pipe(setParseTree(parseTree), addAction('BuildParseTree'))(state);
+    state.validationFailure.push(...validationFailures);
+
+    // eslint-disable-next-line no-param-reassign
+    state.parseTree = parseTree;
+    return state;
   });

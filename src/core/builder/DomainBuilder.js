@@ -91,6 +91,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `${this.currentDomain.typeGroupHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
         sourceMap: this.currentDomain.sourceMap.type,
+        fileMap: null,
       });
       const duplicateEntity: Domain | Subdomain = currentDomainRepository.get(this.currentDomain.metaEdName);
       this.validationFailures.push({
@@ -98,6 +99,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
         sourceMap: duplicateEntity.sourceMap.type,
+        fileMap: null,
       });
     } else {
       currentDomainRepository.set(this.currentDomain.metaEdName, this.currentDomain);

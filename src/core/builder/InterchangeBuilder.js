@@ -102,6 +102,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `Interchange named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
         sourceMap: this.currentInterchange.sourceMap.type,
+        fileMap: null,
       });
       // $FlowIgnore - we ensure the key is in the map above
       const duplicateEntity: Interchange = this.entityRepository.interchange.get(this.currentInterchange.metaEdName);
@@ -110,6 +111,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `Interchange named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
         sourceMap: duplicateEntity.sourceMap.type,
+        fileMap: null,
       });
     } else {
       this.entityRepository.interchange.set(this.currentInterchange.metaEdName, this.currentInterchange);

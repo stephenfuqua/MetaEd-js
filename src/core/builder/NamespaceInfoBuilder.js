@@ -61,6 +61,7 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `Namespace named ${this.currentNamespaceInfo.namespace} is a duplicate declaration of that name.`,
         sourceMap: this.currentNamespaceInfo.sourceMap.type,
+        fileMap: null,
       });
       // $FlowIgnore - we ensure the key is in the map above
       const duplicateEntity: NamespaceInfo = this.entityRepository.namespaceInfo.get(this.currentNamespaceInfo.namespace);
@@ -69,6 +70,7 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
         category: 'error',
         message: `Namespace named ${duplicateEntity.namespace} is a duplicate declaration of that name.`,
         sourceMap: duplicateEntity.sourceMap.type,
+        fileMap: null,
       });
     } else {
       this.entityRepository.namespaceInfo.set(this.currentNamespaceInfo.namespace, this.currentNamespaceInfo);

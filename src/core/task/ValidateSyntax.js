@@ -1,36 +1,38 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { addAction, concatenateErrorMessages } from '../State';
 import type { State } from '../State';
-import { createFileIndex } from './FileIndex';
+import { createFileIndex, getFilenameAndLineNumber } from './FileIndex';
 import MetaEdErrorListener from '../../grammar/MetaEdErrorListener';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 
-// eslint-disable-next-line import/prefer-default-export
 export const validateSyntax = R.curry(
 (parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
-  const errorMessages = [];
-
-  if (state.get('loadedFileSet') == null) {
+  if (state.loadedFileSet == null) {
     winston.error('ValidateSyntax: no files to load found');
     return state;
   }
 
-  state.get('loadedFileSet').forEach(fileToLoad => {
+  state.loadedFileSet.forEach(fileToLoad => {
     fileToLoad.files.forEach(file => {
-      const errorListener = new MetaEdErrorListener(errorMessages, createFileIndex([file]));
+      const validationFailures = [];
+      const errorListener = new MetaEdErrorListener(validationFailures);
 
-      const parseTree = parseTreeBuilder(errorListener, file.get('contents'));
+      const parseTree = parseTreeBuilder(errorListener, file.contents);
       if (parseTree == null) {
-        winston.error(`ValidateSyntax: parse tree builder returned null for file ${file.fullName()}`);
+        winston.error(`ValidateSyntax: parse tree builder returned null for file ${file.fullName}`);
       }
+
+      validationFailures.forEach(failure => {
+        const fileIndex = createFileIndex([file]);
+        if (failure.sourceMap) {
+          // eslint-disable-next-line no-param-reassign
+          failure.fileMap = getFilenameAndLineNumber(fileIndex, failure.sourceMap.line);
+        }
+      });
+
+      state.validationFailure.push(...validationFailures);
     });
   });
-
-  if (errorMessages.length > 0) {
-    // TODO: maybe error out if errorMessages has a message
-//    winston.error(`ValidateSyntax: errors during parsing ${errorMessages.join()}`);
-  }
-  return R.pipe(concatenateErrorMessages(errorMessages), addAction('ValidateSyntax'))(state);
+  return state;
 });

@@ -1,24 +1,13 @@
 // @flow
 import path from 'path';
-import { Record } from 'immutable';
 
-type MetaEdFileRecord = {
+export type MetaEdFile = {
   contents: string;
   lineCount: number;
   directoryName: string;
   filename: string;
   fullName: string;
 }
-
-export type MetaEdFile = Record<MetaEdFileRecord>;
-
-export const MetaEdFileInstance: MetaEdFile = Record({
-  contents: null,
-  lineCount: null,
-  directoryName: null,
-  filename: null,
-  fullName: null,
-});
 
 export type FileSet = {
   namespace: string,
@@ -37,12 +26,11 @@ export function createMetaEdFile(directoryName: string, filename: string, origin
 
   const lineCount = contents.split(/\r\n|\r|\n/).length - 1;
 
-  // $FlowIgnore -- doesn't like constructor call on Immutable.Record
-  return new MetaEdFileInstance({
+  return {
     contents,
     lineCount,
     directoryName,
     filename,
     fullName: directoryName ? path.join(directoryName, filename) : filename,
-  });
+  };
 }

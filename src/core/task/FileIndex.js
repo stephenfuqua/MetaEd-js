@@ -1,6 +1,5 @@
 // @flow
 import R from 'ramda';
-import { Record } from 'immutable';
 import type { MetaEdFile } from './MetaEdFile';
 
 export type FileAndLineNumber = {
@@ -8,29 +7,23 @@ export type FileAndLineNumber = {
   lineNumber: number,
 }
 
-export type FilenameAndLineNumber = {
+export type FileMap = {
   filename: string,
   lineNumber: number,
 }
 
-type FileIndexRecord = {
+export type FileIndex = {
   fileAndLineNumbersSorted: FileAndLineNumber[];
   totalLineCount: number;
 }
 
-export type FileIndex = Record<FileIndexRecord>;
-
-export const FileIndexInstance: FileIndex = Record({
-  fileAndLineNumbersSorted: null,
-  totalLineCount: null,
-});
-
-export function getAllContents(fileIndex: FileIndex): string {
-  return fileIndex.get('fileAndLineNumbersSorted').map(x => x.file.get('contents')).join('');
+export function getAllContents(fileIndex: ?FileIndex): string {
+  if (fileIndex == null) return '';
+  return fileIndex.fileAndLineNumbersSorted.map(x => x.file.contents).join('');
 }
 
-export function getFilenameAndLineNumber(fileIndex: FileIndex, concatenatedLineNumber: number): FilenameAndLineNumber {
-  const matchingFileAndLineNumber = R.findLast(x => x.lineNumber <= concatenatedLineNumber, fileIndex.get('fileAndLineNumbersSorted'));
+export function getFilenameAndLineNumber(fileIndex: FileIndex, concatenatedLineNumber: number): FileMap {
+  const matchingFileAndLineNumber = R.findLast(x => x.lineNumber <= concatenatedLineNumber, fileIndex.fileAndLineNumbersSorted);
 
   if (matchingFileAndLineNumber == null) {
     return { filename: 'Error/matchingFileAndLineNumber/null', lineNumber: -1 };
@@ -45,12 +38,11 @@ export function createFileIndex(metaEdFiles: MetaEdFile[]): FileIndex {
   let lineNumber = 1;
   metaEdFiles.forEach(file => {
     fileAndLineNumbers.push({ file, lineNumber });
-    lineNumber += file.get('lineCount');
+    lineNumber += file.lineCount;
   });
 
-  // $FlowIgnore -- doesn't like constructor call on Immutable.Record
-  return new FileIndexInstance({
+  return {
     fileAndLineNumbersSorted: R.sortBy(R.prop('lineNumber'))(fileAndLineNumbers),
     totalLineCount: lineNumber,
-  });
+  };
 }

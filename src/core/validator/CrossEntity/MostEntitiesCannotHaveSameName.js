@@ -15,7 +15,7 @@ function groupByMetaEdName(entities: Array<MostEntities>): Map<string, Array<Mos
 }
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyIndex: Map<PropertyType, EntityProperty>): Array<ValidationFailure> {
+export function validate(repository: Repository, propertyIndex: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   groupByMetaEdName(entitiesNeedingDuplicateChecking(repository)).forEach((entities, metaEdName) => {
@@ -26,6 +26,7 @@ export function validate(repository: Repository, propertyIndex: Map<PropertyType
           category: 'error',
           message: `${entity.typeGroupHumanizedName} named ${metaEdName} is a duplicate declaration of that name.`,
           sourceMap: entity.sourceMap.type,
+          fileMap: null,
         });
       });
     }

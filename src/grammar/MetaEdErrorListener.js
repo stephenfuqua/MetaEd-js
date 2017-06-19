@@ -1,35 +1,30 @@
 // @flow
 import antlr4 from 'antlr4';
-import type { FileIndex, FilenameAndLineNumber } from '../core/task/FileIndex';
-import { getFilenameAndLineNumber } from '../core/task/FileIndex';
-
-type ValidationMessage = any;
+import type { ValidationFailure } from '../core/validator/ValidationFailure';
 
 export default class MetaEdErrorListener {
-  _messageCollection: ValidationMessage[];
-  _fileIndex: FileIndex;
+  _messageCollection: ValidationFailure[];
 
-  constructor(messageCollection: ValidationMessage[], fileIndex: FileIndex) {
+  constructor(messageCollection: ValidationFailure[]) {
     antlr4.error.ErrorListener.call(this);
     this._messageCollection = messageCollection;
-    this._fileIndex = fileIndex;
   }
 
-  syntaxError(recognizer: any, offendingSymbol: any, concatenatedLineNumber: number, characterPosition: number,
-    message: string /* , e */) {
-    const metaEdFile: FilenameAndLineNumber = getFilenameAndLineNumber(this._fileIndex, concatenatedLineNumber);
-
+  syntaxError(recognizer: any, offendingSymbol: any, concatenatedLineNumber: number, characterPosition: number, message: string) {
     this._messageCollection.push({
+      validatorName: 'MetaEdErrorListener',
+      category: 'error',
       message,
-      characterPosition,
-      concatenatedLineNumber,
-      filename: metaEdFile.filename,
-      lineNumber: metaEdFile.lineNumber,
-      tokenText: offendingSymbol && offendingSymbol.text ? offendingSymbol.text : '',
+      sourceMap: {
+        line: concatenatedLineNumber,
+        column: characterPosition,
+        tokenText: offendingSymbol && offendingSymbol.text ? offendingSymbol.text : '',
+      },
+      fileMap: null,
     });
   }
 
-  getMessageCollection(): ValidationMessage[] {
+  getMessageCollection(): ValidationFailure[] {
     return this._messageCollection;
   }
 }

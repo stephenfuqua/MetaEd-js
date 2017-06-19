@@ -120,6 +120,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           message: `${this.currentTopLevelEntity.typeGroupHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
           // $FlowIgnore - sourceMap property not on TLE
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
+          fileMap: null,
         });
         const duplicateEntity: TopLevelEntity = currentTopLevelEntityRepository.get(this.currentTopLevelEntity.metaEdName);
         this.validationFailures.push({
@@ -128,6 +129,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           // $FlowIgnore - sourceMap property not on TLE
           sourceMap: duplicateEntity.sourceMap.type,
+          fileMap: null,
         });
       } else {
         currentTopLevelEntityRepository.set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
@@ -319,6 +321,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name.`,
       // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: this.currentProperty.sourceMap.type,
+      fileMap: null,
     });
     // $FlowIgnore - already ensured key exists in Map above
     const duplicateProperty: EntityProperty = this.currentTopLevelEntityPropertyLookup.get(fullPropertyName);
@@ -328,6 +331,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.`,
       // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: duplicateProperty.sourceMap.type,
+      fileMap: null,
     });
 
     return true;

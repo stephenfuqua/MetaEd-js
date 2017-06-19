@@ -65,6 +65,7 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
           message: `${this.currentSharedSimple.typeGroupHumanizedName} named ${this.currentSharedSimple.metaEdName} is a duplicate declaration of that name.`,
           // $FlowIgnore - sourceMap property not on SharedSimple
           sourceMap: this.currentSharedSimple.sourceMap.type,
+          fileMap: null,
         });
         const duplicateEntity: SharedSimple = currentSharedSimpleRepository.get(this.currentSharedSimple.metaEdName);
         this.validationFailures.push({
@@ -73,6 +74,7 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
           message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           // $FlowIgnore - sourceMap property not on SharedSimple
           sourceMap: duplicateEntity.sourceMap.type,
+          fileMap: null,
         });
       } else {
         currentSharedSimpleRepository.set(this.currentSharedSimple.metaEdName, this.currentSharedSimple);

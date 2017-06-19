@@ -1,27 +1,16 @@
 // @flow
-import R from 'ramda';
-import { List, Map, Record, Set } from 'immutable';
 import type { InputDirectory } from './task/FileSystemFilenameLoader';
 import type { FileSet } from './task/MetaEdFile';
 import type { FileIndex } from './task/FileIndex';
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { ValidationFailure } from './validator/ValidationFailure';
+import type { Repository } from './model/Repository';
+import type { PropertyType } from './model/property/PropertyType';
+import type { EntityProperty } from './model/property/EntityProperty';
 
-// temporary
-type ValidationMessage = any;
-type ValidationProblem = any;
-
-type StateRecord = {
-  // every function/object that changes the state must append their name here
-  action: List<string>,
-
+export type State = {
   // the collection of error messages from syntax and semantic validation, and other processes
-  errorMessages: List<ValidationMessage>,
-
-  // the collection of warning messages from semantic validation
-  warningMessages: List<ValidationMessage>,
-
-  // the collection of indeterminate validations from semantic validation
-  validationProblems: List<ValidationProblem>,
+  validationFailure: Array<ValidationFailure>,
 
   // the specified directories to load .metaed files from
   inputDirectories: ?InputDirectory[],
@@ -31,68 +20,17 @@ type StateRecord = {
   filepathsToExclude: Set<string>,
 
   // the set of files whose contents have been loaded
-  loadedFileSet: List<FileSet>,
+  loadedFileSet: Array<FileSet>,
 
-  // the sourcemap for the concatenation of all .metaed files
-  fileIndex: FileIndex,
-
-  // the symbol table created by SymbolTableBuilder
-  symbolTable: ?any,
+  // the line number indexing for the concatenation of all .metaed files
+  fileIndex: ?FileIndex,
 
   // the ANTLR parse tree of the concatenated .metaed files
   parseTree: ?MetaEdGrammar,
 
-  // a store for individual validators that need to maintain information between runs
-  // e.g. ensuring no duplicate MetaEdIds
-  validatorData: Map<string, string>,
+  // the data repository
+  repository: ?Repository,
+
+  // the transient property index
+  propertyIndex: ?Map<PropertyType, Array<EntityProperty>>,
 };
-
-export type State = Record<StateRecord>;
-
-// eslint-disable-next-line import/prefer-default-export
-export const StateInstance: State = Record({
-  action: new List(),
-  warningMessages: new List(),
-  errorMessages: new List(),
-  validationProblems: new List(),
-  symbolTable: null,
-  fileIndex: null,
-  loadedFileSet: new List(),
-  inputDirectories: null,
-  filepathsToExclude: new Set(),
-  parseTree: null,
-  validatorData: new Map(),
-});
-
-export const addAction = R.curry((actionString: string, state: State): State =>
-  state.set('action', state.get('action').push(actionString)));
-
-export const addErrorMessage = R.curry((errorMessage: ValidationMessage, state: State): State =>
-  state.set('errorMessages', state.get('errorMessages').push(errorMessage)));
-
-export const concatenateErrorMessages = R.curry((errorMessages: ValidationMessage[], state: State): State =>
-  state.set('errorMessages', state.get('errorMessages').concat(errorMessages)));
-
-export const addWarningMessage = R.curry((warningMessage: ValidationMessage, state: State): State =>
-  state.set('warningMessages', state.get('warningMessages').push(warningMessage)));
-
-export const addValidationProblem = R.curry((validationProblem: ValidationProblem, state: State): State =>
-  state.set('validationProblems', state.get('validationProblems').push(validationProblem)));
-
-export const addLoadedFileSet = R.curry((fileSet: FileSet, state: State): State =>
-  state.set('loadedFileSet', state.get('loadedFileSet').concat(fileSet)));
-
-export const addFilepathsToExclude = R.curry((filepaths: string, state: State): State =>
-  state.set('filepathsToExclude', state.get('filepathsToExclude').concat(filepaths)));
-
-export const setFileIndex = R.curry((fileIndex: FileIndex, state: State): State =>
-  state.set('fileIndex', fileIndex));
-
-export const setParseTree = R.curry((parseTree: ?MetaEdGrammar, state: State): State =>
-  state.set('parseTree', parseTree));
-
-export const setValidatorData = R.curry((validatorData: Map<string, string>, state: State): State =>
-  state.set('validatorData', validatorData));
-
-export const setSymbolTable = R.curry((symbolTable: ?any, state: State): State =>
-  state.set('symbolTable', symbolTable));
