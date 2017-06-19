@@ -13,7 +13,7 @@ describe('when building domain entity subclass in extension namespace', () => {
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -23,7 +23,7 @@ describe('when building domain entity subclass in extension namespace', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
@@ -43,15 +43,15 @@ describe('when building domain entity subclass in extension namespace', () => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-  it('should have correct base name', () => {
+  it('should have base name', () => {
     expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
   });
 
@@ -76,7 +76,7 @@ describe('when building duplicate domain entity subclasses', () => {
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -86,12 +86,12 @@ describe('when building duplicate domain entity subclasses', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
 
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
@@ -124,7 +124,7 @@ describe('when building duplicate domain entity subclasses', () => {
   });
 });
 
-describe('when building domain entity subclass with missing domain entity subclass name', () => {
+describe('when building domain entity subclass with no domain entity subclass name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -133,7 +133,7 @@ describe('when building domain entity subclass with missing domain entity subcla
 
   const entityName: string = '';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -143,11 +143,15 @@ describe('when building domain entity subclass with missing domain entity subcla
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -164,7 +168,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
 
   const entityName: string = 'entityName';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -174,11 +178,15 @@ describe('when building domain entity subclass with lowercase domain entity subc
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -195,7 +203,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'baseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -205,11 +213,48 @@ describe('when building domain entity subclass with lowercase based on name', ()
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name but with lowercase prefix ignored', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe('EntityName');
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.domainEntitySubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have extraneous input error', () => {
@@ -217,7 +262,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
   });
 });
 
-describe('when building domain entity subclass with missing based on name', () => {
+describe('when building domain entity subclass with no based on name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -225,8 +270,7 @@ describe('when building domain entity subclass with missing based on name', () =
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
-  const baseEntityName: string = '';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -235,12 +279,53 @@ describe('when building domain entity subclass with missing based on name', () =
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
-      .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withStartDomainEntitySubclass(entityName, '')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no base name', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe('');
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.domainEntitySubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have missing id error', () => {
@@ -248,7 +333,7 @@ describe('when building domain entity subclass with missing based on name', () =
   });
 });
 
-describe('when building domain entity subclass with missing documentation', () => {
+describe('when building domain entity subclass with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -272,12 +357,45 @@ describe('when building domain entity subclass with missing documentation', () =
       .sendToListener(builder);
   });
 
+  it('should build one domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no base name', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).documentation).toBe('');
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(0);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building domain entity subclass with missing property', () => {
+describe('when building domain entity subclass with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -286,7 +404,7 @@ describe('when building domain entity subclass with missing property', () => {
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
 
   beforeAll(() => {
     const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
@@ -294,10 +412,43 @@ describe('when building domain entity subclass with missing property', () => {
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -314,7 +465,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
-  const Documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const trailingText: string = '\r\nTrailingText';
@@ -325,12 +476,53 @@ describe('when building domain entity subclass with invalid trailing text', () =
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName)
-      .withDocumentation(Documentation)
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false)
       .withTrailingText(trailingText)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one domain entity subclass', () => {
+    expect(entityRepository.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.domainEntitySubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have extraneous input error', () => {
