@@ -45,19 +45,19 @@ describe('when building domain in extension namespace', () => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.domain.get(domainName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.domain.get(domainName).metaEdId).toBe(domainMetaEdId);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.domain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-  it('should have correct entity documentation', () => {
+  it('should have documentation', () => {
     expect(entityRepository.domain.get(domainName).documentation).toBe(entityDocumentation);
   });
 
@@ -67,7 +67,7 @@ describe('when building domain in extension namespace', () => {
     expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
   });
 
-  it('should have correct footer documentation', () => {
+  it('should have footer documentation', () => {
     expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
     expect(entityRepository.domain.get(domainName).footerDocumentation).toBe(footerDocumentation);
   });
@@ -169,19 +169,19 @@ describe('when building subdomain in extension namespace', () => {
     expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-  it('should have correct entity documentation', () => {
+  it('should have documentation', () => {
     expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
   });
 
@@ -191,12 +191,12 @@ describe('when building subdomain in extension namespace', () => {
     expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
   });
 
-  it('should have correct position', () => {
+  it('should have position', () => {
     expect(entityRepository.subdomain.get(domainName).position).toBe(subdomainPosition);
   });
 });
 
-describe('when building domain with missing domain name', () => {
+describe('when building domain with no domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -222,6 +222,10 @@ describe('when building domain with missing domain name', () => {
       .withEndDomain()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build choice', () => {
+    expect(entityRepository.domain.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -257,12 +261,52 @@ describe('when building domain with lowercase domain name', () => {
       .sendToListener(builder);
   });
 
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository but with lowercase prefix ignored', () => {
+    expect(entityRepository.domain.get('Name')).toBeDefined();
+    expect(entityRepository.domain.get('Name').metaEdName).toBe('Name');
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domain.get('Name').namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get('Name').metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domain.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get('Name').documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get('Name').domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get('Name').domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get('Name').domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have footer documentation', () => {
+    expect(entityRepository.domain.get('Name').domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get('Name').footerDocumentation).toBe(footerDocumentation);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building domain with missing documentation', () => {
+describe('when building domain with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -288,12 +332,52 @@ describe('when building domain with missing documentation', () => {
       .sendToListener(builder);
   });
 
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domain.get(domainName)).toBeDefined();
+    expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get(domainName).documentation).toBe('');
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have footer documentation', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).footerDocumentation).toBe(footerDocumentation);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building domain with missing domain item', () => {
+describe('when building domain with no domain item', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -318,12 +402,49 @@ describe('when building domain with missing domain item', () => {
       .sendToListener(builder);
   });
 
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domain.get(domainName)).toBeDefined();
+    expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have no domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(0);
+  });
+
+  it('should not have footer documentation', () => {
+    expect(entityRepository.domain.get(domainName).footerDocumentation).toBe('');
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building domain with missing text in footer documentation', () => {
+describe('when building domain with no text in footer documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -349,6 +470,46 @@ describe('when building domain with missing text in footer documentation', () =>
       .withEndDomain()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domain.get(domainName)).toBeDefined();
+    expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should not have footer documentation', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).footerDocumentation).toBe('');
   });
 
   it('should have missing text error', () => {
@@ -384,12 +545,47 @@ describe('when building domain with invalid trailing text', () => {
       .sendToListener(builder);
   });
 
+  it('should build one domain', () => {
+    expect(entityRepository.domain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domain.get(domainName)).toBeDefined();
+    expect(entityRepository.domain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building subdomain with missing subdomain name', () => {
+describe('when building subdomain with no subdomain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -416,6 +612,10 @@ describe('when building subdomain with missing subdomain name', () => {
       .withEndSubdomain()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build subdomain', () => {
+    expect(entityRepository.domain.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {
@@ -452,12 +652,55 @@ describe('when building subdomain with lowercase subdomain name', () => {
       .sendToListener(builder);
   });
 
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository but with lowercase prefix ignored', () => {
+    expect(entityRepository.subdomain.get('Name')).toBeDefined();
+    expect(entityRepository.subdomain.get('Name').metaEdName).toBe('Name');
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain', () => {
+    expect(entityRepository.subdomain.get('Name').parentMetaEdName).toBe(parentDomainName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get('Name').namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get('Name').metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.subdomain.get('Name').documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get('Name').domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get('Name').domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get('Name').domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get('Name').position).toBe(subdomainPosition);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building subdomain with missing parent domain name', () => {
+describe('when building subdomain with no parent domain name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -465,7 +708,6 @@ describe('when building subdomain with missing parent domain name', () => {
   const projectExtension: string = 'ProjectExtension';
 
   const domainName: string = 'DomainName';
-  const parentDomainName: string = '';
   const domainMetaEdId: string = '10';
   const entityDocumentation: string = 'EntityDocumentation';
   const domainItemName: string = 'DomainItemName';
@@ -477,13 +719,56 @@ describe('when building subdomain with missing parent domain name', () => {
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
-      .withStartSubdomain(domainName, parentDomainName, domainMetaEdId)
+      .withStartSubdomain(domainName, '', domainMetaEdId)
       .withDocumentation(entityDocumentation)
       .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
       .withSubdomainPosition(subdomainPosition)
       .withEndSubdomain()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should not have parent domain', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe('');
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(subdomainPosition);
   });
 
   it('should have missing id error', () => {
@@ -520,12 +805,55 @@ describe('when building subdomain with lowercase parent domain name', () => {
       .sendToListener(builder);
   });
 
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain but with lowercase prefix ignored', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe('DomainName');
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(subdomainPosition);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building subdomain with missing documentation', () => {
+describe('when building subdomain with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -533,7 +861,7 @@ describe('when building subdomain with missing documentation', () => {
   const projectExtension: string = 'ProjectExtension';
 
   const domainName: string = 'DomainName';
-  const parentDomainName: string = 'parentDomainName';
+  const parentDomainName: string = 'ParentDomainName';
   const domainMetaEdId: string = '10';
   const domainItemName: string = 'DomainItemName';
   const domainItemMetaEdId: string = '20';
@@ -552,12 +880,55 @@ describe('when building subdomain with missing documentation', () => {
       .sendToListener(builder);
   });
 
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe(parentDomainName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe('');
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(subdomainPosition);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building subdomain with missing domain item', () => {
+describe('when building subdomain with no domain item', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -583,12 +954,53 @@ describe('when building subdomain with missing domain item', () => {
       .sendToListener(builder);
   });
 
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe(parentDomainName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have no domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(0);
+  });
+
+  it('should have position but with the number ignored', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(0);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building subdomain with missing unsigned int in position', () => {
+describe('when building subdomain with no unsigned int in position', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -617,6 +1029,49 @@ describe('when building subdomain with missing unsigned int in position', () => 
       .sendToListener(builder);
   });
 
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe(parentDomainName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position with default value', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(0);
+  });
+
   it('should have missing unsigned int error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
@@ -635,6 +1090,7 @@ describe('when building subdomain with invalid trailing text', () => {
   const entityDocumentation: string = 'EntityDocumentation';
   const domainItemName: string = 'DomainItemName';
   const domainItemMetaEdId: string = '20';
+  const subdomainPosition: number = 1;
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
@@ -645,10 +1101,54 @@ describe('when building subdomain with invalid trailing text', () => {
       .withStartSubdomain(domainName, parentDomainName, domainMetaEdId)
       .withDocumentation(entityDocumentation)
       .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
+      .withSubdomainPosition(subdomainPosition)
       .withTrailingText(trailingText)
       .withEndSubdomain()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.subdomain.get(domainName)).toBeDefined();
+    expect(entityRepository.subdomain.get(domainName).metaEdName).toBe(domainName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have parent domain', () => {
+    expect(entityRepository.subdomain.get(domainName).parentMetaEdName).toBe(parentDomainName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(domainName).metaEdId).toBe(domainMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.subdomain.get(domainName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.subdomain.get(domainName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.subdomain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.subdomain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get(domainName).position).toBe(subdomainPosition);
   });
 
   it('should have extraneous input error', () => {

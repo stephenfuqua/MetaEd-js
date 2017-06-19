@@ -13,7 +13,7 @@ import { domainItemFactory, NoDomainItem } from '../model/DomainItem';
 import { domainFactory, NoDomain } from '../model/Domain';
 import { subdomainFactory } from '../model/Subdomain';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
-import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class DomainBuilder extends MetaEdGrammarListener {
@@ -60,7 +60,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentDomainItem !== NoDomainItem) {
       this.currentDomainItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -85,24 +85,26 @@ export default class DomainBuilder extends MetaEdGrammarListener {
     if (this.currentDomain === NoDomain) return;
     // $FlowIgnore - allowing currentDomain.type to specify the entityRepository Map property
     const currentDomainRepository = this.entityRepository[this.currentDomain.type];
-    if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
-      this.validationFailures.push({
-        validatorName: 'DomainBuilder',
-        category: 'error',
-        message: `${this.currentDomain.typeGroupHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
-        sourceMap: this.currentDomain.sourceMap.type,
+    if (this.currentDomain.metaEdName) {
+      if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
+        this.validationFailures.push({
+          validatorName: 'DomainBuilder',
+          category: 'error',
+          message: `${this.currentDomain.typeGroupHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
+          sourceMap: this.currentDomain.sourceMap.type,
         fileMap: null,
-      });
-      const duplicateEntity: Domain | Subdomain = currentDomainRepository.get(this.currentDomain.metaEdName);
-      this.validationFailures.push({
-        validatorName: 'DomainBuilder',
-        category: 'error',
-        message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-        sourceMap: duplicateEntity.sourceMap.type,
+        });
+        const duplicateEntity: Domain | Subdomain = currentDomainRepository.get(this.currentDomain.metaEdName);
+        this.validationFailures.push({
+          validatorName: 'DomainBuilder',
+          category: 'error',
+          message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          sourceMap: duplicateEntity.sourceMap.type,
         fileMap: null,
-      });
-    } else {
-      currentDomainRepository.set(this.currentDomain.metaEdName, this.currentDomain);
+        });
+      } else {
+        currentDomainRepository.set(this.currentDomain.metaEdName, this.currentDomain);
+      }
     }
 
     this.currentDomain = NoDomain;
@@ -120,30 +122,30 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterDomainName(context: MetaEdGrammar.DomainNameContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomain.metaEdName = context.ID().getText();
   }
 
   enterSubdomainName(context: MetaEdGrammar.SubdomainNameContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomain.metaEdName = context.ID().getText();
   }
 
   enterParentDomainName(context: MetaEdGrammar.ParentDomainNameContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     ((this.currentDomain: any): Subdomain).parentMetaEdName = context.ID().getText();
   }
 
   enterSubdomainPosition(context: MetaEdGrammar.SubdomainPositionContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentDomain: any): Subdomain).position = Number(context.UNSIGNED_INT().getText());
   }
 
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomainItem = Object.assign(domainItemFactory(), { metaEdName: context.ID().getText() });
   }
 
