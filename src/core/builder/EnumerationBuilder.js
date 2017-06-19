@@ -6,7 +6,7 @@ import { schoolYearEnumerationFactory } from '../model/SchoolYearEnumeration';
 import type { Enumeration } from '../model/Enumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
 import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
-import { extractDocumentation, extractShortDescription, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
@@ -35,7 +35,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
   enterEnumerationName(context: MetaEdGrammar.EnumerationNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     const enumerationName = context.ID().getText();
 
     // need to differentiate SchoolYear from other enumerations - overwrite with new type
@@ -64,7 +64,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
     if (this.currentEnumerationItem !== NoEnumerationItem) {
       this.currentEnumerationItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     } else {
