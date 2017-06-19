@@ -47,19 +47,19 @@ describe('when building association in extension namespace', () => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-  it('should have correct association documentation', () => {
+  it('should have association documentation', () => {
     expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
   });
 
@@ -142,11 +142,11 @@ describe('when building association without extension', () => {
     expect(entityRepository.association.get(entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
@@ -154,7 +154,7 @@ describe('when building association without extension', () => {
     expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe('');
   });
 
-  it('should have correct association documentation', () => {
+  it('should have association documentation', () => {
     expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
   });
 
@@ -338,7 +338,7 @@ describe('when building association with additional identity property', () => {
   });
 });
 
-describe('when building association with missing association name', () => {
+describe('when building association with no association name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -369,7 +369,11 @@ describe('when building association with missing association name', () => {
       .sendToListener(builder);
   });
 
-  it('should have viable alternative error', () => {
+  it('should not build association', () => {
+    expect(entityRepository.association.size).toBe(0);
+  });
+
+  it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
@@ -405,19 +409,23 @@ describe('when building association with lowercase association name', () => {
       .sendToListener(builder);
   });
 
-  it('should have viable alternative error', () => {
+  it('should not build association', () => {
+    expect(entityRepository.association.size).toBe(0);
+  });
+
+  it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with missing documentation', () => {
+describe('when building association with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
-  const entityName: string = 'entityName';
+  const entityName: string = 'EntityName';
   const entityMetaEdId: string = '1';
   const firstDomainEntityName: string = 'FirstDomainEntityName';
   const firstDomainEntityMetaEdId: string = '2';
@@ -439,12 +447,84 @@ describe('when building association with missing documentation', () => {
       .sendToListener(builder);
   });
 
-  it('should have viable alternative error', () => {
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.association.get(entityName).documentation).toBe('');
+  });
+
+  it('should have two properties', () => {
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
+  });
+
+  it('should have first domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have first domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have second domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
+  it('should have second domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
+  it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with missing domain entity property', () => {
+describe('when building association with no domain entity property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -465,7 +545,7 @@ describe('when building association with missing domain entity property', () => 
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
-      .withStartProperty('domainEntity', firstDomainEntityName, firstDomainEntityMetaEdId)
+      .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
       .withDocumentation(documentation2)
       .withContext(null)
       .withEndProperty()
@@ -474,12 +554,84 @@ describe('when building association with missing domain entity property', () => 
       .sendToListener(builder);
   });
 
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
+  });
+
+  it('should have two properties', () => {
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
+  });
+
+  it('should have first domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have first domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have second domain entity property with no metaEdName, metaEdId, or documentation', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe('');
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe('');
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
+  });
+
+  it('should have second domain entity property as identity property with no metaEdName, metaEdId, or documentation', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe('');
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe('');
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with missing documentation in the first domain entity', () => {
+describe('when building association with no documentation in the first domain entity', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -502,7 +654,7 @@ describe('when building association with missing documentation in the first doma
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
-      .withStartProperty('domainEntity', firstDomainEntityName, firstDomainEntityMetaEdId)
+      .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
       .withContext(null)
       .withEndProperty()
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
@@ -511,12 +663,84 @@ describe('when building association with missing documentation in the first doma
       .sendToListener(builder);
   });
 
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
+  });
+
+  it('should have two properties', () => {
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
+  });
+
+  it('should have first domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
+  });
+
+  it('should have first domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
+  });
+
+  it('should have second domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
+  it('should have second domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association with missing documentation in the second domain entity', () => {
+describe('when building association with no documentation in the second domain entity', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -540,12 +764,84 @@ describe('when building association with missing documentation in the second dom
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
-      .withStartProperty('domainEntity', secondDomainEntityName, secondDomainEntityMetaEdId)
+      .withStartProperty('domain entity', secondDomainEntityName, secondDomainEntityMetaEdId)
       .withContext(null)
       .withEndProperty()
       .withEndAssociation()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
+  });
+
+  it('should have two properties', () => {
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
+  });
+
+  it('should have first domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have first domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have second domain entity property with no documentation', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
+  });
+
+  it('should have second domain entity property as identity property with no documentation', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe('');
   });
 
   it('should have mismatched input error', () => {
@@ -560,7 +856,7 @@ describe('when building association with invalid trailing text', () => {
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
-  const entityName: string = 'entityName';
+  const entityName: string = 'EntityName';
   const entityMetaEdId: string = '1';
   const documentation1: string = 'documentation1';
   const firstDomainEntityName: string = 'FirstDomainEntityName';
@@ -586,7 +882,79 @@ describe('when building association with invalid trailing text', () => {
       .sendToListener(builder);
   });
 
-  it('should have viable alternative error', () => {
+  it('should build one association', () => {
+    expect(entityRepository.association.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.association.get(entityName)).toBeDefined();
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.association.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.association.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.association.get(entityName).documentation).toBe(documentation1);
+  });
+
+  it('should have two properties', () => {
+    expect(entityRepository.association.get(entityName).properties).toHaveLength(2);
+  });
+
+  it('should have first domain entity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have first domain entity property as identity property', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[0];
+
+    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation2);
+  });
+
+  it('should have second domain entity property with', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).properties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
+  it('should have second domain entity property as identity property with', () => {
+    const domainEntityProperty = entityRepository.association.get(entityName).identityProperties[1];
+
+    expect(domainEntityProperty.metaEdName).toBe(secondDomainEntityName);
+    expect(domainEntityProperty.type).toBe('domainEntity');
+    expect(domainEntityProperty.metaEdId).toBe(secondDomainEntityMetaEdId);
+    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
+    expect(domainEntityProperty.documentation).toBe(documentation3);
+  });
+
+  it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });

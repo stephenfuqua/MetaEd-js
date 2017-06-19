@@ -1,43 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building association with invalid trailing text should have viable alternative error 1`] = `
+exports[`when building association with invalid trailing text should have extraneous input error 1`] = `
+Array [
+  "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 11, token: TrailingText",
+]
+`;
+
+exports[`when building association with lowercase association name should have no viable alternative error 1`] = `
 Array [
   "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
 ]
 `;
 
-exports[`when building association with lowercase association name should have viable alternative error 1`] = `
-Array [
-  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
-]
-`;
-
-exports[`when building association with missing association name should have viable alternative error 1`] = `
+exports[`when building association with no association name should have no viable alternative error 1`] = `
 Array [
   "no viable alternative at input 'Association[1]', column: 15, line: 2, token: [1]",
 ]
 `;
 
-exports[`when building association with missing documentation in the first domain entity should have mismatched input error 1`] = `
+exports[`when building association with no documentation in the first domain entity should have mismatched input error 1`] = `
 Array [
-  "mismatched input 'domain' expecting {'domain entity', 'allow primary key updates'}, column: 4, line: 5, token: domain",
+  "mismatched input 'domain entity' expecting 'documentation', column: 4, line: 6, token: domain entity",
 ]
 `;
 
-exports[`when building association with missing documentation in the second domain entity should have mismatched input error 1`] = `
+exports[`when building association with no documentation in the second domain entity should have mismatched input error 1`] = `
 Array [
-  "mismatched input 'domain' expecting 'domain entity', column: 4, line: 8, token: domain",
+  "mismatched input 'End Namespace' expecting 'documentation', column: 0, line: 9, token: End Namespace",
 ]
 `;
 
-exports[`when building association with missing documentation should have viable alternative error 1`] = `
+exports[`when building association with no documentation should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+  "mismatched input 'domain entity' expecting 'documentation', column: 4, line: 3, token: domain entity",
 ]
 `;
 
-exports[`when building association with missing domain entity property should have mismatched input error 1`] = `
+exports[`when building association with no domain entity property should have mismatched input error 1`] = `
 Array [
-  "mismatched input 'domain' expecting {'domain entity', 'allow primary key updates'}, column: 4, line: 5, token: domain",
+  "mismatched input 'End Namespace' expecting 'domain entity', column: 0, line: 8, token: End Namespace",
 ]
 `;
