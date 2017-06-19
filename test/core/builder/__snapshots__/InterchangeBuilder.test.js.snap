@@ -12,13 +12,13 @@ Array [
 ]
 `;
 
-exports[`when building interchange extension with missing element property should have no viable alternative error 1`] = `
+exports[`when building interchange extension with no element property should have mismatched input error 1`] = `
 Array [
-  "no viable alternative at input 'Interchangeinterchange', column: 14, line: 2, token: interchange",
+  "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity'}, column: 0, line: 3, token: End Namespace",
 ]
 `;
 
-exports[`when building interchange extension with missing interchange extension name should have no viable alternative error 1`] = `
+exports[`when building interchange extension with no interchange extension name should have no viable alternative error 1`] = `
 Array [
   "no viable alternative at input 'Interchangeadditions', column: 15, line: 2, token: additions",
 ]
@@ -36,19 +36,19 @@ Array [
 ]
 `;
 
-exports[`when building interchange with missing documentation should have mismatched input error 1`] = `
+exports[`when building interchange with no documentation should have mismatched input error 1`] = `
 Array [
   "mismatched input 'domain entity' expecting 'documentation', column: 4, line: 3, token: domain entity",
 ]
 `;
 
-exports[`when building interchange with missing interchange component property should have mismatched input error 1`] = `
+exports[`when building interchange with no interchange component property should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {'association', 'association identity', 'descriptor', 'domain entity', 'domain entity identity', 'extended documentation', 'use case documentation'}, column: 0, line: 5, token: End Namespace",
 ]
 `;
 
-exports[`when building interchange with missing interchange name should have no viable alternative error 1`] = `
+exports[`when building interchange with no interchange name should have no viable alternative error 1`] = `
 Array [
   "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
 ]

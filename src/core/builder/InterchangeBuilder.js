@@ -11,7 +11,7 @@ import { interchangeFactory, NoInterchange } from '../model/Interchange';
 import { interchangeItemFactory, NoInterchangeItem } from '../model/InterchangeItem';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
-import { extractDocumentation, squareBracketRemoval } from './BuilderUtility';
+import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class InterchangeBuilder extends MetaEdGrammarListener {
@@ -68,7 +68,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null) return;
+    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentInterchangeItem !== NoInterchangeItem) {
       this.currentInterchangeItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -96,25 +96,27 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   exitingInterchange() {
     if (this.currentInterchange === NoInterchange) return;
-    if (this.entityRepository.interchange.has(this.currentInterchange.metaEdName)) {
-      this.validationFailures.push({
-        validatorName: 'InterchangeBuilder',
-        category: 'error',
-        message: `Interchange named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
-        sourceMap: this.currentInterchange.sourceMap.type,
+    if (this.currentInterchange.metaEdName) {
+      if (this.entityRepository.interchange.has(this.currentInterchange.metaEdName)) {
+        this.validationFailures.push({
+          validatorName: 'InterchangeBuilder',
+          category: 'error',
+          message: `Interchange named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
+          sourceMap: this.currentInterchange.sourceMap.type,
         fileMap: null,
-      });
-      // $FlowIgnore - we ensure the key is in the map above
-      const duplicateEntity: Interchange = this.entityRepository.interchange.get(this.currentInterchange.metaEdName);
-      this.validationFailures.push({
-        validatorName: 'InterchangeBuilder',
-        category: 'error',
-        message: `Interchange named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-        sourceMap: duplicateEntity.sourceMap.type,
+        });
+        // $FlowIgnore - we ensure the key is in the map above
+        const duplicateEntity: Interchange = this.entityRepository.interchange.get(this.currentInterchange.metaEdName);
+        this.validationFailures.push({
+          validatorName: 'InterchangeBuilder',
+          category: 'error',
+          message: `Interchange named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          sourceMap: duplicateEntity.sourceMap.type,
         fileMap: null,
-      });
-    } else {
-      this.entityRepository.interchange.set(this.currentInterchange.metaEdName, this.currentInterchange);
+        });
+      } else {
+        this.entityRepository.interchange.set(this.currentInterchange.metaEdName, this.currentInterchange);
+      }
     }
     this.currentInterchange = NoInterchange;
   }
@@ -131,26 +133,26 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterInterchangeName(context: MetaEdGrammar.InterchangeNameContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchange.metaEdName = context.ID().getText();
   }
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchange.metaEdName = context.ID().getText();
     this.currentInterchange.baseEntityName = context.ID().getText();
   }
 
   enterInterchangeElement(context: MetaEdGrammar.InterchangeElementContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
   }
 
   enterInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
   }
 
