@@ -4,6 +4,7 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { associationSubclassFactory } from '../model/AssociationSubclass';
 import type { AssociationSubclass } from '../model/AssociationSubclass';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
+import { isErrorText } from './BuilderUtility';
 
 export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -17,13 +18,13 @@ export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
   }
 
   enterAssociationName(context: MetaEdGrammar.AssociationNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 
   enterBaseName(context: MetaEdGrammar.BaseNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     ((this.currentTopLevelEntity: any): AssociationSubclass).baseEntityName = context.ID().getText();
   }

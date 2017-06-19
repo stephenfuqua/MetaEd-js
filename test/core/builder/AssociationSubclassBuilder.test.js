@@ -13,6 +13,7 @@ describe('when building association subclass in extension namespace', () => {
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -21,7 +22,7 @@ describe('when building association subclass in extension namespace', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
@@ -41,16 +42,20 @@ describe('when building association subclass in extension namespace', () => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-  it('should have correct base name', () => {
+  it('should have base name', () => {
     expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have one property', () => {
@@ -120,7 +125,7 @@ describe('when building duplicate association subclasses', () => {
   });
 });
 
-describe('when building association subclass with missing association subclass name', () => {
+describe('when building association subclass with no association subclass name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -129,6 +134,7 @@ describe('when building association subclass with missing association subclass n
 
   const entityName: string = '';
   const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -137,11 +143,15 @@ describe('when building association subclass with missing association subclass n
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build association subclass', () => {
+    expect(entityRepository.associationExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -158,6 +168,7 @@ describe('when building association subclass with lowercase association subclass
 
   const entityName: string = 'entityName';
   const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -166,11 +177,15 @@ describe('when building association subclass with lowercase association subclass
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build association subclass', () => {
+    expect(entityRepository.associationExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -178,7 +193,7 @@ describe('when building association subclass with lowercase association subclass
   });
 });
 
-describe('when building association subclass with missing based on name', () => {
+describe('when building association subclass with no based on name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -187,6 +202,7 @@ describe('when building association subclass with missing based on name', () => 
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = '';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -195,11 +211,52 @@ describe('when building association subclass with missing based on name', () => 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name', () => {
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.associationSubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have missing id error', () => {
@@ -216,6 +273,7 @@ describe('when building association subclass with lowercase based on name', () =
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'baseEntityName';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -224,11 +282,52 @@ describe('when building association subclass with lowercase based on name', () =
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name but with lowercase prefix ignored', () => {
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe('EntityName');
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.associationSubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have extraneous input error', () => {
@@ -236,14 +335,14 @@ describe('when building association subclass with lowercase based on name', () =
   });
 });
 
-describe('when building association subclass with missing documentation', () => {
+describe('when building association subclass with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
-  const entityName: string = 'entityName';
+  const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
   const propertyName: string = 'PropertyName';
 
@@ -259,20 +358,54 @@ describe('when building association subclass with missing documentation', () => 
       .sendToListener(builder);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name but with lowercase prefix ignored', () => {
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have no documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe('');
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(0);
+  });
+
+  it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building association subclass with missing property', () => {
+describe('when building association subclass with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
-  const entityName: string = 'entityName';
+  const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
 
   beforeAll(() => {
     const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
@@ -280,12 +413,46 @@ describe('when building association subclass with missing property', () => {
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
+      .withDocumentation(documentation)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have no viable alternative error', () => {
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name but with lowercase prefix ignored', () => {
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(0);
+  });
+
+  it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
@@ -299,8 +466,9 @@ describe('when building association subclass with invalid trailing text', () => 
 
   const entityName: string = 'EntityName';
   const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
-  const trailingText: string = 'TrailingText';
+  const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
     const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
@@ -308,12 +476,53 @@ describe('when building association subclass with invalid trailing text', () => 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
-      .withDocumentation('doc')
+      .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withTrailingText(trailingText)
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one association subclass', () => {
+    expect(entityRepository.associationSubclass.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.associationSubclass.get(entityName)).toBeDefined();
+    expect(entityRepository.associationSubclass.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.associationSubclass.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have base name', () => {
+    expect(entityRepository.associationSubclass.get(entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.associationSubclass.get(entityName).documentation).toBe(documentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.associationSubclass.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
   });
 
   it('should have extraneous input error', () => {
