@@ -4,6 +4,7 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityExtensionFactory } from '../model/DomainEntityExtension';
 import type { DomainEntityExtension } from '../model/DomainEntityExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
+import { isErrorText } from './BuilderUtility';
 
 export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -18,7 +19,7 @@ export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder 
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);

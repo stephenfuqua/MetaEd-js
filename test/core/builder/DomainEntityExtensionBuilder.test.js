@@ -43,11 +43,11 @@ describe('when building domain entity extension in extension namespace', () => {
     expect(entityRepository.domainEntityExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -115,7 +115,7 @@ describe('when building duplicate domain entity extensions', () => {
   });
 });
 
-describe('when building domain entity extension with missing domain entity extension name', () => {
+describe('when building domain entity extension with no domain entity extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -124,7 +124,7 @@ describe('when building domain entity extension with missing domain entity exten
 
   const entityName: string = '';
   const MetaEdId: string = '10';
-  const documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -137,6 +137,10 @@ describe('when building domain entity extension with missing domain entity exten
       .withEndDomainEntityExtension()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build domain entity extension', () => {
+    expect(entityRepository.domainEntityExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -145,7 +149,7 @@ describe('when building domain entity extension with missing domain entity exten
 });
 
 
-describe('when building domain entity extension with missing domain entity extension name', () => {
+describe('when building domain entity extension with no domain entity extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -154,7 +158,7 @@ describe('when building domain entity extension with missing domain entity exten
 
   const entityName: string = '';
   const MetaEdId: string = '10';
-  const documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -167,6 +171,10 @@ describe('when building domain entity extension with missing domain entity exten
       .withEndDomainEntityExtension()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build domain entity extension', () => {
+    expect(entityRepository.domainEntityExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -183,7 +191,7 @@ describe('when building domain entity extension with lowercase domain entity ext
 
   const entityName: string = 'entityName';
   const MetaEdId: string = '10';
-  const documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
@@ -198,12 +206,16 @@ describe('when building domain entity extension with lowercase domain entity ext
       .sendToListener(builder);
   });
 
+  it('should not build domain entity extension', () => {
+    expect(entityRepository.domainEntityExtension.size).toBe(0);
+  });
+
   it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building domain entity extension with missing property', () => {
+describe('when building domain entity extension with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -224,6 +236,35 @@ describe('when building domain entity extension with missing property', () => {
       .sendToListener(builder);
   });
 
+  it('should build one domain entity extension', () => {
+    expect(entityRepository.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntityExtension.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have extendee name', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).baseEntityName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).properties).toHaveLength(0);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
@@ -236,9 +277,9 @@ describe('when building domain entity extension with invalid trailing text', () 
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
-  const entityName: string = 'entityName';
+  const entityName: string = 'EntityName';
   const MetaEdId: string = '10';
-  const documentation: string = 'Doc';
+  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const trailingText: string = '\r\nTrailingText';
 
@@ -254,8 +295,44 @@ describe('when building domain entity extension with invalid trailing text', () 
       .withEndNamespace()
       .sendToListener(builder);
   });
+  it('should build one domain entity extension', () => {
+    expect(entityRepository.domainEntityExtension.size).toBe(1);
+  });
 
-  it('should have no viable alternative error', () => {
+  it('should be found in entity repository', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName)).toBeDefined();
+    expect(entityRepository.domainEntityExtension.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+
+  it('should have extendee name', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).baseEntityName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const integerProperty = entityRepository.domainEntityExtension.get(entityName).properties[0];
+
+    expect(integerProperty.metaEdName).toBe(propertyName);
+    expect(integerProperty.type).toBe('integer');
+    expect(integerProperty.isRequired).toBe(true);
+  });
+
+  it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
