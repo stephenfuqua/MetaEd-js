@@ -50,6 +50,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   currentMergedProperty: MergedProperty;
   whenExitingPropertyCommand: Array<() => void>;
   validationFailures: Array<ValidationFailure>;
+  currentTopLevelEntityPropertyLookup: Map<string, EntityProperty>;
 
   constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
     super();
@@ -60,6 +61,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.currentMergedProperty = NoMergedProperty;
     this.whenExitingPropertyCommand = [];
     this.validationFailures = validationFailures;
+    this.currentTopLevelEntityPropertyLookup = new Map();
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -89,6 +91,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enteringEntity(entityFactory: () => TopLevelEntity) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentTopLevelEntity = Object.assign(entityFactory(), { namespaceInfo: this.namespaceInfo });
+    this.currentTopLevelEntityPropertyLookup.clear();
   }
 
   exitingEntity() {
@@ -288,6 +291,34 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.exitingProperty();
   }
 
+  // side effect - pushes ValidationFailures if there is a name collision
+  propertyNameCollision(): boolean {
+    const fullPropertyName = `${this.currentProperty.withContext}${this.currentProperty.metaEdName}`;
+    if (!this.currentTopLevelEntityPropertyLookup.has(fullPropertyName)) {
+      this.currentTopLevelEntityPropertyLookup.set(fullPropertyName, this.currentProperty);
+      return false;
+    }
+
+    this.validationFailures.push({
+      validatorName: 'TopLevelEntityBuilder',
+      category: 'error',
+      message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name.`,
+      // $FlowIgnore - sourceMap not on EntityProperty
+      sourceMap: this.currentProperty.sourceMap.type,
+    });
+    // $FlowIgnore - already ensured key exists in Map above
+    const duplicateProperty: EntityProperty = this.currentTopLevelEntityPropertyLookup.get(fullPropertyName);
+    this.validationFailures.push({
+      validatorName: 'TopLevelEntityBuilder',
+      category: 'error',
+      message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.`,
+      // $FlowIgnore - sourceMap not on EntityProperty
+      sourceMap: duplicateProperty.sourceMap.type,
+    });
+
+    return true;
+  }
+
   exitingProperty() {
     if (this.currentProperty === NoEntityProperty) return;
 
@@ -297,19 +328,15 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     }
 
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      if (this.currentProperty.isPartOfIdentity || this.currentProperty.isIdentityRename) {
-        this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
-      }
-
-      if (!this.currentProperty.isQueryableOnly) {
-        this.currentTopLevelEntity.properties.push(this.currentProperty);
-      }
-
       while (this.whenExitingPropertyCommand.length > 0) {
         this.whenExitingPropertyCommand.pop()();
       }
 
       this.currentProperty.parentEntityName = this.currentTopLevelEntity.metaEdName;
+
+      if (!this.currentProperty.isQueryableOnly && !this.propertyNameCollision()) {
+        this.currentTopLevelEntity.properties.push(this.currentProperty);
+      }
     }
 
     this.currentProperty = NoEntityProperty;
@@ -376,15 +403,24 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // eslint-disable-next-line no-unused-vars
   enterIdentity(context: MetaEdGrammar.IdentityContext) {
+    this.enteringIdentity();
+  }
+
+  enteringIdentity() {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
+    this.whenExitingPropertyCommand.push(
+      () => {
+        this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
+      },
+    );
   }
 
   // eslint-disable-next-line no-unused-vars
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isIdentityRename = true;
-    this.currentProperty.isPartOfIdentity = true;
+    this.enteringIdentity();
   }
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {

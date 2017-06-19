@@ -32,13 +32,15 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
   enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = Object.assign(domainEntityPropertyFactory(), { isPartOfIdentity: true });
+    this.currentProperty = domainEntityPropertyFactory();
+    this.enteringIdentity();
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = Object.assign(domainEntityPropertyFactory(), { isPartOfIdentity: true });
+    this.currentProperty = domainEntityPropertyFactory();
+    this.enteringIdentity();
   }
 
   // eslint-disable-next-line no-unused-vars

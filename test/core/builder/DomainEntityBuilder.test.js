@@ -143,6 +143,123 @@ describe('when building duplicate domain entities', () => {
   });
 });
 
+describe('when building duplicate property names', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const metaEdId: string = '1';
+  const projectExtension: string = 'ProjectExtension';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const stringPropertyName: string = 'StringPropertyName';
+  const documentation: string = 'Doc';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each property', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 2 sourceMap');
+  });
+});
+
+describe('when building duplicate property names with different with context names', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const metaEdId: string = '1';
+  const projectExtension: string = 'ProjectExtension';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const stringPropertyName: string = 'StringPropertyName';
+  const documentation: string = 'Doc';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context1')
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have no validation failures', () => {
+    expect(validationFailures).toHaveLength(0);
+  });
+});
+
+describe('when building duplicate property names with same with context name', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const metaEdId: string = '1';
+  const projectExtension: string = 'ProjectExtension';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const stringPropertyName: string = 'StringPropertyName';
+  const documentation: string = 'Doc';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntity(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context')
+      .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have two validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  xit('should have validation failures for each property', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[0].category).toBe('error');
+    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 1 message');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 1 sourceMap');
+
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].category).toBe('error');
+    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 2 message');
+    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 2 sourceMap');
+  });
+});
+
 describe('when building domain entity without extension', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
