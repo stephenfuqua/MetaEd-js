@@ -2,6 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { commonFactory, inlineCommonFactory } from '../model/Common';
+import { isErrorText } from './BuilderUtility';
 
 export default class CommonBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
@@ -15,7 +16,7 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
   }
 
   enterCommonName(context: MetaEdGrammar.CommonNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 
@@ -30,7 +31,7 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
   }
 
   enterInlineCommonName(context: MetaEdGrammar.InlineCommonNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
   }
 }

@@ -44,15 +44,15 @@ describe('when building common in extension namespace', () => {
     expect(validationFailures).toHaveLength(0);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -60,7 +60,7 @@ describe('when building common in extension namespace', () => {
     expect(entityRepository.common.get(entityName).inlineInOds).toBe(false);
   });
 
-  it('should have correct entity documentation', () => {
+  it('should have entity documentation', () => {
     expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
   });
 
@@ -171,15 +171,15 @@ describe('when building inline common in extension namespace', () => {
     expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
   });
 
-  it('should have correct namespace', () => {
+  it('should have namespace', () => {
     expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
-  it('should have correct metaEdId', () => {
+  it('should have metaEdId', () => {
     expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
-  it('should have correct project extension', () => {
+  it('should have project extension', () => {
     expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
@@ -187,7 +187,7 @@ describe('when building inline common in extension namespace', () => {
     expect(entityRepository.common.get(entityName).inlineInOds).toBe(true);
   });
 
-  it('should have correct entity documentation', () => {
+  it('should have documentation', () => {
     expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
   });
 
@@ -206,7 +206,7 @@ describe('when building inline common in extension namespace', () => {
   });
 });
 
-describe('when building common with missing common name', () => {
+describe('when building common with no common name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -232,6 +232,10 @@ describe('when building common with missing common name', () => {
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build common', () => {
+    expect(entityRepository.common.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -267,12 +271,16 @@ describe('when building common with lowercase common name', () => {
       .sendToListener(builder);
   });
 
+  it('should not build common', () => {
+    expect(entityRepository.common.size).toBe(0);
+  });
+
   it('should have no viable alternative error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with missing documentation', () => {
+describe('when building common with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -298,12 +306,55 @@ describe('when building common with missing documentation', () => {
       .sendToListener(builder);
   });
 
+  it('should build one common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(false);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe('');
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const property = entityRepository.common.get(entityName).properties[0];
+
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.metaEdId).toBe(propertyMetaEdId);
+    expect(property.isRequired).toBe(true);
+    expect(property.documentation).toBe(propertyDocumentation);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building common with missing property', () => {
+describe('when building common with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -324,6 +375,39 @@ describe('when building common with missing property', () => {
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(false);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -360,12 +444,55 @@ describe('when building common with invalid trailing text', () => {
       .sendToListener(builder);
   });
 
+  it('should build one common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(false);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const property = entityRepository.common.get(entityName).properties[0];
+
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.metaEdId).toBe(propertyMetaEdId);
+    expect(property.isRequired).toBe(true);
+    expect(property.documentation).toBe(propertyDocumentation);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with missing inline common name', () => {
+describe('when building inline common with no inline common name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -390,6 +517,10 @@ describe('when building inline common with missing inline common name', () => {
       .withEndInlineCommon()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should not build inline common', () => {
+    expect(entityRepository.common.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -424,12 +555,55 @@ describe('when building inline common with lowercase inline common name', () => 
       .sendToListener(builder);
   });
 
+  it('should build one inline common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository but with lowercase prefix ignored', () => {
+    expect(entityRepository.common.get('Name')).toBeDefined();
+    expect(entityRepository.common.get('Name').metaEdName).toBe('Name');
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get('Name').namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get('Name').metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get('Name').inlineInOds).toBe(true);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.common.get('Name').documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.common.get('Name').properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const property = entityRepository.common.get('Name').properties[0];
+
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.metaEdId).toBe(propertyMetaEdId);
+    expect(property.isRequired).toBe(true);
+    expect(property.documentation).toBe(propertyDocumentation);
+  });
+
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with missing documentation', () => {
+describe('when building inline common with no documentation', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -455,12 +629,55 @@ describe('when building inline common with missing documentation', () => {
       .sendToListener(builder);
   });
 
+  it('should build one inline common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(true);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe('');
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const property = entityRepository.common.get(entityName).properties[0];
+
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.metaEdId).toBe(propertyMetaEdId);
+    expect(property.isRequired).toBe(true);
+    expect(property.documentation).toBe(propertyDocumentation);
+  });
+
   it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
 
-describe('when building inline common with missing property', () => {
+describe('when building inline common with no property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
@@ -476,11 +693,44 @@ describe('when building inline common with missing property', () => {
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
-      .withStartCommon(entityName, entityMetaEdId)
+      .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(builder);
+  });
+
+  it('should build one inline common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(true);
+  });
+
+  it('should not have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have no property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -517,7 +767,50 @@ describe('when building inline common with invalid trailing text', () => {
       .sendToListener(builder);
   });
 
-  it('should have extraneous input error', () => {
+  it('should build one inline common', () => {
+    expect(entityRepository.common.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.common.get(entityName)).toBeDefined();
+    expect(entityRepository.common.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.namespace).toBe(namespace);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.common.get(entityName).metaEdId).toBe(entityMetaEdId);
+  });
+
+  it('should have project extension', () => {
+    expect(entityRepository.common.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+  });
+
+  it('should be inlined in ODS', () => {
+    expect(entityRepository.common.get(entityName).inlineInOds).toBe(true);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.common.get(entityName).documentation).toBe(entityDocumentation);
+  });
+
+  it('should have one property', () => {
+    expect(entityRepository.common.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have integer property', () => {
+    const property = entityRepository.common.get(entityName).properties[0];
+
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.metaEdId).toBe(propertyMetaEdId);
+    expect(property.isRequired).toBe(true);
+    expect(property.documentation).toBe(propertyDocumentation);
+  });
+
+  it('should have mismatched input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
