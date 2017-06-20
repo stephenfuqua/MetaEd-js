@@ -34,3 +34,15 @@ export type State = {
   // the transient property index
   propertyIndex: ?Map<PropertyType, Array<EntityProperty>>,
 };
+
+export const defaultStateFactory: () => State = () =>
+  ({
+    validationFailure: [],
+    inputDirectories: [],
+    filepathsToExclude: new Set(),
+    loadedFileSet: [],
+    fileIndex: null,
+    parseTree: null,
+    repository: null,
+    propertyIndex: null,
+  });

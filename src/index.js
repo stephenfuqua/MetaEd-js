@@ -1,8 +1,8 @@
 // @flow
-
 export { startingFromFileLoadP } from './core/task/Pipeline';
 export { createMetaEdFile } from './core/task/MetaEdFile';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './core/task/BufferFileLoader';
+export { defaultStateFactory } from './core/State';
 
 export type { State } from './core/State';
 export type { InputDirectory } from './core/task/FileSystemFilenameLoader';

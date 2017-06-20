@@ -23,8 +23,8 @@ export const validateSyntax = R.curry(
         winston.error(`ValidateSyntax: parse tree builder returned null for file ${file.fullName}`);
       }
 
+      const fileIndex = createFileIndex([file]);
       validationFailures.forEach(failure => {
-        const fileIndex = createFileIndex([file]);
         if (failure.sourceMap) {
           // eslint-disable-next-line no-param-reassign
           failure.fileMap = getFilenameAndLineNumber(fileIndex, failure.sourceMap.line);

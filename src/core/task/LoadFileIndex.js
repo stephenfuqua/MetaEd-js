@@ -14,10 +14,10 @@ function endNamespace() {
   return createMetaEdFile('InMemory', 'InMemory', 'End Namespace\n');
 }
 
-export default function loadFileIndex(state: State) {
+export default function loadFileIndex(state: State): State {
   if (state.loadedFileSet == null) {
     winston.error('LoadFileIndex: no files to load found');
-    return;
+    return state;
   }
 
   const metaEdFiles: MetaEdFile[] = [];
@@ -31,5 +31,6 @@ export default function loadFileIndex(state: State) {
 
   // eslint-disable-next-line no-param-reassign
   state.fileIndex = createFileIndex(metaEdFiles);
+  return state;
 }
 

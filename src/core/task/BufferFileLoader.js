@@ -2,13 +2,14 @@
 import type { MetaEdFile, FileSet } from './MetaEdFile';
 import type { State } from '../State';
 
-function appendFileSet(state: State, fileSet: FileSet) {
+function appendFileSet(state: State, fileSet: FileSet): State {
   const filepaths = fileSet.files.map(file => file.fullName);
   filepaths.forEach(filePath => state.filepathsToExclude.add(filePath));
   state.loadedFileSet.push(fileSet);
+  return state;
 }
 
-export function loadCoreBufferedFiles(state: State, files: MetaEdFile[]) {
+export function loadCoreBufferedFiles(state: State, files: MetaEdFile[]): State {
   const fileSet: FileSet = {
     namespace: 'edfi',
     projectExtension: '',
@@ -18,7 +19,7 @@ export function loadCoreBufferedFiles(state: State, files: MetaEdFile[]) {
   return appendFileSet(state, fileSet);
 }
 
-export function loadExtensionBufferedFiles(state: State, files: MetaEdFile[]) {
+export function loadExtensionBufferedFiles(state: State, files: MetaEdFile[]): State {
   const fileSet: FileSet = {
     namespace: 'extension',
     projectExtension: 'EXTENSION',

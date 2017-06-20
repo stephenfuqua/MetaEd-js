@@ -2,9 +2,9 @@
 import type { ParserRuleContext } from 'antlr4/ParserRuleContext';
 
 export type SourceMap = {
-  line: number;
-  column: number;
-  tokenText: string;
+  line: number,
+  column: number,
+  tokenText: string,
 }
 
 export function sourceMapFrom(context: ParserRuleContext): ?SourceMap {
