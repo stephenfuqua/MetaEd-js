@@ -1,6 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building domain entity namespace info source map should have correct line, column, text 1`] = `
+exports[`when building abstract entity source map should have line, column, text for each property 1`] = `
+DomainEntitySourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "isAbstract": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Abstract Entity",
+  },
+  "metaEdId": Object {
+    "column": 29,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 18,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Abstract Entity",
+  },
+}
+`;
+
+exports[`when building domain entity namespace info source map should have line, column, text for each property 1`] = `
 NamespaceInfoSourceMap {
   "isExtension": Object {
     "column": 26,
@@ -25,7 +60,7 @@ NamespaceInfoSourceMap {
 }
 `;
 
-exports[`when building domain entity source map should have correct line, column, text for each property 1`] = `
+exports[`when building domain entity source map should have line, column, text for each property 1`] = `
 DomainEntitySourceMap {
   "allowPrimaryKeyUpdates": Object {
     "column": 4,
@@ -46,6 +81,11 @@ DomainEntitySourceMap {
     "column": 16,
     "line": 2,
     "tokenText": "EntityName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
   },
   "type": Object {
     "column": 2,
@@ -133,4 +173,24 @@ Array [
   "missing NAMESPACE_ID at 'Namespace', column: 16, line: 1, token: Namespace",
   "extraneous input 'ProjectExtension' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 26, line: 1, token: ProjectExtension",
 ]
+`;
+
+exports[`when building duplicate domain entities should have validation failures for each entity -> DE 1 message 1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 15,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`when building duplicate domain entities should have validation failures for each entity -> DE 2 message 1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domain entities should have validation failures for each entity -> DE 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
 `;

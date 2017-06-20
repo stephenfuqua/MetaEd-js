@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building domain entity extension source map should have correct line, column, text 1`] = `
+DomainEntityExtensionSourceMap {
+  "baseEntityName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "metaEdId": Object {
+    "column": 37,
+    "line": 2,
+    "tokenText": "[10]",
+  },
+  "metaEdName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain Entity",
+  },
+}
+`;
+
 exports[`when building domain entity extension with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
@@ -28,4 +58,24 @@ exports[`when building domain entity extension with no property should have mism
 Array [
   "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 3, token: End Namespace",
 ]
+`;
+
+exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 7,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
 `;

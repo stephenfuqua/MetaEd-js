@@ -8,6 +8,7 @@ import type { ValidationFailure } from '../../../src/core/validator/ValidationFa
 describe('when building domain entity extension in extension namespace', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -17,7 +18,7 @@ describe('when building domain entity extension in extension namespace', () => {
   beforeAll(() => {
     const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntityExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -67,6 +68,7 @@ describe('when building domain entity extension in extension namespace', () => {
 describe('when building duplicate domain entity extensions', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -76,7 +78,7 @@ describe('when building duplicate domain entity extensions', () => {
   beforeAll(() => {
     const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntityExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -102,13 +104,13 @@ describe('when building duplicate domain entity extensions', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('DomainEntityExtensionBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('DomainEntityExtensionBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap');
@@ -334,5 +336,56 @@ describe('when building domain entity extension with invalid trailing text', () 
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building domain entity extension source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '10';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomainEntityExtension(entityName, metaEdId)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+  });
+
+  it('should have baseEntityName', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.baseEntityName).toBeDefined();
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.baseEntityName.tokenText).toBe(entityName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have correct line, column, text', () => {
+    expect(entityRepository.domainEntityExtension.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
