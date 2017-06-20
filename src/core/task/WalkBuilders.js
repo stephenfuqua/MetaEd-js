@@ -22,9 +22,7 @@ import SharedIntegerBuilder from '../builder/SharedIntegerBuilder';
 import SharedStringBuilder from '../builder/SharedStringBuilder';
 
 export function execute(state: State): State {
-  // eslint-disable-next-line no-param-reassign
   state.repository = repositoryFactory();
-  // eslint-disable-next-line no-param-reassign
   state.propertyIndex = new Map();
   const entityRepository = state.repository.entity;
   const propertyIndex = state.propertyIndex;

@@ -29,7 +29,6 @@ export default function loadFileIndex(state: State): State {
     metaEdFiles.push(endNamespace());
   });
 
-  // eslint-disable-next-line no-param-reassign
   state.fileIndex = createFileIndex(metaEdFiles);
   return state;
 }

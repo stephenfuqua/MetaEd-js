@@ -12,6 +12,9 @@
     "max-len": "off",
     "no-underscore-dangle": "off",
     "no-duplicate-imports": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-param-reassign": [2, {
+      "props": false
+    }]
   }
 }

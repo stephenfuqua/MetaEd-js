@@ -26,7 +26,6 @@ export const validateSyntax = R.curry(
       const fileIndex = createFileIndex([file]);
       validationFailures.forEach(failure => {
         if (failure.sourceMap) {
-          // eslint-disable-next-line no-param-reassign
           failure.fileMap = getFilenameAndLineNumber(fileIndex, failure.sourceMap.line);
         }
       });
