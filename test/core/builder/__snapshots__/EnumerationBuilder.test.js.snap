@@ -1,5 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 message 1`] = `"Enumeration named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 8,
+  "tokenText": "Enumeration",
+}
+`;
+
+exports[`when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 message 1`] = `"Enumeration named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Enumeration",
+}
+`;
+
+exports[`when building enumeration source map should have line, column, text for each property 1`] = `
+EnumerationSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "metaEdId": Object {
+    "column": 25,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Enumeration",
+  },
+}
+`;
+
+exports[`when building enumeration source map should have line, column, text for each property 2`] = `
+EnumerationItemSourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "documentation",
+  },
+  "metaEdId": Object {
+    "column": 32,
+    "line": 5,
+    "tokenText": "[2]",
+  },
+  "shortDescription": Object {
+    "column": 9,
+    "line": 5,
+    "tokenText": "\\"ItemShortDescription\\"",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "item",
+  },
+}
+`;
+
+exports[`when building enumeration source map should have line, column, text for each property 3`] = `
+EnumerationItemSourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 9,
+    "tokenText": "documentation",
+  },
+  "metaEdId": Object {
+    "column": 33,
+    "line": 8,
+    "tokenText": "[3]",
+  },
+  "shortDescription": Object {
+    "column": 9,
+    "line": 8,
+    "tokenText": "\\"ItemShortDescription2\\"",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "item",
+  },
+}
+`;
+
 exports[`when building enumeration with empty enumeration item description should have extraneous input error 1`] = `
 Array [
   "missing TEXT at '[2]', column: 6, line: 5, token: [2]",

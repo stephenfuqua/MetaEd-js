@@ -125,13 +125,13 @@ describe('when building duplicate enumerations', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('EnumerationBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('EnumerationBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 sourceMap');
@@ -644,5 +644,101 @@ describe('when building enumeration with invalid trailing text', () => {
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building enumeration source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '1';
+  const documentation: string = 'Documentation';
+  const itemShortDescription: string = 'ItemShortDescription';
+  const itemDocumentation: string = 'ItemDocumentation';
+  const itemMetaEdId: string = '2';
+  const itemShortDescription2: string = 'ItemShortDescription2';
+  const itemDocumentation2: string = 'ItemDocumentation2';
+  const itemMetaEdId2: string = '3';
+
+  beforeAll(() => {
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartEnumeration(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
+      .withEnumerationItem(itemShortDescription2, itemDocumentation2, itemMetaEdId2)
+      .withEndEnumeration()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have first enumeration item type', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.type).toBeDefined();
+  });
+
+  it('should have first enumeration item shortDescription', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription.tokenText).toBe(`"${itemShortDescription}"`);
+  });
+
+  it('should have first enumeration item metaEdId', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId.tokenText).toBe(`[${itemMetaEdId}]`);
+  });
+
+  it('should have first enumeration item documentation', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have second enumeration item type', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.type).toBeDefined();
+  });
+
+  it('should have second enumeration item shortDescription', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription.tokenText).toBe(`"${itemShortDescription2}"`);
+  });
+
+  it('should have second enumeration item metaEdId', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId.tokenText).toBe(`[${itemMetaEdId2}]`);
+  });
+
+  it('should have second enumeration item documentation', () => {
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap).toMatchSnapshot();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap).toMatchSnapshot();
+    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap).toMatchSnapshot();
   });
 });
