@@ -3,6 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityExtensionFactory } from '../model/DomainEntityExtension';
 import type { DomainEntityExtension } from '../model/DomainEntityExtension';
+import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
@@ -10,6 +11,12 @@ export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder 
   // eslint-disable-next-line no-unused-vars
   enterDomainEntityExtension(context: MetaEdGrammar.DomainEntityExtensionContext) {
     this.enteringEntity(domainEntityExtensionFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      Object.assign(((this.currentTopLevelEntity: any): DomainEntityExtension).sourceMap, {
+        type: sourceMapFrom(context),
+        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+      });
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -24,5 +31,9 @@ export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
     ((this.currentTopLevelEntity: any): DomainEntityExtension).baseEntityName = extendeeName;
+    Object.assign(((this.currentTopLevelEntity: any): DomainEntityExtension).sourceMap, {
+      metaEdName: sourceMapFrom(context),
+      baseEntityName: sourceMapFrom(context),
+    });
   }
 }
