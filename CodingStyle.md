@@ -7,6 +7,8 @@ Coding Style Guide
 * No abbreviations, no truncations of variable/method/file names.
 * Validator, Enhancer and Diminisher file names must be descriptive. Be as verbose as necessary.
 * Validators, Enhancers and Diminishers must only do one thing - truly SRP.
+* No methods on Model classes.
+* Only Builders and Models can be classes, the rest are functions.
 * Minimize plurals.
 * Minimize temp variables.
 * Extract small pure functions to name behaviors. Be as verbose as necessary.
