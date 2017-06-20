@@ -9,6 +9,7 @@ import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { interchangeFactory, NoInterchange } from '../model/Interchange';
 import { interchangeItemFactory, NoInterchangeItem } from '../model/InterchangeItem';
+import { interchangeExtensionFactory } from '../model/InterchangeExtension';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
@@ -88,34 +89,36 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   // eslint-disable-next-line no-unused-vars
   enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentInterchange = Object.assign(interchangeFactory(), {
+    this.currentInterchange = Object.assign(interchangeExtensionFactory(), {
       namespaceInfo: this.namespaceInfo,
-      isExtension: true,
     });
   }
 
   exitingInterchange() {
     if (this.currentInterchange === NoInterchange) return;
     if (this.currentInterchange.metaEdName) {
-      if (this.entityRepository.interchange.has(this.currentInterchange.metaEdName)) {
+      const extensionMessageString = this.currentInterchange.type === 'interchangeExtension' ? 'Extension ' : '';
+      // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
+      if (this.entityRepository[this.currentInterchange.type].has(this.currentInterchange.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentInterchange.sourceMap.type,
           fileMap: null,
         });
-        // $FlowIgnore - we ensure the key is in the map above
-        const duplicateEntity: Interchange = this.entityRepository.interchange.get(this.currentInterchange.metaEdName);
+        // $FlowIgnore - we ensure the key is in the map above, and allow currentInterchange.type to specify the entityRepository Map property
+        const duplicateEntity: Interchange = this.entityRepository[this.currentInterchange.type].get(this.currentInterchange.metaEdName);
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
       } else {
-        this.entityRepository.interchange.set(this.currentInterchange.metaEdName, this.currentInterchange);
+        // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
+        this.entityRepository[this.currentInterchange.type].set(this.currentInterchange.metaEdName, this.currentInterchange);
       }
     }
     this.currentInterchange = NoInterchange;

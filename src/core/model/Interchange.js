@@ -7,7 +7,6 @@ import type { SourceMap } from './SourceMap';
 export class InterchangeSourceMap extends ModelBaseSourceMap {
   elements: ?Array<SourceMap>;
   identityTemplates: ?Array<SourceMap>;
-  isExtension: ?SourceMap;
   extendedDocumentation: ?SourceMap;
   useCaseDocumentation: ?SourceMap;
 }
@@ -15,7 +14,6 @@ export class InterchangeSourceMap extends ModelBaseSourceMap {
 export class Interchange extends ModelBase {
   elements: Array<InterchangeItem>;
   identityTemplates: Array<InterchangeItem>;
-  isExtension: boolean;
   extendedDocumentation: string;
   useCaseDocumentation: string;
   baseEntityName: string;
@@ -33,7 +31,6 @@ export function interchangeFactory(): Interchange {
 
     elements: [],
     identityTemplates: [],
-    isExtension: false,
     extendedDocumentation: '',
     useCaseDocumentation: '',
     baseEntityName: '',

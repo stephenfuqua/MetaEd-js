@@ -11,6 +11,7 @@ import type { DomainEntityExtension } from './DomainEntityExtension';
 import type { DomainEntitySubclass } from './DomainEntitySubclass';
 import type { Enumeration } from './Enumeration';
 import type { Interchange } from './Interchange';
+import type { InterchangeExtension } from './InterchangeExtension';
 import type { MapTypeEnumeration } from './MapTypeEnumeration';
 import type { NamespaceInfo } from './NamespaceInfo';
 import type { SchoolYearEnumeration } from './SchoolYearEnumeration';
@@ -34,6 +35,7 @@ export class EntityRepository {
   domainEntitySubclass: Map<string, DomainEntitySubclass>;
   enumeration: Map<string, Enumeration>;
   interchange: Map<string, Interchange>;
+  interchangeExtension: Map<string, InterchangeExtension>;
   mapTypeEnumeration: Map<string, MapTypeEnumeration>;
   namespaceInfo: Map<string, NamespaceInfo>;
   schoolYearEnumeration: Map<string, SchoolYearEnumeration>;
@@ -58,6 +60,7 @@ export function entityRepositoryFactory(): EntityRepository {
     domainEntitySubclass: new Map(),
     enumeration: new Map(),
     interchange: new Map(),
+    interchangeExtension: new Map(),
     mapTypeEnumeration: new Map(),
     namespaceInfo: new Map(),
     schoolYearEnumeration: new Map(),

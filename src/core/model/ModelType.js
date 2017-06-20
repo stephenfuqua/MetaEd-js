@@ -17,6 +17,7 @@ export type ModelType =
   'enumeration' |
   'enumerationItem' |
   'interchange' |
+  'interchangeExtension' |
   'inlineCommon' |
   'mapTypeEnumeration' |
   'namespaceInfo' |
