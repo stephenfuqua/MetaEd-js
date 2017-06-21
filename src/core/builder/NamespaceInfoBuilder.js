@@ -4,6 +4,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
+import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
@@ -15,7 +16,9 @@ export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContex
     context.NAMESPACE_ID().exception != null ||
     context.NAMESPACE_ID().getText() == null) return namespaceInfo;
 
-  return Object.assign(namespaceInfo, { namespace: context.NAMESPACE_ID().getText() });
+  Object.assign(namespaceInfo, { namespace: context.NAMESPACE_ID().getText() });
+  Object.assign(namespaceInfo.sourceMap, { namespace: sourceMapFrom(context) });
+  return namespaceInfo;
 }
 
 export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
@@ -24,7 +27,9 @@ export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContex
   if (context.CORE() != null) return namespaceInfo;
   if (context.ID() == null || context.ID().exception != null || isErrorText(context.ID().getText())) return namespaceInfo;
 
-  return Object.assign(namespaceInfo, { projectExtension: context.ID().getText(), isExtension: true });
+  Object.assign(namespaceInfo, { projectExtension: context.ID().getText(), isExtension: true });
+  Object.assign(namespaceInfo.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });
+  return namespaceInfo;
 }
 
 export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
@@ -44,6 +49,7 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
     if (context.exception) return;
     if (this.currentNamespaceInfo !== NoNamespaceInfo) return;
     this.currentNamespaceInfo = namespaceInfoFactory();
+    this.currentNamespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {

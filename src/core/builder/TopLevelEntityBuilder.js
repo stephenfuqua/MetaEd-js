@@ -88,13 +88,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.namespaceInfo = enteringNamespaceName(context, this.namespaceInfo);
-    this.namespaceInfo.sourceMap.namespace = sourceMapFrom(context);
   }
 
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.namespaceInfo = enteringNamespaceType(context, this.namespaceInfo);
-    Object.assign(this.namespaceInfo.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });
   }
 
   // eslint-disable-next-line no-unused-vars

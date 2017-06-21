@@ -146,3 +146,44 @@ describe('when building core namespace info', () => {
     expect(entityRepository.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });
 });
+
+describe('when building extension namespace info source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  beforeAll(() => {
+    const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartCommon('Dummy')
+      .withDocumentation('Dummy')
+      .withIntegerProperty('Dummy', 'Dummy', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.namespaceInfo[0].sourceMap.type).toBeDefined();
+  });
+
+  it('should have namespace', () => {
+    expect(entityRepository.namespaceInfo[0].sourceMap.namespace).toBeDefined();
+  });
+
+  it('should have isExtension', () => {
+    expect(entityRepository.namespaceInfo[0].sourceMap.isExtension).toBeDefined();
+  });
+
+  it('should have projectExtension', () => {
+    expect(entityRepository.namespaceInfo[0].sourceMap.projectExtension).toBeDefined();
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.namespaceInfo[0].sourceMap).toMatchSnapshot();
+  });
+});
