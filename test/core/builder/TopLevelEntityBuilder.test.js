@@ -61,6 +61,16 @@ describe('when building a decimal property', () => {
     expect(property.minValue).toBe(minValue);
     expect(property.hasRestriction).toBe(true);
   });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
 });
 
 describe('when building a string property', () => {
@@ -108,6 +118,16 @@ describe('when building a string property', () => {
     expect(property.maxLength).toBe(maxLength);
     expect(property.minLength).toBe(minLength);
     expect(property.hasRestriction).toBe(true);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
   });
 });
 
@@ -157,6 +177,16 @@ describe('when building a integer property', () => {
     expect(property.minValue).toBe(minValue);
     expect(property.hasRestriction).toBe(true);
   });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
 });
 
 describe('when building a short property', () => {
@@ -205,6 +235,16 @@ describe('when building a short property', () => {
     expect(property.minValue).toBe(minValue);
     expect(property.hasRestriction).toBe(true);
   });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
 });
 
 describe('when building a common property with extension override', () => {
@@ -239,6 +279,16 @@ describe('when building a common property with extension override', () => {
 
   it('should have extension override flag set', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].isExtensionOverride).toBe(true);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
   });
 });
 
@@ -276,6 +326,16 @@ describe('when building a domain entity property', () => {
 
   it('should have correct MetaEd ID', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
   });
 });
 

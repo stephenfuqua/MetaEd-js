@@ -5,16 +5,16 @@ import type { PropertyType } from '../../model/property/PropertyType';
 import type { EntityProperty } from '../../model/property/EntityProperty';
 
 export function validate(repository: Repository, propertyIndex: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
-  const properties: ?Array<EntityProperty> = propertyIndex.get('choice');
+  const properties: ?Array<EntityProperty> = propertyIndex.get('domainEntity');
   if (properties == null) return [];
 
   const failures: Array<ValidationFailure> = [];
   properties.forEach(property => {
-    if (repository.entity.choice.get(property.metaEdName) == null) {
+    if (repository.entity.domainEntity.get(property.metaEdName) == null) {
       failures.push({
-        validatorName: 'ChoicePropertyMustMatchAChoice',
+        validatorName: 'DomainEntityPropertyMustMatchADomainEntity',
         category: 'error',
-        message: `Choice property '${property.metaEdName}' does not match any declared Choice.`,
+        message: `Domain entity property '${property.metaEdName}' does not match any declared Domain Entity.`,
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });

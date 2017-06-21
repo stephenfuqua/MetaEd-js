@@ -20,6 +20,7 @@ import { descriptorPropertyFactory } from '../model/property/DescriptorProperty'
 import { durationPropertyFactory } from '../model/property/DurationProperty';
 import { enumerationPropertyFactory } from '../model/property/EnumerationProperty';
 import { CommonProperty, commonPropertyFactory } from '../model/property/CommonProperty';
+import type { CommonPropertySourceMap } from '../model/property/CommonProperty';
 import { inlineCommonPropertyFactory } from '../model/property/InlineCommonProperty';
 import { choicePropertyFactory } from '../model/property/ChoiceProperty';
 import { IntegerProperty, integerPropertyFactory } from '../model/property/IntegerProperty';
@@ -164,84 +165,99 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterBooleanProperty(context: MetaEdGrammar.BooleanPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = booleanPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCurrencyProperty(context: MetaEdGrammar.CurrencyPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = currencyPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDateProperty(context: MetaEdGrammar.DatePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = datePropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDecimalProperty(context: MetaEdGrammar.DecimalPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = decimalPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDescriptorProperty(context: MetaEdGrammar.DescriptorPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = descriptorPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterDurationProperty(context: MetaEdGrammar.DurationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = durationPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterEnumerationProperty(context: MetaEdGrammar.EnumerationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = enumerationPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCommonProperty(context: MetaEdGrammar.CommonPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = commonPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterInlineCommonProperty(context: MetaEdGrammar.InlineCommonPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = inlineCommonPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterChoiceProperty(context: MetaEdGrammar.ChoicePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = choicePropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCommonExtensionOverride(context: MetaEdGrammar.CommonExtensionOverrideContext) {
     if (this.currentProperty == null) return;
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
     ((this.currentProperty: any): CommonProperty).isExtensionOverride = true;
+    ((this.currentProperty.sourceMap: any): CommonPropertySourceMap).isExtensionOverride = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterIntegerProperty(context: MetaEdGrammar.IntegerPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = integerPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterShortProperty(context: MetaEdGrammar.ShortPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = shortPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterPercentProperty(context: MetaEdGrammar.PercentPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = percentPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -254,48 +270,56 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterDomainEntityProperty(context: MetaEdGrammar.DomainEntityPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = domainEntityPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedDecimalProperty(context: MetaEdGrammar.SharedDecimalPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedDecimalPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedIntegerProperty(context: MetaEdGrammar.SharedIntegerPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedIntegerPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedShortProperty(context: MetaEdGrammar.SharedShortPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedShortPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterSharedStringProperty(context: MetaEdGrammar.SharedStringPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = sharedStringPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterStringProperty(context: MetaEdGrammar.StringPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = stringPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterTimeProperty(context: MetaEdGrammar.TimePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = timePropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterYearProperty(context: MetaEdGrammar.YearPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = yearPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
