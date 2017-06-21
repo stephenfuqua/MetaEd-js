@@ -4,7 +4,7 @@ import winston from 'winston';
 import MetaEdErrorListener from '../../grammar/MetaEdErrorListener';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import type { State } from '../State';
-import { getAllContents /* , getFilenameAndLineNumber */ } from './FileIndex';
+import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
 
 export const buildParseTree = R.curry(
   (parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
@@ -17,10 +17,6 @@ export const buildParseTree = R.curry(
       winston.error('BuildParseTree: parse tree builder returned null for state metaEdFileIndex contents');
     }
 
-    // Right now we ignore errors collected by errorListener, as they are duplicates from ValidateSyntax
-    // Should be instead ditch ValidateSyntax and do it all here?
-
-/*
     validationFailures.forEach(failure => {
       if (failure.sourceMap && state.fileIndex) {
         // eslint-disable-next-line no-param-reassign
@@ -28,8 +24,7 @@ export const buildParseTree = R.curry(
       }
     });
 
-    state.validationFailure.push(...validationFailures);
-*/
+//    state.validationFailure.push(...validationFailures);
 
     // eslint-disable-next-line no-param-reassign
     state.parseTree = parseTree;

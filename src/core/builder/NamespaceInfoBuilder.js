@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
   if (namespaceInfo === NoNamespaceInfo || isErrorText(context.NAMESPACE_ID().getText())) return namespaceInfoFactory();
 
-  if (context.exception != null ||
+  if (context.exception ||
     context.NAMESPACE_ID() == null ||
     context.NAMESPACE_ID().exception != null ||
     context.NAMESPACE_ID().getText() == null) return namespaceInfo;
@@ -20,6 +20,7 @@ export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContex
 
 export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
   if (namespaceInfo === NoNamespaceInfo) return namespaceInfo;
+  if (context.exception) return namespaceInfo;
   if (context.CORE() != null) return namespaceInfo;
   if (context.ID() == null || context.ID().exception != null || isErrorText(context.ID().getText())) return namespaceInfo;
 

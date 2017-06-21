@@ -69,7 +69,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentInterchangeItem !== NoInterchangeItem) {
       this.currentInterchangeItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -149,13 +149,13 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterInterchangeElement(context: MetaEdGrammar.InterchangeElementContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
   }
 
   enterInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
   }
 

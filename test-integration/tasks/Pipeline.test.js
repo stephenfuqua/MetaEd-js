@@ -90,13 +90,15 @@ describe('When a single file with a duplicate entity name', () => {
 
   it('Should return an error', () => {
     const endState = startingFromFileLoad(stateFactory());
-    expect(endState.validationFailure).toHaveLength(2);
+    expect(endState.validationFailure).toHaveLength(3);
+    expect(endState.validationFailure).toMatchSnapshot();
   });
 
   it('Should return an error in Promise form', () => {
     const endStateP = startingFromFileLoadP(stateFactory());
     return endStateP.then(endState => {
-      expect(endState.validationFailure).toHaveLength(2);
+      expect(endState.validationFailure).toHaveLength(3);
+      expect(endState.validationFailure).toMatchSnapshot();
     });
   });
 });

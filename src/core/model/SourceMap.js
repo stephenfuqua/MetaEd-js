@@ -8,7 +8,7 @@ export type SourceMap = {
 }
 
 export function sourceMapFrom(context: ParserRuleContext): ?SourceMap {
-  if (context.start == null) return null;
+  if (context.exception || context.start == null) return null;
 
   return {
     line: context.start.line,

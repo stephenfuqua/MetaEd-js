@@ -24,25 +24,25 @@ export default class SharedDecimalBuilder extends SharedSimpleBuilder {
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).decimalPlaces = context.UNSIGNED_INT().getText();
   }
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).totalDigits = context.UNSIGNED_INT().getText();
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).minValue = context.decimalValue().getText();
   }
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).maxValue = context.decimalValue().getText();
   }
 }

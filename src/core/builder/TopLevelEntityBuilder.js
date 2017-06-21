@@ -151,7 +151,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception != null ||
+      isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentProperty !== NoEntityProperty) {
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -365,7 +368,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterPropertyDocumentation(context: MetaEdGrammar.PropertyDocumentationContext) {
     if (this.currentProperty === NoEntityProperty) return;
 
-    if (context.INHERITED() != null && !context.INHERITED().exception) {
+    if (!context.exception && context.INHERITED() != null && !context.INHERITED().exception) {
       this.currentProperty.documentationInherited = true;
     } else {
       this.currentProperty.documentation = extractDocumentation(context);
@@ -374,19 +377,19 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterWithContextName(context: MetaEdGrammar.WithContextNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.withContext = context.ID().getText();
   }
 
   enterShortenToName(context: MetaEdGrammar.ShortenToNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.shortenTo = context.ID().getText();
   }
 
   enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.metaEdName = context.ID().getText();
 
     if (this.currentProperty.metaEdName === 'SchoolYear' && this.currentProperty.type === 'enumeration') {
@@ -396,7 +399,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterSharedPropertyType(context: MetaEdGrammar.SharedPropertyTypeContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.referencedType = context.ID().getText();
   }
 
@@ -445,7 +448,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.baseKeyName = context.ID().getText();
   }
 
@@ -475,56 +478,56 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).minLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).maxLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.signed_int() == null || context.signed_int().exception) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).minValue = context.signed_int().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.signed_int() == null || context.signed_int().exception) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).maxValue = context.signed_int().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.decimalValue() == null || context.decimalValue().exception) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
   }
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.decimalValue() == null || context.decimalValue().exception) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
   }
@@ -543,13 +546,13 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMergePropertyPath(context: MetaEdGrammar.MergePropertyPathContext) {
     if (this.currentMergedProperty === NoMergedProperty) return;
-    if (context.propertyPath() == null || context.propertyPath().exception) return;
+    if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
     this.currentMergedProperty.mergePropertyPath = propertyPathFrom(context.propertyPath());
   }
 
   enterTargetPropertyPath(context: MetaEdGrammar.TargetPropertyPathContext) {
     if (this.currentMergedProperty === NoMergedProperty) return;
-    if (context.propertyPath() == null || context.propertyPath().exception) return;
+    if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
     this.currentMergedProperty.targetPropertyPath = propertyPathFrom(context.propertyPath());
   }
 

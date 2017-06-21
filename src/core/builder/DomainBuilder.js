@@ -60,7 +60,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
 
     if (this.currentDomainItem !== NoDomainItem) {
       this.currentDomainItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -145,7 +145,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
   }
 
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
-    if (context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomainItem = Object.assign(domainItemFactory(), { metaEdName: context.ID().getText() });
   }
 

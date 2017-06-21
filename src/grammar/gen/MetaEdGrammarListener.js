@@ -1,4 +1,4 @@
-// Generated from C:/work/metaed/MetaEd/src/MetaEd/Grammar/Antlr/Language/MetaEdGrammar.g4 by ANTLR 4.7
+// Generated from C:\work\metaed\MetaEd\src\MetaEd\Grammar\Antlr\Language\MetaEdGrammar.g4 by ANTLR 4.6
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 

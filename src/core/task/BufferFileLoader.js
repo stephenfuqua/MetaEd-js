@@ -10,6 +10,7 @@ function appendFileSet(state: State, fileSet: FileSet): State {
 }
 
 export function loadCoreBufferedFiles(state: State, files: MetaEdFile[]): State {
+  if (files.length === 0) return state;
   const fileSet: FileSet = {
     namespace: 'edfi',
     projectExtension: '',
@@ -20,6 +21,7 @@ export function loadCoreBufferedFiles(state: State, files: MetaEdFile[]): State 
 }
 
 export function loadExtensionBufferedFiles(state: State, files: MetaEdFile[]): State {
+  if (files.length === 0) return state;
   const fileSet: FileSet = {
     namespace: 'extension',
     projectExtension: 'EXTENSION',

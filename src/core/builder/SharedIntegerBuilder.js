@@ -40,13 +40,13 @@ export default class SharedIntegerBuilder extends SharedSimpleBuilder {
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).minValue = context.signed_int().getText();
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
-    if (context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentSharedSimple: any): SharedInteger).maxValue = context.signed_int().getText();
   }
 }
