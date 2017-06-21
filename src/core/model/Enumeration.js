@@ -9,7 +9,7 @@ export class EnumerationSourceMap extends TopLevelEntitySourceMap {
 
 export class Enumeration extends TopLevelEntity {
   enumerationItems: Array<EnumerationItem>;
-  sourceMap: EnumerationSourceMap;
+  sourceMap: TopLevelEntitySourceMap | EnumerationSourceMap;
 }
 
 export function enumerationFactory(): Enumeration {

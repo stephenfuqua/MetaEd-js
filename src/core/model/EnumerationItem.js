@@ -9,7 +9,7 @@ export class EnumerationItemSourceMap extends ModelBaseSourceMap {
 
 export class EnumerationItem extends ModelBase {
   shortDescription: string;
-  sourceMap: EnumerationItemSourceMap;
+  sourceMap: ModelBaseSourceMap & EnumerationItemSourceMap;
 }
 
 export function enumerationItemFactory(): EnumerationItem {

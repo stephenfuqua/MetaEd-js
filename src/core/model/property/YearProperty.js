@@ -1,10 +1,11 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class YearPropertySourceMap extends SimplePropertySourceMap {}
 
 export class YearProperty extends SimpleProperty {
-  sourceMap: YearPropertySourceMap;
+  sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | YearPropertySourceMap;
 }
 
 export function yearPropertyFactory(): YearProperty {

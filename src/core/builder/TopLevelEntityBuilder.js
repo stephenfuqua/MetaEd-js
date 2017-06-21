@@ -116,7 +116,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
           message: `${this.currentTopLevelEntity.typeGroupHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on TLE
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
           fileMap: null,
         });
@@ -125,7 +124,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
           message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on TLE
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -139,7 +137,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.documentation = extractDocumentation(context);
-    // $FlowIgnore - sourceMap property not on TLE
     this.currentTopLevelEntity.sourceMap.documentation = sourceMapFrom(context);
   }
 
@@ -156,11 +153,9 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
     if (this.currentProperty !== NoEntityProperty) {
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - sourceMap property not on TLE
       this.currentProperty.sourceMap.metaEdId = sourceMapFrom(context);
     } else if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - sourceMap property not on TLE
       this.currentTopLevelEntity.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
@@ -320,7 +315,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
       message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name.`,
-      // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: this.currentProperty.sourceMap.type,
       fileMap: null,
     });
@@ -330,7 +324,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
       message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.`,
-      // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: duplicateProperty.sourceMap.type,
       fileMap: null,
     });
@@ -435,12 +428,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
-        // $FlowIgnore - sourceMap property not on TLE
         let identityProperties = this.currentTopLevelEntity.sourceMap.identityProperties;
         identityProperties = identityProperties || [];
         const sourceMap: any = sourceMapFrom(context);
         identityProperties.push(sourceMap);
-        // $FlowIgnore - sourceMap property not on TLE
         this.currentTopLevelEntity.sourceMap.identityProperties = identityProperties;
       },
     );

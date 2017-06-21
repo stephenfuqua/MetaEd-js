@@ -4,7 +4,6 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityPropertyFactory } from '../model/property/DomainEntityProperty';
 import { associationFactory } from '../model/Association';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
-import type { Association } from '../model/Association';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
@@ -12,7 +11,7 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
   enterAssociation(context: MetaEdGrammar.AssociationContext) {
     this.enteringEntity(associationFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      ((this.currentTopLevelEntity: any): Association).sourceMap.type = sourceMapFrom(context);
+      this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }
   }
 
@@ -24,13 +23,13 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
   enterAssociationName(context: MetaEdGrammar.AssociationNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
-    ((this.currentTopLevelEntity: any): Association).sourceMap.metaEdName = sourceMapFrom(context);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterCascadeUpdate(context: MetaEdGrammar.CascadeUpdateContext) {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      ((this.currentTopLevelEntity: any): Association).allowPrimaryKeyUpdates = true;
-      ((this.currentTopLevelEntity: any): Association).sourceMap.allowPrimaryKeyUpdates = sourceMapFrom(context);
+      this.currentTopLevelEntity.allowPrimaryKeyUpdates = true;
+      this.currentTopLevelEntity.sourceMap.allowPrimaryKeyUpdates = sourceMapFrom(context);
     }
   }
 

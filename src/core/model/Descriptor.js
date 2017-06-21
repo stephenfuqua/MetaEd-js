@@ -13,7 +13,7 @@ export class Descriptor extends TopLevelEntity {
   isMapTypeRequired: boolean;
   isMapTypeOptional: boolean;
   mapTypeEnumeration: MapTypeEnumeration;
-  sourceMap: DescriptorSourceMap;
+  sourceMap: TopLevelEntitySourceMap | DescriptorSourceMap;
 }
 
 export function descriptorFactory(): Descriptor {

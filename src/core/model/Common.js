@@ -11,7 +11,7 @@ export class CommonSourceMap extends TopLevelEntitySourceMap {
 export class Common extends TopLevelEntity {
   extender: ?CommonExtension;
   inlineInOds: boolean;
-  sourceMap: CommonSourceMap;
+  sourceMap: TopLevelEntitySourceMap | CommonSourceMap;
 }
 
 export function commonFactory(): Common {

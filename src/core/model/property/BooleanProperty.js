@@ -1,10 +1,11 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class BooleanPropertySourceMap extends SimplePropertySourceMap {}
 
 export class BooleanProperty extends SimpleProperty {
-  sourceMap: BooleanPropertySourceMap;
+  sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | BooleanPropertySourceMap;
 }
 
 export function booleanPropertyFactory(): BooleanProperty {

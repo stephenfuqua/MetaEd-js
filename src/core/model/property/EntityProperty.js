@@ -50,6 +50,7 @@ export class EntityProperty {
   withContext: string;
   hasRestriction: boolean;
   referencedType: string;
+  sourceMap: EntityPropertySourceMap;
 }
 
 export function defaultEntityPropertyFields() {
@@ -75,6 +76,7 @@ export function defaultEntityPropertyFields() {
     withContext: '',
     hasRestriction: false,
     referencedType: '',
+    sourceMap: new EntityPropertySourceMap(),
   };
 }
 

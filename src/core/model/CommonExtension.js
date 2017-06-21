@@ -4,7 +4,7 @@ import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from '
 export class CommonExtensionSourceMap extends TopLevelEntitySourceMap {}
 
 export class CommonExtension extends TopLevelEntity {
-  sourceMap: CommonExtensionSourceMap;
+  sourceMap: TopLevelEntitySourceMap | CommonExtensionSourceMap;
 }
 
 export function commonExtensionFactory(): CommonExtension {

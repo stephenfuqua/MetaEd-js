@@ -4,7 +4,7 @@ import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from '
 export class DomainEntitySubclassSourceMap extends TopLevelEntitySourceMap {}
 
 export class DomainEntitySubclass extends TopLevelEntity {
-  sourceMap: DomainEntitySubclassSourceMap;
+  sourceMap: TopLevelEntitySourceMap | DomainEntitySubclassSourceMap;
 }
 
 export function domainEntitySubclassFactory(): DomainEntitySubclass {

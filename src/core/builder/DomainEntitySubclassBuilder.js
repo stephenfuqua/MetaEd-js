@@ -2,7 +2,6 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntitySubclassFactory } from '../model/DomainEntitySubclass';
-import type { DomainEntitySubclass } from '../model/DomainEntitySubclass';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
@@ -12,7 +11,7 @@ export default class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
   enterDomainEntitySubclass(context: MetaEdGrammar.DomainEntitySubclassContext) {
     this.enteringEntity(domainEntitySubclassFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      Object.assign(((this.currentTopLevelEntity: any): DomainEntitySubclass).sourceMap, {
+      Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
       });
@@ -28,14 +27,14 @@ export default class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
-    ((this.currentTopLevelEntity: any): DomainEntitySubclass).sourceMap.metaEdName = sourceMapFrom(context);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterBaseName(context: MetaEdGrammar.BaseNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
-    ((this.currentTopLevelEntity: any): DomainEntitySubclass).baseEntityName = context.ID().getText();
-    Object.assign(((this.currentTopLevelEntity: any): DomainEntitySubclass).sourceMap, {
+    this.currentTopLevelEntity.baseEntityName = context.ID().getText();
+    Object.assign(this.currentTopLevelEntity.sourceMap, {
       baseEntity: sourceMapFrom(context),
       baseEntityName: sourceMapFrom(context),
     });

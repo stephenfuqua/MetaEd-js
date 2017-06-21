@@ -15,7 +15,6 @@ export function validate(repository: Repository, propertyIndex: Map<PropertyType
         validatorName: 'CommonPropertyMustMatchACommon',
         category: 'error',
         message: `Common property '${property.metaEdName}' does not match any declared Common.`,
-        // $FlowIgnore - sourceMap not on EntityProperty
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });
