@@ -959,3 +959,55 @@ describe('when building association with invalid trailing text', () => {
   });
 });
 
+describe('when building association source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const entityMetaEdId: string = '1';
+  const documentation1: string = 'documentation1';
+  const firstDomainEntityName: string = 'FirstDomainEntityName';
+  const firstDomainEntityMetaEdId: string = '2';
+  const documentation2: string = 'documentation2';
+  const secondDomainEntityName: string = 'SecondDomainEntityName';
+  const secondDomainEntityMetaEdId: string = '3';
+  const documentation3: string = 'documentation3';
+
+  beforeAll(() => {
+    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociation(entityName, entityMetaEdId)
+      .withDocumentation(documentation1)
+      .withCascadeUpdate()
+      .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
+      .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
+      .withEndAssociation()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a allowPrimaryKeyUpdates property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
+  });
+
+  it('should have a identityProperties property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toBeDefined();
+    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toHaveLength(2);
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});

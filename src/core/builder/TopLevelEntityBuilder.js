@@ -422,26 +422,31 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     );
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterIdentity(context: MetaEdGrammar.IdentityContext) {
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
-  enteringIdentity() {
+  enteringIdentity(context: MetaEdGrammar.FirstDomainEntityContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
+        // $FlowIgnore - sourceMap property not on TLE
+        let identityProperties = this.currentTopLevelEntity.sourceMap.identityProperties;
+        identityProperties = identityProperties || [];
+        const sourceMap: any = sourceMapFrom(context);
+        identityProperties.push(sourceMap);
+        // $FlowIgnore - sourceMap property not on TLE
+        this.currentTopLevelEntity.sourceMap.identityProperties = identityProperties;
       },
     );
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isIdentityRename = true;
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {

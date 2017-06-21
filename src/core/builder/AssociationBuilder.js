@@ -6,11 +6,14 @@ import { associationFactory } from '../model/Association';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { Association } from '../model/Association';
 import { isErrorText } from './BuilderUtility';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterAssociation(context: MetaEdGrammar.AssociationContext) {
     this.enteringEntity(associationFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      ((this.currentTopLevelEntity: any): Association).sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -19,29 +22,28 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
   }
 
   enterAssociationName(context: MetaEdGrammar.AssociationNameContext) {
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
+    ((this.currentTopLevelEntity: any): Association).sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterCascadeUpdate(context: MetaEdGrammar.CascadeUpdateContext) {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       ((this.currentTopLevelEntity: any): Association).allowPrimaryKeyUpdates = true;
+      ((this.currentTopLevelEntity: any): Association).sourceMap.allowPrimaryKeyUpdates = sourceMapFrom(context);
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = domainEntityPropertyFactory();
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = domainEntityPropertyFactory();
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
   // eslint-disable-next-line no-unused-vars

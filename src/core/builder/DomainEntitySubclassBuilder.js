@@ -32,8 +32,7 @@ export default class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
   }
 
   enterBaseName(context: MetaEdGrammar.BaseNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     ((this.currentTopLevelEntity: any): DomainEntitySubclass).baseEntityName = context.ID().getText();
     Object.assign(((this.currentTopLevelEntity: any): DomainEntitySubclass).sourceMap, {
