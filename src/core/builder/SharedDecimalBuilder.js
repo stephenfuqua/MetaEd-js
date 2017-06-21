@@ -34,6 +34,7 @@ export default class SharedDecimalBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).decimalPlaces = context.UNSIGNED_INT().getText();
+    // $FlowIgnore - sourceMap property not on SharedSimple
     ((this.currentSharedSimple: any): SharedDecimal).sourceMap.decimalPlaces = sourceMapFrom(context);
   }
 
@@ -41,6 +42,7 @@ export default class SharedDecimalBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).totalDigits = context.UNSIGNED_INT().getText();
+    // $FlowIgnore - sourceMap property not on SharedSimple
     ((this.currentSharedSimple: any): SharedDecimal).sourceMap.totalDigits = sourceMapFrom(context);
   }
 
@@ -48,6 +50,7 @@ export default class SharedDecimalBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).minValue = context.decimalValue().getText();
+    // $FlowIgnore - sourceMap property not on SharedSimple
     ((this.currentSharedSimple: any): SharedDecimal).sourceMap.minValue = sourceMapFrom(context);
   }
 
@@ -55,6 +58,7 @@ export default class SharedDecimalBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple === NoSharedSimple) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentSharedSimple: any): SharedDecimal).maxValue = context.decimalValue().getText();
+    // $FlowIgnore - sourceMap property not on SharedSimple
     ((this.currentSharedSimple: any): SharedDecimal).sourceMap.maxValue = sourceMapFrom(context);
   }
 }
