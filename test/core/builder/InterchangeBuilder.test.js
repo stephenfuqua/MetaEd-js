@@ -691,3 +691,126 @@ describe('when building interchange extension with invalid trailing text', () =>
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
+
+describe('when building single interchange source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const interchangeName: string = 'InterchangeName';
+  const interchangeMetaEdId: string = '1';
+  const interchangeDocumentation: string = 'InterchangeDocumentation';
+  const extendedDocumentation: string = 'ExtendedDocumentation';
+  const useCaseDocumentation: string = 'UseCaseDocumentation';
+  const interchangeElementName: string = 'InterchangeElementName';
+  const interchangeElementMetaEdId: string = '2';
+  const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
+  const interchangeIdentityTemplateMetaEdId: string = '3';
+
+  beforeAll(() => {
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartInterchange(interchangeName, interchangeMetaEdId)
+      .withDocumentation(interchangeDocumentation)
+      .withExtendedDocumentation(extendedDocumentation)
+      .withUseCaseDocumentation(useCaseDocumentation)
+      .withDomainEntityElement(interchangeElementName, interchangeElementMetaEdId)
+      .withDomainEntityIdentityTemplate(interchangeIdentityTemplateName, interchangeIdentityTemplateMetaEdId)
+      .withEndInterchange()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  // ModelBaseSourceMap
+  xit('should have namespaceInfo', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdName.tokenText).toBe(interchangeName);
+  });
+  it('should have metaEdId', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdId.tokenText).toBe(`[${interchangeMetaEdId}]`);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.documentation).toBeDefined();
+  });
+
+  // InterchangeSourceMap
+  it('should have extendedDocumentation', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.extendedDocumentation).toBeDefined();
+  });
+
+  it('should have useCaseDocumentation', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.useCaseDocumentation).toBeDefined();
+  });
+
+  it('should have useCaseDocumentation', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.useCaseDocumentation).toBeDefined();
+  });
+
+  xit('should have one element', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.elements).toHaveLength(1);
+  });
+
+  xit('should have one identityTemplate', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.identityTemplates).toHaveLength(1);
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap).toMatchSnapshot();
+  });
+
+  // InterchangeItemSourceMap
+  it('should have element type', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.type).toBeDefined();
+  });
+
+  it('should have element metaEdName', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have element metaEdId', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.metaEdId).toBeDefined();
+  });
+
+  xit('should have element referencedEntity', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.referencedEntity).toBeDefined();
+  });
+
+  it('should have element line, column, text for each property', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap).toMatchSnapshot();
+  });
+
+  it('should have identityTemplate type', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.type).toBeDefined();
+  });
+
+  it('should have identityTemplate metaEdName', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have identityTemplate metaEdId', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.metaEdId).toBeDefined();
+  });
+
+  // only set in interchangeItem model ?
+  xit('should have identityTemplate referencedEntity', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.referencedEntity).toBeDefined();
+  });
+
+  it('should have identityTemplate line, column, text for each property', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap).toMatchSnapshot();
+  });
+});

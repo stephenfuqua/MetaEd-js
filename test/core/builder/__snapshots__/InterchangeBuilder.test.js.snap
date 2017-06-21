@@ -53,3 +53,78 @@ Array [
   "no viable alternative at input 'Interchange[1]', column: 15, line: 2, token: [1]",
 ]
 `;
+
+exports[`when building single interchange source map should have element line, column, text for each property 1`] = `
+InterchangeItemSourceMap {
+  "metaEdId": Object {
+    "column": 41,
+    "line": 9,
+    "tokenText": "[2]",
+  },
+  "metaEdName": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "domain entity",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "domain entity",
+  },
+}
+`;
+
+exports[`when building single interchange source map should have identityTemplate line, column, text for each property 1`] = `
+InterchangeItemSourceMap {
+  "metaEdId": Object {
+    "column": 59,
+    "line": 10,
+    "tokenText": "[3]",
+  },
+  "metaEdName": Object {
+    "column": 4,
+    "line": 10,
+    "tokenText": "domain entity identity",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 10,
+    "tokenText": "domain entity identity",
+  },
+}
+`;
+
+exports[`when building single interchange source map should have line, column, text for each property 1`] = `
+InterchangeSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "extendedDocumentation": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "extended documentation",
+  },
+  "metaEdId": Object {
+    "column": 30,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "InterchangeName",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Interchange",
+  },
+  "useCaseDocumentation": Object {
+    "column": 4,
+    "line": 7,
+    "tokenText": "use case documentation",
+  },
+}
+`;
