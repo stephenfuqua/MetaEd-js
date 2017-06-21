@@ -10,6 +10,8 @@ import { NoSharedSimple } from '../model/SharedSimple';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
+import { sourceMapFrom } from '../model/SourceMap';
+
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export default class SharedSimpleBuilder extends MetaEdGrammarListener {
@@ -30,6 +32,7 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
     this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
@@ -91,12 +94,16 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
     this.currentSharedSimple.documentation = extractDocumentation(context);
+    // $FlowIgnore - sourceMap property not on SharedSimple
+    this.currentSharedSimple.sourceMap.documentation = sourceMapFrom(context);
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
     if (this.currentSharedSimple !== NoSharedSimple) {
       this.currentSharedSimple.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      // $FlowIgnore - sourceMap property not on SharedSimple
+      this.currentSharedSimple.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
 }

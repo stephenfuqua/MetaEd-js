@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building shared decimal source mp should have line, column, text for each property 1`] = `
+SharedDecimalSourceMap {
+  "decimalPlaces": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "decimal places",
+  },
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "maxValue": Object {
+    "column": 6,
+    "line": 8,
+    "tokenText": "max value",
+  },
+  "metaEdId": Object {
+    "column": 28,
+    "line": 2,
+    "tokenText": "[123]",
+  },
+  "metaEdName": Object {
+    "column": 17,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "minValue": Object {
+    "column": 6,
+    "line": 7,
+    "tokenText": "min value",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "totalDigits": Object {
+    "column": 6,
+    "line": 5,
+    "tokenText": "total digits",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Shared Decimal",
+  },
+}
+`;
+
 exports[`when building shared decimal with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 9, token: TrailingText",

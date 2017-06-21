@@ -777,3 +777,80 @@ describe('when building shared decimal with invalid trailing text', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
+
+describe('when building shared decimal source mp', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '123';
+  const documentation = 'doc';
+  const totalDigits = '10';
+  const decimalPlaces = '3';
+  const minValue = '2';
+  const maxValue = '100';
+
+  beforeAll(() => {
+    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartSharedDecimal(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
+      .withEndSharedDecimal()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  // SharedSimpleSourceMap
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  // SharedDecimalSourceMap
+  it('should have totalDigits', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.totalDigits).toBeDefined();
+  });
+
+  it('should have decimalPlaces', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.decimalPlaces).toBeDefined();
+  });
+
+  it('should have minValue', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.minValue).toBeDefined();
+  });
+
+  it('should have maxValue', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.maxValue).toBeDefined();
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
