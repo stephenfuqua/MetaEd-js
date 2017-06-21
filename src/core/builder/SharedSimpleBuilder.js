@@ -66,7 +66,6 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
           validatorName: 'SharedSimpleBuilder',
           category: 'error',
           message: `${this.currentSharedSimple.typeGroupHumanizedName} named ${this.currentSharedSimple.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on SharedSimple
           sourceMap: this.currentSharedSimple.sourceMap.type,
           fileMap: null,
         });
@@ -75,7 +74,6 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
           validatorName: 'SharedSimpleBuilder',
           category: 'error',
           message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on SharedSimple
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -94,7 +92,6 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentSharedSimple === NoSharedSimple) return;
     this.currentSharedSimple.documentation = extractDocumentation(context);
-    // $FlowIgnore - sourceMap property not on SharedSimple
     this.currentSharedSimple.sourceMap.documentation = sourceMapFrom(context);
   }
 
@@ -102,7 +99,6 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
     if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
     if (this.currentSharedSimple !== NoSharedSimple) {
       this.currentSharedSimple.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - sourceMap property not on SharedSimple
       this.currentSharedSimple.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }

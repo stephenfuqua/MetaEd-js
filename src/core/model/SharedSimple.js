@@ -13,6 +13,7 @@ export class SharedSimpleSourceMap {
 
 export class SharedSimple extends ModelBase {
   typeGroupHumanizedName: string;
+  sourceMap: SharedSimpleSourceMap;
 }
 
 export function defaultSharedSimple(): SharedSimple {
@@ -23,6 +24,7 @@ export function defaultSharedSimple(): SharedSimple {
     metaEdName: '',
     metaEdId: '',
     namespaceInfo: namespaceInfoFactory(),
+    sourceMap: new SharedSimpleSourceMap(),
   });
 }
 
