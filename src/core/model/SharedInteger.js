@@ -13,7 +13,7 @@ export class SharedInteger extends SharedSimple {
   isShort: boolean;
   minValue: string;
   maxValue: string;
-  sourceMap: SharedIntegerSourceMap;
+  sourceMap: SharedSimpleSourceMap | SharedIntegerSourceMap;
 }
 
 export function sharedIntegerFactory(): SharedInteger {

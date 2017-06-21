@@ -2,7 +2,6 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { associationSubclassFactory } from '../model/AssociationSubclass';
-import type { AssociationSubclass } from '../model/AssociationSubclass';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
@@ -26,6 +25,6 @@ export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
-    ((this.currentTopLevelEntity: any): AssociationSubclass).baseEntityName = context.ID().getText();
+    this.currentTopLevelEntity.baseEntityName = context.ID().getText();
   }
 }

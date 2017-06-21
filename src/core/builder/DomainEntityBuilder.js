@@ -2,7 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityFactory } from '../model/DomainEntity';
-import type { DomainEntity } from '../model/DomainEntity';
+import type { DomainEntity, DomainEntitySourceMap } from '../model/DomainEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
@@ -13,7 +13,7 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
     this.enteringEntity(domainEntityFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       ((this.currentTopLevelEntity: any): DomainEntity).isAbstract = true;
-      Object.assign(((this.currentTopLevelEntity: any): DomainEntity).sourceMap, {
+      Object.assign(((this.currentTopLevelEntity.sourceMap: any): DomainEntitySourceMap), {
         type: sourceMapFrom(context),
         isAbstract: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
@@ -25,7 +25,7 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
   enterDomainEntity(context: MetaEdGrammar.DomainEntityContext) {
     this.enteringEntity(domainEntityFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      Object.assign(((this.currentTopLevelEntity: any): DomainEntity).sourceMap, {
+      Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
       });
@@ -46,21 +46,21 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
-    ((this.currentTopLevelEntity: any): DomainEntity).sourceMap.metaEdName = sourceMapFrom(context);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterEntityName(context: MetaEdGrammar.EntityNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
-    ((this.currentTopLevelEntity: any): DomainEntity).sourceMap.metaEdName = sourceMapFrom(context);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterCascadeUpdate(context: MetaEdGrammar.CascadeUpdateContext) {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      ((this.currentTopLevelEntity: any): DomainEntity).allowPrimaryKeyUpdates = true;
-      ((this.currentTopLevelEntity: any): DomainEntity).sourceMap.allowPrimaryKeyUpdates = sourceMapFrom(context);
+      this.currentTopLevelEntity.allowPrimaryKeyUpdates = true;
+      this.currentTopLevelEntity.sourceMap.allowPrimaryKeyUpdates = sourceMapFrom(context);
     }
   }
 }

@@ -2,7 +2,6 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { commonExtensionFactory } from '../model/CommonExtension';
-import type { CommonExtension } from '../model/CommonExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 
 export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
@@ -22,6 +21,6 @@ export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
-    ((this.currentTopLevelEntity: any): CommonExtension).baseEntityName = extendeeName;
+    this.currentTopLevelEntity.baseEntityName = extendeeName;
   }
 }

@@ -1,10 +1,11 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
+import { EntityPropertySourceMap } from './EntityProperty';
 
 export class ChoicePropertySourceMap extends ReferentialPropertySourceMap {}
 
 export class ChoiceProperty extends ReferentialProperty {
-  sourceMap: ChoicePropertySourceMap;
+  sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap | ChoicePropertySourceMap;
 }
 
 export function choicePropertyFactory(): ChoiceProperty {

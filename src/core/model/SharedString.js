@@ -11,7 +11,7 @@ export class SharedStringSourceMap extends SharedSimpleSourceMap {
 export class SharedString extends SharedSimple {
   minLength: string;
   maxLength: string;
-  sourceMap: SharedStringSourceMap;
+  sourceMap: SharedSimpleSourceMap | SharedStringSourceMap;
 }
 
 export function sharedStringFactory(): SharedString {

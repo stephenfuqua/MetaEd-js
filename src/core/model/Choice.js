@@ -4,7 +4,7 @@ import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from '
 export class ChoiceSourceMap extends TopLevelEntitySourceMap {}
 
 export class Choice extends TopLevelEntity {
-  sourceMap: ChoiceSourceMap;
+  sourceMap: TopLevelEntitySourceMap | ChoiceSourceMap;
 }
 
 export function choiceFactory(): Choice {

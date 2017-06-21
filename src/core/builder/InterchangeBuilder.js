@@ -2,7 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
-import type { Interchange } from '../model/Interchange';
+import type { Interchange, InterchangeSourceMap } from '../model/Interchange';
 import type { InterchangeItem } from '../model/InterchangeItem';
 import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
@@ -62,13 +62,13 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   enterExtendedDocumentation(context: MetaEdGrammar.ExtendedDocumentationContext) {
     if (this.currentInterchange === NoInterchange) return;
     this.currentInterchange.extendedDocumentation = extractDocumentation(context);
-    this.currentInterchange.sourceMap.extendedDocumentation = sourceMapFrom(context);
+    ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).extendedDocumentation = sourceMapFrom(context);
   }
 
   enterUseCaseDocumentation(context: MetaEdGrammar.UseCaseDocumentationContext) {
     if (this.currentInterchange === NoInterchange) return;
     this.currentInterchange.useCaseDocumentation = extractDocumentation(context);
-    this.currentInterchange.sourceMap.useCaseDocumentation = sourceMapFrom(context);
+    ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).useCaseDocumentation = sourceMapFrom(context);
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {

@@ -1,10 +1,11 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class CurrencyPropertySourceMap extends SimplePropertySourceMap {}
 
 export class CurrencyProperty extends SimpleProperty {
-  sourceMap: CurrencyPropertySourceMap;
+  sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | CurrencyPropertySourceMap;
 }
 
 export function currencyPropertyFactory(): CurrencyProperty {

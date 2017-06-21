@@ -12,12 +12,14 @@ export class ReferentialPropertySourceMap extends EntityPropertySourceMap {
 export class ReferentialProperty extends EntityProperty {
   referencedEntity: TopLevelEntity;
   mergedProperties: Array<MergedProperty>;
+  sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap;
 }
 
 export function defaultReferentialPropertyFields() {
   return Object.assign({}, defaultEntityPropertyFields(), {
     referencedEntity: defaultTopLevelEntity(),
     mergedProperties: [],
+    sourceMap: new ReferentialPropertySourceMap(),
   });
 }
 

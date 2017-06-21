@@ -14,7 +14,7 @@ export class SharedDecimal extends SharedSimple {
   decimalPlaces: string;
   minValue: string;
   maxValue: string;
-  sourceMap: SharedDecimalSourceMap;
+  sourceMap: SharedSimpleSourceMap | SharedDecimalSourceMap;
 }
 
 export function sharedDecimalFactory(): SharedDecimal {

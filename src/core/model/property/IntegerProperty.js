@@ -1,6 +1,7 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
 import type { SourceMap } from './../SourceMap';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class IntegerPropertySourceMap extends SimplePropertySourceMap {
   minValue: ?SourceMap;
@@ -10,7 +11,7 @@ export class IntegerPropertySourceMap extends SimplePropertySourceMap {
 export class IntegerProperty extends SimpleProperty {
   minValue: ?string;
   maxValue: ?string;
-  sourceMap: IntegerPropertySourceMap;
+  sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | IntegerPropertySourceMap;
 }
 
 export function integerPropertyFactory(): IntegerProperty {

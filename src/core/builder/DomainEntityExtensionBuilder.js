@@ -2,7 +2,6 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { domainEntityExtensionFactory } from '../model/DomainEntityExtension';
-import type { DomainEntityExtension } from '../model/DomainEntityExtension';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
@@ -12,7 +11,7 @@ export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder 
   enterDomainEntityExtension(context: MetaEdGrammar.DomainEntityExtensionContext) {
     this.enteringEntity(domainEntityExtensionFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      Object.assign(((this.currentTopLevelEntity: any): DomainEntityExtension).sourceMap, {
+      Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
       });
@@ -25,13 +24,12 @@ export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder 
   }
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
-    ((this.currentTopLevelEntity: any): DomainEntityExtension).baseEntityName = extendeeName;
-    Object.assign(((this.currentTopLevelEntity: any): DomainEntityExtension).sourceMap, {
+    this.currentTopLevelEntity.baseEntityName = extendeeName;
+    Object.assign(this.currentTopLevelEntity.sourceMap, {
       metaEdName: sourceMapFrom(context),
       baseEntityName: sourceMapFrom(context),
     });

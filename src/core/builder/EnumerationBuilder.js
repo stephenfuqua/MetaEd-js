@@ -28,7 +28,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   enterEnumeration(context: MetaEdGrammar.EnumerationContext) {
     this.enteringEntity(enumerationFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
-      Object.assign(((this.currentTopLevelEntity: any): Enumeration).sourceMap, {
+      Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
       });
@@ -48,14 +48,14 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
     // need to differentiate SchoolYear from other enumerations - overwrite with new type
     if (enumerationName === 'SchoolYear') {
       this.enteringEntity(schoolYearEnumerationFactory);
-      Object.assign(((this.currentTopLevelEntity: any): Enumeration).sourceMap, {
+      Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
       });
     }
 
     this.enteringName(enumerationName);
-    Object.assign(((this.currentTopLevelEntity: any): Enumeration).sourceMap, {
+    Object.assign(this.currentTopLevelEntity.sourceMap, {
       metaEdName: sourceMapFrom(context),
     });
   }
@@ -70,7 +70,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = enumerationItemFactory();
-    this.currentEnumerationItem.namespaceInfo.sourceMap = ((this.currentTopLevelEntity: any): Enumeration).namespaceInfo.sourceMap;
+    this.currentEnumerationItem.namespaceInfo.sourceMap = this.currentTopLevelEntity.namespaceInfo.sourceMap;
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
   }
 

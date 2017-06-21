@@ -1,10 +1,11 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class TimePropertySourceMap extends SimplePropertySourceMap {}
 
 export class TimeProperty extends SimpleProperty {
-  sourceMap: TimePropertySourceMap;
+  sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | TimePropertySourceMap;
 }
 
 export function timePropertyFactory(): TimeProperty {

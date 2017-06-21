@@ -15,7 +15,6 @@ export function validate(repository: Repository, propertyIndex: Map<PropertyType
         validatorName: 'ChoicePropertyMustMatchAChoice',
         category: 'error',
         message: `Choice property '${property.metaEdName}' does not match any declared Choice.`,
-        // $FlowIgnore - sourceMap not on EntityProperty
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });

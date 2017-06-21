@@ -1,10 +1,11 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
+import type { EntityPropertySourceMap } from './EntityProperty';
 
 export class EnumerationPropertySourceMap extends ReferentialPropertySourceMap {}
 
 export class EnumerationProperty extends ReferentialProperty {
-  sourceMap: EnumerationPropertySourceMap;
+  sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap | EnumerationPropertySourceMap;
 }
 
 export function enumerationPropertyFactory(): EnumerationProperty {

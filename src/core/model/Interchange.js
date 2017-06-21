@@ -18,7 +18,7 @@ export class Interchange extends ModelBase {
   useCaseDocumentation: string;
   baseEntityName: string;
   baseEntity: ?Interchange;
-  sourceMap: InterchangeSourceMap;
+  sourceMap: ModelBaseSourceMap | InterchangeSourceMap;
 }
 
 export function interchangeFactory(): Interchange {

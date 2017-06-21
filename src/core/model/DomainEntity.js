@@ -8,7 +8,7 @@ export class DomainEntitySourceMap extends TopLevelEntitySourceMap {
 
 export class DomainEntity extends TopLevelEntity {
   isAbstract: boolean;
-  sourceMap: DomainEntitySourceMap;
+  sourceMap: TopLevelEntitySourceMap | DomainEntitySourceMap;
 }
 
 export function domainEntityFactory(): DomainEntity {

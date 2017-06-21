@@ -4,7 +4,7 @@ import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from '
 export class AssociationSourceMap extends TopLevelEntitySourceMap {}
 
 export class Association extends TopLevelEntity {
-  sourceMap: AssociationSourceMap;
+  sourceMap: TopLevelEntitySourceMap | AssociationSourceMap;
 }
 
 export function associationFactory(): Association {

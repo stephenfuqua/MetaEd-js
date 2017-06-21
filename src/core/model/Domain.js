@@ -17,7 +17,7 @@ export class Domain extends TopLevelEntity {
   entities: Array<TopLevelEntity>;
   footerDocumentation: string;
   subdomains: Array<Subdomain>;
-  sourceMap: DomainSourceMap;
+  sourceMap: TopLevelEntitySourceMap | DomainSourceMap;
 }
 
 export function domainFactory(): Domain {

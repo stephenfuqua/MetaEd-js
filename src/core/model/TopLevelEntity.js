@@ -21,6 +21,7 @@ export class TopLevelEntity extends ModelBase {
   allowPrimaryKeyUpdates: boolean;
   baseEntityName: string;
   baseEntity: ?TopLevelEntity;
+  sourceMap: TopLevelEntitySourceMap;
 }
 
 export function defaultTopLevelEntity(): TopLevelEntity {

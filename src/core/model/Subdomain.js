@@ -1,10 +1,10 @@
 // @flow
 import { Domain, domainFactory } from './Domain';
 import type { SourceMap } from './SourceMap';
-import { TopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
 
-export class SubdomainSourceMap {
+export class SubdomainSourceMap extends TopLevelEntitySourceMap {
   type: ?SourceMap;
   domainItems: ?Array<SourceMap>;
   entities: ?Array<SourceMap>;
@@ -21,7 +21,7 @@ export class Subdomain extends TopLevelEntity {
   parent: Domain;
   parentMetaEdName: string;
   position: number;
-  sourceMap: SubdomainSourceMap;
+  sourceMap: TopLevelEntitySourceMap | SubdomainSourceMap;
 }
 
 export function subdomainFactory(): Subdomain {

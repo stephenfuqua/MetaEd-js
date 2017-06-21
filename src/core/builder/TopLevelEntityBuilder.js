@@ -116,7 +116,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
           message: `${this.currentTopLevelEntity.typeGroupHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on TLE
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
           fileMap: null,
         });
@@ -125,7 +124,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
           message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          // $FlowIgnore - sourceMap property not on TLE
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -139,7 +137,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.documentation = extractDocumentation(context);
-    // $FlowIgnore - sourceMap property not on TLE
     this.currentTopLevelEntity.sourceMap.documentation = sourceMapFrom(context);
   }
 
@@ -156,11 +153,9 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
     if (this.currentProperty !== NoEntityProperty) {
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - sourceMap property not on TLE
       this.currentProperty.sourceMap.metaEdId = sourceMapFrom(context);
     } else if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
-      // $FlowIgnore - sourceMap property not on TLE
       this.currentTopLevelEntity.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
@@ -320,7 +315,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
       message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name.`,
-      // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: this.currentProperty.sourceMap.type,
       fileMap: null,
     });
@@ -330,7 +324,6 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
       message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.`,
-      // $FlowIgnore - sourceMap not on EntityProperty
       sourceMap: duplicateProperty.sourceMap.type,
       fileMap: null,
     });
@@ -422,26 +415,32 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     );
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterIdentity(context: MetaEdGrammar.IdentityContext) {
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
-  enteringIdentity() {
+  enteringIdentity(context: MetaEdGrammar.FirstDomainEntityContext |
+    MetaEdGrammar.SecondDomainEntityContext |
+    MetaEdGrammar.IdentityContext |
+    MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
+        let identityProperties = this.currentTopLevelEntity.sourceMap.identityProperties;
+        identityProperties = identityProperties || [];
+        const sourceMap: any = sourceMapFrom(context);
+        identityProperties.push(sourceMap);
+        this.currentTopLevelEntity.sourceMap.identityProperties = identityProperties;
       },
     );
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isIdentityRename = true;
-    this.enteringIdentity();
+    this.enteringIdentity(context);
   }
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {
