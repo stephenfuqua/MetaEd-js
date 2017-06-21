@@ -3,16 +3,18 @@ import antlr4 from 'antlr4';
 import type { ValidationFailure } from '../core/validator/ValidationFailure';
 
 export default class MetaEdErrorListener {
-  _messageCollection: ValidationFailure[];
+  messageCollection: ValidationFailure[];
+  validatorName: string;
 
-  constructor(messageCollection: ValidationFailure[]) {
+  constructor(messageCollection: ValidationFailure[], validatorName: string = 'MetaEdErrorListener') {
     antlr4.error.ErrorListener.call(this);
-    this._messageCollection = messageCollection;
+    this.messageCollection = messageCollection;
+    this.validatorName = validatorName;
   }
 
   syntaxError(recognizer: any, offendingSymbol: any, concatenatedLineNumber: number, characterPosition: number, message: string) {
-    this._messageCollection.push({
-      validatorName: 'MetaEdErrorListener',
+    this.messageCollection.push({
+      validatorName: this.validatorName,
       category: 'error',
       message,
       sourceMap: {
@@ -25,6 +27,6 @@ export default class MetaEdErrorListener {
   }
 
   getMessageCollection(): ValidationFailure[] {
-    return this._messageCollection;
+    return this.messageCollection;
   }
 }

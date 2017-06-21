@@ -10,7 +10,7 @@ export const buildParseTree = R.curry(
   (parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
     const validationFailures = [];
 
-    const errorListener = new MetaEdErrorListener(validationFailures);
+    const errorListener = new MetaEdErrorListener(validationFailures, 'BuildParseTree - MetaEdErrorListener');
     const parseTree = parseTreeBuilder(errorListener, getAllContents(state.fileIndex));
 
     if (parseTree == null) {

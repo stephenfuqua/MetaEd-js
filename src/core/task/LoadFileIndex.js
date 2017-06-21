@@ -23,9 +23,7 @@ export default function loadFileIndex(state: State): State {
   const metaEdFiles: MetaEdFile[] = [];
   state.loadedFileSet.forEach(loading => {
     metaEdFiles.push(startNamespace(loading.namespace, loading.projectExtension, loading.isExtension));
-    loading.files.forEach(file => {
-      metaEdFiles.push(file);
-    });
+    metaEdFiles.push(...loading.files);
     metaEdFiles.push(endNamespace());
   });
 

@@ -40,41 +40,25 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
 
   // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
+    if (context.exception) return;
     if (this.currentNamespaceInfo !== NoNamespaceInfo) return;
     this.currentNamespaceInfo = namespaceInfoFactory();
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
+    if (this.currentNamespaceInfo === NoNamespaceInfo) return;
     this.currentNamespaceInfo = enteringNamespaceName(context, this.currentNamespaceInfo);
   }
 
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
+    if (this.currentNamespaceInfo === NoNamespaceInfo) return;
     this.currentNamespaceInfo = enteringNamespaceType(context, this.currentNamespaceInfo);
   }
 
   // eslint-disable-next-line no-unused-vars
   exitNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.currentNamespaceInfo === NoNamespaceInfo) return;
-    if (this.entityRepository.namespaceInfo.has(this.currentNamespaceInfo.namespace)) {
-      this.validationFailures.push({
-        validatorName: 'NamespaceInfoBuilder',
-        category: 'error',
-        message: `Namespace named ${this.currentNamespaceInfo.namespace} is a duplicate declaration of that name.`,
-        sourceMap: this.currentNamespaceInfo.sourceMap.type,
-        fileMap: null,
-      });
-      // $FlowIgnore - we ensure the key is in the map above
-      const duplicateEntity: NamespaceInfo = this.entityRepository.namespaceInfo.get(this.currentNamespaceInfo.namespace);
-      this.validationFailures.push({
-        validatorName: 'NamespaceInfoBuilder',
-        category: 'error',
-        message: `Namespace named ${duplicateEntity.namespace} is a duplicate declaration of that name.`,
-        sourceMap: duplicateEntity.sourceMap.type,
-        fileMap: null,
-      });
-    } else {
-      this.entityRepository.namespaceInfo.set(this.currentNamespaceInfo.namespace, this.currentNamespaceInfo);
-    }
+    this.entityRepository.namespaceInfo.push(this.currentNamespaceInfo);
     this.currentNamespaceInfo = NoNamespaceInfo;
   }
 }
