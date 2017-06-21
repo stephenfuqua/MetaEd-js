@@ -426,7 +426,10 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.enteringIdentity(context);
   }
 
-  enteringIdentity(context: MetaEdGrammar.FirstDomainEntityContext) {
+  enteringIdentity(context: MetaEdGrammar.FirstDomainEntityContext |
+    MetaEdGrammar.SecondDomainEntityContext |
+    MetaEdGrammar.IdentityContext |
+    MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
     this.whenExitingPropertyCommand.push(
