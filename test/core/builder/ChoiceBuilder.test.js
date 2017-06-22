@@ -119,7 +119,7 @@ describe('when building duplicate choices', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate choices should have validation failures for each entity -> Choice 1 message');
@@ -439,5 +439,52 @@ describe('when building choice with invalid trailing text', () => {
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building choice source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const entityMetaEdId: string = '1';
+  const propertyName: string = 'PropertyName';
+  const propertyMetaEdId: string = '2';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+  const entityDocumentation: string = 'EntityDocumentation';
+
+  beforeAll(() => {
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartChoice(entityName, entityMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withEndChoice()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.choice.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.choice.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.choice.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.choice.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.choice.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
