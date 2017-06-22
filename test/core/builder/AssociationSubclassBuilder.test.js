@@ -112,13 +112,13 @@ describe('when building duplicate association subclasses', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('AssociationSubclassBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('AssociationSubclassBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate association subclasses should have validation failures for each entity -> Association 2 sourceMap');
@@ -527,5 +527,54 @@ describe('when building association subclass with invalid trailing text', () => 
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building association subclass source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const baseEntityName: string = 'BaseEntityName';
+  const documentation: string = 'Documentation';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociationSubclass(entityName, baseEntityName, '1')
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a baseEntityName property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap.baseEntityName).toBeDefined();
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.associationSubclass.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

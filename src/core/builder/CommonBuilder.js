@@ -29,6 +29,9 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
   enterInlineCommon(context: MetaEdGrammar.InlineCommonContext) {
     this.enteringEntity(inlineCommonFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -39,5 +42,6 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
   enterInlineCommonName(context: MetaEdGrammar.InlineCommonNameContext) {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 }

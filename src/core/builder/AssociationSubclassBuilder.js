@@ -4,11 +4,14 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { associationSubclassFactory } from '../model/AssociationSubclass';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterAssociationSubclass(context: MetaEdGrammar.AssociationSubclassContext) {
     this.enteringEntity(associationSubclassFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -17,8 +20,10 @@ export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
   }
 
   enterAssociationName(context: MetaEdGrammar.AssociationNameContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterBaseName(context: MetaEdGrammar.BaseNameContext) {
@@ -26,5 +31,6 @@ export default class AssociationSubclassBuilder extends TopLevelEntityBuilder {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     this.currentTopLevelEntity.baseEntityName = context.ID().getText();
+    this.currentTopLevelEntity.sourceMap.baseEntityName = sourceMapFrom(context);
   }
 }

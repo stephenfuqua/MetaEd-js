@@ -861,3 +861,50 @@ describe('when building common source map', () => {
     expect(entityRepository.common.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
+
+describe('when building inline common source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const entityMetaEdId: string = '1';
+  const entityDocumentation: string = 'EntityDocumentation';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+  const propertyMetaEdId: string = '2';
+
+  beforeAll(() => {
+    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartInlineCommon(entityName, entityMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
+      .withEndInlineCommon()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.common.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.common.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.common.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.common.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.common.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
