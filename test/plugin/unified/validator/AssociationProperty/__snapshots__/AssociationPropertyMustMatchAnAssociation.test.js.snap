@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association property has invalid identifier should have validation failures for each property -> message  1`] = `"Association property 'UndefinedEntityName' does not match any declared Association."`;
+exports[`when association property has invalid identifier should have validation failures for each property -> message  1`] = `"Association property 'UndefinedEntityName' does not match any declared Association or Association Subclass."`;
 
 exports[`when association property has invalid identifier should have validation failures for each property -> sourceMap 1`] = `
 Object {

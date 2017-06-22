@@ -10,11 +10,11 @@ export function validate(repository: Repository, propertyIndex: Map<PropertyType
 
   const failures: Array<ValidationFailure> = [];
   properties.forEach(property => {
-    if (repository.entity.association.get(property.metaEdName) == null) {
+    if (!repository.entity.association.has(property.metaEdName) && !repository.entity.associationSubclass.has(property.metaEdName)) {
       failures.push({
         validatorName: 'AssociationPropertyMustMatchAnAssociation',
         category: 'error',
-        message: `Association property '${property.metaEdName}' does not match any declared Association.`,
+        message: `Association property '${property.metaEdName}' does not match any declared Association or Association Subclass.`,
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });

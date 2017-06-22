@@ -1,5 +1,6 @@
 // @flow
 import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
+import AssociationSubclassBuilder from '../../../../../src/core/builder/AssociationSubclassBuilder';
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
 import { repositoryFactory } from '../../../../../src/core/model/Repository';
@@ -34,6 +35,39 @@ describe('when association property has identifier of association', () => {
 
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
       .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
+
+    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
+    failures = validate(repository, propertyIndex);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures.length).toBe(0);
+  });
+});
+
+describe('when association property has identifier of association subclass', () => {
+  const repository: Repository = repositoryFactory();
+  const domainEntityName: string = 'DomainEntityName';
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociationSubclass(entityName, 'BaseAssociation')
+      .withDocumentation('doc')
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
+      .withEndAssociationSubclass()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('doc')
+      .withAssociationProperty(entityName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
     propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
