@@ -1,8 +1,8 @@
 // @flow
-import type { Repository } from '../../model/Repository';
-import type { ValidationFailure } from '../ValidationFailure';
-import type { PropertyType } from '../../model/property/PropertyType';
-import type { EntityProperty } from '../../model/property/EntityProperty';
+import type { Repository } from '../../../../core/model/Repository';
+import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
+import type { PropertyType } from '../../../../core/model/property/PropertyType';
+import type { EntityProperty } from '../../../../core/model/property/EntityProperty';
 
 export function validate(repository: Repository, propertyIndex: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
   const properties: ?Array<EntityProperty> = propertyIndex.get('association');

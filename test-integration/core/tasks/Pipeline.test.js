@@ -1,9 +1,9 @@
 // @flow
 import mockfs from 'mock-fs';
-import MetaEdTextBuilder from '../../test/core/MetaEdTextBuilder';
-import { startingFromFileLoad, startingFromFileLoadP } from '../../src/core/task/Pipeline';
-import type { State } from '../../src/core/State';
-import { defaultStateFactory } from '../../src/core/State';
+import MetaEdTextBuilder from '../../../test/core/MetaEdTextBuilder';
+import { startingFromFileLoad, startingFromFileLoadP } from '../../../src/core/task/Pipeline';
+import type { State } from '../../../src/core/State';
+import { defaultStateFactory } from '../../../src/core/State';
 
 describe('When a single file', () => {
   const stateFactory: () => State = () =>

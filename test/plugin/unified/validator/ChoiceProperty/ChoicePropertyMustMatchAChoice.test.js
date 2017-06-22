@@ -1,13 +1,14 @@
-// @noflow
-import ChoiceBuilder from '../../../../src/core/builder/ChoiceBuilder';
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../../src/core/model/property/EntityProperty';
+// @flow
+import ChoiceBuilder from '../../../../../src/core/builder/ChoiceBuilder';
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
+import type { PropertyType } from '../../../../../src/core/model/property/PropertyType';
+import type { EntityProperty } from '../../../../../src/core/model/property/EntityProperty';
+import { domainEntityFrom } from '../../../../core/TestHelper';
 
 describe('when choice property has identifier of choice', () => {
   const repository: Repository = repositoryFactory();
@@ -20,7 +21,7 @@ describe('when choice property has identifier of choice', () => {
       .withBeginNamespace('edfi')
       .withStartChoice(entityName)
       .withDocumentation('doc')
-      .withStringProperty('StringProperty', 'doc', true, false, 100)
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndChoice()
 
       .withStartDomainEntity(domainEntityName)
@@ -32,7 +33,7 @@ describe('when choice property has identifier of choice', () => {
       .sendToListener(new ChoiceBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('choice', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('choice', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 
@@ -52,7 +53,7 @@ describe('when choice property has invalid identifier', () => {
       .withBeginNamespace('edfi')
       .withStartChoice('WrongName')
       .withDocumentation('doc')
-      .withStringProperty('StringProperty', 'doc', true, false, 100)
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndChoice()
 
       .withStartDomainEntity(domainEntityName)
@@ -64,7 +65,7 @@ describe('when choice property has invalid identifier', () => {
       .sendToListener(new ChoiceBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('choice', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('choice', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 

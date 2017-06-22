@@ -1,18 +1,18 @@
-// @noflow
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/CrossEntity/MostEntitiesCannotHaveSameName';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
-import AssociationBuilder from '../../../../src/core/builder/AssociationBuilder';
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import DomainEntityExtensionBuilder from '../../../../src/core/builder/DomainEntityExtensionBuilder';
-import AssociationExtensionBuilder from '../../../../src/core/builder/AssociationExtensionBuilder';
-import SharedIntegerBuilder from '../../../../src/core/builder/SharedIntegerBuilder';
-import DescriptorBuilder from '../../../../src/core/builder/DescriptorBuilder';
-import EnumerationBuilder from '../../../../src/core/builder/EnumerationBuilder';
-import InterchangeBuilder from '../../../../src/core/builder/InterchangeBuilder';
-import CommonBuilder from '../../../../src/core/builder/CommonBuilder';
+// @flow
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/CrossEntity/MostEntitiesCannotHaveSameName';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
+import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import DomainEntityExtensionBuilder from '../../../../../src/core/builder/DomainEntityExtensionBuilder';
+import AssociationExtensionBuilder from '../../../../../src/core/builder/AssociationExtensionBuilder';
+import SharedIntegerBuilder from '../../../../../src/core/builder/SharedIntegerBuilder';
+import DescriptorBuilder from '../../../../../src/core/builder/DescriptorBuilder';
+import EnumerationBuilder from '../../../../../src/core/builder/EnumerationBuilder';
+import InterchangeBuilder from '../../../../../src/core/builder/InterchangeBuilder';
+import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
 
 describe('when entities have different names', () => {
   const repository: Repository = repositoryFactory();
@@ -187,7 +187,7 @@ describe('when DE and SharedInteger have identical names', () => {
       .withEndNamespace()
 
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new SharedIntegerBuilder(repository.entity, [], new Map()));
+      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
 
     failures = validate(repository);
   });
@@ -347,7 +347,7 @@ describe('when DE has same name as interchange', () => {
       .withEndNamespace()
 
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new InterchangeBuilder(repository.entity, [], new Map()));
+      .sendToListener(new InterchangeBuilder(repository.entity, []));
 
     failures = validate(repository);
   });

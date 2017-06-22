@@ -1,10 +1,10 @@
-// @noflow
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
+// @flow
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity with no UniqueId fields', () => {
   const repository: Repository = repositoryFactory();
@@ -16,8 +16,8 @@ describe('when validating domain entity with no UniqueId fields', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withStringIdentity('Property1', 'doc', 100)
-      .withStringProperty('Property2', 'doc', true, false, 50)
+      .withStringIdentity('Property1', 'doc', '100')
+      .withStringProperty('Property2', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
@@ -44,8 +44,8 @@ describe('when validating domain entity with one UniqueId field', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withStringIdentity('UniqueId', 'doc', 100, 'Student')
-      .withStringProperty('Property', 'doc', true, false, 50)
+      .withStringIdentity('UniqueId', 'doc', '100', 'Student')
+      .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
@@ -72,9 +72,9 @@ describe('when validating domain entity with two UniqueId fields', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withStringIdentity('UniqueId', 'doc', 100, null, 'Student')
-      .withStringIdentity('UniqueId', 'doc', 100, null, 'Staff')
-      .withStringProperty('Property', 'doc', true, false, 50)
+      .withStringIdentity('UniqueId', 'doc', '100', null, 'Student')
+      .withStringIdentity('UniqueId', 'doc', '100', null, 'Staff')
+      .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
@@ -105,9 +105,9 @@ describe('when validating domain entity with two UniqueId fields in extension na
       .withBeginNamespace('extension', 'ProjectExtension')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withStringIdentity('UniqueId', 'doc', 100, null, 'Student')
-      .withStringIdentity('UniqueId', 'doc', 100, null, 'Staff')
-      .withStringProperty('Property', 'doc', true, false, 50)
+      .withStringIdentity('UniqueId', 'doc', '100', null, 'Student')
+      .withStringIdentity('UniqueId', 'doc', '100', null, 'Staff')
+      .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));

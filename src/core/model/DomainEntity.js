@@ -19,3 +19,7 @@ export function domainEntityFactory(): DomainEntity {
     sourceMap: new DomainEntitySourceMap(),
   });
 }
+
+export const NoDomainEntity: DomainEntity = Object.assign(domainEntityFactory(), {
+  metaEdName: 'NoDomainEntity',
+});

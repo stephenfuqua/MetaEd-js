@@ -4,6 +4,8 @@ import antlr4 from 'antlr4';
 import { MetaEdGrammar } from '../../src/grammar/gen/MetaEdGrammar';
 import type { MetaEdGrammarListener } from '../../src/grammar/gen/MetaEdGrammarListener';
 import { BaseLexer } from '../../src/grammar/gen/BaseLexer';
+import type { Repository } from '../../src/core/model/Repository';
+import { DomainEntity, NoDomainEntity } from '../../src/core/model/DomainEntity';
 
 class TestErrorListener {
   errorMessages: string[];
@@ -30,5 +32,10 @@ export function listen(metaEdText: string, listener: MetaEdGrammarListener): str
   const parserContext = parser.metaEd();
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, parserContext);
   return testErrorListener.errorMessages;
+}
+
+export function domainEntityFrom(repository: Repository, metaEdName: string): DomainEntity {
+  const result = repository.entity.domainEntity.get(metaEdName);
+  return result || NoDomainEntity;
 }
 

@@ -1,8 +1,8 @@
 // @noflow
 import mockfs from 'mock-fs';
-import MetaEdTextBuilder from '../../test/core/MetaEdTextBuilder';
-import loadFiles from '../../src/core/task/FileSystemFilenameLoader';
-import { defaultStateFactory } from '../../src/core/State';
+import MetaEdTextBuilder from '../../../test/core/MetaEdTextBuilder';
+import loadFiles from '../../../src/core/task/FileSystemFilenameLoader';
+import { defaultStateFactory } from '../../../src/core/State';
 
 describe('When a single file', () => {
   beforeAll(() => {

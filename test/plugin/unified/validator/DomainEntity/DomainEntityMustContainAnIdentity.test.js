@@ -1,10 +1,10 @@
-// @noflow
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/DomainEntity/DomainEntityMustContainAnIdentity';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
+// @flow
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/DomainEntity/DomainEntityMustContainAnIdentity';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity with identity fields', () => {
   const repository: Repository = repositoryFactory();
@@ -16,7 +16,7 @@ describe('when validating domain entity with identity fields', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc1')
-      .withStringIdentity('Property1', 'doc2', 100)
+      .withStringIdentity('Property1', 'doc2', '100')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
@@ -43,7 +43,7 @@ describe('when validating domain entity with no identity fields', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc1')
-      .withStringProperty('Property1', 'doc2', true, false, 100)
+      .withStringProperty('Property1', 'doc2', true, false, '100')
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));

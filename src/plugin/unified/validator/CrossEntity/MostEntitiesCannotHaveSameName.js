@@ -1,9 +1,9 @@
 // @flow
-import { entitiesNeedingDuplicateChecking } from '../../model/Repository';
-import type { Repository, MostEntities } from '../../model/Repository';
-import type { ValidationFailure } from '../ValidationFailure';
-import type { PropertyType } from '../../model/property/PropertyType';
-import type { EntityProperty } from '../../model/property/EntityProperty';
+import { entitiesNeedingDuplicateChecking } from '../../../../core/model/Repository';
+import type { Repository, MostEntities } from '../../../../core/model/Repository';
+import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
+import type { PropertyType } from '../../../../core/model/property/PropertyType';
+import type { EntityProperty } from '../../../../core/model/property/EntityProperty';
 
 function groupByMetaEdName(entities: Array<MostEntities>): Map<string, Array<MostEntities>> {
   return entities.reduce((structure: Map<string, Array<MostEntities>>, entity: MostEntities) => {
@@ -15,7 +15,7 @@ function groupByMetaEdName(entities: Array<MostEntities>): Map<string, Array<Mos
 }
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyIndex: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
+export function validate(repository: Repository, propertyIndex?: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   groupByMetaEdName(entitiesNeedingDuplicateChecking(repository)).forEach((entities, metaEdName) => {

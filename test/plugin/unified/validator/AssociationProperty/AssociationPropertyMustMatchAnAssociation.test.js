@@ -1,13 +1,14 @@
-// @noflow
-import AssociationBuilder from '../../../../src/core/builder/AssociationBuilder';
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../../src/core/model/property/EntityProperty';
+// @flow
+import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
+import type { PropertyType } from '../../../../../src/core/model/property/PropertyType';
+import type { EntityProperty } from '../../../../../src/core/model/property/EntityProperty';
+import { domainEntityFrom } from '../../../../core/TestHelper';
 
 describe('when association property has identifier of association', () => {
   const repository: Repository = repositoryFactory();
@@ -35,7 +36,7 @@ describe('when association property has identifier of association', () => {
       .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('association', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 
@@ -60,7 +61,7 @@ describe('when association property has invalid identifier', () => {
       .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('association', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 

@@ -1,10 +1,10 @@
 // @flow
 import type { State } from '../State';
-import { validate as choicePropertyMustMatchAChoice } from '../validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
-import { validate as commonPropertyMustMatchACommon } from '../validator/CommonProperty/CommonPropertyMustMatchACommon';
-import { validate as mostEntitiesCannotHaveSameName } from '../validator/CrossEntity/MostEntitiesCannotHaveSameName';
-import { validate as domainEntityMustContainAnIdentity } from '../validator/DomainEntity/DomainEntityMustContainAnIdentity';
-import { validate as domainEntityMustContainNoMoreThanOneUniqueIdColumn } from '../validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
+import { validate as choicePropertyMustMatchAChoice } from '../../plugin/unified/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
+import { validate as commonPropertyMustMatchACommon } from '../../plugin/unified/validator/CommonProperty/CommonPropertyMustMatchACommon';
+import { validate as mostEntitiesCannotHaveSameName } from '../../plugin/unified/validator/CrossEntity/MostEntitiesCannotHaveSameName';
+import { validate as domainEntityMustContainAnIdentity } from '../../plugin/unified/validator/DomainEntity/DomainEntityMustContainAnIdentity';
+import { validate as domainEntityMustContainNoMoreThanOneUniqueIdColumn } from '../../plugin/unified/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
 import type { Repository } from '../model/Repository';
 import type { PropertyType } from '../model/property/PropertyType';
 import type { EntityProperty } from '../model/property/EntityProperty';

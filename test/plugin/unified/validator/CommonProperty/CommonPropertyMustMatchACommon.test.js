@@ -1,13 +1,14 @@
-// @noflow
-import CommonBuilder from '../../../../src/core/builder/CommonBuilder';
-import DomainEntityBuilder from '../../../../src/core/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../src/core/model/Repository';
-import type { Repository } from '../../../../src/core/model/Repository';
-import { validate } from '../../../../src/core/validator/CommonProperty/CommonPropertyMustMatchACommon';
-import type { ValidationFailure } from '../../../../src/core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../../src/core/model/property/EntityProperty';
+// @flow
+import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
+import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
+import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
+import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { Repository } from '../../../../../src/core/model/Repository';
+import { validate } from '../../../../../src/plugin/unified/validator/CommonProperty/CommonPropertyMustMatchACommon';
+import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
+import type { PropertyType } from '../../../../../src/core/model/property/PropertyType';
+import type { EntityProperty } from '../../../../../src/core/model/property/EntityProperty';
+import { domainEntityFrom } from '../../../../core/TestHelper';
 
 describe('when common property has identifier of common', () => {
   const repository: Repository = repositoryFactory();
@@ -32,7 +33,7 @@ describe('when common property has identifier of common', () => {
       .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('common', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('common', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 
@@ -64,7 +65,7 @@ describe('when common property has invalid identifier', () => {
       .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
 
     const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('common', repository.entity.domainEntity.get(domainEntityName).properties);
+    propertyIndex.set('common', domainEntityFrom(repository, domainEntityName).properties);
     failures = validate(repository, propertyIndex);
   });
 
