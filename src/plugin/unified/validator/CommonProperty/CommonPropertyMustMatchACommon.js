@@ -1,10 +1,10 @@
 // @flow
 import type { Repository } from '../../../../core/model/Repository';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../core/model/property/PropertyType';
+import type { PropertyIndex } from '../../../../core/model/property/PropertyIndex';
 import type { EntityProperty } from '../../../../core/model/property/EntityProperty';
 
-export function validate(repository: Repository, propertyIndex: Map<PropertyType, Array<EntityProperty>>): Array<ValidationFailure> {
+export function validate(repository: Repository, propertyIndex: PropertyIndex): Array<ValidationFailure> {
   const properties: ?Array<EntityProperty> = propertyIndex.get('common');
   if (properties == null) return [];
 

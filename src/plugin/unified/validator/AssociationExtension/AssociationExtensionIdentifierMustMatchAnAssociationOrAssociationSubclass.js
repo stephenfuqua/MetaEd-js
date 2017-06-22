@@ -6,13 +6,13 @@ import type { PropertyIndex } from '../../../../core/model/property/PropertyInde
 // eslint-disable-next-line no-unused-vars
 export function validate(repository: Repository, propertyIndex?: PropertyIndex): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.domainEntity.forEach(domainEntity => {
-    if (domainEntity.identityProperties.length === 0) {
+  repository.entity.associationExtension.forEach(entity => {
+    if (!repository.entity.association.has(entity.metaEdName) && !repository.entity.associationSubclass.has(entity.metaEdName)) {
       failures.push({
-        validatorName: 'DomainEntityMustContainAnIdentity',
+        validatorName: 'AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass',
         category: 'error',
-        message: `Domain Entity ${domainEntity.metaEdName} does not have an identity specified.`,
-        sourceMap: domainEntity.sourceMap.type,
+        message: `Association additions '${entity.metaEdName}' does not match any declared Association or Association Subclass.`,
+        sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
     }

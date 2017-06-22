@@ -1,5 +1,6 @@
 // @flow
 import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
+import AssociationSubclassBuilder from '../../../../../src/core/builder/AssociationSubclassBuilder';
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
 import { repositoryFactory } from '../../../../../src/core/model/Repository';
@@ -41,7 +42,40 @@ describe('when association property has identifier of association', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when association property has identifier of association subclass', () => {
+  const repository: Repository = repositoryFactory();
+  const domainEntityName: string = 'DomainEntityName';
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociationSubclass(entityName, 'BaseAssociation')
+      .withDocumentation('doc')
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
+      .withEndAssociationSubclass()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('doc')
+      .withAssociationProperty(entityName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
+      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], new Map()));
+
+    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
+    failures = validate(repository, propertyIndex);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -66,12 +100,10 @@ describe('when association property has invalid identifier', () => {
   });
 
   it('should have validation failures()', () => {
-    expect(failures.length).toBe(1);
+    expect(failures).toHaveLength(1);
   });
 
   it('should have validation failure for property', () => {
-    expect(failures.length).toBe(1);
-
     expect(failures[0].validatorName).toBe('AssociationPropertyMustMatchAnAssociation');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when association property has invalid identifier should have validation failures for each property -> message ');

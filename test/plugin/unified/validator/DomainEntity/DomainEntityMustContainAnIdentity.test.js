@@ -29,7 +29,7 @@ describe('when validating domain entity with identity fields', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -56,7 +56,7 @@ describe('when validating domain entity with no identity fields', () => {
   });
 
   it('should have validation failure', () => {
-    expect(failures.length).toBe(1);
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityMustContainAnIdentity');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when validating domain entity with no identity fields -> message');

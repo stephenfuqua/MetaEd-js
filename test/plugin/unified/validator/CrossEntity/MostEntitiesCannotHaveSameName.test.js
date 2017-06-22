@@ -45,7 +45,7 @@ describe('when entities have different names', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -81,7 +81,7 @@ describe('when DE and Association have identical names', () => {
   });
 
   it('should have validation failures for each entity', () => {
-    expect(failures.length).toBe(2);
+    expect(failures).toHaveLength(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
@@ -126,7 +126,7 @@ describe('when DE has same name as DE extension', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -163,7 +163,7 @@ describe('when Association has same name as Association extension', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -198,7 +198,7 @@ describe('when DE and SharedInteger have identical names', () => {
   });
 
   it('should have validation failures for each entity', () => {
-    expect(failures.length).toBe(2);
+    expect(failures).toHaveLength(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
@@ -243,7 +243,7 @@ describe('when DE and Common have identical names', () => {
   });
 
   it('should have validation failures for each entity', () => {
-    expect(failures.length).toBe(2);
+    expect(failures).toHaveLength(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
@@ -288,7 +288,7 @@ describe('when DE has same name as descriptor', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -323,7 +323,7 @@ describe('when DE has same name as enumeration', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -358,6 +358,6 @@ describe('when DE has same name as interchange', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });

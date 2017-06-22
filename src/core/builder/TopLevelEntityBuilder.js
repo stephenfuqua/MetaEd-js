@@ -9,7 +9,6 @@ import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';
-import type { PropertyType } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { booleanPropertyFactory } from '../model/property/BooleanProperty';
@@ -38,13 +37,14 @@ import { ShortProperty, shortPropertyFactory } from '../model/property/ShortProp
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
+import type { PropertyIndex } from '../model/property/PropertyIndex';
 
 function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<string> {
   if (R.any(token => token.exception)(context.ID())) return [];
   return R.map(token => token.getText())(context.ID());
 }
 
-function addPropertyToPropertyIndex(entityProperty: EntityProperty, propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
+function addPropertyToPropertyIndex(entityProperty: EntityProperty, propertyIndex: PropertyIndex) {
   if (entityProperty === NoEntityProperty) return;
   if (!propertyIndex.has(entityProperty.type)) {
     propertyIndex.set(entityProperty.type, []);
@@ -62,11 +62,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   whenExitingPropertyCommand: Array<() => void>;
   validationFailures: Array<ValidationFailure>;
   currentTopLevelEntityPropertyLookup: Map<string, EntityProperty>;
-  propertyIndex: Map<PropertyType, Array<EntityProperty>>;
+  propertyIndex: PropertyIndex;
 
   constructor(entityRepository: EntityRepository,
     validationFailures: Array<ValidationFailure>,
-    propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
+    propertyIndex: PropertyIndex) {
     super();
     this.entityRepository = entityRepository;
     this.namespaceInfo = NoNamespaceInfo;
