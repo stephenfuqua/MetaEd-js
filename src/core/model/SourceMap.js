@@ -6,15 +6,18 @@ export type SourceMap = {
   column: number,
   tokenText: string,
 }
+
 export function defaultSourceMap(): SourceMap {
   return {
     line: 0,
     column: 0,
-    tokenText: '',
+    tokenText: 'unknown',
   };
 }
 
-export const NoSourceMap: SourceMap = defaultSourceMap();
+export const NoSourceMap: SourceMap = Object.assign(defaultSourceMap(), {
+  tokenText: 'NoSourceMap',
+});
 
 export function sourceMapFrom(context: ParserRuleContext): SourceMap {
   if (context.exception || context.start == null) return NoSourceMap;
