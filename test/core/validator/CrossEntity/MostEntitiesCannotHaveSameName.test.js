@@ -197,7 +197,7 @@ describe('when DE and SharedInteger have identical names', () => {
     expect(repository.entity.sharedInteger.size).toBe(1);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(failures.length).toBe(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
@@ -242,7 +242,7 @@ describe('when DE and Common have identical names', () => {
     expect(repository.entity.common.size).toBe(1);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(failures.length).toBe(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');

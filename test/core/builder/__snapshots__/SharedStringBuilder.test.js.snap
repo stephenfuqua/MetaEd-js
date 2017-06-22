@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building duplicate shared strings should have validation failures for each entity -> SS 1 message 1`] = `"Shared String named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared strings should have validation failures for each entity -> SS 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 7,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building duplicate shared strings should have validation failures for each entity -> SS 2 message 1`] = `"Shared String named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared strings should have validation failures for each entity -> SS 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Shared String",
+}
+`;
+
 exports[`when building shared string in extension namespace should have line, column, text for each property 1`] = `
 SharedStringSourceMap {
   "documentation": Object {
