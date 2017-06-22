@@ -102,7 +102,7 @@ describe('when building multiple common extensions', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate common extensions should have validation failures for each entity -> Common Extension 1 message');
@@ -220,5 +220,47 @@ describe('when building common extension with invalid trailing text', () => {
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building common extension source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartCommonExtension(entityName, '1')
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndCommonExtension()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a baseEntityName property', () => {
+    expect(entityRepository.commonExtension.get(entityName).sourceMap.baseEntityName).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.commonExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.commonExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.commonExtension.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.commonExtension.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

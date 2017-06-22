@@ -3,11 +3,14 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { commonExtensionFactory } from '../model/CommonExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterCommonExtension(context: MetaEdGrammar.CommonExtensionContext) {
     this.enteringEntity(commonExtensionFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -21,6 +24,8 @@ export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
     this.currentTopLevelEntity.baseEntityName = extendeeName;
+    this.currentTopLevelEntity.sourceMap.baseEntityName = sourceMapFrom(context);
   }
 }
