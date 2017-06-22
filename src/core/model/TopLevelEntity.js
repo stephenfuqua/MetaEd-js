@@ -5,12 +5,19 @@ import { namespaceInfoFactory } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 
 export class TopLevelEntitySourceMap extends ModelBaseSourceMap {
-  properties: ?Array<SourceMap>;
-  identityProperties: ?Array<SourceMap>;
-  queryableFields: ?Array<SourceMap>;
+  properties: Array<SourceMap>;
+  identityProperties: Array<SourceMap>;
+  queryableFields: Array<SourceMap>;
   allowPrimaryKeyUpdates: ?SourceMap;
   baseEntityName: ?SourceMap;
   baseEntity: ?SourceMap;
+
+  constructor() {
+    super();
+    this.properties = [];
+    this.identityProperties = [];
+    this.queryableFields = [];
+  }
 }
 
 export class TopLevelEntity extends ModelBase {

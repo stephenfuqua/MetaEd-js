@@ -101,11 +101,13 @@ InterchangeSourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
+  "elements": Array [],
   "extendedDocumentation": Object {
     "column": 4,
     "line": 5,
     "tokenText": "extended documentation",
   },
+  "identityTemplates": Array [],
   "metaEdId": Object {
     "column": 30,
     "line": 2,

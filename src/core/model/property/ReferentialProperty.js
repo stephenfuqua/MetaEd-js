@@ -6,7 +6,12 @@ import { MergedProperty } from './MergedProperty';
 
 export class ReferentialPropertySourceMap extends EntityPropertySourceMap {
   referencedEntity: ?SourceMap;
-  mergedProperties: ?Array<SourceMap>;
+  mergedProperties: Array<SourceMap>;
+
+  constructor() {
+    super();
+    this.mergedProperties = [];
+  }
 }
 
 export class ReferentialProperty extends EntityProperty {

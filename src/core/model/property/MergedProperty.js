@@ -5,10 +5,15 @@ import type { SourceMap } from './../SourceMap';
 
 export class MergedPropertySourceMap {
   type: ?SourceMap;
-  mergePropertyPath: ?Array<SourceMap>;
-  targetPropertyPath: ?Array<SourceMap>;
+  mergePropertyPath: Array<SourceMap>;
+  targetPropertyPath: Array<SourceMap>;
   mergeProperty: ?SourceMap;
   targetProperty: ?SourceMap;
+
+  constructor() {
+    this.mergePropertyPath = [];
+    this.targetPropertyPath = [];
+  }
 }
 
 export class MergedProperty {

@@ -5,10 +5,16 @@ import { namespaceInfoFactory } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 
 export class InterchangeSourceMap extends ModelBaseSourceMap {
-  elements: ?Array<SourceMap>;
-  identityTemplates: ?Array<SourceMap>;
+  elements: Array<SourceMap>;
+  identityTemplates: Array<SourceMap>;
   extendedDocumentation: ?SourceMap;
   useCaseDocumentation: ?SourceMap;
+
+  constructor() {
+    super();
+    this.elements = [];
+    this.identityTemplates = [];
+  }
 }
 
 export class Interchange extends ModelBase {

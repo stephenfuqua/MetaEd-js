@@ -6,12 +6,18 @@ import { DomainItem } from './DomainItem';
 
 export class SubdomainSourceMap extends TopLevelEntitySourceMap {
   type: ?SourceMap;
-  domainItems: ?Array<SourceMap>;
-  entities: ?Array<SourceMap>;
+  domainItems: Array<SourceMap>;
+  entities: Array<SourceMap>;
   footerDocumentation: ?SourceMap;
   parent: ?SourceMap;
   parentMetaEdName: ?SourceMap;
   position: ?SourceMap;
+
+  constructor() {
+    super();
+    this.domainItems = [];
+    this.entities = [];
+  }
 }
 
 export class Subdomain extends TopLevelEntity {

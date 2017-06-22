@@ -4,7 +4,12 @@ import { EnumerationItem } from './EnumerationItem';
 import type { SourceMap } from './SourceMap';
 
 export class EnumerationSourceMap extends TopLevelEntitySourceMap {
-  enumerationItems: ?Array<SourceMap>;
+  enumerationItems: Array<SourceMap>;
+
+  constructor() {
+    super();
+    this.enumerationItems = [];
+  }
 }
 
 export class Enumeration extends TopLevelEntity {

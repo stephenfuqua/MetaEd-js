@@ -7,6 +7,7 @@ DomainEntityExtensionSourceMap {
     "line": 2,
     "tokenText": "EntityName",
   },
+  "identityProperties": Array [],
   "metaEdId": Object {
     "column": 37,
     "line": 2,
@@ -22,6 +23,8 @@ DomainEntityExtensionSourceMap {
     "line": 1,
     "tokenText": "Begin Namespace",
   },
+  "properties": Array [],
+  "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,

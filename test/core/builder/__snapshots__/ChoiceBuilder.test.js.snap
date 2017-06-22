@@ -7,6 +7,7 @@ ChoiceSourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
+  "identityProperties": Array [],
   "metaEdId": Object {
     "column": 20,
     "line": 2,
@@ -17,6 +18,8 @@ ChoiceSourceMap {
     "line": 2,
     "tokenText": "EntityName",
   },
+  "properties": Array [],
+  "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,

@@ -17,6 +17,7 @@ DomainEntitySubclassSourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
+  "identityProperties": Array [],
   "metaEdId": Object {
     "column": 51,
     "line": 2,
@@ -32,6 +33,8 @@ DomainEntitySubclassSourceMap {
     "line": 1,
     "tokenText": "Begin Namespace",
   },
+  "properties": Array [],
+  "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,

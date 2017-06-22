@@ -7,6 +7,7 @@ DomainEntitySourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
+  "identityProperties": Array [],
   "isAbstract": Object {
     "column": 2,
     "line": 2,
@@ -27,6 +28,8 @@ DomainEntitySourceMap {
     "line": 1,
     "tokenText": "Begin Namespace",
   },
+  "properties": Array [],
+  "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,
@@ -72,6 +75,7 @@ DomainEntitySourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
+  "identityProperties": Array [],
   "metaEdId": Object {
     "column": 27,
     "line": 2,
@@ -87,6 +91,8 @@ DomainEntitySourceMap {
     "line": 1,
     "tokenText": "Begin Namespace",
   },
+  "properties": Array [],
+  "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,
