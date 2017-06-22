@@ -440,3 +440,66 @@ describe('when building shared string with invalid trailing text', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
+
+describe('when building shared string in extension namespace', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '123';
+  const documentation = 'doc';
+  const minLength = '2';
+  const maxLength = '100';
+
+  beforeAll(() => {
+    const builder = new SharedStringBuilder(entityRepository, validationFailures);
+
+    textBuilder
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartSharedString(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withStringRestrictions(minLength, maxLength)
+      .withEndSharedString()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  // SharedSimpleSourceMap
+  it('should have type', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  // SharedStringSourceMap
+  it('should have minLength', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.minLength).toBeDefined();
+  });
+
+  it('should have maxLength', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.maxLength).toBeDefined();
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
