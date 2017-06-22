@@ -5,11 +5,15 @@ import { associationExtensionFactory } from '../model/AssociationExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { AssociationExtension } from '../model/AssociationExtension';
 import { isErrorText } from './BuilderUtility';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
   // eslint-disable-next-line no-unused-vars
   enterAssociationExtension(context: MetaEdGrammar.AssociationExtensionContext) {
     this.enteringEntity(associationExtensionFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      ((this.currentTopLevelEntity: any): AssociationExtension).sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -24,5 +28,6 @@ export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);
     ((this.currentTopLevelEntity: any): AssociationExtension).baseEntityName = extendeeName;
+    ((this.currentTopLevelEntity: any): AssociationExtension).sourceMap.metaEdName = sourceMapFrom(context);
   }
 }

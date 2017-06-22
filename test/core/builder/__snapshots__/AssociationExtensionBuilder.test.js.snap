@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building association extension source map should have line, column, text for each property 1`] = `
+AssociationExtensionSourceMap {
+  "metaEdId": Object {
+    "column": 35,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Association",
+  },
+}
+`;
+
 exports[`when building association extension with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'min value', 'max value', 'with context'}, column: 0, line: 7, token: TrailingText",

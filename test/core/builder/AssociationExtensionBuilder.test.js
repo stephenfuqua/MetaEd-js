@@ -296,3 +296,36 @@ describe('when building association extension with invalid trailing text', () =>
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
+
+describe('when building association extension source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  beforeAll(() => {
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociationExtension(entityName, '1')
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationExtension()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.associationExtension.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.associationExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have line, column, text for each property', () => {
+    expect(entityRepository.associationExtension.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
