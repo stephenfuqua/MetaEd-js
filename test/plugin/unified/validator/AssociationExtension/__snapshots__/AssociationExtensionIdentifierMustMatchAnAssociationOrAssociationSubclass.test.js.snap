@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when association extension extends an invalid identifier should have validation failure -> message 1`] = `"Association additions 'EntityName' does not match any declared Association or Association Subclass."`;
+
+exports[`when association extension extends an invalid identifier should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Association",
+}
+`;
