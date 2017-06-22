@@ -32,10 +32,10 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
     this.validationFailures = validationFailures;
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
     this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
@@ -83,17 +83,17 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
       this.currentInterchange.sourceMap.metaEdId = sourceMapFrom(context);
     }
   }
-
-  // eslint-disable-next-line no-unused-vars
   enterInterchange(context: MetaEdGrammar.InterchangeContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentInterchange = Object.assign(interchangeFactory(), {
       namespaceInfo: this.namespaceInfo,
     });
-    this.currentInterchange.sourceMap.type = sourceMapFrom(context);
+    Object.assign(this.currentInterchange.sourceMap, {
+      type: sourceMapFrom(context),
+      namespaceInfo: this.currentInterchange.namespaceInfo.sourceMap.type,
+    });
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentInterchange = Object.assign(interchangeExtensionFactory(), {
@@ -161,20 +161,16 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
-    // TODO
-    // this.currentInterchange.sourceMap.elements.sourceMapFrom(context));
-    this.currentInterchangeItem.sourceMap.type = sourceMapFrom(context);
-    this.currentInterchangeItem.sourceMap.metaEdName = sourceMapFrom(context);
+    Object.assign(this.currentInterchangeItem.sourceMap, { type: sourceMapFrom(context), metaEdName: sourceMapFrom(context) });
+    ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).elements.push(sourceMapFrom(context));
   }
 
   enterInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
-    // TODO
-    // this.currentInterchange.sourceMap.identityTemplates.push(sourceMapFrom(context));
-    this.currentInterchangeItem.sourceMap.type = sourceMapFrom(context);
-    this.currentInterchangeItem.sourceMap.metaEdName = sourceMapFrom(context);
+    Object.assign(this.currentInterchangeItem.sourceMap, { type: sourceMapFrom(context), metaEdName: sourceMapFrom(context) });
+    ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).identityTemplates.push(sourceMapFrom(context));
   }
 
   // eslint-disable-next-line no-unused-vars

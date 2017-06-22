@@ -6,9 +6,18 @@ export type SourceMap = {
   column: number,
   tokenText: string,
 }
+export function defaultSourceMap(): SourceMap {
+  return {
+    line: 0,
+    column: 0,
+    tokenText: '',
+  };
+}
 
-export function sourceMapFrom(context: ParserRuleContext): ?SourceMap {
-  if (context.exception || context.start == null) return null;
+export const NoSourceMap: SourceMap = defaultSourceMap();
+
+export function sourceMapFrom(context: ParserRuleContext): SourceMap {
+  if (context.exception || context.start == null) return NoSourceMap;
 
   return {
     line: context.start.line,

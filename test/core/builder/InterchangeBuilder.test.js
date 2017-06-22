@@ -140,13 +140,13 @@ describe('when building duplicate interchanges', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap');
@@ -726,7 +726,7 @@ describe('when building single interchange source map', () => {
   });
 
   // ModelBaseSourceMap
-  xit('should have namespaceInfo', () => {
+  it('should have namespaceInfo', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.namespaceInfo).toBeDefined();
   });
 
@@ -738,6 +738,7 @@ describe('when building single interchange source map', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdName).toBeDefined();
     expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdName.tokenText).toBe(interchangeName);
   });
+
   it('should have metaEdId', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdId).toBeDefined();
     expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdId.tokenText).toBe(`[${interchangeMetaEdId}]`);
@@ -760,11 +761,11 @@ describe('when building single interchange source map', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.useCaseDocumentation).toBeDefined();
   });
 
-  xit('should have one element', () => {
+  it('should have one element', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.elements).toHaveLength(1);
   });
 
-  xit('should have one identityTemplate', () => {
+  it('should have one identityTemplate', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.identityTemplates).toHaveLength(1);
   });
 
@@ -785,10 +786,6 @@ describe('when building single interchange source map', () => {
     expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.metaEdId).toBeDefined();
   });
 
-  xit('should have element referencedEntity', () => {
-    expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap.referencedEntity).toBeDefined();
-  });
-
   it('should have element line, column, text for each property', () => {
     expect(entityRepository.interchange.get(interchangeName).elements[0].sourceMap).toMatchSnapshot();
   });
@@ -803,11 +800,6 @@ describe('when building single interchange source map', () => {
 
   it('should have identityTemplate metaEdId', () => {
     expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.metaEdId).toBeDefined();
-  });
-
-  // only set in interchangeItem model ?
-  xit('should have identityTemplate referencedEntity', () => {
-    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].sourceMap.referencedEntity).toBeDefined();
   });
 
   it('should have identityTemplate line, column, text for each property', () => {
