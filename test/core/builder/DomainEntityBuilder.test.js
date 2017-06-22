@@ -1786,3 +1786,327 @@ describe('when building abstract entity source map', () => {
     expect(entityRepository.domainEntity.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
+
+// Properties
+describe('when building domain entity with weak reference required collection association property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const documentation: string = 'Documentation';
+  const propertyType: string = 'association';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'propertyDocumentation';
+  const contextName: string = 'ContextName';
+  const metaEdId: string = '1';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, propertyDocumentation, true, true, true, contextName, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have association properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(propertyDocumentation);
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].namespaceInfo).toBeDefined();
+  });
+
+  it('should have isRequiredCollection', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBeTruthy();
+  });
+
+  it('should have withContext', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].withContext).toBe(contextName);
+  });
+
+  it('should not have referencedEntity', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].referencedEntity).toBeDefined();
+  });
+
+  it('should not have mergedProperties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).toHaveLength(0);
+  });
+
+  it('should have isWeak', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+  });
+
+  describe('source map', () => {
+    it('should have type', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type.tokenText).toBe(propertyType);
+    });
+
+    it('should have documentation', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentation).toBeDefined();
+    });
+
+    it('should have metaEdName', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName).toBeDefined();
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName.tokenText).toBe(propertyName);
+    });
+
+    it('should have metaEdId', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId).toBeDefined();
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+    });
+
+    it('should have isRequiredCollection', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBeTruthy();
+    });
+
+    it('should have withContext', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).toBeDefined();
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext.tokenText).toBe(contextName);
+    });
+
+    it('should have isWeak', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
+    });
+
+    it('should have line, column, text for each property', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toMatchSnapshot();
+    });
+  });
+});
+
+xdescribe('Association Template', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const documentation: string = 'Documentation';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'propertyDocumentation';
+  const contextName: string = 'ContextName';
+  const metaEdId: string = '1';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, propertyDocumentation, true, true, true, contextName, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have association property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('association');
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+  });
+
+  it('should not have documentationInherited', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentationInherited).toBeFalsy();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].namespaceInfo).toBeDefined();
+  });
+
+  it('should not have baseKeyName', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].baseKeyName).toBe('');
+  });
+
+  it('should not have shortenTo', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].shortenTo).toBe('');
+  });
+
+  it('should not have propertyNamePath', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].propertyNamePath).toBe('');
+  });
+
+  it('should not have isIdentityRename', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isIdentityRename).toBeFalsy();
+  });
+
+  it('should not have isRequired', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequired).toBeFalsy();
+  });
+
+  it('should not have isOptional', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptional).toBeFalsy();
+  });
+
+  it('should have isRequiredCollection', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBeTruthy();
+  });
+
+  it('should not have isOptionalCollection', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptionalCollection).toBeFalsy();
+  });
+
+  it('should not have isQueryableOnly', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isQueryableOnly).toBeFalsy();
+  });
+
+  it('should have withContext', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].withContext).toBe(contextName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext.tokenText).toBe(contextName);
+  });
+
+  it('should not have hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBeFalsy();
+  });
+
+  it('should not have referencedType', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].referencedType).toBe('');
+  });
+
+  it('should not have referencedEntity', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].referencedEntity).toBeDefined();
+  });
+
+  it('should not have mergedProperties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).toHaveLength(0);
+  });
+
+  it('should have isWeak', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+  });
+
+  describe('source map', () => {
+    it('should have type', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    });
+
+    it('should have association properties', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+    });
+
+    it('should have documentation', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentation).toBeDefined();
+    });
+
+    it('should not have documentationInherited', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentationInherited).toBeDefined();
+    });
+
+    it('should have metaEdName', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName).toBeDefined();
+    });
+
+    it('should have metaEdId', () => {
+
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId).toBeDefined();
+    });
+
+    it('should have namespaceInfo', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.namespaceInfo).toBeDefined();
+    });
+
+    it('should not have baseKeyName', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.baseKeyName).toBeDefined();
+    });
+
+    it('should not have shortenTo', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo).toBeDefined();
+    });
+
+    it('should not have propertyNamePath', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.propertyNamePath).toBeDefined();
+    });
+
+    it('should not have isIdentityRename', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isIdentityRename).toBeDefined();
+    });
+
+    it('should not have isRequired', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequired).toBeDefined();
+    });
+
+    it('should not have isOptional', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptional).toBeDefined();
+    });
+
+    it('should have isRequiredCollection', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequiredCollection).toBeDefined();
+    });
+
+    it('should not have isOptionalCollection', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptionalCollection).toBeDefined();
+    });
+
+    it('should not have isQueryableOnly', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isQueryableOnly).toBeDefined();
+    });
+
+    it('should have withContext', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).toBeDefined();
+    });
+
+    it('should not have hasRestriction', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).toBeDefined();
+    });
+
+    it('should not have referencedType', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.referencedType).toBeDefined();
+    });
+
+    it('should not have referencedEntity', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.referencedEntity).toBeDefined();
+    });
+
+    it('should not have mergedProperties', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.mergedProperties).toBeDefined();
+    });
+
+    it('should have isWeak', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
+    });
+
+    it('should have line, column, text for each property', () => {
+      expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toMatchSnapshot();
+    });
+  });
+});

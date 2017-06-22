@@ -24,8 +24,8 @@ import { inlineCommonPropertyFactory } from '../model/property/InlineCommonPrope
 import { choicePropertyFactory } from '../model/property/ChoiceProperty';
 import { IntegerProperty, integerPropertyFactory } from '../model/property/IntegerProperty';
 import { percentPropertyFactory } from '../model/property/PercentProperty';
-import { AssociationProperty, associationPropertyFactory } from '../model/property/AssociationProperty';
-import { DomainEntityProperty, domainEntityPropertyFactory } from '../model/property/DomainEntityProperty';
+import { AssociationProperty, associationPropertyFactory, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
+import { DomainEntityProperty, domainEntityPropertyFactory, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
 import { sharedDecimalPropertyFactory } from '../model/property/SharedDecimalProperty';
 import { sharedIntegerPropertyFactory } from '../model/property/SharedIntegerProperty';
 import { sharedStringPropertyFactory } from '../model/property/SharedStringProperty';
@@ -388,6 +388,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
       this.currentProperty.documentationInherited = true;
     } else {
       this.currentProperty.documentation = extractDocumentation(context);
+      this.currentProperty.sourceMap.documentation = sourceMapFrom(context);
     }
   }
 
@@ -395,6 +396,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.withContext = context.ID().getText();
+    this.currentProperty.sourceMap.withContext = sourceMapFrom(context);
   }
 
   enterShortenToName(context: MetaEdGrammar.ShortenToNameContext) {
@@ -407,6 +409,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.metaEdName = context.ID().getText();
+    this.currentProperty.sourceMap.metaEdName = sourceMapFrom(context);
 
     if (this.currentProperty.metaEdName === 'SchoolYear' && this.currentProperty.type === 'enumeration') {
       this.currentProperty.type = 'schoolYearEnumeration';
@@ -490,6 +493,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterRequiredCollection(context: MetaEdGrammar.RequiredCollectionContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isRequiredCollection = true;
+    this.currentProperty.sourceMap.isRequiredCollection = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -558,6 +562,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterIsWeakReference(context: MetaEdGrammar.IsWeakReferenceContext) {
     if (this.currentProperty === NoEntityProperty) return;
     ((this.currentProperty: any): DomainEntityProperty | AssociationProperty).isWeak = true;
+    ((this.currentProperty.sourceMap: any): DomainEntityPropertySourceMap | AssociationPropertySourceMap).isWeak = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars

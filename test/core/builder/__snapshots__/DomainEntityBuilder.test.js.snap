@@ -181,6 +181,47 @@ Array [
 ]
 `;
 
+exports[`when building domain entity with weak reference required collection association property source map should have line, column, text for each property 1`] = `
+AssociationPropertySourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "documentation",
+  },
+  "isRequiredCollection": Object {
+    "column": 6,
+    "line": 8,
+    "tokenText": "is required collection",
+  },
+  "isWeak": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "is weak",
+  },
+  "mergedProperties": Array [],
+  "metaEdId": Object {
+    "column": 29,
+    "line": 5,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 16,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "association",
+  },
+  "withContext": Object {
+    "column": 19,
+    "line": 9,
+    "tokenText": "ContextName",
+  },
+}
+`;
+
 exports[`when building duplicate domain entities should have validation failures for each entity -> DE 1 message 1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
 
 exports[`when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap 1`] = `
