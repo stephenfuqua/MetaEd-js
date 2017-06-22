@@ -42,7 +42,7 @@ describe('when association property has identifier of association', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -75,7 +75,7 @@ describe('when association property has identifier of association subclass', () 
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -100,12 +100,10 @@ describe('when association property has invalid identifier', () => {
   });
 
   it('should have validation failures()', () => {
-    expect(failures.length).toBe(1);
+    expect(failures).toHaveLength(1);
   });
 
   it('should have validation failure for property', () => {
-    expect(failures.length).toBe(1);
-
     expect(failures[0].validatorName).toBe('AssociationPropertyMustMatchAnAssociation');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when association property has invalid identifier should have validation failures for each property -> message ');

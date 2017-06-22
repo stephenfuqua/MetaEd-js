@@ -6,13 +6,13 @@ import type { PropertyIndex } from '../../../../core/model/property/PropertyInde
 // eslint-disable-next-line no-unused-vars
 export function validate(repository: Repository, propertyIndex?: PropertyIndex): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.domainEntity.forEach(domainEntity => {
-    if (domainEntity.identityProperties.length === 0) {
+  repository.entity.associationExtension.forEach(entity => {
+    if (!entity.namespaceInfo.isExtension) {
       failures.push({
-        validatorName: 'DomainEntityMustContainAnIdentity',
+        validatorName: 'AssociationExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
-        message: `Domain Entity ${domainEntity.metaEdName} does not have an identity specified.`,
-        sourceMap: domainEntity.sourceMap.type,
+        message: `Association additions '${entity.metaEdName}' is not valid in core namespace '${entity.namespaceInfo.namespace}`,
+        sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
     }

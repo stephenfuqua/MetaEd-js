@@ -58,7 +58,7 @@ describe('when validating domain entity with one UniqueId field', () => {
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -87,7 +87,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
   });
 
   it('should have validation failure', () => {
-    expect(failures.length).toBe(1);
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityMustContainNoMoreThanOneUniqueIdColumn');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when validating domain entity with two UniqueId fields -> message');
@@ -120,6 +120,6 @@ describe('when validating domain entity with two UniqueId fields in extension na
   });
 
   it('should have no validation failures()', () => {
-    expect(failures.length).toBe(0);
+    expect(failures).toHaveLength(0);
   });
 });
