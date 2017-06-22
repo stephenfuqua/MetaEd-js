@@ -102,7 +102,7 @@ describe('when building duplicate association extensions', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate association extensions should have validation failures for each entity -> Association 1 message');
@@ -317,15 +317,19 @@ describe('when building association extension source map', () => {
       .sendToListener(builder);
   });
 
-  it('should have a type property', () => {
-    expect(entityRepository.associationExtension.get(entityName).sourceMap.type).toBeDefined();
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.associationExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
     expect(entityRepository.associationExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have line, column, text for each property', () => {
+  it('should have a type property', () => {
+    expect(entityRepository.associationExtension.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map data', () => {
     expect(entityRepository.associationExtension.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

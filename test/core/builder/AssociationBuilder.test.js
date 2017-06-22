@@ -990,24 +990,32 @@ describe('when building association source map', () => {
       .sendToListener(builder);
   });
 
-  it('should have a type property', () => {
-    expect(entityRepository.association.get(entityName).sourceMap.type).toBeDefined();
+  it('should have an allowPrimaryKeyUpdates property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have two identity properties', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toBeDefined();
+    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toHaveLength(2);
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
     expect(entityRepository.association.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
-  it('should have a allowPrimaryKeyUpdates property', () => {
-    expect(entityRepository.association.get(entityName).sourceMap.allowPrimaryKeyUpdates).toBeDefined();
+  it('should have a type property', () => {
+    expect(entityRepository.association.get(entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have a identityProperties property', () => {
-    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toBeDefined();
-    expect(entityRepository.association.get(entityName).sourceMap.identityProperties).toHaveLength(2);
-  });
-
-  it('should have line, column, text for each property', () => {
+  it('should have source map data', () => {
     expect(entityRepository.association.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

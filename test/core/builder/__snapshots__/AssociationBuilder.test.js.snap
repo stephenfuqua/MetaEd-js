@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building association source map should have line, column, text for each property 1`] = `
+exports[`when building association source map should have source map data 1`] = `
 AssociationSourceMap {
   "allowPrimaryKeyUpdates": Object {
     "column": 4,
