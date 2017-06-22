@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building shared integer source map should have line, column, text for each property 1`] = `
+SharedIntegerSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "maxValue": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "max value",
+  },
+  "metaEdId": Object {
+    "column": 28,
+    "line": 2,
+    "tokenText": "[123]",
+  },
+  "metaEdName": Object {
+    "column": 17,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "minValue": Object {
+    "column": 6,
+    "line": 5,
+    "tokenText": "min value",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Shared Integer",
+  },
+}
+`;
+
 exports[`when building shared integer with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 0, line: 7, token: TrailingText",
@@ -34,6 +74,51 @@ exports[`when building shared integer with no shared integer name should have mi
 Array [
   "missing ID at '[123]', column: 18, line: 2, token: [123]",
 ]
+`;
+
+exports[`when building shared short source map should have line, column, text for each property 1`] = `
+SharedIntegerSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "isShort": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Shared Short",
+  },
+  "maxValue": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "max value",
+  },
+  "metaEdId": Object {
+    "column": 26,
+    "line": 2,
+    "tokenText": "[123]",
+  },
+  "metaEdName": Object {
+    "column": 15,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "minValue": Object {
+    "column": 6,
+    "line": 5,
+    "tokenText": "min value",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Shared Short",
+  },
+}
 `;
 
 exports[`when building shared short with invalid trailing text should have extraneous input error 1`] = `
