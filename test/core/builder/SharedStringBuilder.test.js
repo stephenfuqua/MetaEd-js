@@ -110,12 +110,12 @@ describe('when building duplicate shared strings', () => {
   });
 
   xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('SharedStringBuilder');
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate shared strings should have validation failures for each entity -> SS 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate shared strings should have validation failures for each entity -> SS 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('SharedStringBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate shared strings should have validation failures for each entity -> SS 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate shared strings should have validation failures for each entity -> SS 2 sourceMap');

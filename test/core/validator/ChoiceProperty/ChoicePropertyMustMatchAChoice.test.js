@@ -72,7 +72,7 @@ describe('when choice property has invalid identifier', () => {
     expect(failures.length).toBe(1);
   });
 
-  xit('should have validation failure for property', () => {
+  it('should have validation failure for property', () => {
     expect(failures.length).toBe(1);
 
     expect(failures[0].validatorName).toBe('ChoicePropertyMustMatchAChoice');

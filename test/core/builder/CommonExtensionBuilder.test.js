@@ -103,12 +103,12 @@ describe('when building multiple common extensions', () => {
   });
 
   xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('CommonExtensionBuilder');
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate common extensions should have validation failures for each entity -> Common Extension 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate common extensions should have validation failures for each entity -> Common 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('CommonExtensionBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate common extensions should have validation failures for each entity -> Common Extension 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate common extensions should have validation failures for each entity -> Common 2 sourceMap');

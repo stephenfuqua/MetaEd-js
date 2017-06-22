@@ -80,7 +80,7 @@ describe('when DE and Association have identical names', () => {
     expect(repository.entity.association.size).toBe(1);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(failures.length).toBe(2);
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');

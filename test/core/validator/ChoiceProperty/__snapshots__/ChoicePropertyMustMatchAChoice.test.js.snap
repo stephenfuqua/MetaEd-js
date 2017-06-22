@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when choice property has invalid identifier should have validation failures for each property -> message  1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
+
+exports[`when choice property has invalid identifier should have validation failures for each property -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 13,
+  "tokenText": "choice",
+}
+`;

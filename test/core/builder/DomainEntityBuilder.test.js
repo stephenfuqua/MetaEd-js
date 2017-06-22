@@ -173,7 +173,7 @@ describe('when building duplicate property names', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each property', () => {
+  it('should have validation failures for each property', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 1 message');
@@ -247,7 +247,7 @@ describe('when building duplicate property names with same with context name', (
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each property', () => {
+  it('should have validation failures for each property', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 1 message');

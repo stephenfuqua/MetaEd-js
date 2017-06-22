@@ -264,6 +264,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterAssociationProperty(context: MetaEdGrammar.AssociationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = associationPropertyFactory();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars

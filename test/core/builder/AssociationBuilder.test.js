@@ -247,13 +247,13 @@ describe('when building duplicate associations', () => {
     expect(validationFailures.length).toBe(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('AssociationBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('AssociationBuilder');
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate associations should have validation failures for each entity -> Association 2 sourceMap');
