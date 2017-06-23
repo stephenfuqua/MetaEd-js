@@ -19,7 +19,7 @@ export class Descriptor extends TopLevelEntity {
 export function descriptorFactory(): Descriptor {
   return Object.assign(new Descriptor(), defaultTopLevelEntity(), {
     type: 'descriptor',
-    typeGroupHumanizedName: 'Descriptor',
+    typeHumanizedName: 'Descriptor',
     isMapTypeRequired: false,
     isMapTypeOptional: false,
     mapTypeEnumeration: mapTypeEnumerationFactory(),

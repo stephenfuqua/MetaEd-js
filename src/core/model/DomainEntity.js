@@ -14,7 +14,7 @@ export class DomainEntity extends TopLevelEntity {
 export function domainEntityFactory(): DomainEntity {
   return Object.assign(new DomainEntity(), defaultTopLevelEntity(), {
     type: 'domainEntity',
-    typeGroupHumanizedName: 'Domain Entity',
+    typeHumanizedName: 'Domain Entity',
     isAbstract: false,
     sourceMap: new DomainEntitySourceMap(),
   });

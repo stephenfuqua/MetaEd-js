@@ -116,7 +116,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
-          message: `${this.currentTopLevelEntity.typeGroupHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `${this.currentTopLevelEntity.typeHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
           fileMap: null,
         });
@@ -124,7 +124,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
-          message: `${duplicateEntity.typeGroupHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });

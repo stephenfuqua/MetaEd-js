@@ -10,7 +10,7 @@ export class DomainEntitySubclass extends TopLevelEntity {
 export function domainEntitySubclassFactory(): DomainEntitySubclass {
   return Object.assign(new DomainEntitySubclass(), defaultTopLevelEntity(), {
     type: 'domainEntitySubclass',
-    typeGroupHumanizedName: 'Domain Entity Subclass',
+    typeHumanizedName: 'Domain Entity Subclass',
     sourceMap: new DomainEntitySubclassSourceMap(),
   });
 }

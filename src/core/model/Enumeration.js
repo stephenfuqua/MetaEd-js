@@ -20,7 +20,7 @@ export class Enumeration extends TopLevelEntity {
 export function enumerationFactory(): Enumeration {
   return Object.assign(new Enumeration(), defaultTopLevelEntity(), {
     type: 'enumeration',
-    typeGroupHumanizedName: 'Enumeration',
+    typeHumanizedName: 'Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });

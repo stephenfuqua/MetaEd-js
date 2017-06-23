@@ -23,7 +23,7 @@ export function validate(repository: Repository, propertyIndex?: PropertyIndex):
         failures.push({
           validatorName: 'MostEntitiesCannotHaveSameName',
           category: 'error',
-          message: `${entity.typeGroupHumanizedName} named ${metaEdName} is a duplicate declaration of that name.`,
+          message: `${entity.typeHumanizedName} named ${metaEdName} is a duplicate declaration of that name.`,
           sourceMap: entity.sourceMap.type,
           fileMap: null,
         });

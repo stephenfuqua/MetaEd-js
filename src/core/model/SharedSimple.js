@@ -12,14 +12,14 @@ export class SharedSimpleSourceMap {
 }
 
 export class SharedSimple extends ModelBase {
-  typeGroupHumanizedName: string;
+  typeHumanizedName: string;
   sourceMap: SharedSimpleSourceMap;
 }
 
 export function defaultSharedSimple(): SharedSimple {
   return Object.assign(new SharedSimple(), {
     type: 'unknown',
-    typeGroupHumanizedName: 'unknown',
+    typeHumanizedName: 'unknown',
     documentation: '',
     metaEdName: '',
     metaEdId: '',

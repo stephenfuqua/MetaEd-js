@@ -17,7 +17,7 @@ export class SharedString extends SharedSimple {
 export function sharedStringFactory(): SharedString {
   return Object.assign(new SharedString(), defaultSharedSimple(), {
     type: 'sharedString',
-    typeGroupHumanizedName: 'Shared String',
+    typeHumanizedName: 'Shared String',
     minLength: '',
     maxLength: '',
     sourceMap: new SharedStringSourceMap(),

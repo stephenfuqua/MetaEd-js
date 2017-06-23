@@ -30,7 +30,7 @@ export class Domain extends TopLevelEntity {
 export function domainFactory(): Domain {
   return Object.assign(new Domain(), defaultTopLevelEntity(), {
     type: 'domain',
-    typeGroupHumanizedName: 'Domain',
+    typeHumanizedName: 'Domain',
     domainItems: [],
     entities: [],
     footerDocumentation: '',

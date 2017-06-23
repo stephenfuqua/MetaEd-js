@@ -10,7 +10,7 @@ export class CommonExtension extends TopLevelEntity {
 export function commonExtensionFactory(): CommonExtension {
   return Object.assign(new CommonExtension(), defaultTopLevelEntity(), {
     type: 'commonExtension',
-    typeGroupHumanizedName: 'Common Extension',
+    typeHumanizedName: 'Common Extension',
     sourceMap: new CommonExtensionSourceMap(),
   });
 }

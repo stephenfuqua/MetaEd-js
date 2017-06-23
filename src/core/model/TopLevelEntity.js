@@ -24,7 +24,7 @@ export class TopLevelEntity extends ModelBase {
   properties: Array<EntityProperty>;
   identityProperties: Array<EntityProperty>;
   queryableFields: Array<EntityProperty>;
-  typeGroupHumanizedName: string;
+  typeHumanizedName: string;
   allowPrimaryKeyUpdates: boolean;
   baseEntityName: string;
   baseEntity: ?TopLevelEntity;
@@ -42,7 +42,7 @@ export function defaultTopLevelEntity(): TopLevelEntity {
     properties: [],
     identityProperties: [],
     queryableFields: [],
-    typeGroupHumanizedName: '',
+    typeHumanizedName: '',
 
     allowPrimaryKeyUpdates: false,
     baseEntityName: '',

@@ -10,7 +10,7 @@ export class AssociationExtension extends TopLevelEntity {
 export function associationExtensionFactory(): AssociationExtension {
   return Object.assign(new AssociationExtension(), defaultTopLevelEntity(), {
     type: 'associationExtension',
-    typeGroupHumanizedName: 'Association Extension',
+    typeHumanizedName: 'Association Extension',
     sourceMap: new AssociationExtensionSourceMap(),
   });
 }

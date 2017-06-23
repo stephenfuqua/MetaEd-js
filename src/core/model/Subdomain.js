@@ -33,7 +33,7 @@ export class Subdomain extends TopLevelEntity {
 export function subdomainFactory(): Subdomain {
   return Object.assign(new Subdomain(), {
     type: 'subdomain',
-    typeGroupHumanizedName: 'Subdomain',
+    typeHumanizedName: 'Subdomain',
     domainItems: [],
     entities: [],
     footerDocumentation: '',

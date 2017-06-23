@@ -20,7 +20,7 @@ export class SharedDecimal extends SharedSimple {
 export function sharedDecimalFactory(): SharedDecimal {
   return Object.assign(new SharedDecimal(), defaultSharedSimple(), {
     type: 'sharedDecimal',
-    typeGroupHumanizedName: 'Shared Decimal',
+    typeHumanizedName: 'Shared Decimal',
     totalDigits: '',
     decimalPlaces: '',
     minValue: '',
