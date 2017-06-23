@@ -7,7 +7,6 @@ import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterAssociationExtension(context: MetaEdGrammar.AssociationExtensionContext) {
     this.enteringEntity(associationExtensionFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

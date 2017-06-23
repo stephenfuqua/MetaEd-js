@@ -116,7 +116,7 @@ describe('when building multiple descriptors', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
+  it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message');
@@ -744,5 +744,95 @@ describe('when building descriptor with invalid trailing text', () => {
 
   it('should have extraneous input error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
+  });
+});
+
+describe('when building descriptor source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '1';
+  const documentation: string = 'Documentation';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDescriptor(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStartMapType(false)
+      .withEndMapType()
+      .withEndDescriptor()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have a isMapTypeOptional property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.isMapTypeOptional).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when building descriptor source map with map type required', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityName: string = 'EntityName';
+  const metaEdId: string = '1';
+  const documentation: string = 'Documentation';
+  const propertyName: string = 'PropertyName';
+
+  beforeAll(() => {
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDescriptor(entityName, metaEdId)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withStartMapType(true)
+      .withEndMapType()
+      .withEndDescriptor()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a isMapTypeRequired property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.isMapTypeRequired).toBeDefined();
+  });
+
+  it('should have a mapTypeEnumeration property', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap.mapTypeEnumeration).toBeDefined();
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.descriptor.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

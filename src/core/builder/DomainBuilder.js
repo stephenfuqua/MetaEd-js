@@ -3,7 +3,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
-import type { Domain } from '../model/Domain';
+import type { Domain, DomainSourceMap } from '../model/Domain';
 import type { Subdomain } from '../model/Subdomain';
 import type { DomainItem } from '../model/DomainItem';
 import type { EntityRepository } from '../model/Repository';
@@ -15,6 +15,7 @@ import { subdomainFactory } from '../model/Subdomain';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DomainBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
@@ -56,6 +57,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentDomain === NoDomain) return;
     this.currentDomain.documentation = extractDocumentation(context);
+    this.currentDomain.sourceMap.documentation = sourceMapFrom(context);
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
@@ -67,12 +69,13 @@ export default class DomainBuilder extends MetaEdGrammarListener {
     } else {
       this.currentDomain.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     }
+    this.currentDomain.sourceMap.metaEdId = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterDomain(context: MetaEdGrammar.DomainContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentDomain = Object.assign(domainFactory(), { namespaceInfo: this.namespaceInfo });
+    this.currentDomain.sourceMap.type = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -124,6 +127,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
     if (this.currentDomain === NoDomain) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomain.metaEdName = context.ID().getText();
+    this.currentDomain.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
   enterSubdomainName(context: MetaEdGrammar.SubdomainNameContext) {
@@ -149,15 +153,16 @@ export default class DomainBuilder extends MetaEdGrammarListener {
     this.currentDomainItem = Object.assign(domainItemFactory(), { metaEdName: context.ID().getText() });
   }
 
-  // eslint-disable-next-line no-unused-vars
   exitDomainItem(context: MetaEdGrammar.DomainItemContext) {
     if (this.currentDomain === NoDomain || this.currentDomainItem === NoDomainItem) return;
     this.currentDomain.domainItems.push(this.currentDomainItem);
     this.currentDomainItem = NoDomainItem;
+    ((this.currentDomain.sourceMap: any): DomainSourceMap).domainItems.push(sourceMapFrom(context));
   }
 
   enterFooterDocumentation(context: MetaEdGrammar.FooterDocumentationContext) {
     if (this.currentDomain === NoDomain) return;
     ((this.currentDomain: any): Domain).footerDocumentation = extractDocumentation(context);
+    ((this.currentDomain.sourceMap: any): DomainSourceMap).footerDocumentation = sourceMapFrom(context);
   }
 }

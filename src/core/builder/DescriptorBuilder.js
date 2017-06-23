@@ -2,7 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { descriptorFactory } from '../model/Descriptor';
-import type { Descriptor } from '../model/Descriptor';
+import type { Descriptor, DescriptorSourceMap } from '../model/Descriptor';
 import type { MapTypeEnumeration } from '../model/MapTypeEnumeration';
 import { mapTypeEnumerationFactory, NoMapTypeEnumeration } from '../model/MapTypeEnumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
@@ -13,6 +13,7 @@ import type { EntityRepository } from '../model/Repository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import type { PropertyType } from '../model/property/PropertyType';
 import type { EntityProperty } from '../model/property/EntityProperty';
+import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DescriptorBuilder extends TopLevelEntityBuilder {
   currentMapTypeEnumeration: MapTypeEnumeration;
@@ -26,9 +27,11 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
     this.currentEnumerationItem = NoEnumerationItem;
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterDescriptor(context: MetaEdGrammar.DescriptorContext) {
     this.enteringEntity(descriptorFactory);
+    if (this.currentTopLevelEntity !== NoTopLevelEntity) {
+      ((this.currentTopLevelEntity: any): Descriptor).sourceMap.type = sourceMapFrom(context);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -39,27 +42,28 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
   enterDescriptorName(context: MetaEdGrammar.DescriptorNameContext) {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.enteringName(context.ID().getText());
+    ((this.currentTopLevelEntity: any): Descriptor).sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterOptionalMapType(context: MetaEdGrammar.OptionalMapTypeContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     ((this.currentTopLevelEntity: any): Descriptor).isMapTypeOptional = true;
+    ((this.currentTopLevelEntity.sourceMap: any): DescriptorSourceMap).isMapTypeOptional = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterRequiredMapType(context: MetaEdGrammar.RequiredMapTypeContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     ((this.currentTopLevelEntity: any): Descriptor).isMapTypeRequired = true;
+    ((this.currentTopLevelEntity.sourceMap: any): DescriptorSourceMap).isMapTypeRequired = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterWithMapType(context: MetaEdGrammar.WithMapTypeContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.namespaceInfo == null) return;
     this.currentMapTypeEnumeration = Object.assign(mapTypeEnumerationFactory(), {
       metaEdName: `${this.currentTopLevelEntity.metaEdName}Map`,
       namespaceInfo: this.namespaceInfo,
     });
+    ((this.currentTopLevelEntity.sourceMap: any): DescriptorSourceMap).mapTypeEnumeration = sourceMapFrom(context);
   }
 
   enterMapTypeDocumentation(context: MetaEdGrammar.MapTypeDocumentationContext) {

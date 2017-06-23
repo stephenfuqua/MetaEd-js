@@ -119,13 +119,13 @@ describe('when building duplicate domains', () => {
     expect(validationFailures).toHaveLength(2);
   });
 
-  xit('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('DomainBuilder');
     expect(validationFailures[0].category).toBe('error');
     expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 message');
     expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap');
 
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].validatorName).toBe('DomainBuilder');
     expect(validationFailures[1].category).toBe('error');
     expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 message');
     expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap');
@@ -1156,3 +1156,59 @@ describe('when building subdomain with invalid trailing text', () => {
   });
 });
 
+describe('when building domain source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+
+  const projectExtension: string = 'ProjectExtension';
+  const domainName: string = 'DomainName';
+  const domainMetaEdId: string = '1';
+  const entityDocumentation: string = 'EntityDocumentation';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+  const footerDocumentation: string = 'FooterDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartDomain(domainName, domainMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation(footerDocumentation)
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have a documentation property', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have a metaEdId property', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have a metaEdName property', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have a type property', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have a footerDocumentation property', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.footerDocumentation).toBeDefined();
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.domainItems).toBeDefined();
+    expect(entityRepository.domain.get(domainName).sourceMap.domainItems).toHaveLength(1);
+  });
+
+  it('should have source map data', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap).toMatchSnapshot();
+  });
+});

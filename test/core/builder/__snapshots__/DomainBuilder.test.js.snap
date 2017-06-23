@@ -1,5 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building domain source map should have source map data 1`] = `
+DomainSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "domainItems": Array [
+    Object {
+      "column": 4,
+      "line": 5,
+      "tokenText": "domain entity",
+    },
+  ],
+  "entities": Array [],
+  "footerDocumentation": Object {
+    "column": 4,
+    "line": 6,
+    "tokenText": "footer documentation",
+  },
+  "identityProperties": Array [],
+  "metaEdId": Object {
+    "column": 33,
+    "line": 5,
+    "tokenText": "[2]",
+  },
+  "metaEdName": Object {
+    "column": 9,
+    "line": 2,
+    "tokenText": "DomainName",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "subdomains": Array [],
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain",
+  },
+}
+`;
+
 exports[`when building domain with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'common', 'descriptor', 'domain entity', 'inline common', 'footer documentation'}, column: 0, line: 6, token: TrailingText",
@@ -34,6 +76,26 @@ exports[`when building domain with no text in footer documentation should have m
 Array [
   "missing TEXT at 'End Namespace', column: 0, line: 7, token: End Namespace",
 ]
+`;
+
+exports[`when building duplicate domains should have validation failures for each entity -> Domain 1 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 8,
+  "tokenText": "Domain",
+}
+`;
+
+exports[`when building duplicate domains should have validation failures for each entity -> Domain 2 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain",
+}
 `;
 
 exports[`when building subdomain with invalid trailing text should have extraneous input error 1`] = `

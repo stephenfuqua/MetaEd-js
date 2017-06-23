@@ -1,5 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when building descriptor source map should have source map data 1`] = `
+DescriptorSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "identityProperties": Array [],
+  "isMapTypeOptional": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with optional map type",
+  },
+  "mapTypeEnumeration": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with optional map type",
+  },
+  "metaEdId": Object {
+    "column": 24,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 13,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Descriptor",
+  },
+}
+`;
+
+exports[`when building descriptor source map with map type required should have source map data 1`] = `
+DescriptorSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "identityProperties": Array [],
+  "isMapTypeRequired": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with map type",
+  },
+  "mapTypeEnumeration": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with map type",
+  },
+  "metaEdId": Object {
+    "column": 24,
+    "line": 2,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 13,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Descriptor",
+  },
+}
+`;
+
 exports[`when building descriptor with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'min value', 'max value', 'with context', 'with optional map type', 'with map type'}, column: 0, line: 9, token: TrailingText",
@@ -34,4 +110,24 @@ exports[`when building descriptor with no enumeration item in map type should ha
 Array [
   "mismatched input 'End Namespace' expecting 'item', column: 0, line: 8, token: End Namespace",
 ]
+`;
+
+exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Descriptor",
+}
+`;
+
+exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Descriptor",
+}
 `;
