@@ -456,11 +456,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
-        let identityProperties = this.currentTopLevelEntity.sourceMap.identityProperties;
-        identityProperties = identityProperties || [];
-        const sourceMap: any = sourceMapFrom(context);
-        identityProperties.push(sourceMap);
-        this.currentTopLevelEntity.sourceMap.identityProperties = identityProperties;
+        this.currentTopLevelEntity.sourceMap.identityProperties.push(sourceMapFrom(context));
       },
     );
   }

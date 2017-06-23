@@ -2037,7 +2037,6 @@ xdescribe('Association Template', () => {
     });
 
     it('should have metaEdId', () => {
-
       expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId).toBeDefined();
     });
 
