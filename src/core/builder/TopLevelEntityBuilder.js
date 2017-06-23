@@ -32,7 +32,7 @@ import { sharedStringPropertyFactory } from '../model/property/SharedStringPrope
 import { StringProperty, stringPropertyFactory } from '../model/property/StringProperty';
 import { timePropertyFactory } from '../model/property/TimeProperty';
 import { yearPropertyFactory } from '../model/property/YearProperty';
-import { ReferentialProperty } from '../model/property/ReferentialProperty';
+import { ReferentialProperty, ReferentialPropertySourceMap } from '../model/property/ReferentialProperty';
 import { ShortProperty, shortPropertyFactory } from '../model/property/ShortProperty';
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -369,7 +369,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.whenExitingPropertyCommand.pop()();
       }
 
+      this.currentProperty.parentEntity = this.currentTopLevelEntity;
+      this.currentProperty.sourceMap.parentEntity = this.currentTopLevelEntity.sourceMap.type;
+
       this.currentProperty.parentEntityName = this.currentTopLevelEntity.metaEdName;
+      this.currentProperty.sourceMap.parentEntityName = this.currentTopLevelEntity.sourceMap.metaEdName;
 
       // isQueryableOnly is XSD-specific and needs to be pulled out to artifact-specific configuration
       if (!this.currentProperty.isQueryableOnly && !this.propertyNameCollision()) {
@@ -386,6 +390,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
     if (!context.exception && context.INHERITED() != null && !context.INHERITED().exception) {
       this.currentProperty.documentationInherited = true;
+      this.currentProperty.sourceMap.documentationInherited = sourceMapFrom(context);
     } else {
       this.currentProperty.documentation = extractDocumentation(context);
       this.currentProperty.sourceMap.documentation = sourceMapFrom(context);
@@ -403,6 +408,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.shortenTo = context.ID().getText();
+    this.currentProperty.sourceMap.shortenTo = sourceMapFrom(context);
   }
 
   enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
@@ -428,6 +434,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
+        this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
       },
     );
   }
@@ -436,9 +443,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterIsQueryableOnly(context: MetaEdGrammar.IsQueryableOnlyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isQueryableOnly = true;
+    this.currentProperty.sourceMap.isQueryableOnly = sourceMapFrom(context);
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
+        this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
       },
     );
   }
@@ -453,6 +462,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
+    this.currentProperty.sourceMap.isPartOfIdentity = sourceMapFrom(context);
     this.whenExitingPropertyCommand.push(
       () => {
         this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
@@ -464,6 +474,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isIdentityRename = true;
+    this.currentProperty.sourceMap.isIdentityRename = sourceMapFrom(context);
     this.enteringIdentity(context);
   }
 
@@ -471,18 +482,21 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.ID() == null || context.ID().exception) return;
     this.currentProperty.baseKeyName = context.ID().getText();
+    this.currentProperty.sourceMap.baseKeyName = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterRequired(context: MetaEdGrammar.RequiredContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isRequired = true;
+    this.currentProperty.sourceMap.isRequired = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
   enterOptional(context: MetaEdGrammar.OptionalContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isOptional = true;
+    this.currentProperty.sourceMap.isOptional = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -496,6 +510,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterOptionalCollection(context: MetaEdGrammar.OptionalCollectionContext) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isOptionalCollection = true;
+    this.currentProperty.sourceMap.isOptionalCollection = sourceMapFrom(context);
   }
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
@@ -583,6 +598,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   exitMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
     if (this.currentProperty === NoEntityProperty || this.currentMergedProperty === NoMergedProperty) return;
     ((this.currentProperty: any): ReferentialProperty).mergedProperties.push(this.currentMergedProperty);
+    ((this.currentProperty.sourceMap: any): ReferentialPropertySourceMap).mergedProperties.push(sourceMapFrom(context));
     this.currentMergedProperty = NoMergedProperty;
   }
 }

@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building association property with context should have source map for contextName with line, column, text 1`] = `
+Object {
+  "column": 17,
+  "line": 9,
+  "tokenText": "ContextName",
+}
+`;
+
+exports[`when building association property with inherited documentation should have source map for documentationInherited with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 6,
+  "tokenText": "documentation",
+}
+`;
+
+exports[`when building association property with merged properties should have source map for mergedProperties with line, column, text 1`] = `
+Array [
+  MergedProperty {
+    "mergeProperty": null,
+    "mergePropertyPath": Array [
+      "MergeProperty0",
+    ],
+    "sourceMap": MergedPropertySourceMap {
+      "mergePropertyPath": Array [],
+      "targetPropertyPath": Array [],
+    },
+    "targetProperty": null,
+    "targetPropertyPath": Array [
+      "MergeProperty1",
+    ],
+  },
+]
+`;
+
+exports[`when building association property with shortened context should have source map for shortenTo with line, column, text 1`] = `
+Object {
+  "column": 40,
+  "line": 9,
+  "tokenText": "ShortenToName",
+}
+`;
+
+exports[`when building association property with weak reference should have source map for isWeak with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is weak",
+}
+`;
+
+exports[`when building identity association property  should have entity level source map for identity properties with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "is part of identity",
+  },
+]
+`;
+
+exports[`when building identity association property  should have source map for isPartOfIdentity with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when building optional association property should have source map for isOptional with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is optional",
+}
+`;
+
+exports[`when building optional collection association property should have source map for isOptionalCollection with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is optional collection",
+}
+`;
+
+exports[`when building queryable association property  should have entity level source map for queryable field with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "is queryable only",
+  },
+]
+`;
+
+exports[`when building queryable association property  should have source map for isQueryableOnly with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is queryable only",
+}
+`;
+
+exports[`when building renamed identity association property should have source map for baseKeyName with line, column, text 1`] = `
+Object {
+  "column": 30,
+  "line": 11,
+  "tokenText": "BaseName",
+}
+`;
+
+exports[`when building renamed identity association property should have source map for isIdentityRename with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 11,
+  "tokenText": "renames identity property",
+}
+`;
+
+exports[`when building required association property should have source map with line, column, text for each property 1`] = `
+AssociationPropertySourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "documentation",
+  },
+  "isRequired": Object {
+    "column": 6,
+    "line": 8,
+    "tokenText": "is required",
+  },
+  "mergedProperties": Array [],
+  "metaEdId": Object {
+    "column": 29,
+    "line": 5,
+    "tokenText": "[1]",
+  },
+  "metaEdName": Object {
+    "column": 16,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
+  "parentEntity": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain Entity",
+  },
+  "parentEntityName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "association",
+  },
+}
+`;
+
+exports[`when building required collection association property should have source map for isRequiredCollection with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is required collection",
+}
+`;

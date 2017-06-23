@@ -5,7 +5,7 @@ Array [
   Object {
     "category": "error",
     "fileMap": Object {
-      "filename": "/fake/dir/DomainEntity1.metaed",
+      "filename": "\\\\fake\\\\dir\\\\DomainEntity1.metaed",
       "lineNumber": 8,
     },
     "message": "mismatched input 'Domain Entity' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'is weak', 'merge', 'with context'}",
@@ -46,7 +46,7 @@ Array [
   Object {
     "category": "error",
     "fileMap": Object {
-      "filename": "/fake/dir/DomainEntity1.metaed",
+      "filename": "\\\\fake\\\\dir\\\\DomainEntity1.metaed",
       "lineNumber": 8,
     },
     "message": "mismatched input 'Domain Entity' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'is weak', 'merge', 'with context'}",

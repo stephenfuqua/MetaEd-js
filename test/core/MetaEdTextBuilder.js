@@ -435,9 +435,9 @@ export default class MetaEdTextBuilder {
   }
 
   withQueryableOnlyPropertyIndicator(): MetaEdTextBuilder {
-    const isRequired = 'is queryable only';
+    const isQueryableOnly = 'is queryable only';
 
-    this._addLine(isRequired);
+    this._addLine(isQueryableOnly);
     return this;
   }
 
