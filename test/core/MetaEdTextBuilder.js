@@ -368,6 +368,10 @@ export default class MetaEdTextBuilder {
     return this._withChildElement('common', domainItemName, metaEdId);
   }
 
+  withInlineCommonDomainItem(domainItemName: string, metaEdId: ?string = null): MetaEdTextBuilder {
+    return this._withChildElement('inline common', domainItemName, metaEdId);
+  }
+
   withDescriptorDomainItem(domainItemName: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withChildElement('descriptor', domainItemName, metaEdId);
   }

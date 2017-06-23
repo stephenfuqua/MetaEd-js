@@ -1,15 +1,15 @@
 // @flow
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
-import { TopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
+import type { ModelType } from './ModelType';
 
 export class InterchangeItemSourceMap extends ModelBaseSourceMap {
-  referencedEntity: ?SourceMap;
+  referencedType: ?SourceMap;
 }
 
 export class InterchangeItem extends ModelBase {
-  referencedEntity: ?TopLevelEntity;
+  referencedType: ?ModelType;
   sourceMap: InterchangeItemSourceMap;
 }
 
@@ -20,7 +20,7 @@ export function interchangeItemFactory(): InterchangeItem {
     metaEdName: '',
     metaEdId: '',
     namespaceInfo: namespaceInfoFactory(),
-    referencedEntity: null,
+    referencedType: 'unknown',
     sourceMap: new InterchangeItemSourceMap(),
   });
 }

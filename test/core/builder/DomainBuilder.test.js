@@ -63,6 +63,7 @@ describe('when building domain in extension namespace', () => {
 
   it('should have one domain item', () => {
     expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].referencedType).toBe('domainEntity');
     expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
     expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
   });
@@ -70,6 +71,126 @@ describe('when building domain in extension namespace', () => {
   it('should have footer documentation', () => {
     expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
     expect(entityRepository.domain.get(domainName).footerDocumentation).toBe(footerDocumentation);
+  });
+});
+
+describe('when building domain with association item', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+
+  const domainName: string = 'DomainName';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('EntityDocumentation')
+      .withAssociationDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].referencedType).toBe('association');
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+});
+
+describe('when building domain with common item', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+
+  const domainName: string = 'DomainName';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('EntityDocumentation')
+      .withCommonDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].referencedType).toBe('common');
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+});
+
+describe('when building domain with inline common item', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+
+  const domainName: string = 'DomainName';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('EntityDocumentation')
+      .withInlineCommonDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].referencedType).toBe('inlineCommon');
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+  });
+});
+
+describe('when building domain with descriptor item', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+
+  const domainName: string = 'DomainName';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('EntityDocumentation')
+      .withDescriptorDomainItem(domainItemName, domainItemMetaEdId)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have one domain item', () => {
+    expect(entityRepository.domain.get(domainName).domainItems).toHaveLength(1);
+    expect(entityRepository.domain.get(domainName).domainItems[0].referencedType).toBe('descriptor');
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdName).toBe(domainItemName);
+    expect(entityRepository.domain.get(domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
   });
 });
 

@@ -5,7 +5,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
 import type { Domain, DomainSourceMap } from '../model/Domain';
 import type { Subdomain } from '../model/Subdomain';
-import type { DomainItem } from '../model/DomainItem';
+import type { DomainItem, DomainItemSourceMap } from '../model/DomainItem';
 import type { EntityRepository } from '../model/Repository';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
@@ -151,6 +151,14 @@ export default class DomainBuilder extends MetaEdGrammarListener {
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomainItem = Object.assign(domainItemFactory(), { metaEdName: context.ID().getText() });
+    ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).referencedType = sourceMapFrom(context);
+
+    // mutually exclusive in language
+    if (context.ASSOCIATION_KEYWORD()) this.currentDomainItem.referencedType = 'association';
+    if (context.COMMON_KEYWORD()) this.currentDomainItem.referencedType = 'common';
+    if (context.DOMAIN_ENTITY_KEYWORD()) this.currentDomainItem.referencedType = 'domainEntity';
+    if (context.DESCRIPTOR_KEYWORD()) this.currentDomainItem.referencedType = 'descriptor';
+    if (context.INLINE_COMMON_KEYWORD()) this.currentDomainItem.referencedType = 'inlineCommon';
   }
 
   exitDomainItem(context: MetaEdGrammar.DomainItemContext) {

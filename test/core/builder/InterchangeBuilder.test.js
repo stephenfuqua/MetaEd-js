@@ -31,7 +31,7 @@ describe('when building single interchange', () => {
       .withExtendedDocumentation(extendedDocumentation)
       .withUseCaseDocumentation(useCaseDocumentation)
       .withDomainEntityElement(interchangeElementName, interchangeElementMetaEdId)
-      .withDomainEntityIdentityTemplate(interchangeIdentityTemplateName, interchangeIdentityTemplateMetaEdId)
+      .withAssociationIdentityTemplate(interchangeIdentityTemplateName, interchangeIdentityTemplateMetaEdId)
       .withEndInterchange()
       .withEndNamespace()
       .sendToListener(builder);
@@ -78,12 +78,55 @@ describe('when building single interchange', () => {
     expect(entityRepository.interchange.get(interchangeName).elements).toHaveLength(1);
     expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
     expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].referencedType).toBe('domainEntity');
   });
 
   it('should have one identity template', () => {
     expect(entityRepository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
     expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
     expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].referencedType).toBe('association');
+  });
+});
+
+describe('when building interchange with additional element and identity types', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+
+  const interchangeName: string = 'InterchangeName';
+  const interchangeElementName1: string = 'InterchangeElementName1';
+  const interchangeElementName2: string = 'InterchangeElementName2';
+  const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
+
+  beforeAll(() => {
+    const builder = new InterchangeBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withStartInterchange(interchangeName, '1')
+      .withDocumentation('doc')
+      .withExtendedDocumentation('doc')
+      .withUseCaseDocumentation('doc')
+      .withAssociationElement(interchangeElementName1, '2')
+      .withDescriptorElement(interchangeElementName2, '3')
+      .withDomainEntityIdentityTemplate(interchangeIdentityTemplateName, '4')
+      .withEndInterchange()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have two element', () => {
+    expect(entityRepository.interchange.get(interchangeName).elements).toHaveLength(2);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].metaEdName).toBe(interchangeElementName1);
+    expect(entityRepository.interchange.get(interchangeName).elements[0].referencedType).toBe('association');
+    expect(entityRepository.interchange.get(interchangeName).elements[1].metaEdName).toBe(interchangeElementName2);
+    expect(entityRepository.interchange.get(interchangeName).elements[1].referencedType).toBe('descriptor');
+  });
+
+  it('should have one identity template', () => {
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates).toHaveLength(1);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
+    expect(entityRepository.interchange.get(interchangeName).identityTemplates[0].referencedType).toBe('domainEntity');
   });
 });
 

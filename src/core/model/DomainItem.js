@@ -1,10 +1,15 @@
 // @flow
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
+import type { ModelType } from './ModelType';
+import type { SourceMap } from './SourceMap';
 
-export class DomainItemSourceMap extends ModelBaseSourceMap {}
+export class DomainItemSourceMap extends ModelBaseSourceMap {
+  referencedType: ?SourceMap;
+}
 
 export class DomainItem extends ModelBase {
+  referencedType: ModelType;
   sourceMap: DomainItemSourceMap;
 }
 
@@ -15,6 +20,7 @@ export function domainItemFactory(): DomainItem {
     metaEdName: '',
     metaEdId: '',
     namespaceInfo: namespaceInfoFactory(),
+    referencedType: 'unknown',
     sourceMap: new DomainItemSourceMap(),
   });
 }

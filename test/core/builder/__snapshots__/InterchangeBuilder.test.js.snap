@@ -106,6 +106,11 @@ InterchangeItemSourceMap {
     "line": 9,
     "tokenText": "domain entity",
   },
+  "referencedType": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "domain entity",
+  },
   "type": Object {
     "column": 4,
     "line": 9,
@@ -122,6 +127,11 @@ InterchangeItemSourceMap {
     "tokenText": "[3]",
   },
   "metaEdName": Object {
+    "column": 4,
+    "line": 10,
+    "tokenText": "domain entity identity",
+  },
+  "referencedType": Object {
     "column": 4,
     "line": 10,
     "tokenText": "domain entity identity",

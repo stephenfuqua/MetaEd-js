@@ -161,7 +161,16 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
-    Object.assign(this.currentInterchangeItem.sourceMap, { type: sourceMapFrom(context), metaEdName: sourceMapFrom(context) });
+    Object.assign(this.currentInterchangeItem.sourceMap, {
+      type: sourceMapFrom(context),
+      metaEdName: sourceMapFrom(context),
+      referencedType: sourceMapFrom(context),
+    });
+
+    // mutually exclusive in language
+    if (context.ASSOCIATION_KEYWORD()) this.currentInterchangeItem.referencedType = 'association';
+    if (context.DOMAIN_ENTITY_KEYWORD()) this.currentInterchangeItem.referencedType = 'domainEntity';
+    if (context.DESCRIPTOR_KEYWORD()) this.currentInterchangeItem.referencedType = 'descriptor';
     ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).elements.push(sourceMapFrom(context));
   }
 
@@ -169,7 +178,15 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
-    Object.assign(this.currentInterchangeItem.sourceMap, { type: sourceMapFrom(context), metaEdName: sourceMapFrom(context) });
+    Object.assign(this.currentInterchangeItem.sourceMap, {
+      type: sourceMapFrom(context),
+      metaEdName: sourceMapFrom(context),
+      referencedType: sourceMapFrom(context),
+    });
+
+    // mutually exclusive in language
+    if (context.ASSOCIATION_IDENTITY()) this.currentInterchangeItem.referencedType = 'association';
+    if (context.DOMAIN_ENTITY_IDENTITY()) this.currentInterchangeItem.referencedType = 'domainEntity';
     ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).identityTemplates.push(sourceMapFrom(context));
   }
 
