@@ -44,7 +44,7 @@ describe('when building association property', () => {
 
   it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toEqual(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
   });
 });
@@ -186,48 +186,95 @@ describe('when building choice property', () => {
 });
 
 // CommonProperty
-describe('when building a common property with extension override', () => {
+describe('when building common property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
-  const propertyName: string = 'PropertyName';
   const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'common';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withCommonExtensionOverrideProperty(propertyName, entityDocumentation, true, false)
+      .withDocumentation(entityDocumentation)
+      .withCommonProperty(propertyName, propertyDocumentation)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have common property', () => {
+  it('should have common property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('common');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have extension override flag set', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isExtensionOverride).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+describe('when building common property with extension override', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'common';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withCommonExtensionOverrideProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have common property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+
+  it('should have isExtensionOverride', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isExtensionOverride).toBeTruthy();
+  });
+
+  it('should have source map for isExtensionOverride with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isExtensionOverride).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isExtensionOverride).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isExtensionOverride).toMatchSnapshot();
   });
 });
 
@@ -1434,6 +1481,7 @@ describe('when building school year enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
+      
   });
 
   it('should have school year enumeration property in entity properties', () => {

@@ -40,6 +40,30 @@ Object {
 }
 `;
 
+exports[`when building common property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "common",
+}
+`;
+
+exports[`when building common property with extension override should have source map for isExtensionOverride with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "common extension",
+}
+`;
+
+exports[`when building common property with extension override should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "common extension",
+}
+`;
+
 exports[`when building currency property should have source map for type with line, column, text 1`] = `
 Object {
   "column": 4,
