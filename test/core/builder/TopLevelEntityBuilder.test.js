@@ -370,15 +370,15 @@ describe('when building decimal property', () => {
 
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'decimal';
   const propertyName: string = 'PropertyName';
-  const propertyDocumentation: string = 'Documentation';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   const totalDigits: string = '6';
   const decimalPlaces: string = '2';
-  const maxValue: string = '1000';
   const minValue: string = '100';
+  const maxValue: string = '1000';
 
-  const metaEdId: string = '1';
 
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
@@ -387,46 +387,63 @@ describe('when building decimal property', () => {
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
       .withDocumentation(entityDocumentation)
-      .withDecimalProperty(propertyName, propertyDocumentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withDecimalProperty(propertyName, propertyDocumentation, true, false, totalDigits, decimalPlaces, minValue, maxValue)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have decimal property', () => {
+  it('should have date property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('decimal');
   });
 
-  it('should have decimal property in property index', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get('decimal')[0]);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
-  });
-
-  it('should have correct metaEdId', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct precision scale and value constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.totalDigits).toBe(totalDigits);
-    expect(property.decimalPlaces).toBe(decimalPlaces);
-    expect(property.maxValue).toBe(maxValue);
-    expect(property.minValue).toBe(minValue);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+  });
+
+  it('should have totalDigits', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].totalDigits).toBe(totalDigits);
+  });
+
+  it('should have source map for totalDigits', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.totalDigits).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.totalDigits).not.toBe(NoSourceMap);
+  });
+
+  it('should have decimalPlaces', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].decimalPlaces).toBe(decimalPlaces);
+  });
+
+  it('should have source map for decimalPlaces', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.decimalPlaces).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.decimalPlaces).not.toBe(NoSourceMap);
+  });
+
+  it('should have minValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].minValue).toBe(minValue);
+  });
+
+  it('should have source map for minValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minValue).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minValue).not.toBe(NoSourceMap);
+  });
+
+  it('should have maxValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].maxValue).toBe(maxValue);
+  });
+
+  it('should have source map for maxValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxValue).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxValue).not.toBe(NoSourceMap);
+  });
+
+  it('should have source map with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toMatchSnapshot();
   });
 });
 

@@ -80,6 +80,61 @@ Object {
 }
 `;
 
+exports[`when building decimal property should have source map with line, column, text 1`] = `
+DecimalPropertySourceMap {
+  "decimalPlaces": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "decimal places",
+  },
+  "documentation": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "documentation",
+  },
+  "isRequired": Object {
+    "column": 6,
+    "line": 8,
+    "tokenText": "is required",
+  },
+  "maxValue": Object {
+    "column": 6,
+    "line": 12,
+    "tokenText": "max value",
+  },
+  "metaEdName": Object {
+    "column": 12,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
+  "minValue": Object {
+    "column": 6,
+    "line": 11,
+    "tokenText": "min value",
+  },
+  "parentEntity": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain Entity",
+  },
+  "parentEntityName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "totalDigits": Object {
+    "column": 6,
+    "line": 9,
+    "tokenText": "total digits",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "decimal",
+  },
+}
+`;
+
 exports[`when building descriptor property should have source map for type with line, column, text 1`] = `
 Object {
   "column": 4,

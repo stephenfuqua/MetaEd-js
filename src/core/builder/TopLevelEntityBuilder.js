@@ -14,7 +14,7 @@ import { extractDocumentation, isErrorText, squareBracketRemoval } from './Build
 import { booleanPropertyFactory } from '../model/property/BooleanProperty';
 import { currencyPropertyFactory } from '../model/property/CurrencyProperty';
 import { datePropertyFactory } from '../model/property/DateProperty';
-import { DecimalProperty, decimalPropertyFactory } from '../model/property/DecimalProperty';
+import { DecimalProperty, decimalPropertyFactory, DecimalPropertySourceMap } from '../model/property/DecimalProperty';
 import { descriptorPropertyFactory } from '../model/property/DescriptorProperty';
 import { durationPropertyFactory } from '../model/property/DurationProperty';
 import { enumerationPropertyFactory } from '../model/property/EnumerationProperty';
@@ -531,6 +531,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).decimalPlaces = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
   }
 
@@ -538,6 +539,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).totalDigits = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
   }
 
@@ -559,6 +561,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).minValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
   }
 
@@ -566,6 +569,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).maxValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
   }
 
