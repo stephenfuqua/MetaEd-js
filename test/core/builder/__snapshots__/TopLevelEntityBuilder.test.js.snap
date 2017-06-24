@@ -1,6 +1,102 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building association property with context should have source map for contextName with line, column, text 1`] = `
+exports[`when building association property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "association",
+}
+`;
+
+exports[`when building association property with weak reference should have source map for isWeak with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 9,
+  "tokenText": "is weak",
+}
+`;
+
+exports[`when building association property with weak reference should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "association",
+}
+`;
+
+exports[`when building boolean property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "bool",
+}
+`;
+
+exports[`when building choice property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "choice",
+}
+`;
+
+exports[`when building currency property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "currency",
+}
+`;
+
+exports[`when building date property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "date",
+}
+`;
+
+exports[`when building descriptor property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "descriptor",
+}
+`;
+
+exports[`when building domain entity property with weak reference should have source map for isWeak with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is weak",
+}
+`;
+
+exports[`when building domain entity property with weak reference should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when building domain entity property with weak reference should have source map for type with line, column, text 2`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when building duration property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "duration",
+}
+`;
+
+exports[`when building entity property with context should have source map for contextName with line, column, text 1`] = `
 Object {
   "column": 17,
   "line": 9,
@@ -8,7 +104,7 @@ Object {
 }
 `;
 
-exports[`when building association property with inherited documentation should have source map for documentationInherited with line, column, text 1`] = `
+exports[`when building entity property with inherited documentation should have source map for documentationInherited with line, column, text 1`] = `
 Object {
   "column": 6,
   "line": 6,
@@ -16,7 +112,91 @@ Object {
 }
 `;
 
-exports[`when building association property with merged properties should have source map for mergedProperties with line, column, text 1`] = `
+exports[`when building entity property with shortened context should have source map for shortenTo with line, column, text 1`] = `
+Object {
+  "column": 40,
+  "line": 9,
+  "tokenText": "ShortenToName",
+}
+`;
+
+exports[`when building enumeration property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "enumeration",
+}
+`;
+
+exports[`when building identity entity property should have entity source map for identity properties with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "is part of identity",
+  },
+]
+`;
+
+exports[`when building identity entity property should have source map for isPartOfIdentity with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when building inline common property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "inline common",
+}
+`;
+
+exports[`when building optional collection entity property should have source map for isOptionalCollection with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is optional collection",
+}
+`;
+
+exports[`when building optional entity property should have source map for isOptional with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is optional",
+}
+`;
+
+exports[`when building percent property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "percent",
+}
+`;
+
+exports[`when building queryable entity property  should have entity source map for queryable field with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "is queryable only",
+  },
+]
+`;
+
+exports[`when building queryable entity property  should have source map for isQueryableOnly with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "is queryable only",
+}
+`;
+
+exports[`when building referential property with merged properties should have source map for mergedProperties with line, column, text 1`] = `
 Array [
   MergedProperty {
     "mergeProperty": null,
@@ -35,75 +215,7 @@ Array [
 ]
 `;
 
-exports[`when building association property with shortened context should have source map for shortenTo with line, column, text 1`] = `
-Object {
-  "column": 40,
-  "line": 9,
-  "tokenText": "ShortenToName",
-}
-`;
-
-exports[`when building association property with weak reference should have source map for isWeak with line, column, text 1`] = `
-Object {
-  "column": 4,
-  "line": 8,
-  "tokenText": "is weak",
-}
-`;
-
-exports[`when building identity association property  should have entity level source map for identity properties with line, column, text 1`] = `
-Array [
-  Object {
-    "column": 4,
-    "line": 8,
-    "tokenText": "is part of identity",
-  },
-]
-`;
-
-exports[`when building identity association property  should have source map for isPartOfIdentity with line, column, text 1`] = `
-Object {
-  "column": 4,
-  "line": 8,
-  "tokenText": "is part of identity",
-}
-`;
-
-exports[`when building optional association property should have source map for isOptional with line, column, text 1`] = `
-Object {
-  "column": 6,
-  "line": 8,
-  "tokenText": "is optional",
-}
-`;
-
-exports[`when building optional collection association property should have source map for isOptionalCollection with line, column, text 1`] = `
-Object {
-  "column": 6,
-  "line": 8,
-  "tokenText": "is optional collection",
-}
-`;
-
-exports[`when building queryable association property  should have entity level source map for queryable field with line, column, text 1`] = `
-Array [
-  Object {
-    "column": 4,
-    "line": 8,
-    "tokenText": "is queryable only",
-  },
-]
-`;
-
-exports[`when building queryable association property  should have source map for isQueryableOnly with line, column, text 1`] = `
-Object {
-  "column": 4,
-  "line": 8,
-  "tokenText": "is queryable only",
-}
-`;
-
-exports[`when building renamed identity association property should have source map for baseKeyName with line, column, text 1`] = `
+exports[`when building renamed identity entity property should have source map for baseKeyName with line, column, text 1`] = `
 Object {
   "column": 30,
   "line": 11,
@@ -111,7 +223,7 @@ Object {
 }
 `;
 
-exports[`when building renamed identity association property should have source map for isIdentityRename with line, column, text 1`] = `
+exports[`when building renamed identity entity property should have source map for isIdentityRename with line, column, text 1`] = `
 Object {
   "column": 4,
   "line": 11,
@@ -119,7 +231,15 @@ Object {
 }
 `;
 
-exports[`when building required association property should have source map with line, column, text for each property 1`] = `
+exports[`when building required collection entity property should have source map for isRequiredCollection with line, column, text 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is required collection",
+}
+`;
+
+exports[`when building required entity properties should have source map with line, column, text for each property 1`] = `
 AssociationPropertySourceMap {
   "documentation": Object {
     "column": 6,
@@ -160,10 +280,50 @@ AssociationPropertySourceMap {
 }
 `;
 
-exports[`when building required collection association property should have source map for isRequiredCollection with line, column, text 1`] = `
+exports[`when building school year enumeration property should have source map for type with line, column, text 1`] = `
 Object {
-  "column": 6,
-  "line": 8,
-  "tokenText": "is required collection",
+  "column": 4,
+  "line": 5,
+  "tokenText": "enumeration",
+}
+`;
+
+exports[`when building shared decimal property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "shared decimal",
+}
+`;
+
+exports[`when building shared integer property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "shared integer",
+}
+`;
+
+exports[`when building shared string property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "shared string",
+}
+`;
+
+exports[`when building time property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "time",
+}
+`;
+
+exports[`when building year property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "year",
 }
 `;

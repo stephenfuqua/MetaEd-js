@@ -2,257 +2,196 @@
 import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { NoSourceMap } from '../../../src/core/model/SourceMap';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { PropertyType } from '../../../src/core/model/property/PropertyType';
 import type { EntityProperty } from '../../../src/core/model/property/EntityProperty';
 
-describe('when building a decimal property', () => {
+// AssociationProperty
+describe('when building association property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'association';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
-
-  const totalDigits: string = '6';
-  const decimalPlaces: string = '2';
-  const maxValue: string = '1000';
-  const minValue: string = '100';
-
-  const metaEdId: string = '123';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withDecimalProperty(propertyName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withAssociationProperty(propertyName, propertyDocumentation)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have decimal property', () => {
+  it('should have association property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('decimal');
   });
 
-  it('should have decimal property in property index', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get('decimal')[0]);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
-  });
-
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct precision scale and value constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.totalDigits).toBe(totalDigits);
-    expect(property.decimalPlaces).toBe(decimalPlaces);
-    expect(property.maxValue).toBe(maxValue);
-    expect(property.minValue).toBe(minValue);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toEqual(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
   });
 });
 
-describe('when building a string property', () => {
+describe('when building association property with weak reference', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'association';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
-
-  const maxLength: string = '1000';
-  const minLength: string = '100';
-
-  const metaEdId: string = '123';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withStringProperty(propertyName, documentation, true, false, maxLength, minLength, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withAssociationProperty(propertyName, propertyDocumentation)
+      .withIsWeakReference(true)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have string property', () => {
+  it('should have association property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('string');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct length constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.maxLength).toBe(maxLength);
-    expect(property.minLength).toBe(minLength);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+
+  it('should have isWeak', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+  });
+
+  it('should have source map for isWeak with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toMatchSnapshot();
   });
 });
 
-describe('when building a integer property', () => {
+// BooleanProperty
+describe('when building boolean property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'boolean';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
-
-  const maxValue: string = '1000';
-  const minValue: string = '100';
-
-  const metaEdId: string = '123';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withIntegerProperty(propertyName, documentation, true, false, maxValue, minValue, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withBooleanProperty(propertyName, propertyDocumentation)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have integer property', () => {
+  it('should have boolean property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('integer');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct value constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.maxValue).toBe(maxValue);
-    expect(property.minValue).toBe(minValue);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
   });
 });
 
-describe('when building a short property', () => {
+// ChoiceProperty
+describe('when building choice property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'choice';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
-
-  const maxValue: string = '1000';
-  const minValue: string = '100';
-
-  const metaEdId: string = '123';
+  const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
-    MetaEdTextBuilder.build()
+    textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withShortProperty(propertyName, documentation, true, false, maxValue, minValue, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withChoiceProperty(propertyName, propertyDocumentation)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have short property', () => {
+  it('should have choice property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('short');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct value constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.maxValue).toBe(maxValue);
-    expect(property.minValue).toBe(minValue);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
   });
 });
 
+// CommonProperty
 describe('when building a common property with extension override', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
 
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, [], new Map());
@@ -261,7 +200,7 @@ describe('when building a common property with extension override', () => {
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withCommonExtensionOverrideProperty(propertyName, documentation, true, false)
+      .withCommonExtensionOverrideProperty(propertyName, entityDocumentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
@@ -274,7 +213,7 @@ describe('when building a common property with extension override', () => {
   });
 
   it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
   });
 
   it('should have extension override flag set', () => {
@@ -292,12 +231,303 @@ describe('when building a common property with extension override', () => {
   });
 });
 
+// CurrencyProperty
+describe('when building currency property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'currency';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withCurrencyProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have currency property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// DateProperty
+describe('when building date property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'date';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDateProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have date property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// DecimalProperty
+describe('when building decimal property', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'Documentation';
+
+  const totalDigits: string = '6';
+  const decimalPlaces: string = '2';
+  const maxValue: string = '1000';
+  const minValue: string = '100';
+
+  const metaEdId: string = '1';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDecimalProperty(propertyName, propertyDocumentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have decimal property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('decimal');
+  });
+
+  it('should have decimal property in property index', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get('decimal')[0]);
+  });
+
+  it('should have correct documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  });
+
+  it('should have correct metaEdId', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have correct precision scale and value constraints', () => {
+    const property = entityRepository.domainEntity.get(entityName).properties[0];
+
+    expect(property.totalDigits).toBe(totalDigits);
+    expect(property.decimalPlaces).toBe(decimalPlaces);
+    expect(property.maxValue).toBe(maxValue);
+    expect(property.minValue).toBe(minValue);
+    expect(property.hasRestriction).toBe(true);
+  });
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
+});
+
+// DescriptorProperty
+describe('when building descriptor property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'descriptor';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDescriptorProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have descriptor property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// DomainEntityProperty
+describe('when building domain entity property with weak reference', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'domainEntity';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityElement(propertyName)
+      .withDocumentation(propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have domain entity property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+describe('when building domain entity property with weak reference', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'domainEntity';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityElement(propertyName)
+      .withDocumentation(propertyDocumentation)
+      .withIsWeakReference(true)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have domain entity property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+
+  it('should have isWeak', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+  });
+
+  it('should have source map for isWeak with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toMatchSnapshot();
+  });
+});
+
+
 describe('when building a domain entity property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
 
   const metaEdId: string = '123';
 
@@ -308,7 +538,7 @@ describe('when building a domain entity property', () => {
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, documentation, true, false, false, null, metaEdId)
+      .withDomainEntityProperty(propertyName, entityDocumentation, true, false, false, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
@@ -321,7 +551,7 @@ describe('when building a domain entity property', () => {
   });
 
   it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(documentation);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
   });
 
   it('should have correct MetaEd ID', () => {
@@ -344,7 +574,7 @@ describe('when building a domain entity property with merge reference', () => {
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
 
   const mergePropertyPath: string = 'EntityA.PropertyB';
   const targetPropertyPath: string = 'EntityC.PropertyD';
@@ -356,7 +586,7 @@ describe('when building a domain entity property with merge reference', () => {
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, documentation, true, false)
+      .withDomainEntityProperty(propertyName, entityDocumentation, true, false)
       .withMergePartOfReference(mergePropertyPath, targetPropertyPath)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -388,7 +618,7 @@ describe('when building a domain entity property with multiple merge references'
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
 
   const mergePropertyPath1: string = 'PropertyA';
   const targetPropertyPath1: string = 'PropertyB';
@@ -402,7 +632,7 @@ describe('when building a domain entity property with multiple merge references'
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, documentation, true, false)
+      .withDomainEntityProperty(propertyName, entityDocumentation, true, false)
       .withMergePartOfReference(mergePropertyPath1, targetPropertyPath1)
       .withMergePartOfReference(mergePropertyPath2, targetPropertyPath2)
       .withEndDomainEntity()
@@ -433,34 +663,82 @@ describe('when building a domain entity property with multiple merge references'
   });
 });
 
-describe('when building required association property', () => {
+// DurationProperty
+describe('when building duration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'duration';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDurationProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have duration property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// EntityProperty
+describe('when building required entity properties', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'entityDocumentation';
   const propertyType: string = 'association';
-  const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const metaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
 
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, true, false, false, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have association property', () => {
+  it('should have association property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have association property in property index', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get(propertyType)[0]);
   });
 
   it('should have type', () => {
@@ -533,14 +811,14 @@ describe('when building required association property', () => {
   });
 });
 
-describe('when building association property with inherited documentation', () => {
+describe('when building entity property with inherited documentation', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const inheritedDocumentation: string = 'inherited';
 
@@ -550,7 +828,7 @@ describe('when building association property with inherited documentation', () =
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, inheritedDocumentation)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -565,23 +843,21 @@ describe('when building association property with inherited documentation', () =
     expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe('');
   });
 
-  it('should have source map for documentationInherited', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentationInherited).toBeDefined();
-  });
-
   it('should have source map for documentationInherited with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentationInherited).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentationInherited).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentationInherited).toMatchSnapshot();
   });
 });
 
-describe('when building queryable association property ', () => {
+describe('when building identity entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const propertyName: string = 'PropertyName';
 
@@ -591,54 +867,7 @@ describe('when building queryable association property ', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
-      .withAssociationElement(propertyName)
-      .withDocumentation(propertyDocumentation)
-      .withQueryableOnlyPropertyIndicator()
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(builder);
-  });
-
-  it('should have queryable field', () => {
-    expect(entityRepository.domainEntity.get(entityName).queryableFields).toHaveLength(1);
-  });
-
-  it('should have entity level source map for queryable field', () => {
-    expect(entityRepository.domainEntity.get(entityName).sourceMap.queryableFields).toHaveLength(1);
-  });
-
-  it('should have entity level source map for queryable field with line, column, text', () => {
-    expect(entityRepository.domainEntity.get(entityName).sourceMap.queryableFields).toMatchSnapshot();
-  });
-
-  it('should have source map for isQueryableOnly', () => {
-    expect(entityRepository.domainEntity.get(entityName).queryableFields[0].sourceMap.isQueryableOnly).toBeDefined();
-  });
-
-  it('should have source map for isQueryableOnly with line, column, text', () => {
-    expect(entityRepository.domainEntity.get(entityName).queryableFields[0].sourceMap.isQueryableOnly).toMatchSnapshot();
-  });
-});
-
-describe('when building identity association property ', () => {
-  const validationFailures: Array<ValidationFailure> = [];
-  const entityRepository: EntityRepository = entityRepositoryFactory();
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
-
-  const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
-  const propertyDocumentation: string = 'PropertyDocumentation';
-  const propertyName: string = 'PropertyName';
-
-  beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
-
-    textBuilder
-      .withBeginNamespace(namespace)
-      .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationElement(propertyName)
       .withDocumentation(propertyDocumentation)
       .withIdentityIndicator()
@@ -647,35 +876,31 @@ describe('when building identity association property ', () => {
       .sendToListener(builder);
   });
 
-  it('should have identity property', () => {
+  it('should have entity identity property', () => {
     expect(entityRepository.domainEntity.get(entityName).identityProperties).toHaveLength(1);
   });
 
-  it('should have entity level source map for identity properties', () => {
+  it('should have entity source map for identity properties with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).sourceMap.identityProperties).toHaveLength(1);
-  });
-
-  it('should have entity level source map for identity properties with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.identityProperties).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).sourceMap.identityProperties).toMatchSnapshot();
   });
 
-  it('should have source map for isPartOfIdentity', () => {
-    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isPartOfIdentity).toBeDefined();
-  });
-
   it('should have source map for isPartOfIdentity with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isPartOfIdentity).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isPartOfIdentity).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isPartOfIdentity).toMatchSnapshot();
   });
 });
 
-describe('when building optional association property', () => {
+describe('when building optional entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -685,7 +910,7 @@ describe('when building optional association property', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, false, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -696,23 +921,21 @@ describe('when building optional association property', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].isOptional).toBeTruthy();
   });
 
-  it('should have source map for isOptional', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptional).toBeDefined();
-  });
-
   it('should have source map for isOptional with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptional).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptional).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptional).toMatchSnapshot();
   });
 });
 
-describe('when building required collection association property', () => {
+describe('when building required collection entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -722,7 +945,7 @@ describe('when building required collection association property', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, true, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -733,23 +956,21 @@ describe('when building required collection association property', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBeTruthy();
   });
 
-  it('should have source map for isRequiredCollection', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequiredCollection).toBeDefined();
-  });
-
   it('should have source map for isRequiredCollection with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequiredCollection).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequiredCollection).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequiredCollection).toMatchSnapshot();
   });
 });
 
-describe('when building optional collection association property', () => {
+describe('when building optional collection entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
@@ -759,7 +980,7 @@ describe('when building optional collection association property', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -770,23 +991,21 @@ describe('when building optional collection association property', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].isOptionalCollection).toBeTruthy();
   });
 
-  it('should have source map for isOptionalCollection', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptionalCollection).toBeDefined();
-  });
-
   it('should have source map for isOptionalCollection with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptionalCollection).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptionalCollection).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isOptionalCollection).toMatchSnapshot();
   });
 });
 
-describe('when building association property with context', () => {
+describe('when building entity property with context', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const contextName: string = 'ContextName';
@@ -797,7 +1016,7 @@ describe('when building association property with context', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, false, false)
       .withContext(contextName)
       .withEndDomainEntity()
@@ -809,24 +1028,21 @@ describe('when building association property with context', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].withContext).toBe(contextName);
   });
 
-  it('should have source map for contextName', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext.tokenText).toBe(contextName);
-  });
-
   it('should have source map for contextName with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.withContext).toMatchSnapshot();
   });
 });
 
-describe('when building association property with shortened context', () => {
+describe('when building entity property with shortened context', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const contextName: string = 'ContextName';
@@ -838,7 +1054,7 @@ describe('when building association property with shortened context', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationProperty(propertyName, propertyDocumentation, false, false, false)
       .withContext(contextName, shortenToName)
       .withEndDomainEntity()
@@ -850,24 +1066,21 @@ describe('when building association property with shortened context', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].shortenTo).toBe(shortenToName);
   });
 
-  it('should have source map for shortenTo', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo.tokenText).toBe(shortenToName);
-  });
-
   it('should have source map for shortenTo with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.shortenTo).toMatchSnapshot();
   });
 });
 
-describe('when building renamed identity association property', () => {
+describe('when building renamed identity entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const baseName: string = 'BaseName';
   const baseDocumentation: string = 'BaseDocumentation';
   const propertyName: string = 'PropertyName';
@@ -879,7 +1092,7 @@ describe('when building renamed identity association property', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationElement(baseName)
       .withDocumentation(baseDocumentation)
       .withAssociationElement(propertyName)
@@ -890,7 +1103,7 @@ describe('when building renamed identity association property', () => {
       .sendToListener(builder);
   });
 
-  it('should have identity property', () => {
+  it('should have entity identity property', () => {
     expect(entityRepository.domainEntity.get(entityName).identityProperties).toHaveLength(1);
   });
 
@@ -902,34 +1115,29 @@ describe('when building renamed identity association property', () => {
     expect(entityRepository.domainEntity.get(entityName).identityProperties[0].baseKeyName).toBe(baseName);
   });
 
-  it('should have source map for isIdentityRename', () => {
-    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isIdentityRename).toBeDefined();
-  });
-
   it('should have source map for isIdentityRename with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isIdentityRename).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isIdentityRename).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.isIdentityRename).toMatchSnapshot();
   });
 
-  it('should have source map for baseKeyName', () => {
-    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.baseKeyName).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.baseKeyName.tokenText).toBe(baseName);
-  });
-
   it('should have source map for baseKeyName with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.baseKeyName).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.baseKeyName).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).identityProperties[0].sourceMap.baseKeyName).toMatchSnapshot();
   });
 });
 
-describe('when building association property with weak reference', () => {
+describe('when building queryable entity property ', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
-  const propertyName: string = 'PropertyName';
+  const entityDocumentation: string = 'Documentation';
   const propertyDocumentation: string = 'PropertyDocumentation';
+  const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
@@ -937,36 +1145,232 @@ describe('when building association property with weak reference', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationElement(propertyName)
       .withDocumentation(propertyDocumentation)
-      .withIsWeakReference(true)
+      .withQueryableOnlyPropertyIndicator()
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have isWeak', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+  it('should have entity queryable field', () => {
+    expect(entityRepository.domainEntity.get(entityName).queryableFields).toHaveLength(1);
   });
 
-  it('should have source map for isWeak', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
+  it('should have entity source map for queryable field with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.queryableFields).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.queryableFields).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).sourceMap.queryableFields).toMatchSnapshot();
   });
 
-  it('should have source map for isWeak with line, column, text', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toMatchSnapshot();
+  it('should have source map for isQueryableOnly with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).queryableFields[0].sourceMap.isQueryableOnly).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).queryableFields[0].sourceMap.isQueryableOnly).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).queryableFields[0].sourceMap.isQueryableOnly).toMatchSnapshot();
   });
 });
 
-describe('when building association property with merged properties', () => {
+// EnumerationProperty
+// TODO: special case schoolYearEnumeration
+describe('when building enumeration property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'enumeration';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withEnumerationProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have enumeration property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// InlineCommonProperty
+describe('when building inline common property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'inlineCommon';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withInlineCommonProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have inline common property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// IntegerProperty
+describe('when building a integer property', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const namespace: string = 'namespace';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const entityDocumentation: string = 'Documentation';
+
+  const maxValue: string = '1000';
+  const minValue: string = '100';
+
+  const metaEdId: string = '123';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withIntegerProperty(propertyName, entityDocumentation, true, false, maxValue, minValue, null, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have integer property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('integer');
+  });
+
+  it('should have correct documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  });
+
+  it('should have correct MetaEd ID', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have correct value constraints', () => {
+    const property = entityRepository.domainEntity.get(entityName).properties[0];
+
+    expect(property.maxValue).toBe(maxValue);
+    expect(property.minValue).toBe(minValue);
+    expect(property.hasRestriction).toBe(true);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
+});
+
+// MergedProperty
+
+// PercentProperty
+describe('when building percent property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'percent';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withPercentProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have percent property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// PropertyIndex?
+
+// ReferentialProperty
+// TODO: referencedEntity
+describe('when building referential property with merged properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
-  const documentation: string = 'Documentation';
+  const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const mergeProperty0: string = 'MergeProperty0';
@@ -978,7 +1382,7 @@ describe('when building association property with merged properties', () => {
     textBuilder
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation(documentation)
+      .withDocumentation(entityDocumentation)
       .withAssociationElement(propertyName)
       .withDocumentation(propertyDocumentation)
       .withMergePartOfReference(mergeProperty0, mergeProperty1)
@@ -998,11 +1402,379 @@ describe('when building association property with merged properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties[0].targetPropertyPath[0]).toBe(mergeProperty1);
   });
 
-  it('should have source map for mergedProperties', () => {
+  it('should have source map for mergedProperties with line, column, text', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).toMatchSnapshot();
+  });
+});
+
+// SchoolYearEnumerationProperty
+describe('when building school year enumeration property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'SchoolYear';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'enumeration';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withEnumerationProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
   });
 
-  it('should have source map for mergedProperties with line, column, text', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].mergedProperties).toMatchSnapshot();
+  it('should have school year enumeration property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// SharedDecimalProperty
+describe('when building shared decimal property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'sharedDecimal';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withSharedDecimalProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have shared decimal property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// SharedIntegerProperty
+describe('when building shared integer property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'sharedInteger';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withSharedIntegerProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have shared integer property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// SharedStringProperty
+describe('when building shared string property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'sharedString';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withSharedStringProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have shared string property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// ShortProperty
+describe('when building a short property', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const namespace: string = 'namespace';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const entityDocumentation: string = 'Documentation';
+
+  const maxValue: string = '1000';
+  const minValue: string = '100';
+
+  const metaEdId: string = '123';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withShortProperty(propertyName, entityDocumentation, true, false, maxValue, minValue, null, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have short property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('short');
+  });
+
+  it('should have correct documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  });
+
+  it('should have correct MetaEd ID', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have correct value constraints', () => {
+    const property = entityRepository.domainEntity.get(entityName).properties[0];
+
+    expect(property.maxValue).toBe(maxValue);
+    expect(property.minValue).toBe(minValue);
+    expect(property.hasRestriction).toBe(true);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
+});
+
+// StringProperty
+describe('when building a string property', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const namespace: string = 'namespace';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const entityDocumentation: string = 'Documentation';
+
+  const maxLength: string = '1000';
+  const minLength: string = '100';
+
+  const metaEdId: string = '123';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withStringProperty(propertyName, entityDocumentation, true, false, maxLength, minLength, null, metaEdId)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have string property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('string');
+  });
+
+  it('should have correct documentation', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  });
+
+  it('should have correct MetaEd ID', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
+  });
+
+  it('should have correct length constraints', () => {
+    const property = entityRepository.domainEntity.get(entityName).properties[0];
+
+    expect(property.maxLength).toBe(maxLength);
+    expect(property.minLength).toBe(minLength);
+    expect(property.hasRestriction).toBe(true);
+  });
+
+  // TODO: full test of sourcemap elements, plus snapshot
+
+  it('should have a source map', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
+  });
+
+  it('should have type property', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+  });
+});
+
+// TimeProperty
+describe('when building time property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'time';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withTimeProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have time property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
+// YearProperty
+describe('when building year property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
+  const namespace: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'year';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+
+    textBuilder
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withYearProperty(propertyName, propertyDocumentation)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should have year property in entity properties', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toMatchSnapshot();
   });
 });
