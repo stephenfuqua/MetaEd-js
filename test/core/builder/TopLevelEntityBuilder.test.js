@@ -1219,7 +1219,6 @@ describe('when building queryable entity property ', () => {
 });
 
 // EnumerationProperty
-// TODO: special case schoolYearEnumeration
 describe('when building enumeration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
@@ -1464,10 +1463,10 @@ describe('when building school year enumeration property', () => {
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
 
-  const entityName: string = 'SchoolYear';
+  const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
-  const propertyType: string = 'enumeration';
-  const propertyName: string = 'PropertyName';
+  const propertyType: string = 'schoolYearEnumeration';
+  const propertyName: string = 'SchoolYear';
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
@@ -1481,7 +1480,6 @@ describe('when building school year enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
-      
   });
 
   it('should have school year enumeration property in entity properties', () => {
