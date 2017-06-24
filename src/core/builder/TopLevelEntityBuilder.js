@@ -22,7 +22,7 @@ import { CommonProperty, commonPropertyFactory } from '../model/property/CommonP
 import type { CommonPropertySourceMap } from '../model/property/CommonProperty';
 import { inlineCommonPropertyFactory } from '../model/property/InlineCommonProperty';
 import { choicePropertyFactory } from '../model/property/ChoiceProperty';
-import { IntegerProperty, integerPropertyFactory } from '../model/property/IntegerProperty';
+import { IntegerProperty, integerPropertyFactory, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
 import { percentPropertyFactory } from '../model/property/PercentProperty';
 import { AssociationProperty, associationPropertyFactory, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
 import { DomainEntityProperty, domainEntityPropertyFactory, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
@@ -33,7 +33,7 @@ import { StringProperty, stringPropertyFactory } from '../model/property/StringP
 import { timePropertyFactory } from '../model/property/TimeProperty';
 import { yearPropertyFactory } from '../model/property/YearProperty';
 import { ReferentialProperty, ReferentialPropertySourceMap } from '../model/property/ReferentialProperty';
-import { ShortProperty, shortPropertyFactory } from '../model/property/ShortProperty';
+import { ShortProperty, shortPropertyFactory, ShortPropertySourceMap } from '../model/property/ShortProperty';
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
@@ -549,14 +549,18 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).minValue = context.signed_int().getText();
+    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).minValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).maxValue = context.signed_int().getText();
+    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).maxValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
