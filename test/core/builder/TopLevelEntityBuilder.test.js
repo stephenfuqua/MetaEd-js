@@ -592,6 +592,7 @@ describe('when building domain entity property with weak reference', () => {
   });
 });
 
+// TODO: Add source map tests
 describe('when building a domain entity property with merge reference', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
@@ -636,6 +637,7 @@ describe('when building a domain entity property with merge reference', () => {
   });
 });
 
+// TODO: Add source map tests
 describe('when building a domain entity property with multiple merge references', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const namespace: string = 'namespace';
@@ -1322,7 +1324,7 @@ describe('when building integer property', () => {
   });
 
   it('should have hasRestriction', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBe(true);
   });
 
   it('should have source map for hasRestriction', () => {
@@ -1616,61 +1618,74 @@ describe('when building shared string property', () => {
 });
 
 // ShortProperty
-describe('when building a short property', () => {
+describe('when building short property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
-  const propertyName: string = 'PropertyName';
   const entityDocumentation: string = 'Documentation';
-
-  const maxValue: string = '1000';
+  const propertyType: string = 'short';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
   const minValue: string = '100';
-
-  const metaEdId: string = '123';
+  const maxValue: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withShortProperty(propertyName, entityDocumentation, true, false, maxValue, minValue, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withShortProperty(propertyName, propertyDocumentation, true, false, maxValue, minValue)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have short property', () => {
+  it('should have short property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('short');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct value constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.maxValue).toBe(maxValue);
-    expect(property.minValue).toBe(minValue);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+  });
+
+  it('should have hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBe(true);
+  });
+
+  it('should have source map for hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).not.toBe(NoSourceMap);
+  });
+
+  it('should have minValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].minValue).toBe(minValue);
+  });
+
+  it('should have source map for minValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minValue).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minValue).not.toBe(NoSourceMap);
+  });
+
+  it('should have maxValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].maxValue).toBe(maxValue);
+  });
+
+  it('should have source map for maxValue', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxValue).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxValue).not.toBe(NoSourceMap);
+  });
+
+  it('should have source map with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toMatchSnapshot();
   });
 });
 
