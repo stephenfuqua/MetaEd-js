@@ -1,5 +1,6 @@
 // @flow
 import mockfs from 'mock-fs';
+import normalize from 'normalize-path';
 import MetaEdTextBuilder from '../../../test/core/MetaEdTextBuilder';
 import { startingFromFileLoad, startingFromFileLoadP } from '../../../src/core/task/Pipeline';
 import type { State } from '../../../src/core/State';
@@ -50,7 +51,7 @@ describe('When a single file', () => {
   });
 });
 
-describe('When a single file with a duplicate entity name', () => {
+describe('When files have duplicate entity names', () => {
   const stateFactory: () => State = () =>
     Object.assign(defaultStateFactory(),
       {
@@ -63,23 +64,26 @@ describe('When a single file with a duplicate entity name', () => {
       });
 
   beforeAll(() => {
-    const metaEdText = MetaEdTextBuilder.build()
+    const metaEdText1 = MetaEdTextBuilder.build()
     .withStartDomainEntity('DomainEntity1')
     .withMetaEdId('123')
     .withDocumentation('doc')
-    .withDomainEntityIdentity('DomainEntity1', 'doc', null, '456')
+    .withDomainEntityIdentity('DomainEntityIdentity', 'doc', null, '456')
     .withEndDomainEntity()
+    .toString();
 
+    const metaEdText2 = MetaEdTextBuilder.build()
     .withStartDomainEntity('DomainEntity1')
-    .withMetaEdId('123')
+    .withMetaEdId('789')
     .withDocumentation('doc')
-    .withDomainEntityIdentity('DomainEntity1', 'doc', null, '456')
+    .withDomainEntityIdentity('DomainEntityIdentity', 'doc', null, '012')
     .withEndDomainEntity()
     .toString();
 
     mockfs({
       '/fake/dir': {
-        'DomainEntity1.metaed': metaEdText,
+        'DomainEntity1.metaed': metaEdText1,
+        'DomainEntity1Also.metaed': metaEdText2,
       },
     });
   });
@@ -90,15 +94,31 @@ describe('When a single file with a duplicate entity name', () => {
 
   it('Should return an error', () => {
     const endState = startingFromFileLoad(stateFactory());
-    expect(endState.validationFailure).toHaveLength(3);
-    expect(endState.validationFailure).toMatchSnapshot();
+    expect(endState.validationFailure).toHaveLength(2);
+    // $FlowIgnore - filename could be null
+    expect(normalize(endState.validationFailure[0].fileMap.filename)).toBe('/fake/dir/DomainEntity1Also.metaed');
+    expect(endState.validationFailure[0].message).toMatchSnapshot('When files have duplicate entity names Should return an error -> message[0]');
+    expect(endState.validationFailure[0].sourceMap).toMatchSnapshot('When files have duplicate entity names Should return an error -> sourceMap[0]');
+
+    // $FlowIgnore - filename could be null
+    expect(normalize(endState.validationFailure[1].fileMap.filename)).toBe('/fake/dir/DomainEntity1.metaed');
+    expect(endState.validationFailure[1].message).toMatchSnapshot('When files have duplicate entity names Should return an error -> message[1]');
+    expect(endState.validationFailure[1].sourceMap).toMatchSnapshot('When files have duplicate entity names Should return an error -> sourceMap[1]');
   });
 
   it('Should return an error in Promise form', () => {
     const endStateP = startingFromFileLoadP(stateFactory());
     return endStateP.then(endState => {
-      expect(endState.validationFailure).toHaveLength(3);
-      expect(endState.validationFailure).toMatchSnapshot();
+      expect(endState.validationFailure).toHaveLength(2);
+      // $FlowIgnore - filename could be null
+      expect(normalize(endState.validationFailure[0].fileMap.filename)).toBe('/fake/dir/DomainEntity1Also.metaed');
+      expect(endState.validationFailure[0].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[0]');
+      expect(endState.validationFailure[0].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[0]');
+
+      // $FlowIgnore - filename could be null
+      expect(normalize(endState.validationFailure[1].fileMap.filename)).toBe('/fake/dir/DomainEntity1.metaed');
+      expect(endState.validationFailure[1].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[1]');
+      expect(endState.validationFailure[1].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[1]');
     });
   });
 });

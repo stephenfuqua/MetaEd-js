@@ -4,10 +4,10 @@ import winston from 'winston';
 import type { State } from '../State';
 import { createFileIndex, getFilenameAndLineNumber } from './FileIndex';
 import MetaEdErrorListener from '../../grammar/MetaEdErrorListener';
-import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
+import type { ParseTreeBuilder } from '../../grammar/ParseTreeBuilder';
 
 export const validateSyntax = R.curry(
-(parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
+(parseTreeBuilder: ParseTreeBuilder, state: State): State => {
   if (state.loadedFileSet == null) {
     winston.error('ValidateSyntax: no files to load found');
     return state;

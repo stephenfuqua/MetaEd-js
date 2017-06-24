@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When multiple files Should load the file contents 1`] = `
+"Association Association1
+  documentation
+  \\"doc\\"
+  domain entity Domain1
+    documentation
+    \\"doc\\"
+  domain entity Domain2
+    documentation
+    \\"doc\\"
+  integer Property2
+    documentation
+    \\"doc\\"
+    is part of identity
+    max value 100
+"
+`;
+
+exports[`When multiple files Should load the file contents 2`] = `
+"Association Association1
+  documentation
+  \\"doc\\"
+  domain entity Domain1
+    documentation
+    \\"doc\\"
+  domain entity Domain2
+    documentation
+    \\"doc\\"
+  integer Property2
+    documentation
+    \\"doc\\"
+    is part of identity
+    max value 100
+"
+`;

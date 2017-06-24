@@ -1,83 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When a single file with a duplicate entity name Should return an error 1`] = `
-Array [
-  Object {
-    "category": "error",
-    "fileMap": Object {
-      "filename": "\\\\fake\\\\dir\\\\DomainEntity1.metaed",
-      "lineNumber": 8,
-    },
-    "message": "mismatched input 'Domain Entity' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'is weak', 'merge', 'with context'}",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 8,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "ValidateSyntax - MetaEdErrorListener",
-  },
-  Object {
-    "category": "error",
-    "fileMap": null,
-    "message": "Domain Entity named DomainEntity1 is a duplicate declaration of that name.",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 9,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "TopLevelEntityBuilder",
-  },
-  Object {
-    "category": "error",
-    "fileMap": null,
-    "message": "Domain Entity named DomainEntity1 is a duplicate declaration of that name.",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 2,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "TopLevelEntityBuilder",
-  },
-]
+exports[`When a single file with a duplicate entity name Should return an error -> message[0] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
+
+exports[`When a single file with a duplicate entity name Should return an error -> message[1] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
+
+exports[`When a single file with a duplicate entity name Should return an error -> sourceMap[0] 1`] = `
+Object {
+  "column": 0,
+  "line": 9,
+  "tokenText": "Domain Entity",
+}
 `;
 
-exports[`When a single file with a duplicate entity name Should return an error in Promise form 1`] = `
-Array [
-  Object {
-    "category": "error",
-    "fileMap": Object {
-      "filename": "\\\\fake\\\\dir\\\\DomainEntity1.metaed",
-      "lineNumber": 8,
-    },
-    "message": "mismatched input 'Domain Entity' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'is weak', 'merge', 'with context'}",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 8,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "ValidateSyntax - MetaEdErrorListener",
-  },
-  Object {
-    "category": "error",
-    "fileMap": null,
-    "message": "Domain Entity named DomainEntity1 is a duplicate declaration of that name.",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 9,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "TopLevelEntityBuilder",
-  },
-  Object {
-    "category": "error",
-    "fileMap": null,
-    "message": "Domain Entity named DomainEntity1 is a duplicate declaration of that name.",
-    "sourceMap": Object {
-      "column": 0,
-      "line": 2,
-      "tokenText": "Domain Entity",
-    },
-    "validatorName": "TopLevelEntityBuilder",
-  },
-]
+exports[`When a single file with a duplicate entity name Should return an error -> sourceMap[1] 1`] = `
+Object {
+  "column": 0,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`When files have duplicate entity names Should return an error -> message[0] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
+
+exports[`When files have duplicate entity names Should return an error -> message[1] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
+
+exports[`When files have duplicate entity names Should return an error -> sourceMap[0] 1`] = `
+Object {
+  "column": 0,
+  "line": 9,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`When files have duplicate entity names Should return an error -> sourceMap[1] 1`] = `
+Object {
+  "column": 0,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
 `;

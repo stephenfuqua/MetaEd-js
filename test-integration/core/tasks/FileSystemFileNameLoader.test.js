@@ -92,11 +92,13 @@ describe('When multiple files', () => {
     expect(associationContents).toMatch('Domain2');
     expect(associationContents).toMatch('integer');
     expect(associationContents).toMatch('Property2');
+    expect(associationContents).toMatchSnapshot();
 
     const domainEntityContents = newState.loadedFileSet[0].files[1].contents;
     expect(domainEntityContents).toMatch('Domain Entity');
     expect(domainEntityContents).toMatch('DomainEntity1');
     expect(domainEntityContents).toMatch('string');
     expect(domainEntityContents).toMatch('Property1');
+    expect(associationContents).toMatchSnapshot();
   });
 });

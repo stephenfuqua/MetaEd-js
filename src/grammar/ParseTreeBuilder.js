@@ -4,6 +4,8 @@ import { BaseLexer } from './gen/BaseLexer';
 import { MetaEdGrammar } from './gen/MetaEdGrammar';
 import MetaEdErrorListener from './MetaEdErrorListener';
 
+export type ParseTreeBuilder = (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar;
+
 function errorListeningParser(metaEdErrorListener: MetaEdErrorListener, metaEdContents: string): MetaEdGrammar {
   const lexer = new BaseLexer(new antlr4.InputStream(metaEdContents));
   const parser = new MetaEdGrammar(new antlr4.CommonTokenStream(lexer));

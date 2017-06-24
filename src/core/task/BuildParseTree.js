@@ -2,12 +2,12 @@
 import R from 'ramda';
 import winston from 'winston';
 import MetaEdErrorListener from '../../grammar/MetaEdErrorListener';
-import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import type { State } from '../State';
 import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
+import type { ParseTreeBuilder } from '../../grammar/ParseTreeBuilder';
 
 export const buildParseTree = R.curry(
-  (parseTreeBuilder: (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar, state: State): State => {
+  (parseTreeBuilder: ParseTreeBuilder, state: State): State => {
     const validationFailures = [];
 
     const errorListener = new MetaEdErrorListener(validationFailures, 'BuildParseTree - MetaEdErrorListener');

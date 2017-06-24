@@ -6,6 +6,7 @@ import { buildTopLevelEntity, buildMetaEd } from '../../grammar/ParseTreeBuilder
 import loadFileIndex from './LoadFileIndex';
 import { buildParseTree } from './BuildParseTree';
 import { execute as walkBuilders } from './WalkBuilders';
+import { fileMapForFailure } from './FileMapForFailure';
 import {
   setupBuilder,
   executeAssociationBuilder,
@@ -46,6 +47,8 @@ export function oldStartingFromFileLoadP(state: State): Promise<State> {
     .then(s => walkBuilders(s))
     .then(nextMacroTask)
     .then(s => runValidators(s))
+    .then(nextMacroTask)
+    .then(s => fileMapForFailure(s))
     .then(nextMacroTask);
 }
 
@@ -95,6 +98,8 @@ export function startingFromFileLoadP(state: State): Promise<State> {
     .then(s => executeSharedStringBuilder(s))
     .then(nextMacroTask)
     .then(s => runValidators(s))
+    .then(nextMacroTask)
+    .then(s => fileMapForFailure(s))
     .then(nextMacroTask);
 }
 
@@ -106,5 +111,6 @@ export function startingFromFileLoad(state: State): State {
     buildParseTree(buildMetaEd),
     walkBuilders,
     runValidators,
+    fileMapForFailure,
   )(state);
 }
