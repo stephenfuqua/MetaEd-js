@@ -148,6 +148,14 @@ Object {
 }
 `;
 
+exports[`when building domain entity property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
+
 exports[`when building domain entity property with weak reference should have source map for isWeak with line, column, text 1`] = `
 Object {
   "column": 4,
@@ -157,14 +165,6 @@ Object {
 `;
 
 exports[`when building domain entity property with weak reference should have source map for type with line, column, text 1`] = `
-Object {
-  "column": 4,
-  "line": 5,
-  "tokenText": "domain entity",
-}
-`;
-
-exports[`when building domain entity property with weak reference should have source map for type with line, column, text 2`] = `
 Object {
   "column": 4,
   "line": 5,

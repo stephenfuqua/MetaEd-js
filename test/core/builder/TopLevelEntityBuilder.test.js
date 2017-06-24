@@ -373,12 +373,10 @@ describe('when building decimal property', () => {
   const propertyType: string = 'decimal';
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
-
   const totalDigits: string = '6';
   const decimalPlaces: string = '2';
   const minValue: string = '100';
   const maxValue: string = '1000';
-
 
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
@@ -499,7 +497,7 @@ describe('when building descriptor property', () => {
 });
 
 // DomainEntityProperty
-describe('when building domain entity property with weak reference', () => {
+describe('when building domain entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
@@ -591,54 +589,6 @@ describe('when building domain entity property with weak reference', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toBeDefined();
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).not.toBe(NoSourceMap);
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isWeak).toMatchSnapshot();
-  });
-});
-
-
-describe('when building a domain entity property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
-  const namespace: string = 'namespace';
-  const entityName: string = 'EntityName';
-  const propertyName: string = 'PropertyName';
-  const entityDocumentation: string = 'Documentation';
-
-  const metaEdId: string = '123';
-
-  beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
-
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
-      .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withDomainEntityProperty(propertyName, entityDocumentation, true, false, false, null, metaEdId)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(builder);
-  });
-
-  it('should have domain entity property', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('domainEntity');
-  });
-
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
-  });
-
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
   });
 });
 
