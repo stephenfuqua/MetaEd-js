@@ -91,7 +91,7 @@ describe('when building association property with weak reference', () => {
   });
 
   it('should have isWeak', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBe(true);
   });
 
   it('should have source map for isWeak with line, column, text', () => {
@@ -268,7 +268,7 @@ describe('when building common property with extension override', () => {
   });
 
   it('should have isExtensionOverride', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isExtensionOverride).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isExtensionOverride).toBe(true);
   });
 
   it('should have source map for isExtensionOverride with line, column, text', () => {
@@ -405,7 +405,7 @@ describe('when building decimal property', () => {
   });
 
   it('should have hasRestriction', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBe(true);
   });
 
   it('should have source map for hasRestriction', () => {
@@ -582,7 +582,7 @@ describe('when building domain entity property with weak reference', () => {
   });
 
   it('should have isWeak', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isWeak).toBe(true);
   });
 
   it('should have source map for isWeak with line, column, text', () => {
@@ -794,39 +794,42 @@ describe('when building required entity properties', () => {
   });
 
   it('should have isRequired', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequired).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequired).toBe(true);
   });
 
   it('should have source map for type', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type.tokenText).toBe(propertyType);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
   });
 
   it('should have source map for documentation', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentation).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.documentation).not.toBe(NoSourceMap);
   });
 
   it('should have source map for metaEdName', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName.tokenText).toBe(propertyName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdName).not.toBe(NoSourceMap);
   });
 
   it('should have source map for metaEdId', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.metaEdId).not.toBe(NoSourceMap);
   });
 
   it('should have source map for parentEntityName', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.parentEntityName).toBeDefined();
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.parentEntityName.tokenText).toBe(entityName);
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.parentEntityName).not.toBe(NoSourceMap);
   });
 
   it('should have source map for parentEntity', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.parentEntity).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.parentEntity).not.toBe(NoSourceMap);
   });
 
   it('should have source map for isRequired', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequired).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.isRequired).not.toBe(NoSourceMap);
   });
 
   it('should have source map with line, column, text for each property', () => {
@@ -859,7 +862,7 @@ describe('when building entity property with inherited documentation', () => {
   });
 
   it('should have documentationInherited', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentationInherited).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].documentationInherited).toBe(true);
   });
 
   it('should not have documentation', () => {
@@ -941,7 +944,7 @@ describe('when building optional entity property', () => {
   });
 
   it('should have isOptional', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptional).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptional).toBe(true);
   });
 
   it('should have source map for isOptional with line, column, text', () => {
@@ -976,7 +979,7 @@ describe('when building required collection entity property', () => {
   });
 
   it('should have isRequiredCollection', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isRequiredCollection).toBe(true);
   });
 
   it('should have source map for isRequiredCollection with line, column, text', () => {
@@ -1011,7 +1014,7 @@ describe('when building optional collection entity property', () => {
   });
 
   it('should have isOptionalCollection', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptionalCollection).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].isOptionalCollection).toBe(true);
   });
 
   it('should have source map for isOptionalCollection with line, column, text', () => {
@@ -1131,7 +1134,7 @@ describe('when building renamed identity entity property', () => {
   });
 
   it('should have isIdentityRename', () => {
-    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].isIdentityRename).toBeTruthy();
+    expect(entityRepository.domainEntity.get(entityName).identityProperties[0].isIdentityRename).toBe(true);
   });
 
   it('should have baseKeyName', () => {
