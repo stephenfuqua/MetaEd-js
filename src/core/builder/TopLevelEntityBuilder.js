@@ -29,7 +29,7 @@ import { DomainEntityProperty, domainEntityPropertyFactory, DomainEntityProperty
 import { sharedDecimalPropertyFactory } from '../model/property/SharedDecimalProperty';
 import { sharedIntegerPropertyFactory } from '../model/property/SharedIntegerProperty';
 import { sharedStringPropertyFactory } from '../model/property/SharedStringProperty';
-import { StringProperty, stringPropertyFactory } from '../model/property/StringProperty';
+import { StringProperty, stringPropertyFactory, StringPropertySourceMap } from '../model/property/StringProperty';
 import { timePropertyFactory } from '../model/property/TimeProperty';
 import { yearPropertyFactory } from '../model/property/YearProperty';
 import { ReferentialProperty, ReferentialPropertySourceMap } from '../model/property/ReferentialProperty';
@@ -518,6 +518,8 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).minLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): StringPropertySourceMap).minLength = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
@@ -525,6 +527,8 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): StringProperty).maxLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): StringPropertySourceMap).maxLength = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {

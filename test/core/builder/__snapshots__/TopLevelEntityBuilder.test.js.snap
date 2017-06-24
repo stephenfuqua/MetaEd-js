@@ -496,6 +496,56 @@ ShortPropertySourceMap {
 }
 `;
 
+exports[`when building string property should have source map with line, column, text 1`] = `
+StringPropertySourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 6,
+    "tokenText": "documentation",
+  },
+  "hasRestriction": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "max length",
+  },
+  "isRequired": Object {
+    "column": 6,
+    "line": 8,
+    "tokenText": "is required",
+  },
+  "maxLength": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "max length",
+  },
+  "metaEdName": Object {
+    "column": 11,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
+  "minLength": Object {
+    "column": 6,
+    "line": 9,
+    "tokenText": "min length",
+  },
+  "parentEntity": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Domain Entity",
+  },
+  "parentEntityName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 5,
+    "tokenText": "string",
+  },
+}
+`;
+
 exports[`when building time property should have source map for type with line, column, text 1`] = `
 Object {
   "column": 4,

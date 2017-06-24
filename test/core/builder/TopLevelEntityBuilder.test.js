@@ -1690,61 +1690,74 @@ describe('when building short property', () => {
 });
 
 // StringProperty
-describe('when building a string property', () => {
+describe('when building string property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
+  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
   const namespace: string = 'namespace';
+
   const entityName: string = 'EntityName';
-  const propertyName: string = 'PropertyName';
   const entityDocumentation: string = 'Documentation';
-
-  const maxLength: string = '1000';
+  const propertyType: string = 'string';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
   const minLength: string = '100';
-
-  const metaEdId: string = '123';
+  const maxLength: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
-      .withDocumentation('doc')
-      .withStringProperty(propertyName, entityDocumentation, true, false, maxLength, minLength, null, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withStringProperty(propertyName, propertyDocumentation, true, false, maxLength, minLength)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(builder);
   });
 
-  it('should have string property', () => {
+  it('should have string property in entity properties', () => {
     expect(entityRepository.domainEntity.get(entityName).properties).toHaveLength(1);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe('string');
   });
 
-  it('should have correct documentation', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].documentation).toBe(entityDocumentation);
+  it('should have type', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].type).toBe(propertyType);
   });
 
-  it('should have correct MetaEd ID', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].metaEdId).toBe(metaEdId);
-  });
-
-  it('should have correct length constraints', () => {
-    const property = entityRepository.domainEntity.get(entityName).properties[0];
-
-    expect(property.maxLength).toBe(maxLength);
-    expect(property.minLength).toBe(minLength);
-    expect(property.hasRestriction).toBe(true);
-  });
-
-  // TODO: full test of sourcemap elements, plus snapshot
-
-  it('should have a source map', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have source map for type', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+  });
+
+  it('should have hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBe(true);
+  });
+
+  it('should have source map for hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).not.toBe(NoSourceMap);
+  });
+
+  it('should have minLength', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].minLength).toBe(minLength);
+  });
+
+  it('should have source map for minLength', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minLength).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.minLength).not.toBe(NoSourceMap);
+  });
+
+  it('should have maxLength', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].maxLength).toBe(maxLength);
+  });
+
+  it('should have source map for maxLength', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxLength).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.maxLength).not.toBe(NoSourceMap);
+  });
+
+  it('should have source map with line, column, text', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap).toMatchSnapshot();
   });
 });
 
