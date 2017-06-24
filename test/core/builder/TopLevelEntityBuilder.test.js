@@ -406,6 +406,15 @@ describe('when building decimal property', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
   });
 
+  it('should have hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].hasRestriction).toBeTruthy();
+  });
+
+  it('should have source map for hasRestriction', () => {
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).toBeDefined();
+    expect(entityRepository.domainEntity.get(entityName).properties[0].sourceMap.hasRestriction).not.toBe(NoSourceMap);
+  });
+
   it('should have totalDigits', () => {
     expect(entityRepository.domainEntity.get(entityName).properties[0].totalDigits).toBe(totalDigits);
   });

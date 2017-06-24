@@ -92,6 +92,11 @@ DecimalPropertySourceMap {
     "line": 6,
     "tokenText": "documentation",
   },
+  "hasRestriction": Object {
+    "column": 6,
+    "line": 12,
+    "tokenText": "max value",
+  },
   "isRequired": Object {
     "column": 6,
     "line": 8,

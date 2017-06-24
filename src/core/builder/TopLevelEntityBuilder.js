@@ -531,16 +531,18 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
-    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).decimalPlaces = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).decimalPlaces = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
-    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).totalDigits = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).totalDigits = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
@@ -561,16 +563,18 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
-    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).minValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).minValue = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
-    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).maxValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
+    ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).maxValue = sourceMapFrom(context);
+    this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars
