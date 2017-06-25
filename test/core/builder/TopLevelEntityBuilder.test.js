@@ -6,6 +6,7 @@ import { NoSourceMap } from '../../../src/core/model/SourceMap';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { PropertyType } from '../../../src/core/model/property/PropertyType';
 import type { EntityProperty } from '../../../src/core/model/property/EntityProperty';
+import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 // AssociationProperty
 describe('when building association property', () => {
