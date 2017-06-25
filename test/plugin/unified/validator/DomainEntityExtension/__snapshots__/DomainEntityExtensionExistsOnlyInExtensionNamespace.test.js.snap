@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity extension is in core namespace should have validation failure -> message 1`] = `"DomainEntity additions 'EntityName' is not valid in core namespace 'edfi"`;
+
+exports[`when domain entity extension is in core namespace should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Domain Entity",
+}
+`;
