@@ -1,0 +1,44 @@
+// @flow
+import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { ModelType } from '../../../../../packages/metaed-core/src/model/ModelType';
+import { excludedModelTypes } from '../ValidatorShared/ExcludedModelTypes';
+
+const validTypes: ModelType[] = [
+  'abstractEntity',
+  'association',
+  'common',
+  'domainEntity',
+  'inlineCommon',
+];
+
+const validTypeNames: string = [
+  'Abstract Entity',
+  'Association',
+  'Common',
+  'Domain Entity',
+  'InlineCommon',
+].join(', ');
+
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
+  const failures: Array<ValidationFailure> = [];
+  const invalidTypes: ModelType[] = excludedModelTypes(Object.keys(metaEd.entity), validTypes);
+  if (invalidTypes.length === 0) return [];
+
+  invalidTypes.forEach(invalidType => {
+    // $FlowIgnore - allowing entityType to specify the entityRepository Map property
+    metaEd.entity[invalidType].forEach(entity => {
+      if (entity.identityProperties.length === 0) return;
+      entity.identityProperties.forEach(property => {
+        failures.push({
+          validatorName: 'IdentityExistsOnlyIfIdentityIsAllowed',
+          category: 'error',
+          message: `'is part of identity' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${entity.metaEdName}. 'is part of identity' is only valid for properties on ${validTypeNames}.`,
+          sourceMap: property.sourceMap.isPartOfIdentity,
+          fileMap: null,
+        });
+      });
+    });
+  });
+  return failures;
+}

@@ -1,7 +1,7 @@
 {
   "name": "metaed-js",
   "main": "dist/index.js",
-  "version": "1.1.0-dev",
+  "version": "1.1.0-experimental",
   "description": "MetaEd for JavaScript",
   "license": "private",
   "publishConfig": {
@@ -36,7 +36,7 @@
   "jest": {
     "testEnvironment": "node",
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "packages/**/src/**/*.js"
     ],
     "coverageThreshold": {
       "global": {
@@ -45,17 +45,20 @@
         "lines": 10,
         "statements": 10
       }
-    }
+    },
+    "modulePathIgnorePatterns": [
+      "dist*"
+    ]
   },
   "scripts": {
     "test": "jest",
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:watch": "jest --watch",
-    "build": "rimraf dist/ && babel src -d dist --source-maps",
+    "build": "rimraf dist/ && babel src -d dist --source-maps --copy-files",
+    "build:unified": "rimraf dist-unified/ && babel src/plugin/unified -d dist-unified --source-maps --copy-files",
     "flow": "flow check",
-    "eslint": "eslint src",
-    "eslint:tests": "eslint test && eslint test-integration",
-    "lint": "npm run flow && npm run eslint && npm run eslint:tests",
+    "eslint": "eslint packages",
+    "lint": "npm run flow && npm run eslint",
     "lint-test": "npm run lint && npm test",
     "release:version-dev": "npm run build && npm run lint-test && standard-version --prerelease dev",
     "release:push-tags": "git push --follow-tags",
