@@ -5,10 +5,8 @@ import { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
 
 export class SubdomainSourceMap extends TopLevelEntitySourceMap {
-  type: ?SourceMap;
   domainItems: Array<SourceMap>;
   entities: Array<SourceMap>;
-  footerDocumentation: ?SourceMap;
   parent: ?SourceMap;
   parentMetaEdName: ?SourceMap;
   position: ?SourceMap;
@@ -23,7 +21,6 @@ export class SubdomainSourceMap extends TopLevelEntitySourceMap {
 export class Subdomain extends TopLevelEntity {
   domainItems: Array<DomainItem>;
   entities: Array<TopLevelEntity>;
-  footerDocumentation: string;
   parent: Domain;
   parentMetaEdName: string;
   position: number;
@@ -36,7 +33,6 @@ export function subdomainFactory(): Subdomain {
     typeHumanizedName: 'Subdomain',
     domainItems: [],
     entities: [],
-    footerDocumentation: '',
     parent: domainFactory(),
     parentMetaEdName: '',
     position: 0,

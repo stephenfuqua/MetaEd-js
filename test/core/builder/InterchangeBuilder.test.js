@@ -738,7 +738,6 @@ describe('when building interchange extension with invalid trailing text', () =>
 describe('when building single interchange source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -755,7 +754,7 @@ describe('when building single interchange source map', () => {
   beforeAll(() => {
     const builder = new InterchangeBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartInterchange(interchangeName, interchangeMetaEdId)
       .withDocumentation(interchangeDocumentation)
@@ -769,12 +768,12 @@ describe('when building single interchange source map', () => {
   });
 
   // ModelBaseSourceMap
-  it('should have namespaceInfo', () => {
-    expect(entityRepository.interchange.get(interchangeName).sourceMap.namespaceInfo).toBeDefined();
-  });
-
   it('should have type', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
@@ -787,17 +786,13 @@ describe('when building single interchange source map', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.metaEdId.tokenText).toBe(`[${interchangeMetaEdId}]`);
   });
 
-  it('should have documentation', () => {
-    expect(entityRepository.interchange.get(interchangeName).sourceMap.documentation).toBeDefined();
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.interchange.get(interchangeName).sourceMap.namespaceInfo).toBeDefined();
   });
 
   // InterchangeSourceMap
   it('should have extendedDocumentation', () => {
     expect(entityRepository.interchange.get(interchangeName).sourceMap.extendedDocumentation).toBeDefined();
-  });
-
-  it('should have useCaseDocumentation', () => {
-    expect(entityRepository.interchange.get(interchangeName).sourceMap.useCaseDocumentation).toBeDefined();
   });
 
   it('should have useCaseDocumentation', () => {

@@ -1613,7 +1613,6 @@ describe('when building domain entity with invalid trailing text', () => {
 describe('when building domain entity source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -1625,7 +1624,7 @@ describe('when building domain entity source map', () => {
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -1673,7 +1672,6 @@ describe('when building domain entity source map', () => {
 describe('when building domain entity namespace info source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -1685,7 +1683,7 @@ describe('when building domain entity namespace info source map', () => {
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -1731,7 +1729,6 @@ describe('when building domain entity namespace info source map', () => {
 describe('when building abstract entity source map', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -1743,7 +1740,7 @@ describe('when building abstract entity source map', () => {
   beforeAll(() => {
     const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartAbstractEntity(entityName, metaEdId)
       .withDocumentation(documentation)

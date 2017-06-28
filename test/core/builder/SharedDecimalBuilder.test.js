@@ -778,10 +778,9 @@ describe('when building shared decimal with invalid trailing text', () => {
   });
 });
 
-describe('when building shared decimal source mp', () => {
+describe('when building shared decimal source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -796,7 +795,7 @@ describe('when building shared decimal source mp', () => {
   beforeAll(() => {
     const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedDecimal(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -807,12 +806,12 @@ describe('when building shared decimal source mp', () => {
   });
 
   // SharedSimpleSourceMap
-  it('should have namespaceInfo', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
-  });
-
   it('should have type', () => {
     expect(entityRepository.sharedDecimal.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
@@ -825,11 +824,7 @@ describe('when building shared decimal source mp', () => {
     expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
-  it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.documentation).toBeDefined();
-  });
-
-  it('should have documentation', () => {
+  it('should have namespaceInfo', () => {
     expect(entityRepository.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
   });
 

@@ -44,7 +44,6 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
     this.validationFailures = validationFailures;
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (context.exception) return;
     if (this.currentNamespaceInfo !== NoNamespaceInfo) return;

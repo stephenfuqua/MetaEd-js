@@ -870,7 +870,6 @@ describe('when building shared short with invalid trailing text', () => {
 describe('when building shared integer source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -883,7 +882,7 @@ describe('when building shared integer source map', () => {
   beforeAll(() => {
     const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -937,7 +936,6 @@ describe('when building shared integer source map', () => {
 describe('when building shared short source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -950,7 +948,7 @@ describe('when building shared short source map', () => {
   beforeAll(() => {
     const builder = new SharedIntegerBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -965,6 +963,10 @@ describe('when building shared short source map', () => {
     expect(entityRepository.sharedInteger.get(entityName).sourceMap.type).toBeDefined();
   });
 
+  it('should have documentation', () => {
+    expect(entityRepository.sharedInteger.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
   it('should have metaEdName', () => {
     expect(entityRepository.sharedInteger.get(entityName).sourceMap.metaEdName).toBeDefined();
     expect(entityRepository.sharedInteger.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
@@ -973,10 +975,6 @@ describe('when building shared short source map', () => {
   it('should have metaEdId', () => {
     expect(entityRepository.sharedInteger.get(entityName).sourceMap.metaEdId).toBeDefined();
     expect(entityRepository.sharedInteger.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
-
-  it('should have documentation', () => {
-    expect(entityRepository.sharedInteger.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have namespaceInfo', () => {

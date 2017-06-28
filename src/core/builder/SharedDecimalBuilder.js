@@ -8,7 +8,6 @@ import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
 export default class SharedDecimalBuilder extends SharedSimpleBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
     this.enteringSharedSimple(sharedDecimalFactory);
     if (this.currentSharedSimple !== NoSharedSimple) {

@@ -533,7 +533,6 @@ describe('when building domain entity subclass with invalid trailing text', () =
 describe('when building domain entity subclass source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -546,7 +545,7 @@ describe('when building domain entity subclass source map', () => {
   beforeAll(() => {
     const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntitySubclass(entityName, baseEntityName, metaEdId)
       .withDocumentation(documentation)
@@ -557,17 +556,26 @@ describe('when building domain entity subclass source map', () => {
       .sendToListener(builder);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have type', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have type property', () => {
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.type).toBeDefined();
+  it('should have documentation', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
     expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdName).toBeDefined();
     expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.namespaceInfo).toBeDefined();
   });
 
   it('should have baseEntity', () => {
@@ -578,19 +586,6 @@ describe('when building domain entity subclass source map', () => {
   it('should have baseEntityName', () => {
     expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.baseEntityName).toBeDefined();
     expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.baseEntityName.tokenText).toBe(baseEntityName);
-  });
-
-  it('should have namespaceInfo', () => {
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.namespaceInfo).toBeDefined();
-  });
-
-  it('should have metaEdId', () => {
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
-
-  it('should have documentation', () => {
-    expect(entityRepository.domainEntitySubclass.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have isAbstract', () => {

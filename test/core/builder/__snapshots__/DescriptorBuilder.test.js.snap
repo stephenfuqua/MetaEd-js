@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building descriptor source map should have source map data 1`] = `
+exports[`when building descriptor source map with optional map type should have line, column, text for each property 1`] = `
 DescriptorSourceMap {
   "documentation": Object {
     "column": 4,
@@ -28,6 +28,11 @@ DescriptorSourceMap {
     "line": 2,
     "tokenText": "EntityName",
   },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {
@@ -38,7 +43,7 @@ DescriptorSourceMap {
 }
 `;
 
-exports[`when building descriptor source map with map type required should have source map data 1`] = `
+exports[`when building descriptor source map with required map type should have source map with line, column, text for each property 1`] = `
 DescriptorSourceMap {
   "documentation": Object {
     "column": 4,
@@ -65,6 +70,11 @@ DescriptorSourceMap {
     "column": 13,
     "line": 2,
     "tokenText": "EntityName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
   },
   "properties": Array [],
   "queryableFields": Array [],
@@ -129,5 +139,70 @@ Object {
   "column": 2,
   "line": 2,
   "tokenText": "Descriptor",
+}
+`;
+
+exports[`when building map type enumeration item source map should have line, column, text for each property 1`] = `
+EnumerationItemSourceMap {
+  "documentation": Object {
+    "column": 8,
+    "line": 13,
+    "tokenText": "documentation",
+  },
+  "metaEdId": Object {
+    "column": 30,
+    "line": 12,
+    "tokenText": "[2]",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "shortDescription": Object {
+    "column": 11,
+    "line": 12,
+    "tokenText": "\\"ShortDescription\\"",
+  },
+  "type": Object {
+    "column": 6,
+    "line": 12,
+    "tokenText": "item",
+  },
+}
+`;
+
+exports[`when building required map type enumeration source map should have line, column, text for each property 1`] = `
+EnumerationSourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "documentation",
+  },
+  "enumerationItems": Array [
+    Object {
+      "column": 6,
+      "line": 12,
+      "tokenText": "item",
+    },
+  ],
+  "identityProperties": Array [],
+  "mapTypeEnumeration": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with map type",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "type": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "with map type",
+  },
 }
 `;

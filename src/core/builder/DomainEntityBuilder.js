@@ -8,7 +8,6 @@ import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
 export default class DomainEntityBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterAbstractEntity(context: MetaEdGrammar.AbstractEntityContext) {
     this.enteringEntity(domainEntityFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
@@ -21,7 +20,6 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterDomainEntity(context: MetaEdGrammar.DomainEntityContext) {
     this.enteringEntity(domainEntityFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
@@ -56,7 +54,6 @@ export default class DomainEntityBuilder extends TopLevelEntityBuilder {
     this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterCascadeUpdate(context: MetaEdGrammar.CascadeUpdateContext) {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.allowPrimaryKeyUpdates = true;

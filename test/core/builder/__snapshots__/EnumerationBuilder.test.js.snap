@@ -27,7 +27,18 @@ EnumerationSourceMap {
     "line": 3,
     "tokenText": "documentation",
   },
-  "enumerationItems": Array [],
+  "enumerationItems": Array [
+    Object {
+      "column": 4,
+      "line": 5,
+      "tokenText": "item",
+    },
+    Object {
+      "column": 4,
+      "line": 8,
+      "tokenText": "item",
+    },
+  ],
   "identityProperties": Array [],
   "metaEdId": Object {
     "column": 25,
@@ -144,4 +155,39 @@ exports[`when building enumeration with no enumeration name should have missing 
 Array [
   "missing ID at 'documentation', column: 4, line: 3, token: documentation",
 ]
+`;
+
+exports[`when building school year enumeration should have source map with line, column, text 1`] = `
+EnumerationSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "enumerationItems": Array [
+    Object {
+      "column": 4,
+      "line": 5,
+      "tokenText": "item",
+    },
+  ],
+  "identityProperties": Array [],
+  "metaEdName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "SchoolYear",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "type": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "SchoolYear",
+  },
+}
 `;

@@ -150,40 +150,6 @@ describe('when building domain entity extension with no domain entity extension 
   });
 });
 
-
-describe('when building domain entity extension with no domain entity extension name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
-  const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
-  const projectExtension: string = 'ProjectExtension';
-
-  const entityName: string = '';
-  const MetaEdId: string = '10';
-  const documentation: string = 'Documentation';
-  const propertyName: string = 'PropertyName';
-
-  beforeAll(() => {
-    const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
-
-    textBuilder
-      .withBeginNamespace(namespace, projectExtension)
-      .withStartDomainEntityExtension(entityName, MetaEdId)
-      .withIntegerProperty(propertyName, documentation, true, false)
-      .withEndDomainEntityExtension()
-      .withEndNamespace()
-      .sendToListener(builder);
-  });
-
-  it('should not build domain entity extension', () => {
-    expect(entityRepository.domainEntityExtension.size).toBe(0);
-  });
-
-  it('should have no viable alternative error', () => {
-    expect(textBuilder.errorMessages).toMatchSnapshot();
-  });
-});
-
 describe('when building domain entity extension with lowercase domain entity extension name', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
@@ -342,7 +308,6 @@ describe('when building domain entity extension with invalid trailing text', () 
 describe('when building domain entity extension source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -353,7 +318,7 @@ describe('when building domain entity extension source map', () => {
   beforeAll(() => {
     const builder = new DomainEntityExtensionBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntityExtension(entityName, metaEdId)
       .withIntegerProperty(propertyName, 'doc', true, false)

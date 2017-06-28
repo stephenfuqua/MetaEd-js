@@ -7,7 +7,6 @@ import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
 export default class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
-  // eslint-disable-next-line no-unused-vars
   enterDomainEntitySubclass(context: MetaEdGrammar.DomainEntitySubclassContext) {
     this.enteringEntity(domainEntitySubclassFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

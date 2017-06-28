@@ -26,7 +26,6 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
     this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterInlineCommon(context: MetaEdGrammar.InlineCommonContext) {
     this.enteringEntity(inlineCommonFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

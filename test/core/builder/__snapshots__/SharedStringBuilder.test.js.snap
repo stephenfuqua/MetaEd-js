@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`when building shared string in extension namespace should have line, column, text for each property 1`] = `
+exports[`when building shared string source map should have line, column, text for each property 1`] = `
 SharedStringSourceMap {
   "documentation": Object {
     "column": 4,

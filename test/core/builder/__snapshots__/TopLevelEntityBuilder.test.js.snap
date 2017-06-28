@@ -288,6 +288,64 @@ IntegerPropertySourceMap {
 }
 `;
 
+exports[`when building merged property reference should have source map for mergePropertyPath with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 10,
+    "line": 9,
+    "tokenText": "Entity",
+  },
+]
+`;
+
+exports[`when building merged property reference should have source map for targetPropertyPath with line, column, text 1`] = `
+Array [
+  Object {
+    "column": 31,
+    "line": 9,
+    "tokenText": "TargetEntity",
+  },
+]
+`;
+
+exports[`when building multiple merge property references should have source map for first merged property 1`] = `
+MergedPropertySourceMap {
+  "mergePropertyPath": Array [
+    Object {
+      "column": 10,
+      "line": 9,
+      "tokenText": "MergePropertyPath0",
+    },
+  ],
+  "targetPropertyPath": Array [
+    Object {
+      "column": 34,
+      "line": 9,
+      "tokenText": "TargetPropertyPath0",
+    },
+  ],
+}
+`;
+
+exports[`when building multiple merge property references should have source map for second merged property 1`] = `
+MergedPropertySourceMap {
+  "mergePropertyPath": Array [
+    Object {
+      "column": 10,
+      "line": 10,
+      "tokenText": "MergePropertyPath1",
+    },
+  ],
+  "targetPropertyPath": Array [
+    Object {
+      "column": 34,
+      "line": 10,
+      "tokenText": "TargetPropertyPath1",
+    },
+  ],
+}
+`;
+
 exports[`when building optional collection entity property should have source map for isOptionalCollection with line, column, text 1`] = `
 Object {
   "column": 6,
@@ -332,19 +390,10 @@ Object {
 
 exports[`when building referential property with merged properties should have source map for mergedProperties with line, column, text 1`] = `
 Array [
-  MergedProperty {
-    "mergeProperty": null,
-    "mergePropertyPath": Array [
-      "MergeProperty0",
-    ],
-    "sourceMap": MergedPropertySourceMap {
-      "mergePropertyPath": Array [],
-      "targetPropertyPath": Array [],
-    },
-    "targetProperty": null,
-    "targetPropertyPath": Array [
-      "MergeProperty1",
-    ],
+  Object {
+    "column": 4,
+    "line": 8,
+    "tokenText": "merge",
   },
 ]
 `;
@@ -427,6 +476,14 @@ Object {
   "column": 4,
   "line": 5,
   "tokenText": "shared decimal",
+}
+`;
+
+exports[`when building shared entity property should have source map for referencedType with line, column, text 1`] = `
+Object {
+  "column": 19,
+  "line": 5,
+  "tokenText": "PropertyName",
 }
 `;
 

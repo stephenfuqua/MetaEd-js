@@ -81,6 +81,56 @@ describe('when building single enumeration', () => {
   });
 });
 
+describe('when building school year enumeration', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+  const projectExtension: string = 'ProjectExtension';
+
+  const entityType: string = 'schoolYearEnumeration';
+  const entityName: string = 'SchoolYear';
+  const documentation: string = 'Documentation';
+  const itemShortDescription: string = 'ItemShortDescription';
+
+  beforeAll(() => {
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartEnumeration(entityName)
+      .withDocumentation(documentation)
+      .withEnumerationItem(itemShortDescription)
+      .withEndEnumeration()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one school year enumeration', () => {
+    expect(entityRepository.schoolYearEnumeration.size).toBe(1);
+  });
+
+  it('should be found in entity repository', () => {
+    expect(entityRepository.schoolYearEnumeration.get(entityName)).toBeDefined();
+    expect(entityRepository.schoolYearEnumeration.get(entityName).metaEdName).toBe(entityName);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.schoolYearEnumeration.get(entityName).type).toBe(entityType);
+  });
+
+  it('should have source map for type', () => {
+    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have source map for namespaceInfo', () => {
+    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have source map with line, column, text', () => {
+    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap).toMatchSnapshot();
+  });
+});
+
 describe('when building duplicate enumerations', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
@@ -650,7 +700,6 @@ describe('when building enumeration with invalid trailing text', () => {
 describe('when building enumeration source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -667,7 +716,7 @@ describe('when building enumeration source map', () => {
   beforeAll(() => {
     const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -678,26 +727,28 @@ describe('when building enumeration source map', () => {
       .sendToListener(builder);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
-  });
-
-  it('should have type property', () => {
+  it('should have type', () => {
     expect(entityRepository.enumeration.get(entityName).sourceMap.type).toBeDefined();
-  });
-
-  it('should have metaEdName', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
-  });
-
-  it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
   it('should have documentation', () => {
     expect(entityRepository.enumeration.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have for enumerationItems', () => {
+    expect(entityRepository.enumeration.get(entityName).sourceMap.enumerationItems).toHaveLength(2);
   });
 
   it('should have first enumeration item type', () => {
@@ -706,12 +757,10 @@ describe('when building enumeration source map', () => {
 
   it('should have first enumeration item shortDescription', () => {
     expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription.tokenText).toBe(`"${itemShortDescription}"`);
   });
 
   it('should have first enumeration item metaEdId', () => {
     expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId.tokenText).toBe(`[${itemMetaEdId}]`);
   });
 
   it('should have first enumeration item documentation', () => {
@@ -724,12 +773,10 @@ describe('when building enumeration source map', () => {
 
   it('should have second enumeration item shortDescription', () => {
     expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription.tokenText).toBe(`"${itemShortDescription2}"`);
   });
 
   it('should have second enumeration item metaEdId', () => {
     expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId.tokenText).toBe(`[${itemMetaEdId2}]`);
   });
 
   it('should have second enumeration item documentation', () => {

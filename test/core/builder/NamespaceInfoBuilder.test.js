@@ -150,14 +150,13 @@ describe('when building core namespace info', () => {
 describe('when building extension namespace info source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   beforeAll(() => {
     const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartCommon('Dummy')
       .withDocumentation('Dummy')

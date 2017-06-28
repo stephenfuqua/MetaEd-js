@@ -28,7 +28,6 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
     this.validationFailures = validationFailures;
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
     this.namespaceInfo = namespaceInfoFactory();

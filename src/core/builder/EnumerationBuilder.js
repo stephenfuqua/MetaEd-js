@@ -3,7 +3,7 @@ import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { enumerationFactory } from '../model/Enumeration';
 import { schoolYearEnumerationFactory } from '../model/SchoolYearEnumeration';
-import type { Enumeration } from '../model/Enumeration';
+import type { Enumeration, EnumerationSourceMap } from '../model/Enumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
 import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
@@ -24,7 +24,6 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
     this.currentEnumerationItem = NoEnumerationItem;
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterEnumeration(context: MetaEdGrammar.EnumerationContext) {
     this.enteringEntity(enumerationFactory);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
@@ -66,7 +65,6 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
     this.currentEnumerationItem.sourceMap.documentation = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = enumerationItemFactory();
@@ -74,10 +72,10 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
   }
 
-  // eslint-disable-next-line no-unused-vars
   exitEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentEnumerationItem === NoEnumerationItem) return;
     ((this.currentTopLevelEntity: any): Enumeration).enumerationItems.push(this.currentEnumerationItem);
+    ((this.currentTopLevelEntity.sourceMap: any): EnumerationSourceMap).enumerationItems.push(sourceMapFrom(context));
     this.currentEnumerationItem = NoEnumerationItem;
   }
 

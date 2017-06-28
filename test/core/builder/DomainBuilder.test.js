@@ -1304,32 +1304,107 @@ describe('when building domain source map', () => {
       .sendToListener(builder);
   });
 
-  it('should have a documentation property', () => {
-    expect(entityRepository.domain.get(domainName).sourceMap.documentation).toBeDefined();
-  });
-
-  it('should have a metaEdId property', () => {
-    expect(entityRepository.domain.get(domainName).sourceMap.metaEdId).toBeDefined();
-  });
-
-  it('should have a metaEdName property', () => {
-    expect(entityRepository.domain.get(domainName).sourceMap.metaEdName).toBeDefined();
-  });
-
-  it('should have a type property', () => {
+  it('should have type', () => {
     expect(entityRepository.domain.get(domainName).sourceMap.type).toBeDefined();
   });
 
-  it('should have a footerDocumentation property', () => {
-    expect(entityRepository.domain.get(domainName).sourceMap.footerDocumentation).toBeDefined();
+  it('should have documentation', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have one domain item', () => {
-    expect(entityRepository.domain.get(domainName).sourceMap.domainItems).toBeDefined();
+  it('should have metaEdName', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have domainItems', () => {
     expect(entityRepository.domain.get(domainName).sourceMap.domainItems).toHaveLength(1);
   });
 
-  it('should have source map data', () => {
+  it('should have footerDocumentation', () => {
+    expect(entityRepository.domain.get(domainName).sourceMap.footerDocumentation).toBeDefined();
+  });
+
+  it('should have line, column, text', () => {
     expect(entityRepository.domain.get(domainName).sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when building subdomain source map', () => {
+  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespace: string = 'namespace';
+
+  const subdomainName: string = 'SubdomainName';
+  const parentDomainName: string = 'ParentDomainName';
+  const metaEdId: string = '1';
+  const entityDocumentation: string = 'EntityDocumentation';
+  const domainItemName: string = 'DomainItemName';
+  const domainItemMetaEdId: string = '2';
+  const subdomainPosition: number = 1;
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(entityRepository, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartSubdomain(subdomainName, parentDomainName, metaEdId)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityDomainItem(domainItemName, domainItemMetaEdId)
+      .withSubdomainPosition(subdomainPosition)
+      .withEndSubdomain()
+      .withEndNamespace()
+      .sendToListener(builder);
+  });
+
+  it('should build one subdomain', () => {
+    expect(entityRepository.subdomain.size).toBe(1);
+  });
+
+  it('should have type', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.type).toBeDefined();
+  });
+
+  it('should have documentation', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.documentation).toBeDefined();
+  });
+
+  it('should have metaEdName', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.metaEdName).toBeDefined();
+  });
+
+  it('should have metaEdId', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.metaEdId).toBeDefined();
+  });
+
+  it('should have namespaceInfo', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.namespaceInfo).toBeDefined();
+  });
+
+  it('should have domainItems', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.domainItems).toHaveLength(1);
+  });
+
+  it('should have parent', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.parent).toBeDefined();
+  });
+
+  it('should have parentMetaEdName', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.parentMetaEdName).toBeDefined();
+  });
+
+  it('should have position', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap.position).toBeDefined();
+  });
+
+  it('should have line, column, text', () => {
+    expect(entityRepository.subdomain.get(subdomainName).sourceMap).toMatchSnapshot();
   });
 });

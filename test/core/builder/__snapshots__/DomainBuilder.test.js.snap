@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building domain source map should have source map data 1`] = `
+exports[`when building domain source map should have line, column, text 1`] = `
 DomainSourceMap {
   "documentation": Object {
     "column": 4,
@@ -30,6 +30,11 @@ DomainSourceMap {
     "column": 9,
     "line": 2,
     "tokenText": "DomainName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
   },
   "properties": Array [],
   "queryableFields": Array [],
@@ -95,6 +100,62 @@ Object {
   "column": 2,
   "line": 2,
   "tokenText": "Domain",
+}
+`;
+
+exports[`when building subdomain source map should have line, column, text 1`] = `
+SubdomainSourceMap {
+  "documentation": Object {
+    "column": 4,
+    "line": 3,
+    "tokenText": "documentation",
+  },
+  "domainItems": Array [
+    Object {
+      "column": 4,
+      "line": 5,
+      "tokenText": "domain entity",
+    },
+  ],
+  "entities": Array [],
+  "identityProperties": Array [],
+  "metaEdId": Object {
+    "column": 33,
+    "line": 5,
+    "tokenText": "[2]",
+  },
+  "metaEdName": Object {
+    "column": 12,
+    "line": 2,
+    "tokenText": "SubdomainName",
+  },
+  "namespaceInfo": Object {
+    "column": 0,
+    "line": 1,
+    "tokenText": "Begin Namespace",
+  },
+  "parent": Object {
+    "column": 29,
+    "line": 2,
+    "tokenText": "ParentDomainName",
+  },
+  "parentMetaEdName": Object {
+    "column": 29,
+    "line": 2,
+    "tokenText": "ParentDomainName",
+  },
+  "position": Object {
+    "column": 13,
+    "line": 6,
+    "tokenText": "1",
+  },
+  "properties": Array [],
+  "queryableFields": Array [],
+  "type": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Subdomain",
+  },
 }
 `;
 

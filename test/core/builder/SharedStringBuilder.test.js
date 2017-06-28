@@ -441,10 +441,9 @@ describe('when building shared string with invalid trailing text', () => {
   });
 });
 
-describe('when building shared string in extension namespace', () => {
+describe('when building shared string source map', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
   const validationFailures: Array<ValidationFailure> = [];
-  const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
@@ -457,7 +456,7 @@ describe('when building shared string in extension namespace', () => {
   beforeAll(() => {
     const builder = new SharedStringBuilder(entityRepository, validationFailures);
 
-    textBuilder
+    MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartSharedString(entityName, metaEdId)
       .withDocumentation(documentation)
@@ -472,6 +471,10 @@ describe('when building shared string in extension namespace', () => {
     expect(entityRepository.sharedString.get(entityName).sourceMap.type).toBeDefined();
   });
 
+  it('should have documentation', () => {
+    expect(entityRepository.sharedString.get(entityName).sourceMap.documentation).toBeDefined();
+  });
+
   it('should have metaEdName', () => {
     expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdName).toBeDefined();
     expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
@@ -480,10 +483,6 @@ describe('when building shared string in extension namespace', () => {
   it('should have metaEdId', () => {
     expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdId).toBeDefined();
     expect(entityRepository.sharedString.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
-
-  it('should have documentation', () => {
-    expect(entityRepository.sharedString.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have namespaceInfo', () => {

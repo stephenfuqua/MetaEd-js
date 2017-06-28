@@ -51,12 +51,6 @@ Array [
 ]
 `;
 
-exports[`when building domain entity extension with no domain entity extension name should have no viable alternative error 2`] = `
-Array [
-  "no viable alternative at input 'Domain Entityadditions', column: 17, line: 2, token: additions",
-]
-`;
-
 exports[`when building domain entity extension with no property should have mismatched input error 1`] = `
 Array [
   "mismatched input 'End Namespace' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year'}, column: 0, line: 3, token: End Namespace",
