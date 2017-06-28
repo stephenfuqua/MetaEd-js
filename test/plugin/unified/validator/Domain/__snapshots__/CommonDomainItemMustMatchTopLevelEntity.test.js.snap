@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when common domain item has no matching top level entity should have validation failure -> message 1`] = `"Common Domain Item property 'CommonDomainItemName' does not match any declared Common."`;
+
+exports[`when common domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;

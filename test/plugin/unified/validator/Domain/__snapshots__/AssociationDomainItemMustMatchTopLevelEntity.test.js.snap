@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when association domain item has no matching top level entity should have validation failure -> message 1`] = `"Association Domain Item property 'AssociationDomainItemName' does not match any declared Association or Association Subclass."`;
+
+exports[`when association domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;

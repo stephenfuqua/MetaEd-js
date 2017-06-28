@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity domain item has no matching top level entity should have validation failure -> message 1`] = `"Domain Entity Domain Item property 'DomainEntityDomainItemName' does not match any declared Domain Entity or Domain Entity Subclass."`;
+
+exports[`when domain entity domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;
