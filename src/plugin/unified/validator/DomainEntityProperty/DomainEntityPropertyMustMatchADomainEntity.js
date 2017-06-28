@@ -10,11 +10,11 @@ export function validate(repository: Repository, propertyIndex: PropertyIndex): 
 
   const failures: Array<ValidationFailure> = [];
   properties.forEach(property => {
-    if (repository.entity.domainEntity.get(property.metaEdName) == null) {
+    if (!repository.entity.domainEntity.has(property.metaEdName) && !repository.entity.domainEntitySubclass.has(property.metaEdName)) {
       failures.push({
         validatorName: 'DomainEntityPropertyMustMatchADomainEntity',
         category: 'error',
-        message: `Domain entity property '${property.metaEdName}' does not match any declared Domain Entity.`,
+        message: `Domain entity property '${property.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass.`,
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });
@@ -23,6 +23,3 @@ export function validate(repository: Repository, propertyIndex: PropertyIndex): 
 
   return failures;
 }
-
-
-// TODO: this is incomplete - also handle domain enity subclass, also needs tests - see Association Property for example
