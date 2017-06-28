@@ -89,11 +89,15 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
     expect(repository.entity.enumeration.size).toBe(1);
   });
 
-  it('should have validation failure', () => {
-    expect(failures).toHaveLength(1);
+  it('should have multiple validation failure', () => {
+    expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> message');
     expect(failures[0].sourceMap).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap');
+    expect(failures[1].validatorName).toBe('EnumerationItemsMustBeUnique');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> message');
+    expect(failures[1].sourceMap).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap');
   });
 });

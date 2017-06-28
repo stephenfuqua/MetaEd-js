@@ -5,24 +5,24 @@ import type { EnumerationItem } from '../../../../core/model/EnumerationItem';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
-function getShortDescriptions(enumerationItems: Array<EnumerationItem>): Array<string> {
-  return enumerationItems.map(x => x.shortDescription);
-}
-
-export function failEnumerationItemDuplicates(
+export function failEnumerationItemRedeclarations(
   validatorName: string,
   entity: Descriptor | Enumeration,
   enumerationItems: Array<EnumerationItem>,
   failures: Array<ValidationFailure>) {
-  const duplicates: Array<string> = findDuplicates(getShortDescriptions(enumerationItems));
-  if (duplicates.length > 0) {
+  const shortDescriptions: Array<string> = enumerationItems.map(x => x.shortDescription);
+  const duplicates: Array<string> = findDuplicates(shortDescriptions);
+
+  duplicates.forEach(duplicate => {
+    const enumerationItem = enumerationItems.find(x => x.shortDescription === duplicate);
+    if (enumerationItem == null) return;
+
     failures.push({
       validatorName,
       category: 'error',
-      message: `${entity.typeHumanizedName} ${entity.metaEdName} declares duplicate item${duplicates.length > 1 ? 's' : ''} ${duplicates.join(', ')}. `,
-      // TODO: update with correct source map once merged
-      sourceMap: entity.sourceMap.type,
+      message: `${entity.typeHumanizedName} ${entity.metaEdName} redeclares item ${duplicate}.`,
+      sourceMap: enumerationItem.sourceMap.type,
       fileMap: null,
     });
-  }
+  });
 }

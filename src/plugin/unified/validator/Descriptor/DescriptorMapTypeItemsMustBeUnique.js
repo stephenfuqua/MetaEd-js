@@ -3,7 +3,7 @@
 import type { Repository } from '../../../../core/model/Repository';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
 import type { PropertyIndex } from '../../../../core/model/property/PropertyIndex';
-import { failEnumerationItemDuplicates } from '../ValidatorShared/FailEnumerationItemDuplicates';
+import { failEnumerationItemRedeclarations } from '../ValidatorShared/FailEnumerationItemRedeclarations';
 
 // eslint-disable-next-line no-unused-vars
 export function validate(repository: Repository, propertyIndex?: PropertyIndex): Array<ValidationFailure> {
@@ -11,7 +11,7 @@ export function validate(repository: Repository, propertyIndex?: PropertyIndex):
 
   repository.entity.descriptor.forEach(descriptor => {
     if (descriptor.mapTypeEnumeration.enumerationItems.length > 1) {
-      failEnumerationItemDuplicates('DescriptorMapTypeItemsMustBeUnique', descriptor, descriptor.mapTypeEnumeration.enumerationItems, failures);
+      failEnumerationItemRedeclarations('DescriptorMapTypeItemsMustBeUnique', descriptor, descriptor.mapTypeEnumeration.enumerationItems, failures);
     }
   });
 

@@ -1,21 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName declares duplicate item ShortDescription. "`;
+exports[`when enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName redeclares item ShortDescription."`;
 
 exports[`when enumeration items have duplicate short descriptions should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Enumeration",
+  "column": 4,
+  "line": 5,
+  "tokenText": "item",
 }
 `;
 
-exports[`when enumeration items have multiple duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName declares duplicate items ShortDescription1, ShortDescription2. "`;
+exports[`when enumeration items have multiple duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName redeclares item ShortDescription1."`;
+
+exports[`when enumeration items have multiple duplicate short descriptions should have validation failure -> message 2`] = `"Enumeration EntityName redeclares item ShortDescription2."`;
 
 exports[`when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Enumeration",
+  "column": 4,
+  "line": 5,
+  "tokenText": "item",
+}
+`;
+
+exports[`when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 4,
+  "line": 11,
+  "tokenText": "item",
 }
 `;

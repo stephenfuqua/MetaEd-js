@@ -1,21 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when map type enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Descriptor EntityName declares duplicate item ShortDescription. "`;
+exports[`when map type enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Descriptor EntityName redeclares item ShortDescription."`;
 
 exports[`when map type enumeration items have duplicate short descriptions should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Descriptor",
+  "column": 6,
+  "line": 8,
+  "tokenText": "item",
 }
 `;
 
-exports[`when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message 1`] = `"Descriptor EntityName declares duplicate items ShortDescription1, ShortDescription2. "`;
+exports[`when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message 1`] = `"Descriptor EntityName redeclares item ShortDescription1."`;
+
+exports[`when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message 2`] = `"Descriptor EntityName redeclares item ShortDescription2."`;
 
 exports[`when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap 1`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Descriptor",
+  "column": 6,
+  "line": 8,
+  "tokenText": "item",
+}
+`;
+
+exports[`when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap 2`] = `
+Object {
+  "column": 6,
+  "line": 14,
+  "tokenText": "item",
 }
 `;
