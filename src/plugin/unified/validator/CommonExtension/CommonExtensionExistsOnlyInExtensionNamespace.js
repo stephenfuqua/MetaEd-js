@@ -6,12 +6,12 @@ import type { PropertyIndex } from '../../../../core/model/property/PropertyInde
 // eslint-disable-next-line no-unused-vars
 export function validate(repository: Repository, propertyIndex?: PropertyIndex): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.domainEntityExtension.forEach(entity => {
-    if (!repository.entity.domainEntity.has(entity.metaEdName) && !repository.entity.domainEntitySubclass.has(entity.metaEdName)) {
+  repository.entity.commonExtension.forEach(entity => {
+    if (!entity.namespaceInfo.isExtension) {
       failures.push({
-        validatorName: 'DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass',
+        validatorName: 'CommonExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
-        message: `Domain Entity additions '${entity.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass.`,
+        message: `Common additions '${entity.metaEdName}' is not valid in core namespace '${entity.namespaceInfo.namespace}`,
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
@@ -20,4 +20,3 @@ export function validate(repository: Repository, propertyIndex?: PropertyIndex):
 
   return failures;
 }
-
