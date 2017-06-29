@@ -1,7 +1,7 @@
 // @flow
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import type { Repository } from '../../../../../src/core/model/Repository';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/CrossEntity/MostEntitiesCannotHaveSameName';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
@@ -15,7 +15,7 @@ import InterchangeBuilder from '../../../../../src/core/builder/InterchangeBuild
 import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
 
 describe('when entities have different names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -33,15 +33,15 @@ describe('when entities have different names', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity and one association', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.association.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.association.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -50,7 +50,7 @@ describe('when entities have different names', () => {
 });
 
 describe('when DE and Association have identical names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -69,15 +69,15 @@ describe('when DE and Association have identical names', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity and one association', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.association.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.association.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -96,7 +96,7 @@ describe('when DE and Association have identical names', () => {
 });
 
 describe('when DE has same name as DE extension', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -114,15 +114,15 @@ describe('when DE has same name as DE extension', () => {
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one DE and one DE extension', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -131,7 +131,7 @@ describe('when DE has same name as DE extension', () => {
 });
 
 describe('when Association has same name as Association extension', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -151,15 +151,15 @@ describe('when Association has same name as Association extension', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one DE and one DE extension', () => {
-    expect(repository.entity.association.size).toBe(1);
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.association.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -168,7 +168,7 @@ describe('when Association has same name as Association extension', () => {
 });
 
 describe('when DE and SharedInteger have identical names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -186,15 +186,15 @@ describe('when DE and SharedInteger have identical names', () => {
       .withEndSharedInteger()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity and one shared integer', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.sharedInteger.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -213,7 +213,7 @@ describe('when DE and SharedInteger have identical names', () => {
 });
 
 describe('when DE and Common have identical names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -231,15 +231,15 @@ describe('when DE and Common have identical names', () => {
       .withEndCommon()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity and one common', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.common.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.common.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -258,7 +258,7 @@ describe('when DE and Common have identical names', () => {
 });
 
 describe('when DE has same name as descriptor', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -276,15 +276,15 @@ describe('when DE has same name as descriptor', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one DE and one descriptor', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.descriptor.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.descriptor.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -293,7 +293,7 @@ describe('when DE has same name as descriptor', () => {
 });
 
 describe('when DE has same name as enumeration', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -311,15 +311,15 @@ describe('when DE has same name as enumeration', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one DE and one enumeration', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.enumeration.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -328,7 +328,7 @@ describe('when DE has same name as enumeration', () => {
 });
 
 describe('when DE has same name as interchange', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -346,15 +346,15 @@ describe('when DE has same name as interchange', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new InterchangeBuilder(repository.entity, []));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one DE and one interchange', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
-    expect(repository.entity.interchange.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {

@@ -1,13 +1,13 @@
 // @flow
 import SharedIntegerBuilder from '../../../../../src/core/builder/SharedIntegerBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating shared integer with max value greater than min value', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -19,9 +19,9 @@ describe('when validating shared integer with max value greater than min value',
       .withMaxValue('100')
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures', () => {
@@ -30,7 +30,7 @@ describe('when validating shared integer with max value greater than min value',
 });
 
 describe('when validating shared integer with min value greater than max value', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -42,13 +42,13 @@ describe('when validating shared integer with min value greater than max value',
       .withMaxValue('10')
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one shared integer', () => {
-    expect(repository.entity.sharedInteger.size).toBe(1);
+    expect(metaEd.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures', () => {
@@ -61,7 +61,7 @@ describe('when validating shared integer with min value greater than max value',
 });
 
 describe('when validating shared short with max value greater than min value', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -73,9 +73,9 @@ describe('when validating shared short with max value greater than min value', (
       .withMaxValue('100')
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures', () => {
@@ -84,7 +84,7 @@ describe('when validating shared short with max value greater than min value', (
 });
 
 describe('when validating shared short with min value greater than max value', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -96,13 +96,13 @@ describe('when validating shared short with min value greater than max value', (
       .withMaxValue('10')
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new SharedIntegerBuilder(repository.entity, []));
+      .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one shared integer', () => {
-    expect(repository.entity.sharedInteger.size).toBe(1);
+    expect(metaEd.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures', () => {

@@ -5,6 +5,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { Interchange, InterchangeSourceMap } from '../model/Interchange';
 import type { InterchangeItem } from '../model/InterchangeItem';
 import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { interchangeFactory, NoInterchange } from '../model/Interchange';
@@ -23,9 +24,9 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   currentInterchangeItem: InterchangeItem;
   validationFailures: Array<ValidationFailure>;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = entityRepository;
+    this.entityRepository = metaEd.entity;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentInterchange = NoInterchange;
     this.currentInterchangeItem = NoInterchangeItem;

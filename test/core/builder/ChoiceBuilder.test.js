@@ -1,13 +1,12 @@
 // @noflow
 import ChoiceBuilder from '../../../src/core/builder/ChoiceBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building choice in extension namespace', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -20,7 +19,7 @@ describe('when building choice in extension namespace', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -33,12 +32,12 @@ describe('when building choice in extension namespace', () => {
   });
 
   it('should build one choice', () => {
-    expect(entityRepository.choice.size).toBe(1);
+    expect(metaEd.entity.choice.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.choice.get(entityName)).toBeDefined();
-    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.choice.get(entityName)).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -46,27 +45,27 @@ describe('when building choice in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.choice.get(entityName).documentation).toBe(entityDocumentation);
+    expect(metaEd.entity.choice.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.choice.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.choice.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = entityRepository.choice.get(entityName).properties[0];
+    const property = metaEd.entity.choice.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -77,7 +76,7 @@ describe('when building choice in extension namespace', () => {
 });
 
 describe('when building duplicate choices', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -90,7 +89,7 @@ describe('when building duplicate choices', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -108,12 +107,12 @@ describe('when building duplicate choices', () => {
   });
 
   it('should build one choice', () => {
-    expect(entityRepository.choice.size).toBe(1);
+    expect(metaEd.entity.choice.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.choice.get(entityName)).toBeDefined();
-    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.choice.get(entityName)).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -134,7 +133,7 @@ describe('when building duplicate choices', () => {
 });
 
 describe('when building choice with no choice name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -148,7 +147,7 @@ describe('when building choice with no choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -161,7 +160,7 @@ describe('when building choice with no choice name', () => {
   });
 
   it('should not build choice', () => {
-    expect(entityRepository.choice.size).toBe(0);
+    expect(metaEd.entity.choice.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -170,7 +169,7 @@ describe('when building choice with no choice name', () => {
 });
 
 describe('when building choice with lowercase choice name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -184,7 +183,7 @@ describe('when building choice with lowercase choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -197,12 +196,12 @@ describe('when building choice with lowercase choice name', () => {
   });
 
   it('should build one choice', () => {
-    expect(entityRepository.choice.size).toBe(1);
+    expect(metaEd.entity.choice.size).toBe(1);
   });
 
   it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(entityRepository.choice.get('Name')).toBeDefined();
-    expect(entityRepository.choice.get('Name').metaEdName).toBe('Name');
+    expect(metaEd.entity.choice.get('Name')).toBeDefined();
+    expect(metaEd.entity.choice.get('Name').metaEdName).toBe('Name');
   });
 
   it('should have no validation failures', () => {
@@ -210,27 +209,27 @@ describe('when building choice with lowercase choice name', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.choice.get('Name').namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.choice.get('Name').namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.choice.get('Name').metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.choice.get('Name').metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.choice.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.choice.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.choice.get('Name').documentation).toBe(entityDocumentation);
+    expect(metaEd.entity.choice.get('Name').documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.choice.get('Name').properties).toHaveLength(1);
+    expect(metaEd.entity.choice.get('Name').properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = entityRepository.choice.get('Name').properties[0];
+    const property = metaEd.entity.choice.get('Name').properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -245,7 +244,7 @@ describe('when building choice with lowercase choice name', () => {
 });
 
 describe('when building choice with no documentation', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -258,7 +257,7 @@ describe('when building choice with no documentation', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -270,8 +269,8 @@ describe('when building choice with no documentation', () => {
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.choice.get(entityName)).toBeDefined();
-    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.choice.get(entityName)).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -279,27 +278,27 @@ describe('when building choice with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(entityRepository.choice.get(entityName).documentation).toBe('');
+    expect(metaEd.entity.choice.get(entityName).documentation).toBe('');
   });
 
   it('should have one property', () => {
-    expect(entityRepository.choice.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.choice.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = entityRepository.choice.get(entityName).properties[0];
+    const property = metaEd.entity.choice.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -314,7 +313,7 @@ describe('when building choice with no documentation', () => {
 });
 
 describe('when building choice with no property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -325,7 +324,7 @@ describe('when building choice with no property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -337,8 +336,8 @@ describe('when building choice with no property', () => {
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.choice.get(entityName)).toBeDefined();
-    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.choice.get(entityName)).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -346,23 +345,23 @@ describe('when building choice with no property', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.choice.get(entityName).documentation).toBe(entityDocumentation);
+    expect(metaEd.entity.choice.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have no property', () => {
-    expect(entityRepository.choice.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.choice.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -371,7 +370,7 @@ describe('when building choice with no property', () => {
 });
 
 describe('when building choice with invalid trailing text', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -386,7 +385,7 @@ describe('when building choice with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -400,8 +399,8 @@ describe('when building choice with invalid trailing text', () => {
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.choice.get(entityName)).toBeDefined();
-    expect(entityRepository.choice.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.choice.get(entityName)).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -409,27 +408,27 @@ describe('when building choice with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.choice.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.choice.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(entityRepository.choice.get(entityName).documentation).toBe(entityDocumentation);
+    expect(metaEd.entity.choice.get(entityName).documentation).toBe(entityDocumentation);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.choice.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.choice.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const property = entityRepository.choice.get(entityName).properties[0];
+    const property = metaEd.entity.choice.get(entityName).properties[0];
 
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
@@ -444,7 +443,7 @@ describe('when building choice with invalid trailing text', () => {
 });
 
 describe('when building choice source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -457,7 +456,7 @@ describe('when building choice source map', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -470,22 +469,22 @@ describe('when building choice source map', () => {
   });
 
   it('should have a documentation property', () => {
-    expect(entityRepository.choice.get(entityName).sourceMap.documentation).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have a metaEdId property', () => {
-    expect(entityRepository.choice.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
-    expect(entityRepository.choice.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have a type property', () => {
-    expect(entityRepository.choice.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.choice.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have source map data', () => {
-    expect(entityRepository.choice.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.choice.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

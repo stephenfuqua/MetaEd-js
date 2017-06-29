@@ -2,13 +2,13 @@
 import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
 import CommonExtensionBuilder from '../../../../../src/core/builder/CommonExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when common extension correctly has different property names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 
@@ -26,14 +26,14 @@ describe('when common extension correctly has different property names', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(repository.entity.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -42,7 +42,7 @@ describe('when common extension correctly has different property names', () => {
 });
 
 describe('when common extension has duplicate property name', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -61,14 +61,14 @@ describe('when common extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(repository.entity.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
@@ -81,7 +81,7 @@ describe('when common extension has duplicate property name', () => {
 });
 
 describe('when common extension has multiple duplicates', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   const notDuplicatePropertyName: string = 'NotDuplicatePropertyName';
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
@@ -105,10 +105,10 @@ describe('when common extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -128,7 +128,7 @@ describe('when common extension has multiple duplicates', () => {
 });
 
 describe('when common extension has duplicate common property', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -147,10 +147,10 @@ describe('when common extension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -163,7 +163,7 @@ describe('when common extension has duplicate common property', () => {
 });
 
 describe('when common extension has duplicate common extension override property', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -182,10 +182,10 @@ describe('when common extension has duplicate common extension override property
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {

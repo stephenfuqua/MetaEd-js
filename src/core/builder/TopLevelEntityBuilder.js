@@ -7,6 +7,7 @@ import { EntityProperty, NoEntityProperty } from '../model/property/EntityProper
 import { defaultMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
 import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
@@ -37,7 +38,7 @@ import { ShortProperty, shortPropertyFactory, ShortPropertySourceMap } from '../
 import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import type { PropertyRepository } from '../model/property/PropertyRepository';
+import type { PropertyIndex } from '../model/property/PropertyRepository';
 
 function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<string> {
   if (R.any(token => token.exception)(context.ID())) return [];
@@ -53,13 +54,11 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   whenExitingPropertyCommand: Array<() => void>;
   validationFailures: Array<ValidationFailure>;
   currentTopLevelEntityPropertyLookup: Map<string, EntityProperty>;
-  propertyRepository: PropertyRepository;
+  propertyRepository: PropertyIndex;
 
-  constructor(entityRepository: EntityRepository,
-    validationFailures: Array<ValidationFailure>,
-    propertyRepository: PropertyRepository) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = entityRepository;
+    this.entityRepository = metaEd.entity;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentTopLevelEntity = NoTopLevelEntity;
     this.currentProperty = NoEntityProperty;
@@ -67,7 +66,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.whenExitingPropertyCommand = [];
     this.validationFailures = validationFailures;
     this.currentTopLevelEntityPropertyLookup = new Map();
-    this.propertyRepository = propertyRepository;
+    this.propertyRepository = metaEd.propertyIndex;
   }
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {

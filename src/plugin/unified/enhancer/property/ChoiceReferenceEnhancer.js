@@ -1,13 +1,12 @@
 // @flow
-import type { EntityRepository } from '../../../../core/model/Repository';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { EnhancerResult } from '../../../../core/enhancer/EnhancerResult';
 
 const enhancerName: string = 'ChoiceReferenceEnhancer';
 
-export function enhance(repository: EntityRepository, propertyRepository: PropertyRepository): EnhancerResult {
-  propertyRepository.choice.forEach(property => {
-    const referencedEntity = repository.choice.get(property.metaEdName);
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  metaEd.propertyIndex.choice.forEach(property => {
+    const referencedEntity = metaEd.entity.choice.get(property.metaEdName);
     if (referencedEntity) property.referencedEntity = referencedEntity;
   });
 

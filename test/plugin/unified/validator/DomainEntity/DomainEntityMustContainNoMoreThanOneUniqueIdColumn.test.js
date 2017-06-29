@@ -1,13 +1,13 @@
 // @flow
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity with no UniqueId fields', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -20,13 +20,13 @@ describe('when validating domain entity with no UniqueId fields', () => {
       .withStringProperty('Property2', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -35,7 +35,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
 });
 
 describe('when validating domain entity with one UniqueId field', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -48,13 +48,13 @@ describe('when validating domain entity with one UniqueId field', () => {
       .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -63,7 +63,7 @@ describe('when validating domain entity with one UniqueId field', () => {
 });
 
 describe('when validating domain entity with two UniqueId fields', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -77,13 +77,13 @@ describe('when validating domain entity with two UniqueId fields', () => {
       .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -96,7 +96,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
 });
 
 describe('when validating domain entity with two UniqueId fields in extension namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -110,13 +110,13 @@ describe('when validating domain entity with two UniqueId fields in extension na
       .withStringProperty('Property', 'doc', true, false, '50')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {

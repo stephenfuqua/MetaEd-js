@@ -1,13 +1,13 @@
 // @flow
 import DomainEntityExtensionBuilder from '../../../../../src/core/builder/DomainEntityExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/DomainEntityExtension/DomainEntityExtensionExistsOnlyInExtensionNamespace';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when domain entity extension is in correct namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -25,13 +25,13 @@ describe('when domain entity extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -40,7 +40,7 @@ describe('when domain entity extension is in correct namespace', () => {
 });
 
 describe('when domain entity extension is in core namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -56,13 +56,13 @@ describe('when domain entity extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {

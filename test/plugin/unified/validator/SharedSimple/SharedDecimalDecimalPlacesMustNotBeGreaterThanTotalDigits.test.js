@@ -1,13 +1,13 @@
 // @flow
 import SharedDecimalBuilder from '../../../../../src/core/builder/SharedDecimalBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/SharedSimple/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating shared decimal with total digits greater than decimal places', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -19,9 +19,9 @@ describe('when validating shared decimal with total digits greater than decimal 
       .withDecimalPlaces('2')
       .withEndSharedDecimal()
       .withEndNamespace()
-      .sendToListener(new SharedDecimalBuilder(repository.entity, []));
+      .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures', () => {
@@ -30,7 +30,7 @@ describe('when validating shared decimal with total digits greater than decimal 
 });
 
 describe('when validating shared decimal with same decimal places and total digits', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -42,9 +42,9 @@ describe('when validating shared decimal with same decimal places and total digi
       .withDecimalPlaces('10')
       .withEndSharedDecimal()
       .withEndNamespace()
-      .sendToListener(new SharedDecimalBuilder(repository.entity, []));
+      .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures', () => {
@@ -53,7 +53,7 @@ describe('when validating shared decimal with same decimal places and total digi
 });
 
 describe('when validating shared decimal with decimal places greater than total digits', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -65,13 +65,13 @@ describe('when validating shared decimal with decimal places greater than total 
       .withDecimalPlaces('11')
       .withEndSharedDecimal()
       .withEndNamespace()
-      .sendToListener(new SharedDecimalBuilder(repository.entity, []));
+      .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one shared decimal', () => {
-    expect(repository.entity.sharedDecimal.size).toBe(1);
+    expect(metaEd.entity.sharedDecimal.size).toBe(1);
   });
 
   it('should have validation failures', () => {

@@ -1,7 +1,6 @@
 // @flow
 import antlr4 from 'antlr4';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
-import { repositoryFactory } from '../model/Repository';
 import type { State } from '../State';
 import AssociationBuilder from '../builder/AssociationBuilder';
 import AssociationExtensionBuilder from '../builder/AssociationExtensionBuilder';
@@ -22,28 +21,25 @@ import SharedIntegerBuilder from '../builder/SharedIntegerBuilder';
 import SharedStringBuilder from '../builder/SharedStringBuilder';
 
 export function execute(state: State): State {
-  state.repository = repositoryFactory();
-  const entityRepository = state.repository.entity;
-  const propertyRepository = state.repository.property;
   const builders: Array<MetaEdGrammarListener> = [];
 
-  builders.push(new AssociationBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new AssociationExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new AssociationSubclassBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new ChoiceBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new CommonBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new CommonExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new DescriptorBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new DomainBuilder(entityRepository, state.validationFailure));
-  builders.push(new DomainEntityBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new DomainEntityExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new DomainEntitySubclassBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new EnumerationBuilder(entityRepository, state.validationFailure, propertyRepository));
-  builders.push(new InterchangeBuilder(entityRepository, state.validationFailure));
-  builders.push(new NamespaceInfoBuilder(entityRepository, state.validationFailure));
-  builders.push(new SharedDecimalBuilder(entityRepository, state.validationFailure));
-  builders.push(new SharedIntegerBuilder(entityRepository, state.validationFailure));
-  builders.push(new SharedStringBuilder(entityRepository, state.validationFailure));
+  builders.push(new AssociationBuilder(state.metaEd, state.validationFailure));
+  builders.push(new AssociationExtensionBuilder(state.metaEd, state.validationFailure));
+  builders.push(new AssociationSubclassBuilder(state.metaEd, state.validationFailure));
+  builders.push(new ChoiceBuilder(state.metaEd, state.validationFailure));
+  builders.push(new CommonBuilder(state.metaEd, state.validationFailure));
+  builders.push(new CommonExtensionBuilder(state.metaEd, state.validationFailure));
+  builders.push(new DescriptorBuilder(state.metaEd, state.validationFailure));
+  builders.push(new DomainBuilder(state.metaEd, state.validationFailure));
+  builders.push(new DomainEntityBuilder(state.metaEd, state.validationFailure));
+  builders.push(new DomainEntityExtensionBuilder(state.metaEd, state.validationFailure));
+  builders.push(new DomainEntitySubclassBuilder(state.metaEd, state.validationFailure));
+  builders.push(new EnumerationBuilder(state.metaEd, state.validationFailure));
+  builders.push(new InterchangeBuilder(state.metaEd, state.validationFailure));
+  builders.push(new NamespaceInfoBuilder(state.metaEd, state.validationFailure));
+  builders.push(new SharedDecimalBuilder(state.metaEd, state.validationFailure));
+  builders.push(new SharedIntegerBuilder(state.metaEd, state.validationFailure));
+  builders.push(new SharedStringBuilder(state.metaEd, state.validationFailure));
 
   builders.forEach(builder => antlr4.tree.ParseTreeWalker.DEFAULT.walk(builder, state.parseTree));
   return state;

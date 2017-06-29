@@ -1,12 +1,11 @@
 // @flow
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 
-export function validate(repository: Repository, propertyRepository: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  propertyRepository.domainEntity.forEach(property => {
-    if (!repository.entity.domainEntity.has(property.metaEdName) && !repository.entity.domainEntitySubclass.has(property.metaEdName)) {
+  metaEd.propertyIndex.domainEntity.forEach(property => {
+    if (!metaEd.entity.domainEntity.has(property.metaEdName) && !metaEd.entity.domainEntitySubclass.has(property.metaEdName)) {
       failures.push({
         validatorName: 'DomainEntityPropertyMustMatchADomainEntity',
         category: 'error',

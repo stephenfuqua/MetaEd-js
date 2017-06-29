@@ -4,7 +4,8 @@ import type { FileSet } from './task/MetaEdFile';
 import type { FileIndex } from './task/FileIndex';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import type { ValidationFailure } from './validator/ValidationFailure';
-import type { Repository } from './model/Repository';
+import type { MetaEdEnvironment } from './MetaEdEnvironment';
+import { metaEdEnvironmentFactory } from './MetaEdEnvironment';
 
 export type State = {
   // the collection of error messages from syntax and semantic validation, and other processes
@@ -26,8 +27,8 @@ export type State = {
   // the ANTLR parse tree of the concatenated .metaed files
   parseTree: ?MetaEdGrammar,
 
-  // the data repository
-  repository: ?Repository,
+  // the MetaEd environment
+  metaEd: MetaEdEnvironment,
 };
 
 export const defaultStateFactory: () => State = () =>
@@ -38,5 +39,5 @@ export const defaultStateFactory: () => State = () =>
     loadedFileSet: [],
     fileIndex: null,
     parseTree: null,
-    repository: null,
+    metaEd: metaEdEnvironmentFactory(),
   });

@@ -1,13 +1,12 @@
 // @noflow
 import CommonExtensionBuilder from '../../../src/core/builder/CommonExtensionBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building common extension in extension namespace', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -16,7 +15,7 @@ describe('when building common extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -28,12 +27,12 @@ describe('when building common extension in extension namespace', () => {
   });
 
   it('should build one common extension', () => {
-    expect(entityRepository.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.commonExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.commonExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.commonExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -41,23 +40,23 @@ describe('when building common extension in extension namespace', () => {
   });
 
   it('should have extendee name', () => {
-    expect(entityRepository.commonExtension.get(entityName).baseEntityName).toBe(entityName);
+    expect(metaEd.entity.commonExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
   it('should have correct namespace', () => {
-    expect(entityRepository.commonExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.commonExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(entityRepository.commonExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.commonExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.commonExtension.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.commonExtension.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = entityRepository.commonExtension.get(entityName).properties[0];
+    const integerProperty = metaEd.entity.commonExtension.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -66,7 +65,7 @@ describe('when building common extension in extension namespace', () => {
 });
 
 describe('when building multiple common extensions', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -75,7 +74,7 @@ describe('when building multiple common extensions', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -91,12 +90,12 @@ describe('when building multiple common extensions', () => {
   });
 
   it('should build one common extension', () => {
-    expect(entityRepository.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.commonExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.commonExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.commonExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -117,7 +116,7 @@ describe('when building multiple common extensions', () => {
 });
 
 describe('when building common extension with missing common extension name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -127,7 +126,7 @@ describe('when building common extension with missing common extension name', ()
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -144,7 +143,7 @@ describe('when building common extension with missing common extension name', ()
 });
 
 describe('when building common extension with lowercase common extension name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -154,7 +153,7 @@ describe('when building common extension with lowercase common extension name', 
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -171,7 +170,7 @@ describe('when building common extension with lowercase common extension name', 
 });
 
 describe('when building common extension with missing property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -180,7 +179,7 @@ describe('when building common extension with missing property', () => {
   const entityName: string = 'EntityName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -196,7 +195,7 @@ describe('when building common extension with missing property', () => {
 });
 
 describe('when building common extension with invalid trailing text', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -207,7 +206,7 @@ describe('when building common extension with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -225,7 +224,7 @@ describe('when building common extension with invalid trailing text', () => {
 });
 
 describe('when building common extension source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -234,7 +233,7 @@ describe('when building common extension source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new CommonExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -246,22 +245,22 @@ describe('when building common extension source map', () => {
   });
 
   it('should have a baseEntityName property', () => {
-    expect(entityRepository.commonExtension.get(entityName).sourceMap.baseEntityName).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).sourceMap.baseEntityName).toBeDefined();
   });
 
   it('should have a metaEdId property', () => {
-    expect(entityRepository.commonExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
-    expect(entityRepository.commonExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have a type property', () => {
-    expect(entityRepository.commonExtension.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.commonExtension.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have source map data', () => {
-    expect(entityRepository.commonExtension.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.commonExtension.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

@@ -3,13 +3,13 @@ import AssociationBuilder from '../../../../../src/core/builder/AssociationBuild
 import AssociationSubclassBuilder from '../../../../../src/core/builder/AssociationSubclassBuilder';
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when association property has identifier of association', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -30,10 +30,10 @@ describe('when association property has identifier of association', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {
@@ -42,7 +42,7 @@ describe('when association property has identifier of association', () => {
 });
 
 describe('when association property has identifier of association subclass', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -61,10 +61,10 @@ describe('when association property has identifier of association subclass', () 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {
@@ -73,7 +73,7 @@ describe('when association property has identifier of association subclass', () 
 });
 
 describe('when association property has invalid identifier', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   let failures: Array<ValidationFailure>;
 
@@ -85,9 +85,9 @@ describe('when association property has invalid identifier', () => {
       .withAssociationProperty('UndefinedEntityName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {

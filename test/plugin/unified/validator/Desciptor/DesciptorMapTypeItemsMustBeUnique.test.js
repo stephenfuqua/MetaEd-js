@@ -1,13 +1,13 @@
 // @noflow
 import DescriptorBuilder from '../../../../../src/core/builder/DescriptorBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when map type enumeration items have different short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -22,13 +22,13 @@ describe('when map type enumeration items have different short descriptions', ()
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(repository.entity.descriptor.size).toBe(1);
+    expect(metaEd.entity.descriptor.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -37,7 +37,7 @@ describe('when map type enumeration items have different short descriptions', ()
 });
 
 describe('when map type enumeration items have duplicate short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -52,13 +52,13 @@ describe('when map type enumeration items have duplicate short descriptions', ()
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(repository.entity.descriptor.size).toBe(1);
+    expect(metaEd.entity.descriptor.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -71,7 +71,7 @@ describe('when map type enumeration items have duplicate short descriptions', ()
 });
 
 describe('when map type enumeration items have multiple duplicate short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -88,13 +88,13 @@ describe('when map type enumeration items have multiple duplicate short descript
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(repository.entity.descriptor.size).toBe(1);
+    expect(metaEd.entity.descriptor.size).toBe(1);
   });
 
   it('should have multiple validation failure', () => {

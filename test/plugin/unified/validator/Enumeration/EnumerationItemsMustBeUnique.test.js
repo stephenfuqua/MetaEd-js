@@ -1,13 +1,13 @@
 // @noflow
 import EnumerationBuilder from '../../../../../src/core/builder/EnumerationBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/Enumeration/EnumerationItemsMustBeUnique';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when enumeration items have different short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -19,13 +19,13 @@ describe('when enumeration items have different short descriptions', () => {
       .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(repository.entity.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
 
@@ -35,7 +35,7 @@ describe('when enumeration items have different short descriptions', () => {
 });
 
 describe('when enumeration items have duplicate short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -47,13 +47,13 @@ describe('when enumeration items have duplicate short descriptions', () => {
       .withEnumerationItem('ShortDescription', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(repository.entity.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -66,7 +66,7 @@ describe('when enumeration items have duplicate short descriptions', () => {
 });
 
 describe('when enumeration items have multiple duplicate short descriptions', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -80,13 +80,13 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
       .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(repository.entity.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should have multiple validation failure', () => {

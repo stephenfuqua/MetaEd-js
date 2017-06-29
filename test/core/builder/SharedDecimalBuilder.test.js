@@ -1,12 +1,12 @@
 // @noflow
 import SharedDecimalBuilder from '../../../src/core/builder/SharedDecimalBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building shared decimal in extension namespace', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -20,7 +20,7 @@ describe('when building shared decimal in extension namespace', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -33,12 +33,12 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should build one shared decimal', () => {
-    expect(entityRepository.sharedDecimal.size).toBe(1);
+    expect(metaEd.entity.sharedDecimal.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.sharedDecimal.get(entityName)).toBeDefined();
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.sharedDecimal.get(entityName)).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -46,40 +46,40 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 });
 
 describe('when building duplicate shared decimals', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -93,7 +93,7 @@ describe('when building duplicate shared decimals', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -111,12 +111,12 @@ describe('when building duplicate shared decimals', () => {
   });
 
   it('should build one shared decimal', () => {
-    expect(entityRepository.sharedDecimal.size).toBe(1);
+    expect(metaEd.entity.sharedDecimal.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.sharedDecimal.get(entityName)).toBeDefined();
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.sharedDecimal.get(entityName)).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -137,7 +137,7 @@ describe('when building duplicate shared decimals', () => {
 });
 
 describe('when building shared decimal with no shared decimal name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -152,7 +152,7 @@ describe('when building shared decimal with no shared decimal name', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -165,7 +165,7 @@ describe('when building shared decimal with no shared decimal name', () => {
   });
 
   it('should not build shared decimal', () => {
-    expect(entityRepository.sharedInteger.size).toBe(0);
+    expect(metaEd.entity.sharedInteger.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -174,7 +174,7 @@ describe('when building shared decimal with no shared decimal name', () => {
 });
 
 describe('when building shared decimal with lowercase shared decimal name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -189,7 +189,7 @@ describe('when building shared decimal with lowercase shared decimal name', () =
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -202,44 +202,44 @@ describe('when building shared decimal with lowercase shared decimal name', () =
   });
 
   it('should build one shared decimal', () => {
-    expect(entityRepository.sharedDecimal.size).toBe(1);
+    expect(metaEd.entity.sharedDecimal.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.sharedDecimal.get('Name')).toBeDefined();
-    expect(entityRepository.sharedDecimal.get('Name').metaEdName).toBe('Name');
+    expect(metaEd.entity.sharedDecimal.get('Name')).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get('Name').metaEdName).toBe('Name');
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get('Name').namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get('Name').namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get('Name').metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get('Name').metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get('Name').documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get('Name').documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get('Name').totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get('Name').totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get('Name').decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get('Name').decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get('Name').minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get('Name').minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get('Name').maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get('Name').maxValue).toBe(maxValue);
   });
 
   it('should have extraneous input error', () => {
@@ -248,7 +248,7 @@ describe('when building shared decimal with lowercase shared decimal name', () =
 });
 
 describe('when building shared decimal with no documentation', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -262,7 +262,7 @@ describe('when building shared decimal with no documentation', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -274,35 +274,35 @@ describe('when building shared decimal with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should not have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe('');
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have mismatched input error', () => {
@@ -311,7 +311,7 @@ describe('when building shared decimal with no documentation', () => {
 });
 
 describe('when building shared decimal with no metaed id', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -326,7 +326,7 @@ describe('when building shared decimal with no metaed id', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -339,35 +339,35 @@ describe('when building shared decimal with no metaed id', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe('');
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have token recognition error', () => {
@@ -376,7 +376,7 @@ describe('when building shared decimal with no metaed id', () => {
 });
 
 describe('when building shared decimal with no total digits property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -390,7 +390,7 @@ describe('when building shared decimal with no total digits property', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -405,35 +405,35 @@ describe('when building shared decimal with no total digits property', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should not have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe('');
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have extraneous input error', () => {
@@ -442,7 +442,7 @@ describe('when building shared decimal with no total digits property', () => {
 });
 
 describe('when building shared decimal with no total digits value', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -457,7 +457,7 @@ describe('when building shared decimal with no total digits value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -473,35 +473,35 @@ describe('when building shared decimal with no total digits value', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits because decimal places token was ignored', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(decimalPlaces);
   });
 
   it('should not have decimal places because it was consumed by total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe('');
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have extraneous input and mismatched input error', () => {
@@ -510,7 +510,7 @@ describe('when building shared decimal with no total digits value', () => {
 });
 
 describe('when building shared decimal with no decimal places property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -524,7 +524,7 @@ describe('when building shared decimal with no decimal places property', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -539,35 +539,35 @@ describe('when building shared decimal with no decimal places property', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should not have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe('');
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have mismatched input and extraneous input error', () => {
@@ -576,7 +576,7 @@ describe('when building shared decimal with no decimal places property', () => {
 });
 
 describe('when building shared decimal with no min value', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -591,7 +591,7 @@ describe('when building shared decimal with no min value', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -607,35 +607,35 @@ describe('when building shared decimal with no min value', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue because max value token was ignored', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(`max value${maxValue}`);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(`max value${maxValue}`);
   });
 
   it('should not have maxValue because it was consumed by min value', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe('');
   });
 
   it('should have extraneous input error', () => {
@@ -644,7 +644,7 @@ describe('when building shared decimal with no min value', () => {
 });
 
 describe('when building shared decimal with no max value', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -659,7 +659,7 @@ describe('when building shared decimal with no max value', () => {
   const maxValue = '';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -675,35 +675,35 @@ describe('when building shared decimal with no max value', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should not have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe('');
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe('');
   });
 
   it('should have mismatched input error', () => {
@@ -712,7 +712,7 @@ describe('when building shared decimal with no max value', () => {
 });
 
 describe('when building shared decimal with invalid trailing text', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -728,7 +728,7 @@ describe('when building shared decimal with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -742,35 +742,35 @@ describe('when building shared decimal with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.sharedDecimal.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.sharedDecimal.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.sharedDecimal.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.sharedDecimal.get(entityName).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.sharedDecimal.get(entityName).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.sharedDecimal.get(entityName).maxValue).toBe(maxValue);
   });
 
   it('should have extraneous input error', () => {
@@ -779,7 +779,7 @@ describe('when building shared decimal with invalid trailing text', () => {
 });
 
 describe('when building shared decimal source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -793,7 +793,7 @@ describe('when building shared decimal source map', () => {
   const maxValue = '100';
 
   beforeAll(() => {
-    const builder = new SharedDecimalBuilder(entityRepository, validationFailures);
+    const builder = new SharedDecimalBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -807,45 +807,45 @@ describe('when building shared decimal source map', () => {
 
   // SharedSimpleSourceMap
   it('should have type', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.documentation).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdName).toBeDefined();
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdId).toBeDefined();
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
   it('should have namespaceInfo', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.namespaceInfo).toBeDefined();
   });
 
   // SharedDecimalSourceMap
   it('should have totalDigits', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.totalDigits).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.totalDigits).toBeDefined();
   });
 
   it('should have decimalPlaces', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.decimalPlaces).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.decimalPlaces).toBeDefined();
   });
 
   it('should have minValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.minValue).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.minValue).toBeDefined();
   });
 
   it('should have maxValue', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap.maxValue).toBeDefined();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap.maxValue).toBeDefined();
   });
 
   it('should have line, column, text for each property', () => {
-    expect(entityRepository.sharedDecimal.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.sharedDecimal.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

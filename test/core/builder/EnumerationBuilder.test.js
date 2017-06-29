@@ -1,13 +1,12 @@
 // @noflow
 import EnumerationBuilder from '../../../src/core/builder/EnumerationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building single enumeration', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -20,7 +19,7 @@ describe('when building single enumeration', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -33,12 +32,12 @@ describe('when building single enumeration', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -46,44 +45,44 @@ describe('when building single enumeration', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with short description', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with metaEdId ', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 });
 
 describe('when building school year enumeration', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -94,7 +93,7 @@ describe('when building school year enumeration', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -107,33 +106,33 @@ describe('when building school year enumeration', () => {
   });
 
   it('should build one school year enumeration', () => {
-    expect(entityRepository.schoolYearEnumeration.size).toBe(1);
+    expect(metaEd.entity.schoolYearEnumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.schoolYearEnumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.schoolYearEnumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have type', () => {
-    expect(entityRepository.schoolYearEnumeration.get(entityName).type).toBe(entityType);
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName).type).toBe(entityType);
   });
 
   it('should have source map for type', () => {
-    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have source map for namespaceInfo', () => {
-    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
   });
 
   it('should have source map with line, column, text', () => {
-    expect(entityRepository.schoolYearEnumeration.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.schoolYearEnumeration.get(entityName).sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when building duplicate enumerations', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -146,7 +145,7 @@ describe('when building duplicate enumerations', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -164,12 +163,12 @@ describe('when building duplicate enumerations', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -190,7 +189,7 @@ describe('when building duplicate enumerations', () => {
 });
 
 describe('when building enumeration without item documentation', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -200,7 +199,7 @@ describe('when building enumeration without item documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -213,20 +212,20 @@ describe('when building enumeration without item documentation', () => {
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have enumeration item with short description', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with no documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe('');
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].documentation).toBe('');
   });
 });
 
 describe('when building multiple enumerations', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -237,7 +236,7 @@ describe('when building multiple enumerations', () => {
   const metaEdId2: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -255,25 +254,25 @@ describe('when building multiple enumerations', () => {
   });
 
   it('should build two enumerations', () => {
-    expect(entityRepository.enumeration.size).toBe(2);
+    expect(metaEd.entity.enumeration.size).toBe(2);
   });
 
   it('should both be found in entityRepository', () => {
-    expect(entityRepository.enumeration.get(entityName1)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName1).metaEdName).toBe(entityName1);
+    expect(metaEd.entity.enumeration.get(entityName1)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName1).metaEdName).toBe(entityName1);
 
-    expect(entityRepository.enumeration.get(entityName2)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName2).metaEdName).toBe(entityName2);
+    expect(metaEd.entity.enumeration.get(entityName2)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName2).metaEdName).toBe(entityName2);
   });
 
   it('should both have metaEdIds', () => {
-    expect(entityRepository.enumeration.get(entityName1).metaEdId).toBe(metaEdId1);
-    expect(entityRepository.enumeration.get(entityName2).metaEdId).toBe(metaEdId2);
+    expect(metaEd.entity.enumeration.get(entityName1).metaEdId).toBe(metaEdId1);
+    expect(metaEd.entity.enumeration.get(entityName2).metaEdId).toBe(metaEdId2);
   });
 });
 
 describe('when building enumeration with no enumeration name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -284,7 +283,7 @@ describe('when building enumeration with no enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -297,7 +296,7 @@ describe('when building enumeration with no enumeration name', () => {
   });
 
   it('should not build enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(0);
+    expect(metaEd.entity.enumeration.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -306,7 +305,7 @@ describe('when building enumeration with no enumeration name', () => {
 });
 
 describe('when building enumeration with lowercase enumeration name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -320,7 +319,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -333,12 +332,12 @@ describe('when building enumeration with lowercase enumeration name', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get('Name')).toBeDefined();
-    expect(entityRepository.enumeration.get('Name').metaEdName).toBe('Name');
+    expect(metaEd.entity.enumeration.get('Name')).toBeDefined();
+    expect(metaEd.entity.enumeration.get('Name').metaEdName).toBe('Name');
   });
 
   it('should have no validation failures', () => {
@@ -346,39 +345,39 @@ describe('when building enumeration with lowercase enumeration name', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get('Name').namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get('Name').namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get('Name').metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.enumeration.get('Name').metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get('Name').namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get('Name').documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get('Name').documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get('Name').properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get('Name').properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(entityRepository.enumeration.get('Name').enumerationItems).toHaveLength(1);
+    expect(metaEd.entity.enumeration.get('Name').enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with short description', () => {
-    expect(entityRepository.enumeration.get('Name').enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(metaEd.entity.enumeration.get('Name').enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(entityRepository.enumeration.get('Name').enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(metaEd.entity.enumeration.get('Name').enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with metaEdId ', () => {
-    expect(entityRepository.enumeration.get('Name').enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(metaEd.entity.enumeration.get('Name').enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 
   it('should have extraneous input error', () => {
@@ -387,7 +386,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
 });
 
 describe('when building enumeration with no documentation', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -400,7 +399,7 @@ describe('when building enumeration with no documentation', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -412,12 +411,12 @@ describe('when building enumeration with no documentation', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -425,39 +424,39 @@ describe('when building enumeration with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe('');
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe('');
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with short description', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with metaEdId ', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 
   it('should have mismatched input error', () => {
@@ -466,7 +465,7 @@ describe('when building enumeration with no documentation', () => {
 });
 
 describe('when building enumeration with no enumeration item', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -477,7 +476,7 @@ describe('when building enumeration with no enumeration item', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -490,12 +489,12 @@ describe('when building enumeration with no enumeration item', () => {
 
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -503,27 +502,27 @@ describe('when building enumeration with no enumeration item', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(entityMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).metaEdId).toBe(entityMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have no enumeration item', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -532,7 +531,7 @@ describe('when building enumeration with no enumeration item', () => {
 });
 
 describe('when building enumeration with empty enumeration item description', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -545,7 +544,7 @@ describe('when building enumeration with empty enumeration item description', ()
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -558,12 +557,12 @@ describe('when building enumeration with empty enumeration item description', ()
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -571,39 +570,39 @@ describe('when building enumeration with empty enumeration item description', ()
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with no short description', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe('');
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe('');
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with metaEdId ', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 
   it('should have extraneous input error', () => {
@@ -616,7 +615,7 @@ describe('when building enumeration with empty enumeration item description', ()
 });
 
 describe('when building enumeration with invalid trailing text', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -631,7 +630,7 @@ describe('when building enumeration with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -645,12 +644,12 @@ describe('when building enumeration with invalid trailing text', () => {
   });
 
   it('should build one enumeration', () => {
-    expect(entityRepository.enumeration.size).toBe(1);
+    expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.enumeration.get(entityName)).toBeDefined();
-    expect(entityRepository.enumeration.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.enumeration.get(entityName)).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -658,39 +657,39 @@ describe('when building enumeration with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.enumeration.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.enumeration.get(entityName).documentation).toBe(documentation);
   });
 
   it('should have no properties', () => {
-    expect(entityRepository.enumeration.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.enumeration.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have one enumeration item', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems).toHaveLength(1);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems).toHaveLength(1);
   });
 
   it('should have enumeration item with short description', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].documentation).toBe(itemDocumentation);
   });
 
   it('should have enumeration item with metaEdId ', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
   });
 
   it('should have extraneous input error', () => {
@@ -699,7 +698,7 @@ describe('when building enumeration with invalid trailing text', () => {
 });
 
 describe('when building enumeration source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -715,7 +714,7 @@ describe('when building enumeration source map', () => {
   const itemMetaEdId2: string = '3';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -729,64 +728,64 @@ describe('when building enumeration source map', () => {
   });
 
   it('should have type', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.documentation).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have namespaceInfo', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.namespaceInfo).toBeDefined();
   });
 
   it('should have for enumerationItems', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap.enumerationItems).toHaveLength(2);
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap.enumerationItems).toHaveLength(2);
   });
 
   it('should have first enumeration item type', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.type).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].sourceMap.type).toBeDefined();
   });
 
   it('should have first enumeration item shortDescription', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].sourceMap.shortDescription).toBeDefined();
   });
 
   it('should have first enumeration item metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have first enumeration item documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap.documentation).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].sourceMap.documentation).toBeDefined();
   });
 
   it('should have second enumeration item type', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.type).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[1].sourceMap.type).toBeDefined();
   });
 
   it('should have second enumeration item shortDescription', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[1].sourceMap.shortDescription).toBeDefined();
   });
 
   it('should have second enumeration item metaEdId', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[1].sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have second enumeration item documentation', () => {
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap.documentation).toBeDefined();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[1].sourceMap.documentation).toBeDefined();
   });
 
   it('should have line, column, text for each property', () => {
-    expect(entityRepository.enumeration.get(entityName).sourceMap).toMatchSnapshot();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[0].sourceMap).toMatchSnapshot();
-    expect(entityRepository.enumeration.get(entityName).enumerationItems[1].sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.enumeration.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[0].sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.enumeration.get(entityName).enumerationItems[1].sourceMap).toMatchSnapshot();
   });
 });

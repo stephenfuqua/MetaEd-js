@@ -3,13 +3,13 @@ import DomainBuilder from '../../../../../src/core/builder/DomainBuilder';
 import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
 import AssociationSubclassBuilder from '../../../../../src/core/builder/AssociationSubclassBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating association domain item matches top level entity', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const associationName: string = 'AssociationName';
 
@@ -29,14 +29,14 @@ describe('when validating association domain item matches top level entity', () 
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -45,7 +45,7 @@ describe('when validating association domain item matches top level entity', () 
 });
 
 describe('when validating association domain item matches top level entity subclass', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const associationName = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -71,15 +71,15 @@ describe('when validating association domain item matches top level entity subcl
       .withBooleanProperty('Property1', 'because a property is required', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -88,7 +88,7 @@ describe('when validating association domain item matches top level entity subcl
 });
 
 describe('when validating association domain item does not match top level entity', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -114,14 +114,14 @@ describe('when validating association domain item does not match top level entit
       .withBooleanProperty('Property1', 'because a property is required', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure()', () => {

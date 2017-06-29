@@ -1,13 +1,13 @@
 // @flow
 import AssociationExtensionBuilder from '../../../../../src/core/builder/AssociationExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when association extension is in correct namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -27,13 +27,13 @@ describe('when association extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -42,7 +42,7 @@ describe('when association extension is in correct namespace', () => {
 });
 
 describe('when association extension is in core namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -60,13 +60,13 @@ describe('when association extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {

@@ -1,12 +1,11 @@
 // @flow
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 
-export function validate(repository: Repository, propertyRepository: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  propertyRepository.choice.forEach(property => {
-    if (repository.entity.choice.get(property.metaEdName) == null) {
+  metaEd.propertyIndex.choice.forEach(property => {
+    if (metaEd.entity.choice.get(property.metaEdName) == null) {
       failures.push({
         validatorName: 'ChoicePropertyMustMatchAChoice',
         category: 'error',

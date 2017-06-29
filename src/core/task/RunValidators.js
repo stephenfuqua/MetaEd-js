@@ -18,7 +18,7 @@ export function execute(state: State): State {
 
   validators.forEach(validator => {
     if (state.repository != null) {
-      state.validationFailure.push(...validator(state.repository, state.repository.property));
+      state.validationFailure.push(...validator(state.metaEd));
     }
   });
 

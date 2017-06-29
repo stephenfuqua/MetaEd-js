@@ -1,17 +1,16 @@
 // @flow
 import type { DomainEntity } from '../../../../core/model/DomainEntity';
 import type { DomainEntitySubclass } from '../../../../core/model/DomainEntitySubclass';
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyRepository?: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.domainEntityExtension.forEach(domainEntityExtension => {
+  metaEd.entity.domainEntityExtension.forEach(domainEntityExtension => {
     const extendedEntity : DomainEntity | DomainEntitySubclass | void =
-      repository.entity.domainEntity.get(domainEntityExtension.metaEdName) || repository.entity.domainEntitySubclass.get(domainEntityExtension.metaEdName);
+      metaEd.entity.domainEntity.get(domainEntityExtension.metaEdName) || metaEd.entity.domainEntitySubclass.get(domainEntityExtension.metaEdName);
     if (extendedEntity) {
       failExtensionPropertyRedeclarations('DomainEntityExtensionMustNotRedeclareProperties', domainEntityExtension, extendedEntity, failures);
     }

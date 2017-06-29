@@ -3,13 +3,13 @@ import AssociationBuilder from '../../../../../src/core/builder/AssociationBuild
 import AssociationExtensionBuilder from '../../../../../src/core/builder/AssociationExtensionBuilder';
 import AssociationSubclassBuilder from '../../../../../src/core/builder/AssociationSubclassBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when association extension extends association', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -29,14 +29,14 @@ describe('when association extension extends association', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -45,7 +45,7 @@ describe('when association extension extends association', () => {
 });
 
 describe('when association extension extends association subclass', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const subclassName: string = 'SubclassName';
   let failures: Array<ValidationFailure>;
@@ -71,15 +71,15 @@ describe('when association extension extends association subclass', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -88,7 +88,7 @@ describe('when association extension extends association subclass', () => {
 });
 
 describe('when association extension extends an invalid identifier', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -99,13 +99,13 @@ describe('when association extension extends an invalid identifier', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {

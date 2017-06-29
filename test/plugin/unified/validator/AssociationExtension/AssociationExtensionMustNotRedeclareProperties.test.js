@@ -2,13 +2,13 @@
 import AssociationBuilder from '../../../../../src/core/builder/AssociationBuilder';
 import AssociationExtensionBuilder from '../../../../../src/core/builder/AssociationExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/AssociationExtension/AssociationExtensionMustNotRedeclareProperties';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when association extension correctly has different property names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -28,14 +28,14 @@ describe('when association extension correctly has different property names', ()
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -44,7 +44,7 @@ describe('when association extension correctly has different property names', ()
 });
 
 describe('when association extension has duplicate property name', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -65,14 +65,14 @@ describe('when association extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(repository.entity.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
@@ -85,7 +85,7 @@ describe('when association extension has duplicate property name', () => {
 });
 
 describe('when association extension has multiple duplicates', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const notDuplicatePropertyName: string = 'NotDuplicatePropertyName';
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
@@ -111,10 +111,10 @@ describe('when association extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -134,7 +134,7 @@ describe('when association extension has multiple duplicates', () => {
 });
 
 describe('when association extension has duplicate common property', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -155,10 +155,10 @@ describe('when association extension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -167,7 +167,7 @@ describe('when association extension has duplicate common property', () => {
 });
 
 describe('when association extension has duplicate common extension override property', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -188,10 +188,10 @@ describe('when association extension has duplicate common extension override pro
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {

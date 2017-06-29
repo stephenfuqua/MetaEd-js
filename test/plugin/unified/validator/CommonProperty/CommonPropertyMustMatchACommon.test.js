@@ -2,13 +2,13 @@
 import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/CommonProperty/CommonPropertyMustMatchACommon';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when common property has identifier of common', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -26,10 +26,10 @@ describe('when common property has identifier of common', () => {
       .withCommonProperty(entityName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {
@@ -38,7 +38,7 @@ describe('when common property has identifier of common', () => {
 });
 
 describe('when common property has invalid identifier', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -56,10 +56,10 @@ describe('when common property has invalid identifier', () => {
       .withCommonProperty(entityName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {

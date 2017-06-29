@@ -4,6 +4,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
 import type { SharedSimple } from '../model/SharedSimple';
 import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { NoSharedSimple } from '../model/SharedSimple';
@@ -20,9 +21,9 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
   currentSharedSimple: SharedSimple;
   validationFailures: Array<ValidationFailure>;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = entityRepository;
+    this.entityRepository = metaEd.entity;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentSharedSimple = NoSharedSimple;
     this.validationFailures = validationFailures;

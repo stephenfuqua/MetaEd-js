@@ -10,19 +10,16 @@ import { mapTypeEnumerationFactory, NoMapTypeEnumeration } from '../model/MapTyp
 import { NoEnumerationItem, enumerationItemFactory } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
-import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import type { PropertyRepository } from '../model/property/PropertyRepository';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DescriptorBuilder extends TopLevelEntityBuilder {
   currentMapTypeEnumeration: MapTypeEnumeration;
   currentEnumerationItem: EnumerationItem;
 
-  constructor(entityRepository: EntityRepository,
-    validationFailures: Array<ValidationFailure>,
-    propertyRepository: PropertyRepository) {
-    super(entityRepository, validationFailures, propertyRepository);
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+    super(metaEd, validationFailures);
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
     this.currentEnumerationItem = NoEnumerationItem;
   }

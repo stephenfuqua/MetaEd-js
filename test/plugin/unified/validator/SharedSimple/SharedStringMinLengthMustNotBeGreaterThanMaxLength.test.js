@@ -1,13 +1,13 @@
 // @flow
 import SharedStringBuilder from '../../../../../src/core/builder/SharedStringBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating shared string with max length greater than min length', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -19,13 +19,13 @@ describe('when validating shared string with max length greater than min length'
       .withMaxLength('100')
       .withEndSharedString()
       .withEndNamespace()
-      .sendToListener(new SharedStringBuilder(repository.entity, []));
+      .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one shared string', () => {
-    expect(repository.entity.sharedString.size).toBe(1);
+    expect(metaEd.entity.sharedString.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -34,7 +34,7 @@ describe('when validating shared string with max length greater than min length'
 });
 
 describe('when validating shared string with min length greater than max length', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -46,13 +46,13 @@ describe('when validating shared string with min length greater than max length'
       .withMaxLength('10')
       .withEndSharedString()
       .withEndNamespace()
-      .sendToListener(new SharedStringBuilder(repository.entity, []));
+      .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one shared string', () => {
-    expect(repository.entity.sharedString.size).toBe(1);
+    expect(metaEd.entity.sharedString.size).toBe(1);
   });
 
   it('should have validation failures', () => {

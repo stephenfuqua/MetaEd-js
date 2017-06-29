@@ -1,20 +1,20 @@
 // @flow
 import NamespaceInfoBuilder from '../../../src/core/builder/NamespaceInfoBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 import { DefaultExtensionEntitySuffix } from '../../../src/core/model/NamespaceInfo';
 
 describe('when building extension namespace info', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   beforeAll(() => {
-    const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
+    const builder = new NamespaceInfoBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -27,7 +27,7 @@ describe('when building extension namespace info', () => {
   });
 
   it('should build one namespace info', () => {
-    expect(entityRepository.namespaceInfo).toHaveLength(1);
+    expect(metaEd.entity.namespaceInfo).toHaveLength(1);
   });
 
   it('should have no validation failures', () => {
@@ -35,31 +35,31 @@ describe('when building extension namespace info', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(entityRepository.namespaceInfo[0]).toBeDefined();
-    expect(entityRepository.namespaceInfo[0].namespace).toBe(namespace);
+    expect(metaEd.entity.namespaceInfo[0]).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(entityRepository.namespaceInfo[0].projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.namespaceInfo[0].projectExtension).toBe(projectExtension);
   });
 
   it('should be an extension', () => {
-    expect(entityRepository.namespaceInfo[0].isExtension).toBe(true);
+    expect(metaEd.entity.namespaceInfo[0].isExtension).toBe(true);
   });
 
   it('should have correct extension suffix', () => {
-    expect(entityRepository.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
+    expect(metaEd.entity.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });
 });
 
 describe('when building duplicate extension namespace info', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   beforeAll(() => {
-    const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
+    const builder = new NamespaceInfoBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -79,7 +79,7 @@ describe('when building duplicate extension namespace info', () => {
   });
 
   it('should build two namespace info', () => {
-    expect(entityRepository.namespaceInfo).toHaveLength(2);
+    expect(metaEd.entity.namespaceInfo).toHaveLength(2);
   });
 
   it('should have no validation failures', () => {
@@ -87,33 +87,33 @@ describe('when building duplicate extension namespace info', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(entityRepository.namespaceInfo[0].namespace).toBe(namespace);
-    expect(entityRepository.namespaceInfo[1].namespace).toBe(namespace);
+    expect(metaEd.entity.namespaceInfo[0].namespace).toBe(namespace);
+    expect(metaEd.entity.namespaceInfo[1].namespace).toBe(namespace);
   });
 
   it('should have correct project extension', () => {
-    expect(entityRepository.namespaceInfo[0].projectExtension).toBe(projectExtension);
-    expect(entityRepository.namespaceInfo[1].projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.namespaceInfo[0].projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.namespaceInfo[1].projectExtension).toBe(projectExtension);
   });
 
   it('should be an extension', () => {
-    expect(entityRepository.namespaceInfo[0].isExtension).toBe(true);
-    expect(entityRepository.namespaceInfo[1].isExtension).toBe(true);
+    expect(metaEd.entity.namespaceInfo[0].isExtension).toBe(true);
+    expect(metaEd.entity.namespaceInfo[1].isExtension).toBe(true);
   });
 
   it('should have correct extension suffix', () => {
-    expect(entityRepository.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
-    expect(entityRepository.namespaceInfo[1].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
+    expect(metaEd.entity.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
+    expect(metaEd.entity.namespaceInfo[1].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });
 });
 
 describe('when building core namespace info', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
 
   beforeAll(() => {
-    const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
+    const builder = new NamespaceInfoBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -126,35 +126,35 @@ describe('when building core namespace info', () => {
   });
 
   it('should build one namespace info', () => {
-    expect(entityRepository.namespaceInfo).toHaveLength(1);
+    expect(metaEd.entity.namespaceInfo).toHaveLength(1);
   });
 
   it('should have correct namespace', () => {
-    expect(entityRepository.namespaceInfo[0]).toBeDefined();
-    expect(entityRepository.namespaceInfo[0].namespace).toBe(namespace);
+    expect(metaEd.entity.namespaceInfo[0]).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].namespace).toBe(namespace);
   });
 
   it('should have a blank project extension', () => {
-    expect(entityRepository.namespaceInfo[0].projectExtension).toBe('');
+    expect(metaEd.entity.namespaceInfo[0].projectExtension).toBe('');
   });
 
   it('should not be an extension', () => {
-    expect(entityRepository.namespaceInfo[0].isExtension).toBeFalsy();
+    expect(metaEd.entity.namespaceInfo[0].isExtension).toBeFalsy();
   });
 
   it('should have correct extension suffix', () => {
-    expect(entityRepository.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
+    expect(metaEd.entity.namespaceInfo[0].extensionEntitySuffix).toBe(DefaultExtensionEntitySuffix);
   });
 });
 
 describe('when building extension namespace info source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   beforeAll(() => {
-    const builder = new NamespaceInfoBuilder(entityRepository, validationFailures);
+    const builder = new NamespaceInfoBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -167,22 +167,22 @@ describe('when building extension namespace info source map', () => {
   });
 
   it('should have type', () => {
-    expect(entityRepository.namespaceInfo[0].sourceMap.type).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].sourceMap.type).toBeDefined();
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.namespaceInfo[0].sourceMap.namespace).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].sourceMap.namespace).toBeDefined();
   });
 
   it('should have isExtension', () => {
-    expect(entityRepository.namespaceInfo[0].sourceMap.isExtension).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].sourceMap.isExtension).toBeDefined();
   });
 
   it('should have projectExtension', () => {
-    expect(entityRepository.namespaceInfo[0].sourceMap.projectExtension).toBeDefined();
+    expect(metaEd.entity.namespaceInfo[0].sourceMap.projectExtension).toBeDefined();
   });
 
   it('should have line, column, text for each property', () => {
-    expect(entityRepository.namespaceInfo[0].sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.namespaceInfo[0].sourceMap).toMatchSnapshot();
   });
 });

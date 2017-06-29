@@ -8,7 +8,6 @@ import { buildParseTree } from './BuildParseTree';
 import { execute as walkBuilders } from './WalkBuilders';
 import { fileMapForFailure } from './FileMapForFailure';
 import {
-  setupBuilder,
   executeAssociationBuilder,
   executeAssociationExtensionBuilder,
   executeAssociationSubclassBuilder,
@@ -60,8 +59,6 @@ export function startingFromFileLoadP(state: State): Promise<State> {
     .then(s => loadFileIndex(s))
     .then(nextMacroTask)
     .then(s => buildParseTree(buildMetaEd, s))
-    .then(nextMacroTask)
-    .then(s => setupBuilder(s))
     .then(nextMacroTask)
     .then(s => executeAssociationBuilder(s))
     .then(nextMacroTask)

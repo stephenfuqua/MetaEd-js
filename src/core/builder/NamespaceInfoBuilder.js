@@ -2,6 +2,7 @@
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -37,9 +38,9 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
   currentNamespaceInfo: NamespaceInfo;
   validationFailures: Array<ValidationFailure>;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = entityRepository;
+    this.entityRepository = metaEd.entity;
     this.currentNamespaceInfo = NoNamespaceInfo;
     this.validationFailures = validationFailures;
   }

@@ -20,8 +20,8 @@ import type { SharedInteger } from './SharedInteger';
 import type { SharedString } from './SharedString';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
-import type { PropertyRepository } from './property/PropertyRepository';
-import { propertyRepositoryFactory } from './property/PropertyRepository';
+import type { PropertyIndex } from './property/PropertyRepository';
+import { propertyIndexFactory } from './property/PropertyRepository';
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -76,14 +76,14 @@ export function entityRepositoryFactory(): EntityRepository {
 export class Repository {
   configuration: any;
   entity: EntityRepository;
-  property: PropertyRepository;
+  property: PropertyIndex;
 }
 
 export function repositoryFactory(): Repository {
   return Object.assign(new Repository(), {
     configuration: null,
     entity: entityRepositoryFactory(),
-    property: propertyRepositoryFactory(),
+    property: propertyIndexFactory(),
   });
 }
 
@@ -100,16 +100,16 @@ export type MostEntities =
 
 // Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
 // and extension entities don't define a new identifier
-export function entitiesNeedingDuplicateChecking(repository: Repository): Array<MostEntities> {
+export function entitiesNeedingDuplicateChecking(entity: EntityRepository): Array<MostEntities> {
   const result: Array<MostEntities> = [];
-  result.push(...repository.entity.association.values());
-  result.push(...repository.entity.associationSubclass.values());
-  result.push(...repository.entity.choice.values());
-  result.push(...repository.entity.common.values());
-  result.push(...repository.entity.domainEntity.values());
-  result.push(...repository.entity.domainEntitySubclass.values());
-  result.push(...repository.entity.sharedDecimal.values());
-  result.push(...repository.entity.sharedInteger.values());
-  result.push(...repository.entity.sharedString.values());
+  result.push(...entity.association.values());
+  result.push(...entity.associationSubclass.values());
+  result.push(...entity.choice.values());
+  result.push(...entity.common.values());
+  result.push(...entity.domainEntity.values());
+  result.push(...entity.domainEntitySubclass.values());
+  result.push(...entity.sharedDecimal.values());
+  result.push(...entity.sharedInteger.values());
+  result.push(...entity.sharedString.values());
   return result;
 }

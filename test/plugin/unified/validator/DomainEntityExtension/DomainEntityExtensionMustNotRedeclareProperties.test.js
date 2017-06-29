@@ -3,13 +3,13 @@ import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBui
 import DomainEntitySubclassBuilder from '../../../../../src/core/builder/DomainEntitySubclassBuilder';
 import DomainEntityExtensionBuilder from '../../../../../src/core/builder/DomainEntityExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/DomainEntityExtension/DomainEntityExtensionMustNotRedeclareProperties';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when domain entity extension correctly has different property names', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -27,14 +27,14 @@ describe('when domain entity extension correctly has different property names', 
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -43,7 +43,7 @@ describe('when domain entity extension correctly has different property names', 
 });
 
 describe('when domain entity extension has duplicate property name', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -62,14 +62,14 @@ describe('when domain entity extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
@@ -82,7 +82,7 @@ describe('when domain entity extension has duplicate property name', () => {
 });
 
 describe('when domain entity subclass and extension have duplicate property name', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const subclassEntityName: string = 'SubclassEntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
@@ -107,15 +107,15 @@ describe('when domain entity subclass and extension have duplicate property name
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(repository.entity.domainEntityExtension.size).toBe(1);
+    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
@@ -128,7 +128,7 @@ describe('when domain entity subclass and extension have duplicate property name
 });
 
 describe('when domain entity extension has multiple duplicates', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const notDuplicatePropertyName: string = 'NotDuplicatePropertyName';
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
@@ -152,10 +152,10 @@ describe('when domain entity extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -174,8 +174,8 @@ describe('when domain entity extension has multiple duplicates', () => {
   });
 });
 
-describe('when domain entityextension has duplicate common property', () => {
-  const repository: Repository = repositoryFactory();
+describe('when domain entity extension has duplicate common property', () => {
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -194,10 +194,10 @@ describe('when domain entityextension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
@@ -206,7 +206,7 @@ describe('when domain entityextension has duplicate common property', () => {
 });
 
 describe('when domain entity extension has duplicate common extension override property', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -225,10 +225,10 @@ describe('when domain entity extension has duplicate common extension override p
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {

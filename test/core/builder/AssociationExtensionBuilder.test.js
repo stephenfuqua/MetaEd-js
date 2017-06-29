@@ -1,13 +1,12 @@
 // @noflow
 import AssociationExtensionBuilder from '../../../src/core/builder/AssociationExtensionBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { entityRepositoryFactory } from '../../../src/core/model/Repository';
-import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
-import type { EntityRepository } from '../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../src/core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 describe('when building association extension in extension namespace', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -16,7 +15,7 @@ describe('when building association extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -28,12 +27,12 @@ describe('when building association extension in extension namespace', () => {
   });
 
   it('should build one association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -41,23 +40,23 @@ describe('when building association extension in extension namespace', () => {
   });
 
   it('should have extendee name', () => {
-    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.associationExtension.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = entityRepository.associationExtension.get(entityName).properties[0];
+    const integerProperty = metaEd.entity.associationExtension.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -66,7 +65,7 @@ describe('when building association extension in extension namespace', () => {
 });
 
 describe('when building duplicate association extensions', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -75,7 +74,7 @@ describe('when building duplicate association extensions', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -91,12 +90,12 @@ describe('when building duplicate association extensions', () => {
   });
 
   it('should build one association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -117,7 +116,7 @@ describe('when building duplicate association extensions', () => {
 });
 
 describe('when building association extension with no association extension name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -127,7 +126,7 @@ describe('when building association extension with no association extension name
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -139,7 +138,7 @@ describe('when building association extension with no association extension name
   });
 
   it('should not build association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(0);
+    expect(metaEd.entity.associationExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -148,7 +147,7 @@ describe('when building association extension with no association extension name
 });
 
 describe('when building association extension with lowercase association extension name', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -158,7 +157,7 @@ describe('when building association extension with lowercase association extensi
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -170,7 +169,7 @@ describe('when building association extension with lowercase association extensi
   });
 
   it('should not build association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(0);
+    expect(metaEd.entity.associationExtension.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -179,7 +178,7 @@ describe('when building association extension with lowercase association extensi
 });
 
 describe('when building association extension with no property', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -188,7 +187,7 @@ describe('when building association extension with no property', () => {
   const entityName: string = 'EntityName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -199,12 +198,12 @@ describe('when building association extension with no property', () => {
   });
 
   it('should build one association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -212,19 +211,19 @@ describe('when building association extension with no property', () => {
   });
 
   it('should have extendee name', () => {
-    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have no property', () => {
-    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(0);
+    expect(metaEd.entity.associationExtension.get(entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -233,7 +232,7 @@ describe('when building association extension with no property', () => {
 });
 
 describe('when building association extension with invalid trailing text', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -244,7 +243,7 @@ describe('when building association extension with invalid trailing text', () =>
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -257,12 +256,12 @@ describe('when building association extension with invalid trailing text', () =>
   });
 
   it('should build one association extension', () => {
-    expect(entityRepository.associationExtension.size).toBe(1);
+    expect(metaEd.entity.associationExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(entityRepository.associationExtension.get(entityName)).toBeDefined();
-    expect(entityRepository.associationExtension.get(entityName).metaEdName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName)).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -270,23 +269,23 @@ describe('when building association extension with invalid trailing text', () =>
   });
 
   it('should have extendee name', () => {
-    expect(entityRepository.associationExtension.get(entityName).baseEntityName).toBe(entityName);
+    expect(metaEd.entity.associationExtension.get(entityName).baseEntityName).toBe(entityName);
   });
 
   it('should have namespace', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(entityRepository.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.associationExtension.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have one property', () => {
-    expect(entityRepository.associationExtension.get(entityName).properties).toHaveLength(1);
+    expect(metaEd.entity.associationExtension.get(entityName).properties).toHaveLength(1);
   });
 
   it('should have integer property', () => {
-    const integerProperty = entityRepository.associationExtension.get(entityName).properties[0];
+    const integerProperty = metaEd.entity.associationExtension.get(entityName).properties[0];
 
     expect(integerProperty.metaEdName).toBe(propertyName);
     expect(integerProperty.type).toBe('integer');
@@ -299,7 +298,7 @@ describe('when building association extension with invalid trailing text', () =>
 });
 
 describe('when building association extension source map', () => {
-  const entityRepository: EntityRepository = entityRepositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -307,7 +306,7 @@ describe('when building association extension source map', () => {
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
+    const builder = new AssociationExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -319,18 +318,18 @@ describe('when building association extension source map', () => {
   });
 
   it('should have a metaEdId property', () => {
-    expect(entityRepository.associationExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have a metaEdName property', () => {
-    expect(entityRepository.associationExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have a type property', () => {
-    expect(entityRepository.associationExtension.get(entityName).sourceMap.type).toBeDefined();
+    expect(metaEd.entity.associationExtension.get(entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have source map data', () => {
-    expect(entityRepository.associationExtension.get(entityName).sourceMap).toMatchSnapshot();
+    expect(metaEd.entity.associationExtension.get(entityName).sourceMap).toMatchSnapshot();
   });
 });

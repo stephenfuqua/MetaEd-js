@@ -2,13 +2,13 @@
 import DomainBuilder from '../../../../../src/core/builder/DomainBuilder';
 import DescriptorBuilder from '../../../../../src/core/builder/DescriptorBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/Domain/DescriptorDomainItemMustMatchTopLevelEntity';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating descriptor domain item matches top level entity', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const descriptorName: string = 'DescriptorName';
 
@@ -28,14 +28,14 @@ describe('when validating descriptor domain item matches top level entity', () =
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -44,7 +44,7 @@ describe('when validating descriptor domain item matches top level entity', () =
 });
 
 describe('when validating descriptor domain item does not match top level entity', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const descriptorName: string = 'DescriptorName';
 
@@ -64,14 +64,14 @@ describe('when validating descriptor domain item does not match top level entity
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure()', () => {

@@ -1,13 +1,13 @@
 // @flow
 import CommonExtensionBuilder from '../../../../../src/core/builder/CommonExtensionBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/CommonExtension/CommonExtensionExistsOnlyInExtensionNamespace';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when common extension is in correct namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 
@@ -25,13 +25,13 @@ describe('when common extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(repository.entity.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -40,7 +40,7 @@ describe('when common extension is in correct namespace', () => {
 });
 
 describe('when common extension is in core namespace', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 
@@ -56,13 +56,13 @@ describe('when common extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(repository.entity.commonExtension.size).toBe(1);
+    expect(metaEd.entity.commonExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {

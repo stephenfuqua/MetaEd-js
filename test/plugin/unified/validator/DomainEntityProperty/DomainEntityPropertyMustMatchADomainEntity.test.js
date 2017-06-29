@@ -2,13 +2,13 @@
 import DomainEntityBuilder from '../../../../../src/core/builder/DomainEntityBuilder';
 import DomainEntitySubclassBuilder from '../../../../../src/core/builder/DomainEntitySubclassBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/DomainEntityProperty/DomainEntityPropertyMustMatchADomainEntity';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when domain entity property has identifier of domain entity', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -27,9 +27,9 @@ describe('when domain entity property has identifier of domain entity', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {
@@ -38,7 +38,7 @@ describe('when domain entity property has identifier of domain entity', () => {
 });
 
 describe('when domain entity property has identifier of domain entity subclass', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -57,10 +57,10 @@ describe('when domain entity property has identifier of domain entity subclass',
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have no validation failures()', () => {
@@ -69,7 +69,7 @@ describe('when domain entity property has identifier of domain entity subclass',
 });
 
 describe('when domain entity property has invalid identifier', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainEntityName: string = 'DomainEntityName';
   let failures: Array<ValidationFailure>;
 
@@ -81,9 +81,9 @@ describe('when domain entity property has invalid identifier', () => {
       .withDomainEntityProperty('UndefinedEntityName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    failures = validate(repository, repository.property);
+    failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {

@@ -1,13 +1,12 @@
 // @flow
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyRepository?: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.domain.forEach(domain => {
+  metaEd.entity.domain.forEach(domain => {
     const names = domain.domainItems.map((di) => di.metaEdName);
 
     const duplicates: Array<string> = findDuplicates(names);

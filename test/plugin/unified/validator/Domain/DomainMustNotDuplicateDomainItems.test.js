@@ -1,13 +1,13 @@
 // @flow
 import DomainBuilder from '../../../../../src/core/builder/DomainBuilder';
 import MetaEdTextBuilder from '../../../../core/MetaEdTextBuilder';
-import { repositoryFactory } from '../../../../../src/core/model/Repository';
-import type { Repository } from '../../../../../src/core/model/Repository';
+import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
+import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import { validate } from '../../../../../src/plugin/unified/validator/Domain/DomainMustNotDuplicateDomainItems';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
 
 describe('when validating domain entity domain item does not duplicate domain items', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
 
   let failures: Array<ValidationFailure>;
@@ -21,13 +21,13 @@ describe('when validating domain entity domain item does not duplicate domain it
       .withDomainEntityDomainItem('DomainItem2')
       .withFooterDocumentation('FooterDocumentation')
       .withEndDomain()
-      .sendToListener(new DomainBuilder(repository.entity, []));
+      .sendToListener(new DomainBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -36,7 +36,7 @@ describe('when validating domain entity domain item does not duplicate domain it
 });
 
 describe('when validating domain entity domain item duplicates domain items', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const domainEntityName: string = 'DomainEntityName';
 
@@ -51,13 +51,13 @@ describe('when validating domain entity domain item duplicates domain items', ()
       .withDomainEntityDomainItem(domainEntityName)
       .withFooterDocumentation('FooterDocumentation')
       .withEndDomain()
-      .sendToListener(new DomainBuilder(repository.entity, []));
+      .sendToListener(new DomainBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure', () => {
@@ -70,7 +70,7 @@ describe('when validating domain entity domain item duplicates domain items', ()
 });
 
 describe('when validating domain entity domain item has multiple duplicate domain items', () => {
-  const repository: Repository = repositoryFactory();
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const domainName: string = 'DomainName';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -90,13 +90,13 @@ describe('when validating domain entity domain item has multiple duplicate domai
       .withDomainEntityDomainItem('NotDuplicate')
       .withFooterDocumentation('FooterDocumentation')
       .withEndDomain()
-      .sendToListener(new DomainBuilder(repository.entity, []));
+      .sendToListener(new DomainBuilder(metaEd, []));
 
-    failures = validate(repository);
+    failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(repository.entity.domain.size).toBe(1);
+    expect(metaEd.entity.domain.size).toBe(1);
   });
 
   it('should have multiple validation failures', () => {

@@ -1,12 +1,11 @@
 // @flow
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 
-export function validate(repository: Repository, propertyRepository: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  propertyRepository.association.forEach(property => {
-    if (!repository.entity.association.has(property.metaEdName) && !repository.entity.associationSubclass.has(property.metaEdName)) {
+  metaEd.propertyIndex.association.forEach(property => {
+    if (!metaEd.entity.association.has(property.metaEdName) && !metaEd.entity.associationSubclass.has(property.metaEdName)) {
       failures.push({
         validatorName: 'AssociationPropertyMustMatchAnAssociation',
         category: 'error',

@@ -23,7 +23,7 @@ import type { StringProperty } from './StringProperty';
 import type { TimeProperty } from './TimeProperty';
 import type { YearProperty } from './YearProperty';
 
-export class PropertyRepository {
+export class PropertyIndex {
   association: Array<AssociationProperty>;
   boolean: Array<BooleanProperty>;
   choice: Array<ChoiceProperty>;
@@ -50,8 +50,8 @@ export class PropertyRepository {
 }
 
 
-export function propertyRepositoryFactory(): PropertyRepository {
-  return Object.assign(new PropertyRepository(), {
+export function propertyIndexFactory(): PropertyIndex {
+  return Object.assign(new PropertyIndex(), {
     association: [],
     boolean: [],
     choice: [],

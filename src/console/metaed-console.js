@@ -1,6 +1,7 @@
 // @flow
 import winston from 'winston';
 import { startingFromFileLoad } from '../core/task/Pipeline';
+import { defaultStateFactory } from '../core/State';
 import type { State } from '../core/State';
 
 const argv = require('yargs')
@@ -21,8 +22,7 @@ winston.level = 'info';
 winston.info(`Executing MetaEd Console on core ${argv.edfi} and extension ${argv.ext}.`);
 winston.info('');
 
-const state: State = {
-  validationFailure: [],
+const state: State = Object.assign(defaultStateFactory(), {
   inputDirectories: [
     {
       path: argv.edfi,
@@ -37,13 +37,7 @@ const state: State = {
       isExtension: true,
     },
   ],
-  filepathsToExclude: new Set(),
-  loadedFileSet: [],
-  fileIndex: null,
-  parseTree: null,
-  repository: null,
-  propertyRepository: null,
-};
+});
 
 const endState: State = startingFromFileLoad(state);
 

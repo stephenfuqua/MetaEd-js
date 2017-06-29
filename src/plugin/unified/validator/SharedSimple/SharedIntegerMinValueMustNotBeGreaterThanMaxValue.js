@@ -1,13 +1,12 @@
 // @flow
-import type { Repository } from '../../../../core/model/Repository';
+import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 import type { SharedIntegerSourceMap } from '../../../../core/model/SharedInteger';
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyRepository?: PropertyRepository): Array<ValidationFailure> {
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  repository.entity.sharedInteger.forEach(entity => {
+  metaEd.entity.sharedInteger.forEach(entity => {
     if (Number.parseInt(entity.minValue, 10) > Number.parseInt(entity.maxValue, 10)) {
       failures.push({
         validatorName: 'SharedIntegerMinValueMustNotBeGreaterThanMaxValue',

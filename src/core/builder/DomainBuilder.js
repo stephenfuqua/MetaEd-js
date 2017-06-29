@@ -6,7 +6,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import type { Domain, DomainSourceMap } from '../model/Domain';
 import type { Subdomain, SubdomainSourceMap } from '../model/Subdomain';
 import type { DomainItem, DomainItemSourceMap } from '../model/DomainItem';
-import type { EntityRepository } from '../model/Repository';
+import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
 import { domainItemFactory, NoDomainItem } from '../model/DomainItem';
@@ -18,15 +18,15 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DomainBuilder extends MetaEdGrammarListener {
-  entityRepository: EntityRepository;
+  metaEd: MetaEdEnvironment;
   namespaceInfo: NamespaceInfo;
   currentDomain: Domain | Subdomain;
   currentDomainItem: DomainItem;
   validationFailures: Array<ValidationFailure>;
 
-  constructor(entityRepository: EntityRepository, validationFailures: Array<ValidationFailure>) {
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = entityRepository;
+    this.metaEd = metaEd;
     this.namespaceInfo = NoNamespaceInfo;
     this.currentDomain = NoDomain;
     this.currentDomainItem = NoDomainItem;
@@ -88,8 +88,8 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   exitingEntity() {
     if (this.currentDomain === NoDomain) return;
-    // $FlowIgnore - allowing currentDomain.type to specify the entityRepository Map property
-    const currentDomainRepository = this.entityRepository[this.currentDomain.type];
+    // $FlowIgnore
+    const currentDomainRepository = this.metaEd.entity[this.currentDomain.type];
     if (this.currentDomain.metaEdName) {
       if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
         this.validationFailures.push({
