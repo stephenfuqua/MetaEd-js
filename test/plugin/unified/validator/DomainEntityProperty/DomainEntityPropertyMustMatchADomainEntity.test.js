@@ -6,9 +6,6 @@ import { repositoryFactory } from '../../../../../src/core/model/Repository';
 import type { Repository } from '../../../../../src/core/model/Repository';
 import { validate } from '../../../../../src/plugin/unified/validator/DomainEntityProperty/DomainEntityPropertyMustMatchADomainEntity';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../../../src/core/model/property/EntityProperty';
-import { domainEntityFrom } from '../../../../core/TestHelper';
 
 describe('when domain entity property has identifier of domain entity', () => {
   const repository: Repository = repositoryFactory();
@@ -21,7 +18,6 @@ describe('when domain entity property has identifier of domain entity', () => {
       .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty('DomainEntity1', 'doc', true, false)
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndDomainEntity()
 
@@ -31,11 +27,9 @@ describe('when domain entity property has identifier of domain entity', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('domainEntity', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have no validation failures()', () => {
@@ -63,12 +57,10 @@ describe('when domain entity property has identifier of domain entity subclass',
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('domainEntity', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have no validation failures()', () => {
@@ -89,11 +81,9 @@ describe('when domain entity property has invalid identifier', () => {
       .withDomainEntityProperty('UndefinedEntityName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('domainEntity', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have validation failures()', () => {

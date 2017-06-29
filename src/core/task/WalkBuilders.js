@@ -23,23 +23,22 @@ import SharedStringBuilder from '../builder/SharedStringBuilder';
 
 export function execute(state: State): State {
   state.repository = repositoryFactory();
-  state.propertyIndex = new Map();
   const entityRepository = state.repository.entity;
-  const propertyIndex = state.propertyIndex;
+  const propertyRepository = state.repository.property;
   const builders: Array<MetaEdGrammarListener> = [];
 
-  builders.push(new AssociationBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new AssociationExtensionBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new AssociationSubclassBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new ChoiceBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new CommonBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new CommonExtensionBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new DescriptorBuilder(entityRepository, state.validationFailure, propertyIndex));
+  builders.push(new AssociationBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new AssociationExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new AssociationSubclassBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new ChoiceBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new CommonBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new CommonExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new DescriptorBuilder(entityRepository, state.validationFailure, propertyRepository));
   builders.push(new DomainBuilder(entityRepository, state.validationFailure));
-  builders.push(new DomainEntityBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new DomainEntityExtensionBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new DomainEntitySubclassBuilder(entityRepository, state.validationFailure, propertyIndex));
-  builders.push(new EnumerationBuilder(entityRepository, state.validationFailure, propertyIndex));
+  builders.push(new DomainEntityBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new DomainEntityExtensionBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new DomainEntitySubclassBuilder(entityRepository, state.validationFailure, propertyRepository));
+  builders.push(new EnumerationBuilder(entityRepository, state.validationFailure, propertyRepository));
   builders.push(new InterchangeBuilder(entityRepository, state.validationFailure));
   builders.push(new NamespaceInfoBuilder(entityRepository, state.validationFailure));
   builders.push(new SharedDecimalBuilder(entityRepository, state.validationFailure));

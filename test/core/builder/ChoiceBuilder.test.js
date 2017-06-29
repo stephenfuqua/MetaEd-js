@@ -2,6 +2,7 @@
 import ChoiceBuilder from '../../../src/core/builder/ChoiceBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -19,7 +20,7 @@ describe('when building choice in extension namespace', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -89,7 +90,7 @@ describe('when building duplicate choices', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -147,7 +148,7 @@ describe('when building choice with no choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -183,7 +184,7 @@ describe('when building choice with lowercase choice name', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -257,7 +258,7 @@ describe('when building choice with no documentation', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -324,7 +325,7 @@ describe('when building choice with no property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -385,7 +386,7 @@ describe('when building choice with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -456,7 +457,7 @@ describe('when building choice source map', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new ChoiceBuilder(entityRepository, validationFailures, new Map());
+    const builder = new ChoiceBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

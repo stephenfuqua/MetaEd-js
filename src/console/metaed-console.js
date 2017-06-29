@@ -42,7 +42,7 @@ const state: State = {
   fileIndex: null,
   parseTree: null,
   repository: null,
-  propertyIndex: null,
+  propertyRepository: null,
 };
 
 const endState: State = startingFromFileLoad(state);

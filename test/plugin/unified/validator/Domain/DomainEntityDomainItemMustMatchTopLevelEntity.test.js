@@ -30,7 +30,7 @@ describe('when validating domain entity domain item matches top level entity', (
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -72,8 +72,8 @@ describe('when validating domain entity domain item matches top level entity sub
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -115,7 +115,7 @@ describe('when validating domain entity domain item does not match top level ent
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

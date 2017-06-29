@@ -27,8 +27,8 @@ describe('when domain entity extension extends domain entity', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -67,9 +67,9 @@ describe('when domain entity extension extends domain entity subclass', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -95,7 +95,7 @@ describe('when domain entity extension extends an invalid identifier', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

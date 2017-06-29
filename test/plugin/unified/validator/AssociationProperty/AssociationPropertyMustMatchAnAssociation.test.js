@@ -7,9 +7,6 @@ import { repositoryFactory } from '../../../../../src/core/model/Repository';
 import type { Repository } from '../../../../../src/core/model/Repository';
 import { validate } from '../../../../../src/plugin/unified/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
 import type { ValidationFailure } from '../../../../../src/core/validator/ValidationFailure';
-import type { PropertyType } from '../../../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../../../src/core/model/property/EntityProperty';
-import { domainEntityFrom } from '../../../../core/TestHelper';
 
 describe('when association property has identifier of association', () => {
   const repository: Repository = repositoryFactory();
@@ -33,12 +30,10 @@ describe('when association property has identifier of association', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have no validation failures()', () => {
@@ -66,12 +61,10 @@ describe('when association property has identifier of association subclass', () 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have no validation failures()', () => {
@@ -92,11 +85,9 @@ describe('when association property has invalid identifier', () => {
       .withAssociationProperty('UndefinedEntityName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property));
 
-    const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
-    propertyIndex.set('association', domainEntityFrom(repository, domainEntityName).properties);
-    failures = validate(repository, propertyIndex);
+    failures = validate(repository, repository.property);
   });
 
   it('should have validation failures()', () => {

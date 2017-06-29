@@ -9,9 +9,8 @@ import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationI
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
+import type { PropertyRepository } from '../model/property/PropertyRepository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import type { PropertyType } from '../model/property/PropertyType';
-import type { EntityProperty } from '../model/property/EntityProperty';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class EnumerationBuilder extends TopLevelEntityBuilder {
@@ -19,8 +18,8 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
   constructor(entityRepository: EntityRepository,
     validationFailures: Array<ValidationFailure>,
-    propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
-    super(entityRepository, validationFailures, propertyIndex);
+    propertyRepository: PropertyRepository) {
+    super(entityRepository, validationFailures, propertyRepository);
     this.currentEnumerationItem = NoEnumerationItem;
   }
 

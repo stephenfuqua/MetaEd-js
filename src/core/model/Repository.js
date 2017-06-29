@@ -20,6 +20,8 @@ import type { SharedInteger } from './SharedInteger';
 import type { SharedString } from './SharedString';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
+import type { PropertyRepository } from './property/PropertyRepository';
+import { propertyRepositoryFactory } from './property/PropertyRepository';
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -74,12 +76,14 @@ export function entityRepositoryFactory(): EntityRepository {
 export class Repository {
   configuration: any;
   entity: EntityRepository;
+  property: PropertyRepository;
 }
 
 export function repositoryFactory(): Repository {
   return Object.assign(new Repository(), {
     configuration: null,
     entity: entityRepositoryFactory(),
+    property: propertyRepositoryFactory(),
   });
 }
 

@@ -31,7 +31,7 @@ describe('when validating inline common domain item matches top level entity', (
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
 
     ((repository.entity.common.get(inlineCommonName): any): Common).inlineInOds = true;
 
@@ -70,7 +70,7 @@ describe('when validating inline common domain item does not match top level ent
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
 
     ((repository.entity.common.get(inlineCommonName): any): Common).inlineInOds = true;
 

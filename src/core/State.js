@@ -5,8 +5,6 @@ import type { FileIndex } from './task/FileIndex';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import type { ValidationFailure } from './validator/ValidationFailure';
 import type { Repository } from './model/Repository';
-import type { PropertyType } from './model/property/PropertyType';
-import type { EntityProperty } from './model/property/EntityProperty';
 
 export type State = {
   // the collection of error messages from syntax and semantic validation, and other processes
@@ -30,9 +28,6 @@ export type State = {
 
   // the data repository
   repository: ?Repository,
-
-  // the transient property index
-  propertyIndex: ?Map<PropertyType, Array<EntityProperty>>,
 };
 
 export const defaultStateFactory: () => State = () =>
@@ -44,5 +39,4 @@ export const defaultStateFactory: () => State = () =>
     fileIndex: null,
     parseTree: null,
     repository: null,
-    propertyIndex: null,
   });

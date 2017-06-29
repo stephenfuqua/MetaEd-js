@@ -12,8 +12,7 @@ import { extractDocumentation, extractShortDescription, squareBracketRemoval, is
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/Repository';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import type { PropertyType } from '../model/property/PropertyType';
-import type { EntityProperty } from '../model/property/EntityProperty';
+import type { PropertyRepository } from '../model/property/PropertyRepository';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class DescriptorBuilder extends TopLevelEntityBuilder {
@@ -22,8 +21,8 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
 
   constructor(entityRepository: EntityRepository,
     validationFailures: Array<ValidationFailure>,
-    propertyIndex: Map<PropertyType, Array<EntityProperty>>) {
-    super(entityRepository, validationFailures, propertyIndex);
+    propertyRepository: PropertyRepository) {
+    super(entityRepository, validationFailures, propertyRepository);
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
     this.currentEnumerationItem = NoEnumerationItem;
   }

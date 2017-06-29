@@ -7,7 +7,6 @@ export type PropertyType =
   'boolean' |
   'choice' |
   'common' |
-  'commonExtension' |
   'currency' |
   'date' |
   'decimal' |

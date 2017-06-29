@@ -2,6 +2,7 @@
 import DomainEntityBuilder from '../../../src/core/builder/DomainEntityBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -17,7 +18,7 @@ describe('when building simple domain entity in extension namespace', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -98,7 +99,7 @@ describe('when building duplicate domain entities', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -155,7 +156,7 @@ describe('when building duplicate property names', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -198,7 +199,7 @@ describe('when building duplicate property names with different with context nam
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -229,7 +230,7 @@ describe('when building duplicate property names with same with context name', (
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -269,7 +270,7 @@ describe('when building domain entity without extension', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -329,7 +330,7 @@ describe('when building domain entity with a with context', () => {
   const withContextName: string = 'WithContextName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -362,7 +363,7 @@ describe('when building domain entity with a with context and shorten to', () =>
   const shortenToName: string = 'ShortenToName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -398,7 +399,7 @@ describe('when building domain entity with choice', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -430,7 +431,7 @@ describe('when building domain entity with inline common reference', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -461,7 +462,7 @@ describe('when building domain entity with queryable field', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -494,7 +495,7 @@ describe('when building domain entity with queryable only property', () => {
   const queryableOnlyName: string = 'QueryableOnlyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -529,7 +530,7 @@ describe('when building domain entity with shared decimal reference', () => {
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -560,7 +561,7 @@ describe('when building domain entity with shared decimal reference without name
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -592,7 +593,7 @@ describe('when building domain entity with shared integer reference', () => {
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -623,7 +624,7 @@ describe('when building domain entity with shared integer reference without name
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -655,7 +656,7 @@ describe('when building domain entity with shared short reference', () => {
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -686,7 +687,7 @@ describe('when building domain entity with shared short reference without name',
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -718,7 +719,7 @@ describe('when building domain entity with shared string reference', () => {
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -749,7 +750,7 @@ describe('when building domain entity with shared string reference without name'
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -781,7 +782,7 @@ describe('when building domain entity with shared string reference inheriting do
   const sharedPropertyType: string = 'SharedPropertyType';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -813,7 +814,7 @@ describe('when building domain entity with domain entity reference inheriting do
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -845,7 +846,7 @@ describe('when building domain entity with cascading updates', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -875,7 +876,7 @@ describe('when building abstract entity in extension namespace', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -952,7 +953,7 @@ describe('when building domain entity with no begin namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withStartDomainEntity(entityName, metaEdId)
@@ -986,7 +987,7 @@ describe('when building domain entity with no project extension', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1022,7 +1023,7 @@ describe('when building domain entity with uppercase namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1093,7 +1094,7 @@ describe('when building domain entity with lowercase project extension', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1164,7 +1165,7 @@ describe('when building domain entity with no namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1226,7 +1227,7 @@ describe('when building domain entity with no end namespace', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1285,7 +1286,7 @@ describe('when building domain entity with no top level entity', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1319,7 +1320,7 @@ describe('when building domain entity with no domain entity name', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1355,7 +1356,7 @@ describe('when building domain entity with lowercase domain entity name', () => 
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1391,7 +1392,7 @@ describe('when building domain entity with no metaed id', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1452,7 +1453,7 @@ describe('when building domain entity with no documentation', () => {
   const stringPropertyName: string = 'StringPropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1511,7 +1512,7 @@ describe('when building domain entity with no properties', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1561,7 +1562,7 @@ describe('when building domain entity with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -1622,7 +1623,7 @@ describe('when building domain entity source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -1681,7 +1682,7 @@ describe('when building domain entity namespace info source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -1738,7 +1739,7 @@ describe('when building abstract entity source map', () => {
   const documentation: string = 'Doc';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

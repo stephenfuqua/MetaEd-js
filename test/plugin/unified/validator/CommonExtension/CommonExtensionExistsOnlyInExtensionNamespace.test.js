@@ -25,7 +25,7 @@ describe('when common extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -56,7 +56,7 @@ describe('when common extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

@@ -19,7 +19,7 @@ describe('when enumeration items have different short descriptions', () => {
       .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -47,7 +47,7 @@ describe('when enumeration items have duplicate short descriptions', () => {
       .withEnumerationItem('ShortDescription', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -80,7 +80,7 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
       .withEnumerationItem('ShortDescription2', 'EnumerationItemDocumentation2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new EnumerationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new EnumerationBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

@@ -2,6 +2,7 @@
 import AssociationBuilder from '../../../src/core/builder/AssociationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -22,7 +23,7 @@ describe('when building association in extension namespace', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -120,7 +121,7 @@ describe('when building association without extension', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -216,7 +217,7 @@ describe('when building duplicate associations', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -271,7 +272,7 @@ describe('when building association with additional identity property', () => {
   const identityProperty: string = 'IdentityProperty';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -356,7 +357,7 @@ describe('when building association with no association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -396,7 +397,7 @@ describe('when building association with lowercase association name', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -435,7 +436,7 @@ describe('when building association with no documentation', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -539,7 +540,7 @@ describe('when building association with no domain entity property', () => {
   const documentation2: string = 'documentation2';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -648,7 +649,7 @@ describe('when building association with no documentation in the first domain en
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -757,7 +758,7 @@ describe('when building association with no documentation in the second domain e
   const secondDomainEntityMetaEdId: string = '3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -868,7 +869,7 @@ describe('when building association with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -976,7 +977,7 @@ describe('when building association source map', () => {
   const documentation3: string = 'documentation3';
 
   beforeAll(() => {
-    const builder = new AssociationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

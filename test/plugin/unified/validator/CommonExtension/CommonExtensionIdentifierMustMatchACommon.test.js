@@ -26,8 +26,8 @@ describe('when common extension extends common', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -53,7 +53,7 @@ describe('when common extension extends an invalid identifier', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

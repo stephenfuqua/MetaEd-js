@@ -2,6 +2,7 @@
 import AssociationSubclassBuilder from '../../../src/core/builder/AssociationSubclassBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -17,7 +18,7 @@ describe('when building association subclass in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -82,7 +83,7 @@ describe('when building duplicate association subclasses', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -138,7 +139,7 @@ describe('when building association subclass with no association subclass name',
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -172,7 +173,7 @@ describe('when building association subclass with lowercase association subclass
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -206,7 +207,7 @@ describe('when building association subclass with no based on name', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -277,7 +278,7 @@ describe('when building association subclass with lowercase based on name', () =
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -347,7 +348,7 @@ describe('when building association subclass with no documentation', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -408,7 +409,7 @@ describe('when building association subclass with no property', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -471,7 +472,7 @@ describe('when building association subclass with invalid trailing text', () => 
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -542,7 +543,7 @@ describe('when building association subclass source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationSubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

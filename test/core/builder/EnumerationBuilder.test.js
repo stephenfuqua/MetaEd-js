@@ -2,6 +2,7 @@
 import EnumerationBuilder from '../../../src/core/builder/EnumerationBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -19,7 +20,7 @@ describe('when building single enumeration', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -93,7 +94,7 @@ describe('when building school year enumeration', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -145,7 +146,7 @@ describe('when building duplicate enumerations', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -199,7 +200,7 @@ describe('when building enumeration without item documentation', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -236,7 +237,7 @@ describe('when building multiple enumerations', () => {
   const metaEdId2: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -283,7 +284,7 @@ describe('when building enumeration with no enumeration name', () => {
   const itemShortDescription: string = 'ItemShortDescription';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -319,7 +320,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -399,7 +400,7 @@ describe('when building enumeration with no documentation', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -476,7 +477,7 @@ describe('when building enumeration with no enumeration item', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -544,7 +545,7 @@ describe('when building enumeration with empty enumeration item description', ()
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -630,7 +631,7 @@ describe('when building enumeration with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -714,7 +715,7 @@ describe('when building enumeration source map', () => {
   const itemMetaEdId2: string = '3';
 
   beforeAll(() => {
-    const builder = new EnumerationBuilder(entityRepository, validationFailures, new Map());
+    const builder = new EnumerationBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

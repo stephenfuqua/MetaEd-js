@@ -27,8 +27,8 @@ describe('when domain entity extension correctly has different property names', 
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -62,8 +62,8 @@ describe('when domain entity extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -107,9 +107,9 @@ describe('when domain entity subclass and extension have duplicate property name
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntitySubclassBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -152,8 +152,8 @@ describe('when domain entity extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -194,8 +194,8 @@ describe('when domain entityextension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -225,8 +225,8 @@ describe('when domain entity extension has duplicate common extension override p
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(repository.entity, [], new Map()))
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityBuilder(repository.entity, [], repository.property))
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

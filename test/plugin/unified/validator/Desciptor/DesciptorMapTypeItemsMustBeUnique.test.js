@@ -22,7 +22,7 @@ describe('when map type enumeration items have different short descriptions', ()
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -52,7 +52,7 @@ describe('when map type enumeration items have duplicate short descriptions', ()
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -88,7 +88,7 @@ describe('when map type enumeration items have multiple duplicate short descript
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

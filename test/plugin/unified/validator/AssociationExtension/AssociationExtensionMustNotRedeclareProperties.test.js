@@ -28,8 +28,8 @@ describe('when association extension correctly has different property names', ()
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -65,8 +65,8 @@ describe('when association extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -111,8 +111,8 @@ describe('when association extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -155,8 +155,8 @@ describe('when association extension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -188,8 +188,8 @@ describe('when association extension has duplicate common extension override pro
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

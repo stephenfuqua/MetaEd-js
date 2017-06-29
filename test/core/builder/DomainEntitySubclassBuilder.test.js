@@ -2,6 +2,7 @@
 import DomainEntitySubclassBuilder from '../../../src/core/builder/DomainEntitySubclassBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -18,7 +19,7 @@ describe('when building domain entity subclass in extension namespace', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -81,7 +82,7 @@ describe('when building duplicate domain entity subclasses', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -138,7 +139,7 @@ describe('when building domain entity subclass with no domain entity subclass na
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -173,7 +174,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -208,7 +209,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -275,7 +276,7 @@ describe('when building domain entity subclass with no based on name', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -346,7 +347,7 @@ describe('when building domain entity subclass with no documentation', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -407,7 +408,7 @@ describe('when building domain entity subclass with no property', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -471,7 +472,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -543,7 +544,7 @@ describe('when building domain entity subclass source map', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntitySubclassBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

@@ -29,7 +29,7 @@ describe('when validating descriptor domain item matches top level entity', () =
       .withEndDescriptor()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -65,7 +65,7 @@ describe('when validating descriptor domain item does not match top level entity
       .withEndDescriptor()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new DescriptorBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DescriptorBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

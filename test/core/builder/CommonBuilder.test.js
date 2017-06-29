@@ -2,6 +2,7 @@
 import CommonBuilder from '../../../src/core/builder/CommonBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -19,7 +20,7 @@ describe('when building common in extension namespace', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -93,7 +94,7 @@ describe('when building duplicate commons', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -150,7 +151,7 @@ describe('when building inline common in extension namespace', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -222,7 +223,7 @@ describe('when building common with no common name', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -259,7 +260,7 @@ describe('when building common with lowercase common name', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -295,7 +296,7 @@ describe('when building common with no documentation', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -366,7 +367,7 @@ describe('when building common with no property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -431,7 +432,7 @@ describe('when building common with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -507,7 +508,7 @@ describe('when building inline common with no inline common name', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -543,7 +544,7 @@ describe('when building inline common with lowercase inline common name', () => 
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -618,7 +619,7 @@ describe('when building inline common with no documentation', () => {
 
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -689,7 +690,7 @@ describe('when building inline common with no property', () => {
   const entityDocumentation: string = 'EntityDocumentation';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -754,7 +755,7 @@ describe('when building inline common with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -829,7 +830,7 @@ describe('when building common source map', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -876,7 +877,7 @@ describe('when building inline common source map', () => {
   const propertyMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new CommonBuilder(entityRepository, validationFailures, new Map());
+    const builder = new CommonBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

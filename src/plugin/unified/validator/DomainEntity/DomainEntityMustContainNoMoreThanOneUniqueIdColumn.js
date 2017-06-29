@@ -1,14 +1,14 @@
 // @flow
 import type { Repository } from '../../../../core/model/Repository';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyIndex } from '../../../../core/model/property/PropertyIndex';
+import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 import type { EntityProperty } from '../../../../core/model/property/EntityProperty';
 
 const hasDuplicateUniqueIds = (properties: Array<EntityProperty>) =>
   properties.reduce((count, property) => (property.metaEdName === 'UniqueId' ? count + 1 : count), 0) > 1;
 
 // eslint-disable-next-line no-unused-vars
-export function validate(repository: Repository, propertyIndex?: PropertyIndex): Array<ValidationFailure> {
+export function validate(repository: Repository, propertyRepository?: PropertyRepository): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   repository.entity.domainEntity.forEach(domainEntity => {
     if (!domainEntity.namespaceInfo.isExtension && hasDuplicateUniqueIds(domainEntity.properties)) {

@@ -2,6 +2,7 @@
 import DescriptorBuilder from '../../../src/core/builder/DescriptorBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -17,7 +18,7 @@ describe('when building descriptor without map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -86,7 +87,7 @@ describe('when building multiple descriptors', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -144,7 +145,7 @@ describe('when building descriptor with optional map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -237,7 +238,7 @@ describe('when building descriptor with required map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -327,7 +328,7 @@ describe('when building descriptor with no descriptor name', () => {
   const documentation: string = 'Documentation';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -360,7 +361,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -433,7 +434,7 @@ describe('when building descriptor with no documentation', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -508,7 +509,7 @@ describe('when building descriptor with no documentation in map type', () => {
   const itemMetaEdId: string = '2';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -602,7 +603,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
   const mapTypeDocumentation: string = 'MapTypeDocumentation';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -685,7 +686,7 @@ describe('when building descriptor with invalid trailing text', () => {
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -759,7 +760,7 @@ describe('when building descriptor source map with optional map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -814,7 +815,7 @@ describe('when building descriptor source map with required map type', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -855,7 +856,7 @@ describe('when building required map type enumeration source map', () => {
   const shortDescription: string = 'ShortDescription';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -906,7 +907,7 @@ describe('when building map type enumeration item source map', () => {
   const shortDescription: string = 'ShortDescription';
 
   beforeAll(() => {
-    const builder = new DescriptorBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DescriptorBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

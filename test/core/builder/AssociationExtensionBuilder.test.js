@@ -2,6 +2,7 @@
 import AssociationExtensionBuilder from '../../../src/core/builder/AssociationExtensionBuilder';
 import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { EntityRepository } from '../../../src/core/model/Repository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
@@ -15,7 +16,7 @@ describe('when building association extension in extension namespace', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -74,7 +75,7 @@ describe('when building duplicate association extensions', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -126,7 +127,7 @@ describe('when building association extension with no association extension name
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -157,7 +158,7 @@ describe('when building association extension with lowercase association extensi
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -187,7 +188,7 @@ describe('when building association extension with no property', () => {
   const entityName: string = 'EntityName';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -243,7 +244,7 @@ describe('when building association extension with invalid trailing text', () =>
   const trailingText: string = '\r\nTrailingText';
 
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     textBuilder
       .withBeginNamespace(namespace, projectExtension)
@@ -306,7 +307,7 @@ describe('when building association extension source map', () => {
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   beforeAll(() => {
-    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, new Map());
+    const builder = new AssociationExtensionBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)

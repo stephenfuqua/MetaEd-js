@@ -27,7 +27,7 @@ describe('when association extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -60,7 +60,7 @@ describe('when association extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

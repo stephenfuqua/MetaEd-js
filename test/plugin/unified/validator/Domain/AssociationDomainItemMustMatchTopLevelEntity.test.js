@@ -30,7 +30,7 @@ describe('when validating association domain item matches top level entity', () 
       .withEndAssociation()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -72,8 +72,8 @@ describe('when validating association domain item matches top level entity subcl
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -115,7 +115,7 @@ describe('when validating association domain item does not match top level entit
       .withEndAssociationSubclass()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

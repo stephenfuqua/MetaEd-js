@@ -29,7 +29,7 @@ describe('when validating common domain item matches top level entity', () => {
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -65,7 +65,7 @@ describe('when validating common domain item does not match top level entity', (
       .withEndCommon()
       .withEndNamespace()
       .sendToListener(new DomainBuilder(repository.entity, []))
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

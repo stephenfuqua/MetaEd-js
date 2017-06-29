@@ -1,15 +1,11 @@
 // @flow
 import type { Repository } from '../../../../core/model/Repository';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { PropertyIndex } from '../../../../core/model/property/PropertyIndex';
-import type { EntityProperty } from '../../../../core/model/property/EntityProperty';
+import type { PropertyRepository } from '../../../../core/model/property/PropertyRepository';
 
-export function validate(repository: Repository, propertyIndex: PropertyIndex): Array<ValidationFailure> {
-  const properties: ?Array<EntityProperty> = propertyIndex.get('choice');
-  if (properties == null) return [];
-
+export function validate(repository: Repository, propertyRepository: PropertyRepository): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  properties.forEach(property => {
+  propertyRepository.choice.forEach(property => {
     if (repository.entity.choice.get(property.metaEdName) == null) {
       failures.push({
         validatorName: 'ChoicePropertyMustMatchAChoice',

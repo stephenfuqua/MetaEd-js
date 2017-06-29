@@ -29,8 +29,8 @@ describe('when association extension extends association', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -71,9 +71,9 @@ describe('when association extension extends association subclass', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()))
-      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property))
+      .sendToListener(new AssociationSubclassBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -99,7 +99,7 @@ describe('when association extension extends an invalid identifier', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
-      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new AssociationExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

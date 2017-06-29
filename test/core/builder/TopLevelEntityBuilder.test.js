@@ -4,15 +4,15 @@ import MetaEdTextBuilder from '../MetaEdTextBuilder';
 import { entityRepositoryFactory } from '../../../src/core/model/Repository';
 import { NoSourceMap } from '../../../src/core/model/SourceMap';
 import type { EntityRepository } from '../../../src/core/model/Repository';
-import type { PropertyType } from '../../../src/core/model/property/PropertyType';
-import type { EntityProperty } from '../../../src/core/model/property/EntityProperty';
+import type { PropertyRepository } from '../../../src/core/model/property/PropertyRepository';
+import { propertyRepositoryFactory } from '../../../src/core/model/property/PropertyRepository';
 import type { ValidationFailure } from '../../../src/core/validator/ValidationFailure';
 
 // AssociationProperty
 describe('when building association property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -22,7 +22,7 @@ describe('when building association property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -52,7 +52,7 @@ describe('when building association property', () => {
 describe('when building association property with weak reference', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -62,7 +62,7 @@ describe('when building association property with weak reference', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -104,7 +104,7 @@ describe('when building association property with weak reference', () => {
 describe('when building boolean property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -114,7 +114,7 @@ describe('when building boolean property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -145,7 +145,7 @@ describe('when building boolean property', () => {
 describe('when building choice property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -155,7 +155,7 @@ describe('when building choice property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -186,7 +186,7 @@ describe('when building choice property', () => {
 describe('when building common property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -196,7 +196,7 @@ describe('when building common property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -226,7 +226,7 @@ describe('when building common property', () => {
 describe('when building common property with extension override', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -236,7 +236,7 @@ describe('when building common property with extension override', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -277,7 +277,7 @@ describe('when building common property with extension override', () => {
 describe('when building currency property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -287,7 +287,7 @@ describe('when building currency property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -318,7 +318,7 @@ describe('when building currency property', () => {
 describe('when building date property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -328,7 +328,7 @@ describe('when building date property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -358,7 +358,7 @@ describe('when building date property', () => {
 // DecimalProperty
 describe('when building decimal property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -372,7 +372,7 @@ describe('when building decimal property', () => {
   const maxValue: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -451,7 +451,7 @@ describe('when building decimal property', () => {
 describe('when building descriptor property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -461,7 +461,7 @@ describe('when building descriptor property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -492,7 +492,7 @@ describe('when building descriptor property', () => {
 describe('when building domain entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -502,7 +502,7 @@ describe('when building domain entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -533,7 +533,7 @@ describe('when building domain entity property', () => {
 describe('when building domain entity property with weak reference', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -543,7 +543,7 @@ describe('when building domain entity property with weak reference', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -586,7 +586,7 @@ describe('when building domain entity property with weak reference', () => {
 describe('when building duration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -596,7 +596,7 @@ describe('when building duration property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -628,7 +628,7 @@ describe('when building duration property', () => {
 describe('when building required entity properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -639,7 +639,7 @@ describe('when building required entity properties', () => {
   const metaEdId: string = '1';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -656,7 +656,7 @@ describe('when building required entity properties', () => {
   });
 
   it('should have association property in property index', () => {
-    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyIndex.get(propertyType)[0]);
+    expect(entityRepository.domainEntity.get(entityName).properties[0]).toBe(propertyRepository[propertyType][0]);
   });
 
   it('should have type', () => {
@@ -743,7 +743,7 @@ describe('when building entity property with inherited documentation', () => {
   const inheritedDocumentation: string = 'inherited';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -781,7 +781,7 @@ describe('when building identity entity property', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -823,7 +823,7 @@ describe('when building optional entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -857,7 +857,7 @@ describe('when building required collection entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -891,7 +891,7 @@ describe('when building optional collection entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -926,7 +926,7 @@ describe('when building entity property with context', () => {
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -963,7 +963,7 @@ describe('when building entity property with shortened context', () => {
   const shortenToName: string = 'ShortenToName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1000,7 +1000,7 @@ describe('when building renamed identity entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1052,7 +1052,7 @@ describe('when building queryable entity property ', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1086,7 +1086,7 @@ describe('when building queryable entity property ', () => {
 describe('when building shared entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1095,7 +1095,7 @@ describe('when building shared entity property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1126,7 +1126,7 @@ describe('when building shared entity property', () => {
 describe('when building enumeration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1136,7 +1136,7 @@ describe('when building enumeration property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1167,7 +1167,7 @@ describe('when building enumeration property', () => {
 describe('when building inline common property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1177,7 +1177,7 @@ describe('when building inline common property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1207,7 +1207,7 @@ describe('when building inline common property', () => {
 // IntegerProperty
 describe('when building integer property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1219,7 +1219,7 @@ describe('when building integer property', () => {
   const maxValue: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1289,7 +1289,7 @@ describe('when building merged property reference', () => {
   const targetPropertyPath: string = 'TargetEntity.TargetProperty';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1344,7 +1344,7 @@ describe('when building multiple merge property references', () => {
   const targetPropertyPath1: string = 'TargetPropertyPath1';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], new Map());
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1397,7 +1397,7 @@ describe('when building multiple merge property references', () => {
 describe('when building percent property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1407,7 +1407,7 @@ describe('when building percent property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1449,7 +1449,7 @@ describe('when building referential property with merged properties', () => {
   const targetPropertyPath: string = 'MergedPropertyTarget';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, new Map());
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepositoryFactory());
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1477,7 +1477,7 @@ describe('when building referential property with merged properties', () => {
 describe('when building school year enumeration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1487,7 +1487,7 @@ describe('when building school year enumeration property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1518,7 +1518,7 @@ describe('when building school year enumeration property', () => {
 describe('when building shared decimal property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1528,7 +1528,7 @@ describe('when building shared decimal property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1559,7 +1559,7 @@ describe('when building shared decimal property', () => {
 describe('when building shared integer property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1569,7 +1569,7 @@ describe('when building shared integer property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1600,7 +1600,7 @@ describe('when building shared integer property', () => {
 describe('when building shared string property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1610,7 +1610,7 @@ describe('when building shared string property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1640,7 +1640,7 @@ describe('when building shared string property', () => {
 // ShortProperty
 describe('when building short property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1652,7 +1652,7 @@ describe('when building short property', () => {
   const maxValue: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1712,7 +1712,7 @@ describe('when building short property', () => {
 // StringProperty
 describe('when building string property', () => {
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1724,7 +1724,7 @@ describe('when building string property', () => {
   const maxLength: string = '1000';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, [], propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, [], propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1785,7 +1785,7 @@ describe('when building string property', () => {
 describe('when building time property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1795,7 +1795,7 @@ describe('when building time property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
@@ -1826,7 +1826,7 @@ describe('when building time property', () => {
 describe('when building year property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const entityRepository: EntityRepository = entityRepositoryFactory();
-  const propertyIndex: Map<PropertyType, Array<EntityProperty>> = new Map();
+  const propertyRepository: PropertyRepository = propertyRepositoryFactory();
   const namespace: string = 'namespace';
 
   const entityName: string = 'EntityName';
@@ -1836,7 +1836,7 @@ describe('when building year property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
 
   beforeAll(() => {
-    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyIndex);
+    const builder = new DomainEntityBuilder(entityRepository, validationFailures, propertyRepository);
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)

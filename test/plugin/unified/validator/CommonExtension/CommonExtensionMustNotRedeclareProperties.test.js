@@ -26,8 +26,8 @@ describe('when common extension correctly has different property names', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -61,8 +61,8 @@ describe('when common extension has duplicate property name', () => {
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -105,8 +105,8 @@ describe('when common extension has multiple duplicates', () => {
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -147,8 +147,8 @@ describe('when common extension has duplicate common property', () => {
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -182,8 +182,8 @@ describe('when common extension has duplicate common extension override property
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new CommonBuilder(repository.entity, [], new Map()))
-      .sendToListener(new CommonExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new CommonBuilder(repository.entity, [], repository.property))
+      .sendToListener(new CommonExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });

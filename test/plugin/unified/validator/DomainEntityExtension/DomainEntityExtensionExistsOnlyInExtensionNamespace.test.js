@@ -25,7 +25,7 @@ describe('when domain entity extension is in correct namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
@@ -56,7 +56,7 @@ describe('when domain entity extension is in core namespace', () => {
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
-      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], new Map()));
+      .sendToListener(new DomainEntityExtensionBuilder(repository.entity, [], repository.property));
 
     failures = validate(repository);
   });
