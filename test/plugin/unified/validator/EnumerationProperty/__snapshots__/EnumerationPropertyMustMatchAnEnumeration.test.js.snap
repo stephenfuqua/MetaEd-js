@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when enumeration property has invalid identifier should have validation failure -> message 1`] = `"Enumeration property PropertyName2 does not match any declared enumeration."`;
+
+exports[`when enumeration property has invalid identifier should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 10,
+  "tokenText": "enumeration",
+}
+`;
