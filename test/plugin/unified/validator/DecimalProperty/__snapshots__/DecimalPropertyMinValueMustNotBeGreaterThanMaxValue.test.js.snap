@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating decimal property with minimum value greater than maximum value -> message 1`] = `"decimal DecimalProperty has min value greater than max value."`;
+
+exports[`when validating decimal property with minimum value greater than maximum value -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 11,
+  "tokenText": "min value",
+}
+`;
