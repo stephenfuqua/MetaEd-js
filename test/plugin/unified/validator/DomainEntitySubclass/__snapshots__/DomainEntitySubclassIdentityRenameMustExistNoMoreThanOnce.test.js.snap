@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity subclass renames base identity more than once should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName based on EntityName tries to rename properties PropertyName1, PropertyName2. Only one identity rename is allowed for a given Domain Entity Subclass."`;
+
+exports[`when domain entity subclass renames base identity more than once should have validation failure -> message 2`] = `"Domain Entity Subclass SubclassName based on EntityName tries to rename properties PropertyName1, PropertyName2. Only one identity rename is allowed for a given Domain Entity Subclass."`;
+
+exports[`when domain entity subclass renames base identity more than once should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 32,
+  "line": 21,
+  "tokenText": "PropertyName1",
+}
+`;
+
+exports[`when domain entity subclass renames base identity more than once should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 32,
+  "line": 26,
+  "tokenText": "PropertyName2",
+}
+`;

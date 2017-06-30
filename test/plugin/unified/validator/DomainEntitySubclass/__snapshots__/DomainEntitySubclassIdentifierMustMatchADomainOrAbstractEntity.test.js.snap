@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> message 1`] = `"Domain Entity Subclass EntityName based on BaseEntityName does not match any declared Domain or Abstract Entity."`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 36,
+  "line": 2,
+  "tokenText": "BaseEntityName",
+}
+`;

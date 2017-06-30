@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName of base Domain Entity."`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> message 2`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName1 of base Domain Entity."`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> message 3`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName2 of base Domain Entity."`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 12,
+  "tokenText": "bool",
+}
+`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 4,
+  "line": 16,
+  "tokenText": "bool",
+}
+`;
+
+exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 3`] = `
+Object {
+  "column": 4,
+  "line": 20,
+  "tokenText": "bool",
+}
+`;

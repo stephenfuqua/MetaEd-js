@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when association subclass has invalid extendee should have validation failure -> message 1`] = `"Association Subclass SubclassName redeclares property DuplicatePropertyName of base Association."`;
+
+exports[`when association subclass has invalid extendee should have validation failure -> message 2`] = `"Association Subclass SubclassName redeclares property DuplicatePropertyName2 of base Association."`;
+
+exports[`when association subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 22,
+  "tokenText": "bool",
+}
+`;
+
+exports[`when association subclass has invalid extendee should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 4,
+  "line": 26,
+  "tokenText": "bool",
+}
+`;
