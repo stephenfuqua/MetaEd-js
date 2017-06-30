@@ -14,3 +14,5 @@ export function commonExtensionFactory(): CommonExtension {
     sourceMap: new CommonExtensionSourceMap(),
   });
 }
+
+export const asCommonExtension = (x: TopLevelEntity): CommonExtension => ((x: any): CommonExtension);

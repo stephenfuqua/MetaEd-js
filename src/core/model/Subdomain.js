@@ -39,3 +39,5 @@ export function subdomainFactory(): Subdomain {
     sourceMap: new SubdomainSourceMap(),
   });
 }
+
+export const asSubdomain = (x: TopLevelEntity): Subdomain => ((x: any): Subdomain);

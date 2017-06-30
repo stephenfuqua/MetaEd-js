@@ -1,6 +1,6 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class DurationPropertySourceMap extends SimplePropertySourceMap {}
 
@@ -14,3 +14,5 @@ export function durationPropertyFactory(): DurationProperty {
     sourceMap: new DurationPropertySourceMap(),
   });
 }
+
+export const asDurationProperty = (x: EntityProperty): DurationProperty => ((x: any): DurationProperty);

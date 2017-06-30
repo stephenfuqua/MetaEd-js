@@ -1,7 +1,7 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
 import type { SourceMap } from './../SourceMap';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class CommonPropertySourceMap extends ReferentialPropertySourceMap {
   isExtensionOverride: ?SourceMap;
@@ -19,3 +19,5 @@ export function commonPropertyFactory(): CommonProperty {
     sourceMap: new CommonPropertySourceMap(),
   });
 }
+
+export const asCommonProperty = (x: EntityProperty): CommonProperty => ((x: any): CommonProperty);

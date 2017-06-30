@@ -1,9 +1,9 @@
 // @flow
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { enumerationFactory } from '../model/Enumeration';
+import { enumerationFactory, asEnumeration } from '../model/Enumeration';
 import { schoolYearEnumerationFactory } from '../model/SchoolYearEnumeration';
-import type { Enumeration, EnumerationSourceMap } from '../model/Enumeration';
+import type { EnumerationSourceMap } from '../model/Enumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
 import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
@@ -70,7 +70,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
   exitEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentEnumerationItem === NoEnumerationItem) return;
-    ((this.currentTopLevelEntity: any): Enumeration).enumerationItems.push(this.currentEnumerationItem);
+    asEnumeration(this.currentTopLevelEntity).enumerationItems.push(this.currentEnumerationItem);
     ((this.currentTopLevelEntity.sourceMap: any): EnumerationSourceMap).enumerationItems.push(sourceMapFrom(context));
     this.currentEnumerationItem = NoEnumerationItem;
   }

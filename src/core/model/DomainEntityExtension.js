@@ -14,3 +14,5 @@ export function domainEntityExtensionFactory(): DomainEntityExtension {
     sourceMap: new DomainEntityExtensionSourceMap(),
   });
 }
+
+export const asDomainEntityExtension = (x: TopLevelEntity): DomainEntityExtension => ((x: any): DomainEntityExtension);

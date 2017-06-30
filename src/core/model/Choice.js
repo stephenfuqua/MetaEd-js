@@ -14,3 +14,5 @@ export function choiceFactory(): Choice {
     sourceMap: new ChoiceSourceMap(),
   });
 }
+
+export const asChoice = (x: TopLevelEntity): Choice => ((x: any): Choice);

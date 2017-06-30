@@ -1,6 +1,6 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class BooleanPropertySourceMap extends SimplePropertySourceMap {}
 
@@ -14,3 +14,5 @@ export function booleanPropertyFactory(): BooleanProperty {
     sourceMap: new BooleanPropertySourceMap(),
   });
 }
+
+export const asBooleanProperty = (x: EntityProperty): BooleanProperty => ((x: any): BooleanProperty);

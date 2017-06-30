@@ -28,3 +28,5 @@ export function interchangeItemFactory(): InterchangeItem {
 export const NoInterchangeItem: InterchangeItem = Object.assign(interchangeItemFactory(), {
   metaEdName: 'NoInterchangeItem',
 });
+
+export const asInterchangeItem = (x: ModelBase): InterchangeItem => ((x: any): InterchangeItem);

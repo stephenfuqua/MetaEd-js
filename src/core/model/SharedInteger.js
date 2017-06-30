@@ -1,6 +1,6 @@
 // @flow
-
 import { SharedSimple, SharedSimpleSourceMap, defaultSharedSimple } from './SharedSimple';
+import type { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
 
 export class SharedIntegerSourceMap extends SharedSimpleSourceMap {
@@ -26,3 +26,5 @@ export function sharedIntegerFactory(): SharedInteger {
     sourceMap: new SharedIntegerSourceMap(),
   });
 }
+
+export const asSharedInteger = (x: ModelBase): SharedInteger => ((x: any): SharedInteger);

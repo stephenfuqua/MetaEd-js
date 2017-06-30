@@ -28,3 +28,5 @@ export function domainItemFactory(): DomainItem {
 export const NoDomainItem: DomainItem = Object.assign(domainItemFactory(), {
   metaEdName: 'NoDomainItem',
 });
+
+export const asDomainItem = (x: ModelBase): DomainItem => ((x: any): DomainItem);

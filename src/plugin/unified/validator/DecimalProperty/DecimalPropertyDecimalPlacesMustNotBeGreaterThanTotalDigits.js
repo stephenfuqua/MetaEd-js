@@ -1,13 +1,13 @@
 // @flow
 import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import { DecimalProperty, DecimalPropertySourceMap } from '../../../../core/model/property/DecimalProperty';
+import { DecimalProperty, DecimalPropertySourceMap, asDecimalProperty } from '../../../../core/model/property/DecimalProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.domainEntity.forEach(entity => {
     entity.properties.filter(p => p.type === 'decimal').forEach(property => {
-      const decimalProperty: DecimalProperty = ((property: any): DecimalProperty);
+      const decimalProperty: DecimalProperty = asDecimalProperty(property);
       if (decimalProperty.decimalPlaces && decimalProperty.totalDigits &&
         Number.parseInt(decimalProperty.decimalPlaces, 10) > Number.parseInt(decimalProperty.totalDigits, 10)) {
         failures.push({

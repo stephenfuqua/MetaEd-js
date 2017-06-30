@@ -23,3 +23,5 @@ export function domainEntityFactory(): DomainEntity {
 export const NoDomainEntity: DomainEntity = Object.assign(domainEntityFactory(), {
   metaEdName: 'NoDomainEntity',
 });
+
+export const asDomainEntity = (x: TopLevelEntity): DomainEntity => ((x: any): DomainEntity);

@@ -1,5 +1,6 @@
 // @flow
 import { defaultTopLevelEntity } from './TopLevelEntity';
+import type { TopLevelEntity } from './TopLevelEntity';
 import { Enumeration, EnumerationSourceMap } from './Enumeration';
 
 export class SchoolYearEnumeration extends Enumeration {}
@@ -12,3 +13,5 @@ export function schoolYearEnumerationFactory(): SchoolYearEnumeration {
     sourceMap: new EnumerationSourceMap(),
   });
 }
+
+export const asSchoolYearEnumeration = (x: TopLevelEntity): SchoolYearEnumeration => ((x: any): SchoolYearEnumeration);

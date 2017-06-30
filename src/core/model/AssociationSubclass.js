@@ -14,3 +14,5 @@ export function associationSubclassFactory(): AssociationSubclass {
     sourceMap: new AssociationSubclassSourceMap(),
   });
 }
+
+export const asAssociationSubclass = (x: TopLevelEntity): AssociationSubclass => ((x: any): AssociationSubclass);

@@ -1,7 +1,7 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
 import type { SourceMap } from './../SourceMap';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class StringPropertySourceMap extends SimplePropertySourceMap {
   minLength: ?SourceMap;
@@ -22,3 +22,5 @@ export function stringPropertyFactory(): StringProperty {
     sourceMap: new StringPropertySourceMap(),
   });
 }
+
+export const asStringProperty = (x: EntityProperty): StringProperty => ((x: any): StringProperty);

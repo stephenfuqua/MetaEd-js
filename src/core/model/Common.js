@@ -34,3 +34,5 @@ export function inlineCommonFactory(): Common {
     sourceMap: new CommonSourceMap(),
   });
 }
+
+export const asCommon = (x: TopLevelEntity): Common => ((x: any): Common);

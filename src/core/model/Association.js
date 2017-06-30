@@ -14,3 +14,5 @@ export function associationFactory(): Association {
     sourceMap: new AssociationSourceMap(),
   });
 }
+
+export const asAssociation = (x: TopLevelEntity): Association => ((x: any): Association);

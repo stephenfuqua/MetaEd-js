@@ -26,3 +26,5 @@ export function descriptorFactory(): Descriptor {
     sourceMap: new DescriptorSourceMap(),
   });
 }
+
+export const asDescriptor = (x: TopLevelEntity): Descriptor => ((x: any): Descriptor);

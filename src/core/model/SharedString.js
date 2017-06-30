@@ -1,6 +1,6 @@
 // @flow
-
 import { SharedSimple, SharedSimpleSourceMap, defaultSharedSimple } from './SharedSimple';
+import type { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
 
 export class SharedStringSourceMap extends SharedSimpleSourceMap {
@@ -23,3 +23,5 @@ export function sharedStringFactory(): SharedString {
     sourceMap: new SharedStringSourceMap(),
   });
 }
+
+export const asSharedString = (x: ModelBase): SharedString => ((x: any): SharedString);

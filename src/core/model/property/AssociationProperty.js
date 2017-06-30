@@ -1,7 +1,7 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
 import type { SourceMap } from './../SourceMap';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityProperty, EntityPropertySourceMap } from './EntityProperty';
 
 export class AssociationPropertySourceMap extends ReferentialPropertySourceMap {
   isWeak: ?SourceMap;
@@ -19,3 +19,5 @@ export function associationPropertyFactory(): AssociationProperty {
     sourceMap: new AssociationPropertySourceMap(),
   });
 }
+
+export const asAssociationProperty = (x: EntityProperty): AssociationProperty => ((x: any): AssociationProperty);

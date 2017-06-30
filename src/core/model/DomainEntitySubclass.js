@@ -14,3 +14,5 @@ export function domainEntitySubclassFactory(): DomainEntitySubclass {
     sourceMap: new DomainEntitySubclassSourceMap(),
   });
 }
+
+export const asDomainEntitySubclass = (x: TopLevelEntity): DomainEntitySubclass => ((x: any): DomainEntitySubclass);

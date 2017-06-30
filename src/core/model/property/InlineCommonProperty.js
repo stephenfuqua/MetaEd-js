@@ -1,6 +1,6 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class InlineCommonPropertySourceMap extends ReferentialPropertySourceMap {}
 
@@ -14,3 +14,5 @@ export function inlineCommonPropertyFactory(): InlineCommonProperty {
     sourceMap: new InlineCommonPropertySourceMap(),
   });
 }
+
+export const asInlineCommonProperty = (x: EntityProperty): InlineCommonProperty => ((x: any): InlineCommonProperty);

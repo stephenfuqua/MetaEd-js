@@ -25,3 +25,5 @@ export function enumerationFactory(): Enumeration {
     sourceMap: new EnumerationSourceMap(),
   });
 }
+
+export const asEnumeration = (x: TopLevelEntity): Enumeration => ((x: any): Enumeration);

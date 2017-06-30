@@ -14,3 +14,5 @@ export function associationExtensionFactory(): AssociationExtension {
     sourceMap: new AssociationExtensionSourceMap(),
   });
 }
+
+export const asAssociationExtension = (x: TopLevelEntity): AssociationExtension => ((x: any): AssociationExtension);

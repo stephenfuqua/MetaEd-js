@@ -28,3 +28,5 @@ export const NoEnumerationItem: EnumerationItem = Object.assign(enumerationItemF
   metaEdName: 'NoEnumerationItem',
   shortDescription: 'NoEnumerationItem',
 });
+
+export const asEnumerationItem = (x: ModelBase): EnumerationItem => ((x: any): EnumerationItem);

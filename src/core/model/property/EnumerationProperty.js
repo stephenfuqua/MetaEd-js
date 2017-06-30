@@ -1,6 +1,6 @@
 // @flow
 import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class EnumerationPropertySourceMap extends ReferentialPropertySourceMap {}
 
@@ -14,3 +14,5 @@ export function enumerationPropertyFactory(): EnumerationProperty {
     sourceMap: new EnumerationPropertySourceMap(),
   });
 }
+
+export const asEnumerationProperty = (x: EntityProperty): EnumerationProperty => ((x: any): EnumerationProperty);

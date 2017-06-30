@@ -1,7 +1,7 @@
 // @flow
 import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
 import type { SourceMap } from './../SourceMap';
-import type { EntityPropertySourceMap } from './EntityProperty';
+import type { EntityProperty, EntityPropertySourceMap } from './EntityProperty';
 
 export class DecimalPropertySourceMap extends SimplePropertySourceMap {
   minValue: ?SourceMap;
@@ -28,3 +28,5 @@ export function decimalPropertyFactory(): DecimalProperty {
     sourceMap: new DecimalPropertySourceMap(),
   });
 }
+
+export const asDecimalProperty = (x: EntityProperty): DecimalProperty => ((x: any): DecimalProperty);
