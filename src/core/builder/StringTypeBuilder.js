@@ -6,7 +6,6 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 import { stringTypeFactory, NoStringType } from '../model/StringType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
-import { IContextWithIdentifier } from '../../grammar/IContextWithIdentifier';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
@@ -55,7 +54,7 @@ export default class StringTypeBuilder extends MetaEdGrammarListener {
     this.enteringStringType(context, true);
   }
 
-  enteringStringType(context: IContextWithIdentifier, generatedSimpleType: boolean = false) {
+  enteringStringType(context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext, generatedSimpleType: boolean = false) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentStringType = Object.assign(stringTypeFactory(), {
       namespaceInfo: this.namespaceInfo,

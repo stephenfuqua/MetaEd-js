@@ -6,7 +6,6 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 import { decimalTypeFactory, NoDecimalType } from '../model/DecimalType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
-import { IContextWithIdentifier } from '../../grammar/IContextWithIdentifier';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
@@ -55,7 +54,7 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
     this.enteringDecimalType(context, true);
   }
 
-  enteringDecimalType(context: IContextWithIdentifier, generatedSimpleType: boolean = false) {
+  enteringDecimalType(context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext, generatedSimpleType: boolean = false) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentDecimalType = Object.assign(decimalTypeFactory(), {
       namespaceInfo: this.namespaceInfo,

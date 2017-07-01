@@ -6,7 +6,6 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 import { integerTypeFactory, shortTypeFactory, NoIntegerType } from '../model/IntegerType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
-import { IContextWithIdentifier } from '../../grammar/IContextWithIdentifier';
 import { MetaEdGrammar } from '../../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
@@ -63,7 +62,11 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
     this.enteringIntegerType(context, { isShort: true, generatedSimpleType: true });
   }
 
-  enteringIntegerType(context: IContextWithIdentifier, { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean }) {
+  enteringIntegerType(context: MetaEdGrammar.SharedIntegerContext |
+    MetaEdGrammar.IntegerPropertyContext |
+    MetaEdGrammar.SharedShortContext |
+    MetaEdGrammar.ShortPropertyContext,
+    { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean }) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     const factory = isShort ? shortTypeFactory : integerTypeFactory;
     this.currentIntegerType = Object.assign(factory(), {
