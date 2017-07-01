@@ -1,0 +1,2 @@
+Remove this file when implemented (file is in both unified and xsd).  In C# code it's in MetaEd.Core.Enhancers.Unified.QueryableLookupSupport but
+has XsdModelEnhancerBase as its base.
