@@ -7,17 +7,20 @@ import AssociationSubclassBuilder from '../builder/AssociationSubclassBuilder';
 import ChoiceBuilder from '../builder/ChoiceBuilder';
 import CommonBuilder from '../builder/CommonBuilder';
 import CommonExtensionBuilder from '../builder/CommonExtensionBuilder';
+import DecimalTypeBuilder from '../builder/DecimalTypeBuilder';
 import DescriptorBuilder from '../builder/DescriptorBuilder';
 import DomainBuilder from '../builder/DomainBuilder';
 import DomainEntityBuilder from '../builder/DomainEntityBuilder';
 import DomainEntityExtensionBuilder from '../builder/DomainEntityExtensionBuilder';
 import DomainEntitySubclassBuilder from '../builder/DomainEntitySubclassBuilder';
 import EnumerationBuilder from '../builder/EnumerationBuilder';
+import IntegerTypeBuilder from '../builder/IntegerTypeBuilder';
 import InterchangeBuilder from '../builder/InterchangeBuilder';
 import NamespaceInfoBuilder from '../builder/NamespaceInfoBuilder';
 import SharedDecimalBuilder from '../builder/SharedDecimalBuilder';
 import SharedIntegerBuilder from '../builder/SharedIntegerBuilder';
 import SharedStringBuilder from '../builder/SharedStringBuilder';
+import StringTypeBuilder from '../builder/StringTypeBuilder';
 
 export function executeAssociationBuilder(state: State): State {
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(new AssociationBuilder(state.metaEd, state.validationFailure), state.parseTree);
@@ -46,6 +49,11 @@ export function executeCommonBuilder(state: State): State {
 
 export function executeCommonExtensionBuilder(state: State): State {
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(new CommonExtensionBuilder(state.metaEd, state.validationFailure), state.parseTree);
+  return state;
+}
+
+export function executeDecimalTypeBuilder(state: State): State {
+  antlr4.tree.ParseTreeWalker.DEFAULT.walk(new DecimalTypeBuilder(state.metaEd, state.validationFailure), state.parseTree);
   return state;
 }
 
@@ -79,6 +87,11 @@ export function executeEnumerationBuilder(state: State): State {
   return state;
 }
 
+export function executeIntegerTypeBuilder(state: State): State {
+  antlr4.tree.ParseTreeWalker.DEFAULT.walk(new IntegerTypeBuilder(state.metaEd, state.validationFailure), state.parseTree);
+  return state;
+}
+
 export function executeInterchangeBuilder(state: State): State {
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(new InterchangeBuilder(state.metaEd, state.validationFailure), state.parseTree);
   return state;
@@ -101,5 +114,10 @@ export function executeSharedIntegerBuilder(state: State): State {
 
 export function executeSharedStringBuilder(state: State): State {
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(new SharedStringBuilder(state.metaEd, state.validationFailure), state.parseTree);
+  return state;
+}
+
+export function executeStringTypeBuilder(state: State): State {
+  antlr4.tree.ParseTreeWalker.DEFAULT.walk(new StringTypeBuilder(state.metaEd, state.validationFailure), state.parseTree);
   return state;
 }

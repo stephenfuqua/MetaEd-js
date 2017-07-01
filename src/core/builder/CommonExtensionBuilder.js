@@ -4,6 +4,7 @@ import TopLevelEntityBuilder from './TopLevelEntityBuilder';
 import { commonExtensionFactory } from '../model/CommonExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
+import { isErrorText } from './BuilderUtility';
 
 export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
   enterCommonExtension(context: MetaEdGrammar.CommonExtensionContext) {
@@ -20,7 +21,7 @@ export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);

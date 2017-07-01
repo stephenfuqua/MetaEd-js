@@ -1,6 +1,7 @@
 // @flow
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
+import type { EntityProperty } from './property/EntityProperty';
 
 export class DecimalTypeSourceMap extends ModelBaseSourceMap {
   documentationInherited: ?SourceMap;
@@ -18,6 +19,7 @@ export class DecimalType extends ModelBase {
   decimalPlaces: string;
   minValue: string;
   maxValue: string;
+  referringSimpleProperties: Array<EntityProperty>;
   sourceMap: DecimalTypeSourceMap;
 }
 
@@ -29,6 +31,7 @@ export function decimalTypeFactory(): DecimalType {
     decimalPlaces: '',
     minValue: '',
     maxValue: '',
+    referringSimpleProperties: [],
     sourceMap: new DecimalTypeSourceMap(),
   });
 }

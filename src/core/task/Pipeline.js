@@ -14,17 +14,20 @@ import {
   executeChoiceBuilder,
   executeCommonBuilder,
   executeCommonExtensionBuilder,
+  executeDecimalTypeBuilder,
   executeDescriptorBuilder,
   executeDomainBuilder,
   executeDomainEntityBuilder,
   executeDomainEntityExtensionBuilder,
   executeDomainEntitySubclassBuilder,
   executeEnumerationBuilder,
+  executeIntegerTypeBuilder,
   executeInterchangeBuilder,
   executeNamespaceInfoBuilder,
   executeSharedDecimalBuilder,
   executeSharedIntegerBuilder,
   executeSharedStringBuilder,
+  executeStringTypeBuilder,
 } from './WalkBuildersP';
 import { execute as runValidators } from './RunValidators';
 
@@ -72,6 +75,8 @@ export function startingFromFileLoadP(state: State): Promise<State> {
     .then(nextMacroTask)
     .then(s => executeCommonExtensionBuilder(s))
     .then(nextMacroTask)
+    .then(s => executeDecimalTypeBuilder(s))
+    .then(nextMacroTask)
     .then(s => executeDescriptorBuilder(s))
     .then(nextMacroTask)
     .then(s => executeDomainBuilder(s))
@@ -84,6 +89,8 @@ export function startingFromFileLoadP(state: State): Promise<State> {
     .then(nextMacroTask)
     .then(s => executeEnumerationBuilder(s))
     .then(nextMacroTask)
+    .then(s => executeIntegerTypeBuilder(s))
+    .then(nextMacroTask)
     .then(s => executeInterchangeBuilder(s))
     .then(nextMacroTask)
     .then(s => executeNamespaceInfoBuilder(s))
@@ -93,6 +100,8 @@ export function startingFromFileLoadP(state: State): Promise<State> {
     .then(s => executeSharedIntegerBuilder(s))
     .then(nextMacroTask)
     .then(s => executeSharedStringBuilder(s))
+    .then(nextMacroTask)
+    .then(s => executeStringTypeBuilder(s))
     .then(nextMacroTask)
     .then(s => runValidators(s))
     .then(nextMacroTask)

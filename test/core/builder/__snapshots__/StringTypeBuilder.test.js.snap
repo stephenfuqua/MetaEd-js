@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building duplicate shared string types should have validation failures for each entity -> SDT 1 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared string types should have validation failures for each entity -> SDT 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 7,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building duplicate shared string types should have validation failures for each entity -> SDT 2 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared string types should have validation failures for each entity -> SDT 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building duplicate shared string with duplicate string property types should have validation failures for each entity -> SDT 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 11,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building duplicate shared string with duplicate string property types should have validation failures for each entity -> SDT 2 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared string with duplicate string property types should have validation failures for each entity -> SDT 2 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "string",
+}
+`;
+
+exports[`when building duplicate string types should have validation failures for each entity -> DT 1 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate string types should have validation failures for each entity -> DT 1 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 11,
+  "tokenText": "string",
+}
+`;
+
+exports[`when building duplicate string types should have validation failures for each entity -> DT 2 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate string types should have validation failures for each entity -> DT 2 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "string",
+}
+`;
+
+exports[`when building shared string with duplicate string property types should have validation failures for each entity -> SDT 1 message 1`] = `"String Type named EntityName is a duplicate declaration of that name."`;

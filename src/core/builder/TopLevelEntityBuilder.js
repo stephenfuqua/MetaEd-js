@@ -366,21 +366,21 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterWithContextName(context: MetaEdGrammar.WithContextNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentProperty.withContext = context.ID().getText();
     this.currentProperty.sourceMap.withContext = sourceMapFrom(context);
   }
 
   enterShortenToName(context: MetaEdGrammar.ShortenToNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentProperty.shortenTo = context.ID().getText();
     this.currentProperty.sourceMap.shortenTo = sourceMapFrom(context);
   }
 
   enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentProperty.metaEdName = context.ID().getText();
     this.currentProperty.sourceMap.metaEdName = sourceMapFrom(context);
 
@@ -391,7 +391,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterSharedPropertyType(context: MetaEdGrammar.SharedPropertyTypeContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentProperty.referencedType = context.ID().getText();
     this.currentProperty.sourceMap.referencedType = sourceMapFrom(context);
   }
@@ -446,7 +446,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterBaseKeyName(context: MetaEdGrammar.BaseKeyNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.ID() == null || context.ID().exception) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentProperty.baseKeyName = context.ID().getText();
     this.currentProperty.sourceMap.baseKeyName = sourceMapFrom(context);
   }
@@ -477,7 +477,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentProperty: any): StringProperty).minLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): StringPropertySourceMap).minLength = sourceMapFrom(context);
@@ -486,7 +486,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentProperty: any): StringProperty).maxLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): StringPropertySourceMap).maxLength = sourceMapFrom(context);
@@ -495,7 +495,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).decimalPlaces = sourceMapFrom(context);
@@ -504,7 +504,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception) return;
+    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).totalDigits = sourceMapFrom(context);
@@ -513,7 +513,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).minValue = context.signed_int().getText();
     ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).minValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
@@ -522,7 +522,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception) return;
+    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).maxValue = context.signed_int().getText();
     ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).maxValue = sourceMapFrom(context);
     this.currentProperty.hasRestriction = true;
@@ -531,7 +531,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).minValue = sourceMapFrom(context);
@@ -540,7 +540,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception) return;
+    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).maxValue = sourceMapFrom(context);

@@ -11,6 +11,7 @@ import type { DomainEntity } from './DomainEntity';
 import type { DomainEntityExtension } from './DomainEntityExtension';
 import type { DomainEntitySubclass } from './DomainEntitySubclass';
 import type { Enumeration } from './Enumeration';
+import type { IntegerType } from './IntegerType';
 import type { Interchange } from './Interchange';
 import type { InterchangeExtension } from './InterchangeExtension';
 import type { MapTypeEnumeration } from './MapTypeEnumeration';
@@ -19,6 +20,7 @@ import type { SchoolYearEnumeration } from './SchoolYearEnumeration';
 import type { SharedDecimal } from './SharedDecimal';
 import type { SharedInteger } from './SharedInteger';
 import type { SharedString } from './SharedString';
+import type { StringType } from './StringType';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
 import type { PropertyIndex } from './property/PropertyRepository';
@@ -38,6 +40,7 @@ export class EntityRepository {
   domainEntityExtension: Map<string, DomainEntityExtension>;
   domainEntitySubclass: Map<string, DomainEntitySubclass>;
   enumeration: Map<string, Enumeration>;
+  integerType: Map<string, IntegerType>;
   interchange: Map<string, Interchange>;
   interchangeExtension: Map<string, InterchangeExtension>;
   mapTypeEnumeration: Map<string, MapTypeEnumeration>;
@@ -46,6 +49,7 @@ export class EntityRepository {
   sharedDecimal: Map<string, SharedDecimal>;
   sharedInteger: Map<string, SharedInteger>;
   sharedString: Map<string, SharedString>;
+  stringType: Map<string, StringType>;
   subdomain: Map<string, Subdomain>;
 }
 
@@ -64,6 +68,7 @@ export function entityRepositoryFactory(): EntityRepository {
     domainEntityExtension: new Map(),
     domainEntitySubclass: new Map(),
     enumeration: new Map(),
+    integerType: new Map(),
     interchange: new Map(),
     interchangeExtension: new Map(),
     mapTypeEnumeration: new Map(),
@@ -72,6 +77,7 @@ export function entityRepositoryFactory(): EntityRepository {
     sharedDecimal: new Map(),
     sharedInteger: new Map(),
     sharedString: new Map(),
+    stringType: new Map(),
     subdomain: new Map(),
   });
 }
