@@ -164,6 +164,27 @@ export default class MetaEdGrammarTalker {
     return this;
   }
 
+  withDecimalType(identifier: string, documentation: string,
+    totalDigits: string, decimalPlaces: string,
+    maxValue: ?string = null, minValue: ?string = null,
+    metaEdId: ?string = null) {
+    this.addMethodCall('enterDecimalType', emptyContext());
+
+    const decimalTypeNameContext = idTextContext(identifier);
+
+    this.addMethodCall('enterDecimalTypeName', decimalTypeNameContext);
+    this.addMethodCall('exitDecimalTypeName', decimalTypeNameContext);
+    this.withMetaEdId(metaEdId);
+
+    this.withDocumentation(documentation);
+    this.addDecimalDigitsAndPlaces(totalDigits, decimalPlaces);
+    this.addMaxMinValueDecimal(maxValue, minValue);
+
+    this.addMethodCall('exitDecimalType', emptyContext());
+
+    return this;
+  }
+
   withSharedDecimal(identifier: string, documentation: string,
     totalDigits: string, decimalPlaces: string,
     maxValue: ?string = null, minValue: ?string = null,

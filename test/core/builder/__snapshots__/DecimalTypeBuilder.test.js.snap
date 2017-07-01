@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building duplicate decimal types should have validation failures for each entity -> DT 1 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate decimal types should have validation failures for each entity -> DT 1 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 13,
+  "tokenText": "decimal",
+}
+`;
+
+exports[`when building duplicate decimal types should have validation failures for each entity -> DT 2 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate decimal types should have validation failures for each entity -> DT 2 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "decimal",
+}
+`;
+
+exports[`when building duplicate shared decimal types should have validation failures for each entity -> SDT 1 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared decimal types should have validation failures for each entity -> SDT 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Shared Decimal",
+}
+`;
+
+exports[`when building duplicate shared decimal types should have validation failures for each entity -> SDT 2 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared decimal types should have validation failures for each entity -> SDT 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Shared Decimal",
+}
+`;
+
+exports[`when building duplicate shared decimal with duplicate decimal property types should have validation failures for each entity -> SDT 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 13,
+  "tokenText": "Shared Decimal",
+}
+`;
+
+exports[`when building duplicate shared decimal with duplicate decimal property types should have validation failures for each entity -> SDT 2 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate shared decimal with duplicate decimal property types should have validation failures for each entity -> SDT 2 sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "decimal",
+}
+`;
+
+exports[`when building shared decimal with duplicate decimal property types should have validation failures for each entity -> SDT 1 message 1`] = `"Decimal Type named EntityName is a duplicate declaration of that name."`;

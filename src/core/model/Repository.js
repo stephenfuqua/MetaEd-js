@@ -5,6 +5,7 @@ import type { AssociationSubclass } from './AssociationSubclass';
 import type { Choice } from './Choice';
 import type { Common } from './Common';
 import type { CommonExtension } from './CommonExtension';
+import type { DecimalType } from './DecimalType';
 import type { Descriptor } from './Descriptor';
 import type { DomainEntity } from './DomainEntity';
 import type { DomainEntityExtension } from './DomainEntityExtension';
@@ -30,6 +31,7 @@ export class EntityRepository {
   choice: Map<string, Choice>;
   common: Map<string, Common>;
   commonExtension: Map<string, CommonExtension>;
+  decimalType: Map<string, DecimalType>;
   descriptor: Map<string, Descriptor>;
   domain: Map<string, Domain>;
   domainEntity: Map<string, DomainEntity>;
@@ -55,6 +57,7 @@ export function entityRepositoryFactory(): EntityRepository {
     choice: new Map(),
     common: new Map(),
     commonExtension: new Map(),
+    decimalType: new Map(),
     descriptor: new Map(),
     domain: new Map(),
     domainEntity: new Map(),

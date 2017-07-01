@@ -8,6 +8,7 @@ export type ModelType =
   'choice' |
   'common' |
   'commonExtension' |
+  'decimalType' |
   'descriptor' |
   'domain' |
   'domainItem' |
@@ -16,6 +17,7 @@ export type ModelType =
   'domainEntitySubclass' |
   'enumeration' |
   'enumerationItem' |
+  'integerType' |
   'interchange' |
   'interchangeExtension' |
   'inlineCommon' |
@@ -26,4 +28,5 @@ export type ModelType =
   'sharedInteger' |
   'sharedShort' |
   'sharedString' |
+  'stringType' |
   'subdomain';
