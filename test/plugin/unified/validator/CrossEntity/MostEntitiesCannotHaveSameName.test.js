@@ -12,7 +12,9 @@ import SharedIntegerBuilder from '../../../../../src/core/builder/SharedIntegerB
 import DescriptorBuilder from '../../../../../src/core/builder/DescriptorBuilder';
 import EnumerationBuilder from '../../../../../src/core/builder/EnumerationBuilder';
 import InterchangeBuilder from '../../../../../src/core/builder/InterchangeBuilder';
+import IntegerTypeBuilder from '../../../../../src/core/builder/IntegerTypeBuilder';
 import CommonBuilder from '../../../../../src/core/builder/CommonBuilder';
+import StringTypeBuilder from '../../../../../src/core/builder/StringTypeBuilder';
 
 describe('when entities have different names', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
@@ -209,6 +211,100 @@ describe('when DE and SharedInteger have identical names', () => {
     expect(failures[1].category).toBe('error');
     expect(failures[1].message).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger message ');
     expect(failures[1].sourceMap).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger sourceMap');
+  });
+});
+
+describe('when DE integer property (creating IntegerType) and SharedInteger have identical names', () => {
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const entityAndPropertyName: string = 'EntityAndPropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName')
+      .withDocumentation('doc')
+      .withIntegerProperty(entityAndPropertyName, 'doc', true, false)
+      .withEndDomainEntity()
+
+      .withStartSharedInteger(entityAndPropertyName)
+      .withDocumentation('doc')
+      .withMinValue('0')
+      .withEndSharedInteger()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new SharedIntegerBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity, one shared integer, one integer type', () => {
+    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(metaEd.entity.integerType.size).toBe(1);
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(failures).toHaveLength(2);
+
+    expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot('when DE integer property (creating IntegerType) and SharedInteger have identical names should have validation failures for each entity -> DE message ');
+    expect(failures[0].sourceMap).toMatchSnapshot('when DE integer property (creating IntegerType) and SharedInteger have identical names should have validation failures for each entity -> DE sourceMap');
+
+    expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot('when DE integer property (creating IntegerType) and SharedInteger have identical names should have validation failures for each entity -> SharedInteger message ');
+    expect(failures[1].sourceMap).toMatchSnapshot('when DE integer property (creating IntegerType) and SharedInteger have identical names should have validation failures for each entity -> SharedInteger sourceMap');
+  });
+});
+
+describe('when two DE properties (creating different SimpleTypes) have identical names', () => {
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const duplicatePropertyName: string = 'DuplicatePropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName1')
+      .withDocumentation('doc')
+      .withIntegerProperty(duplicatePropertyName, 'doc', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DomainEntityName2')
+      .withDocumentation('doc')
+      .withStringProperty(duplicatePropertyName, 'doc', true, false, '50')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities, one integer type, and one string type', () => {
+    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(metaEd.entity.integerType.size).toBe(1);
+    expect(metaEd.entity.stringType.size).toBe(1);
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(failures).toHaveLength(2);
+
+    expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot('when two DE properties (creating different SimpleTypes) have identical names should have validation failures for each entity -> DE message ');
+    expect(failures[0].sourceMap).toMatchSnapshot('when two DE properties (creating different SimpleTypes) have identical names should have validation failures for each entity -> DE sourceMap');
+
+    expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot('when two DE properties (creating different SimpleTypes) have identical names should have validation failures for each entity -> SharedInteger message ');
+    expect(failures[1].sourceMap).toMatchSnapshot('when two DE properties (creating different SimpleTypes) have identical names should have validation failures for each entity -> SharedInteger sourceMap');
   });
 });
 

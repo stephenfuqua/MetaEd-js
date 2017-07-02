@@ -24,7 +24,6 @@ import type { StringType } from './StringType';
 import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
 import type { PropertyIndex } from './property/PropertyRepository';
-import { propertyIndexFactory } from './property/PropertyRepository';
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -83,17 +82,8 @@ export function entityRepositoryFactory(): EntityRepository {
 }
 
 export class Repository {
-  configuration: any;
   entity: EntityRepository;
   property: PropertyIndex;
-}
-
-export function repositoryFactory(): Repository {
-  return Object.assign(new Repository(), {
-    configuration: null,
-    entity: entityRepositoryFactory(),
-    property: propertyIndexFactory(),
-  });
 }
 
 export type MostEntities =
@@ -101,11 +91,14 @@ export type MostEntities =
   AssociationSubclass |
   Choice |
   Common |
+  DecimalType |
   DomainEntity |
   DomainEntitySubclass |
+  IntegerType |
   SharedDecimal |
   SharedInteger |
-  SharedString;
+  SharedString |
+  StringType;
 
 // Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
 // and extension entities don't define a new identifier
@@ -116,9 +109,12 @@ export function entitiesNeedingDuplicateChecking(entity: EntityRepository): Arra
   result.push(...entity.choice.values());
   result.push(...entity.common.values());
   result.push(...entity.domainEntity.values());
+  result.push(...entity.decimalType.values());
   result.push(...entity.domainEntitySubclass.values());
+  result.push(...entity.integerType.values());
   result.push(...entity.sharedDecimal.values());
   result.push(...entity.sharedInteger.values());
   result.push(...entity.sharedString.values());
+  result.push(...entity.stringType.values());
   return result;
 }
