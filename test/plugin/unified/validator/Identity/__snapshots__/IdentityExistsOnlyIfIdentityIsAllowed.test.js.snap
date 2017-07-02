@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating association extension with invalid identity property should have validation failure -> message 1`] = `"'is part of identity' is invalid for property PropertyName4 on Association Extension EntityName. 'is part of identity' is only valid for properties on Abstract Entity, Association, Common, Domain Entity, InlineCommon."`;
+
+exports[`when validating association extension with invalid identity property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 20,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when validating association subclass with invalid identity property should have validation failure -> message 1`] = `"'is part of identity' is invalid for property PropertyName4 on Association Subclass SubclassName. 'is part of identity' is only valid for properties on Abstract Entity, Association, Common, Domain Entity, InlineCommon."`;
+
+exports[`when validating association subclass with invalid identity property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 22,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when validating descriptor with invalid identity property should have validation failure -> message 1`] = `"'is part of identity' is invalid for property PropertyName1 on Descriptor EntityName. 'is part of identity' is only valid for properties on Abstract Entity, Association, Common, Domain Entity, InlineCommon."`;
+
+exports[`when validating descriptor with invalid identity property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when validating domain entity extension with invalid identity property should have validation failure -> message 1`] = `"'is part of identity' is invalid for property PropertyName2 on Domain Entity Extension EntityName. 'is part of identity' is only valid for properties on Abstract Entity, Association, Common, Domain Entity, InlineCommon."`;
+
+exports[`when validating domain entity extension with invalid identity property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 14,
+  "tokenText": "is part of identity",
+}
+`;
+
+exports[`when validating domain entity subclass with invalid identity property should have validation failure -> message 1`] = `"'is part of identity' is invalid for property PropertyName2 on Domain Entity Subclass SubclassName. 'is part of identity' is only valid for properties on Abstract Entity, Association, Common, Domain Entity, InlineCommon."`;
+
+exports[`when validating domain entity subclass with invalid identity property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 16,
+  "tokenText": "is part of identity",
+}
+`;

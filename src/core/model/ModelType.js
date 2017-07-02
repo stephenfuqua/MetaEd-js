@@ -2,6 +2,7 @@
 
 export type ModelType =
   'unknown' |
+  'abstractEntity' |
   'association' |
   'associationExtension' |
   'associationSubclass' |
@@ -30,3 +31,4 @@ export type ModelType =
   'sharedString' |
   'stringType' |
   'subdomain';
+

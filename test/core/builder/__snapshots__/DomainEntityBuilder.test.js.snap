@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`when building abstract entity source map should have line, column, text for each property 1`] = `
-DomainEntitySourceMap {
+AbstractEntitySourceMap {
   "documentation": Object {
     "column": 4,
     "line": 3,

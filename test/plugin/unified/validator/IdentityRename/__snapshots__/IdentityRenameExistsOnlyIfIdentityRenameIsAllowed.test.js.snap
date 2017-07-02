@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating association with invalid identity rename property should have validation failure -> message 1`] = `"'renames identity property' is invalid for property PropertyName3 on Association EntityName. 'renames identity property' is only valid for properties on Domain Entity Subclass and Association Subclass."`;
+
+exports[`when validating association with invalid identity rename property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 14,
+  "tokenText": "renames identity property",
+}
+`;
+
+exports[`when validating domain entity with invalid identity rename property should have validation failure -> message 1`] = `"'renames identity property' is invalid for property PropertyName1 on Domain Entity EntityName. 'renames identity property' is only valid for properties on Domain Entity Subclass and Association Subclass."`;
+
+exports[`when validating domain entity with invalid identity rename property should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "renames identity property",
+}
+`;
