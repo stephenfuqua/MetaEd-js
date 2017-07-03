@@ -1,5 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 
 export class AssociationExtensionSourceMap extends TopLevelEntitySourceMap {}
 
@@ -15,4 +16,4 @@ export function associationExtensionFactory(): AssociationExtension {
   });
 }
 
-export const asAssociationExtension = (x: TopLevelEntity): AssociationExtension => ((x: any): AssociationExtension);
+export const asAssociationExtension = (x: ModelBase): AssociationExtension => ((x: any): AssociationExtension);

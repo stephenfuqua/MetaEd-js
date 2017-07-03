@@ -1,5 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 
 export class DomainEntitySubclassSourceMap extends TopLevelEntitySourceMap {}
 
@@ -15,4 +16,4 @@ export function domainEntitySubclassFactory(): DomainEntitySubclass {
   });
 }
 
-export const asDomainEntitySubclass = (x: TopLevelEntity): DomainEntitySubclass => ((x: any): DomainEntitySubclass);
+export const asDomainEntitySubclass = (x: ModelBase): DomainEntitySubclass => ((x: any): DomainEntitySubclass);

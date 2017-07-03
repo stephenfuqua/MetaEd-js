@@ -2,6 +2,7 @@
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import { EnumerationItem } from './EnumerationItem';
 import type { SourceMap } from './SourceMap';
+import type { ModelBase } from './ModelBase';
 
 export class EnumerationSourceMap extends TopLevelEntitySourceMap {
   enumerationItems: Array<SourceMap>;
@@ -26,4 +27,4 @@ export function enumerationFactory(): Enumeration {
   });
 }
 
-export const asEnumeration = (x: TopLevelEntity): Enumeration => ((x: any): Enumeration);
+export const asEnumeration = (x: ModelBase): Enumeration => ((x: any): Enumeration);

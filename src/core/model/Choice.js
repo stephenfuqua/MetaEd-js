@@ -1,5 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 
 export class ChoiceSourceMap extends TopLevelEntitySourceMap {}
 
@@ -15,4 +16,4 @@ export function choiceFactory(): Choice {
   });
 }
 
-export const asChoice = (x: TopLevelEntity): Choice => ((x: any): Choice);
+export const asChoice = (x: ModelBase): Choice => ((x: any): Choice);

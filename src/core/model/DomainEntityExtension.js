@@ -1,5 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 
 export class DomainEntityExtensionSourceMap extends TopLevelEntitySourceMap {}
 
@@ -15,4 +16,4 @@ export function domainEntityExtensionFactory(): DomainEntityExtension {
   });
 }
 
-export const asDomainEntityExtension = (x: TopLevelEntity): DomainEntityExtension => ((x: any): DomainEntityExtension);
+export const asDomainEntityExtension = (x: ModelBase): DomainEntityExtension => ((x: any): DomainEntityExtension);

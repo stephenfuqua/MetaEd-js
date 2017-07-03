@@ -3,6 +3,7 @@ import { Domain, domainFactory } from './Domain';
 import type { SourceMap } from './SourceMap';
 import { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
+import { ModelBase } from './ModelBase';
 
 export class SubdomainSourceMap extends TopLevelEntitySourceMap {
   domainItems: Array<SourceMap>;
@@ -40,4 +41,4 @@ export function subdomainFactory(): Subdomain {
   });
 }
 
-export const asSubdomain = (x: TopLevelEntity): Subdomain => ((x: any): Subdomain);
+export const asSubdomain = (x: ModelBase): Subdomain => ((x: any): Subdomain);

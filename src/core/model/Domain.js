@@ -43,5 +43,5 @@ export const NoDomain: Domain = Object.assign(domainFactory(), {
   metaEdName: 'NoDomain',
 });
 
-export const asDomain = (x: TopLevelEntity): Domain => ((x: any): Domain);
+export const asDomain = (x: ModelBase): Domain => ((x: any): Domain);
 export const asDomainBase = (x: ModelBase): Domain | Subdomain => ((x: any): Domain | Subdomain);

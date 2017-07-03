@@ -1,6 +1,7 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
+import type { ModelBase } from './ModelBase';
 
 export class DomainEntitySourceMap extends TopLevelEntitySourceMap {
   isAbstract: ?SourceMap;
@@ -24,4 +25,4 @@ export const NoDomainEntity: DomainEntity = Object.assign(domainEntityFactory(),
   metaEdName: 'NoDomainEntity',
 });
 
-export const asDomainEntity = (x: TopLevelEntity): DomainEntity => ((x: any): DomainEntity);
+export const asDomainEntity = (x: ModelBase): DomainEntity => ((x: any): DomainEntity);

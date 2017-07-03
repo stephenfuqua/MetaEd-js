@@ -1,5 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 
 export class CommonExtensionSourceMap extends TopLevelEntitySourceMap {}
 
@@ -15,4 +16,4 @@ export function commonExtensionFactory(): CommonExtension {
   });
 }
 
-export const asCommonExtension = (x: TopLevelEntity): CommonExtension => ((x: any): CommonExtension);
+export const asCommonExtension = (x: ModelBase): CommonExtension => ((x: any): CommonExtension);

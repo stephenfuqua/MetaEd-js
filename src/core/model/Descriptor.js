@@ -2,6 +2,7 @@
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import { MapTypeEnumeration, mapTypeEnumerationFactory } from './MapTypeEnumeration';
 import type { SourceMap } from './SourceMap';
+import type { ModelBase } from './ModelBase';
 
 export class DescriptorSourceMap extends TopLevelEntitySourceMap {
   isMapTypeRequired: ?SourceMap;
@@ -27,4 +28,4 @@ export function descriptorFactory(): Descriptor {
   });
 }
 
-export const asDescriptor = (x: TopLevelEntity): Descriptor => ((x: any): Descriptor);
+export const asDescriptor = (x: ModelBase): Descriptor => ((x: any): Descriptor);

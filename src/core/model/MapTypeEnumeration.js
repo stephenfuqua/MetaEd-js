@@ -1,6 +1,6 @@
 // @flow
 import { defaultTopLevelEntity } from './TopLevelEntity';
-import type { TopLevelEntity } from './TopLevelEntity';
+import type { ModelBase } from './ModelBase';
 import { Enumeration, EnumerationSourceMap } from './Enumeration';
 
 export class MapTypeEnumeration extends Enumeration {}
@@ -18,4 +18,4 @@ export const NoMapTypeEnumeration: MapTypeEnumeration = Object.assign(mapTypeEnu
   metaEdName: 'NoMapTypeEnumeration',
 });
 
-export const asMapTypeEnumeration = (x: TopLevelEntity): MapTypeEnumeration => ((x: any): MapTypeEnumeration);
+export const asMapTypeEnumeration = (x: ModelBase): MapTypeEnumeration => ((x: any): MapTypeEnumeration);

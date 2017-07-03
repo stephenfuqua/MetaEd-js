@@ -1,6 +1,7 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
+import type { ModelBase } from './ModelBase';
 
 export class AbstractEntitySourceMap extends TopLevelEntitySourceMap {
   isAbstract: ?SourceMap;
@@ -24,4 +25,4 @@ export const NoAbstractEntity: AbstractEntity = Object.assign(abstractEntityFact
   metaEdName: 'NoAbstractEntity',
 });
 
-export const asAbstractEntity = (x: TopLevelEntity): AbstractEntity => ((x: any): AbstractEntity);
+export const asAbstractEntity = (x: ModelBase): AbstractEntity => ((x: any): AbstractEntity);

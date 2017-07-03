@@ -2,6 +2,7 @@
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { CommonExtension } from './CommonExtension';
+import type { ModelBase } from './ModelBase';
 
 export class CommonSourceMap extends TopLevelEntitySourceMap {
   extender: ?SourceMap;
@@ -35,4 +36,4 @@ export function inlineCommonFactory(): Common {
   });
 }
 
-export const asCommon = (x: TopLevelEntity): Common => ((x: any): Common);
+export const asCommon = (x: ModelBase): Common => ((x: any): Common);
