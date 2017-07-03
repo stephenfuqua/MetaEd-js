@@ -148,9 +148,13 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
     if (this.currentDecimalType === NoDecimalType) return;
 
     if (this.currentDecimalType.metaEdName) {
+      // Another example of why DecimalType belongs in XSD specific, repository key partitions by namespace
+      const projectExtension = this.currentDecimalType.namespaceInfo.projectExtension;
+      const repositoryId = projectExtension ? `${projectExtension}-${this.currentDecimalType.metaEdName}` : this.currentDecimalType.metaEdName;
+
       // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
       const currentDecimalTypeRepository = this.metaEd.entity[this.currentDecimalType.type];
-      if (currentDecimalTypeRepository.has(this.currentDecimalType.metaEdName)) {
+      if (currentDecimalTypeRepository.has(repositoryId)) {
         this.validationFailures.push({
           validatorName: 'DecimalTypeBuilder',
           category: 'error',
@@ -158,7 +162,7 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
           sourceMap: this.currentDecimalType.sourceMap.type,
           fileMap: null,
         });
-        const duplicateEntity: DecimalType = currentDecimalTypeRepository.get(this.currentDecimalType.metaEdName);
+        const duplicateEntity: DecimalType = currentDecimalTypeRepository.get(repositoryId);
         this.validationFailures.push({
           validatorName: 'DecimalTypeBuilder',
           category: 'error',
@@ -167,7 +171,7 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
           fileMap: null,
         });
       } else {
-        currentDecimalTypeRepository.set(this.currentDecimalType.metaEdName, this.currentDecimalType);
+        currentDecimalTypeRepository.set(repositoryId, this.currentDecimalType);
       }
     }
     this.currentDecimalType = NoDecimalType;

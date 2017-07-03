@@ -19,6 +19,8 @@ describe('when building shared decimal in extension namespace', () => {
   const minValue = '2';
   const maxValue = '100';
 
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -35,7 +37,7 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
   });
 
   it('should have no validation failures', () => {
@@ -43,47 +45,47 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(metaEd.entity.decimalType.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(metaEd.entity.decimalType.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
-    expect(metaEd.entity.decimalType.get(entityName).type).toBe('decimalType');
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).type).toBe('decimalType');
   });
 
   it('should have type humanized name', () => {
-    expect(metaEd.entity.decimalType.get(entityName).typeHumanizedName).toBe('Decimal Type');
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).typeHumanizedName).toBe('Decimal Type');
   });
 
   it('should have metaed id', () => {
-    expect(metaEd.entity.decimalType.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(metaEd.entity.decimalType.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(metaEd.entity.decimalType.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(metaEd.entity.decimalType.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(metaEd.entity.decimalType.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(metaEd.entity.decimalType.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
   it('should not be a generated type', () => {
-    expect(metaEd.entity.decimalType.get(entityName).generatedSimpleType).toBe(false);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).generatedSimpleType).toBe(false);
   });
 });
 
@@ -101,6 +103,8 @@ describe('when building domain entity with decimal property in extension namespa
   const minValue = '2';
   const maxValue = '100';
 
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -117,7 +121,7 @@ describe('when building domain entity with decimal property in extension namespa
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
   });
 
   it('should have no validation failures', () => {
@@ -125,47 +129,47 @@ describe('when building domain entity with decimal property in extension namespa
   });
 
   it('should have namespace', () => {
-    expect(metaEd.entity.decimalType.get(entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
   });
 
   it('should have project extension', () => {
-    expect(metaEd.entity.decimalType.get(entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
-    expect(metaEd.entity.decimalType.get(entityName).type).toBe('decimalType');
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).type).toBe('decimalType');
   });
 
   it('should have type humanized name', () => {
-    expect(metaEd.entity.decimalType.get(entityName).typeHumanizedName).toBe('Decimal Type');
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).typeHumanizedName).toBe('Decimal Type');
   });
 
   it('should have metaed id', () => {
-    expect(metaEd.entity.decimalType.get(entityName).metaEdId).toBe(metaEdId);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(metaEd.entity.decimalType.get(entityName).documentation).toBe(documentation);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).documentation).toBe(documentation);
   });
 
   it('should have total digits', () => {
-    expect(metaEd.entity.decimalType.get(entityName).totalDigits).toBe(totalDigits);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).totalDigits).toBe(totalDigits);
   });
 
   it('should have decimal places', () => {
-    expect(metaEd.entity.decimalType.get(entityName).decimalPlaces).toBe(decimalPlaces);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).decimalPlaces).toBe(decimalPlaces);
   });
 
   it('should have minValue', () => {
-    expect(metaEd.entity.decimalType.get(entityName).minValue).toBe(minValue);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).minValue).toBe(minValue);
   });
 
   it('should have maxValue', () => {
-    expect(metaEd.entity.decimalType.get(entityName).maxValue).toBe(maxValue);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
   it('should be a generated type', () => {
-    expect(metaEd.entity.decimalType.get(entityName).generatedSimpleType).toBe(true);
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).generatedSimpleType).toBe(true);
   });
 });
 
@@ -184,6 +188,9 @@ describe('when building multiple shared decimals in extension namespace', () => 
   const decimalPlaces = '3';
   const minValue = '2';
   const maxValue = '100';
+
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+  const expectedRepositoryId2 = `${projectExtension}-${entityName2}`;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -206,8 +213,8 @@ describe('when building multiple shared decimals in extension namespace', () => 
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
-    expect(metaEd.entity.decimalType.get(entityName2)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId2)).toBeDefined();
   });
 
   it('should have no validation failures', () => {
@@ -231,6 +238,9 @@ describe('when building domain entity with multiple decimal properties in extens
   const minValue = '2';
   const maxValue = '100';
 
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+  const expectedRepositoryId2 = `${projectExtension}-${entityName2}`;
+
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -248,8 +258,8 @@ describe('when building domain entity with multiple decimal properties in extens
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
-    expect(metaEd.entity.decimalType.get(entityName2)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId2)).toBeDefined();
   });
 
   it('should have no validation failures', () => {
@@ -270,6 +280,8 @@ describe('when building duplicate shared decimals in extension namespace', () =>
   const decimalPlaces = '3';
   const minValue = '2';
   const maxValue = '100';
+
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -292,7 +304,7 @@ describe('when building duplicate shared decimals in extension namespace', () =>
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
   });
 
   it('should have validation failures', () => {
@@ -326,6 +338,8 @@ describe('when building domain entity with duplicate decimal properties in exten
   const minValue = '2';
   const maxValue = '100';
 
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -343,7 +357,7 @@ describe('when building domain entity with duplicate decimal properties in exten
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
   });
 
   it('should have validation failures', () => {
@@ -377,6 +391,8 @@ describe('when building shared decimal with duplicate decimal property in extens
   const minValue = '2';
   const maxValue = '100';
 
+  const expectedRepositoryId = `${projectExtension}-${entityName}`;
+
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
@@ -399,7 +415,7 @@ describe('when building shared decimal with duplicate decimal property in extens
   });
 
   it('should be found in entity repository', () => {
-    expect(metaEd.entity.decimalType.get(entityName)).toBeDefined();
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId)).toBeDefined();
   });
 
   it('should have validation failures', () => {

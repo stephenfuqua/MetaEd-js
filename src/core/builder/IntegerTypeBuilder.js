@@ -161,9 +161,13 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
     if (this.currentIntegerType === NoIntegerType) return;
 
     if (this.currentIntegerType.metaEdName) {
+      // Another example of why IntegerType belongs in XSD specific, repository key partitions by namespace
+      const projectExtension = this.currentIntegerType.namespaceInfo.projectExtension;
+      const repositoryId = projectExtension ? `${projectExtension}-${this.currentIntegerType.metaEdName}` : this.currentIntegerType.metaEdName;
+
       // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
       const currentIntegerTypeRepository = this.metaEd.entity[this.currentIntegerType.type];
-      if (currentIntegerTypeRepository.has(this.currentIntegerType.metaEdName)) {
+      if (currentIntegerTypeRepository.has(repositoryId)) {
         this.validationFailures.push({
           validatorName: 'IntegerTypeBuilder',
           category: 'error',
@@ -171,7 +175,7 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
           sourceMap: this.currentIntegerType.sourceMap.type,
           fileMap: null,
         });
-        const duplicateEntity: IntegerType = currentIntegerTypeRepository.get(this.currentIntegerType.metaEdName);
+        const duplicateEntity: IntegerType = currentIntegerTypeRepository.get(repositoryId);
         this.validationFailures.push({
           validatorName: 'IntegerTypeBuilder',
           category: 'error',
@@ -180,7 +184,7 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
           fileMap: null,
         });
       } else {
-        currentIntegerTypeRepository.set(this.currentIntegerType.metaEdName, this.currentIntegerType);
+        currentIntegerTypeRepository.set(repositoryId, this.currentIntegerType);
       }
     }
     this.currentIntegerType = NoIntegerType;
