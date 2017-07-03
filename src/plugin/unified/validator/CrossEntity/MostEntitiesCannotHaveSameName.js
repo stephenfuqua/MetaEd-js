@@ -12,7 +12,7 @@ import type { SharedInteger } from '../../../../core/model/SharedInteger';
 import type { SharedString } from '../../../../core/model/SharedString';
 import type { StringType } from '../../../../core/model/StringType';
 import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
-import type { EntityRepository } from '../../../../core/model/Repository';
+import type { EntityRepository } from '../../../../core/model/EntityRepository';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 

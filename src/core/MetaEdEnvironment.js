@@ -1,7 +1,7 @@
 // @flow
-import type { EntityRepository } from './model/Repository';
+import type { EntityRepository } from './model/EntityRepository';
 import type { PropertyIndex } from './model/property/PropertyRepository';
-import { entityRepositoryFactory } from './model/Repository';
+import { entityRepositoryFactory } from './model/EntityRepository';
 import { propertyIndexFactory } from './model/property/PropertyRepository';
 
 // plugin exports:

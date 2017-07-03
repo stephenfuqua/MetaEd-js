@@ -6,7 +6,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty, NoEntityProperty } from '../model/property/EntityProperty';
 import { defaultMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
 import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
-import type { EntityRepository } from '../model/Repository';
+import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';

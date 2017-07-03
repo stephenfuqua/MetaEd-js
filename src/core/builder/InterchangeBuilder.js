@@ -4,7 +4,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 
 import type { Interchange, InterchangeSourceMap } from '../model/Interchange';
 import type { InterchangeItem } from '../model/InterchangeItem';
-import type { EntityRepository } from '../model/Repository';
+import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
