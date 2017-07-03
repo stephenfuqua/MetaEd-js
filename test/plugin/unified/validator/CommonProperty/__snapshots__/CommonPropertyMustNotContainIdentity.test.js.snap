@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating common property has primary key should have validation failures -> message  1`] = `"Common property EntityName is invalid to be used for the identity of Domain Entity EntityName2."`;
+
+exports[`when validating common property has primary key should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 16,
+  "tokenText": "is part of identity",
+}
+`;
