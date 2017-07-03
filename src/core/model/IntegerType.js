@@ -2,6 +2,7 @@
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
+import { namespaceInfoFactory } from './NamespaceInfo';
 
 export class IntegerTypeSourceMap extends ModelBaseSourceMap {
   documentationInherited: ?SourceMap;
@@ -25,6 +26,10 @@ export class IntegerType extends ModelBase {
 export function integerTypeFactory(): IntegerType {
   return Object.assign(new IntegerType(), {
     type: 'integerType',
+    documentation: '',
+    metaEdName: '',
+    metaEdId: '',
+    namespaceInfo: namespaceInfoFactory(),
     typeHumanizedName: 'Integer Type',
     isShort: false,
     minValue: '',
