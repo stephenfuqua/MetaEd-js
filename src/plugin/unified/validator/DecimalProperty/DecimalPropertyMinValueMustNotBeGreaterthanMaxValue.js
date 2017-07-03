@@ -5,22 +5,19 @@ import { DecimalProperty, DecimalPropertySourceMap, asDecimalProperty } from '..
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntity.forEach(entity => {
-    entity.properties.filter(p => p.type === 'decimal').forEach(property => {
-      const decimalProperty: DecimalProperty = asDecimalProperty(property);
-      if (decimalProperty.minValue && decimalProperty.maxValue &&
-        // $FlowIgnore
-        Number.parseInt(decimalProperty.minValue, 10) > Number.parseInt(decimalProperty.maxValue, 10)) {
-        failures.push({
-          validatorName: 'DecimalPropertyMinValueMustNotBeGreaterThanMaxValue',
-          category: 'error',
-          message: `${property.type} ${property.metaEdName} has min value greater than max value.`,
-          sourceMap: ((property.sourceMap: any): DecimalPropertySourceMap).minValue,
-          fileMap: null,
-        });
-      }
+  metaEd.propertyIndex.decimal.forEach(decimal => {
+    const decimalProperty: DecimalProperty = asDecimalProperty(decimal);
+    const minValue: number = Number.parseInt(decimalProperty.minValue || '0', 10);
+    const maxValue: number = Number.parseInt(decimalProperty.maxValue || '0', 10);
+    if (minValue <= maxValue) return;
+
+    failures.push({
+      validatorName: 'DecimalPropertyMinValueMustNotBeGreaterThanMaxValue',
+      category: 'error',
+      message: `${decimal.type} ${decimal.metaEdName} has min value greater than max value.`,
+      sourceMap: ((decimal.sourceMap: any): DecimalPropertySourceMap).minValue,
+      fileMap: null,
     });
   });
-
   return failures;
 }

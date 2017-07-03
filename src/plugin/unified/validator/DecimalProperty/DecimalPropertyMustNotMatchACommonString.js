@@ -4,21 +4,17 @@ import type { ValidationFailure } from '../../../../core/validator/ValidationFai
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntity.forEach(entity => {
-    entity.properties.forEach(property => {
-      metaEd.entity.sharedString.forEach(sharedString => {
-        if (property.metaEdName === sharedString.metaEdName) {
-          failures.push({
-            validatorName: 'DecimalPropertyMustNotMatchACommonString',
-            category: 'error',
-            message: `${property.type} ${property.metaEdName} has the same name as a Common String.`,
-            sourceMap: property.sourceMap.metaEdName,
-            fileMap: null,
-          });
-        }
+  metaEd.propertyIndex.decimal.forEach(decimal => {
+    metaEd.entity.sharedString.forEach(sharedString => {
+      if (decimal.metaEdName !== sharedString.metaEdName) return;
+      failures.push({
+        validatorName: 'DecimalPropertyMustNotMatchACommonString',
+        category: 'error',
+        message: `${decimal.type} ${decimal.metaEdName} has the same name as a Common String.`,
+        sourceMap: decimal.sourceMap.metaEdName,
+        fileMap: null,
       });
     });
   });
-
   return failures;
 }

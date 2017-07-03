@@ -4,14 +4,14 @@ import type { ValidationFailure } from '../../../../core/validator/ValidationFai
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.propertyIndex.decimal.forEach(decimal => {
+  metaEd.propertyIndex.integer.forEach(integer => {
     metaEd.entity.sharedInteger.forEach(sharedInteger => {
-      if (decimal.metaEdName !== sharedInteger.metaEdName) return;
+      if (integer.metaEdName !== sharedInteger.metaEdName) return;
       failures.push({
-        validatorName: 'DecimalPropertyMustNotMatchACommonInteger',
+        validatorName: 'IntegerPropertyMustNotMatchACommonInteger',
         category: 'error',
-        message: `${decimal.type} ${decimal.metaEdName} has the same name as a Common Integer.`,
-        sourceMap: decimal.sourceMap.metaEdName,
+        message: `${integer.type} ${integer.metaEdName} has the same name as a Common Integer.`,
+        sourceMap: integer.sourceMap.metaEdName,
         fileMap: null,
       });
     });
