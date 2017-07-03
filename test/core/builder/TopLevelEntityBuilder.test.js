@@ -609,7 +609,7 @@ describe('when building duration property', () => {
 });
 
 // EntityProperty
-// TODO: add propertyNamePath source map
+// TODO: add propertyPathName source map
 describe('when building required entity properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();

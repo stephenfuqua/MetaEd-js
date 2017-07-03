@@ -29,3 +29,29 @@ export type PropertyType =
 
 const sharedProperty: Array<PropertyType> = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
 export const isSharedProperty = (property: EntityProperty): boolean => sharedProperty.includes(property.type);
+
+export const allPropertyTypes: Array<PropertyType> = [
+  'association',
+  'boolean',
+  'choice',
+  'common',
+  'currency',
+  'date',
+  'decimal',
+  'descriptor',
+  'domainEntity',
+  'duration',
+  'enumeration',
+  'inlineCommon',
+  'integer',
+  'percent',
+  'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedShort',
+  'sharedString',
+  'short',
+  'string',
+  'time',
+  'year',
+];

@@ -27,19 +27,7 @@ import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
 import type { TopLevelEntity } from './TopLevelEntity';
 import { asTopLevelEntity } from './TopLevelEntity';
-
-const topLevelEntityModelTypes: Array<ModelType> = [
-  'association',
-  'associationSubclass',
-  'choice',
-  'common',
-  'descriptor',
-  'domainEntity',
-  'domainEntitySubclass',
-  'enumeration',
-  'mapTypeEnumeration',
-  'schoolYearEnumeration',
-];
+import { topLevelEntityModelTypes } from './ModelType';
 
 export class EntityRepository {
   association: Map<string, Association>;

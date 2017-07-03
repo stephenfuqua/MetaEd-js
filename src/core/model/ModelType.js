@@ -32,3 +32,15 @@ export type ModelType =
   'stringType' |
   'subdomain';
 
+export const topLevelEntityModelTypes: Array<ModelType> = [
+  'association',
+  'associationSubclass',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'domainEntitySubclass',
+  'enumeration',
+  'mapTypeEnumeration',
+  'schoolYearEnumeration',
+];

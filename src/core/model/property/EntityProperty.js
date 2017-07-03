@@ -13,7 +13,7 @@ export class EntityPropertySourceMap {
   namespaceInfo: ?SourceMap;
   baseKeyName: ?SourceMap;
   shortenTo: ?SourceMap;
-  propertyNamePath: ?SourceMap;
+  propertyPathName: ?SourceMap;
   parentEntityName: ?SourceMap;
   parentEntity: ?SourceMap;
   isPartOfIdentity: ?SourceMap;
@@ -37,7 +37,7 @@ export class EntityProperty {
   namespaceInfo: NamespaceInfo;
   baseKeyName: string;
   shortenTo: string;
-  propertyNamePath: string;
+  propertyPathName: string;
   parentEntityName: string;
   parentEntity: TopLevelEntity;
   isPartOfIdentity: boolean;
@@ -63,7 +63,7 @@ export function defaultEntityPropertyFields() {
     namespaceInfo: namespaceInfoFactory(),
     baseKeyName: '',
     shortenTo: '',
-    propertyNamePath: '',
+    propertyPathName: '',
     parentEntityName: '',
     parentEntity: defaultTopLevelEntity(),
     isPartOfIdentity: false,

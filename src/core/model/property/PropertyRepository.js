@@ -22,6 +22,9 @@ import type { ShortProperty } from './ShortProperty';
 import type { StringProperty } from './StringProperty';
 import type { TimeProperty } from './TimeProperty';
 import type { YearProperty } from './YearProperty';
+import type { PropertyType } from './PropertyType';
+import type { EntityProperty } from './EntityProperty';
+import { allPropertyTypes } from './PropertyType';
 
 export class PropertyIndex {
   association: Array<AssociationProperty>;
@@ -76,4 +79,23 @@ export function propertyIndexFactory(): PropertyIndex {
     time: [],
     year: [],
   });
+}
+
+export function getAll(propertyIndex: PropertyIndex, ...propertyTypes: Array<PropertyType>): Array<EntityProperty> {
+  const result = [];
+  // $FlowIgnore - using model type repository lookup
+  propertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));
+  return result;
+}
+
+export function getAllProperties(propertyIndex: PropertyIndex): Array<EntityProperty> {
+  const result = [];
+  // $FlowIgnore - using model type repository lookup
+  allPropertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));
+  return result;
+}
+
+export function addProperty(propertyIndex: PropertyIndex, property: EntityProperty) {
+  // $FlowIgnore - indexing with type
+  propertyIndex[property.type].push(property);
 }
