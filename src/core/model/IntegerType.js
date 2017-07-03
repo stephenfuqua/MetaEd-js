@@ -10,6 +10,7 @@ export class IntegerTypeSourceMap extends ModelBaseSourceMap {
   maxValue: ?SourceMap;
 }
 
+// Note these are XSD specific with the advent of SharedInteger, and creation should be move to XSD enhancers
 export class IntegerType extends ModelBase {
   generatedSimpleType: boolean;
   documentationInherited: boolean;

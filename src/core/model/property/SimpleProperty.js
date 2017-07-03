@@ -1,19 +1,26 @@
 // @flow
 import { EntityProperty, EntityPropertySourceMap, defaultEntityPropertyFields } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
-import { defaultSharedSimple, SharedSimple } from './../SharedSimple';
+import { decimalTypeFactory } from './../DecimalType';
+import type { DecimalType } from './../DecimalType';
+import type { IntegerType } from './../IntegerType';
+import type { StringType } from './../StringType';
 
 export class SimplePropertySourceMap extends EntityPropertySourceMap {
   referencedEntity: ?SourceMap;
 }
 
+
 export class SimpleProperty extends EntityProperty {
-  referencedEntity: SharedSimple;
+  // note these are obsoleted by Shared versions, and references should move to them, only for SharedProperties
+  // Nonshared won't need referenced entity - will be handled in XSD specific
+  referencedEntity: DecimalType | IntegerType | StringType;
 }
 
 export function defaultSimplePropertyFields() {
   return Object.assign({}, defaultEntityPropertyFields(), {
-    referencedEntity: defaultSharedSimple(),
+    // default referencedEntity
+    referencedEntity: decimalTypeFactory(),
   });
 }
 

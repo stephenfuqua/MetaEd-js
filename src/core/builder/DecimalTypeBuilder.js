@@ -11,6 +11,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
+// Note DecimalType is XSD specific with the advent of SharedDecimal, and creation should be move to XSD enhancers
 export default class DecimalTypeBuilder extends MetaEdGrammarListener {
   currentDecimalType: DecimalType;
   metaEd: MetaEdEnvironment;

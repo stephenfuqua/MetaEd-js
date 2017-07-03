@@ -11,6 +11,7 @@ export class DecimalTypeSourceMap extends ModelBaseSourceMap {
   maxValue: ?SourceMap;
 }
 
+// Note these are XSD specific with the advent of SharedDecimal, and creation should be move to XSD enhancers
 export class DecimalType extends ModelBase {
   generatedSimpleType: boolean;
   documentationInherited: boolean;

@@ -8,6 +8,7 @@ export class SharedStringSourceMap extends SharedSimpleSourceMap {
   maxLength: ?SourceMap;
 }
 
+// Note these are XSD specific with the advent of SharedString, and creation should be move to XSD enhancers
 export class SharedString extends SharedSimple {
   minLength: string;
   maxLength: string;

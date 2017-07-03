@@ -11,6 +11,7 @@ import { MetaEdGrammarListener } from '../../grammar/gen/MetaEdGrammarListener';
 import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
+// Note StringType is XSD specific with the advent of SharedString, and creation should be move to XSD enhancers
 export default class StringTypeBuilder extends MetaEdGrammarListener {
   currentStringType: StringType;
   metaEd: MetaEdEnvironment;
