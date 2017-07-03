@@ -25,6 +25,21 @@ import type { Domain } from './Domain';
 import type { Subdomain } from './Subdomain';
 import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
+import type { TopLevelEntity } from './TopLevelEntity';
+import { asTopLevelEntity } from './TopLevelEntity';
+
+const topLevelEntityModelTypes: Array<ModelType> = [
+  'association',
+  'associationSubclass',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'domainEntitySubclass',
+  'enumeration',
+  'mapTypeEnumeration',
+  'schoolYearEnumeration',
+];
 
 export class EntityRepository {
   association: Map<string, Association>;
@@ -85,7 +100,7 @@ export function entityRepositoryFactory(): EntityRepository {
 export function getAll(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
-  modelTypes.forEach(modelType => result.push(...repository[modelType]));
+  modelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
 
@@ -94,6 +109,20 @@ export function getEntity(repository: EntityRepository, metaEdId: string, ...mod
   modelTypes.forEach(modelType => {
     // $FlowIgnore - using model type repository lookup
     if (!result) result = repository[modelType].get(metaEdId);
+  });
+  return result;
+}
+
+export function addEntity(repository: EntityRepository, entity: ModelBase) {
+  // $FlowIgnore - indexing with type
+  repository[entity.type].set(entity.metaEdName, entity);
+}
+
+export function getTopLevelEntity(repository: EntityRepository, metaEdId: string): ?TopLevelEntity {
+  let result: ?TopLevelEntity = null;
+  topLevelEntityModelTypes.forEach(modelType => {
+    // $FlowIgnore - using model type repository lookup
+    if (!result) result = asTopLevelEntity(repository[modelType].get(metaEdId));
   });
   return result;
 }

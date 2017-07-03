@@ -53,3 +53,5 @@ export function defaultTopLevelEntity(): TopLevelEntity {
 export const NoTopLevelEntity: TopLevelEntity = Object.assign(defaultTopLevelEntity(), {
   metaEdName: 'NoTopLevelEntity',
 });
+
+export const asTopLevelEntity = (x: ModelBase): TopLevelEntity => ((x: any): TopLevelEntity);

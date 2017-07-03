@@ -1,8 +1,9 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
-import { DomainItem } from './DomainItem';
+import type { DomainItem } from './DomainItem';
 import type { SourceMap } from './SourceMap';
-import { Subdomain } from './Subdomain';
+import type { Subdomain } from './Subdomain';
+import type { ModelBase } from './ModelBase';
 
 export class DomainSourceMap extends TopLevelEntitySourceMap {
   domainItems: Array<SourceMap>;
@@ -43,3 +44,4 @@ export const NoDomain: Domain = Object.assign(domainFactory(), {
 });
 
 export const asDomain = (x: TopLevelEntity): Domain => ((x: any): Domain);
+export const asDomainBase = (x: ModelBase): Domain | Subdomain => ((x: any): Domain | Subdomain);
