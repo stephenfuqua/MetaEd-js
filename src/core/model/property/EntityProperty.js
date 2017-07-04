@@ -3,6 +3,10 @@ import { NamespaceInfo, namespaceInfoFactory } from '../NamespaceInfo';
 import { TopLevelEntity, defaultTopLevelEntity } from '../TopLevelEntity';
 import type { SourceMap } from '../SourceMap';
 import type { PropertyType } from './PropertyType';
+import type { ReferentialProperty } from './ReferentialProperty';
+import type { SimpleProperty } from './SimpleProperty';
+
+export type HasReferencedEntity = ReferentialProperty | SimpleProperty;
 
 export class EntityPropertySourceMap {
   type: ?SourceMap;
