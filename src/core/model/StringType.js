@@ -38,3 +38,5 @@ export function stringTypeFactory(): StringType {
 export const NoStringType: StringType = Object.assign(stringTypeFactory(), {
   metaEdName: 'NoStringType',
 });
+
+export const asStringType = (x: ModelBase): StringType => ((x: any): StringType);

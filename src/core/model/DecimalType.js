@@ -45,3 +45,5 @@ export function decimalTypeFactory(): DecimalType {
 export const NoDecimalType: DecimalType = Object.assign(decimalTypeFactory(), {
   metaEdName: 'NoDecimalType',
 });
+
+export const asDecimalType = (x: ModelBase): DecimalType => ((x: any): DecimalType);

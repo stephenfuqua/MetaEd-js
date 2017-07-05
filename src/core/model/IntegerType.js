@@ -54,3 +54,5 @@ export function shortTypeFactory(): IntegerType {
 export const NoIntegerType: IntegerType = Object.assign(integerTypeFactory(), {
   metaEdName: 'NoIntegerType',
 });
+
+export const asIntegerType = (x: ModelBase): IntegerType => ((x: any): IntegerType);
