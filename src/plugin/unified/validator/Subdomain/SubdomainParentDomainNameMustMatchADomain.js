@@ -1,7 +1,7 @@
 // @flow
 import type { MetaEdEnvironment } from '../../../../core/MetaEdEnvironment';
 import type { ValidationFailure } from '../../../../core/validator/ValidationFailure';
-import type { Subdomain, SubdomainSourceMap } from '../../../../core/model/Subdomain'
+import type { Subdomain, SubdomainSourceMap } from '../../../../core/model/Subdomain';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
