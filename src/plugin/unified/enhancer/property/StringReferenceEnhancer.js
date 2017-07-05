@@ -14,6 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const referencedEntity = metaEd.entity.stringType.get(property.metaEdName);
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;
+      referencedEntity.referringSimpleProperties.push(property);
     }
   });
 

@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import type { ShortProperty } from '../../../../../src/core/model/property/ShortProperty';
@@ -15,15 +14,17 @@ describe('when enhancing short property', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
+  let property: ShortProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
-    const property: ShortProperty = Object.assign(shortPropertyFactory(), {
+    property = Object.assign(shortPropertyFactory(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.short.push(property);
 
-    const referencedEntity: IntegerType = Object.assign(integerTypeFactory(), {
+    referencedEntity = Object.assign(integerTypeFactory(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
@@ -32,9 +33,8 @@ describe('when enhancing short property', () => {
   });
 
   it('should have no validation failures()', () => {
-    const property = R.head(metaEd.propertyIndex.short.filter(p => p.metaEdName === referencedEntityName));
-    expect(property).toBeDefined();
-    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(referencedEntity.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -42,15 +42,17 @@ describe('when enhancing shared short property', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
+  let property: SharedShortProperty;
+  let referencedEntity: IntegerType;
 
   beforeAll(() => {
-    const property: SharedShortProperty = Object.assign(sharedShortPropertyFactory(), {
+    property = Object.assign(sharedShortPropertyFactory(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.sharedShort.push(property);
 
-    const referencedEntity: IntegerType = Object.assign(integerTypeFactory(), {
+    referencedEntity = Object.assign(integerTypeFactory(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
@@ -59,8 +61,7 @@ describe('when enhancing shared short property', () => {
   });
 
   it('should have no validation failures()', () => {
-    const property = R.head(metaEd.propertyIndex.sharedShort.filter(p => p.metaEdName === referencedEntityName));
-    expect(property).toBeDefined();
-    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(referencedEntity.referringSimpleProperties).toContain(property);
   });
 });

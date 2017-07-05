@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../../src/core/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../src/core/MetaEdEnvironment';
 import type { StringProperty } from '../../../../../src/core/model/property/StringProperty';
@@ -15,15 +14,17 @@ describe('when enhancing string property', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
+  let property: StringProperty;
+  let referencedEntity: StringType;
 
   beforeAll(() => {
-    const property: StringProperty = Object.assign(stringPropertyFactory(), {
+    property = Object.assign(stringPropertyFactory(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.string.push(property);
 
-    const referencedEntity: StringType = Object.assign(stringTypeFactory(), {
+    referencedEntity = Object.assign(stringTypeFactory(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
@@ -32,9 +33,8 @@ describe('when enhancing string property', () => {
   });
 
   it('should have no validation failures()', () => {
-    const property = R.head(metaEd.propertyIndex.string.filter(p => p.metaEdName === referencedEntityName));
-    expect(property).toBeDefined();
-    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(referencedEntity.referringSimpleProperties).toContain(property);
   });
 });
 
@@ -42,15 +42,17 @@ describe('when enhancing shared string property', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
+  let property: SharedStringProperty;
+  let referencedEntity: StringType;
 
   beforeAll(() => {
-    const property: SharedStringProperty = Object.assign(sharedStringPropertyFactory(), {
+    property = Object.assign(sharedStringPropertyFactory(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.sharedString.push(property);
 
-    const referencedEntity: StringType = Object.assign(stringTypeFactory(), {
+    referencedEntity = Object.assign(stringTypeFactory(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
@@ -59,8 +61,7 @@ describe('when enhancing shared string property', () => {
   });
 
   it('should have no validation failures()', () => {
-    const property = R.head(metaEd.propertyIndex.sharedString.filter(p => p.metaEdName === referencedEntityName));
-    expect(property).toBeDefined();
-    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity).toBe(referencedEntity);
+    expect(referencedEntity.referringSimpleProperties).toContain(property);
   });
 });
