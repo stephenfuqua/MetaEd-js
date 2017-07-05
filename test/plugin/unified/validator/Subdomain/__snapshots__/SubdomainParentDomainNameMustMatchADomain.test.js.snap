@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when subdomain entity parent domain name does not match a domain should have validation failure -> message 1`] = `"Subdomain parent domain name 'DomainName' does not match any declared Domain."`;
+
+exports[`when subdomain entity parent domain name does not match a domain should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 29,
+  "line": 5,
+  "tokenText": "DomainName",
+}
+`;
