@@ -30,6 +30,7 @@ import { asTopLevelEntity } from './TopLevelEntity';
 import { topLevelEntityModelTypes } from './ModelType';
 
 export class EntityRepository {
+  unknown: Map<string, any>;
   association: Map<string, Association>;
   associationExtension: Map<string, AssociationExtension>;
   associationSubclass: Map<string, AssociationSubclass>;
@@ -58,6 +59,7 @@ export class EntityRepository {
 
 export function entityRepositoryFactory(): EntityRepository {
   return Object.assign(new EntityRepository(), {
+    unknown: new Map(),
     association: new Map(),
     associationExtension: new Map(),
     associationSubclass: new Map(),

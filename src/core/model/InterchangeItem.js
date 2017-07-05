@@ -3,13 +3,16 @@ import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { namespaceInfoFactory } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 import type { ModelType } from './ModelType';
+import { defaultTopLevelEntity } from './TopLevelEntity';
+import type { TopLevelEntity } from './TopLevelEntity';
 
 export class InterchangeItemSourceMap extends ModelBaseSourceMap {
   referencedType: ?SourceMap;
 }
 
 export class InterchangeItem extends ModelBase {
-  referencedType: ?ModelType;
+  referencedType: ModelType;
+  referencedEntity: TopLevelEntity;
   sourceMap: InterchangeItemSourceMap;
 }
 
@@ -21,6 +24,7 @@ export function interchangeItemFactory(): InterchangeItem {
     metaEdId: '',
     namespaceInfo: namespaceInfoFactory(),
     referencedType: 'unknown',
+    referencedEntity: defaultTopLevelEntity(),
     sourceMap: new InterchangeItemSourceMap(),
   });
 }
