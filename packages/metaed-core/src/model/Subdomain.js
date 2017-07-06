@@ -1,5 +1,5 @@
 // @flow
-import { Domain, domainFactory } from './Domain';
+import { Domain, newDomain } from './Domain';
 import type { SourceMap } from './SourceMap';
 import { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { DomainItem } from './DomainItem';
@@ -28,13 +28,13 @@ export class Subdomain extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | SubdomainSourceMap;
 }
 
-export function subdomainFactory(): Subdomain {
+export function newSubdomain(): Subdomain {
   return Object.assign(new Subdomain(), {
     type: 'subdomain',
     typeHumanizedName: 'Subdomain',
     domainItems: [],
     entities: [],
-    parent: domainFactory(),
+    parent: newDomain(),
     parentMetaEdName: '',
     position: 0,
     sourceMap: new SubdomainSourceMap(),

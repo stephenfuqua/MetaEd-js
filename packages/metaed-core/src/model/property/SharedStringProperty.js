@@ -1,11 +1,11 @@
 // @flow
-import { StringProperty, stringPropertyFactory } from './StringProperty';
+import { StringProperty, newStringProperty } from './StringProperty';
 import type { EntityProperty } from './EntityProperty';
 
 export class SharedStringProperty extends StringProperty {}
 
-export function sharedStringPropertyFactory(): SharedStringProperty {
-  return Object.assign(new SharedStringProperty(), stringPropertyFactory(), {
+export function newSharedStringProperty(): SharedStringProperty {
+  return Object.assign(new SharedStringProperty(), newStringProperty(), {
     type: 'sharedString',
   });
 }

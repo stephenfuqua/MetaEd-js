@@ -2,9 +2,9 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { DomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { domainEntityFactory } from '../../../../packages/metaed-core/src/model/DomainEntity';
+import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
 import type { DomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { domainEntitySubclassFactory } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
+import { newDomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
 import { enhance } from '../../src/enhancer/DomainEntitySubclassBaseClassEnhancer';
 
 describe('when enhancing domainEntity subclass referring to domainEntity', () => {
@@ -15,12 +15,12 @@ describe('when enhancing domainEntity subclass referring to domainEntity', () =>
   let childEntity: DomainEntitySubclass;
 
   beforeAll(() => {
-    parentEntity = Object.assign(domainEntityFactory(), {
+    parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
     });
     metaEd.entity.domainEntity.set(parentEntity.metaEdName, parentEntity);
 
-    childEntity = Object.assign(domainEntitySubclassFactory(), {
+    childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
     });
@@ -42,12 +42,12 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
   let childEntity: DomainEntitySubclass;
 
   beforeAll(() => {
-    parentEntity = Object.assign(domainEntitySubclassFactory(), {
+    parentEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: parentEntityName,
     });
     metaEd.entity.domainEntitySubclass.set(parentEntity.metaEdName, parentEntity);
 
-    childEntity = Object.assign(domainEntitySubclassFactory(), {
+    childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
     });

@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { DomainItem } from './DomainItem';
 import type { SourceMap } from './SourceMap';
 import type { Subdomain } from './Subdomain';
@@ -27,8 +27,8 @@ export class Domain extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | DomainSourceMap;
 }
 
-export function domainFactory(): Domain {
-  return Object.assign(new Domain(), defaultTopLevelEntity(), {
+export function newDomain(): Domain {
+  return Object.assign(new Domain(), newTopLevelEntity(), {
     type: 'domain',
     typeHumanizedName: 'Domain',
     domainItems: [],
@@ -39,7 +39,7 @@ export function domainFactory(): Domain {
   });
 }
 
-export const NoDomain: Domain = Object.assign(domainFactory(), {
+export const NoDomain: Domain = Object.assign(newDomain(), {
   metaEdName: 'NoDomain',
 });
 

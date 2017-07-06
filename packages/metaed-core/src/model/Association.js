@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
 export class AssociationSourceMap extends TopLevelEntitySourceMap {}
@@ -8,8 +8,8 @@ export class Association extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | AssociationSourceMap;
 }
 
-export function associationFactory(): Association {
-  return Object.assign(new Association(), defaultTopLevelEntity(), {
+export function newAssociation(): Association {
+  return Object.assign(new Association(), newTopLevelEntity(), {
     type: 'association',
     typeHumanizedName: 'Association',
     sourceMap: new AssociationSourceMap(),

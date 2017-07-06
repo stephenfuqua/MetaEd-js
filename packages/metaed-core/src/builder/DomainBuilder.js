@@ -8,10 +8,10 @@ import type { Subdomain, SubdomainSourceMap } from '../model/Subdomain';
 import type { DomainItem, DomainItemSourceMap } from '../model/DomainItem';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
-import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
-import { domainItemFactory, NoDomainItem } from '../model/DomainItem';
-import { domainFactory, NoDomain } from '../model/Domain';
-import { subdomainFactory } from '../model/Subdomain';
+import { NoNamespaceInfo, newNamespaceInfo } from '../model/NamespaceInfo';
+import { newDomainItem, NoDomainItem } from '../model/DomainItem';
+import { newDomain, NoDomain } from '../model/Domain';
+import { newSubdomain } from '../model/Subdomain';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
@@ -35,7 +35,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -74,14 +74,14 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterDomain(context: MetaEdGrammar.DomainContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentDomain = Object.assign(domainFactory(), { namespaceInfo: this.namespaceInfo });
+    this.currentDomain = Object.assign(newDomain(), { namespaceInfo: this.namespaceInfo });
     this.currentDomain.sourceMap.type = sourceMapFrom(context);
     this.currentDomain.sourceMap.namespaceInfo = this.namespaceInfo.sourceMap.type;
   }
 
   enterSubdomain(context: MetaEdGrammar.SubdomainContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentDomain = Object.assign(subdomainFactory(), { namespaceInfo: this.namespaceInfo });
+    this.currentDomain = Object.assign(newSubdomain(), { namespaceInfo: this.namespaceInfo });
     this.currentDomain.sourceMap.type = sourceMapFrom(context);
     this.currentDomain.sourceMap.namespaceInfo = this.namespaceInfo.sourceMap.type;
   }
@@ -156,7 +156,7 @@ export default class DomainBuilder extends MetaEdGrammarListener {
 
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-    this.currentDomainItem = Object.assign(domainItemFactory(), { metaEdName: context.ID().getText() });
+    this.currentDomainItem = Object.assign(newDomainItem(), { metaEdName: context.ID().getText() });
     ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).referencedType = sourceMapFrom(context);
 
     // mutually exclusive in language

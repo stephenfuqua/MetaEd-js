@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
 
@@ -12,8 +12,8 @@ export class DomainEntity extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | DomainEntitySourceMap;
 }
 
-export function domainEntityFactory(): DomainEntity {
-  return Object.assign(new DomainEntity(), defaultTopLevelEntity(), {
+export function newDomainEntity(): DomainEntity {
+  return Object.assign(new DomainEntity(), newTopLevelEntity(), {
     type: 'domainEntity',
     typeHumanizedName: 'Domain Entity',
     isAbstract: false,
@@ -21,7 +21,7 @@ export function domainEntityFactory(): DomainEntity {
   });
 }
 
-export const NoDomainEntity: DomainEntity = Object.assign(domainEntityFactory(), {
+export const NoDomainEntity: DomainEntity = Object.assign(newDomainEntity(), {
   metaEdName: 'NoDomainEntity',
 });
 

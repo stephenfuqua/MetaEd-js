@@ -3,9 +3,9 @@ import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { DescriptorProperty } from '../../../../../packages/metaed-core/src/model/property/DescriptorProperty';
-import { descriptorPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/DescriptorProperty';
+import { newDescriptorProperty } from '../../../../../packages/metaed-core/src/model/property/DescriptorProperty';
 import type { Descriptor } from '../../../../../packages/metaed-core/src/model/Descriptor';
-import { descriptorFactory } from '../../../../../packages/metaed-core/src/model/Descriptor';
+import { newDescriptor } from '../../../../../packages/metaed-core/src/model/Descriptor';
 import { enhance } from '../../../src/enhancer/property/DescriptorReferenceEnhancer';
 
 describe('when enhancing descriptor property', () => {
@@ -14,19 +14,19 @@ describe('when enhancing descriptor property', () => {
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
-    const property: DescriptorProperty = Object.assign(descriptorPropertyFactory(), {
+    const property: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.descriptor.push(property);
 
-    const parentEntity: Descriptor = Object.assign(descriptorFactory(), {
+    const parentEntity: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
     metaEd.entity.descriptor.set(parentEntity.metaEdName, parentEntity);
 
-    const referencedEntity: Descriptor = Object.assign(descriptorFactory(), {
+    const referencedEntity: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.descriptor.set(referencedEntity.metaEdName, referencedEntity);

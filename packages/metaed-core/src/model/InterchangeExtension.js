@@ -1,17 +1,17 @@
 // @flow
 import { Interchange, InterchangeSourceMap } from './Interchange';
 import type { ModelBase } from './ModelBase';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 
 export class InterchangeExtension extends Interchange {}
 
-export function interchangeExtensionFactory(): InterchangeExtension {
+export function newInterchangeExtension(): InterchangeExtension {
   return Object.assign(new InterchangeExtension(), {
     type: 'interchangeExtension',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
 
     elements: [],
     identityTemplates: [],

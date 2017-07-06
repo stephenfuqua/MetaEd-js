@@ -16,7 +16,7 @@ export class SharedInteger extends SharedSimple {
   sourceMap: SharedSimpleSourceMap | SharedIntegerSourceMap;
 }
 
-export function sharedIntegerFactory(): SharedInteger {
+export function newSharedInteger(): SharedInteger {
   return Object.assign(new SharedInteger(), defaultSharedSimple(), {
     type: 'sharedInteger',
     typeHumanizedName: 'Shared Integer',

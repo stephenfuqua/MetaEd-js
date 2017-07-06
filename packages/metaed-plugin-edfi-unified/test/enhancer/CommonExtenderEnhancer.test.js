@@ -2,9 +2,9 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { Common } from '../../../../packages/metaed-core/src/model/Common';
-import { commonFactory } from '../../../../packages/metaed-core/src/model/Common';
+import { newCommon } from '../../../../packages/metaed-core/src/model/Common';
 import type { CommonExtension } from '../../../../packages/metaed-core/src/model/CommonExtension';
-import { commonExtensionFactory } from '../../../../packages/metaed-core/src/model/CommonExtension';
+import { newCommonExtension } from '../../../../packages/metaed-core/src/model/CommonExtension';
 import { enhance } from '../../src/enhancer/CommonExtenderEnhancer';
 
 describe('when enhancing parent of common extension', () => {
@@ -14,12 +14,12 @@ describe('when enhancing parent of common extension', () => {
   let childEntity: CommonExtension;
 
   beforeAll(() => {
-    parentEntity = Object.assign(commonFactory(), {
+    parentEntity = Object.assign(newCommon(), {
       metaEdName: parentEntityName,
     });
     metaEd.entity.common.set(parentEntity.metaEdName, parentEntity);
 
-    childEntity = Object.assign(commonExtensionFactory(), {
+    childEntity = Object.assign(newCommonExtension(), {
       metaEdName: parentEntityName,
       baseEntity: parentEntity,
     });

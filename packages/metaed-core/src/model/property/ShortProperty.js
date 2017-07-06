@@ -14,7 +14,7 @@ export class ShortProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | ShortPropertySourceMap;
 }
 
-export function shortPropertyFactory(): ShortProperty {
+export function newShortProperty(): ShortProperty {
   return Object.assign(new ShortProperty(), defaultSimpleProperty(), {
     type: 'short',
     minValue: null,

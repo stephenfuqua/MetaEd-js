@@ -2,9 +2,9 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { Domain } from '../../../../packages/metaed-core/src/model/Domain';
-import { domainFactory } from '../../../../packages/metaed-core/src/model/Domain';
+import { newDomain } from '../../../../packages/metaed-core/src/model/Domain';
 import type { Subdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { subdomainFactory } from '../../../../packages/metaed-core/src/model/Subdomain';
+import { newSubdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
 import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
 import { enhance } from '../../src/enhancer/SubdomainParentEntityEnhancer';
 
@@ -16,12 +16,12 @@ describe('when enhancing subdomain with parent', () => {
   let childEntity: Subdomain;
 
   beforeAll(() => {
-    parentEntity = Object.assign(domainFactory(), {
+    parentEntity = Object.assign(newDomain(), {
       metaEdName: parentEntityName,
     });
     addEntity(metaEd.entity, parentEntity);
 
-    childEntity = Object.assign(subdomainFactory(), {
+    childEntity = Object.assign(newSubdomain(), {
       metaEdName: childEntityName,
       parentMetaEdName: parentEntityName,
     });

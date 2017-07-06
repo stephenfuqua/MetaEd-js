@@ -1,7 +1,7 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import SharedSimpleBuilder from './SharedSimpleBuilder';
-import { sharedDecimalFactory } from '../model/SharedDecimal';
+import { newSharedDecimal } from '../model/SharedDecimal';
 import type { SharedDecimal, SharedDecimalSourceMap } from '../model/SharedDecimal';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
@@ -9,7 +9,7 @@ import { NoSharedSimple } from '../model/SharedSimple';
 
 export default class SharedDecimalBuilder extends SharedSimpleBuilder {
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
-    this.enteringSharedSimple(sharedDecimalFactory);
+    this.enteringSharedSimple(newSharedDecimal);
     if (this.currentSharedSimple !== NoSharedSimple) {
       Object.assign(((this.currentSharedSimple: any): SharedDecimal).sourceMap, {
         type: sourceMapFrom(context),

@@ -18,7 +18,7 @@ export class DecimalProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | DecimalPropertySourceMap;
 }
 
-export function decimalPropertyFactory(): DecimalProperty {
+export function newDecimalProperty(): DecimalProperty {
   return Object.assign(new DecimalProperty(), defaultSimpleProperty(), {
     type: 'decimal',
     minValue: null,

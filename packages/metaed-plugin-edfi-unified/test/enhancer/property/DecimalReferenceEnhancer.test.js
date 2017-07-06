@@ -2,11 +2,11 @@
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { DecimalProperty } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
-import { decimalPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
+import { newDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
 import type { SharedDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
-import { sharedDecimalPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
+import { newSharedDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
 import type { DecimalType } from '../../../../../packages/metaed-core/src/model/DecimalType';
-import { decimalTypeFactory } from '../../../../../packages/metaed-core/src/model/DecimalType';
+import { newDecimalType } from '../../../../../packages/metaed-core/src/model/DecimalType';
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
 describe('when enhancing decimal property', () => {
@@ -17,13 +17,13 @@ describe('when enhancing decimal property', () => {
   let referencedEntity: DecimalType;
 
   beforeAll(() => {
-    property = Object.assign(decimalPropertyFactory(), {
+    property = Object.assign(newDecimalProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.decimal.push(property);
 
-    referencedEntity = Object.assign(decimalTypeFactory(), {
+    referencedEntity = Object.assign(newDecimalType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.decimalType.set(referencedEntity.metaEdName, referencedEntity);
@@ -45,13 +45,13 @@ describe('when enhancing shared decimal property', () => {
   let referencedEntity: DecimalType;
 
   beforeAll(() => {
-    property = Object.assign(sharedDecimalPropertyFactory(), {
+    property = Object.assign(newSharedDecimalProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.sharedDecimal.push(property);
 
-    referencedEntity = Object.assign(decimalTypeFactory(), {
+    referencedEntity = Object.assign(newDecimalType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.decimalType.set(referencedEntity.metaEdName, referencedEntity);

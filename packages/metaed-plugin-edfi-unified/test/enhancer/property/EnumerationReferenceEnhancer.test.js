@@ -3,9 +3,9 @@ import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { EnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/EnumerationProperty';
-import { enumerationPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/EnumerationProperty';
+import { newEnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/EnumerationProperty';
 import type { Enumeration } from '../../../../../packages/metaed-core/src/model/Enumeration';
-import { enumerationFactory } from '../../../../../packages/metaed-core/src/model/Enumeration';
+import { newEnumeration } from '../../../../../packages/metaed-core/src/model/Enumeration';
 import { enhance } from '../../../src/enhancer/property/EnumerationReferenceEnhancer';
 
 describe('when enhancing enumeration property', () => {
@@ -14,19 +14,19 @@ describe('when enhancing enumeration property', () => {
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
-    const property: EnumerationProperty = Object.assign(enumerationPropertyFactory(), {
+    const property: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.enumeration.push(property);
 
-    const parentEntity: Enumeration = Object.assign(enumerationFactory(), {
+    const parentEntity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
     metaEd.entity.enumeration.set(parentEntity.metaEdName, parentEntity);
 
-    const referencedEntity: Enumeration = Object.assign(enumerationFactory(), {
+    const referencedEntity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.enumeration.set(referencedEntity.metaEdName, referencedEntity);

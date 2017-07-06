@@ -1,5 +1,5 @@
 // @flow
-import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
+import { ReferentialProperty, ReferentialPropertySourceMap, newReferentialProperty } from './ReferentialProperty';
 import { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class ChoicePropertySourceMap extends ReferentialPropertySourceMap {}
@@ -8,8 +8,8 @@ export class ChoiceProperty extends ReferentialProperty {
   sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap | ChoicePropertySourceMap;
 }
 
-export function choicePropertyFactory(): ChoiceProperty {
-  return Object.assign(new ChoiceProperty(), defaultReferentialProperty(), {
+export function newChoiceProperty(): ChoiceProperty {
+  return Object.assign(new ChoiceProperty(), newReferentialProperty(), {
     type: 'choice',
     sourceMap: new ChoicePropertySourceMap(),
   });

@@ -4,38 +4,38 @@ import R from 'ramda';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty, NoEntityProperty } from '../model/property/EntityProperty';
-import { defaultMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
+import { newMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
 import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import { NamespaceInfo, namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { NamespaceInfo, newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { isSharedProperty } from '../model/property/PropertyType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
-import { booleanPropertyFactory } from '../model/property/BooleanProperty';
-import { currencyPropertyFactory } from '../model/property/CurrencyProperty';
-import { datePropertyFactory } from '../model/property/DateProperty';
-import { DecimalProperty, decimalPropertyFactory, DecimalPropertySourceMap } from '../model/property/DecimalProperty';
-import { descriptorPropertyFactory } from '../model/property/DescriptorProperty';
-import { durationPropertyFactory } from '../model/property/DurationProperty';
-import { enumerationPropertyFactory } from '../model/property/EnumerationProperty';
-import { CommonProperty, commonPropertyFactory } from '../model/property/CommonProperty';
+import { newBooleanProperty } from '../model/property/BooleanProperty';
+import { newCurrencyProperty } from '../model/property/CurrencyProperty';
+import { newDateProperty } from '../model/property/DateProperty';
+import { DecimalProperty, newDecimalProperty, DecimalPropertySourceMap } from '../model/property/DecimalProperty';
+import { newDescriptorProperty } from '../model/property/DescriptorProperty';
+import { newDurationProperty } from '../model/property/DurationProperty';
+import { newEnumerationProperty } from '../model/property/EnumerationProperty';
+import { CommonProperty, newCommonProperty } from '../model/property/CommonProperty';
 import type { CommonPropertySourceMap } from '../model/property/CommonProperty';
-import { inlineCommonPropertyFactory } from '../model/property/InlineCommonProperty';
-import { choicePropertyFactory } from '../model/property/ChoiceProperty';
-import { IntegerProperty, integerPropertyFactory, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
-import { percentPropertyFactory } from '../model/property/PercentProperty';
-import { AssociationProperty, associationPropertyFactory, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
-import { DomainEntityProperty, domainEntityPropertyFactory, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
-import { sharedDecimalPropertyFactory } from '../model/property/SharedDecimalProperty';
-import { sharedIntegerPropertyFactory } from '../model/property/SharedIntegerProperty';
-import { sharedStringPropertyFactory } from '../model/property/SharedStringProperty';
-import { StringProperty, stringPropertyFactory, StringPropertySourceMap } from '../model/property/StringProperty';
-import { timePropertyFactory } from '../model/property/TimeProperty';
-import { yearPropertyFactory } from '../model/property/YearProperty';
+import { newInlineCommonProperty } from '../model/property/InlineCommonProperty';
+import { newChoiceProperty } from '../model/property/ChoiceProperty';
+import { IntegerProperty, newIntegerCommonProperty, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
+import { newPercentProperty } from '../model/property/PercentProperty';
+import { AssociationProperty, newAssociationProperty, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
+import { DomainEntityProperty, newDomainEntityProperty, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
+import { newSharedDecimalProperty } from '../model/property/SharedDecimalProperty';
+import { newSharedIntegerProperty } from '../model/property/SharedIntegerProperty';
+import { newSharedStringProperty } from '../model/property/SharedStringProperty';
+import { StringProperty, newStringProperty, StringPropertySourceMap } from '../model/property/StringProperty';
+import { newTimeProperty } from '../model/property/TimeProperty';
+import { newYearProperty } from '../model/property/YearProperty';
 import { ReferentialProperty, ReferentialPropertySourceMap } from '../model/property/ReferentialProperty';
-import { ShortProperty, shortPropertyFactory, ShortPropertySourceMap } from '../model/property/ShortProperty';
-import { sharedShortPropertyFactory } from '../model/property/SharedShortProperty';
+import { ShortProperty, newShortProperty, ShortPropertySourceMap } from '../model/property/ShortProperty';
+import { newSharedShortProperty } from '../model/property/SharedShortProperty';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import type { PropertyIndex } from '../model/property/PropertyRepository';
@@ -71,7 +71,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -152,61 +152,61 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterBooleanProperty(context: MetaEdGrammar.BooleanPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = booleanPropertyFactory();
+    this.currentProperty = newBooleanProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterCurrencyProperty(context: MetaEdGrammar.CurrencyPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = currencyPropertyFactory();
+    this.currentProperty = newCurrencyProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterDateProperty(context: MetaEdGrammar.DatePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = datePropertyFactory();
+    this.currentProperty = newDateProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterDecimalProperty(context: MetaEdGrammar.DecimalPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = decimalPropertyFactory();
+    this.currentProperty = newDecimalProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterDescriptorProperty(context: MetaEdGrammar.DescriptorPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = descriptorPropertyFactory();
+    this.currentProperty = newDescriptorProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterDurationProperty(context: MetaEdGrammar.DurationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = durationPropertyFactory();
+    this.currentProperty = newDurationProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterEnumerationProperty(context: MetaEdGrammar.EnumerationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = enumerationPropertyFactory();
+    this.currentProperty = newEnumerationProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterCommonProperty(context: MetaEdGrammar.CommonPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = commonPropertyFactory();
+    this.currentProperty = newCommonProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterInlineCommonProperty(context: MetaEdGrammar.InlineCommonPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = inlineCommonPropertyFactory();
+    this.currentProperty = newInlineCommonProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterChoiceProperty(context: MetaEdGrammar.ChoicePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = choicePropertyFactory();
+    this.currentProperty = newChoiceProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -219,73 +219,73 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterIntegerProperty(context: MetaEdGrammar.IntegerPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = integerPropertyFactory();
+    this.currentProperty = newIntegerCommonProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterShortProperty(context: MetaEdGrammar.ShortPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = shortPropertyFactory();
+    this.currentProperty = newShortProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterPercentProperty(context: MetaEdGrammar.PercentPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = percentPropertyFactory();
+    this.currentProperty = newPercentProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterAssociationProperty(context: MetaEdGrammar.AssociationPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = associationPropertyFactory();
+    this.currentProperty = newAssociationProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterDomainEntityProperty(context: MetaEdGrammar.DomainEntityPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = domainEntityPropertyFactory();
+    this.currentProperty = newDomainEntityProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterSharedDecimalProperty(context: MetaEdGrammar.SharedDecimalPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = sharedDecimalPropertyFactory();
+    this.currentProperty = newSharedDecimalProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterSharedIntegerProperty(context: MetaEdGrammar.SharedIntegerPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = sharedIntegerPropertyFactory();
+    this.currentProperty = newSharedIntegerProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterSharedShortProperty(context: MetaEdGrammar.SharedShortPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = sharedShortPropertyFactory();
+    this.currentProperty = newSharedShortProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterSharedStringProperty(context: MetaEdGrammar.SharedStringPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = sharedStringPropertyFactory();
+    this.currentProperty = newSharedStringProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterStringProperty(context: MetaEdGrammar.StringPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = stringPropertyFactory();
+    this.currentProperty = newStringProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterTimeProperty(context: MetaEdGrammar.TimePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = timePropertyFactory();
+    this.currentProperty = newTimeProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
   enterYearProperty(context: MetaEdGrammar.YearPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = yearPropertyFactory();
+    this.currentProperty = newYearProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -556,7 +556,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
   // eslint-disable-next-line no-unused-vars
   enterMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    this.currentMergedProperty = defaultMergedProperty();
+    this.currentMergedProperty = newMergedProperty();
   }
 
   enterMergePropertyPath(context: MetaEdGrammar.MergePropertyPathContext) {

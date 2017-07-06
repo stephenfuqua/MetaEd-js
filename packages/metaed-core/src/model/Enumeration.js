@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import { EnumerationItem } from './EnumerationItem';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
@@ -18,8 +18,8 @@ export class Enumeration extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | EnumerationSourceMap;
 }
 
-export function enumerationFactory(): Enumeration {
-  return Object.assign(new Enumeration(), defaultTopLevelEntity(), {
+export function newEnumeration(): Enumeration {
+  return Object.assign(new Enumeration(), newTopLevelEntity(), {
     type: 'enumeration',
     typeHumanizedName: 'Enumeration',
     enumerationItems: [],

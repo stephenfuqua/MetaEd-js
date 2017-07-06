@@ -8,7 +8,7 @@ export class DateProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | DatePropertySourceMap;
 }
 
-export function datePropertyFactory(): DateProperty {
+export function newDateProperty(): DateProperty {
   return Object.assign(new DateProperty(), defaultSimpleProperty(), {
     type: 'date',
     sourceMap: new DatePropertySourceMap(),

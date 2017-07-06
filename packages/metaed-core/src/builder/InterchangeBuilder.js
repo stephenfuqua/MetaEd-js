@@ -8,10 +8,10 @@ import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
-import { interchangeFactory, NoInterchange } from '../model/Interchange';
-import { interchangeItemFactory, NoInterchangeItem } from '../model/InterchangeItem';
-import { interchangeExtensionFactory } from '../model/InterchangeExtension';
-import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { newInterchange, NoInterchange } from '../model/Interchange';
+import { newInterchangeItem, NoInterchangeItem } from '../model/InterchangeItem';
+import { newInterchangeExtension } from '../model/InterchangeExtension';
+import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -35,7 +35,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -86,7 +86,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   }
   enterInterchange(context: MetaEdGrammar.InterchangeContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentInterchange = Object.assign(interchangeFactory(), {
+    this.currentInterchange = Object.assign(newInterchange(), {
       namespaceInfo: this.namespaceInfo,
     });
     Object.assign(this.currentInterchange.sourceMap, {
@@ -97,7 +97,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentInterchange = Object.assign(interchangeExtensionFactory(), {
+    this.currentInterchange = Object.assign(newInterchangeExtension(), {
       namespaceInfo: this.namespaceInfo,
     });
     this.currentInterchange.sourceMap.type = sourceMapFrom(context);
@@ -161,7 +161,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   enterInterchangeElement(context: MetaEdGrammar.InterchangeElementContext) {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-    this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
+    this.currentInterchangeItem = Object.assign(newInterchangeItem(), { metaEdName: context.ID().getText() });
     Object.assign(this.currentInterchangeItem.sourceMap, {
       type: sourceMapFrom(context),
       metaEdName: sourceMapFrom(context),
@@ -178,7 +178,7 @@ export default class InterchangeBuilder extends MetaEdGrammarListener {
   enterInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
     if (this.currentInterchange === NoInterchange) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-    this.currentInterchangeItem = Object.assign(interchangeItemFactory(), { metaEdName: context.ID().getText() });
+    this.currentInterchangeItem = Object.assign(newInterchangeItem(), { metaEdName: context.ID().getText() });
     Object.assign(this.currentInterchangeItem.sourceMap, {
       type: sourceMapFrom(context),
       metaEdName: sourceMapFrom(context),

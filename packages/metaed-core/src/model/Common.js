@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { CommonExtension } from './CommonExtension';
 import type { ModelBase } from './ModelBase';
@@ -15,8 +15,8 @@ export class Common extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | CommonSourceMap;
 }
 
-export function commonFactory(): Common {
-  return Object.assign(new Common(), defaultTopLevelEntity(), {
+export function newCommon(): Common {
+  return Object.assign(new Common(), newTopLevelEntity(), {
     type: 'common',
     typeHumanizedName: 'Common',
     extender: null,
@@ -26,8 +26,8 @@ export function commonFactory(): Common {
   });
 }
 
-export function inlineCommonFactory(): Common {
-  return Object.assign(new Common(), defaultTopLevelEntity(), {
+export function newInlineCommon(): Common {
+  return Object.assign(new Common(), newTopLevelEntity(), {
     type: 'common',
     typeHumanizedName: 'Inline Common',
     extender: null,

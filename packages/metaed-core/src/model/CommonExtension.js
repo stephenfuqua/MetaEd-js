@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
 export class CommonExtensionSourceMap extends TopLevelEntitySourceMap {}
@@ -8,8 +8,8 @@ export class CommonExtension extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | CommonExtensionSourceMap;
 }
 
-export function commonExtensionFactory(): CommonExtension {
-  return Object.assign(new CommonExtension(), defaultTopLevelEntity(), {
+export function newCommonExtension(): CommonExtension {
+  return Object.assign(new CommonExtension(), newTopLevelEntity(), {
     type: 'commonExtension',
     typeHumanizedName: 'Common Extension',
     sourceMap: new CommonExtensionSourceMap(),

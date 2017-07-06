@@ -1,8 +1,8 @@
 // @flow
 import type { EntityRepository } from './model/EntityRepository';
 import type { PropertyIndex } from './model/property/PropertyRepository';
-import { entityRepositoryFactory } from './model/EntityRepository';
-import { propertyIndexFactory } from './model/property/PropertyRepository';
+import { newEntityRepository } from './model/EntityRepository';
+import { newPropertyIndex } from './model/property/PropertyRepository';
 
 // plugin exports:
 //   - specialized model types
@@ -36,8 +36,8 @@ export type MetaEdEnvironment = {
 
 export const metaEdEnvironmentFactory: () => MetaEdEnvironment = () =>
   ({
-    entity: entityRepositoryFactory(),
-    propertyIndex: propertyIndexFactory(),
+    entity: newEntityRepository(),
+    propertyIndex: newPropertyIndex(),
     plugin: new Map(),
     model: {},
     metaEdVersion: '',

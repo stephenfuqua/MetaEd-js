@@ -8,7 +8,7 @@ export class PercentProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | PercentPropertySourceMap;
 }
 
-export function percentPropertyFactory(): PercentProperty {
+export function newPercentProperty(): PercentProperty {
   return Object.assign(new PercentProperty(), defaultSimpleProperty(), {
     type: 'percent',
     sourceMap: new PercentPropertySourceMap(),

@@ -2,7 +2,7 @@
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 
 export class IntegerTypeSourceMap extends ModelBaseSourceMap {
   documentationInherited: ?SourceMap;
@@ -23,13 +23,13 @@ export class IntegerType extends ModelBase {
   sourceMap: IntegerTypeSourceMap;
 }
 
-export function integerTypeFactory(): IntegerType {
+export function newIntegerType(): IntegerType {
   return Object.assign(new IntegerType(), {
     type: 'integerType',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     typeHumanizedName: 'Integer Type',
     isShort: false,
     minValue: '',
@@ -39,7 +39,7 @@ export function integerTypeFactory(): IntegerType {
   });
 }
 
-export function shortTypeFactory(): IntegerType {
+export function newShortType(): IntegerType {
   return Object.assign(new IntegerType(), {
     type: 'integerType',
     typeHumanizedName: 'Integer Type',
@@ -51,7 +51,7 @@ export function shortTypeFactory(): IntegerType {
   });
 }
 
-export const NoIntegerType: IntegerType = Object.assign(integerTypeFactory(), {
+export const NoIntegerType: IntegerType = Object.assign(newIntegerType(), {
   metaEdName: 'NoIntegerType',
 });
 

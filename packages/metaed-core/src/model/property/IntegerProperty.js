@@ -14,7 +14,7 @@ export class IntegerProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | IntegerPropertySourceMap;
 }
 
-export function integerPropertyFactory(): IntegerProperty {
+export function newIntegerCommonProperty(): IntegerProperty {
   return Object.assign(new IntegerProperty(), defaultSimpleProperty(), {
     type: 'integer',
     minValue: null,

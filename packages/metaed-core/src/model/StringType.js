@@ -2,7 +2,7 @@
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 
 export class StringTypeSourceMap extends ModelBaseSourceMap {
   documentationInherited: ?SourceMap;
@@ -26,7 +26,7 @@ export function stringTypeFactory(): StringType {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     typeHumanizedName: 'String Type',
     minLength: '',
     maxLength: '',

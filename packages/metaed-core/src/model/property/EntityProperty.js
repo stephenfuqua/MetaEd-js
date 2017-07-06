@@ -1,6 +1,6 @@
 // @flow
-import { NamespaceInfo, namespaceInfoFactory } from '../NamespaceInfo';
-import { TopLevelEntity, defaultTopLevelEntity } from '../TopLevelEntity';
+import { NamespaceInfo, newNamespaceInfo } from '../NamespaceInfo';
+import { TopLevelEntity, newTopLevelEntity } from '../TopLevelEntity';
 import type { SourceMap } from '../SourceMap';
 import type { PropertyType } from './PropertyType';
 import type { ReferentialProperty } from './ReferentialProperty';
@@ -57,19 +57,19 @@ export class EntityProperty {
   sourceMap: EntityPropertySourceMap;
 }
 
-export function defaultEntityPropertyFields() {
+export function newEntityPropertyFields() {
   return {
     type: 'unknown',
     documentation: '',
     documentationInherited: false,
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     baseKeyName: '',
     shortenTo: '',
     propertyPathName: '',
     parentEntityName: '',
-    parentEntity: defaultTopLevelEntity(),
+    parentEntity: newTopLevelEntity(),
     isPartOfIdentity: false,
     isIdentityRename: false,
     isRequired: false,
@@ -84,10 +84,10 @@ export function defaultEntityPropertyFields() {
   };
 }
 
-export function defaultEntityProperty(): EntityProperty {
-  return Object.assign(new EntityProperty(), defaultEntityPropertyFields());
+export function newEntityProperty(): EntityProperty {
+  return Object.assign(new EntityProperty(), newEntityPropertyFields());
 }
 
-export const NoEntityProperty: EntityProperty = Object.assign(defaultEntityProperty(), {
+export const NoEntityProperty: EntityProperty = Object.assign(newEntityProperty(), {
   metaEdName: 'NoEntityProperty',
 });

@@ -4,13 +4,13 @@ import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
-import { NoNamespaceInfo, namespaceInfoFactory } from '../model/NamespaceInfo';
+import { NoNamespaceInfo, newNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
-  if (namespaceInfo === NoNamespaceInfo || isErrorText(context.NAMESPACE_ID().getText())) return namespaceInfoFactory();
+  if (namespaceInfo === NoNamespaceInfo || isErrorText(context.NAMESPACE_ID().getText())) return newNamespaceInfo();
 
   if (context.exception ||
     context.NAMESPACE_ID() == null ||
@@ -48,7 +48,7 @@ export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (context.exception) return;
     if (this.currentNamespaceInfo !== NoNamespaceInfo) return;
-    this.currentNamespaceInfo = namespaceInfoFactory();
+    this.currentNamespaceInfo = newNamespaceInfo();
     this.currentNamespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 

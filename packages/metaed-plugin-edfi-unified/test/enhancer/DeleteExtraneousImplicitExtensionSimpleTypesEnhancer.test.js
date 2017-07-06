@@ -2,7 +2,7 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { NamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
-import { namespaceInfoFactory } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
+import { newNamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
 import { stringTypeFactory } from '../../../../packages/metaed-core/src/model/StringType';
 import { enhance } from '../../src/enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
@@ -12,7 +12,7 @@ describe('when there are duplicate string types', () => {
   const coreDuplicatedSimpleTypeName: string = 'CoreDuplicatedSimpleTypeName';
   const extensionOnlySimpleTypeName: string = 'ExtensionOnlySimpleTypeName';
 
-  const extensionNamespaceInfo : NamespaceInfo = Object.assign(namespaceInfoFactory(), { isExtension: true, projectExtension: 'extension' });
+  const extensionNamespaceInfo : NamespaceInfo = Object.assign(newNamespaceInfo(), { isExtension: true, projectExtension: 'extension' });
 
   beforeAll(() => {
     metaEd.entity.stringType.set(coreOnlySimpleTypeName, Object.assign(stringTypeFactory(), { metaEdName: coreOnlySimpleTypeName }));

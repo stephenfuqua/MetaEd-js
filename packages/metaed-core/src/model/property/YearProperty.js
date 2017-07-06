@@ -8,7 +8,7 @@ export class YearProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | YearPropertySourceMap;
 }
 
-export function yearPropertyFactory(): YearProperty {
+export function newYearProperty(): YearProperty {
   return Object.assign(new YearProperty(), defaultSimpleProperty(), {
     type: 'year',
     sourceMap: new YearPropertySourceMap(),

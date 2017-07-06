@@ -8,7 +8,7 @@ export class TimeProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | TimePropertySourceMap;
 }
 
-export function timePropertyFactory(): TimeProperty {
+export function newTimeProperty(): TimeProperty {
   return Object.assign(new TimeProperty(), defaultSimpleProperty(), {
     type: 'time',
     sourceMap: new TimePropertySourceMap(),

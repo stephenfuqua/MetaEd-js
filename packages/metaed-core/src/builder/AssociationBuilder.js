@@ -1,15 +1,15 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { domainEntityPropertyFactory } from '../model/property/DomainEntityProperty';
-import { associationFactory } from '../model/Association';
+import { newDomainEntityProperty } from '../model/property/DomainEntityProperty';
+import { newAssociation } from '../model/Association';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationBuilder extends TopLevelEntityBuilder {
   enterAssociation(context: MetaEdGrammar.AssociationContext) {
-    this.enteringEntity(associationFactory);
+    this.enteringEntity(newAssociation);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }
@@ -35,13 +35,13 @@ export default class AssociationBuilder extends TopLevelEntityBuilder {
 
   enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = domainEntityPropertyFactory();
+    this.currentProperty = newDomainEntityProperty();
     this.enteringIdentity(context);
   }
 
   enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = domainEntityPropertyFactory();
+    this.currentProperty = newDomainEntityProperty();
     this.enteringIdentity(context);
   }
 

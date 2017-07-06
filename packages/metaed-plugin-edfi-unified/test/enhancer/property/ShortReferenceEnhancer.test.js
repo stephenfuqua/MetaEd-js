@@ -2,11 +2,11 @@
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { ShortProperty } from '../../../../../packages/metaed-core/src/model/property/ShortProperty';
-import { shortPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/ShortProperty';
+import { newShortProperty } from '../../../../../packages/metaed-core/src/model/property/ShortProperty';
 import type { SharedShortProperty } from '../../../../../packages/metaed-core/src/model/property/SharedShortProperty';
-import { sharedShortPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/SharedShortProperty';
+import { newSharedShortProperty } from '../../../../../packages/metaed-core/src/model/property/SharedShortProperty';
 import type { IntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
-import { integerTypeFactory } from '../../../../../packages/metaed-core/src/model/IntegerType';
+import { newIntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
 import { enhance } from '../../../src/enhancer/property/ShortReferenceEnhancer';
 
 
@@ -18,13 +18,13 @@ describe('when enhancing short property', () => {
   let referencedEntity: IntegerType;
 
   beforeAll(() => {
-    property = Object.assign(shortPropertyFactory(), {
+    property = Object.assign(newShortProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.short.push(property);
 
-    referencedEntity = Object.assign(integerTypeFactory(), {
+    referencedEntity = Object.assign(newIntegerType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);
@@ -46,13 +46,13 @@ describe('when enhancing shared short property', () => {
   let referencedEntity: IntegerType;
 
   beforeAll(() => {
-    property = Object.assign(sharedShortPropertyFactory(), {
+    property = Object.assign(newSharedShortProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.sharedShort.push(property);
 
-    referencedEntity = Object.assign(integerTypeFactory(), {
+    referencedEntity = Object.assign(newIntegerType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.integerType.set(referencedEntity.metaEdName, referencedEntity);

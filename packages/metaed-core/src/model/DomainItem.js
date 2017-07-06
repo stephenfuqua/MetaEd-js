@@ -1,6 +1,6 @@
 // @flow
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 import type { ModelType } from './ModelType';
 import type { SourceMap } from './SourceMap';
 
@@ -13,19 +13,19 @@ export class DomainItem extends ModelBase {
   sourceMap: DomainItemSourceMap;
 }
 
-export function domainItemFactory(): DomainItem {
+export function newDomainItem(): DomainItem {
   return Object.assign(new DomainItem(), {
     type: 'domainItem',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     referencedType: 'unknown',
     sourceMap: new DomainItemSourceMap(),
   });
 }
 
-export const NoDomainItem: DomainItem = Object.assign(domainItemFactory(), {
+export const NoDomainItem: DomainItem = Object.assign(newDomainItem(), {
   metaEdName: 'NoDomainItem',
 });
 

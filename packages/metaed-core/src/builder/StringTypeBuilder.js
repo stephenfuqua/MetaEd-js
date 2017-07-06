@@ -8,7 +8,7 @@ import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBui
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
-import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
 // Note StringType is XSD specific with the advent of SharedString, and creation should be move to XSD enhancers
@@ -28,7 +28,7 @@ export default class StringTypeBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 

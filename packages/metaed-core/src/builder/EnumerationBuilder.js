@@ -1,11 +1,11 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { enumerationFactory, asEnumeration } from '../model/Enumeration';
-import { schoolYearEnumerationFactory } from '../model/SchoolYearEnumeration';
+import { newEnumeration, asEnumeration } from '../model/Enumeration';
+import { newSchoolYearEnumeration } from '../model/SchoolYearEnumeration';
 import type { EnumerationSourceMap } from '../model/Enumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
-import { enumerationItemFactory, NoEnumerationItem } from '../model/EnumerationItem';
+import { newEnumerationItem, NoEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
@@ -21,7 +21,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
   }
 
   enterEnumeration(context: MetaEdGrammar.EnumerationContext) {
-    this.enteringEntity(enumerationFactory);
+    this.enteringEntity(newEnumeration);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
@@ -42,7 +42,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
     // need to differentiate SchoolYear from other enumerations - overwrite with new type
     if (enumerationName === 'SchoolYear') {
-      this.enteringEntity(schoolYearEnumerationFactory);
+      this.enteringEntity(newSchoolYearEnumeration);
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
         namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
@@ -63,7 +63,7 @@ export default class EnumerationBuilder extends TopLevelEntityBuilder {
 
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentEnumerationItem = enumerationItemFactory();
+    this.currentEnumerationItem = newEnumerationItem();
     this.currentEnumerationItem.namespaceInfo.sourceMap = this.currentTopLevelEntity.namespaceInfo.sourceMap;
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
   }

@@ -1,11 +1,11 @@
 // @flow
-import { ShortProperty, shortPropertyFactory } from './ShortProperty';
+import { ShortProperty, newShortProperty } from './ShortProperty';
 import type { EntityProperty } from './EntityProperty';
 
 export class SharedShortProperty extends ShortProperty {}
 
-export function sharedShortPropertyFactory(): SharedShortProperty {
-  return Object.assign(new SharedShortProperty(), shortPropertyFactory(), {
+export function newSharedShortProperty(): SharedShortProperty {
+  return Object.assign(new SharedShortProperty(), newShortProperty(), {
     type: 'sharedShort',
   });
 }

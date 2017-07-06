@@ -8,7 +8,7 @@ export class CurrencyProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | CurrencyPropertySourceMap;
 }
 
-export function currencyPropertyFactory(): CurrencyProperty {
+export function newCurrencyProperty(): CurrencyProperty {
   return Object.assign(new CurrencyProperty(), defaultSimpleProperty(), {
     type: 'currency',
     sourceMap: new CurrencyPropertySourceMap(),

@@ -8,7 +8,7 @@ export class BooleanProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | BooleanPropertySourceMap;
 }
 
-export function booleanPropertyFactory(): BooleanProperty {
+export function newBooleanProperty(): BooleanProperty {
   return Object.assign(new BooleanProperty(), defaultSimpleProperty(), {
     type: 'boolean',
     sourceMap: new BooleanPropertySourceMap(),

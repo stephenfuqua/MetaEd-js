@@ -8,7 +8,7 @@ export class DurationProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | DurationPropertySourceMap;
 }
 
-export function durationPropertyFactory(): DurationProperty {
+export function newDurationProperty(): DurationProperty {
   return Object.assign(new DurationProperty(), defaultSimpleProperty(), {
     type: 'duration',
     sourceMap: new DurationPropertySourceMap(),

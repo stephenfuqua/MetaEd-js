@@ -2,9 +2,9 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { Interchange } from '../../../../packages/metaed-core/src/model/Interchange';
-import { interchangeFactory } from '../../../../packages/metaed-core/src/model/Interchange';
+import { newInterchange } from '../../../../packages/metaed-core/src/model/Interchange';
 import type { InterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
-import { interchangeExtensionFactory } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
+import { newInterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
 describe('when enhancing interchange extension referring to interchange', () => {
@@ -14,12 +14,12 @@ describe('when enhancing interchange extension referring to interchange', () => 
   let childEntity: InterchangeExtension;
 
   beforeAll(() => {
-    parentEntity = Object.assign(interchangeFactory(), {
+    parentEntity = Object.assign(newInterchange(), {
       metaEdName: parentEntityName,
     });
     metaEd.entity.interchange.set(parentEntity.metaEdName, parentEntity);
 
-    childEntity = Object.assign(interchangeExtensionFactory(), {
+    childEntity = Object.assign(newInterchangeExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
     });

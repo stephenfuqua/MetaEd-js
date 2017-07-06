@@ -24,7 +24,7 @@ export class MergedProperty {
   sourceMap: MergedPropertySourceMap;
 }
 
-export function defaultMergedProperty(): MergedProperty {
+export function newMergedProperty(): MergedProperty {
   return Object.assign(new MergedProperty(), {
     mergePropertyPath: [],
     targetPropertyPath: [],
@@ -34,7 +34,7 @@ export function defaultMergedProperty(): MergedProperty {
   });
 }
 
-export const NoMergedProperty: MergedProperty = Object.assign(defaultMergedProperty(), {
+export const NoMergedProperty: MergedProperty = Object.assign(newMergedProperty(), {
   mergeProperty: NoEntityProperty,
   targetProperty: NoEntityProperty,
 });

@@ -1,7 +1,7 @@
 // @flow
 import { InterchangeItem } from './InterchangeItem';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 
 export class InterchangeSourceMap extends ModelBaseSourceMap {
@@ -27,13 +27,13 @@ export class Interchange extends ModelBase {
   sourceMap: ModelBaseSourceMap | InterchangeSourceMap;
 }
 
-export function interchangeFactory(): Interchange {
+export function newInterchange(): Interchange {
   return Object.assign(new Interchange(), {
     type: 'interchange',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
 
     elements: [],
     identityTemplates: [],
@@ -46,7 +46,7 @@ export function interchangeFactory(): Interchange {
   });
 }
 
-export const NoInterchange: Interchange = Object.assign(interchangeFactory(), {
+export const NoInterchange: Interchange = Object.assign(newInterchange(), {
   metaEdName: 'NoInterchange',
 });
 

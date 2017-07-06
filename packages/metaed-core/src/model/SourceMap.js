@@ -8,7 +8,7 @@ export type SourceMap = {
   tokenText: string,
 }
 
-export function defaultSourceMap(): SourceMap {
+export function newSourceMap(): SourceMap {
   return {
     line: 0,
     column: 0,
@@ -16,7 +16,7 @@ export function defaultSourceMap(): SourceMap {
   };
 }
 
-export const NoSourceMap: SourceMap = Object.assign(defaultSourceMap(), {
+export const NoSourceMap: SourceMap = Object.assign(newSourceMap(), {
   tokenText: 'NoSourceMap',
 });
 

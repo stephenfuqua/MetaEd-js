@@ -1,6 +1,6 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
-import { MapTypeEnumeration, mapTypeEnumerationFactory } from './MapTypeEnumeration';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
+import { MapTypeEnumeration, newMapTypeEnumeration } from './MapTypeEnumeration';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
 
@@ -17,13 +17,13 @@ export class Descriptor extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | DescriptorSourceMap;
 }
 
-export function descriptorFactory(): Descriptor {
-  return Object.assign(new Descriptor(), defaultTopLevelEntity(), {
+export function newDescriptor(): Descriptor {
+  return Object.assign(new Descriptor(), newTopLevelEntity(), {
     type: 'descriptor',
     typeHumanizedName: 'Descriptor',
     isMapTypeRequired: false,
     isMapTypeOptional: false,
-    mapTypeEnumeration: mapTypeEnumerationFactory(),
+    mapTypeEnumeration: newMapTypeEnumeration(),
     sourceMap: new DescriptorSourceMap(),
   });
 }

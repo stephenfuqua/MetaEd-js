@@ -1,14 +1,14 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { associationExtensionFactory } from '../model/AssociationExtension';
+import { newAssociationExtension } from '../model/AssociationExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class AssociationExtensionBuilder extends TopLevelEntityBuilder {
   enterAssociationExtension(context: MetaEdGrammar.AssociationExtensionContext) {
-    this.enteringEntity(associationExtensionFactory);
+    this.enteringEntity(newAssociationExtension);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }

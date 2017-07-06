@@ -1,7 +1,7 @@
 // @flow
 import type { EntityProperty } from './property/EntityProperty';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 
 export class TopLevelEntitySourceMap extends ModelBaseSourceMap {
@@ -31,13 +31,13 @@ export class TopLevelEntity extends ModelBase {
   sourceMap: TopLevelEntitySourceMap;
 }
 
-export function defaultTopLevelEntity(): TopLevelEntity {
+export function newTopLevelEntity(): TopLevelEntity {
   return Object.assign(new TopLevelEntity(), {
     type: 'unknown',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
 
     properties: [],
     identityProperties: [],
@@ -50,7 +50,7 @@ export function defaultTopLevelEntity(): TopLevelEntity {
   });
 }
 
-export const NoTopLevelEntity: TopLevelEntity = Object.assign(defaultTopLevelEntity(), {
+export const NoTopLevelEntity: TopLevelEntity = Object.assign(newTopLevelEntity(), {
   metaEdName: 'NoTopLevelEntity',
 });
 

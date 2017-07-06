@@ -57,7 +57,7 @@ export class EntityRepository {
   subdomain: Map<string, Subdomain>;
 }
 
-export function entityRepositoryFactory(): EntityRepository {
+export function newEntityRepository(): EntityRepository {
   return Object.assign(new EntityRepository(), {
     unknown: new Map(),
     association: new Map(),

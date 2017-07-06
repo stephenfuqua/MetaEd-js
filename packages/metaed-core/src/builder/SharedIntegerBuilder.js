@@ -1,7 +1,7 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import SharedSimpleBuilder from './SharedSimpleBuilder';
-import { sharedIntegerFactory } from '../model/SharedInteger';
+import { newSharedInteger } from '../model/SharedInteger';
 import type { SharedInteger, SharedIntegerSourceMap } from '../model/SharedInteger';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
@@ -9,7 +9,7 @@ import { NoSharedSimple } from '../model/SharedSimple';
 
 export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   enterSharedInteger(context: MetaEdGrammar.SharedIntegerContext) {
-    this.enteringSharedSimple(sharedIntegerFactory);
+    this.enteringSharedSimple(newSharedInteger);
     if (this.currentSharedSimple !== NoSharedSimple) {
       Object.assign(((this.currentSharedSimple.sourceMap: any): SharedIntegerSourceMap), {
         type: sourceMapFrom(context),
@@ -19,7 +19,7 @@ export default class SharedIntegerBuilder extends SharedSimpleBuilder {
   }
 
   enterSharedShort(context: MetaEdGrammar.SharedShortContext) {
-    this.enteringSharedSimple(sharedIntegerFactory);
+    this.enteringSharedSimple(newSharedInteger);
     if (this.currentSharedSimple !== NoSharedSimple) {
       ((this.currentSharedSimple: any): SharedInteger).isShort = true;
       Object.assign(((this.currentSharedSimple.sourceMap: any): SharedIntegerSourceMap), {

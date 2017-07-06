@@ -1,14 +1,14 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { domainEntityExtensionFactory } from '../model/DomainEntityExtension';
+import { newDomainEntityExtension } from '../model/DomainEntityExtension';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
 export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder {
   enterDomainEntityExtension(context: MetaEdGrammar.DomainEntityExtensionContext) {
-    this.enteringEntity(domainEntityExtensionFactory);
+    this.enteringEntity(newDomainEntityExtension);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),

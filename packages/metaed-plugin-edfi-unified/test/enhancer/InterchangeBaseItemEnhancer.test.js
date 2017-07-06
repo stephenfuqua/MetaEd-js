@@ -3,41 +3,41 @@ import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/M
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import { addEntity, getEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
-import { domainEntityFactory } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { domainEntitySubclassFactory } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { associationFactory } from '../../../../packages/metaed-core/src/model/Association';
-import { associationSubclassFactory } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { descriptorFactory } from '../../../../packages/metaed-core/src/model/Descriptor';
-import { interchangeFactory } from '../../../../packages/metaed-core/src/model/Interchange';
-import { interchangeItemFactory } from '../../../../packages/metaed-core/src/model/InterchangeItem';
-import { domainEntityExtensionFactory } from '../../../../packages/metaed-core/src/model/DomainEntityExtension';
-import { interchangeExtensionFactory } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
+import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
+import { newDomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
+import { newAssociation } from '../../../../packages/metaed-core/src/model/Association';
+import { newAssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
+import { newDescriptor } from '../../../../packages/metaed-core/src/model/Descriptor';
+import { newInterchange } from '../../../../packages/metaed-core/src/model/Interchange';
+import { newInterchangeItem } from '../../../../packages/metaed-core/src/model/InterchangeItem';
+import { newDomainEntityExtension } from '../../../../packages/metaed-core/src/model/DomainEntityExtension';
+import { newInterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
 
 describe('when enhancing interchange in core', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
 
   const interchangeMetaEdName: string = 'InterchangeMetaEdName';
 
-  const domainEntity1 = Object.assign(domainEntityFactory(), { metaEdName: 'DomainEntity1' });
-  const domainEntity2 = Object.assign(domainEntityFactory(), { metaEdName: 'DomainEntity2' });
-  const domainEntitySubclass1 = Object.assign(domainEntitySubclassFactory(), { metaEdName: 'DomainEntitySubclass1' });
-  const domainEntitySubclass2 = Object.assign(domainEntitySubclassFactory(), { metaEdName: 'DomainEntitySubclass2' });
-  const association1 = Object.assign(associationFactory(), { metaEdName: 'Association1' });
-  const association2 = Object.assign(associationFactory(), { metaEdName: 'Association2' });
-  const associationSubclass1 = Object.assign(associationSubclassFactory(), { metaEdName: 'AssociationSubclass1' });
-  const associationSubclass2 = Object.assign(associationSubclassFactory(), { metaEdName: 'AssociationSubclass2' });
-  const descriptor1 = Object.assign(descriptorFactory(), { metaEdName: 'Descriptor1' });
-  const descriptor2 = Object.assign(descriptorFactory(), { metaEdName: 'Descriptor2' });
+  const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: 'DomainEntity1' });
+  const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: 'DomainEntity2' });
+  const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), { metaEdName: 'DomainEntitySubclass1' });
+  const domainEntitySubclass2 = Object.assign(newDomainEntitySubclass(), { metaEdName: 'DomainEntitySubclass2' });
+  const association1 = Object.assign(newAssociation(), { metaEdName: 'Association1' });
+  const association2 = Object.assign(newAssociation(), { metaEdName: 'Association2' });
+  const associationSubclass1 = Object.assign(newAssociationSubclass(), { metaEdName: 'AssociationSubclass1' });
+  const associationSubclass2 = Object.assign(newAssociationSubclass(), { metaEdName: 'AssociationSubclass2' });
+  const descriptor1 = Object.assign(newDescriptor(), { metaEdName: 'Descriptor1' });
+  const descriptor2 = Object.assign(newDescriptor(), { metaEdName: 'Descriptor2' });
 
   const elementEntities = [domainEntity1, domainEntitySubclass1, association1, associationSubclass1, descriptor1];
   const identityTemplateEntities = [domainEntity2, domainEntitySubclass2, association2, associationSubclass2, descriptor2];
 
   beforeAll(() => {
-    const interchange = Object.assign(interchangeFactory(), { metaEdName: interchangeMetaEdName });
+    const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName });
     addEntity(metaEd.entity, interchange);
 
     elementEntities.forEach(entity => {
-      interchange.elements.push(Object.assign(interchangeItemFactory(), {
+      interchange.elements.push(Object.assign(newInterchangeItem(), {
         metaEdName: entity.metaEdName,
         referencedType: entity.type,
       }));
@@ -45,7 +45,7 @@ describe('when enhancing interchange in core', () => {
     });
 
     identityTemplateEntities.forEach(entity => {
-      interchange.identityTemplates.push(Object.assign(interchangeItemFactory(), {
+      interchange.identityTemplates.push(Object.assign(newInterchangeItem(), {
         metaEdName: entity.metaEdName,
         referencedType: entity.type,
       }));
@@ -76,25 +76,25 @@ describe('when enhancing interchange extension', () => {
 
   const interchangeMetaEdName: string = 'InterchangeMetaEdName';
 
-  const domainEntity = Object.assign(domainEntityFactory(), { metaEdName: 'DomainEntity' });
-  const domainEntityExtension = Object.assign(domainEntityExtensionFactory(), { metaEdName: 'DomainEntity' });
+  const domainEntity = Object.assign(newDomainEntity(), { metaEdName: 'DomainEntity' });
+  const domainEntityExtension = Object.assign(newDomainEntityExtension(), { metaEdName: 'DomainEntity' });
 
   beforeAll(() => {
     addEntity(metaEd.entity, domainEntity);
     addEntity(metaEd.entity, domainEntityExtension);
 
-    const interchange = Object.assign(interchangeFactory(), { metaEdName: interchangeMetaEdName });
+    const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName });
     addEntity(metaEd.entity, interchange);
 
-    const interchangeExtension = Object.assign(interchangeExtensionFactory(), { metaEdName: interchangeMetaEdName });
+    const interchangeExtension = Object.assign(newInterchangeExtension(), { metaEdName: interchangeMetaEdName });
     addEntity(metaEd.entity, interchangeExtension);
 
-    interchange.elements.push(Object.assign(interchangeItemFactory(), {
+    interchange.elements.push(Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity.metaEdName,
       referencedType: domainEntity.type,
     }));
 
-    interchangeExtension.elements.push(Object.assign(interchangeItemFactory(), {
+    interchangeExtension.elements.push(Object.assign(newInterchangeItem(), {
       metaEdName: domainEntityExtension.metaEdName,
       referencedType: domainEntityExtension.type,
     }));

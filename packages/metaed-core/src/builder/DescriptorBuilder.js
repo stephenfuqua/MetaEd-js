@@ -1,13 +1,13 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { descriptorFactory, asDescriptor } from '../model/Descriptor';
+import { newDescriptor, asDescriptor } from '../model/Descriptor';
 import type { DescriptorSourceMap } from '../model/Descriptor';
 import type { EnumerationSourceMap } from '../model/Enumeration';
 import type { MapTypeEnumeration } from '../model/MapTypeEnumeration';
 import type { EnumerationItem } from '../model/EnumerationItem';
-import { mapTypeEnumerationFactory, NoMapTypeEnumeration } from '../model/MapTypeEnumeration';
-import { NoEnumerationItem, enumerationItemFactory } from '../model/EnumerationItem';
+import { newMapTypeEnumeration, NoMapTypeEnumeration } from '../model/MapTypeEnumeration';
+import { NoEnumerationItem, newEnumerationItem } from '../model/EnumerationItem';
 import { extractDocumentation, extractShortDescription, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
@@ -25,7 +25,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterDescriptor(context: MetaEdGrammar.DescriptorContext) {
-    this.enteringEntity(descriptorFactory);
+    this.enteringEntity(newDescriptor);
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     this.currentTopLevelEntity.sourceMap.namespaceInfo = this.currentTopLevelEntity.namespaceInfo.sourceMap.type;
@@ -57,7 +57,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
 
   enterWithMapType(context: MetaEdGrammar.WithMapTypeContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.namespaceInfo == null) return;
-    this.currentMapTypeEnumeration = Object.assign(mapTypeEnumerationFactory(), {
+    this.currentMapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
       metaEdName: `${this.currentTopLevelEntity.metaEdName}Map`,
       namespaceInfo: this.namespaceInfo,
     });
@@ -91,7 +91,7 @@ export default class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
-    this.currentEnumerationItem = enumerationItemFactory();
+    this.currentEnumerationItem = newEnumerationItem();
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
     this.currentEnumerationItem.sourceMap.namespaceInfo = this.currentTopLevelEntity.sourceMap.namespaceInfo;
   }

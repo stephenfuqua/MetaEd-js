@@ -1,7 +1,7 @@
 // @flow
-import { EntityProperty, EntityPropertySourceMap, defaultEntityPropertyFields } from './EntityProperty';
+import { EntityProperty, EntityPropertySourceMap, newEntityPropertyFields } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
-import { decimalTypeFactory } from './../DecimalType';
+import { newDecimalType } from './../DecimalType';
 import type { DecimalType } from './../DecimalType';
 import type { IntegerType } from './../IntegerType';
 import type { StringType } from './../StringType';
@@ -17,9 +17,9 @@ export class SimpleProperty extends EntityProperty {
 }
 
 export function defaultSimplePropertyFields() {
-  return Object.assign({}, defaultEntityPropertyFields(), {
+  return Object.assign({}, newEntityPropertyFields(), {
     // default referencedEntity
-    referencedEntity: decimalTypeFactory(),
+    referencedEntity: newDecimalType(),
   });
 }
 

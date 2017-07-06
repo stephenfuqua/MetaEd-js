@@ -3,9 +3,9 @@ import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { ChoiceProperty } from '../../../../../packages/metaed-core/src/model/property/ChoiceProperty';
-import { choicePropertyFactory } from '../../../../../packages/metaed-core/src/model/property/ChoiceProperty';
+import { newChoiceProperty } from '../../../../../packages/metaed-core/src/model/property/ChoiceProperty';
 import type { Choice } from '../../../../../packages/metaed-core/src/model/Choice';
-import { choiceFactory } from '../../../../../packages/metaed-core/src/model/Choice';
+import { newChoice } from '../../../../../packages/metaed-core/src/model/Choice';
 import { enhance } from '../../../src/enhancer/property/ChoiceReferenceEnhancer';
 
 describe('when enhancing choice property', () => {
@@ -14,19 +14,19 @@ describe('when enhancing choice property', () => {
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
-    const property: ChoiceProperty = Object.assign(choicePropertyFactory(), {
+    const property: ChoiceProperty = Object.assign(newChoiceProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
     metaEd.propertyIndex.choice.push(property);
 
-    const parentEntity: Choice = Object.assign(choiceFactory(), {
+    const parentEntity: Choice = Object.assign(newChoice(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
     metaEd.entity.choice.set(parentEntity.metaEdName, parentEntity);
 
-    const referencedEntity: Choice = Object.assign(choiceFactory(), {
+    const referencedEntity: Choice = Object.assign(newChoice(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.choice.set(referencedEntity.metaEdName, referencedEntity);

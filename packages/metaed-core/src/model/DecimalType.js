@@ -2,7 +2,7 @@
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 
 export class DecimalTypeSourceMap extends ModelBaseSourceMap {
   documentationInherited: ?SourceMap;
@@ -25,13 +25,13 @@ export class DecimalType extends ModelBase {
   sourceMap: DecimalTypeSourceMap;
 }
 
-export function decimalTypeFactory(): DecimalType {
+export function newDecimalType(): DecimalType {
   return Object.assign(new DecimalType(), {
     type: 'decimalType',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     typeHumanizedName: 'Decimal Type',
     totalDigits: '',
     decimalPlaces: '',
@@ -42,7 +42,7 @@ export function decimalTypeFactory(): DecimalType {
   });
 }
 
-export const NoDecimalType: DecimalType = Object.assign(decimalTypeFactory(), {
+export const NoDecimalType: DecimalType = Object.assign(newDecimalType(), {
   metaEdName: 'NoDecimalType',
 });
 

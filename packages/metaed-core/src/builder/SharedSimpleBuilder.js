@@ -8,7 +8,7 @@ import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 
 import { NoSharedSimple } from '../model/SharedSimple';
-import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
@@ -31,7 +31,7 @@ export default class SharedSimpleBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 

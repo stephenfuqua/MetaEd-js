@@ -1,9 +1,9 @@
 // @flow
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 import type { ModelType } from './ModelType';
-import { defaultTopLevelEntity } from './TopLevelEntity';
+import { newTopLevelEntity } from './TopLevelEntity';
 import type { TopLevelEntity } from './TopLevelEntity';
 
 export class InterchangeItemSourceMap extends ModelBaseSourceMap {
@@ -16,20 +16,20 @@ export class InterchangeItem extends ModelBase {
   sourceMap: InterchangeItemSourceMap;
 }
 
-export function interchangeItemFactory(): InterchangeItem {
+export function newInterchangeItem(): InterchangeItem {
   return Object.assign(new InterchangeItem(), {
     type: 'unknown',
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     referencedType: 'unknown',
-    referencedEntity: defaultTopLevelEntity(),
+    referencedEntity: newTopLevelEntity(),
     sourceMap: new InterchangeItemSourceMap(),
   });
 }
 
-export const NoInterchangeItem: InterchangeItem = Object.assign(interchangeItemFactory(), {
+export const NoInterchangeItem: InterchangeItem = Object.assign(newInterchangeItem(), {
   metaEdName: 'NoInterchangeItem',
 });
 

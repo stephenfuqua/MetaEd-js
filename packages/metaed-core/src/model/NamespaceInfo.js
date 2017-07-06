@@ -32,11 +32,11 @@ export function defaultNamespaceInfoFields() {
   };
 }
 
-export function namespaceInfoFactory(): NamespaceInfo {
+export function newNamespaceInfo(): NamespaceInfo {
   return Object.assign(new NamespaceInfo(), defaultNamespaceInfoFields());
 }
 
-export const NoNamespaceInfo: NamespaceInfo = Object.assign(namespaceInfoFactory(), {
+export const NoNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
   namespace: 'nonamespaceinfo',
   projectExtension: 'NoNamespaceInfo',
 });

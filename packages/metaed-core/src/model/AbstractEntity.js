@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
 
@@ -12,8 +12,8 @@ export class AbstractEntity extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | AbstractEntitySourceMap;
 }
 
-export function abstractEntityFactory(): AbstractEntity {
-  return Object.assign(new AbstractEntity(), defaultTopLevelEntity(), {
+export function newAbstractEntity(): AbstractEntity {
+  return Object.assign(new AbstractEntity(), newTopLevelEntity(), {
     type: 'domainEntity',
     typeHumanizedName: 'Abstract Entity',
     isAbstract: true,
@@ -21,7 +21,7 @@ export function abstractEntityFactory(): AbstractEntity {
   });
 }
 
-export const NoAbstractEntity: AbstractEntity = Object.assign(abstractEntityFactory(), {
+export const NoAbstractEntity: AbstractEntity = Object.assign(newAbstractEntity(), {
   metaEdName: 'NoAbstractEntity',
 });
 

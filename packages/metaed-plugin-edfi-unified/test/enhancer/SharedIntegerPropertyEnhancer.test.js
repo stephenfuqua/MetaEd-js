@@ -2,11 +2,11 @@
 import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { sharedIntegerPropertyFactory } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
-import { integerTypeFactory } from '../../../../packages/metaed-core/src/model/IntegerType';
+import { newSharedIntegerProperty } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
+import { newIntegerType } from '../../../../packages/metaed-core/src/model/IntegerType';
 import { enhance } from '../../src/enhancer/SharedIntegerPropertyEnhancer';
 import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
-import { sharedShortPropertyFactory } from '../../../../packages/metaed-core/src/model/property/SharedShortProperty';
+import { newSharedShortProperty } from '../../../../packages/metaed-core/src/model/property/SharedShortProperty';
 
 describe('when shared integer property refers to a shared integer', () => {
   const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
@@ -16,11 +16,11 @@ describe('when shared integer property refers to a shared integer', () => {
   const minValue = '1';
 
   beforeAll(() => {
-    const referencedEntity = Object.assign(integerTypeFactory(), {
+    const referencedEntity = Object.assign(newIntegerType(), {
       metaEdName, maxValue, minValue,
     });
 
-    const property = Object.assign(sharedIntegerPropertyFactory(), {
+    const property = Object.assign(newSharedIntegerProperty(), {
       metaEdName,
       referencedEntity,
     });
@@ -44,11 +44,11 @@ describe('when shared short property refers to a shared short', () => {
   const minValue = '1';
 
   beforeAll(() => {
-    const referencedEntity = Object.assign(integerTypeFactory(), {
+    const referencedEntity = Object.assign(newIntegerType(), {
       metaEdName, maxValue, minValue,
     });
 
-    const property = Object.assign(sharedShortPropertyFactory(), {
+    const property = Object.assign(newSharedShortProperty(), {
       metaEdName,
       referencedEntity,
     });

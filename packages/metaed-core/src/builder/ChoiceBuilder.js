@@ -1,14 +1,14 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { choiceFactory } from '../model/Choice';
+import { newChoice } from '../model/Choice';
 import { isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class ChoiceBuilder extends TopLevelEntityBuilder {
   enterChoice(context: MetaEdGrammar.ChoiceContext) {
-    this.enteringEntity(choiceFactory);
+    this.enteringEntity(newChoice);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }

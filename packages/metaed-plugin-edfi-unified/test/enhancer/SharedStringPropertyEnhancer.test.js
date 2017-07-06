@@ -2,7 +2,7 @@
 import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { sharedStringPropertyFactory } from '../../../../packages/metaed-core/src/model/property/SharedStringProperty';
+import { newSharedStringProperty } from '../../../../packages/metaed-core/src/model/property/SharedStringProperty';
 import { stringTypeFactory } from '../../../../packages/metaed-core/src/model/StringType';
 import { enhance } from '../../src/enhancer/SharedStringPropertyEnhancer';
 import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
@@ -19,7 +19,7 @@ describe('when shared string property refers to a shared string', () => {
       metaEdName, maxLength, minLength,
     });
 
-    const property = Object.assign(sharedStringPropertyFactory(), {
+    const property = Object.assign(newSharedStringProperty(), {
       metaEdName,
       referencedEntity,
     });

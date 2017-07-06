@@ -18,7 +18,7 @@ export class SharedDecimal extends SharedSimple {
   sourceMap: SharedSimpleSourceMap | SharedDecimalSourceMap;
 }
 
-export function sharedDecimalFactory(): SharedDecimal {
+export function newSharedDecimal(): SharedDecimal {
   return Object.assign(new SharedDecimal(), defaultSharedSimple(), {
     type: 'sharedDecimal',
     typeHumanizedName: 'Shared Decimal',

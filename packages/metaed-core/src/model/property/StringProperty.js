@@ -14,7 +14,7 @@ export class StringProperty extends SimpleProperty {
   sourceMap: EntityPropertySourceMap | SimplePropertySourceMap | StringPropertySourceMap;
 }
 
-export function stringPropertyFactory(): StringProperty {
+export function newStringProperty(): StringProperty {
   return Object.assign(new StringProperty(), defaultSimpleProperty(), {
     type: 'string',
     minLength: null,

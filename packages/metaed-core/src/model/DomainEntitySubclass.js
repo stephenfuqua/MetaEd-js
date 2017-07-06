@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
 export class DomainEntitySubclassSourceMap extends TopLevelEntitySourceMap {}
@@ -8,8 +8,8 @@ export class DomainEntitySubclass extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | DomainEntitySubclassSourceMap;
 }
 
-export function domainEntitySubclassFactory(): DomainEntitySubclass {
-  return Object.assign(new DomainEntitySubclass(), defaultTopLevelEntity(), {
+export function newDomainEntitySubclass(): DomainEntitySubclass {
+  return Object.assign(new DomainEntitySubclass(), newTopLevelEntity(), {
     type: 'domainEntitySubclass',
     typeHumanizedName: 'Domain Entity Subclass',
     sourceMap: new DomainEntitySubclassSourceMap(),

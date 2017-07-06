@@ -2,8 +2,8 @@
 import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { domainEntityFactory } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { domainEntityPropertyFactory } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
+import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
+import { newDomainEntityProperty } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
 import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
 import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
 import { enhance } from '../../src/enhancer/PropertyPathNameEnhancer';
@@ -14,12 +14,12 @@ describe('when enhancing entity property without with context', () => {
   const propertyName: string = 'PropertyName';
 
   beforeAll(() => {
-    const property = Object.assign(domainEntityPropertyFactory(), {
+    const property = Object.assign(newDomainEntityProperty(), {
       metaEdName: propertyName,
       parentEntityName,
     });
 
-    const parentEntity = Object.assign(domainEntityFactory(), {
+    const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
@@ -43,13 +43,13 @@ describe('when enhancing entity property with a with context', () => {
   const withContext: string = 'WithContext';
 
   beforeAll(() => {
-    const property = Object.assign(domainEntityPropertyFactory(), {
+    const property = Object.assign(newDomainEntityProperty(), {
       metaEdName: propertyName,
       parentEntityName,
       withContext,
     });
 
-    const parentEntity = Object.assign(domainEntityFactory(), {
+    const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
@@ -73,13 +73,13 @@ describe('when enhancing entity property with identical with context', () => {
   const withContext: string = propertyName;
 
   beforeAll(() => {
-    const property = Object.assign(domainEntityPropertyFactory(), {
+    const property = Object.assign(newDomainEntityProperty(), {
       metaEdName: propertyName,
       parentEntityName,
       withContext,
     });
 
-    const parentEntity = Object.assign(domainEntityFactory(), {
+    const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
     });

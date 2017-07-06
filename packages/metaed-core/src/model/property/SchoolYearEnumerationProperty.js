@@ -1,5 +1,5 @@
 // @flow
-import { ReferentialProperty, ReferentialPropertySourceMap, defaultReferentialProperty } from './ReferentialProperty';
+import { ReferentialProperty, ReferentialPropertySourceMap, newReferentialProperty } from './ReferentialProperty';
 import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class SchoolYearEnumerationPropertySourceMap extends ReferentialPropertySourceMap {}
@@ -8,8 +8,8 @@ export class SchoolYearEnumerationProperty extends ReferentialProperty {
   sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap | SchoolYearEnumerationPropertySourceMap;
 }
 
-export function schoolYearEnumerationPropertyFactory(): SchoolYearEnumerationProperty {
-  return Object.assign(new SchoolYearEnumerationProperty(), defaultReferentialProperty(), {
+export function newSchoolYearEnumerationProperty(): SchoolYearEnumerationProperty {
+  return Object.assign(new SchoolYearEnumerationProperty(), newReferentialProperty(), {
     type: 'schoolYearEnumeration',
     sourceMap: new SchoolYearEnumerationPropertySourceMap(),
   });

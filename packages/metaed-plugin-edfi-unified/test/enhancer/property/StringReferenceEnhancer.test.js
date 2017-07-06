@@ -2,9 +2,9 @@
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { StringProperty } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
-import { stringPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
+import { newStringProperty } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
 import type { SharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
-import { sharedStringPropertyFactory } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
+import { newSharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
 import type { StringType } from '../../../../../packages/metaed-core/src/model/StringType';
 import { stringTypeFactory } from '../../../../../packages/metaed-core/src/model/StringType';
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
@@ -18,7 +18,7 @@ describe('when enhancing string property', () => {
   let referencedEntity: StringType;
 
   beforeAll(() => {
-    property = Object.assign(stringPropertyFactory(), {
+    property = Object.assign(newStringProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });
@@ -46,7 +46,7 @@ describe('when enhancing shared string property', () => {
   let referencedEntity: StringType;
 
   beforeAll(() => {
-    property = Object.assign(sharedStringPropertyFactory(), {
+    property = Object.assign(newSharedStringProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });

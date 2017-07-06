@@ -1,14 +1,14 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import TopLevelEntityBuilder from './TopLevelEntityBuilder';
-import { commonFactory, inlineCommonFactory } from '../model/Common';
+import { newCommon, newInlineCommon } from '../model/Common';
 import { isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 
 export default class CommonBuilder extends TopLevelEntityBuilder {
   enterCommon(context: MetaEdGrammar.CommonContext) {
-    this.enteringEntity(commonFactory);
+    this.enteringEntity(newCommon);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }
@@ -27,7 +27,7 @@ export default class CommonBuilder extends TopLevelEntityBuilder {
   }
 
   enterInlineCommon(context: MetaEdGrammar.InlineCommonContext) {
-    this.enteringEntity(inlineCommonFactory);
+    this.enteringEntity(newInlineCommon);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
     }

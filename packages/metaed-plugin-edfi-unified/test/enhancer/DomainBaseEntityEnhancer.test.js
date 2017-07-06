@@ -2,18 +2,18 @@
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { Domain } from '../../../../packages/metaed-core/src/model/Domain';
-import { domainFactory } from '../../../../packages/metaed-core/src/model/Domain';
+import { newDomain } from '../../../../packages/metaed-core/src/model/Domain';
 import type { Subdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { subdomainFactory } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { domainItemFactory } from '../../../../packages/metaed-core/src/model/DomainItem';
+import { newSubdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
+import { newDomainItem } from '../../../../packages/metaed-core/src/model/DomainItem';
 import type { DomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { domainEntityFactory } from '../../../../packages/metaed-core/src/model/DomainEntity';
+import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
 import type { DomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { domainEntitySubclassFactory } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
+import { newDomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
 import type { Association } from '../../../../packages/metaed-core/src/model/Association';
-import { associationFactory } from '../../../../packages/metaed-core/src/model/Association';
+import { newAssociation } from '../../../../packages/metaed-core/src/model/Association';
 import type { AssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { associationSubclassFactory } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
+import { newAssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
 import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
 
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';
@@ -33,22 +33,22 @@ describe('when enhancing domain', () => {
   const associationSubclass1MetaEdName = 'AssociationSubclass1Name';
   const associationSubclass2MetaEdName = 'AssociationSubclass2Name';
 
-  const domainEntity1: DomainEntity = Object.assign(domainEntityFactory(), { metaEdName: domainEntity1MetaEdName });
-  const domainEntity2: DomainEntity = Object.assign(domainEntityFactory(), { metaEdName: domainEntity2MetaEdName });
+  const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity1MetaEdName });
+  const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity2MetaEdName });
 
-  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(domainEntitySubclassFactory(), { metaEdName: domainEntitySubclass1MetaEdName });
-  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(domainEntitySubclassFactory(), { metaEdName: domainEntitySubclass2MetaEdName });
+  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass1MetaEdName });
+  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass2MetaEdName });
 
-  const association1: Association = Object.assign(associationFactory(), { metaEdName: association1MetaEdName });
-  const association2: Association = Object.assign(associationFactory(), { metaEdName: association2MetaEdName });
+  const association1: Association = Object.assign(newAssociation(), { metaEdName: association1MetaEdName });
+  const association2: Association = Object.assign(newAssociation(), { metaEdName: association2MetaEdName });
 
-  const associationSubclass1: AssociationSubclass = Object.assign(associationSubclassFactory(), { metaEdName: associationSubclass1MetaEdName });
-  const associationSubclass2: AssociationSubclass = Object.assign(associationSubclassFactory(), { metaEdName: associationSubclass2MetaEdName });
+  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass1MetaEdName });
+  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass2MetaEdName });
 
   const domainMetaEdName = 'domainMetaEdName';
 
   beforeAll(() => {
-    const domain: Domain = Object.assign(domainFactory(), { metaEdName: domainMetaEdName });
+    const domain: Domain = Object.assign(newDomain(), { metaEdName: domainMetaEdName });
     addEntity(metaEd.entity, domain);
     addEntity(metaEd.entity, domainEntity1);
     addEntity(metaEd.entity, domainEntity2);
@@ -59,14 +59,14 @@ describe('when enhancing domain', () => {
     addEntity(metaEd.entity, associationSubclass1);
     addEntity(metaEd.entity, associationSubclass2);
 
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntity1MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntity2MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntitySubclass1MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntitySubclass2MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: association1MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: association2MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: associationSubclass1MetaEdName }));
-    domain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: associationSubclass2MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass1MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass2MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association1MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association2MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass1MetaEdName }));
+    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass2MetaEdName }));
 
     enhance(metaEd);
   });
@@ -111,22 +111,22 @@ describe('when enhancing subdomain', () => {
   const associationSubclass1MetaEdName = 'AssociationSubclass1Name';
   const associationSubclass2MetaEdName = 'AssociationSubclass2Name';
 
-  const domainEntity1: DomainEntity = Object.assign(domainEntityFactory(), { metaEdName: domainEntity1MetaEdName });
-  const domainEntity2: DomainEntity = Object.assign(domainEntityFactory(), { metaEdName: domainEntity2MetaEdName });
+  const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity1MetaEdName });
+  const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity2MetaEdName });
 
-  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(domainEntitySubclassFactory(), { metaEdName: domainEntitySubclass1MetaEdName });
-  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(domainEntitySubclassFactory(), { metaEdName: domainEntitySubclass2MetaEdName });
+  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass1MetaEdName });
+  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass2MetaEdName });
 
-  const association1: Association = Object.assign(associationFactory(), { metaEdName: association1MetaEdName });
-  const association2: Association = Object.assign(associationFactory(), { metaEdName: association2MetaEdName });
+  const association1: Association = Object.assign(newAssociation(), { metaEdName: association1MetaEdName });
+  const association2: Association = Object.assign(newAssociation(), { metaEdName: association2MetaEdName });
 
-  const associationSubclass1: AssociationSubclass = Object.assign(associationSubclassFactory(), { metaEdName: associationSubclass1MetaEdName });
-  const associationSubclass2: AssociationSubclass = Object.assign(associationSubclassFactory(), { metaEdName: associationSubclass2MetaEdName });
+  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass1MetaEdName });
+  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass2MetaEdName });
 
   const subdomainMetaEdName = 'domainMetaEdName';
 
   beforeAll(() => {
-    const subdomain: Subdomain = Object.assign(subdomainFactory(), { metaEdName: subdomainMetaEdName });
+    const subdomain: Subdomain = Object.assign(newSubdomain(), { metaEdName: subdomainMetaEdName });
     addEntity(metaEd.entity, subdomain);
     addEntity(metaEd.entity, domainEntity1);
     addEntity(metaEd.entity, domainEntity2);
@@ -137,14 +137,14 @@ describe('when enhancing subdomain', () => {
     addEntity(metaEd.entity, associationSubclass1);
     addEntity(metaEd.entity, associationSubclass2);
 
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntity1MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntity2MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntitySubclass1MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: domainEntitySubclass2MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: association1MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: association2MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: associationSubclass1MetaEdName }));
-    subdomain.domainItems.push(Object.assign(domainItemFactory(), { metaEdName: associationSubclass2MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass1MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass2MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association1MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association2MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass1MetaEdName }));
+    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass2MetaEdName }));
 
     enhance(metaEd);
   });

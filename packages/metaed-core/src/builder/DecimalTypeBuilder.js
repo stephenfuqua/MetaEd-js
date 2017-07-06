@@ -3,12 +3,12 @@ import type { DecimalType } from '../model/DecimalType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import { decimalTypeFactory, NoDecimalType } from '../model/DecimalType';
+import { newDecimalType, NoDecimalType } from '../model/DecimalType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
-import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
 // Note DecimalType is XSD specific with the advent of SharedDecimal, and creation should be move to XSD enhancers
@@ -28,7 +28,7 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -57,7 +57,7 @@ export default class DecimalTypeBuilder extends MetaEdGrammarListener {
 
   enteringDecimalType(context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext, generatedSimpleType: boolean = false) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentDecimalType = Object.assign(decimalTypeFactory(), {
+    this.currentDecimalType = Object.assign(newDecimalType(), {
       namespaceInfo: this.namespaceInfo,
       generatedSimpleType,
     });

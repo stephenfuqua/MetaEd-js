@@ -3,12 +3,12 @@ import type { IntegerType } from '../model/IntegerType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import { integerTypeFactory, shortTypeFactory, NoIntegerType } from '../model/IntegerType';
+import { newIntegerType, newShortType, NoIntegerType } from '../model/IntegerType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
-import { namespaceInfoFactory, NoNamespaceInfo } from '../model/NamespaceInfo';
+import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
 // Note IntegerType is XSD specific with the advent of SharedInteger and SharedShort, and creation should be move to XSD enhancers
@@ -28,7 +28,7 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
 
   enterNamespace(context: MetaEdGrammar.NamespaceContext) {
     if (this.namespaceInfo !== NoNamespaceInfo) return;
-    this.namespaceInfo = namespaceInfoFactory();
+    this.namespaceInfo = newNamespaceInfo();
     this.namespaceInfo.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -69,7 +69,7 @@ export default class IntegerTypeBuilder extends MetaEdGrammarListener {
     MetaEdGrammar.ShortPropertyContext,
     { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean }) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    const factory = isShort ? shortTypeFactory : integerTypeFactory;
+    const factory = isShort ? newShortType : newIntegerType;
     this.currentIntegerType = Object.assign(factory(), {
       namespaceInfo: this.namespaceInfo,
       generatedSimpleType,

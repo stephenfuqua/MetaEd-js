@@ -2,8 +2,8 @@
 import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { sharedDecimalPropertyFactory } from '../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
-import { decimalTypeFactory } from '../../../../packages/metaed-core/src/model/DecimalType';
+import { newSharedDecimalProperty } from '../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
+import { newDecimalType } from '../../../../packages/metaed-core/src/model/DecimalType';
 import { enhance } from '../../src/enhancer/SharedDecimalPropertyEnhancer';
 import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
 
@@ -17,11 +17,11 @@ describe('when shared decimal property refers to a shared decimal', () => {
   const minValue = '1';
 
   beforeAll(() => {
-    const referencedEntity = Object.assign(decimalTypeFactory(), {
+    const referencedEntity = Object.assign(newDecimalType(), {
       metaEdName, totalDigits, decimalPlaces, maxValue, minValue,
     });
 
-    const property = Object.assign(sharedDecimalPropertyFactory(), {
+    const property = Object.assign(newSharedDecimalProperty(), {
       metaEdName,
       referencedEntity,
     });

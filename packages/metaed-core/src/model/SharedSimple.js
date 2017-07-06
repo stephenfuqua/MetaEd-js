@@ -1,5 +1,5 @@
 // @flow
-import { namespaceInfoFactory } from './NamespaceInfo';
+import { newNamespaceInfo } from './NamespaceInfo';
 import { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
 
@@ -23,7 +23,7 @@ export function defaultSharedSimple(): SharedSimple {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: namespaceInfoFactory(),
+    namespaceInfo: newNamespaceInfo(),
     sourceMap: new SharedSimpleSourceMap(),
   });
 }

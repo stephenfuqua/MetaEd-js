@@ -2,10 +2,10 @@
 import R from 'ramda';
 import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { domainEntityFactory } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { domainEntityPropertyFactory } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
-import { integerTypeFactory } from '../../../../packages/metaed-core/src/model/IntegerType';
-import { sharedIntegerPropertyFactory } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
+import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
+import { newDomainEntityProperty } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
+import { newIntegerType } from '../../../../packages/metaed-core/src/model/IntegerType';
+import { newSharedIntegerProperty } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
 import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
 import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
 import { enhance } from '../../src/enhancer/InheritedDocumentationCopyingEnhancer';
@@ -17,19 +17,19 @@ describe('when enhancing shared integer property with inherited documentation', 
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
-    const referencedEntity = Object.assign(integerTypeFactory(), {
+    const referencedEntity = Object.assign(newIntegerType(), {
       metaEdName: referencedEntityName,
       documentation: referencedEntityDocumentation,
     });
 
-    const property = Object.assign(sharedIntegerPropertyFactory(), {
+    const property = Object.assign(newSharedIntegerProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
       referencedEntity,
       documentationInherited: true,
     });
 
-    const parentEntity = Object.assign(domainEntityFactory(), {
+    const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
     });
@@ -54,19 +54,19 @@ describe('when enhancing domain entity property with inherited documentation', (
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
-    const referencedEntity = Object.assign(domainEntityFactory(), {
+    const referencedEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName,
       documentation: referencedEntityDocumentation,
     });
 
-    const property = Object.assign(domainEntityPropertyFactory(), {
+    const property = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
       referencedEntity,
       documentationInherited: true,
     });
 
-    const parentEntity = Object.assign(domainEntityFactory(), {
+    const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
     });

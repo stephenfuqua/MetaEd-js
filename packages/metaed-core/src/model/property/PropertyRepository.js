@@ -53,7 +53,7 @@ export class PropertyIndex {
 }
 
 
-export function propertyIndexFactory(): PropertyIndex {
+export function newPropertyIndex(): PropertyIndex {
   return Object.assign(new PropertyIndex(), {
     association: [],
     boolean: [],

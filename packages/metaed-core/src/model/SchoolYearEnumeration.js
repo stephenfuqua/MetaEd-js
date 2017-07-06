@@ -1,12 +1,12 @@
 // @flow
-import { defaultTopLevelEntity } from './TopLevelEntity';
+import { newTopLevelEntity } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 import { Enumeration, EnumerationSourceMap } from './Enumeration';
 
 export class SchoolYearEnumeration extends Enumeration {}
 
-export function schoolYearEnumerationFactory(): SchoolYearEnumeration {
-  return Object.assign(new SchoolYearEnumeration(), defaultTopLevelEntity(), {
+export function newSchoolYearEnumeration(): SchoolYearEnumeration {
+  return Object.assign(new SchoolYearEnumeration(), newTopLevelEntity(), {
     type: 'schoolYearEnumeration',
     typeHumanizedName: 'Enumeration',
     enumerationItems: [],

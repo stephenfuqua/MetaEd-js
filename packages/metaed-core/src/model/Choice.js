@@ -1,5 +1,5 @@
 // @flow
-import { TopLevelEntity, TopLevelEntitySourceMap, defaultTopLevelEntity } from './TopLevelEntity';
+import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
 export class ChoiceSourceMap extends TopLevelEntitySourceMap {}
@@ -8,8 +8,8 @@ export class Choice extends TopLevelEntity {
   sourceMap: TopLevelEntitySourceMap | ChoiceSourceMap;
 }
 
-export function choiceFactory(): Choice {
-  return Object.assign(new Choice(), defaultTopLevelEntity(), {
+export function newChoice(): Choice {
+  return Object.assign(new Choice(), newTopLevelEntity(), {
     type: 'choice',
     typeHumanizedName: 'Choice',
     sourceMap: new ChoiceSourceMap(),
