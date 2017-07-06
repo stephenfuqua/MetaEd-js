@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when interchange extension elements duplicates multiple names in base interchange should have validation failure -> message 1`] = `"Interchange additions InterchangeName redeclares property DomainEntityElementName1 of base Interchange."`;
+
+exports[`when interchange extension elements duplicates multiple names in base interchange should have validation failure -> message 2`] = `"Interchange additions InterchangeName redeclares property DomainEntityElementName2 of base Interchange."`;
+
+exports[`when interchange extension elements duplicates multiple names in base interchange should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 10,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when interchange extension elements duplicates multiple names in base interchange should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 4,
+  "line": 11,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when validating interchange extension elements duplicates names in base interchange should have validation failure -> message 1`] = `"Interchange additions InterchangeName redeclares property DomainEntityElementName of base Interchange."`;
+
+exports[`when validating interchange extension elements duplicates names in base interchange should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 9,
+  "tokenText": "domain entity",
+}
+`;

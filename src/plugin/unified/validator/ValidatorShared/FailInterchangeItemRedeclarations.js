@@ -21,7 +21,7 @@ export function failInterchangeItemRedeclarations(
       validatorName,
       category: 'error',
       message: `Interchange ${entity.metaEdName} redeclares ${duplicateItemName} ${duplicate}.`,
-      sourceMap: interchangeItem.sourceMap.type,
+      sourceMap: interchangeItem.sourceMap.metaEdName,
       fileMap: null,
     });
   });

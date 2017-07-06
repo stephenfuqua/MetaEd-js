@@ -23,7 +23,7 @@ const validTypeNames: string = [
 export function failInterchangeItemNotMatchingBaseClassProperty(
   validatorName: string,
   entity: EntityRepository,
-  interchangeItemType: string,
+  interchangeItemType: 'elements' | 'identityTemplates',
   messagePrefix: string,
   failures: Array<ValidationFailure>) {
   entity.interchange.forEach(interchange => {
