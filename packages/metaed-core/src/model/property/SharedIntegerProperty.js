@@ -1,11 +1,11 @@
 // @flow
-import { IntegerProperty, newIntegerCommonProperty } from './IntegerProperty';
+import { IntegerProperty, newIntegerProperty } from './IntegerProperty';
 import type { EntityProperty } from './EntityProperty';
 
 export class SharedIntegerProperty extends IntegerProperty {}
 
 export function newSharedIntegerProperty(): SharedIntegerProperty {
-  return Object.assign(new SharedIntegerProperty(), newIntegerCommonProperty(), {
+  return Object.assign(new SharedIntegerProperty(), newIntegerProperty(), {
     type: 'sharedInteger',
   });
 }

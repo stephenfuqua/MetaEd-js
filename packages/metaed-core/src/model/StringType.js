@@ -20,7 +20,7 @@ export class StringType extends ModelBase {
   sourceMap: StringTypeSourceMap;
 }
 
-export function stringTypeFactory(): StringType {
+export function newStringType(): StringType {
   return Object.assign(new StringType(), {
     type: 'stringType',
     documentation: '',
@@ -35,7 +35,7 @@ export function stringTypeFactory(): StringType {
   });
 }
 
-export const NoStringType: StringType = Object.assign(stringTypeFactory(), {
+export const NoStringType: StringType = Object.assign(newStringType(), {
   metaEdName: 'NoStringType',
 });
 

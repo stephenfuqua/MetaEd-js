@@ -1,5 +1,5 @@
 // @flow
-import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import { SimpleProperty, SimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { SourceMap } from './../SourceMap';
 import type { EntityProperty, EntityPropertySourceMap } from './EntityProperty';
 
@@ -19,7 +19,7 @@ export class DecimalProperty extends SimpleProperty {
 }
 
 export function newDecimalProperty(): DecimalProperty {
-  return Object.assign(new DecimalProperty(), defaultSimpleProperty(), {
+  return Object.assign(new DecimalProperty(), newSimpleProperty(), {
     type: 'decimal',
     minValue: null,
     maxValue: null,

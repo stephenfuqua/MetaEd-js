@@ -3,7 +3,7 @@ import type { StringType } from '../model/StringType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { NamespaceInfo } from '../model/NamespaceInfo';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import { stringTypeFactory, NoStringType } from '../model/StringType';
+import { newStringType, NoStringType } from '../model/StringType';
 import { enteringNamespaceName, enteringNamespaceType } from './NamespaceInfoBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
@@ -57,7 +57,7 @@ export default class StringTypeBuilder extends MetaEdGrammarListener {
 
   enteringStringType(context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext, generatedSimpleType: boolean = false) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
-    this.currentStringType = Object.assign(stringTypeFactory(), {
+    this.currentStringType = Object.assign(newStringType(), {
       namespaceInfo: this.namespaceInfo,
       generatedSimpleType,
     });

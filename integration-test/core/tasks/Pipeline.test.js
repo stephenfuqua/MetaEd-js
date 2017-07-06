@@ -3,7 +3,7 @@ import normalize from 'normalize-path';
 import MetaEdTextBuilder from '../../../packages/metaed-core/test/MetaEdTextBuilder';
 import { startingFromFileLoad, startingFromFileLoadP } from '../../../packages/metaed-core/src/task/Pipeline';
 import type { State } from '../../../packages/metaed-core/src/State';
-import { defaultStateFactory } from '../../../packages/metaed-core/src/State';
+import { newState } from '../../../packages/metaed-core/src/State';
 import { createMetaEdFile } from '../../../packages/metaed-core/src/task/MetaEdFile';
 import { loadCoreBufferedFiles } from '../../../packages/metaed-core/src/task/BufferFileLoader';
 
@@ -19,7 +19,7 @@ describe('When a single file', () => {
   let state: State;
 
   beforeEach(() => {
-    state = loadCoreBufferedFiles(defaultStateFactory(), [createMetaEdFile('/fake/dir', 'DomainEntity.metaed', metaEdText)]);
+    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity.metaed', metaEdText)]);
   });
 
   it('Should parse and validate without errors', () => {
@@ -55,7 +55,7 @@ describe('When files have duplicate entity names', () => {
   let state: State;
 
   beforeEach(() => {
-    state = loadCoreBufferedFiles(defaultStateFactory(), [
+    state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdText1),
       createMetaEdFile('/fake/dir', 'DomainEntity1Also.metaed', metaEdText2),
     ]);
@@ -122,7 +122,7 @@ describe('When multiple files', () => {
   let state: State;
 
   beforeEach(() => {
-    state = loadCoreBufferedFiles(defaultStateFactory(), [
+    state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdTextDomainEntity1),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),

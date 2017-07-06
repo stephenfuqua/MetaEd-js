@@ -38,7 +38,7 @@ export type State = {
   pluginManifest: Array<PluginManifest>,
 };
 
-export const defaultStateFactory: () => State = () =>
+export const newState: () => State = () =>
   ({
     validationFailure: [],
     inputDirectories: [],

@@ -16,13 +16,13 @@ export class SimpleProperty extends EntityProperty {
   referencedEntity: DecimalType | IntegerType | StringType;
 }
 
-export function defaultSimplePropertyFields() {
+export function newSimplePropertyFields() {
   return Object.assign({}, newEntityPropertyFields(), {
     // default referencedEntity
     referencedEntity: newDecimalType(),
   });
 }
 
-export function defaultSimpleProperty(): SimpleProperty {
-  return Object.assign(new SimpleProperty(), defaultSimplePropertyFields());
+export function newSimpleProperty(): SimpleProperty {
+  return Object.assign(new SimpleProperty(), newSimplePropertyFields());
 }

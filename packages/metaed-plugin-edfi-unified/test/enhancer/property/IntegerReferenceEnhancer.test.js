@@ -2,7 +2,7 @@
 import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { IntegerProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
-import { newIntegerCommonProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
+import { newIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
 import type { SharedIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
 import { newSharedIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
 import type { IntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
@@ -18,7 +18,7 @@ describe('when enhancing integer property', () => {
   let referencedEntity: IntegerType;
 
   beforeAll(() => {
-    property = Object.assign(newIntegerCommonProperty(), {
+    property = Object.assign(newIntegerProperty(), {
       metaEdName: referencedEntityName,
       parentEntityName,
     });

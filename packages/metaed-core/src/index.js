@@ -2,7 +2,7 @@
 export { startingFromFileLoadP } from './task/Pipeline';
 export { createMetaEdFile } from './task/MetaEdFile';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './task/BufferFileLoader';
-export { defaultStateFactory } from './State';
+export { newState } from './State';
 
 
 // Flow types
@@ -82,7 +82,61 @@ export type { StringType } from './model/StringType';
 export type { Subdomain } from './model/Subdomain';
 export type { TopLevelEntity } from './model/TopLevelEntity';
 
+
 // Factories
-
 export { newAssociationProperty } from './model/property/AssociationProperty';
+export { newBooleanProperty } from './model/property/BooleanProperty';
+export { newChoiceProperty } from './model/property/ChoiceProperty';
+export { newCommonProperty } from './model/property/CommonProperty';
+export { newCurrencyProperty } from './model/property/CurrencyProperty';
+export { newDateProperty } from './model/property/DateProperty';
+export { newDecimalProperty } from './model/property/DecimalProperty';
+export { newDescriptorProperty } from './model/property/DescriptorProperty';
+export { newDomainEntityProperty } from './model/property/DomainEntityProperty';
+export { newDurationProperty } from './model/property/DurationProperty';
+export { newEnumerationProperty } from './model/property/EnumerationProperty';
+export { newInlineCommonProperty } from './model/property/InlineCommonProperty';
+export { newIntegerProperty } from './model/property/IntegerProperty';
+export { newMergedProperty } from './model/property/MergedProperty';
+export { newPercentProperty } from './model/property/PercentProperty';
+export { newSchoolYearEnumerationProperty } from './model/property/SchoolYearEnumerationProperty';
+export { newSharedDecimalProperty } from './model/property/SharedDecimalProperty';
+export { newSharedIntegerProperty } from './model/property/SharedIntegerProperty';
+export { newSharedShortProperty } from './model/property/SharedShortProperty';
+export { newSharedStringProperty } from './model/property/SharedStringProperty';
+export { newShortProperty } from './model/property/ShortProperty';
+export { newSimpleProperty } from './model/property/SimpleProperty';
+export { newStringProperty } from './model/property/StringProperty';
+export { newTimeProperty } from './model/property/TimeProperty';
+export { newYearProperty } from './model/property/YearProperty';
 
+export { newAbstractEntity } from './model/AbstractEntity';
+export { newAssociation } from './model/Association';
+export { newAssociationExtension } from './model/AssociationExtension';
+export { newAssociationSubclass } from './model/AssociationSubclass';
+export { newChoice } from './model/Choice';
+export { newCommon } from './model/Common';
+export { newCommonExtension } from './model/CommonExtension';
+export { newDecimalType } from './model/DecimalType';
+export { newDescriptor } from './model/Descriptor';
+export { newDomain } from './model/Domain';
+export { newDomainEntity } from './model/DomainEntity';
+export { newDomainEntityExtension } from './model/DomainEntityExtension';
+export { newDomainEntitySubclass } from './model/DomainEntitySubclass';
+export { newDomainItem } from './model/DomainItem';
+export { newEnumeration } from './model/Enumeration';
+export { newEnumerationItem } from './model/EnumerationItem';
+export { newIntegerType } from './model/IntegerType';
+export { newInterchange } from './model/Interchange';
+export { newInterchangeExtension } from './model/InterchangeExtension';
+export { newInterchangeItem } from './model/InterchangeItem';
+export { newMapTypeEnumeration } from './model/MapTypeEnumeration';
+export { newNamespaceInfo } from './model/NamespaceInfo';
+export { newSchoolYearEnumeration } from './model/SchoolYearEnumeration';
+export { newSharedDecimal } from './model/SharedDecimal';
+export { newSharedInteger } from './model/SharedInteger';
+export { newSharedString } from './model/SharedString';
+export { newSourceMap } from './model/SourceMap';
+export { newStringType } from './model/StringType';
+export { newSubdomain } from './model/Subdomain';
+export { newTopLevelEntity } from './model/TopLevelEntity';

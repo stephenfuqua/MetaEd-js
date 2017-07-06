@@ -1,5 +1,5 @@
 // @flow
-import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import { SimpleProperty, SimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class PercentPropertySourceMap extends SimplePropertySourceMap {}
@@ -9,7 +9,7 @@ export class PercentProperty extends SimpleProperty {
 }
 
 export function newPercentProperty(): PercentProperty {
-  return Object.assign(new PercentProperty(), defaultSimpleProperty(), {
+  return Object.assign(new PercentProperty(), newSimpleProperty(), {
     type: 'percent',
     sourceMap: new PercentPropertySourceMap(),
   });

@@ -2,7 +2,7 @@
 import mockfs from 'mock-fs';
 import MetaEdTextBuilder from '../../../packages/metaed-core/test/MetaEdTextBuilder';
 import loadFiles from '../../../packages/metaed-core/src/task/FileSystemFilenameLoader';
-import { defaultStateFactory } from '../../../packages/metaed-core/src/State';
+import { newState } from '../../../packages/metaed-core/src/State';
 
 describe('When a single file', () => {
   beforeAll(() => {
@@ -25,7 +25,7 @@ describe('When a single file', () => {
   });
 
   it('Should load the file contents', () => {
-    const newState = loadFiles(Object.assign(defaultStateFactory(),
+    const newState = loadFiles(Object.assign(newState(),
       {
         inputDirectories: [{
           path: '/fake/dir',
@@ -77,7 +77,7 @@ describe('When multiple files', () => {
   });
 
   it('Should load the file contents', () => {
-    const newState = loadFiles(Object.assign(defaultStateFactory(),
+    const newState = loadFiles(Object.assign(newState(),
       {
         inputDirectories: [{
           path: '/fake/dir',

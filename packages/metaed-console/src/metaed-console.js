@@ -1,7 +1,7 @@
 // @flow
 import winston from 'winston';
 import { startingFromFileLoad } from '../../metaed-core/src/task/Pipeline';
-import { defaultStateFactory } from '../../metaed-core/src/State';
+import { newState } from '../../metaed-core/src/State';
 import type { State } from '../../metaed-core/src/State';
 
 const argv = require('yargs')
@@ -22,7 +22,7 @@ winston.level = 'info';
 winston.info(`Executing MetaEd Console on core ${argv.edfi} and extension ${argv.ext}.`);
 winston.info('');
 
-const state: State = Object.assign(defaultStateFactory(), {
+const state: State = Object.assign(newState(), {
   inputDirectories: [
     {
       path: argv.edfi,

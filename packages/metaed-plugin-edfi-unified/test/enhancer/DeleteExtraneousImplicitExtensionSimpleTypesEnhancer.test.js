@@ -3,7 +3,7 @@ import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/M
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
 import type { NamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
 import { newNamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
-import { stringTypeFactory } from '../../../../packages/metaed-core/src/model/StringType';
+import { newStringType } from '../../../../packages/metaed-core/src/model/StringType';
 import { enhance } from '../../src/enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
 describe('when there are duplicate string types', () => {
@@ -15,13 +15,13 @@ describe('when there are duplicate string types', () => {
   const extensionNamespaceInfo : NamespaceInfo = Object.assign(newNamespaceInfo(), { isExtension: true, projectExtension: 'extension' });
 
   beforeAll(() => {
-    metaEd.entity.stringType.set(coreOnlySimpleTypeName, Object.assign(stringTypeFactory(), { metaEdName: coreOnlySimpleTypeName }));
-    metaEd.entity.stringType.set(coreDuplicatedSimpleTypeName, Object.assign(stringTypeFactory(), { metaEdName: coreDuplicatedSimpleTypeName }));
-    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`, Object.assign(stringTypeFactory(), {
+    metaEd.entity.stringType.set(coreOnlySimpleTypeName, Object.assign(newStringType(), { metaEdName: coreOnlySimpleTypeName }));
+    metaEd.entity.stringType.set(coreDuplicatedSimpleTypeName, Object.assign(newStringType(), { metaEdName: coreDuplicatedSimpleTypeName }));
+    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`, Object.assign(newStringType(), {
       metaEdName: coreDuplicatedSimpleTypeName,
       namespaceInfo: extensionNamespaceInfo,
     }));
-    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`, Object.assign(stringTypeFactory(), {
+    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`, Object.assign(newStringType(), {
       metaEdName: extensionOnlySimpleTypeName,
       namespaceInfo: extensionNamespaceInfo,
     }));

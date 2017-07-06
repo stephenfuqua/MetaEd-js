@@ -1,5 +1,5 @@
 // @flow
-import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import { SimpleProperty, SimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class YearPropertySourceMap extends SimplePropertySourceMap {}
@@ -9,7 +9,7 @@ export class YearProperty extends SimpleProperty {
 }
 
 export function newYearProperty(): YearProperty {
-  return Object.assign(new YearProperty(), defaultSimpleProperty(), {
+  return Object.assign(new YearProperty(), newSimpleProperty(), {
     type: 'year',
     sourceMap: new YearPropertySourceMap(),
   });

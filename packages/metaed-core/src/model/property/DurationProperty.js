@@ -1,5 +1,5 @@
 // @flow
-import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import { SimpleProperty, SimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
 export class DurationPropertySourceMap extends SimplePropertySourceMap {}
@@ -9,7 +9,7 @@ export class DurationProperty extends SimpleProperty {
 }
 
 export function newDurationProperty(): DurationProperty {
-  return Object.assign(new DurationProperty(), defaultSimpleProperty(), {
+  return Object.assign(new DurationProperty(), newSimpleProperty(), {
     type: 'duration',
     sourceMap: new DurationPropertySourceMap(),
   });

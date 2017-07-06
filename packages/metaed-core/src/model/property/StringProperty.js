@@ -1,5 +1,5 @@
 // @flow
-import { SimpleProperty, SimplePropertySourceMap, defaultSimpleProperty } from './SimpleProperty';
+import { SimpleProperty, SimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { SourceMap } from './../SourceMap';
 import type { EntityPropertySourceMap, EntityProperty } from './EntityProperty';
 
@@ -15,7 +15,7 @@ export class StringProperty extends SimpleProperty {
 }
 
 export function newStringProperty(): StringProperty {
-  return Object.assign(new StringProperty(), defaultSimpleProperty(), {
+  return Object.assign(new StringProperty(), newSimpleProperty(), {
     type: 'string',
     minLength: null,
     maxLength: null,

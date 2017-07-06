@@ -23,7 +23,7 @@ import { CommonProperty, newCommonProperty } from '../model/property/CommonPrope
 import type { CommonPropertySourceMap } from '../model/property/CommonProperty';
 import { newInlineCommonProperty } from '../model/property/InlineCommonProperty';
 import { newChoiceProperty } from '../model/property/ChoiceProperty';
-import { IntegerProperty, newIntegerCommonProperty, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
+import { IntegerProperty, newIntegerProperty, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
 import { newPercentProperty } from '../model/property/PercentProperty';
 import { AssociationProperty, newAssociationProperty, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
 import { DomainEntityProperty, newDomainEntityProperty, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
@@ -219,7 +219,7 @@ export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterIntegerProperty(context: MetaEdGrammar.IntegerPropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    this.currentProperty = newIntegerCommonProperty();
+    this.currentProperty = newIntegerProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 

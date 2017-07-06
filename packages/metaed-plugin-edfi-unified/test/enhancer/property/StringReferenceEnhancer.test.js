@@ -6,7 +6,7 @@ import { newStringProperty } from '../../../../../packages/metaed-core/src/model
 import type { SharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
 import { newSharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
 import type { StringType } from '../../../../../packages/metaed-core/src/model/StringType';
-import { stringTypeFactory } from '../../../../../packages/metaed-core/src/model/StringType';
+import { newStringType } from '../../../../../packages/metaed-core/src/model/StringType';
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
 
 
@@ -24,7 +24,7 @@ describe('when enhancing string property', () => {
     });
     metaEd.propertyIndex.string.push(property);
 
-    referencedEntity = Object.assign(stringTypeFactory(), {
+    referencedEntity = Object.assign(newStringType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
@@ -52,7 +52,7 @@ describe('when enhancing shared string property', () => {
     });
     metaEd.propertyIndex.sharedString.push(property);
 
-    referencedEntity = Object.assign(stringTypeFactory(), {
+    referencedEntity = Object.assign(newStringType(), {
       metaEdName: referencedEntityName,
     });
     metaEd.entity.stringType.set(referencedEntity.metaEdName, referencedEntity);
