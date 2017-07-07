@@ -3,13 +3,13 @@ import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packag
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.propertyIndex.decimal.forEach(decimal => {
-    if (metaEd.entity.sharedDecimal.has(decimal.metaEdName)) {
+  metaEd.propertyIndex.string.forEach(string => {
+    if (metaEd.entity.sharedInteger.has(string.metaEdName)) {
       failures.push({
-        validatorName: 'DecimalPropertyMustNotMatchACommonDecimal',
+        validatorName: 'StringPropertyMustNotMatchACommonInteger',
         category: 'error',
-        message: `Decimal Property ${decimal.metaEdName} has the same name as a Common Decimal.`,
-        sourceMap: decimal.sourceMap.metaEdName,
+        message: `String Property ${string.metaEdName} has the same name as a Common Integer.`,
+        sourceMap: string.sourceMap.metaEdName,
         fileMap: null,
       });
     }
