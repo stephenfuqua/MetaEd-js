@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating short identity matches common string -> message 1`] = `"Short Property ShortProperty has the same name as a Common String."`;
+
+exports[`when validating short identity matches common string -> sourceMap 1`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "ShortProperty",
+}
+`;
+
+exports[`when validating short property matches common string -> message 1`] = `"Short Property ShortProperty has the same name as a Common String."`;
+
+exports[`when validating short property matches common string -> sourceMap 1`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "ShortProperty",
+}
+`;

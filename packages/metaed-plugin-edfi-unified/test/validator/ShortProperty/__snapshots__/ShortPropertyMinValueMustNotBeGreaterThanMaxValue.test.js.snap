@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating short identity with minimum value greater than maximum value -> message 1`] = `"Short Property ShortIdentity has min value greater than max value."`;
+
+exports[`when validating short identity with minimum value greater than maximum value -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 9,
+  "tokenText": "min value",
+}
+`;
+
+exports[`when validating short property with minimum value greater than maximum value -> message 1`] = `"Short Property ShortProperty has min value greater than max value."`;
+
+exports[`when validating short property with minimum value greater than maximum value -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 15,
+  "tokenText": "min value",
+}
+`;
