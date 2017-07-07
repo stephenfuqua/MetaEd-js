@@ -25,7 +25,7 @@ describe('When a single file', () => {
   });
 
   it('Should load the file contents', () => {
-    const newState = loadFiles(Object.assign(newState(),
+    const state = loadFiles(Object.assign(newState(),
       {
         inputDirectories: [{
           path: '/fake/dir',
@@ -34,7 +34,7 @@ describe('When a single file', () => {
           isExtension: false,
         }],
       }));
-    const contents = newState.loadedFileSet[0].files[0].contents;
+    const contents = state.loadedFileSet[0].files[0].contents;
     expect(contents).toMatch('Domain Entity');
     expect(contents).toMatch('DomainEntity1');
     expect(contents).toMatch('string');
@@ -77,7 +77,7 @@ describe('When multiple files', () => {
   });
 
   it('Should load the file contents', () => {
-    const newState = loadFiles(Object.assign(newState(),
+    const state = loadFiles(Object.assign(newState(),
       {
         inputDirectories: [{
           path: '/fake/dir',
@@ -86,7 +86,7 @@ describe('When multiple files', () => {
           isExtension: false,
         }],
       }));
-    const associationContents = newState.loadedFileSet[0].files[0].contents;
+    const associationContents = state.loadedFileSet[0].files[0].contents;
     expect(associationContents).toMatch('Association');
     expect(associationContents).toMatch('Domain1');
     expect(associationContents).toMatch('Domain2');
@@ -94,7 +94,7 @@ describe('When multiple files', () => {
     expect(associationContents).toMatch('Property2');
     expect(associationContents).toMatchSnapshot();
 
-    const domainEntityContents = newState.loadedFileSet[0].files[1].contents;
+    const domainEntityContents = state.loadedFileSet[0].files[1].contents;
     expect(domainEntityContents).toMatch('Domain Entity');
     expect(domainEntityContents).toMatch('DomainEntity1');
     expect(domainEntityContents).toMatch('string');
