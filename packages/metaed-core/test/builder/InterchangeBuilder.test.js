@@ -1,12 +1,12 @@
 // @noflow
-import InterchangeBuilder from '../../src/builder/InterchangeBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { InterchangeBuilder } from '../../src/builder/InterchangeBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 
 describe('when building single interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -90,7 +90,7 @@ describe('when building single interchange', () => {
 });
 
 describe('when building interchange with additional element and identity types', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
 
   const interchangeName: string = 'InterchangeName';
@@ -131,7 +131,7 @@ describe('when building interchange with additional element and identity types',
 });
 
 describe('when building duplicate interchanges', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -197,7 +197,7 @@ describe('when building duplicate interchanges', () => {
 });
 
 describe('when building single interchange extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -257,7 +257,7 @@ describe('when building single interchange extension', () => {
 });
 
 describe('when building duplicate interchange extensions', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -314,7 +314,7 @@ describe('when building duplicate interchange extensions', () => {
 });
 
 describe('when building interchange with no interchange name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -349,7 +349,7 @@ describe('when building interchange with no interchange name', () => {
 });
 
 describe('when building interchange with lowercase interchange name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -384,7 +384,7 @@ describe('when building interchange with lowercase interchange name', () => {
 });
 
 describe('when building interchange with no documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -444,7 +444,7 @@ describe('when building interchange with no documentation', () => {
 });
 
 describe('when building interchange with no interchange component property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -500,7 +500,7 @@ describe('when building interchange with no interchange component property', () 
 });
 
 describe('when building interchange with invalid trailing text', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -564,7 +564,7 @@ describe('when building interchange with invalid trailing text', () => {
 });
 
 describe('when building interchange extension with no interchange extension name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -597,7 +597,7 @@ describe('when building interchange extension with no interchange extension name
 });
 
 describe('when building interchange extension with lowercase interchange extension name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -630,7 +630,7 @@ describe('when building interchange extension with lowercase interchange extensi
 });
 
 describe('when building interchange extension with no element property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -682,7 +682,7 @@ describe('when building interchange extension with no element property', () => {
 });
 
 describe('when building interchange extension with invalid trailing text', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -736,7 +736,7 @@ describe('when building interchange extension with invalid trailing text', () =>
 });
 
 describe('when building single interchange source map', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';

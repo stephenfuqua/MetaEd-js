@@ -1,14 +1,10 @@
 // @flow
-import ChoiceBuilder from '../../../../../packages/metaed-core/src/builder/ChoiceBuilder';
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, ChoiceBuilder, DomainEntityBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when choice property has identifier of choice', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -38,7 +34,7 @@ describe('when choice property has identifier of choice', () => {
 });
 
 describe('when choice property has invalid identifier', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;

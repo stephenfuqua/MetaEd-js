@@ -1,17 +1,18 @@
 // @flow
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import AssociationSubclassBuilder from '../../../../../packages/metaed-core/src/builder/AssociationSubclassBuilder';
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import DomainEntitySubclassBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntitySubclassBuilder';
-import InterchangeBuilder from '../../../../../packages/metaed-core/src/builder/InterchangeBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  AssociationBuilder,
+  AssociationSubclassBuilder,
+  DomainEntityBuilder,
+  DomainEntitySubclassBuilder,
+  InterchangeBuilder,
+} from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Interchange/InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating interchange identity template is an abstract entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const abstractEntityName: string = 'AbstractEntityName';
   let failures: Array<ValidationFailure>;
 
@@ -50,7 +51,7 @@ describe('when validating interchange identity template is an abstract entity', 
 });
 
 describe('when validating interchange identity template is a domain entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   let failures: Array<ValidationFailure>;
 
@@ -89,7 +90,7 @@ describe('when validating interchange identity template is a domain entity', () 
 });
 
 describe('when validating interchange identity template is a domain entity subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   let failures: Array<ValidationFailure>;
@@ -139,7 +140,7 @@ describe('when validating interchange identity template is a domain entity subcl
 });
 
 describe('when validating interchange identity template is an association', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName: string = 'AssociationName';
   let failures: Array<ValidationFailure>;
 
@@ -180,7 +181,7 @@ describe('when validating interchange identity template is an association', () =
 });
 
 describe('when validating interchange identity template is an association', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
   let failures: Array<ValidationFailure>;
@@ -232,7 +233,7 @@ describe('when validating interchange identity template is an association', () =
 });
 
 describe('when validating interchange identity template has invalid name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {

@@ -1,12 +1,12 @@
 // @noflow
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
-import IntegerTypeBuilder from '../../src/builder/IntegerTypeBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
+import { IntegerTypeBuilder } from '../../src/builder/IntegerTypeBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
 
 describe('when building shared integer in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -84,7 +84,7 @@ describe('when building shared integer in extension namespace', () => {
 });
 
 describe('when building domain entity with integer property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -162,7 +162,7 @@ describe('when building domain entity with integer property in extension namespa
 });
 
 describe('when building shared short in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -240,7 +240,7 @@ describe('when building shared short in extension namespace', () => {
 });
 
 describe('when building domain entity with short property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -318,7 +318,7 @@ describe('when building domain entity with short property in extension namespace
 });
 
 describe('when building multiple shared integers in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -365,7 +365,7 @@ describe('when building multiple shared integers in extension namespace', () => 
 });
 
 describe('when building domain entity with multiple integer properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -408,7 +408,7 @@ describe('when building domain entity with multiple integer properties in extens
 });
 
 describe('when building duplicate shared integers in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -463,7 +463,7 @@ describe('when building duplicate shared integers in extension namespace', () =>
 });
 
 describe('when building domain entity with duplicate integer properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -514,7 +514,7 @@ describe('when building domain entity with duplicate integer properties in exten
 });
 
 describe('when building shared integer with duplicate integer property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';

@@ -1,6 +1,5 @@
 // @flow
-import type { ModelBase } from '../../../../packages/metaed-core/src/model/ModelBase';
-import type { EntityProperty } from '../../../../packages/metaed-core/src/model/property/EntityProperty';
+import type { ModelBase, EntityProperty } from '../../../../packages/metaed-core/index';
 
 export function groupByMetaEdName<T: ModelBase | EntityProperty>(modelItems: Array<T>): Map<string, Array<T>> {
   return modelItems.reduce((structure: Map<string, Array<T>>, modelItem: T) => {

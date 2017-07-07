@@ -1,25 +1,30 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { Domain } from '../../../../packages/metaed-core/src/model/Domain';
-import { newDomain } from '../../../../packages/metaed-core/src/model/Domain';
-import type { Subdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { newSubdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { newDomainItem } from '../../../../packages/metaed-core/src/model/DomainItem';
-import type { DomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import type { DomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { newDomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import type { Association } from '../../../../packages/metaed-core/src/model/Association';
-import { newAssociation } from '../../../../packages/metaed-core/src/model/Association';
-import type { AssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { newAssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
+import {
+  newMetaEdEnvironment,
+  newDomain,
+  newSubdomain,
+  newDomainItem,
+  newDomainEntity,
+  newDomainEntitySubclass,
+  newAssociation,
+  newAssociationSubclass,
+  addEntity,
+} from '../../../../packages/metaed-core/index';
+
+import type {
+  MetaEdEnvironment,
+  Domain,
+  Subdomain,
+  DomainEntity,
+  DomainEntitySubclass,
+  Association,
+  AssociationSubclass,
+} from '../../../../packages/metaed-core/index';
 
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';
 
 describe('when enhancing domain', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const domainEntity1MetaEdName = 'DomainEntity1Name';
   const domainEntity2MetaEdName = 'DomainEntity2Name';
@@ -97,7 +102,7 @@ describe('when enhancing domain', () => {
 });
 
 describe('when enhancing subdomain', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const domainEntity1MetaEdName = 'DomainEntity1Name';
   const domainEntity2MetaEdName = 'DomainEntity2Name';

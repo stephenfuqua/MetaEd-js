@@ -1,13 +1,10 @@
 // @flow
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterthanMaxValue';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating decimal property with correct minimum value and maximum value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const totalDigits: string = '10';
   const decimalPlaces: string = '2';
@@ -39,7 +36,7 @@ describe('when validating decimal property with correct minimum value and maximu
 });
 
 describe('when validating decimal property with same minimum value and maximum value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const totalDigits: string = '10';
   const decimalPlaces: string = '2';
@@ -71,7 +68,7 @@ describe('when validating decimal property with same minimum value and maximum v
 });
 
 describe('when validating decimal property with minimum value greater than maximum value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const totalDigits: string = '10';
   const decimalPlaces: string = '2';

@@ -1,13 +1,10 @@
 // @flow
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating domain entity with no UniqueId fields', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -35,7 +32,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
 });
 
 describe('when validating domain entity with one UniqueId field', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -63,7 +60,7 @@ describe('when validating domain entity with one UniqueId field', () => {
 });
 
 describe('when validating domain entity with two UniqueId fields', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -96,7 +93,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
 });
 
 describe('when validating domain entity with two UniqueId fields in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 

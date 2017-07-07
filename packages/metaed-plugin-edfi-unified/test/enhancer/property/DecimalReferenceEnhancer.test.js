@@ -1,16 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { DecimalProperty } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
-import { newDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
-import type { SharedDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
-import { newSharedDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
-import type { DecimalType } from '../../../../../packages/metaed-core/src/model/DecimalType';
-import { newDecimalType } from '../../../../../packages/metaed-core/src/model/DecimalType';
+import { newMetaEdEnvironment, newDecimalProperty, newSharedDecimalProperty, newDecimalType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, DecimalProperty, SharedDecimalProperty, DecimalType } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
 describe('when enhancing decimal property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: DecimalProperty;
@@ -38,7 +32,7 @@ describe('when enhancing decimal property', () => {
 });
 
 describe('when enhancing shared decimal property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: SharedDecimalProperty;

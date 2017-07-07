@@ -1,13 +1,13 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import SharedSimpleBuilder from './SharedSimpleBuilder';
+import { SharedSimpleBuilder } from './SharedSimpleBuilder';
 import { newSharedDecimal } from '../model/SharedDecimal';
 import type { SharedDecimal, SharedDecimalSourceMap } from '../model/SharedDecimal';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
-export default class SharedDecimalBuilder extends SharedSimpleBuilder {
+export class SharedDecimalBuilder extends SharedSimpleBuilder {
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
     this.enteringSharedSimple(newSharedDecimal);
     if (this.currentSharedSimple !== NoSharedSimple) {

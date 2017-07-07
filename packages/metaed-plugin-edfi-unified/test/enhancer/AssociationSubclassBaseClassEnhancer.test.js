@@ -1,14 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { Association } from '../../../../packages/metaed-core/src/model/Association';
-import { newAssociation } from '../../../../packages/metaed-core/src/model/Association';
-import type { AssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { newAssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
+import { newMetaEdEnvironment, newAssociation, newAssociationSubclass } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, Association, AssociationSubclass } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/AssociationSubclassBaseClassEnhancer';
 
 describe('when enhancing association subclass referring to association', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const childEntityName: string = 'ChildEntityName';
   let parentEntity: Association;
@@ -35,7 +31,7 @@ describe('when enhancing association subclass referring to association', () => {
 });
 
 describe('when enhancing association subclass referring to association subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const childEntityName: string = 'ChildEntityName';
   let parentEntity: AssociationSubclass;

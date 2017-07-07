@@ -1,14 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { Common } from '../../../../packages/metaed-core/src/model/Common';
-import { newCommon } from '../../../../packages/metaed-core/src/model/Common';
-import type { CommonExtension } from '../../../../packages/metaed-core/src/model/CommonExtension';
-import { newCommonExtension } from '../../../../packages/metaed-core/src/model/CommonExtension';
+import { newMetaEdEnvironment, newCommon, newCommonExtension } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, Common, CommonExtension } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/CommonExtensionBaseClassEnhancer';
 
 describe('when enhancing common extension referring to common', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   let parentEntity: Common;
   let childEntity: CommonExtension;

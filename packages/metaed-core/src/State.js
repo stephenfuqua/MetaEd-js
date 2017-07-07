@@ -5,7 +5,7 @@ import type { FileIndex } from './task/FileIndex';
 import type { MetaEdGrammar } from './grammar/gen/MetaEdGrammar';
 import type { ValidationFailure } from './validator/ValidationFailure';
 import type { MetaEdEnvironment } from './MetaEdEnvironment';
-import { metaEdEnvironmentFactory } from './MetaEdEnvironment';
+import { newMetaEdEnvironment } from './MetaEdEnvironment';
 import type { PluginManifest } from './plugin/PluginTypes';
 
 export type State = {
@@ -46,7 +46,7 @@ export const newState: () => State = () =>
     loadedFileSet: [],
     fileIndex: null,
     parseTree: null,
-    metaEd: metaEdEnvironmentFactory(),
+    metaEd: newMetaEdEnvironment(),
     pluginScanDirectory: null,
     pluginManifest: [],
   });

@@ -2,7 +2,7 @@
 import type { MetaEdGrammarListener } from '../src/grammar/gen/MetaEdGrammarListener';
 import { listen } from './TestHelper';
 
-export default class MetaEdTextBuilder {
+export class MetaEdTextBuilder {
   textLines: string[];
   indentationLevel: number;
   errorMessages: string[];

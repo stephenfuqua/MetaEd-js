@@ -1,14 +1,10 @@
 // @flow
-import CommonBuilder from '../../../../../packages/metaed-core/src/builder/CommonBuilder';
-import CommonExtensionBuilder from '../../../../../packages/metaed-core/src/builder/CommonExtensionBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, CommonExtensionBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when common extension extends common', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 
@@ -42,7 +38,7 @@ describe('when common extension extends common', () => {
 });
 
 describe('when common extension extends an invalid identifier', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 

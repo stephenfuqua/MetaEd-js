@@ -17,7 +17,7 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 
-export default class DomainBuilder extends MetaEdGrammarListener {
+export class DomainBuilder extends MetaEdGrammarListener {
   metaEd: MetaEdEnvironment;
   namespaceInfo: NamespaceInfo;
   currentDomain: Domain | Subdomain;

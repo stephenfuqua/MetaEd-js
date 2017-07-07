@@ -1,14 +1,10 @@
 // @flow
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, SharedStringBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/DecimalProperty/DecimalPropertyMustNotMatchACommonString';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import SharedStringBuilder from '../../../../../packages/metaed-core/src/builder/SharedStringBuilder';
 
 describe('when validating decimal property does not match common string', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const decimalProperty: string = 'DecimalProperty';
   const totalDigits: string = '10';
@@ -46,7 +42,7 @@ describe('when validating decimal property does not match common string', () => 
 });
 
 describe('when validating decimal property matches common string', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const decimalProperty: string = 'DecimalProperty';
   const totalDigits: string = '10';

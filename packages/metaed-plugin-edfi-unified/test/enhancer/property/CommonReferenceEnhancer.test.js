@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { CommonProperty } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
-import { newCommonProperty } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
-import type { Common } from '../../../../../packages/metaed-core/src/model/Common';
-import { newCommon } from '../../../../../packages/metaed-core/src/model/Common';
+import { newMetaEdEnvironment, newCommonProperty, newCommon } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, CommonProperty, Common } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/CommonReferenceEnhancer';
 
 describe('when enhancing common property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

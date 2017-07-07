@@ -1,15 +1,10 @@
 // @flow
-import DomainBuilder from '../../../../../packages/metaed-core/src/builder/DomainBuilder';
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import AssociationSubclassBuilder from '../../../../../packages/metaed-core/src/builder/AssociationSubclassBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, AssociationBuilder, AssociationSubclassBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating association domain item matches top level entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const associationName: string = 'AssociationName';
 
@@ -45,7 +40,7 @@ describe('when validating association domain item matches top level entity', () 
 });
 
 describe('when validating association domain item matches top level entity subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const associationName = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -88,7 +83,7 @@ describe('when validating association domain item matches top level entity subcl
 });
 
 describe('when validating association domain item does not match top level entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';

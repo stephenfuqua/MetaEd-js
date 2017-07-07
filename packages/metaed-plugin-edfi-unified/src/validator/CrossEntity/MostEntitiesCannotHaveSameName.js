@@ -1,19 +1,20 @@
 // @flow
-import type { Association } from '../../../../../packages/metaed-core/src/model/Association';
-import type { AssociationSubclass } from '../../../../../packages/metaed-core/src/model/AssociationSubclass';
-import type { Choice } from '../../../../../packages/metaed-core/src/model/Choice';
-import type { Common } from '../../../../../packages/metaed-core/src/model/Common';
-import type { DecimalType } from '../../../../../packages/metaed-core/src/model/DecimalType';
-import type { DomainEntity } from '../../../../../packages/metaed-core/src/model/DomainEntity';
-import type { DomainEntitySubclass } from '../../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import type { IntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
-import type { SharedDecimal } from '../../../../../packages/metaed-core/src/model/SharedDecimal';
-import type { SharedInteger } from '../../../../../packages/metaed-core/src/model/SharedInteger';
-import type { SharedString } from '../../../../../packages/metaed-core/src/model/SharedString';
-import type { StringType } from '../../../../../packages/metaed-core/src/model/StringType';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { EntityRepository } from '../../../../../packages/metaed-core/src/model/EntityRepository';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type {
+  Association,
+  AssociationSubclass,
+  Choice,
+  Common,
+  DecimalType,
+  DomainEntity,
+  DomainEntitySubclass,
+  IntegerType,
+  SharedDecimal,
+  SharedInteger,
+  SharedString,
+  StringType,
+  MetaEdEnvironment,
+  EntityRepository,
+  ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 type MostEntities =

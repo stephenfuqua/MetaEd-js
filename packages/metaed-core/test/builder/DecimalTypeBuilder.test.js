@@ -1,12 +1,12 @@
 // @noflow
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
-import DecimalTypeBuilder from '../../src/builder/DecimalTypeBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
+import { DecimalTypeBuilder } from '../../src/builder/DecimalTypeBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
 
 describe('when building shared decimal in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -90,7 +90,7 @@ describe('when building shared decimal in extension namespace', () => {
 });
 
 describe('when building domain entity with decimal property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -174,7 +174,7 @@ describe('when building domain entity with decimal property in extension namespa
 });
 
 describe('when building multiple shared decimals in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -223,7 +223,7 @@ describe('when building multiple shared decimals in extension namespace', () => 
 });
 
 describe('when building domain entity with multiple decimal properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -268,7 +268,7 @@ describe('when building domain entity with multiple decimal properties in extens
 });
 
 describe('when building duplicate shared decimals in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -325,7 +325,7 @@ describe('when building duplicate shared decimals in extension namespace', () =>
 });
 
 describe('when building domain entity with duplicate decimal properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -378,7 +378,7 @@ describe('when building domain entity with duplicate decimal properties in exten
 });
 
 describe('when building shared decimal with duplicate decimal property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';

@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { DescriptorProperty } from '../../../../../packages/metaed-core/src/model/property/DescriptorProperty';
-import { newDescriptorProperty } from '../../../../../packages/metaed-core/src/model/property/DescriptorProperty';
-import type { Descriptor } from '../../../../../packages/metaed-core/src/model/Descriptor';
-import { newDescriptor } from '../../../../../packages/metaed-core/src/model/Descriptor';
+import { newMetaEdEnvironment, newDescriptorProperty, newDescriptor } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, DescriptorProperty, Descriptor } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/DescriptorReferenceEnhancer';
 
 describe('when enhancing descriptor property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

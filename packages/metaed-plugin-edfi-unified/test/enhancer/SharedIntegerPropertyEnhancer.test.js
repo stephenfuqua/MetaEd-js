@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newSharedIntegerProperty } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
-import { newIntegerType } from '../../../../packages/metaed-core/src/model/IntegerType';
+import { newMetaEdEnvironment, newSharedIntegerProperty, newIntegerType, addProperty, newSharedShortProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/SharedIntegerPropertyEnhancer';
-import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
-import { newSharedShortProperty } from '../../../../packages/metaed-core/src/model/property/SharedShortProperty';
 
 describe('when shared integer property refers to a shared integer', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName: string = 'ReferencedEntityName';
 
   const maxValue = '100';
@@ -37,7 +33,7 @@ describe('when shared integer property refers to a shared integer', () => {
 });
 
 describe('when shared short property refers to a shared short', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName: string = 'ReferencedEntityName';
 
   const maxValue = '100';

@@ -1,7 +1,5 @@
 // @flow
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { EntityRepository } from '../../../../../packages/metaed-core/src/model/EntityRepository';
-import type { ModelType } from '../../../../../packages/metaed-core/src/model/ModelType';
+import type { EntityRepository, ModelType, ValidationFailure } from '../../../../../packages/metaed-core/index';
 
 const validTypes: ModelType[] = [
   'association',

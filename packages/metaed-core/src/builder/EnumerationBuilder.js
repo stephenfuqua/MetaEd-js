@@ -1,6 +1,6 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import TopLevelEntityBuilder from './TopLevelEntityBuilder';
+import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newEnumeration, asEnumeration } from '../model/Enumeration';
 import { newSchoolYearEnumeration } from '../model/SchoolYearEnumeration';
 import type { EnumerationSourceMap } from '../model/Enumeration';
@@ -12,7 +12,7 @@ import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 
-export default class EnumerationBuilder extends TopLevelEntityBuilder {
+export class EnumerationBuilder extends TopLevelEntityBuilder {
   currentEnumerationItem: EnumerationItem;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {

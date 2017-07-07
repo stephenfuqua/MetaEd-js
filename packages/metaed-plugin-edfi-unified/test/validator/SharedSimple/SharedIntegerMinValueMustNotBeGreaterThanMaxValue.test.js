@@ -1,13 +1,10 @@
 // @flow
-import SharedIntegerBuilder from '../../../../../packages/metaed-core/src/builder/SharedIntegerBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, SharedIntegerBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating shared integer with max value greater than min value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -30,7 +27,7 @@ describe('when validating shared integer with max value greater than min value',
 });
 
 describe('when validating shared integer with min value greater than max value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -61,7 +58,7 @@ describe('when validating shared integer with min value greater than max value',
 });
 
 describe('when validating shared short with max value greater than min value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -84,7 +81,7 @@ describe('when validating shared short with max value greater than min value', (
 });
 
 describe('when validating shared short with min value greater than max value', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {

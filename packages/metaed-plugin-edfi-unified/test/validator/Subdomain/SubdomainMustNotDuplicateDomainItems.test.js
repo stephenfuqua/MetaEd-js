@@ -1,13 +1,10 @@
 // @flow
-import DomainBuilder from '../../../../../packages/metaed-core/src/builder/DomainBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating subdomain entity domain item does not duplicate domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const subdomainName: string = 'SubdomainName';
 
@@ -45,7 +42,7 @@ describe('when validating subdomain entity domain item does not duplicate domain
 });
 
 describe('when validating subdomain entity domain item has duplicate domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const subdomainName: string = 'SubdomainName';
   const domainEntityName: string = 'DomainEntityName';
@@ -80,7 +77,7 @@ describe('when validating subdomain entity domain item has duplicate domain item
 });
 
 describe('when validating subdomain entity domain item has multiple duplicate domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const subdomainName: string = 'SubdomainName';
   const domainEntityName: string = 'DomainEntityName';

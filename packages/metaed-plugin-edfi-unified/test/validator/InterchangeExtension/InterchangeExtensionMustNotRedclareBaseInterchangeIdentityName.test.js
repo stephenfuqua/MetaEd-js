@@ -1,13 +1,10 @@
 // @flow
-import InterchangeBuilder from '../../../../../packages/metaed-core/src/builder/InterchangeBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, InterchangeBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating interchange extension identity template has different names than base interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName: string = 'InterchangeName';
   let failures: Array<ValidationFailure>;
 
@@ -46,7 +43,7 @@ describe('when validating interchange extension identity template has different 
 });
 
 describe('when validating interchange extension identity template duplicates names in base interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName: string = 'InterchangeName';
   const domainEntityTemplateName: string = 'DomainEntityIdentityTemplateName';
   let failures: Array<ValidationFailure>;
@@ -90,7 +87,7 @@ describe('when validating interchange extension identity template duplicates nam
 });
 
 describe('when interchange extension identity templates duplicates multiple names in base interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName: string = 'InterchangeName';
   const domainEntityTemplateName1: string = 'DomainEntityIdentityTemplateName1';
   const domainEntityTemplateName2: string = 'DomainEntityIdentityTemplateName2';

@@ -15,7 +15,7 @@ import { sourceMapFrom } from '../model/SourceMap';
 
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
-export default class SharedSimpleBuilder extends MetaEdGrammarListener {
+export class SharedSimpleBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentSharedSimple: SharedSimple;

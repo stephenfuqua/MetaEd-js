@@ -1,7 +1,5 @@
 // @flow
-import type { Interchange } from '../../../../../packages/metaed-core/src/model/Interchange';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { Interchange, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { failInterchangeExtensionPropertyRedeclarations } from '../ValidatorShared/FailInterchangeExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

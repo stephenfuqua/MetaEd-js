@@ -1,12 +1,12 @@
 // @noflow
-import CommonExtensionBuilder from '../../src/builder/CommonExtensionBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { CommonExtensionBuilder } from '../../src/builder/CommonExtensionBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 
 describe('when building common extension in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -65,7 +65,7 @@ describe('when building common extension in extension namespace', () => {
 });
 
 describe('when building multiple common extensions', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -116,7 +116,7 @@ describe('when building multiple common extensions', () => {
 });
 
 describe('when building common extension with missing common extension name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -143,7 +143,7 @@ describe('when building common extension with missing common extension name', ()
 });
 
 describe('when building common extension with lowercase common extension name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -170,7 +170,7 @@ describe('when building common extension with lowercase common extension name', 
 });
 
 describe('when building common extension with missing property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -195,7 +195,7 @@ describe('when building common extension with missing property', () => {
 });
 
 describe('when building common extension with invalid trailing text', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -224,7 +224,7 @@ describe('when building common extension with invalid trailing text', () => {
 });
 
 describe('when building common extension source map', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';

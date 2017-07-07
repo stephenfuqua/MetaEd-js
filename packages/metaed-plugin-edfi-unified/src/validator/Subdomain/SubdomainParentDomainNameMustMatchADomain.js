@@ -1,7 +1,6 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { Subdomain, SubdomainSourceMap } from '../../../../../packages/metaed-core/src/model/Subdomain';
+import type { Subdomain, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { SubdomainSourceMap } from '../../../../../packages/metaed-core/src/model/Subdomain';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

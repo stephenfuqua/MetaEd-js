@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import loadFiles from './FileSystemFilenameLoader';
+import { loadFiles } from './FileSystemFilenameLoader';
 import { validateSyntax } from './ValidateSyntax';
 import { buildTopLevelEntity, buildMetaEd } from '../grammar/ParseTreeBuilder';
 import loadFileIndex from './LoadFileIndex';

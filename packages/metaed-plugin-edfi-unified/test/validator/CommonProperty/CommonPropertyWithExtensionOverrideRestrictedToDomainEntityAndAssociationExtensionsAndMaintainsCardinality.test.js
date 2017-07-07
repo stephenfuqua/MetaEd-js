@@ -1,18 +1,19 @@
 // @flow
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import AssociationExtensionBuilder from '../../../../../packages/metaed-core/src/builder/AssociationExtensionBuilder';
-import CommonBuilder from '../../../../../packages/metaed-core/src/builder/CommonBuilder';
-import CommonExtensionBuilder from '../../../../../packages/metaed-core/src/builder/CommonExtensionBuilder';
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import DomainEntityExtensionBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityExtensionBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+  CommonBuilder,
+  CommonExtensionBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+} from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating common property does not have extension override', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -49,7 +50,7 @@ describe('when validating common property does not have extension override', () 
 });
 
 describe('when validating common property has extension override on non domain entity or association extensions', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName1';
   let failures: Array<ValidationFailure>;
 
@@ -91,7 +92,7 @@ describe('when validating common property has extension override on non domain e
 });
 
 describe('when validating common property has extension override on domain entity extension without include on extendee', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -145,7 +146,7 @@ describe('when validating common property has extension override on domain entit
 });
 
 describe('when validating common property has extension override on association extension without include on extendee', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -201,7 +202,7 @@ describe('when validating common property has extension override on association 
 });
 
 describe('when validating common property has extension override on domain entity extension with include on extendee and matching cardinality', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -253,7 +254,7 @@ describe('when validating common property has extension override on domain entit
 });
 
 describe('when validating common property has extension override on association extension with include on extendee and matching cardinality', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -307,7 +308,7 @@ describe('when validating common property has extension override on association 
 });
 
 describe('when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -362,7 +363,7 @@ describe('when validating common property has extension override on domain entit
 });
 
 describe('when validating common property has extension override on association extension with include on extendee not matching collection cardinality', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -419,7 +420,7 @@ describe('when validating common property has extension override on association 
 });
 
 describe('when validating common property has extension override on domain entity extension with include on extendee not matching nullablility', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
@@ -474,7 +475,7 @@ describe('when validating common property has extension override on domain entit
 });
 
 describe('when validating common property has extension override on association extension with include on extendee not matching nullablility', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;

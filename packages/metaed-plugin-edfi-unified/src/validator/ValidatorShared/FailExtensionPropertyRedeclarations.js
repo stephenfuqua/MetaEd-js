@@ -1,8 +1,5 @@
 // @flow
-import type { TopLevelEntity } from '../../../../../packages/metaed-core/src/model/TopLevelEntity';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { EntityProperty } from '../../../../../packages/metaed-core/src/model/property/EntityProperty';
-import type { CommonProperty } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
+import type { TopLevelEntity, EntityProperty, CommonProperty, ValidationFailure } from '../../../../../packages/metaed-core/index';
 
 function isNotCommonExtensionOverride(entityProperty: EntityProperty): boolean {
   if (entityProperty.type !== 'common') return true;

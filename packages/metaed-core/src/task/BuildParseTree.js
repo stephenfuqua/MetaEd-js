@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import MetaEdErrorListener from '../grammar/MetaEdErrorListener';
+import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
 import type { State } from '../State';
 import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
 import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';

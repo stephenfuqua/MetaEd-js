@@ -34,7 +34,7 @@ export type MetaEdEnvironment = {
   dataStandardVersion: SemVer,
 };
 
-export const metaEdEnvironmentFactory: () => MetaEdEnvironment = () =>
+export const newMetaEdEnvironment: () => MetaEdEnvironment = () =>
   ({
     entity: newEntityRepository(),
     propertyIndex: newPropertyIndex(),

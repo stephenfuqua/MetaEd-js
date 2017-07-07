@@ -1,17 +1,19 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { newDomainEntityProperty } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
-import { newIntegerType } from '../../../../packages/metaed-core/src/model/IntegerType';
-import { newSharedIntegerProperty } from '../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
-import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
-import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
+import {
+  newMetaEdEnvironment,
+  newDomainEntity,
+  newDomainEntityProperty,
+  newIntegerType,
+  newSharedIntegerProperty,
+  addEntity,
+  addProperty,
+} from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/InheritedDocumentationCopyingEnhancer';
 
 describe('when enhancing shared integer property with inherited documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityDocumentation: string = 'ReferencedEntityDocumentation';
   const referencedEntityName: string = 'ReferencedEntityName';
@@ -48,7 +50,7 @@ describe('when enhancing shared integer property with inherited documentation', 
 });
 
 describe('when enhancing domain entity property with inherited documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityDocumentation: string = 'ReferencedEntityDocumentation';
   const referencedEntityName: string = 'ReferencedEntityName';

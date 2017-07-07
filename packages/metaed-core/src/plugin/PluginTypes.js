@@ -5,13 +5,13 @@ export type MetaEdPlugin = {
   validators: Array<Validator>,
 }
 
-export function defaultMetaEdPlugin(): MetaEdPlugin {
+export function newMetaEdPlugin(): MetaEdPlugin {
   return {
     validators: [],
   };
 }
 
-export const NoMetaEdPlugin = defaultMetaEdPlugin();
+export const NoMetaEdPlugin = newMetaEdPlugin();
 
 export type PluginManifest = {
   npmName: string,
@@ -28,8 +28,4 @@ export type PluginManifest = {
 
 export type PluginData = {
   todo: string
-}
-
-export type MetaEdCore = {
-  exampleIsModelObjectFactory: string,
 }

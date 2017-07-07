@@ -1,15 +1,10 @@
 // @flow
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import AssociationExtensionBuilder from '../../../../../packages/metaed-core/src/builder/AssociationExtensionBuilder';
-import AssociationSubclassBuilder from '../../../../../packages/metaed-core/src/builder/AssociationSubclassBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationExtensionBuilder, AssociationSubclassBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when association extension extends association', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -45,7 +40,7 @@ describe('when association extension extends association', () => {
 });
 
 describe('when association extension extends association subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const subclassName: string = 'SubclassName';
   let failures: Array<ValidationFailure>;
@@ -88,7 +83,7 @@ describe('when association extension extends association subclass', () => {
 });
 
 describe('when association extension extends an invalid identifier', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 

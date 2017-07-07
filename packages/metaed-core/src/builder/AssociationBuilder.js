@@ -1,13 +1,13 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import TopLevelEntityBuilder from './TopLevelEntityBuilder';
+import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newDomainEntityProperty } from '../model/property/DomainEntityProperty';
 import { newAssociation } from '../model/Association';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
-export default class AssociationBuilder extends TopLevelEntityBuilder {
+export class AssociationBuilder extends TopLevelEntityBuilder {
   enterAssociation(context: MetaEdGrammar.AssociationContext) {
     this.enteringEntity(newAssociation);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

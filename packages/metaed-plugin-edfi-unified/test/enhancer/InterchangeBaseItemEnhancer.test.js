@@ -1,20 +1,23 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { addEntity, getEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
+import {
+  newMetaEdEnvironment,
+  newDomainEntity,
+  newDomainEntitySubclass,
+  newAssociation,
+  newAssociationSubclass,
+  newDescriptor,
+  newInterchange,
+  newInterchangeItem,
+  newDomainEntityExtension,
+  newInterchangeExtension,
+  addEntity,
+  getEntity,
+} from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
-import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { newDomainEntitySubclass } from '../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { newAssociation } from '../../../../packages/metaed-core/src/model/Association';
-import { newAssociationSubclass } from '../../../../packages/metaed-core/src/model/AssociationSubclass';
-import { newDescriptor } from '../../../../packages/metaed-core/src/model/Descriptor';
-import { newInterchange } from '../../../../packages/metaed-core/src/model/Interchange';
-import { newInterchangeItem } from '../../../../packages/metaed-core/src/model/InterchangeItem';
-import { newDomainEntityExtension } from '../../../../packages/metaed-core/src/model/DomainEntityExtension';
-import { newInterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
 
 describe('when enhancing interchange in core', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const interchangeMetaEdName: string = 'InterchangeMetaEdName';
 
@@ -72,7 +75,7 @@ describe('when enhancing interchange in core', () => {
 });
 
 describe('when enhancing interchange extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const interchangeMetaEdName: string = 'InterchangeMetaEdName';
 

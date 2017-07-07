@@ -81,7 +81,7 @@ export function newPropertyIndex(): PropertyIndex {
   });
 }
 
-export function getAll(propertyIndex: PropertyIndex, ...propertyTypes: Array<PropertyType>): Array<EntityProperty> {
+export function getPropertiesOfType(propertyIndex: PropertyIndex, ...propertyTypes: Array<PropertyType>): Array<EntityProperty> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
   propertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));

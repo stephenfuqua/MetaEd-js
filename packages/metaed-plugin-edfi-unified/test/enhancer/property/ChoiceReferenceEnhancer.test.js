@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ChoiceProperty } from '../../../../../packages/metaed-core/src/model/property/ChoiceProperty';
-import { newChoiceProperty } from '../../../../../packages/metaed-core/src/model/property/ChoiceProperty';
-import type { Choice } from '../../../../../packages/metaed-core/src/model/Choice';
-import { newChoice } from '../../../../../packages/metaed-core/src/model/Choice';
+import { newMetaEdEnvironment, newChoiceProperty, newChoice } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ChoiceProperty, Choice } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/ChoiceReferenceEnhancer';
 
 describe('when enhancing choice property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

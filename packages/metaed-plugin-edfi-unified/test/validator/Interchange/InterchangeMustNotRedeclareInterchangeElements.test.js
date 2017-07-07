@@ -1,13 +1,10 @@
 // @flow
-import InterchangeBuilder from '../../../../../packages/metaed-core/src/builder/InterchangeBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, InterchangeBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Interchange/InterchangeMustNotRedeclareInterchangeElements';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating interchange interchange element has different names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -34,7 +31,7 @@ describe('when validating interchange interchange element has different names', 
 });
 
 describe('when validating interchange interchange element has duplicate names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityElementName: string = 'DomainEntityElementName';
   let failures: Array<ValidationFailure>;
 
@@ -66,7 +63,7 @@ describe('when validating interchange interchange element has duplicate names', 
 });
 
 describe('when validating interchange interchange element has multiple duplicate names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityElementName1: string = 'DomainEntityElementName1';
   const domainEntityElementName2: string = 'DomainEntityElementName2';
   let failures: Array<ValidationFailure>;

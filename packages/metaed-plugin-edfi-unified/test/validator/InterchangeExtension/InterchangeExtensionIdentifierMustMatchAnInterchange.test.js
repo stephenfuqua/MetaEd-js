@@ -1,13 +1,10 @@
 // @flow
-import InterchangeBuilder from '../../../../../packages/metaed-core/src/builder/InterchangeBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, InterchangeBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/InterchangeExtension/InterchangeExtensionIdentifierMustMatchAnInterchange';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating interchange extension has valid extendee', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName: string = 'InterchangeName';
   let failures: Array<ValidationFailure>;
 
@@ -46,7 +43,7 @@ describe('when validating interchange extension has valid extendee', () => {
 });
 
 describe('when validating interchange extension has invalid extendee', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {

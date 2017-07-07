@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { SchoolYearEnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/SchoolYearEnumerationProperty';
-import { newSchoolYearEnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/SchoolYearEnumerationProperty';
-import type { SchoolYearEnumeration } from '../../../../../packages/metaed-core/src/model/SchoolYearEnumeration';
-import { newSchoolYearEnumeration } from '../../../../../packages/metaed-core/src/model/SchoolYearEnumeration';
+import { newMetaEdEnvironment, newSchoolYearEnumerationProperty, newSchoolYearEnumeration } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, SchoolYearEnumerationProperty, SchoolYearEnumeration } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/SchoolYearEnumerationReferenceEnhancer';
 
 describe('when enhancing schoolYearEnumeration property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

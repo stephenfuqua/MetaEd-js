@@ -1,6 +1,5 @@
 // @flow
-import type { Validator } from '../../metaed-core/src/validator/Validator';
-import type { MetaEdCore, PluginData, MetaEdPlugin } from '../../metaed-core/src/plugin/PluginTypes';
+import type { Validator, PluginData, MetaEdPlugin } from '../../../packages/metaed-core/index';
 
 import { validate as associationExtensionExistsOnlyInExtensionNamespace } from './validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
 import { validate as associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass } from './validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
@@ -37,7 +36,7 @@ function validatorList(): Array<Validator> {
 }
 
 // eslint-disable-next-line no-unused-vars
-export default function initialize(data: PluginData, host: MetaEdCore): MetaEdPlugin {
+export default function initialize(data: PluginData, host: any): MetaEdPlugin {
   return {
     validators: validatorList(),
   };

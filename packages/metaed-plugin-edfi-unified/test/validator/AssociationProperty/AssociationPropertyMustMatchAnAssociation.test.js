@@ -1,15 +1,10 @@
 // @flow
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import AssociationSubclassBuilder from '../../../../../packages/metaed-core/src/builder/AssociationSubclassBuilder';
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationSubclassBuilder, DomainEntityBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when association property has identifier of association', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -42,7 +37,7 @@ describe('when association property has identifier of association', () => {
 });
 
 describe('when association property has identifier of association subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -73,7 +68,7 @@ describe('when association property has identifier of association subclass', () 
 });
 
 describe('when association property has invalid identifier', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   let failures: Array<ValidationFailure>;
 

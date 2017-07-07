@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { EnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/EnumerationProperty';
-import { newEnumerationProperty } from '../../../../../packages/metaed-core/src/model/property/EnumerationProperty';
-import type { Enumeration } from '../../../../../packages/metaed-core/src/model/Enumeration';
-import { newEnumeration } from '../../../../../packages/metaed-core/src/model/Enumeration';
+import { newMetaEdEnvironment, newEnumerationProperty, newEnumeration } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnumerationProperty, Enumeration } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/EnumerationReferenceEnhancer';
 
 describe('when enhancing enumeration property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

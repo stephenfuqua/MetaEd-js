@@ -1,12 +1,12 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import TopLevelEntityBuilder from './TopLevelEntityBuilder';
+import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newDomainEntityExtension } from '../model/DomainEntityExtension';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
-export default class DomainEntityExtensionBuilder extends TopLevelEntityBuilder {
+export class DomainEntityExtensionBuilder extends TopLevelEntityBuilder {
   enterDomainEntityExtension(context: MetaEdGrammar.DomainEntityExtensionContext) {
     this.enteringEntity(newDomainEntityExtension);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

@@ -33,7 +33,7 @@ export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContex
   return namespaceInfo;
 }
 
-export default class NamespaceInfoBuilder extends MetaEdGrammarListener {
+export class NamespaceInfoBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
   currentNamespaceInfo: NamespaceInfo;
   validationFailures: Array<ValidationFailure>;

@@ -1,8 +1,5 @@
 // @flow
-import type { DomainEntity } from '../../../../../packages/metaed-core/src/model/DomainEntity';
-import type { DomainEntitySubclass } from '../../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { DomainEntity, DomainEntitySubclass, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 // eslint-disable-next-line no-unused-vars

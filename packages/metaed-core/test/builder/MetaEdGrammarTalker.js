@@ -29,7 +29,7 @@ const idTextContext: TestContext = textContext('ID', R.__);
 
 const joinDocumentationLines = (lines: Array<string>): string => `"${lines.map(s => s.trim()).join('\r\n')}"`;
 
-export default class MetaEdGrammarTalker {
+export class MetaEdGrammarTalker {
   listenerMethodCalls: ListenerMethodCall[];
 
   constructor() {

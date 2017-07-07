@@ -1,14 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newSharedDecimalProperty } from '../../../../packages/metaed-core/src/model/property/SharedDecimalProperty';
-import { newDecimalType } from '../../../../packages/metaed-core/src/model/DecimalType';
+import { newMetaEdEnvironment, newSharedDecimalProperty, newDecimalType, addProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/SharedDecimalPropertyEnhancer';
-import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
 
 describe('when shared decimal property refers to a shared decimal', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName: string = 'ReferencedEntityName';
 
   const totalDigits = '5';

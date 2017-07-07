@@ -1,7 +1,5 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { EntityProperty } from '../../../../../packages/metaed-core/src/model/property/EntityProperty';
+import type { EntityProperty, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 
 const hasDuplicateUniqueIds = (properties: Array<EntityProperty>) =>
   properties.reduce((count, property) => (property.metaEdName === 'UniqueId' ? count + 1 : count), 0) > 1;

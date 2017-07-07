@@ -1,6 +1,6 @@
 // @flow
 import normalize from 'normalize-path';
-import MetaEdTextBuilder from '../../../packages/metaed-core/test/MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../../packages/metaed-core/test/MetaEdTextBuilder';
 import { startingFromFileLoad, startingFromFileLoadP } from '../../../packages/metaed-core/src/task/Pipeline';
 import type { State } from '../../../packages/metaed-core/src/State';
 import { newState } from '../../../packages/metaed-core/src/State';

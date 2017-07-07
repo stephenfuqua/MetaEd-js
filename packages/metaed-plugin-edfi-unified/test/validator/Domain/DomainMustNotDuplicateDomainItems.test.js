@@ -1,13 +1,10 @@
 // @flow
-import DomainBuilder from '../../../../../packages/metaed-core/src/builder/DomainBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Domain/DomainMustNotDuplicateDomainItems';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating domain entity domain item does not duplicate domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
 
   let failures: Array<ValidationFailure>;
@@ -36,7 +33,7 @@ describe('when validating domain entity domain item does not duplicate domain it
 });
 
 describe('when validating domain entity domain item duplicates domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const domainEntityName: string = 'DomainEntityName';
 
@@ -70,7 +67,7 @@ describe('when validating domain entity domain item duplicates domain items', ()
 });
 
 describe('when validating domain entity domain item has multiple duplicate domain items', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityName2: string = 'DomainEntityName2';

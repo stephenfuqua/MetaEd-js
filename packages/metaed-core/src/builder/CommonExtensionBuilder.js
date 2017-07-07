@@ -1,12 +1,12 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import TopLevelEntityBuilder from './TopLevelEntityBuilder';
+import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newCommonExtension } from '../model/CommonExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 
-export default class CommonExtensionBuilder extends TopLevelEntityBuilder {
+export class CommonExtensionBuilder extends TopLevelEntityBuilder {
   enterCommonExtension(context: MetaEdGrammar.CommonExtensionContext) {
     this.enteringEntity(newCommonExtension);
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

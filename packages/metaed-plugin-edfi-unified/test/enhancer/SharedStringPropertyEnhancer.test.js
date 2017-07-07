@@ -1,14 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newSharedStringProperty } from '../../../../packages/metaed-core/src/model/property/SharedStringProperty';
-import { newStringType } from '../../../../packages/metaed-core/src/model/StringType';
+import { newMetaEdEnvironment, newSharedStringProperty, newStringType, addProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/SharedStringPropertyEnhancer';
-import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
 
 describe('when shared string property refers to a shared string', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const metaEdName: string = 'ReferencedEntityName';
 
   const maxLength = '100';

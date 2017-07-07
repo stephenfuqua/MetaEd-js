@@ -1,8 +1,7 @@
 // @noflow
 import mockfs from 'mock-fs';
-import MetaEdTextBuilder from '../../../packages/metaed-core/test/MetaEdTextBuilder';
-import loadFiles from '../../../packages/metaed-core/src/task/FileSystemFilenameLoader';
-import { newState } from '../../../packages/metaed-core/src/State';
+import { MetaEdTextBuilder } from '../../../packages/metaed-core/test/MetaEdTextBuilder';
+import { newState, loadFiles } from '../../../packages/metaed-core/index';
 
 describe('When a single file', () => {
   beforeAll(() => {

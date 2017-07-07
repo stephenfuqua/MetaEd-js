@@ -1,14 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { Interchange } from '../../../../packages/metaed-core/src/model/Interchange';
-import { newInterchange } from '../../../../packages/metaed-core/src/model/Interchange';
-import type { InterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
-import { newInterchangeExtension } from '../../../../packages/metaed-core/src/model/InterchangeExtension';
+import { newMetaEdEnvironment, newInterchange, newInterchangeExtension } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, Interchange, InterchangeExtension } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
 describe('when enhancing interchange extension referring to interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   let parentEntity: Interchange;
   let childEntity: InterchangeExtension;

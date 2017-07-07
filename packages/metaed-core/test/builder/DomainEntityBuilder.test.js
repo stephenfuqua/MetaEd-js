@@ -1,12 +1,12 @@
 // @noflow
-import DomainEntityBuilder from '../../src/builder/DomainEntityBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { DomainEntityBuilder } from '../../src/builder/DomainEntityBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 
 describe('when building simple domain entity in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -87,7 +87,7 @@ describe('when building simple domain entity in extension namespace', () => {
 });
 
 describe('when building duplicate domain entities', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -144,7 +144,7 @@ describe('when building duplicate domain entities', () => {
 });
 
 describe('when building duplicate property names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -187,7 +187,7 @@ describe('when building duplicate property names', () => {
 });
 
 describe('when building duplicate property names with different with context names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -218,7 +218,7 @@ describe('when building duplicate property names with different with context nam
 });
 
 describe('when building duplicate property names with same with context name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -261,7 +261,7 @@ describe('when building duplicate property names with same with context name', (
 });
 
 describe('when building domain entity without extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
@@ -321,7 +321,7 @@ describe('when building domain entity without extension', () => {
 });
 
 describe('when building domain entity with a with context', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -353,7 +353,7 @@ describe('when building domain entity with a with context', () => {
 });
 
 describe('when building domain entity with a with context and shorten to', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -390,7 +390,7 @@ describe('when building domain entity with a with context and shorten to', () =>
 });
 
 describe('when building domain entity with choice', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -422,7 +422,7 @@ describe('when building domain entity with choice', () => {
 });
 
 describe('when building domain entity with inline common reference', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -454,7 +454,7 @@ describe('when building domain entity with inline common reference', () => {
 });
 
 describe('when building domain entity with queryable field', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -486,7 +486,7 @@ describe('when building domain entity with queryable field', () => {
 });
 
 describe('when building domain entity with queryable only property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -521,7 +521,7 @@ describe('when building domain entity with queryable only property', () => {
 });
 
 describe('when building domain entity with shared decimal reference', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -553,7 +553,7 @@ describe('when building domain entity with shared decimal reference', () => {
 });
 
 describe('when building domain entity with shared decimal reference without name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -584,7 +584,7 @@ describe('when building domain entity with shared decimal reference without name
 });
 
 describe('when building domain entity with shared integer reference', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -616,7 +616,7 @@ describe('when building domain entity with shared integer reference', () => {
 });
 
 describe('when building domain entity with shared integer reference without name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -647,7 +647,7 @@ describe('when building domain entity with shared integer reference without name
 });
 
 describe('when building domain entity with shared short reference', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -679,7 +679,7 @@ describe('when building domain entity with shared short reference', () => {
 });
 
 describe('when building domain entity with shared short reference without name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -710,7 +710,7 @@ describe('when building domain entity with shared short reference without name',
 });
 
 describe('when building domain entity with shared string reference', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -742,7 +742,7 @@ describe('when building domain entity with shared string reference', () => {
 });
 
 describe('when building domain entity with shared string reference without name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -773,7 +773,7 @@ describe('when building domain entity with shared string reference without name'
 });
 
 describe('when building domain entity with shared string reference inheriting documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -806,7 +806,7 @@ describe('when building domain entity with shared string reference inheriting do
 });
 
 describe('when building domain entity with domain entity reference inheriting documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -838,7 +838,7 @@ describe('when building domain entity with domain entity reference inheriting do
 });
 
 describe('when building domain entity with cascading updates', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -865,7 +865,7 @@ describe('when building domain entity with cascading updates', () => {
 
 describe('when building abstract entity in extension namespace', () => {
   const validationFailures: Array<ValidationFailure> = [];
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
@@ -941,7 +941,7 @@ describe('when building abstract entity in extension namespace', () => {
 });
 
 describe('when building domain entity with no begin namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
 
@@ -973,7 +973,7 @@ describe('when building domain entity with no begin namespace', () => {
 });
 
 describe('when building domain entity with no project extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1009,7 +1009,7 @@ describe('when building domain entity with no project extension', () => {
 });
 
 describe('when building domain entity with uppercase namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'Namespace';
@@ -1080,7 +1080,7 @@ describe('when building domain entity with uppercase namespace', () => {
 });
 
 describe('when building domain entity with lowercase project extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1151,7 +1151,7 @@ describe('when building domain entity with lowercase project extension', () => {
 });
 
 describe('when building domain entity with no namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = '';
@@ -1213,7 +1213,7 @@ describe('when building domain entity with no namespace', () => {
 });
 
 describe('when building domain entity with no end namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1274,7 +1274,7 @@ describe('when building domain entity with no end namespace', () => {
 });
 
 describe('when building domain entity with no top level entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1306,7 +1306,7 @@ describe('when building domain entity with no top level entity', () => {
 });
 
 describe('when building domain entity with no domain entity name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1342,7 +1342,7 @@ describe('when building domain entity with no domain entity name', () => {
 });
 
 describe('when building domain entity with lowercase domain entity name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1378,7 +1378,7 @@ describe('when building domain entity with lowercase domain entity name', () => 
 });
 
 describe('when building domain entity with no metaed id', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1440,7 +1440,7 @@ describe('when building domain entity with no metaed id', () => {
 });
 
 describe('when building domain entity with no documentation', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1500,7 +1500,7 @@ describe('when building domain entity with no documentation', () => {
 });
 
 describe('when building domain entity with no properties', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1547,7 +1547,7 @@ describe('when building domain entity with no properties', () => {
 });
 
 describe('when building domain entity with invalid trailing text', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
   const namespace: string = 'namespace';
@@ -1611,7 +1611,7 @@ describe('when building domain entity with invalid trailing text', () => {
 });
 
 describe('when building domain entity source map', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1670,7 +1670,7 @@ describe('when building domain entity source map', () => {
 });
 
 describe('when building domain entity namespace info source map', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -1728,7 +1728,7 @@ describe('when building domain entity namespace info source map', () => {
 
 describe('when building abstract entity source map', () => {
   const validationFailures: Array<ValidationFailure> = [];
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 

@@ -1,7 +1,5 @@
 // @flow
-import type { Association } from '../../../../../packages/metaed-core/src/model/Association';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { Association, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty } from '../ValidatorShared/FailSubclassIdentityRenameNotMatchingBaseClassIdentityProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

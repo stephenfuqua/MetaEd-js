@@ -1,7 +1,5 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { DomainItem } from '../../../../../packages/metaed-core/src/model/DomainItem';
+import type { DomainItem, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {

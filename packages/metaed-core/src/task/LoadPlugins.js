@@ -3,7 +3,7 @@ import path from 'path';
 import winston from 'winston';
 import { scanDirectories, materializePlugin } from '../plugin/PluginLoader';
 import type { State } from '../State';
-import type { MetaEdCore, PluginData, PluginManifest } from '../plugin/PluginTypes';
+import type { PluginData, PluginManifest } from '../plugin/PluginTypes';
 import { NoMetaEdPlugin } from '../plugin/PluginTypes';
 
 const cachedPluginManifest: Array<PluginManifest> = [];
@@ -20,7 +20,7 @@ export function loadPlugins(state: State): State {
   const pluginManifests = scanDirectories(state.pluginScanDirectory, { pluginType: 'artifact-specific' });
 
   const data: PluginData = { todo: 'any set up data that the plugin should receive' };
-  const interfaceToMetaEdCore: MetaEdCore = { exampleIsModelObjectFactory: 'should be an interface with methods to create new model objects' };
+  const interfaceToMetaEdCore: any = { exampleIsModelObjectFactory: 'should be an interface with methods to create new model objects' };
 
   pluginManifests.forEach(pluginManifest => {
     materializePlugin(data, interfaceToMetaEdCore, pluginManifest);

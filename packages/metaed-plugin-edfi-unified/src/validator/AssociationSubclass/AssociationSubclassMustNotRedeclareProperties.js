@@ -1,8 +1,5 @@
 // @flow
-import type { Association } from '../../../../../packages/metaed-core/src/model/Association';
-import type { AssociationExtension } from '../../../../../packages/metaed-core/src/model/AssociationExtension';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { Association, AssociationExtension, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

@@ -1,14 +1,10 @@
 // @flow
-import CommonBuilder from '../../../../../packages/metaed-core/src/builder/CommonBuilder';
-import CommonExtensionBuilder from '../../../../../packages/metaed-core/src/builder/CommonExtensionBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, CommonExtensionBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when common extension correctly has different property names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
 
@@ -42,7 +38,7 @@ describe('when common extension correctly has different property names', () => {
 });
 
 describe('when common extension has duplicate property name', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -81,7 +77,7 @@ describe('when common extension has duplicate property name', () => {
 });
 
 describe('when common extension has multiple duplicates', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const notDuplicatePropertyName: string = 'NotDuplicatePropertyName';
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
@@ -128,7 +124,7 @@ describe('when common extension has multiple duplicates', () => {
 });
 
 describe('when common extension has duplicate common property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
@@ -163,7 +159,7 @@ describe('when common extension has duplicate common property', () => {
 });
 
 describe('when common extension has duplicate common extension override property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;

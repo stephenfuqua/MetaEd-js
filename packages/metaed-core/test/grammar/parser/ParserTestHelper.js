@@ -4,7 +4,7 @@ import { Trees } from 'antlr4/tree/Trees';
 import BaseLexer from '../../../src/grammar/gen/BaseLexer';
 import MetaEdGrammar from '../../../src/grammar/gen/MetaEdGrammar';
 
-export default class ParserTestHelper {
+export class ParserTestHelper {
   static parse(inputText: string) {
     const inputStream = new antlr4.InputStream(inputText);
     const lexer = new BaseLexer.BaseLexer(inputStream);

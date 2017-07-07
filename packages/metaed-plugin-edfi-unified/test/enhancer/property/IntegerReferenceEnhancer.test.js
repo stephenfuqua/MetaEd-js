@@ -1,17 +1,11 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { IntegerProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
-import { newIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
-import type { SharedIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
-import { newSharedIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/SharedIntegerProperty';
-import type { IntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
-import { newIntegerType } from '../../../../../packages/metaed-core/src/model/IntegerType';
+import { newMetaEdEnvironment, newIntegerProperty, newSharedIntegerProperty, newIntegerType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, IntegerProperty, SharedIntegerProperty, IntegerType } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
 
 describe('when enhancing integer property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: IntegerProperty;
@@ -39,7 +33,7 @@ describe('when enhancing integer property', () => {
 });
 
 describe('when enhancing shared integer property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: SharedIntegerProperty;

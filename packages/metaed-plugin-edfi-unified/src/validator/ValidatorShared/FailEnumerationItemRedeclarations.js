@@ -1,8 +1,5 @@
 // @flow
-import type { Descriptor } from '../../../../../packages/metaed-core/src/model/Descriptor';
-import type { Enumeration } from '../../../../../packages/metaed-core/src/model/Enumeration';
-import type { EnumerationItem } from '../../../../../packages/metaed-core/src/model/EnumerationItem';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { Descriptor, Enumeration, EnumerationItem, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
 export function failEnumerationItemRedeclarations(

@@ -1,6 +1,6 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import TopLevelEntityBuilder from './TopLevelEntityBuilder';
+import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newDescriptor, asDescriptor } from '../model/Descriptor';
 import type { DescriptorSourceMap } from '../model/Descriptor';
 import type { EnumerationSourceMap } from '../model/Enumeration';
@@ -14,7 +14,7 @@ import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 
-export default class DescriptorBuilder extends TopLevelEntityBuilder {
+export class DescriptorBuilder extends TopLevelEntityBuilder {
   currentMapTypeEnumeration: MapTypeEnumeration;
   currentEnumerationItem: EnumerationItem;
 

@@ -2,7 +2,7 @@
 import fs from 'final-fs';
 import path from 'path';
 import winston from 'winston';
-import type { PluginManifest, MetaEdCore, PluginData, MetaEdPlugin } from './PluginTypes';
+import type { PluginManifest, PluginData, MetaEdPlugin } from './PluginTypes';
 import { NoMetaEdPlugin } from './PluginTypes';
 
 export type PluginOptions = {
@@ -55,7 +55,7 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
   return result;
 }
 
-export function materializePlugin(pluginData: PluginData, metaEdCore: MetaEdCore, plugManifest: PluginManifest) {
+export function materializePlugin(pluginData: PluginData, metaEdCore: any, plugManifest: PluginManifest) {
   try {
     /* eslint-disable */
     // $FlowIgnore - No one likes a dynamic require
@@ -63,7 +63,7 @@ export function materializePlugin(pluginData: PluginData, metaEdCore: MetaEdCore
     /* eslint-enable */
 
     // handle either ES or CommonJS modules
-    const pluginFactory: (PluginData, MetaEdCore) => MetaEdPlugin = pluginFactoryCandidate.default ? pluginFactoryCandidate.default : pluginFactoryCandidate;
+    const pluginFactory: (PluginData, any) => MetaEdPlugin = pluginFactoryCandidate.default ? pluginFactoryCandidate.default : pluginFactoryCandidate;
     plugManifest.plugin = pluginFactory(pluginData, metaEdCore);
   } catch (err) {
     winston.error(`PluginLoader: Attempted load of plugin '${plugManifest.pluginName}' at '${plugManifest.mainModule}' failed.`);

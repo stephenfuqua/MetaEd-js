@@ -87,7 +87,7 @@ export function newEntityRepository(): EntityRepository {
   });
 }
 
-export function getAll(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
+export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
   modelTypes.forEach(modelType => result.push(...repository[modelType].values()));

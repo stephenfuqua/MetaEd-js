@@ -1,17 +1,11 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { StringProperty } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
-import { newStringProperty } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
-import type { SharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
-import { newSharedStringProperty } from '../../../../../packages/metaed-core/src/model/property/SharedStringProperty';
-import type { StringType } from '../../../../../packages/metaed-core/src/model/StringType';
-import { newStringType } from '../../../../../packages/metaed-core/src/model/StringType';
+import { newMetaEdEnvironment, newStringProperty, newSharedStringProperty, newStringType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, StringProperty, SharedStringProperty, StringType } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
 
 
 describe('when enhancing string property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: StringProperty;
@@ -39,7 +33,7 @@ describe('when enhancing string property', () => {
 });
 
 describe('when enhancing shared string property', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
   let property: SharedStringProperty;

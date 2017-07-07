@@ -2,7 +2,7 @@
 import antlr4 from 'antlr4/index';
 import { BaseLexer } from './gen/BaseLexer';
 import { MetaEdGrammar } from './gen/MetaEdGrammar';
-import MetaEdErrorListener from './MetaEdErrorListener';
+import { MetaEdErrorListener } from './MetaEdErrorListener';
 
 export type ParseTreeBuilder = (metaEdErrorListener: MetaEdErrorListener, metaEdContents: string) => MetaEdGrammar;
 

@@ -17,7 +17,7 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
-export default class InterchangeBuilder extends MetaEdGrammarListener {
+export class InterchangeBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentInterchange: Interchange;

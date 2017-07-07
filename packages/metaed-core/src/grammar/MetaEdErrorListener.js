@@ -2,7 +2,7 @@
 import antlr4 from 'antlr4';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
-export default class MetaEdErrorListener {
+export class MetaEdErrorListener {
   messageCollection: ValidationFailure[];
   validatorName: string;
 

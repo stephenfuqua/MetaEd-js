@@ -1,13 +1,13 @@
 // @flow
 import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import SharedSimpleBuilder from './SharedSimpleBuilder';
+import { SharedSimpleBuilder } from './SharedSimpleBuilder';
 import { newSharedInteger } from '../model/SharedInteger';
 import type { SharedInteger, SharedIntegerSourceMap } from '../model/SharedInteger';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
-export default class SharedIntegerBuilder extends SharedSimpleBuilder {
+export class SharedIntegerBuilder extends SharedSimpleBuilder {
   enterSharedInteger(context: MetaEdGrammar.SharedIntegerContext) {
     this.enteringSharedSimple(newSharedInteger);
     if (this.currentSharedSimple !== NoSharedSimple) {

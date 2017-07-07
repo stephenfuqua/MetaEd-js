@@ -1,7 +1,6 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { EnhancerResult } from '../../../../packages/metaed-core/src/enhancer/EnhancerResult';
-import { getAllProperties } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
+import { getAllProperties } from '../../../../packages/metaed-core/index';
 
 const enhancerName: string = 'PropertyPathNameEnhancer';
 

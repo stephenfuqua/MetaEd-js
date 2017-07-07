@@ -12,7 +12,7 @@ import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
 // Note DecimalType is XSD specific with the advent of SharedDecimal, and creation should be move to XSD enhancers
-export default class DecimalTypeBuilder extends MetaEdGrammarListener {
+export class DecimalTypeBuilder extends MetaEdGrammarListener {
   currentDecimalType: DecimalType;
   metaEd: MetaEdEnvironment;
   namespaceInfo: NamespaceInfo;

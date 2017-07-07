@@ -1,12 +1,12 @@
 // @noflow
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
-import { metaEdEnvironmentFactory } from '../../src/MetaEdEnvironment';
+import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
-import StringTypeBuilder from '../../src/builder/StringTypeBuilder';
-import MetaEdTextBuilder from '../MetaEdTextBuilder';
+import { StringTypeBuilder } from '../../src/builder/StringTypeBuilder';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
 
 describe('when building shared string in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -81,7 +81,7 @@ describe('when building shared string in extension namespace', () => {
 });
 
 describe('when building domain entity with string property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -155,7 +155,7 @@ describe('when building domain entity with string property in extension namespac
 });
 
 describe('when building multiple shared strings in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -202,7 +202,7 @@ describe('when building multiple shared strings in extension namespace', () => {
 });
 
 describe('when building domain entity with multiple string properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -245,7 +245,7 @@ describe('when building domain entity with multiple string properties in extensi
 });
 
 describe('when building duplicate shared strings in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -300,7 +300,7 @@ describe('when building duplicate shared strings in extension namespace', () => 
 });
 
 describe('when building domain entity with duplicate string properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
@@ -351,7 +351,7 @@ describe('when building domain entity with duplicate string properties in extens
 });
 
 describe('when building shared string with duplicate string property in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const namespace: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';

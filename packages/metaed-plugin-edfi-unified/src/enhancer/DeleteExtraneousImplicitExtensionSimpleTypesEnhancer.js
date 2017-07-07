@@ -1,6 +1,5 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { EnhancerResult } from '../../../../packages/metaed-core/src/enhancer/EnhancerResult';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
 import { asCommon } from '../../../../packages/metaed-core/src/model/Common';
 import { groupByMetaEdName } from '../shared/GroupByMetaEdName';
 

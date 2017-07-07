@@ -1,15 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newDomainEntity } from '../../../../packages/metaed-core/src/model/DomainEntity';
-import { newDomainEntityProperty } from '../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
-import { addEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
-import { addProperty } from '../../../../packages/metaed-core/src/model/property/PropertyRepository';
+import { newMetaEdEnvironment, newDomainEntity, newDomainEntityProperty, addEntity, addProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/PropertyPathNameEnhancer';
 
 describe('when enhancing entity property without with context', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const propertyName: string = 'PropertyName';
 
@@ -37,7 +33,7 @@ describe('when enhancing entity property without with context', () => {
 });
 
 describe('when enhancing entity property with a with context', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const propertyName: string = 'PropertyName';
   const withContext: string = 'WithContext';
@@ -67,7 +63,7 @@ describe('when enhancing entity property with a with context', () => {
 });
 
 describe('when enhancing entity property with identical with context', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const propertyName: string = 'PropertyName';
   const withContext: string = propertyName;

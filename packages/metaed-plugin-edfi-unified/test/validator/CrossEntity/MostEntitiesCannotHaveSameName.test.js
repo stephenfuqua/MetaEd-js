@@ -1,23 +1,24 @@
 // @flow
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+  CommonBuilder,
+  DescriptorBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  EnumerationBuilder,
+  InterchangeBuilder,
+  IntegerTypeBuilder,
+  SharedIntegerBuilder,
+  StringTypeBuilder,
+} from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/CrossEntity/MostEntitiesCannotHaveSameName';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import AssociationBuilder from '../../../../../packages/metaed-core/src/builder/AssociationBuilder';
-import DomainEntityBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityBuilder';
-import DomainEntityExtensionBuilder from '../../../../../packages/metaed-core/src/builder/DomainEntityExtensionBuilder';
-import AssociationExtensionBuilder from '../../../../../packages/metaed-core/src/builder/AssociationExtensionBuilder';
-import SharedIntegerBuilder from '../../../../../packages/metaed-core/src/builder/SharedIntegerBuilder';
-import DescriptorBuilder from '../../../../../packages/metaed-core/src/builder/DescriptorBuilder';
-import EnumerationBuilder from '../../../../../packages/metaed-core/src/builder/EnumerationBuilder';
-import InterchangeBuilder from '../../../../../packages/metaed-core/src/builder/InterchangeBuilder';
-import IntegerTypeBuilder from '../../../../../packages/metaed-core/src/builder/IntegerTypeBuilder';
-import CommonBuilder from '../../../../../packages/metaed-core/src/builder/CommonBuilder';
-import StringTypeBuilder from '../../../../../packages/metaed-core/src/builder/StringTypeBuilder';
 
 describe('when entities have different names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -52,7 +53,7 @@ describe('when entities have different names', () => {
 });
 
 describe('when DE and Association have identical names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -98,7 +99,7 @@ describe('when DE and Association have identical names', () => {
 });
 
 describe('when DE has same name as DE extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -133,7 +134,7 @@ describe('when DE has same name as DE extension', () => {
 });
 
 describe('when Association has same name as Association extension', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -170,7 +171,7 @@ describe('when Association has same name as Association extension', () => {
 });
 
 describe('when DE and SharedInteger have identical names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -215,7 +216,7 @@ describe('when DE and SharedInteger have identical names', () => {
 });
 
 describe('when DE integer property (creating IntegerType) and SharedInteger have identical names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityAndPropertyName: string = 'EntityAndPropertyName';
   let failures: Array<ValidationFailure>;
 
@@ -262,7 +263,7 @@ describe('when DE integer property (creating IntegerType) and SharedInteger have
 });
 
 describe('when two DE properties (creating different SimpleTypes) have identical names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
 
@@ -309,7 +310,7 @@ describe('when two DE properties (creating different SimpleTypes) have identical
 });
 
 describe('when DE and Common have identical names', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -354,7 +355,7 @@ describe('when DE and Common have identical names', () => {
 });
 
 describe('when DE has same name as descriptor', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -389,7 +390,7 @@ describe('when DE has same name as descriptor', () => {
 });
 
 describe('when DE has same name as enumeration', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -424,7 +425,7 @@ describe('when DE has same name as enumeration', () => {
 });
 
 describe('when DE has same name as interchange', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 

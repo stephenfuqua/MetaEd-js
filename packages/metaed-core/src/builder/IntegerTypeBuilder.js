@@ -12,7 +12,7 @@ import { newNamespaceInfo, NoNamespaceInfo } from '../model/NamespaceInfo';
 import { sourceMapFrom } from '../model/SourceMap';
 
 // Note IntegerType is XSD specific with the advent of SharedInteger and SharedShort, and creation should be move to XSD enhancers
-export default class IntegerTypeBuilder extends MetaEdGrammarListener {
+export class IntegerTypeBuilder extends MetaEdGrammarListener {
   currentIntegerType: IntegerType;
   metaEd: MetaEdEnvironment;
   namespaceInfo: NamespaceInfo;

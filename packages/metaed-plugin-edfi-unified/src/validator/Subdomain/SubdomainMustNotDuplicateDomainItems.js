@@ -1,6 +1,5 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
 // eslint-disable-next-line no-unused-vars

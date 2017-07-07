@@ -1,13 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { NamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
-import { newNamespaceInfo } from '../../../../packages/metaed-core/src/model/NamespaceInfo';
-import { newStringType } from '../../../../packages/metaed-core/src/model/StringType';
+import { newMetaEdEnvironment, newNamespaceInfo, newStringType } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, NamespaceInfo } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
 describe('when there are duplicate string types', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreOnlySimpleTypeName: string = 'CoreOnlySimpleTypeName';
   const coreDuplicatedSimpleTypeName: string = 'CoreDuplicatedSimpleTypeName';
   const extensionOnlySimpleTypeName: string = 'ExtensionOnlySimpleTypeName';

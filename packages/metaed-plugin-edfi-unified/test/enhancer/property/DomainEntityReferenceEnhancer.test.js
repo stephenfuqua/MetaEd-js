@@ -1,17 +1,11 @@
 // @flow
 import R from 'ramda';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { DomainEntityProperty } from '../../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
-import { newDomainEntityProperty } from '../../../../../packages/metaed-core/src/model/property/DomainEntityProperty';
-import type { DomainEntity } from '../../../../../packages/metaed-core/src/model/DomainEntity';
-import { newDomainEntity } from '../../../../../packages/metaed-core/src/model/DomainEntity';
-import type { DomainEntitySubclass } from '../../../../../packages/metaed-core/src/model/DomainEntitySubclass';
-import { newDomainEntitySubclass } from '../../../../../packages/metaed-core/src/model/DomainEntitySubclass';
+import { newMetaEdEnvironment, newDomainEntityProperty, newDomainEntity, newDomainEntitySubclass } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, DomainEntityProperty, DomainEntity, DomainEntitySubclass } from '../../../../../packages/metaed-core/index';
 import { enhance } from '../../../src/enhancer/property/DomainEntityReferenceEnhancer';
 
 describe('when enhancing domainEntity property referring to domainEntity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 
@@ -44,7 +38,7 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
 });
 
 describe('when enhancing domainEntity property referring to subclass', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 

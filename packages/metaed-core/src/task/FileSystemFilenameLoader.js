@@ -13,7 +13,7 @@ export type InputDirectory = {
   isExtension: boolean,
 }
 
-export default function loadFiles(state: State): State {
+export function loadFiles(state: State): State {
   if (state.inputDirectories == null) {
     winston.warn('FileSystemFilenameLoader: no input directories');
     return state;

@@ -1,26 +1,26 @@
 // @flow
 import antlr4 from 'antlr4';
 import type { State } from '../State';
-import AssociationBuilder from '../builder/AssociationBuilder';
-import AssociationExtensionBuilder from '../builder/AssociationExtensionBuilder';
-import AssociationSubclassBuilder from '../builder/AssociationSubclassBuilder';
-import ChoiceBuilder from '../builder/ChoiceBuilder';
-import CommonBuilder from '../builder/CommonBuilder';
-import CommonExtensionBuilder from '../builder/CommonExtensionBuilder';
-import DecimalTypeBuilder from '../builder/DecimalTypeBuilder';
-import DescriptorBuilder from '../builder/DescriptorBuilder';
-import DomainBuilder from '../builder/DomainBuilder';
-import DomainEntityBuilder from '../builder/DomainEntityBuilder';
-import DomainEntityExtensionBuilder from '../builder/DomainEntityExtensionBuilder';
-import DomainEntitySubclassBuilder from '../builder/DomainEntitySubclassBuilder';
-import EnumerationBuilder from '../builder/EnumerationBuilder';
-import IntegerTypeBuilder from '../builder/IntegerTypeBuilder';
-import InterchangeBuilder from '../builder/InterchangeBuilder';
-import NamespaceInfoBuilder from '../builder/NamespaceInfoBuilder';
-import SharedDecimalBuilder from '../builder/SharedDecimalBuilder';
-import SharedIntegerBuilder from '../builder/SharedIntegerBuilder';
-import SharedStringBuilder from '../builder/SharedStringBuilder';
-import StringTypeBuilder from '../builder/StringTypeBuilder';
+import { AssociationBuilder } from '../builder/AssociationBuilder';
+import { AssociationExtensionBuilder } from '../builder/AssociationExtensionBuilder';
+import { AssociationSubclassBuilder } from '../builder/AssociationSubclassBuilder';
+import { ChoiceBuilder } from '../builder/ChoiceBuilder';
+import { CommonBuilder } from '../builder/CommonBuilder';
+import { CommonExtensionBuilder } from '../builder/CommonExtensionBuilder';
+import { DecimalTypeBuilder } from '../builder/DecimalTypeBuilder';
+import { DescriptorBuilder } from '../builder/DescriptorBuilder';
+import { DomainBuilder } from '../builder/DomainBuilder';
+import { DomainEntityBuilder } from '../builder/DomainEntityBuilder';
+import { DomainEntityExtensionBuilder } from '../builder/DomainEntityExtensionBuilder';
+import { DomainEntitySubclassBuilder } from '../builder/DomainEntitySubclassBuilder';
+import { EnumerationBuilder } from '../builder/EnumerationBuilder';
+import { IntegerTypeBuilder } from '../builder/IntegerTypeBuilder';
+import { InterchangeBuilder } from '../builder/InterchangeBuilder';
+import { NamespaceInfoBuilder } from '../builder/NamespaceInfoBuilder';
+import { SharedDecimalBuilder } from '../builder/SharedDecimalBuilder';
+import { SharedIntegerBuilder } from '../builder/SharedIntegerBuilder';
+import { SharedStringBuilder } from '../builder/SharedStringBuilder';
+import { StringTypeBuilder } from '../builder/StringTypeBuilder';
 
 export function executeAssociationBuilder(state: State): State {
   antlr4.tree.ParseTreeWalker.DEFAULT.walk(new AssociationBuilder(state.metaEd, state.validationFailure), state.parseTree);

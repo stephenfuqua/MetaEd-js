@@ -3,7 +3,7 @@ import R from 'ramda';
 import winston from 'winston';
 import type { State } from '../State';
 import { createFileIndex, getFilenameAndLineNumber } from './FileIndex';
-import MetaEdErrorListener from '../grammar/MetaEdErrorListener';
+import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
 import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
 
 export const validateSyntax = R.curry(

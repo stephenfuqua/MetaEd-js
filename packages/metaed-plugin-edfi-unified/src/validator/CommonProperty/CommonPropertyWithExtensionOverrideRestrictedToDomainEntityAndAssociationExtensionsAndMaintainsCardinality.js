@@ -1,9 +1,10 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
-import type { ModelType } from '../../../../../packages/metaed-core/src/model/ModelType';
-import type { EntityRepository } from '../../../../../packages/metaed-core/src/model/EntityRepository';
-import type { EntityProperty } from '../../../../../packages/metaed-core/src/model/property/EntityProperty';
+import type {
+  EntityProperty,
+  EntityRepository,
+  MetaEdEnvironment,
+  ModelType,
+  ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { CommonPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
 
 const validEntityTypes: ModelType[] = [

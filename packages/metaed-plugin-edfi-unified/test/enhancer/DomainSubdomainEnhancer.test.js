@@ -1,13 +1,10 @@
 // @flow
-import { metaEdEnvironmentFactory } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../packages/metaed-core/src/MetaEdEnvironment';
-import { newSubdomain } from '../../../../packages/metaed-core/src/model/Subdomain';
-import { newDomain } from '../../../../packages/metaed-core/src/model/Domain';
-import { addEntity, getEntity } from '../../../../packages/metaed-core/src/model/EntityRepository';
+import { newMetaEdEnvironment, newSubdomain, newDomain, addEntity, getEntity } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/enhancer/DomainSubdomainEnhancer';
 
 describe('when enhancing domain', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainMetaEdName: string = 'DomainMetaEdName';
   const subdomain1MetaEdName: string = 'Subdomain1MetaEdName';
   const subdomain2MetaEdName: string = 'Subdomain2MetaEdName';

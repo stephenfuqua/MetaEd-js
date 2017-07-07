@@ -1,14 +1,10 @@
 // @flow
-import DomainBuilder from '../../../../../packages/metaed-core/src/builder/DomainBuilder';
-import DescriptorBuilder from '../../../../../packages/metaed-core/src/builder/DescriptorBuilder';
-import MetaEdTextBuilder from '../../../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { metaEdEnvironmentFactory } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
-import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/src/MetaEdEnvironment';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, DescriptorBuilder } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Domain/DescriptorDomainItemMustMatchTopLevelEntity';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/src/validator/ValidationFailure';
 
 describe('when validating descriptor domain item matches top level entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const descriptorName: string = 'DescriptorName';
 
@@ -44,7 +40,7 @@ describe('when validating descriptor domain item matches top level entity', () =
 });
 
 describe('when validating descriptor domain item does not match top level entity', () => {
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentFactory();
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainName: string = 'DomainName';
   const descriptorName: string = 'DescriptorName';
 

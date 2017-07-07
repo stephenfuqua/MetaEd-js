@@ -1,5 +1,5 @@
 // @flow
-import MetaEdErrorListener from '../../src/grammar/MetaEdErrorListener';
+import { MetaEdErrorListener } from '../../src/grammar/MetaEdErrorListener';
 import { buildTopLevelEntity, buildMetaEd } from '../../src/grammar/ParseTreeBuilder';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 

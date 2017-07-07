@@ -45,7 +45,7 @@ function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<str
   return R.map(token => token.getText())(context.ID());
 }
 
-export default class TopLevelEntityBuilder extends MetaEdGrammarListener {
+export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
   namespaceInfo: NamespaceInfo;
   currentTopLevelEntity: TopLevelEntity;
