@@ -31,3 +31,5 @@ export function newReferentialPropertyFields() {
 export function newReferentialProperty(): ReferentialProperty {
   return Object.assign(new ReferentialProperty(), newReferentialPropertyFields());
 }
+
+export const asReferentialProperty = (x: EntityProperty): ReferentialProperty => ((x: any): ReferentialProperty);
