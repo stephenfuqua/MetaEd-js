@@ -6,7 +6,6 @@
   },
   "metaed-plugin": {
     "artifact-specific": {
-      "pluginName": "edfi:unified",
       "mainModule": "./src/unified.js",
       "displayName": "The Ed-Fi Alliance Unified Plugin",
       "author": "Ed-Fi Alliance",

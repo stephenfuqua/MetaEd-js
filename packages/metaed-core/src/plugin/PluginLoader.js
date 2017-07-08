@@ -2,7 +2,7 @@
 import fs from 'final-fs';
 import path from 'path';
 import winston from 'winston';
-import type { PluginManifest, PluginData, MetaEdPlugin } from './PluginTypes';
+import type { PluginManifest, MetaEdPlugin } from './PluginTypes';
 import { NoMetaEdPlugin } from './PluginTypes';
 
 export type PluginOptions = {
@@ -27,9 +27,10 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
     pluginName: packageMetadata.pluginName || 'none',
     displayName: packageMetadata.displayName || 'none',
     author: packageMetadata.author || 'none',
-    metaEdVersion: packageMetadata.metaEdVersion || 'none',
+    metaEdVersionRange: packageMetadata.metaEdVersionRange || 'none',
     dependencies: packageMetadata.dependencies || [],
-    plugin: NoMetaEdPlugin,
+    dataReference: packageMetadata.dataReference || '',
+    metaEdPlugin: NoMetaEdPlugin,
     enabled: true,
   };
 }
@@ -55,7 +56,7 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
   return result;
 }
 
-export function materializePlugin(pluginData: PluginData, metaEdCore: any, plugManifest: PluginManifest) {
+export function materializePlugin(pluginData: any, metaEdCore: any, plugManifest: PluginManifest) {
   try {
     /* eslint-disable */
     // $FlowIgnore - No one likes a dynamic require
@@ -63,11 +64,11 @@ export function materializePlugin(pluginData: PluginData, metaEdCore: any, plugM
     /* eslint-enable */
 
     // handle either ES or CommonJS modules
-    const pluginFactory: (PluginData, any) => MetaEdPlugin = pluginFactoryCandidate.default ? pluginFactoryCandidate.default : pluginFactoryCandidate;
-    plugManifest.plugin = pluginFactory(pluginData, metaEdCore);
+    const pluginFactory: (any, any) => MetaEdPlugin = pluginFactoryCandidate.default ? pluginFactoryCandidate.default : pluginFactoryCandidate;
+    plugManifest.metaEdPlugin = pluginFactory(pluginData, metaEdCore);
   } catch (err) {
-    winston.error(`PluginLoader: Attempted load of plugin '${plugManifest.pluginName}' at '${plugManifest.mainModule}' failed.`);
+    winston.error(`PluginLoader: Attempted load of npm package ${plugManifest.npmName} plugin '${plugManifest.displayName}' at '${plugManifest.mainModule}' failed.`);
     winston.error(`PluginLoader: Error Message: ${err.message}`);
-    plugManifest.plugin = NoMetaEdPlugin;
+    plugManifest.metaEdPlugin = NoMetaEdPlugin;
   }
 }

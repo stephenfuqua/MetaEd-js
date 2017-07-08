@@ -1,13 +1,16 @@
 // @flow
 import type { Validator } from '../validator/Validator';
+import type { Enhancer } from '../enhancer/Enhancer';
 
 export type MetaEdPlugin = {
-  validators: Array<Validator>,
+  validator: Array<Validator>,
+  enhancer: Array<Enhancer>,
 }
 
 export function newMetaEdPlugin(): MetaEdPlugin {
   return {
-    validators: [],
+    validator: [],
+    enhancer: [],
   };
 }
 
@@ -17,15 +20,11 @@ export type PluginManifest = {
   npmName: string,
   version: string,
   mainModule: string,
-  pluginName: string,
   displayName: string,
   author: string,
-  metaEdVersion: string,
+  metaEdVersionRange: string,
   dependencies: Array<string>,
-  plugin: MetaEdPlugin,
+  dataReference: string,
   enabled: boolean,
-}
-
-export type PluginData = {
-  todo: string
+  metaEdPlugin: MetaEdPlugin,
 }

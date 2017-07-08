@@ -45,9 +45,10 @@ export type { FileSet, MetaEdFile } from './src/task/MetaEdFile';
 export type { FileIndex } from './src/task/FileIndex';
 export type { Validator } from './src/validator/Validator';
 export type { ValidationFailure } from './src/validator/ValidationFailure';
-export type { MetaEdEnvironment } from './src/MetaEdEnvironment';
+export type { Enhancer } from './src/enhancer/Enhancer';
 export type { EnhancerResult } from './src/enhancer/EnhancerResult';
-export type { MetaEdPlugin, PluginData, PluginManifest } from './src/plugin/PluginTypes';
+export type { MetaEdEnvironment } from './src/MetaEdEnvironment';
+export type { MetaEdPlugin, PluginManifest } from './src/plugin/PluginTypes';
 
 // Properties
 export type { AssociationProperty } from './src/model/property/AssociationProperty';

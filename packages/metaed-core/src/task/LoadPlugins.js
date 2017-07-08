@@ -3,7 +3,7 @@ import path from 'path';
 import winston from 'winston';
 import { scanDirectories, materializePlugin } from '../plugin/PluginLoader';
 import type { State } from '../State';
-import type { PluginData, PluginManifest } from '../plugin/PluginTypes';
+import type { PluginManifest } from '../plugin/PluginTypes';
 import { NoMetaEdPlugin } from '../plugin/PluginTypes';
 
 const cachedPluginManifest: Array<PluginManifest> = [];
@@ -19,15 +19,15 @@ export function loadPlugins(state: State): State {
 
   const pluginManifests = scanDirectories(state.pluginScanDirectory, { pluginType: 'artifact-specific' });
 
-  const data: PluginData = { todo: 'any set up data that the plugin should receive' };
+  const pluginData = { name: 'xyz', annotation: 'pdq' };
   const interfaceToMetaEdCore: any = { exampleIsModelObjectFactory: 'should be an interface with methods to create new model objects' };
 
   pluginManifests.forEach(pluginManifest => {
-    materializePlugin(data, interfaceToMetaEdCore, pluginManifest);
+    materializePlugin(pluginData, interfaceToMetaEdCore, pluginManifest);
     if (pluginManifest.plugin !== NoMetaEdPlugin) {
-      winston.info(`LoadPlugins: Loaded plugin '${pluginManifest.pluginName}'`);
+      winston.info(`LoadPlugins: Loaded plugin '${pluginManifest.npmName}'`);
     } else {
-      winston.info(`LoadPlugins: Could not load plugin '${pluginManifest.pluginName}'`);
+      winston.info(`LoadPlugins: Could not load plugin '${pluginManifest.npmName}'`);
     }
 
     cachedPluginManifest.push(pluginManifest);

@@ -56,6 +56,7 @@ export class EntityProperty {
   hasRestriction: boolean;
   referencedType: string;
   sourceMap: EntityPropertySourceMap;
+  data: any;
 }
 
 export function newEntityPropertyFields() {
@@ -83,6 +84,7 @@ export function newEntityPropertyFields() {
     hasRestriction: false,
     referencedType: '',
     sourceMap: new EntityPropertySourceMap(),
+    data: {},
   };
 }
 

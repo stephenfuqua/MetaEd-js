@@ -29,6 +29,8 @@ export class TopLevelEntity extends ModelBase {
   baseEntityName: string;
   baseEntity: ?TopLevelEntity;
   sourceMap: TopLevelEntitySourceMap;
+  data: any;
+  config: any;
 }
 
 export function newTopLevelEntity(): TopLevelEntity {

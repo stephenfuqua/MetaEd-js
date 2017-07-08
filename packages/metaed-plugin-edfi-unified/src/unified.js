@@ -1,5 +1,5 @@
 // @flow
-import type { Validator, PluginData, MetaEdPlugin } from '../../../packages/metaed-core/index';
+import type { Enhancer, Validator, MetaEdPlugin } from '../../../packages/metaed-core/index';
 
 import { validate as associationExtensionExistsOnlyInExtensionNamespace } from './validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
 import { validate as associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass } from './validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
@@ -16,7 +16,6 @@ import { validate as domainEntityMustContainNoMoreThanOneUniqueIdColumn } from '
 import { validate as domainEntityExtensionExistsOnlyInExtensionNamespace } from './validator/DomainEntityExtension/DomainEntityExtensionExistsOnlyInExtensionNamespace';
 import { validate as domainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass } from './validator/DomainEntityExtension/DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass';
 import { validate as domainEntityExtensionMustNotRedeclareProperties } from './validator/DomainEntityExtension/DomainEntityExtensionMustNotRedeclareProperties';
-
 
 function validatorList(): Array<Validator> {
   return [
@@ -35,9 +34,13 @@ function validatorList(): Array<Validator> {
   ];
 }
 
-// eslint-disable-next-line no-unused-vars
-export default function initialize(data: PluginData, host: any): MetaEdPlugin {
+function enhancerList(): Array<Enhancer> {
+  return [];  // TODO: list them
+}
+
+export default function initialize(): MetaEdPlugin {
   return {
-    validators: validatorList(),
+    validator: validatorList(),
+    enhancer: enhancerList(),
   };
 }
