@@ -11,6 +11,7 @@ export class DescriptorProperty extends ReferentialProperty {
 export function newDescriptorProperty(): DescriptorProperty {
   return Object.assign(new DescriptorProperty(), newReferentialProperty(), {
     type: 'descriptor',
+    typeHumanizedName: 'Descriptor Property',
     sourceMap: new DescriptorPropertySourceMap(),
   });
 }

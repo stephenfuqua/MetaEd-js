@@ -17,6 +17,7 @@ export class ShortProperty extends SimpleProperty {
 export function newShortProperty(): ShortProperty {
   return Object.assign(new ShortProperty(), newSimpleProperty(), {
     type: 'short',
+    typeHumanizedName: 'Short Property',
     minValue: null,
     maxValue: null,
     sourceMap: new ShortPropertySourceMap(),

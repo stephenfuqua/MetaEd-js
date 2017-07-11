@@ -11,6 +11,7 @@ export class PercentProperty extends SimpleProperty {
 export function newPercentProperty(): PercentProperty {
   return Object.assign(new PercentProperty(), newSimpleProperty(), {
     type: 'percent',
+    typeHumanizedName: 'Percent Property',
     sourceMap: new PercentPropertySourceMap(),
   });
 }

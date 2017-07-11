@@ -11,6 +11,7 @@ export class SchoolYearEnumerationProperty extends ReferentialProperty {
 export function newSchoolYearEnumerationProperty(): SchoolYearEnumerationProperty {
   return Object.assign(new SchoolYearEnumerationProperty(), newReferentialProperty(), {
     type: 'schoolYearEnumeration',
+    typeHumanizedName: 'School Year Enumeration Property',
     sourceMap: new SchoolYearEnumerationPropertySourceMap(),
   });
 }

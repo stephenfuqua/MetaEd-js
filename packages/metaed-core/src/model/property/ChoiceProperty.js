@@ -11,6 +11,7 @@ export class ChoiceProperty extends ReferentialProperty {
 export function newChoiceProperty(): ChoiceProperty {
   return Object.assign(new ChoiceProperty(), newReferentialProperty(), {
     type: 'choice',
+    typeHumanizedName: 'Choice Property',
     sourceMap: new ChoicePropertySourceMap(),
   });
 }

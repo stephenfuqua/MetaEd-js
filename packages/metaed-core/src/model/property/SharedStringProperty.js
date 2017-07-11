@@ -7,6 +7,7 @@ export class SharedStringProperty extends StringProperty {}
 export function newSharedStringProperty(): SharedStringProperty {
   return Object.assign(new SharedStringProperty(), newStringProperty(), {
     type: 'sharedString',
+    typeHumanizedName: 'Shared String Property',
   });
 }
 

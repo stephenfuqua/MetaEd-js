@@ -11,6 +11,7 @@ export class TimeProperty extends SimpleProperty {
 export function newTimeProperty(): TimeProperty {
   return Object.assign(new TimeProperty(), newSimpleProperty(), {
     type: 'time',
+    typeHumanizedName: 'Time Property',
     sourceMap: new TimePropertySourceMap(),
   });
 }

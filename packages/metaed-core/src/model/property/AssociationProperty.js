@@ -15,6 +15,7 @@ export class AssociationProperty extends ReferentialProperty {
 export function newAssociationProperty(): AssociationProperty {
   return Object.assign(new AssociationProperty(), newReferentialProperty(), {
     type: 'association',
+    typeHumanizedName: 'Association Property',
     isWeak: false,
     sourceMap: new AssociationPropertySourceMap(),
   });

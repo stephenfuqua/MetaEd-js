@@ -7,6 +7,7 @@ export class SharedShortProperty extends ShortProperty {}
 export function newSharedShortProperty(): SharedShortProperty {
   return Object.assign(new SharedShortProperty(), newShortProperty(), {
     type: 'sharedShort',
+    typeHumanizedName: 'Shared Short Property',
   });
 }
 

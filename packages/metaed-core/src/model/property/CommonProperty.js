@@ -15,6 +15,7 @@ export class CommonProperty extends ReferentialProperty {
 export function newCommonProperty(): CommonProperty {
   return Object.assign(new CommonProperty(), newReferentialProperty(), {
     type: 'common',
+    typeHumanizedName: 'Common Property',
     isExtensionOverride: false,
     sourceMap: new CommonPropertySourceMap(),
   });

@@ -22,9 +22,9 @@ DomainSourceMap {
   },
   "identityProperties": Array [],
   "metaEdId": Object {
-    "column": 33,
-    "line": 5,
-    "tokenText": "[2]",
+    "column": 20,
+    "line": 2,
+    "tokenText": "[1]",
   },
   "metaEdName": Object {
     "column": 9,
@@ -120,9 +120,9 @@ SubdomainSourceMap {
   "entities": Array [],
   "identityProperties": Array [],
   "metaEdId": Object {
-    "column": 33,
-    "line": 5,
-    "tokenText": "[2]",
+    "column": 46,
+    "line": 2,
+    "tokenText": "[1]",
   },
   "metaEdName": Object {
     "column": 12,

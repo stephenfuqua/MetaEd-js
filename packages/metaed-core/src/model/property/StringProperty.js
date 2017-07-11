@@ -17,6 +17,7 @@ export class StringProperty extends SimpleProperty {
 export function newStringProperty(): StringProperty {
   return Object.assign(new StringProperty(), newSimpleProperty(), {
     type: 'string',
+    typeHumanizedName: 'String Property',
     minLength: null,
     maxLength: null,
     sourceMap: new StringPropertySourceMap(),

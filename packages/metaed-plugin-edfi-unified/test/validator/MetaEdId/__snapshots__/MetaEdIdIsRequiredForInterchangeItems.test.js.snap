@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating interchange element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+
+exports[`when validating interchange element is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when validating interchange extension element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+
+exports[`when validating interchange extension element is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 3,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when validating interchange extension identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityIdentityTemplateName is missing a MetaEdId value."`;
+
+exports[`when validating interchange extension identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 3,
+  "tokenText": "domain entity identity",
+}
+`;
+
+exports[`when validating interchange identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+
+exports[`when validating interchange identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;

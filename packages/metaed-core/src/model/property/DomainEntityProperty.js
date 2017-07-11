@@ -15,6 +15,7 @@ export class DomainEntityProperty extends ReferentialProperty {
 export function newDomainEntityProperty(): DomainEntityProperty {
   return Object.assign(new DomainEntityProperty(), newReferentialProperty(), {
     type: 'domainEntity',
+    typeHumanizedName: 'Domain Entity Property',
     isWeak: false,
     sourceMap: new DomainEntityPropertySourceMap(),
   });

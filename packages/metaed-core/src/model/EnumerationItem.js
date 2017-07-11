@@ -8,6 +8,7 @@ export class EnumerationItemSourceMap extends ModelBaseSourceMap {
 }
 
 export class EnumerationItem extends ModelBase {
+  typeHumanizedName: string;
   shortDescription: string;
   sourceMap: ModelBaseSourceMap & EnumerationItemSourceMap;
 }
@@ -15,6 +16,7 @@ export class EnumerationItem extends ModelBase {
 export function newEnumerationItem(): EnumerationItem {
   return Object.assign(new EnumerationItem(), {
     type: 'enumerationItem',
+    typeHumanizedName: 'Enumeration Item',
     documentation: '',
     metaEdName: '',
     metaEdId: '',

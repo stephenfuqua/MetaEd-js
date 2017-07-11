@@ -11,6 +11,7 @@ export class InlineCommonProperty extends ReferentialProperty {
 export function newInlineCommonProperty(): InlineCommonProperty {
   return Object.assign(new InlineCommonProperty(), newReferentialProperty(), {
     type: 'inlineCommon',
+    typeHumanizedName: 'Inline Common Property',
     sourceMap: new InlineCommonPropertySourceMap(),
   });
 }

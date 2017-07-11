@@ -8,7 +8,7 @@ export class SchoolYearEnumeration extends Enumeration {}
 export function newSchoolYearEnumeration(): SchoolYearEnumeration {
   return Object.assign(new SchoolYearEnumeration(), newTopLevelEntity(), {
     type: 'schoolYearEnumeration',
-    typeHumanizedName: 'Enumeration',
+    typeHumanizedName: 'School Year Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });

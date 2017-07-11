@@ -11,6 +11,7 @@ export class CurrencyProperty extends SimpleProperty {
 export function newCurrencyProperty(): CurrencyProperty {
   return Object.assign(new CurrencyProperty(), newSimpleProperty(), {
     type: 'currency',
+    typeHumanizedName: 'Currency Property',
     sourceMap: new CurrencyPropertySourceMap(),
   });
 }

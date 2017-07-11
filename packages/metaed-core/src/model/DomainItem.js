@@ -9,6 +9,7 @@ export class DomainItemSourceMap extends ModelBaseSourceMap {
 }
 
 export class DomainItem extends ModelBase {
+  typeHumanizedName: string;
   referencedType: ModelType;
   sourceMap: DomainItemSourceMap;
 }
@@ -16,6 +17,7 @@ export class DomainItem extends ModelBase {
 export function newDomainItem(): DomainItem {
   return Object.assign(new DomainItem(), {
     type: 'domainItem',
+    typeHumanizedName: 'Domain Item',
     documentation: '',
     metaEdName: '',
     metaEdId: '',

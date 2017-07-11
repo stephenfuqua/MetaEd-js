@@ -27,7 +27,7 @@ import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
 import type { TopLevelEntity } from './TopLevelEntity';
 import { asTopLevelEntity } from './TopLevelEntity';
-import { topLevelEntityModelTypes } from './ModelType';
+import { allEntityModelTypes, topLevelEntityModelTypes } from './ModelType';
 
 export class EntityRepository {
   unknown: Map<string, any>;
@@ -85,6 +85,13 @@ export function newEntityRepository(): EntityRepository {
     stringType: new Map(),
     subdomain: new Map(),
   });
+}
+
+export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
+  const result = [];
+  // $FlowIgnore - using model type repository lookup
+  allEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
+  return result;
 }
 
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {

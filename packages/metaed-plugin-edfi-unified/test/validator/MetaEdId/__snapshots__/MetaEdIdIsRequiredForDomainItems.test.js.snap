@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating domain item is missing metaEdId should have validation failures -> message 1`] = `"Domain Item DomainItemName is missing a MetaEdId value."`;
+
+exports[`when validating domain item is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
+
+exports[`when validating subdomain is missing metaEdId for entity should have validation failures -> message 1`] = `"Domain Item DomainEntityElementName is missing a MetaEdId value."`;
+
+exports[`when validating subdomain is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;

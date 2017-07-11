@@ -11,6 +11,7 @@ export class DateProperty extends SimpleProperty {
 export function newDateProperty(): DateProperty {
   return Object.assign(new DateProperty(), newSimpleProperty(), {
     type: 'date',
+    typeHumanizedName: 'Date Property',
     sourceMap: new DatePropertySourceMap(),
   });
 }

@@ -11,6 +11,7 @@ export class BooleanProperty extends SimpleProperty {
 export function newBooleanProperty(): BooleanProperty {
   return Object.assign(new BooleanProperty(), newSimpleProperty(), {
     type: 'boolean',
+    typeHumanizedName: 'Boolean Property',
     sourceMap: new BooleanPropertySourceMap(),
   });
 }

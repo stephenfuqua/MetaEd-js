@@ -18,6 +18,7 @@ export class InterchangeSourceMap extends ModelBaseSourceMap {
 }
 
 export class Interchange extends ModelBase {
+  typeHumanizedName: string;
   elements: Array<InterchangeItem>;
   identityTemplates: Array<InterchangeItem>;
   extendedDocumentation: string;
@@ -30,6 +31,7 @@ export class Interchange extends ModelBase {
 export function newInterchange(): Interchange {
   return Object.assign(new Interchange(), {
     type: 'interchange',
+    typeHumanizedName: 'Interchange',
     documentation: '',
     metaEdName: '',
     metaEdId: '',

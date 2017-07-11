@@ -21,6 +21,7 @@ export type ModelType =
   'integerType' |
   'interchange' |
   'interchangeExtension' |
+  'interchangeItem' |
   'inlineCommon' |
   'mapTypeEnumeration' |
   'namespaceInfo' |
@@ -31,6 +32,33 @@ export type ModelType =
   'sharedString' |
   'stringType' |
   'subdomain';
+
+export const allEntityModelTypes: Array<ModelType> = [
+  'unknown',
+  'association',
+  'associationExtension',
+  'associationSubclass',
+  'choice',
+  'common',
+  'commonExtension',
+  'decimalType',
+  'descriptor',
+  'domain',
+  'domainEntity',
+  'domainEntityExtension',
+  'domainEntitySubclass',
+  'enumeration',
+  'integerType',
+  'interchange',
+  'interchangeExtension',
+  'mapTypeEnumeration',
+  'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedString',
+  'stringType',
+  'subdomain',
+];
 
 export const topLevelEntityModelTypes: Array<ModelType> = [
   'association',
@@ -44,3 +72,4 @@ export const topLevelEntityModelTypes: Array<ModelType> = [
   'mapTypeEnumeration',
   'schoolYearEnumeration',
 ];
+

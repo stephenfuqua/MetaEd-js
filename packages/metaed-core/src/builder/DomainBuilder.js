@@ -66,10 +66,11 @@ export class DomainBuilder extends MetaEdGrammarListener {
 
     if (this.currentDomainItem !== NoDomainItem) {
       this.currentDomainItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      this.currentDomainItem.sourceMap.metaEdId = sourceMapFrom(context);
     } else {
       this.currentDomain.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      this.currentDomain.sourceMap.metaEdId = sourceMapFrom(context);
     }
-    this.currentDomain.sourceMap.metaEdId = sourceMapFrom(context);
   }
 
   enterDomain(context: MetaEdGrammar.DomainContext) {
@@ -157,6 +158,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDomainItem = Object.assign(newDomainItem(), { metaEdName: context.ID().getText() });
+    ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).metaEdName = sourceMapFrom(context);
     ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).referencedType = sourceMapFrom(context);
 
     // mutually exclusive in language

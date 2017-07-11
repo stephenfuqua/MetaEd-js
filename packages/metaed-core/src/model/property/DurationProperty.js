@@ -11,6 +11,7 @@ export class DurationProperty extends SimpleProperty {
 export function newDurationProperty(): DurationProperty {
   return Object.assign(new DurationProperty(), newSimpleProperty(), {
     type: 'duration',
+    typeHumanizedName: 'Duration Property',
     sourceMap: new DurationPropertySourceMap(),
   });
 }

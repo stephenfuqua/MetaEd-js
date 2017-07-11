@@ -11,6 +11,7 @@ export class EnumerationProperty extends ReferentialProperty {
 export function newEnumerationProperty(): EnumerationProperty {
   return Object.assign(new EnumerationProperty(), newReferentialProperty(), {
     type: 'enumeration',
+    typeHumanizedName: 'Enumeration Property',
     sourceMap: new EnumerationPropertySourceMap(),
   });
 }

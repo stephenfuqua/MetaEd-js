@@ -8,6 +8,7 @@ export class InterchangeExtension extends Interchange {}
 export function newInterchangeExtension(): InterchangeExtension {
   return Object.assign(new InterchangeExtension(), {
     type: 'interchangeExtension',
+    typeHumanizedName: 'Interchange Extension',
     documentation: '',
     metaEdName: '',
     metaEdId: '',

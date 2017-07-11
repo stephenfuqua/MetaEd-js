@@ -17,6 +17,7 @@ export class IntegerProperty extends SimpleProperty {
 export function newIntegerProperty(): IntegerProperty {
   return Object.assign(new IntegerProperty(), newSimpleProperty(), {
     type: 'integer',
+    typeHumanizedName: 'Integer Property',
     minValue: null,
     maxValue: null,
     sourceMap: new IntegerPropertySourceMap(),

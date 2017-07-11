@@ -11,6 +11,7 @@ export class YearProperty extends SimpleProperty {
 export function newYearProperty(): YearProperty {
   return Object.assign(new YearProperty(), newSimpleProperty(), {
     type: 'year',
+    typeHumanizedName: 'Year Property',
     sourceMap: new YearPropertySourceMap(),
   });
 }

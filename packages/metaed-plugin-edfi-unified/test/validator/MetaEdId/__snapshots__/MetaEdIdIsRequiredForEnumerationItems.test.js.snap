@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating enumeration item is missing metaEdId should have validation failures -> message 1`] = `"Enumeration Item  is missing a MetaEdId value."`;
+
+exports[`when validating enumeration item is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "item",
+}
+`;
+
+exports[`when validating map type enumeration item is missing metaEdId should have validation failures -> message 1`] = `"Enumeration Item  is missing a MetaEdId value."`;
+
+exports[`when validating map type enumeration item is missing metaEdId should have validation failures -> message 2`] = `"Enumeration Item  is missing a MetaEdId value."`;
+
+exports[`when validating map type enumeration item is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 6,
+  "line": 8,
+  "tokenText": "item",
+}
+`;
+
+exports[`when validating map type enumeration item is missing metaEdId should have validation failures -> sourceMap 2`] = `
+Object {
+  "column": 6,
+  "line": 11,
+  "tokenText": "item",
+}
+`;
+
+exports[`when validating school year enumeration item is missing metaEdId should have validation failures -> message 1`] = `"Enumeration Item  is missing a MetaEdId value."`;
+
+exports[`when validating school year enumeration item is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "item",
+}
+`;

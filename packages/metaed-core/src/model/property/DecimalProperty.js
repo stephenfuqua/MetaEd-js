@@ -21,6 +21,7 @@ export class DecimalProperty extends SimpleProperty {
 export function newDecimalProperty(): DecimalProperty {
   return Object.assign(new DecimalProperty(), newSimpleProperty(), {
     type: 'decimal',
+    typeHumanizedName: 'Decimal Property',
     minValue: null,
     maxValue: null,
     totalDigits: '',

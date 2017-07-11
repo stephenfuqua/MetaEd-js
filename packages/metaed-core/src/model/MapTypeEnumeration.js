@@ -8,7 +8,7 @@ export class MapTypeEnumeration extends Enumeration {}
 export function newMapTypeEnumeration(): MapTypeEnumeration {
   return Object.assign(new MapTypeEnumeration(), newTopLevelEntity(), {
     type: 'mapTypeEnumeration',
-    typeHumanizedName: 'Enumeration',
+    typeHumanizedName: 'Map Type Enumeration',
     enumerationItems: [],
     sourceMap: new EnumerationSourceMap(),
   });

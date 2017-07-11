@@ -7,6 +7,7 @@ export class SharedIntegerProperty extends IntegerProperty {}
 export function newSharedIntegerProperty(): SharedIntegerProperty {
   return Object.assign(new SharedIntegerProperty(), newIntegerProperty(), {
     type: 'sharedInteger',
+    typeHumanizedName: 'Shared Integer Property',
   });
 }
 
