@@ -60,7 +60,21 @@ export const allEntityModelTypes: Array<ModelType> = [
   'subdomain',
 ];
 
-export const topLevelEntityModelTypes: Array<ModelType> = [
+export const allTopLevelEntityModelTypes: Array<ModelType> = [
+  'unknown',
+  'association',
+  'associationExtension',
+  'associationSubclass',
+  'choice',
+  'common',
+  'commonExtension',
+  'descriptor',
+  'domainEntity',
+  'domainEntityExtension',
+  'domainEntitySubclass',
+];
+
+export const topLevelCoreEntityModelTypes: Array<ModelType> = [
   'association',
   'associationSubclass',
   'choice',
@@ -72,4 +86,3 @@ export const topLevelEntityModelTypes: Array<ModelType> = [
   'mapTypeEnumeration',
   'schoolYearEnumeration',
 ];
-

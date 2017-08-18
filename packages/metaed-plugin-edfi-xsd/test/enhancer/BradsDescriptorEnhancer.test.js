@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, newDescriptor } from '../../../../packages/metaed
 import type { MetaEdEnvironment, Descriptor } from '../../../../packages/metaed-core/index';
 import { enhance } from '../../src/model/Descriptor';
 
-describe('when descriptor setup enhancer runs', () => {
+xdescribe('when descriptor setup enhancer runs', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const parentEntityName: string = 'ParentEntityName';
   let parentEntity: Descriptor;

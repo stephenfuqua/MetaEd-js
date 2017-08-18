@@ -27,7 +27,7 @@ import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
 import type { TopLevelEntity } from './TopLevelEntity';
 import { asTopLevelEntity } from './TopLevelEntity';
-import { allEntityModelTypes, topLevelEntityModelTypes } from './ModelType';
+import { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './ModelType';
 
 export class EntityRepository {
   unknown: Map<string, any>;
@@ -94,6 +94,13 @@ export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
   return result;
 }
 
+export function getAllTopLevelEntities(repository: EntityRepository): Array<TopLevelEntity> {
+  const result = [];
+  // $FlowIgnore - using model type repository lookup
+  allTopLevelEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
+  return result;
+}
+
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
@@ -115,9 +122,9 @@ export function addEntity(repository: EntityRepository, entity: ModelBase) {
   repository[entity.type].set(entity.metaEdName, entity);
 }
 
-export function getTopLevelEntity(repository: EntityRepository, metaEdId: string): ?TopLevelEntity {
+export function getTopLevelCoreEntity(repository: EntityRepository, metaEdId: string): ?TopLevelEntity {
   let result: ?TopLevelEntity = null;
-  topLevelEntityModelTypes.forEach(modelType => {
+  topLevelCoreEntityModelTypes.forEach(modelType => {
     // $FlowIgnore - using model type repository lookup
     if (!result) result = asTopLevelEntity(repository[modelType].get(metaEdId));
   });

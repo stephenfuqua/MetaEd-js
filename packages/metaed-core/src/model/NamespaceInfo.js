@@ -17,6 +17,8 @@ export class NamespaceInfo {
   projectExtension: string;
   extensionEntitySuffix: string;
   sourceMap: NamespaceInfoSourceMap;
+  data: any;
+  config: any;
 }
 
 export const DefaultExtensionEntitySuffix: string = 'Extension';

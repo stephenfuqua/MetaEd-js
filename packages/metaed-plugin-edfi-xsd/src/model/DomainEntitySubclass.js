@@ -2,14 +2,19 @@
 import type { MetaEdEnvironment, EnhancerResult, DomainEntitySubclass, EntityProperty } from '../../../../packages/metaed-core/index';
 
 export type DomainEntitySubclassEdfiXsd = {
-  xsd_Properties: Array<EntityProperty>;
+  xsd_Properties: () => Array<EntityProperty>;
 };
 
 const enhancerName: string = 'DomainEntitySubclassSetupEnhancer';
 
+// note this is an override of xsdProperties in TopLevelEntity
+function xsdProperties(domainEntitySubclass: DomainEntitySubclass): () => Array<EntityProperty> {
+  return () => domainEntitySubclass.properties.filter(p => !p.isPartOfIdentity);
+}
+
 export function addDomainEntitySubclassEdfiXsdTo(domainEntitySubclass: DomainEntitySubclass) {
   Object.assign(domainEntitySubclass.data.edfiXsd, {
-    xsd_Properties: domainEntitySubclass.properties.filter(p => !p.isPartOfIdentity),
+    xsd_Properties: xsdProperties(domainEntitySubclass),
   });
 }
 

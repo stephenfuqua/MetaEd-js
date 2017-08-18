@@ -11,7 +11,7 @@ export { createMetaEdFile } from './src/task/MetaEdFile';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './src/task/BufferFileLoader';
 export { loadFiles } from './src/task/FileSystemFilenameLoader';
 export { newState } from './src/State';
-export { addEntity, getAllEntities, getEntity, getTopLevelEntity, getEntitiesOfType } from './src/model/EntityRepository';
+export { addEntity, getAllEntities, getAllTopLevelEntities, getEntity, getTopLevelCoreEntity, getEntitiesOfType } from './src/model/EntityRepository';
 export { addProperty, getAllProperties, getPropertiesOfType, newPropertyIndex } from './src/model/property/PropertyRepository';
 
 // Builders

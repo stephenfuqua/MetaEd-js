@@ -4,15 +4,20 @@ import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWi
 
 export type DomainEntityExtensionEdfiXsd = {
   xsd_MetaEdNameWithExtension: () => string;
-  xsd_Properties: Array<EntityProperty>;
+  xsd_Properties: () => Array<EntityProperty>;
 };
 
 const enhancerName: string = 'DomainEntityExtensionSetupEnhancer';
 
+// note this is an override of xsdProperties in TopLevelEntity
+function xsdProperties(domainEntityExtension: DomainEntityExtension): () => Array<EntityProperty> {
+  return () => domainEntityExtension.properties.filter(p => !p.isPartOfIdentity);
+}
+
 export function addDomainEntityExtensionEdfiXsdTo(domainEntityExtension: DomainEntityExtension) {
   Object.assign(domainEntityExtension.data.edfiXsd, {
     xsd_MetaEdNameWithExtension: metaEdNameWithExtensionIncludingSuffix(domainEntityExtension),
-    xsd_Properties: domainEntityExtension.properties.filter(p => !p.isPartOfIdentity),
+    xsd_Properties: xsdProperties(domainEntityExtension),
   });
 }
 
