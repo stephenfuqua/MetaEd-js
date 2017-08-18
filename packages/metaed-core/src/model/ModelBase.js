@@ -17,4 +17,6 @@ export class ModelBase {
   metaEdName: string;
   metaEdId: string;
   namespaceInfo: NamespaceInfo;
+  data: any;
+  config: any;
 }

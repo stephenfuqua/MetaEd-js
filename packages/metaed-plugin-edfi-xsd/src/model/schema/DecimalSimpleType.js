@@ -1,6 +1,6 @@
 // @flow
 import type { SimpleType } from './SimpleType';
-import { newAnnotation } from './Annotation';
+import { newSimpleType } from './SimpleType';
 
 export type DecimalSimpleType = SimpleType & {
   totalDigits: string,
@@ -11,14 +11,11 @@ export type DecimalSimpleType = SimpleType & {
 }
 
 export function newDecimalSimpleType(): DecimalSimpleType {
-  return {
-    name: '',
-    baseType: '',
-    annotation: newAnnotation(),
+  return Object.assign({}, newSimpleType(), {
     totalDigits: '',
     decimalPlaces: '',
     minValue: '',
     maxValue: '',
     hasRestrictions: () => !!this.totalDigits || !!this.decimalPlaces || !!this.minValue || !!this.maxValue,
-  };
+  });
 }

@@ -10,7 +10,7 @@ export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd | {
 // Enhancer for object setup
 const enhancerName: string = 'ChoicePropertySetupEnhancer';
 
-export function addChoicePropertyEdfiXsd(property: ChoiceProperty) {
+export function addChoicePropertyEdfiXsdTo(property: ChoiceProperty) {
   Object.assign(property.data.edfiXsd, {
     xsd_Properties: [],
     xsd_IsChoice: true,
@@ -19,7 +19,7 @@ export function addChoicePropertyEdfiXsd(property: ChoiceProperty) {
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.choice.forEach((property: ChoiceProperty) => {
-    addChoicePropertyEdfiXsd(property);
+    addChoicePropertyEdfiXsdTo(property);
   });
 
   return {

@@ -10,10 +10,10 @@ export type DescriptorEdfiXsd = {
 
 const enhancerName: string = 'DescriptorSetupEnhancer';
 
-export function addDescriptorEdfiXsd(descriptor: Descriptor) {
+export function addDescriptorEdfiXsdTo(descriptor: Descriptor) {
   Object.assign(descriptor.data.edfiXsd, {
-    xsd_DescriptorName: descriptor.metaEdName,
-    xsd_DescriptorNameWithExtension: descriptor.metaEdName + descriptor.namespaceInfo.extensionEntitySuffix,
+    xsd_DescriptorName: '',
+    xsd_DescriptorNameWithExtension: '',
     xsd_IsMapType: false,
     xsd_HasPropertiesOrMapType: false,
   });
@@ -21,7 +21,7 @@ export function addDescriptorEdfiXsd(descriptor: Descriptor) {
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.entity.descriptor.forEach((descriptor: Descriptor) => {
-    addDescriptorEdfiXsd(descriptor);
+    addDescriptorEdfiXsdTo(descriptor);
   });
 
   return {

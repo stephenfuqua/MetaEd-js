@@ -1,6 +1,6 @@
 // @flow
 import type { SimpleType } from './SimpleType';
-import { newAnnotation } from './Annotation';
+import { newSimpleType } from './SimpleType';
 
 export type StringSimpleType = SimpleType & {
   minLength: string,
@@ -9,12 +9,9 @@ export type StringSimpleType = SimpleType & {
 }
 
 export function newStringSimpleType(): StringSimpleType {
-  return {
-    name: '',
-    baseType: '',
-    annotation: newAnnotation(),
+  return Object.assign({}, newSimpleType(), {
     minLength: '',
     maxLength: '',
     hasRestrictions: () => !!this.minLength || !!this.maxLength,
-  };
+  });
 }

@@ -34,7 +34,7 @@ export class EntityPropertySourceMap {
 
 export class EntityProperty {
   type: PropertyType;
-  typeHumanizedName: string
+  typeHumanizedName: string;
   documentation: string;
   documentationInherited: boolean;
   metaEdName: string;

@@ -1,6 +1,6 @@
 // @flow
 import type { SimpleType } from './SimpleType';
-import { newAnnotation } from './Annotation';
+import { newSimpleType } from './SimpleType';
 
 export type EnumerationSimpleType = SimpleType & {
   enumerationTokens: Array<string>,
@@ -8,11 +8,8 @@ export type EnumerationSimpleType = SimpleType & {
 }
 
 export function newEnumerationSimpleType(): EnumerationSimpleType {
-  return {
-    name: '',
-    baseType: '',
-    annotation: newAnnotation(),
+  return Object.assign({}, newSimpleType(), {
     enumerationTokens: [],
     hasRestrictions: () => this.enumerationTokens.length > 0,
-  };
+  });
 }

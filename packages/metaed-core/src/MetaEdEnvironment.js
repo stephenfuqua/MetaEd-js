@@ -10,9 +10,6 @@ import { newPropertyIndex } from './model/property/PropertyRepository';
 //   - hopefully no behavior
 export type PluginEnvironment = any;
 
-// access to core model types
-export type CoreModel = any;
-
 export type SemVer = string;
 
 // provided to validators and enhancers
@@ -26,9 +23,6 @@ export type MetaEdEnvironment = {
   // plugin environment by plugin name
   plugin: Map<string, PluginEnvironment>,
 
-  // access to core model types (and factories??)
-  model: CoreModel,
-
   metaEdVersion: SemVer,
 
   dataStandardVersion: SemVer,
@@ -39,7 +33,6 @@ export const newMetaEdEnvironment: () => MetaEdEnvironment = () =>
     entity: newEntityRepository(),
     propertyIndex: newPropertyIndex(),
     plugin: new Map(),
-    model: {},
     metaEdVersion: '',
     dataStandardVersion: '',
   });

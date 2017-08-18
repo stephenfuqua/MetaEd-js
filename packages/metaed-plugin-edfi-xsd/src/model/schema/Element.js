@@ -1,6 +1,7 @@
 // @flow
 import type { Annotation } from './Annotation';
 import type { ComplexTypeItem } from './ComplexTypeItem';
+import { newComplexTypeItem } from './ComplexTypeItem';
 import { newAnnotation } from './Annotation';
 
 export type Element = ComplexTypeItem & {
@@ -10,12 +11,9 @@ export type Element = ComplexTypeItem & {
 }
 
 export function newElement(): Element {
-  return {
+  return Object.assign({}, newComplexTypeItem(), {
     name: '',
     type: '',
     annotation: newAnnotation(),
-    minOccurs: '',
-    maxOccurs: '',
-    maxOccursIsUnbounded: false,
-  };
+  });
 }

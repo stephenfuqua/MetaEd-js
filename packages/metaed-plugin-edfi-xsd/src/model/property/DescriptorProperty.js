@@ -11,7 +11,7 @@ export type DescriptorPropertyEdfiXsd = EntityPropertyEdfiXsd | {
 // Enhancer for object setup
 const enhancerName: string = 'DescriptorPropertySetupEnhancer';
 
-export function addDescriptorPropertyEdfiXsd(property: DescriptorProperty) {
+export function addDescriptorPropertyEdfiXsdTo(property: DescriptorProperty) {
   Object.assign(property.data.edfiXsd, {
     xsd_IsDescriptor: true,
     xsd_DescriptorName: property.referencedEntity.data.xsd_DescriptorName,
@@ -21,7 +21,7 @@ export function addDescriptorPropertyEdfiXsd(property: DescriptorProperty) {
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.descriptor.forEach((property: DescriptorProperty) => {
-    addDescriptorPropertyEdfiXsd(property);
+    addDescriptorPropertyEdfiXsdTo(property);
   });
 
   return {

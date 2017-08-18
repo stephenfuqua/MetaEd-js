@@ -1,6 +1,6 @@
 // @flow
 import type { SimpleType } from './SimpleType';
-import { newAnnotation } from './Annotation';
+import { newSimpleType } from './SimpleType';
 
 export type IntegerSimpleType = SimpleType & {
   minValue: string,
@@ -9,12 +9,9 @@ export type IntegerSimpleType = SimpleType & {
 }
 
 export function newDecimalSimpleType(): IntegerSimpleType {
-  return {
-    name: '',
-    baseType: '',
-    annotation: newAnnotation(),
+  return Object.assign({}, newSimpleType(), {
     minValue: '',
     maxValue: '',
     hasRestrictions: () => !!this.minValue || !!this.maxValue,
-  };
+  });
 }
