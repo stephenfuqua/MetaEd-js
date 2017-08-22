@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, EntityProperty, ChoiceProperty } from '../../../../../packages/metaed-core/index';
 import type { EntityPropertyEdfiXsd } from './EntityProperty';
 
-export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd | {
+export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd & {
   xsd_Properties: Array<EntityProperty>,
   xsd_IsChoice: boolean,
 }

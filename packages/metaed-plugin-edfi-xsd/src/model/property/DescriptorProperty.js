@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, DescriptorProperty } from '../../../../../packages/metaed-core/index';
 import type { EntityPropertyEdfiXsd } from './EntityProperty';
 
-export type DescriptorPropertyEdfiXsd = EntityPropertyEdfiXsd | {
+export type DescriptorPropertyEdfiXsd = EntityPropertyEdfiXsd & {
   xsd_IsDescriptor: boolean,
   xsd_DescriptorName: string,
   xsd_DescriptorNameWithExtension: string,

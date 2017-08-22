@@ -8,7 +8,15 @@ import { newPropertyIndex } from './model/property/PropertyRepository';
 //   - specialized model types
 //   - maybe specialized model factories (hopefully not)
 //   - hopefully no behavior
-export type PluginEnvironment = any;
+export type PluginEnvironment = {
+  // the plugin-specific entity repository
+  entity: any,
+};
+
+export const newPluginEnvironment: () => PluginEnvironment = () =>
+  ({
+    entity: {},
+  });
 
 export type SemVer = string;
 

@@ -47,7 +47,7 @@ export type { Validator } from './src/validator/Validator';
 export type { ValidationFailure } from './src/validator/ValidationFailure';
 export type { Enhancer } from './src/enhancer/Enhancer';
 export type { EnhancerResult } from './src/enhancer/EnhancerResult';
-export type { MetaEdEnvironment } from './src/MetaEdEnvironment';
+export type { MetaEdEnvironment, PluginEnvironment } from './src/MetaEdEnvironment';
 export type { MetaEdPlugin, PluginManifest } from './src/plugin/PluginTypes';
 
 // Properties
@@ -100,7 +100,7 @@ export type { EntityRepository } from './src/model/EntityRepository';
 export type { Enumeration } from './src/model/Enumeration';
 export type { EnumerationItem } from './src/model/EnumerationItem';
 export type { IntegerType } from './src/model/IntegerType';
-export type { Interchange } from './src/model/Interchange';
+export { Interchange } from './src/model/Interchange';
 export type { InterchangeExtension } from './src/model/InterchangeExtension';
 export type { InterchangeItem } from './src/model/InterchangeItem';
 export type { MapTypeEnumeration } from './src/model/MapTypeEnumeration';
@@ -119,7 +119,7 @@ export type { TopLevelEntity } from './src/model/TopLevelEntity';
 
 
 // Factories
-export { newMetaEdEnvironment } from './src/MetaEdEnvironment';
+export { newMetaEdEnvironment, newPluginEnvironment } from './src/MetaEdEnvironment';
 
 export { newAssociationProperty } from './src/model/property/AssociationProperty';
 export { newBooleanProperty } from './src/model/property/BooleanProperty';
