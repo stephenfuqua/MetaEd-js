@@ -1,7 +1,8 @@
 // @noflow
-import mockfs from 'mock-fs';
+import ffs from 'final-fs';
 import { MetaEdTextBuilder } from '../../../packages/metaed-core/test/MetaEdTextBuilder';
 import { newState, loadFiles } from '../../../packages/metaed-core/index';
+
 
 describe('When a single file', () => {
   beforeAll(() => {
@@ -12,15 +13,11 @@ describe('When a single file', () => {
     .withEndDomainEntity()
     .toString();
 
-    mockfs({
-      '/fake/dir': {
-        'DomainEntity1.metaed': metaEdText,
-      },
-    });
-  });
-
-  afterAll(() => {
-    mockfs.restore();
+    const domainEntity1 = {
+      path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
+      content: metaEdText,
+    };
+    ffs.addMockFile(domainEntity1);
   });
 
   it('Should load the file contents', () => {
@@ -59,27 +56,24 @@ describe('When multiple files', () => {
     .withEndDomainEntity()
     .toString();
 
-    mockfs({
-      '/fake/dir': {
-        'Domain Entities': {
-          'DomainEntity1.metaed': metaEdTextDomainEntity,
-        },
-        Associations: {
-          'Association1.metaed': metaEdTextAssociation,
-        },
-      },
-    });
+    const association1 = {
+      path: '/fake/dir/Associations/Association1.metaed',
+      content: metaEdTextAssociation,
+    };
+    const domainEntity1 = {
+      path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
+      content: metaEdTextDomainEntity,
+    };
+    ffs.addMockFile(association1);
+    ffs.addMockFile(domainEntity1);
   });
 
-  afterAll(() => {
-    mockfs.restore();
-  });
 
   it('Should load the file contents', () => {
     const state = loadFiles(Object.assign(newState(),
       {
         inputDirectories: [{
-          path: '/fake/dir',
+          path: '/fake',
           namespace: 'edfi',
           projectExtension: '',
           isExtension: false,
