@@ -26,15 +26,18 @@ function xsdHasExtensionOverrideProperties(topLevelEntity: TopLevelEntity): () =
 }
 
 export function addTopLevelEntityEdfiXsdTo(topLevelEntity: TopLevelEntity) {
-  Object.assign(topLevelEntity.data.edfiXsd, {
-    xsd_ComplexTypes: [],
-    xsd_ReferenceType: newComplexType(),
-    xsd_IdentityType: newComplexType(),
-    xsd_LookupType: newComplexType(),
-    xsd_IdentityProperties: [],
-    xsd_HasQueryableField: false,
-    xsd_Properties: xsdProperties(topLevelEntity),
-    xsd_HasExtensionOverrideProperties: xsdHasExtensionOverrideProperties(topLevelEntity),
+  sdfsdfasdfasdf
+  Object.assign(topLevelEntity.data, {
+    edfiXsd: {
+      xsd_ComplexTypes: [],
+      xsd_ReferenceType: newComplexType(),
+      xsd_IdentityType: newComplexType(),
+      xsd_LookupType: newComplexType(),
+      xsd_IdentityProperties: [],
+      xsd_HasQueryableField: false,
+      xsd_Properties: xsdProperties(topLevelEntity),
+      xsd_HasExtensionOverrideProperties: xsdHasExtensionOverrideProperties(topLevelEntity),
+    },
   });
 }
 
