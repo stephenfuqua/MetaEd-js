@@ -26,7 +26,6 @@ function xsdHasExtensionOverrideProperties(topLevelEntity: TopLevelEntity): () =
 }
 
 export function addTopLevelEntityEdfiXsdTo(topLevelEntity: TopLevelEntity) {
-  sdfsdfasdfasdf
   Object.assign(topLevelEntity.data, {
     edfiXsd: {
       xsd_ComplexTypes: [],

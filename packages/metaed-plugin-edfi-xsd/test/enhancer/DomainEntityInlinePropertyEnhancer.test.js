@@ -1,10 +1,10 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newCommon, newCommonProperty, newStringProperty } from '../../../../packages/metaed-core/index';
-import type { MetaEdEnvironment, Common, Association } from '../../../../packages/metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntity, newCommon, newCommonProperty, newStringProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, Common, DomainEntity } from '../../../../packages/metaed-core/index';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
-describe('when enhancing association with inline string property', () => {
+describe('when enhancing domainEntity with inline string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const inlineName: string = 'InlineName';
   const entityName: string = 'EntityName';
@@ -34,7 +34,7 @@ describe('when enhancing association with inline string property', () => {
     });
     metaEd.entity.common.set(inlineCommon.metaEdName, inlineCommon);
 
-    const association: Association = Object.assign(newAssociation(), {
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       properties: [
         Object.assign(newCommonProperty(), {
@@ -47,27 +47,28 @@ describe('when enhancing association with inline string property', () => {
         },
       },
     });
-    metaEd.entity.association.set(association.metaEdName, association);
+    metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
   });
 
 
-  it('should add identity properties to association', () => {
-    const association: any = metaEd.entity.association.get(entityName);
-    expect(association.properties[0].type).toBe('common');
-    expect(association.data.edfiXsd.xsd_IdentityProperties.length).toBe(1);
-    expect(association.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(propertyName2);
+  it('should add identity properties to domainEntity', () => {
+    const domainEntity: any = metaEd.entity.domainEntity.get(entityName);
+    expect(domainEntity.properties[0].type).toBe('common');
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(1);
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(propertyName2);
   });
 });
 
-describe('when enhancing association with inline nested string property', () => {
+describe('when enhancing domainEntity with inline nested string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const inline1Name: string = 'Inline1Name';
   const inline2Name: string = 'Inline2Name';
   const entityName: string = 'EntityName';
-  const propertyName: string = 'PropertyName';
+  const property1Name: string = 'Property1Name';
+  const property2Name: string = 'Property2Name';
 
   beforeAll(() => {
     const inlineCommon2: Common = Object.assign(newCommon(), {
@@ -75,7 +76,7 @@ describe('when enhancing association with inline nested string property', () => 
       inlineInOds: true,
       properties: [
         Object.assign(newStringProperty(), {
-          metaEdName: propertyName,
+          metaEdName: property1Name,
           isPartOfIdentity: true,
         }),
       ],
@@ -94,6 +95,10 @@ describe('when enhancing association with inline nested string property', () => 
           metaEdName: inline2Name,
           referencedEntity: inlineCommon2,
         }),
+        Object.assign(newStringProperty(), {
+          metaEdName: property2Name,
+          isPartOfIdentity: true,
+        }),
       ],
       data: {
         edfiXsd: {
@@ -102,7 +107,7 @@ describe('when enhancing association with inline nested string property', () => 
     });
     metaEd.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
 
-    const association: Association = Object.assign(newAssociation(), {
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       properties: [
         Object.assign(newCommonProperty(), {
@@ -115,17 +120,18 @@ describe('when enhancing association with inline nested string property', () => 
         },
       },
     });
-    metaEd.entity.association.set(association.metaEdName, association);
+    metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
   });
 
 
-  it('should add identity properties to association', () => {
-    const association: any = metaEd.entity.association.get(entityName);
-    expect(association.properties[0].type).toBe('common');
-    expect(association.data.edfiXsd.xsd_IdentityProperties.length).toBe(1);
-    expect(association.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(propertyName);
+  it('should add identity properties to domainEntity', () => {
+    const domainEntity: any = metaEd.entity.domainEntity.get(entityName);
+    expect(domainEntity.properties[0].type).toBe('common');
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(2);
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(property2Name);
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[1].metaEdName).toBe(property1Name);
   });
 });

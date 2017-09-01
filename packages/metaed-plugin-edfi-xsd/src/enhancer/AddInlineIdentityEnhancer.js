@@ -16,7 +16,7 @@ function addInlineIdentities(topLevelEntity: TopLevelEntity, properties: Array<E
       const topLevelEntityEdfiXsd: TopLevelEntityEdfiXsd = ((topLevelEntity.data.edfiXsd: any): TopLevelEntityEdfiXsd);
       topLevelEntityEdfiXsd.xsd_IdentityProperties.push(identityProperty);
     });
-    addInlineIdentities(common, common.properties, entity);
+    addInlineIdentities(topLevelEntity, common.properties, entity);
   });
 }
 
