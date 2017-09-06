@@ -17,6 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         enumerationBaseXsdData.xsd_EnumerationName;
   });
 
+
   return {
     enhancerName,
     success: true,

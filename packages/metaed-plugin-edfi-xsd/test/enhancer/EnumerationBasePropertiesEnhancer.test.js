@@ -121,12 +121,12 @@ describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', (
   });
 
   it('should have xsd_EnumerationName assigned', () => {
-    const enumeration: any = metaEd.entity.enumeration.get(enumerationBaseName);
+    const enumeration: any = metaEd.entity.mapTypeEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsd_EnumerationName).toBe(enumerationName);
   });
 
   it('should have xsd_EnumerationBaseNameWithExtension value same as enumerationName', () => {
-    const enumeration: any = metaEd.entity.enumeration.get(enumerationBaseName);
+    const enumeration: any = metaEd.entity.mapTypeEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsd_EnumerationNameWithExtension).toBe(enumerationName);
   });
 });
@@ -151,12 +151,12 @@ describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration'
   });
 
   it('should have xsd_EnumerationName assigned', () => {
-    const enumeration: any = metaEd.entity.enumeration.get(enumerationBaseName);
+    const enumeration: any = metaEd.entity.schoolYearEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsd_EnumerationName).toBe(enumerationName);
   });
 
   it('should have xsd_EnumerationBaseNameWithExtension value same as enumerationName', () => {
-    const enumeration: any = metaEd.entity.enumeration.get(enumerationBaseName);
+    const enumeration: any = metaEd.entity.schoolYearEnumeration.get(enumerationBaseName);
     expect(enumeration.data.edfiXsd.xsd_EnumerationNameWithExtension).toBe(enumerationName);
   });
 });
