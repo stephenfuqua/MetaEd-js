@@ -105,7 +105,7 @@ export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: A
   const result = [];
   // $FlowIgnore - using model type repository lookup
   modelTypes.forEach(modelType => result.push(...repository[modelType].values()));
-  return result;
+  return ((result: any): Array<ModelBase>);
 }
 
 export function getEntity(repository: EntityRepository, metaEdId: string, ...modelTypes: Array<ModelType>): ?ModelBase {
