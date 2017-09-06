@@ -36,7 +36,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     'sharedString',
     'stringType',
   ).forEach(entity => {
-    metaEdNameWithExtension(entity);
+    addModelBaseEdfiXsdTo(entity);
   });
 
   return {
