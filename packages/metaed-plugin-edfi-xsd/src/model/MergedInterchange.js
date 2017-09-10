@@ -17,10 +17,9 @@ export const combinedElementsAndIdentityTemplatesFor =
 export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, mergedInterchange: MergedInterchange) => {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   if (mergedInterchange.namespaceInfo.isExtension) {
-    edFiXsdEntityRepository.mergedInterchange.set(`${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.repositoryId}`, mergedInterchange);
-  } else {
-    edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
+    mergedInterchange.repositoryId = `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}`;
   }
+  edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 };
 
 // warning: limitation of extending base model objects in an extension plugin is that the type field is restricted
