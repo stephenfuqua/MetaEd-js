@@ -1,10 +1,17 @@
 // @flow
+import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from '../../../../packages/metaed-core/index';
 
 export type InterchangeItemEdfiXsd = {
   xsd_Name: string;
   xsd_Type: string;
 };
+
+const equalXsdName = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Name']));
+const equalXsdType = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Type']));
+export const interchangeItemsEqual = R.both(equalXsdName, equalXsdType);
+export const unionOfInterchangeItems = R.unionWith(interchangeItemsEqual);
+export const differenceOfInterchangeItems = R.differenceWith(interchangeItemsEqual);
 
 const enhancerName: string = 'InterchangeItemSetupEnhancer';
 

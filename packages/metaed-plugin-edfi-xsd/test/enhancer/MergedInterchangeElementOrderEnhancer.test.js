@@ -3,10 +3,9 @@ import { newMetaEdEnvironment, newInterchangeItem, newNamespaceInfo, newPluginEn
 import type { MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeElementOrderEnhancer';
-import { newMergedInterchange } from '../../src/model/MergedInterchange';
+import { newMergedInterchange, addMergedInterchangeToRepository } from '../../src/model/MergedInterchange';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
-import type { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsd_Name', () => {
   const plugin = Object.assign(newPluginEnvironment(), {
@@ -85,9 +84,8 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
         },
       },
     });
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-    edFiXsdEntityRepository.mergedInterchange.set(coreMergedInterchange.repositoryId, coreMergedInterchange);
-    edFiXsdEntityRepository.mergedInterchange.set(`${projectExtension}-${extensionMergedInterchange.repositoryId}`, extensionMergedInterchange);
+    addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
+    addMergedInterchangeToRepository(metaEd, extensionMergedInterchange);
 
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);

@@ -3,16 +3,10 @@ import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { MergedInterchange } from '../model/MergedInterchange';
+import { combinedElementsAndIdentityTemplatesFor } from '../model/MergedInterchange';
+import { unionOfInterchangeItems, differenceOfInterchangeItems } from '../model/InterchangeItem';
 
 const enhancerName: string = 'MergedInterchangeElementOrderEnhancer';
-
-const equalXsdName = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Name']));
-const equalXsdType = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Type']));
-const equalXsdNameAndType = R.both(equalXsdName, equalXsdType);
-const unionOf = R.unionWith(equalXsdNameAndType);
-const differenceOf = R.differenceWith(equalXsdNameAndType);
-
-const combinedElementsAndIdentityTemplatesFor = (mergedInterchange: MergedInterchange) => unionOf(mergedInterchange.elements, mergedInterchange.identityTemplates);
 
 function addElementsInOrder(coreInterchanges: Array<MergedInterchange>, extensionInterchanges: Array<MergedInterchange>) {
   coreInterchanges.forEach(core => {
@@ -24,9 +18,9 @@ function addElementsInOrder(coreInterchanges: Array<MergedInterchange>, extensio
     const matchingCoreInterchange = R.find(R.eqProps('metaEdName', extension), coreInterchanges);
     if (matchingCoreInterchange) {
       const initialCoreElements = combinedElementsAndIdentityTemplatesFor(matchingCoreInterchange);
-      const extensionElementsLessCoreElements = differenceOf(initialExtensionElements, initialCoreElements);
-      const extensionElementsThatExtendCore = differenceOf(initialExtensionElements, extensionElementsLessCoreElements);
-      const extensionElementsThatExtendCoreThenOnesThatAreNew = unionOf(extensionElementsThatExtendCore, extensionElementsLessCoreElements);
+      const extensionElementsLessCoreElements = differenceOfInterchangeItems(initialExtensionElements, initialCoreElements);
+      const extensionElementsThatExtendCore = differenceOfInterchangeItems(initialExtensionElements, extensionElementsLessCoreElements);
+      const extensionElementsThatExtendCoreThenOnesThatAreNew = unionOfInterchangeItems(extensionElementsThatExtendCore, extensionElementsLessCoreElements);
       extension.orderedElements = extensionElementsThatExtendCoreThenOnesThatAreNew;
     } else {
       extension.orderedElements = initialExtensionElements;
