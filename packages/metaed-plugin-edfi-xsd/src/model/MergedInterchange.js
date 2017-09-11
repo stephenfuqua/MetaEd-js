@@ -16,9 +16,10 @@ export const combinedElementsAndIdentityTemplatesFor =
 
 export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, mergedInterchange: MergedInterchange) => {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  if (mergedInterchange.namespaceInfo.isExtension) {
-    mergedInterchange.repositoryId = `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}`;
-  }
+  mergedInterchange.repositoryId = mergedInterchange.namespaceInfo.isExtension ?
+    `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}` :
+    mergedInterchange.metaEdName;
+
   edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 };
 
