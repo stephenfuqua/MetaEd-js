@@ -13,6 +13,8 @@ export { loadFiles } from './src/task/FileSystemFilenameLoader';
 export { newState } from './src/State';
 export { addEntity, getAllEntities, getAllTopLevelEntities, getEntity, getTopLevelCoreEntity, getEntitiesOfType } from './src/model/EntityRepository';
 export { addProperty, getAllProperties, getPropertiesOfType, newPropertyIndex } from './src/model/property/PropertyRepository';
+export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './src/model/property/PropertyType';
+export { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './src/model/ModelType';
 
 // Builders
 
