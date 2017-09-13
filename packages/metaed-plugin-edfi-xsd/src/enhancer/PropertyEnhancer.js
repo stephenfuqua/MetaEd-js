@@ -22,7 +22,7 @@ import type {
   DescriptorProperty,
   AssociationProperty,
   DomainEntityProperty,
- } from '../../../../packages/metaed-core/index';
+} from '../../../../packages/metaed-core/index';
 import { getAllProperties, getAllTopLevelEntities, isReferenceProperty } from '../../../../packages/metaed-core/index';
 import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
