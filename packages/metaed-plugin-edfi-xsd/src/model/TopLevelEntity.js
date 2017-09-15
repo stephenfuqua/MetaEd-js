@@ -1,7 +1,7 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity, CommonProperty } from '../../../../packages/metaed-core/index';
 import { getAllTopLevelEntities } from '../../../../packages/metaed-core/index';
-import { newComplexType } from './schema/ComplexType';
+import { NoComplexType } from './schema/ComplexType';
 import type { ComplexType } from './schema/ComplexType';
 
 export type TopLevelEntityEdfiXsd = {
@@ -26,17 +26,17 @@ function xsdHasExtensionOverrideProperties(topLevelEntity: TopLevelEntity): () =
 }
 
 export function addTopLevelEntityEdfiXsdTo(topLevelEntity: TopLevelEntity) {
-  Object.assign(topLevelEntity.data, {
-    edfiXsd: {
-      xsd_ComplexTypes: [],
-      xsd_ReferenceType: newComplexType(),
-      xsd_IdentityType: newComplexType(),
-      xsd_LookupType: newComplexType(),
-      xsd_IdentityProperties: [],
-      xsd_HasQueryableField: false,
-      xsd_Properties: xsdProperties(topLevelEntity),
-      xsd_HasExtensionOverrideProperties: xsdHasExtensionOverrideProperties(topLevelEntity),
-    },
+  if (topLevelEntity.data.edfiXsd == null) topLevelEntity.data.edfiXsd = {};
+
+  Object.assign(topLevelEntity.data.edfiXsd, {
+    xsd_ComplexTypes: [],
+    xsd_ReferenceType: NoComplexType,
+    xsd_IdentityType: NoComplexType,
+    xsd_LookupType: NoComplexType,
+    xsd_IdentityProperties: [],
+    xsd_HasQueryableField: false,
+    xsd_Properties: xsdProperties(topLevelEntity),
+    xsd_HasExtensionOverrideProperties: xsdHasExtensionOverrideProperties(topLevelEntity),
   });
 }
 

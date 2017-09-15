@@ -7,21 +7,23 @@ import { enhance } from '../../src/enhancer/CopyPropertiesEnhancer';
 describe('when enhancing domainEntity with string properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
-  const propertyName1: string = 'PropertyName1';
-  const propertyName2: string = 'PropertyName2';
+  const identityProperty = Object.assign(newStringProperty(), {
+    metaEdName: 'IdentityPropertyName',
+    isPartOfIdentity: true,
+  });
 
   beforeAll(() => {
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       properties: [
+        identityProperty,
         Object.assign(newStringProperty(), {
-          metaEdName: propertyName1,
+          metaEdName: 'NotIdentityPropertyName',
           isPartOfIdentity: false,
         }),
-        Object.assign(newStringProperty(), {
-          metaEdName: propertyName2,
-          isPartOfIdentity: true,
-        }),
+      ],
+      identityProperties: [
+        identityProperty,
       ],
       data: {
         edfiXsd: {
@@ -34,10 +36,9 @@ describe('when enhancing domainEntity with string properties', () => {
     enhance(metaEd);
   });
 
-  it('should add identity properties to domainEntity', () => {
+  it('should add identity property only to domainEntity xsd_IdentityProperties', () => {
     const domainEntity: any = metaEd.entity.domainEntity.get(entityName);
-    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(2);
-    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(propertyName1);
-    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[1].metaEdName).toBe(propertyName2);
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(1);
+    expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0]).toBe(identityProperty);
   });
 });

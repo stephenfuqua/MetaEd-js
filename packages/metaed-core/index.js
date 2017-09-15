@@ -6,6 +6,7 @@ export { MetaEdTextBuilder } from './test/MetaEdTextBuilder';
 
 // Functions
 
+export { prependIndefiniteArticle } from './src/Utility';
 export { startingFromFileLoadP } from './src/task/Pipeline';
 export { createMetaEdFile } from './src/task/MetaEdFile';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './src/task/BufferFileLoader';
@@ -119,6 +120,9 @@ export type { StringType } from './src/model/StringType';
 export type { Subdomain } from './src/model/Subdomain';
 export type { TopLevelEntity } from './src/model/TopLevelEntity';
 
+// Null Objects
+export { NoMapTypeEnumeration } from './src/model/MapTypeEnumeration';
+export { NoTopLevelEntity } from './src/model/TopLevelEntity';
 
 // Factories
 export { newMetaEdEnvironment, newPluginEnvironment } from './src/MetaEdEnvironment';

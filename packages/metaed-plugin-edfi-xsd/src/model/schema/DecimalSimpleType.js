@@ -2,7 +2,8 @@
 import type { SimpleType } from './SimpleType';
 import { newSimpleType } from './SimpleType';
 
-export type DecimalSimpleType = SimpleType & {
+export type DecimalSimpleType = {
+  ...$Exact<SimpleType>,
   totalDigits: string,
   decimalPlaces: string,
   minValue: string,
@@ -16,6 +17,6 @@ export function newDecimalSimpleType(): DecimalSimpleType {
     decimalPlaces: '',
     minValue: '',
     maxValue: '',
-    hasRestrictions: () => !!this.totalDigits || !!this.decimalPlaces || !!this.minValue || !!this.maxValue,
+    hasRestrictions() { return !!this.totalDigits || !!this.decimalPlaces || !!this.minValue || !!this.maxValue; },
   });
 }

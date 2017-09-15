@@ -25,7 +25,10 @@ export function newComplexType(): ComplexType {
     isRestriction: false,
     attributes: [],
     items: [],
-
-    hasItems: () => this.items.length > 0,
+    hasItems() { return this.items.length > 0; },
   };
 }
+
+export const NoComplexType: ComplexType = Object.assign(newComplexType(), {
+  name: 'NoComplexType',
+});

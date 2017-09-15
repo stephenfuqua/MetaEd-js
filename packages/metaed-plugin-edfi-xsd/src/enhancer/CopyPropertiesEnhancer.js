@@ -7,7 +7,7 @@ const enhancerName: string = 'CopyPropertiesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllTopLevelEntities(metaEd.entity).forEach(entity => {
-    ((entity.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_IdentityProperties.push(...entity.properties);
+    ((entity.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_IdentityProperties.push(...entity.identityProperties);
   });
 
   return {

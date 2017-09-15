@@ -1,7 +1,7 @@
 // @flow
 import { EntityProperty, EntityPropertySourceMap, newEntityPropertyFields } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
-import { newTopLevelEntity, TopLevelEntity } from './../TopLevelEntity';
+import { TopLevelEntity, NoTopLevelEntity } from './../TopLevelEntity';
 import { MergedProperty } from './MergedProperty';
 
 export class ReferentialPropertySourceMap extends EntityPropertySourceMap {
@@ -22,7 +22,7 @@ export class ReferentialProperty extends EntityProperty {
 
 export function newReferentialPropertyFields() {
   return Object.assign({}, newEntityPropertyFields(), {
-    referencedEntity: newTopLevelEntity(),
+    referencedEntity: NoTopLevelEntity,
     mergedProperties: [],
     sourceMap: new ReferentialPropertySourceMap(),
   });

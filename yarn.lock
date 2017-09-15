@@ -3794,6 +3794,16 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://www.myget.org/F/ed-fi/npm/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
+sugar-core@^2.0.0:
+  version "2.0.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/sugar-core/-/sugar-core-2.0.4.tgz#9db0730e6c47eb7d28184a79c4ab18b2b7946ca0"
+
+sugar@^2.0.4:
+  version "2.0.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/sugar/-/sugar-2.0.4.tgz#79a6fa4dabc587fb855a52ee7176dd042bf757b0"
+  dependencies:
+    sugar-core "^2.0.0"
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"

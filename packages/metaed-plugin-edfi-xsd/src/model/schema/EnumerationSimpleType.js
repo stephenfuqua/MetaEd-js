@@ -2,7 +2,8 @@
 import type { SimpleType } from './SimpleType';
 import { newSimpleType } from './SimpleType';
 
-export type EnumerationSimpleType = SimpleType & {
+export type EnumerationSimpleType = {
+  ...$Exact<SimpleType>,
   enumerationTokens: Array<string>,
   hasRestrictions: () => boolean,
 }
@@ -10,6 +11,6 @@ export type EnumerationSimpleType = SimpleType & {
 export function newEnumerationSimpleType(): EnumerationSimpleType {
   return Object.assign({}, newSimpleType(), {
     enumerationTokens: [],
-    hasRestrictions: () => this.enumerationTokens.length > 0,
+    hasRestrictions() { return this.enumerationTokens.length > 0; },
   });
 }

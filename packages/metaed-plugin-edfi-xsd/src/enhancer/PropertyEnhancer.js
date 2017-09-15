@@ -23,7 +23,7 @@ import type {
   AssociationProperty,
   DomainEntityProperty,
 } from '../../../../packages/metaed-core/index';
-import { getAllProperties, getAllTopLevelEntities, isReferenceProperty } from '../../../../packages/metaed-core/index';
+import { NoTopLevelEntity, getAllProperties, getAllTopLevelEntities, isReferenceProperty } from '../../../../packages/metaed-core/index';
 import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';
@@ -33,7 +33,7 @@ const queryableFieldsFrom = selectMany(x => x.queryableFields);
 const adjustEnumerationSuffix = (metaEdName: string): string => (metaEdName.endsWith('Type') ? metaEdName : `${metaEdName}Type`);
 
 function noParentOrReferencedEntityProjectExtension(property: ReferentialProperty | SimpleProperty): boolean {
-  return !property.parentEntityName || property.referencedEntity == null || property.referencedEntity.namespaceInfo.projectExtension == null;
+  return !property.parentEntityName || property.referencedEntity === NoTopLevelEntity || property.referencedEntity.namespaceInfo.projectExtension == null;
 }
 
 function prependedWithProjectExtension(projectExtension: string, typeName: string) {

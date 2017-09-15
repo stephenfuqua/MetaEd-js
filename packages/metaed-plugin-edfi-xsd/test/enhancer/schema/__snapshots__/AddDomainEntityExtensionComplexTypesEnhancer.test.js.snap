@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when enhancing domainEntity extension with common type override should have annotation documentation assigned on restriction complex type 1`] = `"Restriction to Base Domain Entity Name for replacement of common type with common type extension"`;

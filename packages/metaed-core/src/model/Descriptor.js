@@ -1,6 +1,6 @@
 // @flow
 import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
-import { MapTypeEnumeration, newMapTypeEnumeration } from './MapTypeEnumeration';
+import { MapTypeEnumeration, NoMapTypeEnumeration } from './MapTypeEnumeration';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
 
@@ -23,7 +23,7 @@ export function newDescriptor(): Descriptor {
     typeHumanizedName: 'Descriptor',
     isMapTypeRequired: false,
     isMapTypeOptional: false,
-    mapTypeEnumeration: newMapTypeEnumeration(),
+    mapTypeEnumeration: NoMapTypeEnumeration,
     sourceMap: new DescriptorSourceMap(),
   });
 }

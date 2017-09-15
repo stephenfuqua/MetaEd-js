@@ -14,8 +14,8 @@ export function newAnnotation(): Annotation {
     documentation: '',
     typeGroup: '',
     descriptorName: '',
-    hasTypeGroup: () => !!this.typeGroup,
-    hasDescriptorName: () => !!this.descriptorName,
-    hasAppInfo: () => this.hasTypeGroup() || this.hasDescriptorName(),
+    hasTypeGroup() { return !!this.typeGroup; },
+    hasDescriptorName() { return !!this.descriptorName; },
+    hasAppInfo() { return this.hasTypeGroup() || this.hasDescriptorName(); },
   };
 }
