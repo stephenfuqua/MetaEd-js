@@ -7,7 +7,7 @@ export function execute(state: State): State {
   state.pluginManifest.filter(plugin => plugin.enabled).forEach(pluginManifest => {
     try {
       pluginManifest.metaEdPlugin.validator.forEach((validator: Validator) => {
-        if (state.repository != null && state.propertyIndex != null) {
+        if (state.metaEd.entity != null && state.metaEd.propertyIndex != null) {
           state.validationFailure.push(...validator(state.metaEd));
         }
       });
