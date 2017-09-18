@@ -7,40 +7,40 @@ import { validate as associationExtensionMustNotRedeclareProperties } from './va
 
 import { validate as associationPropertyMustMatchAnAssociation } from './validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
 
-import { validate as AssociationSubclassIdentifierMustMatchAnAssociation} from './validator/AssociationSubclass/AssociationSubclassIdentifierMustMatchAnAssociation';
-import { validate as AssociationSubclassIdentityRenameMustExistNoMoreThanOnce} from './validator/AssociationSubclass/AssociationSubclassIdentityRenameMustExistNoMoreThanOnce';
-import { validate as AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass} from './validator/AssociationSubclass/AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass';
-import { validate as AssociationSubclassMustNotRedeclareProperties} from './validator/AssociationSubclass/AssociationSubclassMustNotRedeclareProperties';
+import { validate as associationSubclassIdentifierMustMatchAnAssociation} from './validator/AssociationSubclass/AssociationSubclassIdentifierMustMatchAnAssociation';
+import { validate as associationSubclassIdentityRenameMustExistNoMoreThanOnce} from './validator/AssociationSubclass/AssociationSubclassIdentityRenameMustExistNoMoreThanOnce';
+import { validate as associationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass} from './validator/AssociationSubclass/AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass';
+import { validate as associationSubclassMustNotRedeclareProperties} from './validator/AssociationSubclass/AssociationSubclassMustNotRedeclareProperties';
 
 import { validate as choicePropertyMustMatchAChoice } from './validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
 
-import { validate as CommonExtensionExistsOnlyInExtensionNamespace} from './validator/CommonExtension/CommonExtensionExistsOnlyInExtensionNamespace';
-import { validate as CommonExtensionIdentifierMustMatchACommon} from './validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
-import { validate as CommonExtensionMustNotRedeclareProperties} from './validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
+import { validate as commonExtensionExistsOnlyInExtensionNamespace} from './validator/CommonExtension/CommonExtensionExistsOnlyInExtensionNamespace';
+import { validate as commonExtensionIdentifierMustMatchACommon} from './validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
+import { validate as commonExtensionMustNotRedeclareProperties} from './validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
 
-import { validate as CommonPropertyMustMatchACommon } from './validator/CommonProperty/CommonPropertyMustMatchACommon';
-import { validate as CommonPropertyMustNotContainIdentity} from './validator/CommonProperty/CommonPropertyMustNotContainIdentity';
-import { validate as CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension} from './validator/CommonProperty/CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension';
-import { validate as CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality} from './validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
+import { validate as commonPropertyMustMatchACommon } from './validator/CommonProperty/CommonPropertyMustMatchACommon';
+import { validate as commonPropertyMustNotContainIdentity} from './validator/CommonProperty/CommonPropertyMustNotContainIdentity';
+import { validate as commonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension} from './validator/CommonProperty/CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension';
+import { validate as commonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality} from './validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
 
 import { validate as mostEntitiesCannotHaveSameName } from './validator/CrossEntity/MostEntitiesCannotHaveSameName';
 
-import { validate as DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits} from './validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
-import { validate as DecimalPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as DecimalPropertyMustNotMatchACommonDecimal} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonDecimal';
-import { validate as DecimalPropertyMustNotMatchACommonInteger} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonInteger';
-import { validate as DecimalPropertyMustNotMatchACommonString} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonString';
+import { validate as decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits} from './validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
+import { validate as decimalPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterThanMaxValue';
+import { validate as decimalPropertyMustNotMatchACommonDecimal} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonDecimal';
+import { validate as decimalPropertyMustNotMatchACommonInteger} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonInteger';
+import { validate as decimalPropertyMustNotMatchACommonString} from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonString';
 
-import { validate as DescriptorMapTypeItemsMustBeUnique} from './validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
+import { validate as descriptorMapTypeItemsMustBeUnique} from './validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
 
-import { validate as DescriptorPropertyMustMatchADescriptor} from './validator/DescriptorProperty/DescriptorPropertyMustMatchADescriptor';
+import { validate as descriptorPropertyMustMatchADescriptor} from './validator/DescriptorProperty/DescriptorPropertyMustMatchADescriptor';
 
-import { validate as AssociationDomainItemMustMatchTopLevelEntity} from './validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
-import { validate as CommonDomainItemMustMatchTopLevelEntity} from './validator/Domain/CommonDomainItemMustMatchTopLevelEntity';
-import { validate as DescriptorDomainItemMustMatchTopLevelEntity} from './validator/Domain/DescriptorDomainItemMustMatchTopLevelEntity';
-import { validate as DomainEntityDomainItemMustMatchTopLevelEntity} from './validator/Domain/DomainEntityDomainItemMustMatchTopLevelEntity';
-import { validate as DomainMustNotDuplicateDomainItems} from './validator/Domain/DomainMustNotDuplicateDomainItems';
-import { validate as InlineCommonDomainItemMustMatchTopLevelEntity} from './validator/Domain/InlineCommonDomainItemMustMatchTopLevelEntity';
+import { validate as associationDomainItemMustMatchTopLevelEntity} from './validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
+import { validate as commonDomainItemMustMatchTopLevelEntity} from './validator/Domain/CommonDomainItemMustMatchTopLevelEntity';
+import { validate as descriptorDomainItemMustMatchTopLevelEntity} from './validator/Domain/DescriptorDomainItemMustMatchTopLevelEntity';
+import { validate as domainEntityDomainItemMustMatchTopLevelEntity} from './validator/Domain/DomainEntityDomainItemMustMatchTopLevelEntity';
+import { validate as domainMustNotDuplicateDomainItems} from './validator/Domain/DomainMustNotDuplicateDomainItems';
+import { validate as inlineCommonDomainItemMustMatchTopLevelEntity} from './validator/Domain/InlineCommonDomainItemMustMatchTopLevelEntity';
 
 import { validate as domainEntityMustContainAnIdentity } from './validator/DomainEntity/DomainEntityMustContainAnIdentity';
 import { validate as domainEntityMustContainNoMoreThanOneUniqueIdColumn } from './validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
@@ -49,68 +49,68 @@ import { validate as domainEntityExtensionExistsOnlyInExtensionNamespace } from 
 import { validate as domainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass } from './validator/DomainEntityExtension/DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass';
 import { validate as domainEntityExtensionMustNotRedeclareProperties } from './validator/DomainEntityExtension/DomainEntityExtensionMustNotRedeclareProperties';
 
-import { validate as DomainEntityPropertyMustMatchADomainEntity} from './validator/DomainEntityProperty/DomainEntityPropertyMustMatchADomainEntity';
+import { validate as domainEntityPropertyMustMatchADomainEntity} from './validator/DomainEntityProperty/DomainEntityPropertyMustMatchADomainEntity';
 
-import { validate as DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity';
-import { validate as DomainEntitySubclassIdentityRenameMustExistNoMoreThanOnce} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustExistNoMoreThanOnce';
-import { validate as DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass';
-import { validate as DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity';
-import { validate as DomainEntitySubclassMustNotRedeclareProperties} from './validator/DomainEntitySubclass/DomainEntitySubclassMustNotRedeclareProperties';
+import { validate as domainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity';
+import { validate as domainEntitySubclassIdentityRenameMustExistNoMoreThanOnce} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustExistNoMoreThanOnce';
+import { validate as domainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass';
+import { validate as domainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity} from './validator/DomainEntitySubclass/DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity';
+import { validate as domainEntitySubclassMustNotRedeclareProperties} from './validator/DomainEntitySubclass/DomainEntitySubclassMustNotRedeclareProperties';
 
-import { validate as EnumerationItemsMustBeUnique} from './validator/Enumeration/EnumerationItemsMustBeUnique';
+import { validate as enumerationItemsMustBeUnique} from './validator/Enumeration/EnumerationItemsMustBeUnique';
 
-import { validate as EnumerationPropertyMustMatchAnEnumeration} from './validator/EnumerationProperty/EnumerationPropertyMustMatchAnEnumeration';
+import { validate as enumerationPropertyMustMatchAnEnumeration} from './validator/EnumerationProperty/EnumerationPropertyMustMatchAnEnumeration';
 
-import { validate as IdentityExistsOnlyIfIdentityIsAllowed} from './validator/Identity/IdentityExistsOnlyIfIdentityIsAllowed';
+import { validate as identityExistsOnlyIfIdentityIsAllowed} from './validator/Identity/IdentityExistsOnlyIfIdentityIsAllowed';
 
-import { validate as IdentityRenameExistsOnlyIfIdentityRenameIsAllowed} from './validator/IdentityRename/IdentityRenameExistsOnlyIfIdentityRenameIsAllowed';
+import { validate as identityRenameExistsOnlyIfIdentityRenameIsAllowed} from './validator/IdentityRename/IdentityRenameExistsOnlyIfIdentityRenameIsAllowed';
 
-import { validate as InlineCommonExistsOnlyInCoreNamespace} from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
+import { validate as inlineCommonExistsOnlyInCoreNamespace} from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
 
-import { validate as IntegerPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/IntegerProperty/IntegerPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as IntegerPropertyMustNotMatchACommonDecimal} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonDecimal';
-import { validate as IntegerPropertyMustNotMatchACommonInteger} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonInteger';
-import { validate as IntegerPropertyMustNotMatchACommonString} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonString';
+import { validate as integerPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/IntegerProperty/IntegerPropertyMinValueMustNotBeGreaterThanMaxValue';
+import { validate as integerPropertyMustNotMatchACommonDecimal} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonDecimal';
+import { validate as integerPropertyMustNotMatchACommonInteger} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonInteger';
+import { validate as integerPropertyMustNotMatchACommonString} from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonString';
 
-import { validate as InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass} from './validator/Interchange/InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass';
-import { validate as InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass} from './validator/Interchange/InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass';
-import { validate as InterchangeMustNotRedeclareIdentityTemplates} from './validator/Interchange/InterchangeMustNotRedeclareIdentityTemplates';
-import { validate as InterchangeMustNotRedeclareInterchangeElements} from './validator/Interchange/InterchangeMustNotRedeclareInterchangeElements';
+import { validate as interchangeElementMustMatchADomainEntityOrAssociationOrSubclass} from './validator/Interchange/InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass';
+import { validate as interchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass} from './validator/Interchange/InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass';
+import { validate as interchangeMustNotRedeclareIdentityTemplates} from './validator/Interchange/InterchangeMustNotRedeclareIdentityTemplates';
+import { validate as interchangeMustNotRedeclareInterchangeElements} from './validator/Interchange/InterchangeMustNotRedeclareInterchangeElements';
 
-import { validate as InterchangeExtensionIdentifierMustMatchAnInterchange} from './validator/InterchangeExtension/InterchangeExtensionIdentifierMustMatchAnInterchange';
-import { validate as InterchangeExtensionMustNotRedeclareBaseInterchangeElements} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeElements';
-import { validate as InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName';
-import { validate as InterchangeExtensionMustNotRedeclareElements} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareElements';
-import { validate as InterchangeExtensionMustNotRedeclareIdentityName} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareIdentityName';
+import { validate as interchangeExtensionIdentifierMustMatchAnInterchange} from './validator/InterchangeExtension/InterchangeExtensionIdentifierMustMatchAnInterchange';
+import { validate as interchangeExtensionMustNotRedeclareBaseInterchangeElements} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeElements';
+import { validate as interchangeExtensionMustNotRedeclareBaseInterchangeIdentityName} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName';
+import { validate as interchangeExtensionMustNotRedeclareElements} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareElements';
+import { validate as interchangeExtensionMustNotRedeclareIdentityName} from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareIdentityName';
 
-import { validate as MergePropertyPathMustExist} from './validator/MergePartOfReference/MergePropertyPathMustExist';
-import { validate as MergeStatementMustStartMergePathWithPropertyName} from './validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
-import { validate as TargetPropertyPathMustExist} from './validator/MergePartOfReference/TargetPropertyPathMustExist';
+import { validate as mergePropertyPathMustExist} from './validator/MergePartOfReference/MergePropertyPathMustExist';
+import { validate as mergeStatementMustStartMergePathWithPropertyName} from './validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
+import { validate as targetPropertyPathMustExist} from './validator/MergePartOfReference/TargetPropertyPathMustExist';
 
-import { validate as MetaEdIdIsRequiredForDomainItems} from './validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
-import { validate as MetaEdIdIsRequiredForEntities} from './validator/MetaEdId/MetaEdIdIsRequiredForEntities';
-import { validate as MetaEdIdIsRequiredForEnumerationItems} from './validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
-import { validate as MetaEdIdIsRequiredForInterchangeItems} from './validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
-import { validate as MetaEdIdIsRequiredForProperties} from './validator/MetaEdId/MetaEdIdIsRequiredForProperties';
-import { validate as MustNotDuplicateMetaEdId} from './validator/MetaEdId/MustNotDuplicateMetaEdId';
+import { validate as metaEdIdIsRequiredForDomainItems} from './validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
+import { validate as metaEdIdIsRequiredForEntities} from './validator/MetaEdId/MetaEdIdIsRequiredForEntities';
+import { validate as metaEdIdIsRequiredForEnumerationItems} from './validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
+import { validate as metaEdIdIsRequiredForInterchangeItems} from './validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
+import { validate as metaEdIdIsRequiredForProperties} from './validator/MetaEdId/MetaEdIdIsRequiredForProperties';
+import { validate as mustNotDuplicateMetaEdId} from './validator/MetaEdId/MustNotDuplicateMetaEdId';
 
-import { validate as SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits} from './validator/SharedSimple/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
-import { validate as SharedDecimalMinValueMustNotBeGreaterThanMaxValue} from './validator/SharedSimple/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
-import { validate as SharedIntegerMinValueMustNotBeGreaterThanMaxValue} from './validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
-import { validate as SharedStringMinLengthMustNotBeGreaterThanMaxLength} from './validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
+import { validate as sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits} from './validator/SharedSimple/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
+import { validate as sharedDecimalMinValueMustNotBeGreaterThanMaxValue} from './validator/SharedSimple/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
+import { validate as sharedIntegerMinValueMustNotBeGreaterThanMaxValue} from './validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
+import { validate as sharedStringMinLengthMustNotBeGreaterThanMaxLength} from './validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
-import { validate as ShortPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/ShortProperty/ShortPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as ShortPropertyMustNotMatchACommonDecimal} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonDecimal';
-import { validate as ShortPropertyMustNotMatchACommonInteger} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonInteger';
-import { validate as ShortPropertyMustNotMatchACommonString} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonString';
+import { validate as shortPropertyMinValueMustNotBeGreaterThanMaxValue} from './validator/ShortProperty/ShortPropertyMinValueMustNotBeGreaterThanMaxValue';
+import { validate as shortPropertyMustNotMatchACommonDecimal} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonDecimal';
+import { validate as shortPropertyMustNotMatchACommonInteger} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonInteger';
+import { validate as shortPropertyMustNotMatchACommonString} from './validator/ShortProperty/ShortPropertyMustNotMatchACommonString';
 
-import { validate as StringPropertyMinLengthMustNotBeGreaterThanMaxLength} from './validator/StringProperty/StringPropertyMinLengthMustNotBeGreaterThanMaxLength';
-import { validate as StringPropertyMustNotMatchACommonDecimal} from './validator/StringProperty/StringPropertyMustNotMatchACommonDecimal';
-import { validate as StringPropertyMustNotMatchACommonInteger} from './validator/StringProperty/StringPropertyMustNotMatchACommonInteger';
-import { validate as StringPropertyMustNotMatchACommonString} from './validator/StringProperty/StringPropertyMustNotMatchACommonString';
+import { validate as stringPropertyMinLengthMustNotBeGreaterThanMaxLength} from './validator/StringProperty/StringPropertyMinLengthMustNotBeGreaterThanMaxLength';
+import { validate as stringPropertyMustNotMatchACommonDecimal} from './validator/StringProperty/StringPropertyMustNotMatchACommonDecimal';
+import { validate as stringPropertyMustNotMatchACommonInteger} from './validator/StringProperty/StringPropertyMustNotMatchACommonInteger';
+import { validate as stringPropertyMustNotMatchACommonString} from './validator/StringProperty/StringPropertyMustNotMatchACommonString';
 
-import { validate as SubdomainMustNotDuplicateDomainItems} from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
-import { validate as SubdomainParentDomainNameMustMatchADomain} from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
+import { validate as subdomainMustNotDuplicateDomainItems} from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
+import { validate as subdomainParentDomainNameMustMatchADomain} from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
 
 function validatorList(): Array<Validator> {
   return [
@@ -120,29 +120,29 @@ function validatorList(): Array<Validator> {
 
     associationPropertyMustMatchAnAssociation,
 
-    AssociationSubclassIdentifierMustMatchAnAssociation,
-    AssociationSubclassIdentityRenameMustExistNoMoreThanOnce,
-    AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass,
-    AssociationSubclassMustNotRedeclareProperties,
+    associationSubclassIdentifierMustMatchAnAssociation,
+    associationSubclassIdentityRenameMustExistNoMoreThanOnce,
+    associationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass,
+    associationSubclassMustNotRedeclareProperties,
 
     choicePropertyMustMatchAChoice,
   
-    CommonExtensionExistsOnlyInExtensionNamespace,
-    CommonExtensionIdentifierMustMatchACommon,
-    CommonExtensionMustNotRedeclareProperties,
+    commonExtensionExistsOnlyInExtensionNamespace,
+    commonExtensionIdentifierMustMatchACommon,
+    commonExtensionMustNotRedeclareProperties,
 
-    CommonPropertyMustMatchACommon,
-    CommonPropertyMustNotContainIdentity,
-    CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension,
-    CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality,
+    commonPropertyMustMatchACommon,
+    commonPropertyMustNotContainIdentity,
+    commonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension,
+    commonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality,
 
     mostEntitiesCannotHaveSameName,
 
-    DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits,
-    DecimalPropertyMinValueMustNotBeGreaterThanMaxValue,
-    DecimalPropertyMustNotMatchACommonDecimal,
-    DecimalPropertyMustNotMatchACommonInteger,
-    DecimalPropertyMustNotMatchACommonString,
+    decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits,
+    decimalPropertyMinValueMustNotBeGreaterThanMaxValue,
+    decimalPropertyMustNotMatchACommonDecimal,
+    decimalPropertyMustNotMatchACommonInteger,
+    decimalPropertyMustNotMatchACommonString,
 
     domainEntityMustContainAnIdentity,
     domainEntityMustContainNoMoreThanOneUniqueIdColumn,
@@ -151,64 +151,64 @@ function validatorList(): Array<Validator> {
     domainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass,
     domainEntityExtensionMustNotRedeclareProperties,
 
-    DomainEntityPropertyMustMatchADomainEntity,
+    domainEntityPropertyMustMatchADomainEntity,
 
-    DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity,
-    DomainEntitySubclassIdentityRenameMustExistNoMoreThanOnce,
-    DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass,
-    DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity,
-    DomainEntitySubclassMustNotRedeclareProperties,
+    domainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity,
+    domainEntitySubclassIdentityRenameMustExistNoMoreThanOnce,
+    domainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass,
+    domainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity,
+    domainEntitySubclassMustNotRedeclareProperties,
 
-    EnumerationItemsMustBeUnique,
+    enumerationItemsMustBeUnique,
 
-    EnumerationPropertyMustMatchAnEnumeration,
+    enumerationPropertyMustMatchAnEnumeration,
 
-    IdentityExistsOnlyIfIdentityIsAllowed,
+    identityExistsOnlyIfIdentityIsAllowed,
 
-    IntegerPropertyMinValueMustNotBeGreaterThanMaxValue,
-    IntegerPropertyMustNotMatchACommonDecimal,
-    IntegerPropertyMustNotMatchACommonInteger,
-    IntegerPropertyMustNotMatchACommonString,
+    integerPropertyMinValueMustNotBeGreaterThanMaxValue,
+    integerPropertyMustNotMatchACommonDecimal,
+    integerPropertyMustNotMatchACommonInteger,
+    integerPropertyMustNotMatchACommonString,
 
-    InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass,
-    InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass,
-    InterchangeMustNotRedeclareIdentityTemplates,
-    InterchangeMustNotRedeclareInterchangeElements,
+    interchangeElementMustMatchADomainEntityOrAssociationOrSubclass,
+    interchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass,
+    interchangeMustNotRedeclareIdentityTemplates,
+    interchangeMustNotRedeclareInterchangeElements,
 
-    InterchangeExtensionIdentifierMustMatchAnInterchange,
-    InterchangeExtensionMustNotRedeclareBaseInterchangeElements,
-    InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName,
-    InterchangeExtensionMustNotRedeclareElements,
-    InterchangeExtensionMustNotRedeclareIdentityName,
+    interchangeExtensionIdentifierMustMatchAnInterchange,
+    interchangeExtensionMustNotRedeclareBaseInterchangeElements,
+    interchangeExtensionMustNotRedeclareBaseInterchangeIdentityName,
+    interchangeExtensionMustNotRedeclareElements,
+    interchangeExtensionMustNotRedeclareIdentityName,
 
-    MergePropertyPathMustExist,
-    MergeStatementMustStartMergePathWithPropertyName,
-    TargetPropertyPathMustExist,
+    mergePropertyPathMustExist,
+    mergeStatementMustStartMergePathWithPropertyName,
+    targetPropertyPathMustExist,
 
-    MetaEdIdIsRequiredForDomainItems,
-    MetaEdIdIsRequiredForEntities,
-    MetaEdIdIsRequiredForEnumerationItems,
-    MetaEdIdIsRequiredForInterchangeItems,
-    MetaEdIdIsRequiredForProperties,
-    MustNotDuplicateMetaEdId,
+    metaEdIdIsRequiredForDomainItems,
+    metaEdIdIsRequiredForEntities,
+    metaEdIdIsRequiredForEnumerationItems,
+    metaEdIdIsRequiredForInterchangeItems,
+    metaEdIdIsRequiredForProperties,
+    mustNotDuplicateMetaEdId,
 
-    SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits,
-    SharedDecimalMinValueMustNotBeGreaterThanMaxValue,
-    SharedIntegerMinValueMustNotBeGreaterThanMaxValue,
-    SharedStringMinLengthMustNotBeGreaterThanMaxLength,
+    sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits,
+    sharedDecimalMinValueMustNotBeGreaterThanMaxValue,
+    sharedIntegerMinValueMustNotBeGreaterThanMaxValue,
+    sharedStringMinLengthMustNotBeGreaterThanMaxLength,
 
-    ShortPropertyMinValueMustNotBeGreaterThanMaxValue,
-    ShortPropertyMustNotMatchACommonDecimal,
-    ShortPropertyMustNotMatchACommonInteger,
-    ShortPropertyMustNotMatchACommonString,
+    shortPropertyMinValueMustNotBeGreaterThanMaxValue,
+    shortPropertyMustNotMatchACommonDecimal,
+    shortPropertyMustNotMatchACommonInteger,
+    shortPropertyMustNotMatchACommonString,
 
-    StringPropertyMinLengthMustNotBeGreaterThanMaxLength,
-    StringPropertyMustNotMatchACommonDecimal,
-    StringPropertyMustNotMatchACommonInteger,
-    StringPropertyMustNotMatchACommonString,
+    stringPropertyMinLengthMustNotBeGreaterThanMaxLength,
+    stringPropertyMustNotMatchACommonDecimal,
+    stringPropertyMustNotMatchACommonInteger,
+    stringPropertyMustNotMatchACommonString,
 
-    SubdomainMustNotDuplicateDomainItems,
-    SubdomainParentDomainNameMustMatchADomain,
+    subdomainMustNotDuplicateDomainItems,
+    subdomainParentDomainNameMustMatchADomain,
 
   ];
 }
