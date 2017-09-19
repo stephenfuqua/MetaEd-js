@@ -1,17 +1,18 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../../packages/metaed-core/index';
 import { getEntitiesOfType } from '../../../../packages/metaed-core/index';
-import { newSimpleType } from './schema/SimpleType';
+import type { SimpleType } from './schema/SimpleType';
+import { NoSimpleType } from './schema/SimpleType';
 
 export type SimpleTypeBaseEdfiXsd = {
-  xsd_MetaEdNameWithExtension: () => string;
+  xsd_SimpleType: SimpleType;
 };
 
 const enhancerName: string = 'SimpleTypeBaseSetupEnhancer';
 
 export function addSimpleTypeBaseEdfiXsdTo(simpleTypeBase: ModelBase) {
   Object.assign(simpleTypeBase.data.edfiXsd, {
-    xsd_SimpleType: newSimpleType(),
+    xsd_SimpleType: NoSimpleType,
   });
 }
 

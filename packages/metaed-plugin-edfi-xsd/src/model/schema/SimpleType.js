@@ -15,3 +15,7 @@ export function newSimpleType(): SimpleType {
     annotation: newAnnotation(),
   };
 }
+
+export const NoSimpleType: SimpleType = Object.assign(newSimpleType(), {
+  name: 'NoSimpleType',
+});

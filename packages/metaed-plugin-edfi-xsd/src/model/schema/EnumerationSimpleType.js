@@ -1,10 +1,11 @@
 // @flow
 import type { SimpleType } from './SimpleType';
+import type { EnumerationToken } from './EnumerationToken';
 import { newSimpleType } from './SimpleType';
 
 export type EnumerationSimpleType = {
   ...$Exact<SimpleType>,
-  enumerationTokens: Array<string>,
+  enumerationTokens: Array<EnumerationToken>,
   hasRestrictions: () => boolean,
 }
 

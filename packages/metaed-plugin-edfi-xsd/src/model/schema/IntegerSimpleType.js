@@ -9,7 +9,7 @@ export type IntegerSimpleType = {
   hasRestrictions: () => boolean,
 }
 
-export function newDecimalSimpleType(): IntegerSimpleType {
+export function newIntegerSimpleType(): IntegerSimpleType {
   return Object.assign({}, newSimpleType(), {
     minValue: '',
     maxValue: '',
