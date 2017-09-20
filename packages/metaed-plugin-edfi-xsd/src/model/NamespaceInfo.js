@@ -1,9 +1,10 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo } from '../../../../packages/metaed-core/index';
+import type { SchemaContainer } from './schema/SchemaContainer';
 import { newSchemaContainer } from './schema/SchemaContainer';
 
 export type NamespaceInfoEdfiXsd = {
-  xsd_Schema: string;
+  xsd_Schema: SchemaContainer;
 };
 
 const enhancerName: string = 'NamespaceInfoSetupEnhancer';

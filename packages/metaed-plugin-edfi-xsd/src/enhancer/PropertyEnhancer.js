@@ -28,8 +28,7 @@ import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';
 
-export const selectMany = R.curry((fn, data) => R.reduce(R.concat, [], R.map(fn, data)));
-const queryableFieldsFrom = selectMany(x => x.queryableFields);
+const queryableFieldsFrom = R.chain(x => x.queryableFields);
 const adjustEnumerationSuffix = (metaEdName: string): string => (metaEdName.endsWith('Type') ? metaEdName : `${metaEdName}Type`);
 
 function noParentOrReferencedEntityProjectExtension(property: ReferentialProperty | SimpleProperty): boolean {

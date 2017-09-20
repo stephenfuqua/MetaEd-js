@@ -21,7 +21,7 @@ export const timeIntervalEdfiId: string = '110';
 const timeIntervalName: string = 'TimeInterval';
 const timeIntervalDocumentation: string = 'A period of time with fixed, well-defined limits.';
 
-export const CreateTimeIntervalSimpleType = () => Object.assign(newStringSimpleType(), {
+export const createTimeIntervalSimpleType = () => Object.assign(newStringSimpleType(), {
   name: timeIntervalName,
   annotation: Object.assign(newAnnotation(), {
     documentation: timeIntervalDocumentation,
