@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating path with merge property collection targeting identity choice type should have one validation failure 1`] = `"Merge statement ContextName1ChoiceName1.DomainEntityName1 must be a valid path. No Property DomainEntityName1 was found"`;
+
+exports[`when validating path with merge property collection targeting non identity choice type should have one validation failure 1`] = `"Merge statement ContextName1ChoiceName1.DomainEntityName1 must be a valid path. No Property DomainEntityName1 was found"`;
+
+exports[`when validating path with merge property collection targeting non identity on current should have one validation failure 1`] = `"Merge statement ContextName1DomainEntityName1 must be a valid path. No Property ContextName1DomainEntityName1 was found"`;
+
+exports[`when validating path with merge property targeting non identity inline common type should have one validation failure 1`] = `"Merge statement ContextName1CommonName1.DomainEntityName1 must be a valid path. No Property DomainEntityName1 was found"`;
+
+exports[`when validating path with merge property targeting non identity on reference should have one validation failure 1`] = `"Merge statement ContextName1DomainEntityName1.ContextName2DomainEntityName2 must be a valid path. No Property ContextName2DomainEntityName2 was found"`;

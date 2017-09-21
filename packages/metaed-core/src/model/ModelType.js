@@ -73,3 +73,4 @@ export const topLevelEntityModelTypes: Array<ModelType> = [
   'schoolYearEnumeration',
 ];
 
+export const asModelType = (x: string): ModelType => ((x: any): ModelType);

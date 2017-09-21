@@ -1,5 +1,9 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder } from '../../../../../packages/metaed-core/index';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+} from '../../../../../packages/metaed-core/index';
 import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
 
