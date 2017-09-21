@@ -183,4 +183,4 @@ export { newSharedString } from './src/model/SharedString';
 export { newSourceMap } from './src/model/SourceMap';
 export { newStringType } from './src/model/StringType';
 export { newSubdomain } from './src/model/Subdomain';
-export { newTopLevelEntity } from './src/model/TopLevelEntity';
+export { asTopLevelEntity, newTopLevelEntity } from './src/model/TopLevelEntity';

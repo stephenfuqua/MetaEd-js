@@ -2931,10 +2931,6 @@ mkdirp@0.5, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mock-fs@^4.4.1:
-  version "4.4.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/mock-fs/-/mock-fs-4.4.1.tgz#f285fa025b42a4031faf75b66f632b21e7056683"
-
 modify-values@^1.0.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/modify-values/-/modify-values-1.0.0.tgz#e2b6cdeb9ce19f99317a53722f3dbf5df5eaaab2"

@@ -1,31 +1,37 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, DomainEntitySubclassBuilder,
-  AssociationBuilder, AssociationExtensionBuilder, AssociationSubclassBuilder } from '../../../../../packages/metaed-core/index';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  DomainEntitySubclassBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+  AssociationSubclassBuilder,
+} from '../../../../../packages/metaed-core/index';
 import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/MergePartOfReference/TargetPropertyPathMustExist';
 import { CommonBuilder } from '../../../../metaed-core/src/builder/CommonBuilder';
 
 describe('when validating domain entity has target property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const domainEntityName = 'DomainEntity1';
+  const domainEntityName1 = 'DomainEntityName1';
+  const domainEntityName2 = 'DomainEntityName2';
   const propertyName = 'Property1';
-  const targetEntityName = 'DomainEntity2';
-  const targetPropertyName = 'Property2';
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
-      .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withStartDomainEntity(domainEntityName1)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
-      .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetEntityName}.${targetPropertyName}`)
+      .withStartDomainEntity(domainEntityName2)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
+      .withMergePartOfReference(`${domainEntityName1}.${propertyName}`, `${propertyName}`)
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
@@ -37,7 +43,7 @@ describe('when validating domain entity has target property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -54,14 +60,14 @@ describe('when validating domain entity has merge property and entity is wrong',
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `EntityNotValid.${targetPropertyName}`)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -76,7 +82,7 @@ describe('when validating domain entity has merge property and entity is wrong',
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> message');
     expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> sourceMap');
@@ -95,14 +101,14 @@ describe('when validating domain entity has merge property and property is wrong
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetEntityName}.NotThere`)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -117,7 +123,7 @@ describe('when validating domain entity has merge property and property is wrong
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> message');
     expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> sourceMap');
@@ -137,20 +143,20 @@ describe('when validating domain entity has merge property on common type', () =
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartCommon(secondEntityName)
-      .withDocumentation('doc')
-      .withDomainEntityIdentity(domainEntityName, 'doc')
+      .withDocumentation('Documentation')
+      .withDomainEntityIdentity(domainEntityName, 'Documentation')
       .withEndCommon()
 
       .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withCommonProperty(secondEntityName, 'doc', false, false)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
+      .withCommonProperty(secondEntityName, 'Documentation', false, false)
       .withMergePartOfReference(`${secondEntityName}.${domainEntityName}`, domainEntityName)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -164,48 +170,7 @@ describe('when validating domain entity has merge property on common type', () =
     expect(metaEd.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures()', () => {
-    expect(failures).toHaveLength(0);
-  });
-});
-
-describe('when validating domain entity extension has merge property', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const domainEntityName = 'EntityWithExt1';
-  const propertyName = 'Property1';
-  const targetEntityName = 'EntityWithExt2';
-  const targetPropertyName = 'Property2';
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
-      .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
-      .withEndDomainEntity()
-
-      .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withEndDomainEntity()
-
-      .withStartDomainEntityExtension(targetEntityName)
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetEntityName}.${targetPropertyName}`)
-      .withEndDomainEntityExtension()
-      .withEndNamespace()
-      .sendToListener(new DomainEntityBuilder(metaEd, failures))
-      .sendToListener(new DomainEntityExtensionBuilder(metaEd, failures));
-
-    failures = validate(metaEd);
-  });
-
-  it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
-  });
-
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -222,20 +187,20 @@ describe('when validating domain entity subclass has merge property', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity('IdentityProperty', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('IdentityProperty', 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity('IdentityProperty2', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('IdentityProperty2', 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntitySubclass('Entity3', targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerProperty(targetPropertyName, 'doc', true, false)
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetEntityName}.Entity3.${targetPropertyName}`)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(targetPropertyName, 'Documentation', true, false)
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
+      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetPropertyName}`)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
@@ -248,7 +213,7 @@ describe('when validating domain entity subclass has merge property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -265,26 +230,26 @@ describe('when validating association has merge property', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity2')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property2', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property2', 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity3')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property3', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property3', 'Documentation')
       .withEndDomainEntity()
 
       .withStartAssociation(targetAssociationName)
-      .withDocumentation('doc')
-      .withAssociationDomainEntityProperty('Entity2', 'doc')
-      .withAssociationDomainEntityProperty('Entity3', 'doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
+      .withDocumentation('Documentation')
+      .withAssociationDomainEntityProperty('Entity2', 'Documentation')
+      .withAssociationDomainEntityProperty('Entity3', 'Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetAssociationName}.${targetPropertyName}`)
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
@@ -297,7 +262,7 @@ describe('when validating association has merge property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -314,28 +279,28 @@ describe('when validating association extension has merge property', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity2')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property2', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property2', 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity3')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property3', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property3', 'Documentation')
       .withEndDomainEntity()
 
       .withStartAssociation(targetAssociationName)
-      .withDocumentation('doc')
-      .withAssociationDomainEntityProperty('Entity2', 'doc')
-      .withAssociationDomainEntityProperty('Entity3', 'doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withAssociationDomainEntityProperty('Entity2', 'Documentation')
+      .withAssociationDomainEntityProperty('Entity3', 'Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
 
       .withStartAssociationExtension(targetAssociationName)
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetAssociationName}.${targetPropertyName}`)
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
@@ -349,7 +314,7 @@ describe('when validating association extension has merge property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -365,30 +330,30 @@ describe('when validating association subclass has merge property', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity2')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property2', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property2', 'Documentation')
       .withEndDomainEntity()
 
       .withStartDomainEntity('Entity3')
-      .withDocumentation('doc')
-      .withIntegerIdentity('Property3', 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('Property3', 'Documentation')
       .withEndDomainEntity()
 
       .withStartAssociation(targetAssociationName)
-      .withDocumentation('doc')
-      .withAssociationDomainEntityProperty('Entity2', 'doc')
-      .withAssociationDomainEntityProperty('Entity3', 'doc')
-      .withIntegerIdentity('Property4', 'doc')
+      .withDocumentation('Documentation')
+      .withAssociationDomainEntityProperty('Entity2', 'Documentation')
+      .withAssociationDomainEntityProperty('Entity3', 'Documentation')
+      .withIntegerIdentity('Property4', 'Documentation')
 
       .withStartAssociationSubclass('Entity5', targetAssociationName)
-      .withDocumentation('doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withMergePartOfReference(`Entity2.${propertyName}`, `${targetAssociationName}.${domainEntityName}`)
+      .withDocumentation('Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
+      .withMergePartOfReference(`Entity2.${propertyName}`, `${domainEntityName}.${propertyName}`)
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new AssociationBuilder(metaEd, failures))
@@ -401,7 +366,7 @@ describe('when validating association subclass has merge property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
@@ -418,15 +383,15 @@ describe('when validating abstract entity has merge property', () => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(propertyName, 'doc')
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(propertyName, 'Documentation')
       .withEndDomainEntity()
 
       .withStartAbstractEntity(targetEntityName)
-      .withDocumentation('doc')
-      .withIntegerIdentity(targetPropertyName, 'doc')
-      .withAssociationProperty(domainEntityName, 'doc', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetEntityName}.${targetPropertyName}`)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(targetPropertyName, 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
+      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, `${targetPropertyName}`)
       .withEndAbstractEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
@@ -438,7 +403,7 @@ describe('when validating abstract entity has merge property', () => {
     expect(metaEd.entity.domainEntity.size).toBe(2);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
 });
