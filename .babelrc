@@ -3,5 +3,6 @@
   "plugins": [
     ["transform-flow-strip-types"]
   ],
-  "sourceMap": "inline"
+  "sourceMap": "inline",
+  "ignore":["node_modules"]
 }
