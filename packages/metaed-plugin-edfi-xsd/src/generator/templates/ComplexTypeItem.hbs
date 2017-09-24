@@ -1,0 +1,11 @@
+<xs:{{#if Items}}{{#if IsChoice}}choice{{else}}sequence{{/if}}{{else}}element{{/if}}
+  {{#if Name}}name="{{{Name}}}"{{/if}}
+  {{#if Type}}type="{{{Type}}}"{{/if}}
+  {{#if MinOccurs}}minOccurs="{{{MinOccurs}}}"{{/if}}
+  {{#if MaxOccursIsUnbounded}} maxOccurs="unbounded"{{else}}{{#if MaxOccurs}} maxOccurs="{{{MaxOccurs}}}" {{/if}}{{/if}}
+  >
+  {{#if Annotation}}{{> Annotation Annotation}}{{/if}}
+  {{#Items}}
+  {{> ComplexTypeItem}}
+  {{/Items}}
+</xs:{{#if Items}}{{#if IsChoice}}choice{{else}}sequence{{/if}}{{else}}element{{/if}}>

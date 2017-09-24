@@ -1,0 +1,23 @@
+<xs:complexType name="{{{Name}}}"{{#if IsAbstract}} abstract="true"{{/if}}>
+  {{> Annotation Annotation}}
+  {{#Attributes}}
+    {{> Attribute}}
+  {{/Attributes}}
+  {{#if BaseType}}
+  <xs:complexContent>
+    <xs:{{#if IsRestriction}}restriction{{else}}extension{{/if}} base="{{{BaseType}}}"{{#unless HasItems}}/{{/unless}}>
+  {{/if}}
+  {{#if HasItems}}
+    <xs:sequence>
+      {{#Items}}
+        {{> ComplexTypeItem}}
+      {{/Items}}
+    </xs:sequence>
+  {{/if}}
+  {{#if BaseType}}
+    {{#if HasItems}}
+    </xs:{{#if IsRestriction}}restriction{{else}}extension{{/if}}>
+    {{/if}}
+  </xs:complexContent>
+  {{/if}}
+</xs:complexType>

@@ -1,0 +1,18 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ed-fi.org/{{{SchemaVersion}}}" targetNamespace="http://ed-fi.org/{{{SchemaVersion}}}" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="{{{Interchange.SchemaLocation}}}"/>
+  <xs:annotation>
+    <xs:documentation>===== {{{Interchange.HumanizedUppercasedMetaEdName}}} Interchange Model =====</xs:documentation>
+  </xs:annotation>
+  <xs:element name="{{{Interchange.InterchangeName}}}">
+    <xs:annotation>
+      <xs:documentation>{{{Interchange.Documentation}}}</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        {{#Interchange.OrderedElements}}
+          <xs:element name="{{{Xsd_Name}}}" type="{{{Xsd_Type}}}"/>
+        {{/Interchange.OrderedElements}}
+        </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

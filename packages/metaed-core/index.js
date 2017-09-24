@@ -50,6 +50,9 @@ export type { Validator } from './src/validator/Validator';
 export type { ValidationFailure } from './src/validator/ValidationFailure';
 export type { Enhancer } from './src/enhancer/Enhancer';
 export type { EnhancerResult } from './src/enhancer/EnhancerResult';
+export type { Generator } from './src/generator/Generator';
+export type { GeneratorResult } from './src/generator/GeneratorResult';
+export type { GeneratedOutput } from './src/generator/GeneratedOutput';
 export type { MetaEdEnvironment, PluginEnvironment } from './src/MetaEdEnvironment';
 export type { MetaEdPlugin, PluginManifest } from './src/plugin/PluginTypes';
 

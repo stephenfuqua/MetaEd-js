@@ -1,0 +1,20 @@
+<xs:simpleType name="{{{Name}}}">
+  {{> Annotation Annotation}}
+  {{#if HasRestrictions}}
+  <xs:restriction base="{{{BaseType}}}">
+    {{#if MinValue}}        <xs:minInclusive value="{{{MinValue}}}" />{{/if}}
+    {{#if MaxValue}}        <xs:maxInclusive value="{{{MaxValue}}}" />{{/if}}
+    {{#if MinLength}}       <xs:minLength value="{{{MinLength}}}" />{{/if}}
+    {{#if MaxLength}}       <xs:maxLength value="{{{MaxLength}}}" />{{/if}}
+    {{#if TotalDigits}}     <xs:totalDigits value="{{{TotalDigits}}}" />{{/if}}
+    {{#if DecimalPlaces}}   <xs:fractionDigits value="{{{DecimalPlaces}}}" />{{/if}}
+    {{#EnumerationTokens}}
+    <xs:enumeration value="{{{Value}}}">
+      {{> Annotation Annotation}}
+    </xs:enumeration>
+    {{/EnumerationTokens}}
+  </xs:restriction>
+  {{else}}
+  <xs:restriction base="{{{BaseType}}}"/>
+  {{/if}}
+</xs:simpleType>
