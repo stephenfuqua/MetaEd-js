@@ -15,3 +15,7 @@ export function newEnumerationSimpleType(): EnumerationSimpleType {
     hasRestrictions() { return this.enumerationTokens.length > 0; },
   });
 }
+
+export const NoEnumerationSimpleType: SimpleType = Object.assign(newSimpleType(), {
+  name: 'NoEnumerationSimpleType',
+});

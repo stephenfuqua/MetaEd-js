@@ -1,7 +1,7 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from '../../../../packages/metaed-core/index';
 import type { EnumerationSimpleType } from './schema/EnumerationSimpleType';
-import { newEnumerationSimpleType } from './schema/EnumerationSimpleType';
+import { NoEnumerationSimpleType } from './schema/EnumerationSimpleType';
 
 export type EnumerationBaseEdfiXsd = {
   xsd_EnumerationName: string;
@@ -17,7 +17,7 @@ export function addEnumerationEdfiXsdTo(enumeration: EnumerationBase) {
   Object.assign(enumeration.data.edfiXsd, {
     xsd_EnumerationName: '',
     xsd_EnumerationNameWithExtension: '',
-    xsd_EnumerationSimpleType: newEnumerationSimpleType(),
+    xsd_EnumerationSimpleType: NoEnumerationSimpleType,
   });
 }
 

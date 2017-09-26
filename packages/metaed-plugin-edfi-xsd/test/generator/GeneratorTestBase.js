@@ -28,16 +28,6 @@ import { newSchemaContainer } from '../../src/model/schema/SchemaContainer';
 export const xs: string = 'http://www.w3.org/2001/XMLSchema';
 export const ann: string = 'http://ed-fi.org/annotation';
 
-/*
-export function ShouldHaveAnnotationWithDocumentation(XElement element, string documentation) {
-  var documentationElements =
-      element.Descendants(XName.Get("annotation", xs))
-          .Select(annotation => annotation.Element(XName.Get("documentation", xs)));
-  var matchingDocumentationElements = documentationElements.Where(de => de.Value == documentation);
-  matchingDocumentationElements.Count().ShouldEqual(1);
-}
-*/
-
 export function createAnnotation(documentation: string, typeGroup: string = '', descriptorName: string = ''): Annotation {
   return Object.assign(newAnnotation(), {
     documentation,

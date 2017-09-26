@@ -15,6 +15,7 @@ import { newAttribute } from '../../model/schema/Attribute';
 import { newElement } from '../../model/schema/Element';
 import { NoComplexType, newComplexType } from '../../model/schema/ComplexType';
 import { NoSimpleType } from '../../model/schema/SimpleType';
+import { NoEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';
 import {
   createCodeValueSimpleType,
   createTimeIntervalSimpleType,
@@ -35,6 +36,7 @@ const manyReferenceTypesFrom = R.chain((x: TopLevelEntity) => {
 
 const removeNoComplexType = R.filter(x => x !== NoComplexType);
 const removeNoSimpleType = R.filter(x => x !== NoSimpleType);
+const removeNoEnumerationSimpleType = R.filter(x => x !== NoEnumerationSimpleType);
 
 const orderByName = R.sortBy(R.prop('name'));
 const inNamespace = namespaceInfo => R.filter(x => x.namespaceInfo.namespace === namespaceInfo.namespace);
@@ -200,6 +202,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       getEntitiesOfType,
       inNamespace(namespaceInfo),
       complexTypesFrom,
+      removeNoComplexType,
       orderByName,
     );
 
@@ -255,6 +258,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       getEntitiesOfType,
       inNamespace(namespaceInfo),
       referenceTypesFrom,
+      removeNoComplexType,
       orderByName,
     );
 
@@ -280,6 +284,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       getEntitiesOfType,
       inNamespace(namespaceInfo),
       enumerationSimpleTypesFrom,
+      removeNoEnumerationSimpleType,
       orderByName,
     );
 

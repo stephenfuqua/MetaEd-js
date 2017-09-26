@@ -1,0 +1,13 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://ed-fi.org/{{{schemaVersion}}}" xmlns:ann="http://ed-fi.org/annotation" targetNamespace="http://ed-fi.org/{{{schemaVersion}}}" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  {{#if isExtension}}<xs:include schemaLocation="Ed-Fi-Core.xsd" />{{else}}<xs:import namespace="http://ed-fi.org/annotation" schemaLocation="SchemaAnnotation.xsd" />{{/if}}
+  {{> annotation schemaAnnotation}}
+  {{#sections}}
+    {{> annotation sectionAnnotation}}
+    {{#complexTypes}}
+      {{> complexType }}
+    {{/complexTypes}}
+    {{#simpleTypes}}
+      {{> simpleType }}
+    {{/simpleTypes}}
+  {{/sections}}
+</xs:schema>

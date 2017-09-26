@@ -16,8 +16,9 @@ import { newMetaEdEnvironment,
   newStringType,
 } from '../../../../../packages/metaed-core/index';
 import type { MetaEdEnvironment } from '../../../../../packages/metaed-core/index';
-import { newComplexType } from '../../../src/model/schema/ComplexType';
-import { newEnumerationSimpleType } from '../../../src/model/schema/EnumerationSimpleType';
+import { NoSimpleType } from '../../../src/model/schema/SimpleType';
+import { newComplexType, NoComplexType } from '../../../src/model/schema/ComplexType';
+import { newEnumerationSimpleType, NoEnumerationSimpleType } from '../../../src/model/schema/EnumerationSimpleType';
 import { newIntegerSimpleType } from '../../../src/model/schema/IntegerSimpleType';
 import { newDecimalSimpleType } from '../../../src/model/schema/DecimalSimpleType';
 import { newStringSimpleType } from '../../../src/model/schema/StringSimpleType';
@@ -265,6 +266,7 @@ describe('when enhancing namespace info for core with children', () => {
         edfiXsd: {
           xsd_ComplexTypes: [
             Object.assign(newComplexType(), { name: domainEntity1ComplexTypeName }),
+            NoComplexType,
           ],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntity1ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntity1LookupTypeName }),
@@ -280,6 +282,7 @@ describe('when enhancing namespace info for core with children', () => {
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
+            NoComplexType,
             Object.assign(newComplexType(), { name: domainEntityExtension1ComplexTypeName }),
           ],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntityExtension1ReferenceTypeName }),
@@ -631,6 +634,44 @@ describe('when enhancing namespace info for core with children', () => {
       },
     });
     metaEd.entity.decimalType.set(decimalType2.metaEdName, decimalType2);
+
+    const domainEntityWithNoComplexTypes = Object.assign(newDomainEntity(), {
+      metaEdName: 'DomainEntityWithNoComplexTypes',
+      namespaceInfo: extensionNamespaceInfo,
+      data: {
+        edfiXsd: {
+          xsd_ComplexTypes: [
+            NoComplexType,
+          ],
+          xsd_ReferenceType: NoComplexType,
+          xsd_LookupType: NoComplexType,
+          xsd_IdentityType: NoComplexType,
+        },
+      },
+    });
+    metaEd.entity.domainEntity.set(domainEntityWithNoComplexTypes.metaEdName, domainEntityWithNoComplexTypes);
+
+    const enumerationWithNoEnumerationSimpleType = Object.assign(newEnumeration(), {
+      metaEdName: 'EnumerationWithNoEnumerationSimpleType',
+      namespaceInfo: extensionNamespaceInfo,
+      data: {
+        edfiXsd: {
+          xsd_EnumerationSimpleType: NoEnumerationSimpleType,
+        },
+      },
+    });
+    metaEd.entity.enumeration.set(enumerationWithNoEnumerationSimpleType.metaEdName, enumerationWithNoEnumerationSimpleType);
+
+    const stringTypeWithNoSimpleType = Object.assign(newStringType(), {
+      metaEdName: 'StringTypeWithNoSimpleType',
+      namespaceInfo: extensionNamespaceInfo,
+      data: {
+        edfiXsd: {
+          xsd_SimpleType: NoSimpleType,
+        },
+      },
+    });
+    metaEd.entity.stringType.set(stringTypeWithNoSimpleType.metaEdName, stringTypeWithNoSimpleType);
 
     enhance(metaEd);
 
