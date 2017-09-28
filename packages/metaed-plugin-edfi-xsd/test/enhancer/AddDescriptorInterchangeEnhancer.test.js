@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newPluginEnvironment, newNamespaceInfo, newDescriptor } from '../../../../packages/metaed-core/index';
-import type { MetaEdEnvironment, NamespaceInfo, Descriptor } from '../../../../packages/metaed-core/index';
+import { newMetaEdEnvironment, newPluginEnvironment, newNamespaceInfo, newDescriptor } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, NamespaceInfo, Descriptor } from '../../../metaed-core/index';
 import { enhance, descriptorInterchangeName } from '../../src/enhancer/AddDescriptorInterchangeEnhancer';
 import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';

@@ -7,6 +7,7 @@ import { newMergedInterchange, addMergedInterchangeToRepository } from '../model
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 const enhancerName: string = 'MergedInterchangeExtensionEnhancer';
+
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   const coreInterchanges: Array<MergedInterchange> = Array.from(edFiXsdEntityRepository.mergedInterchange.values());

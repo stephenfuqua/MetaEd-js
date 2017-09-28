@@ -1,12 +1,9 @@
 // @flow
-import type { Enhancer, Validator, MetaEdPlugin } from '../../../packages/metaed-core/index';
+import type { Validator, MetaEdPlugin } from '../../metaed-core/index';
+import { enhancerList } from './enhancer/EnhancerList';
 
 function validatorList(): Array<Validator> {
-  return [];  // TODO: list them
-}
-
-function enhancerList(): Array<Enhancer> {
-  return [];  // TODO: list them
+  return [];
 }
 
 export default function initialize(): MetaEdPlugin {
