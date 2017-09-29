@@ -28,6 +28,7 @@ export function newInterchangeItem(): InterchangeItem {
     referencedType: 'unknown',
     referencedEntity: newTopLevelEntity(),
     sourceMap: new InterchangeItemSourceMap(),
+    data: {},
   });
 }
 

@@ -16,6 +16,8 @@ export const differenceOfInterchangeItems = R.differenceWith(interchangeItemsEqu
 const enhancerName: string = 'InterchangeItemSetupEnhancer';
 
 export function addInterchangeItemEdfiXsdTo(interchangeItem: InterchangeItem) {
+  if (interchangeItem.data.edfiXsd == null) interchangeItem.data.edfiXsd = {};
+
   Object.assign(interchangeItem.data.edfiXsd, {
     xsd_Name: '',
     xsd_Type: '',

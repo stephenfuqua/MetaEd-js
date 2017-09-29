@@ -31,6 +31,7 @@ export function defaultNamespaceInfoFields() {
     projectExtension: '',
     extensionEntitySuffix: DefaultExtensionEntitySuffix,
     sourceMap: new NamespaceInfoSourceMap(),
+    data: {},
   };
 }
 

@@ -10,6 +10,8 @@ export type ModelBaseEdfiXsd = {
 const enhancerName: string = 'ModelBaseSetupEnhancer';
 
 export function addModelBaseEdfiXsdTo(modelBase: ModelBase) {
+  if (modelBase.data.edfiXsd == null) modelBase.data.edfiXsd = {};
+
   Object.assign(modelBase.data.edfiXsd, {
     xsd_MetaEdNameWithExtension: metaEdNameWithExtension(modelBase),
   });

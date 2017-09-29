@@ -23,6 +23,7 @@ export function newEnumerationItem(): EnumerationItem {
     namespaceInfo: newNamespaceInfo(),
     shortDescription: '',
     sourceMap: new EnumerationItemSourceMap(),
+    data: {},
   });
 }
 

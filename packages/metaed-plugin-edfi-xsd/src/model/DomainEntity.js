@@ -13,6 +13,8 @@ function xsdProperties(domainEntity: DomainEntity): () => Array<EntityProperty> 
 }
 
 export function addDomainEntityEdfiXsdTo(domainEntity: DomainEntity) {
+  if (domainEntity.data.edfiXsd == null) domainEntity.data.edfiXsd = {};
+
   Object.assign(domainEntity.data.edfiXsd, {
     xsd_Properties: xsdProperties(domainEntity),
   });

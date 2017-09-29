@@ -47,6 +47,8 @@ export function newTopLevelEntity(): TopLevelEntity {
     allowPrimaryKeyUpdates: false,
     baseEntityName: '',
     baseEntity: null,
+
+    data: {},
   });
 }
 

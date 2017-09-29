@@ -9,6 +9,8 @@ export type AssociationExtensionEdfiXsd = {
 const enhancerName: string = 'AssociationExtensionSetupEnhancer';
 
 export function addAssociationExtensionEdfiXsdTo(associationExtension: AssociationExtension) {
+  if (associationExtension.data.edfiXsd == null) associationExtension.data.edfiXsd = {};
+
   Object.assign(associationExtension.data.edfiXsd, {
     xsd_MetaEdNameWithExtension: metaEdNameWithExtensionIncludingSuffix(associationExtension),
   });

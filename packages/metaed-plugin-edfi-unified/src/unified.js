@@ -1,5 +1,6 @@
 // @flow
 import type { Enhancer, Validator, MetaEdPlugin } from '../../../packages/metaed-core/index';
+import { newMetaEdPlugin } from '../../../packages/metaed-core/index';
 
 import { validate as abstractEntityMustContainAnIdentity } from './validator/AbstractEntity/AbstractEntityMustContainAnIdentity';
 
@@ -333,8 +334,8 @@ function enhancerList(): Array<Enhancer> {
 }
 
 export default function initialize(): MetaEdPlugin {
-  return {
+  return Object.assign(newMetaEdPlugin(), {
     validator: validatorList(),
     enhancer: enhancerList(),
-  };
+  });
 }

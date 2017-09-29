@@ -11,6 +11,8 @@ export type DescriptorEdfiXsd = {
 const enhancerName: string = 'DescriptorSetupEnhancer';
 
 export function addDescriptorEdfiXsdTo(descriptor: Descriptor) {
+  if (descriptor.data.edfiXsd == null) descriptor.data.edfiXsd = {};
+
   Object.assign(descriptor.data.edfiXsd, {
     xsd_DescriptorName: '',
     xsd_DescriptorNameWithExtension: '',

@@ -9,6 +9,8 @@ export type CommonExtensionEdfiXsd = {
 const enhancerName: string = 'CommonExtensionSetupEnhancer';
 
 export function addCommonExtensionEdfiXsdTo(commonExtension: CommonExtension) {
+  if (commonExtension.data.edfiXsd == null) commonExtension.data.edfiXsd = {};
+
   Object.assign(commonExtension.data.edfiXsd, {
     xsd_MetaEdNameWithExtension: metaEdNameWithExtensionIncludingSuffix(commonExtension),
   });

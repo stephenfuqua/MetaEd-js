@@ -45,6 +45,7 @@ export function newInterchange(): Interchange {
     baseEntity: null,
 
     sourceMap: new InterchangeSourceMap(),
+    data: {},
   });
 }
 

@@ -13,6 +13,8 @@ function xsdProperties(domainEntitySubclass: DomainEntitySubclass): () => Array<
 }
 
 export function addDomainEntitySubclassEdfiXsdTo(domainEntitySubclass: DomainEntitySubclass) {
+  if (domainEntitySubclass.data.edfiXsd == null) domainEntitySubclass.data.edfiXsd = {};
+
   Object.assign(domainEntitySubclass.data.edfiXsd, {
     xsd_Properties: xsdProperties(domainEntitySubclass),
   });

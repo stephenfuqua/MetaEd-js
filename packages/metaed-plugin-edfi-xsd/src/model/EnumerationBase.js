@@ -14,6 +14,8 @@ export type EnumerationBase = Enumeration | MapTypeEnumeration | SchoolYearEnume
 const enhancerName: string = 'EnumerationBaseSetupEnhancer';
 
 export function addEnumerationEdfiXsdTo(enumeration: EnumerationBase) {
+  if (enumeration.data.edfiXsd == null) enumeration.data.edfiXsd = {};
+
   Object.assign(enumeration.data.edfiXsd, {
     xsd_EnumerationName: '',
     xsd_EnumerationNameWithExtension: '',

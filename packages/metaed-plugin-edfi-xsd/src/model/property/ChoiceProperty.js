@@ -11,6 +11,8 @@ export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd & {
 const enhancerName: string = 'ChoicePropertySetupEnhancer';
 
 export function addChoicePropertyEdfiXsdTo(property: ChoiceProperty) {
+  if (property.data.edfiXsd == null) property.data.edfiXsd = {};
+
   Object.assign(property.data.edfiXsd, {
     xsd_Properties: [],
     xsd_IsChoice: true,

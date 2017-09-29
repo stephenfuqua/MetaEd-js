@@ -15,6 +15,8 @@ function xsdProperties(domainEntityExtension: DomainEntityExtension): () => Arra
 }
 
 export function addDomainEntityExtensionEdfiXsdTo(domainEntityExtension: DomainEntityExtension) {
+  if (domainEntityExtension.data.edfiXsd == null) domainEntityExtension.data.edfiXsd = {};
+
   Object.assign(domainEntityExtension.data.edfiXsd, {
     xsd_MetaEdNameWithExtension: metaEdNameWithExtensionIncludingSuffix(domainEntityExtension),
     xsd_Properties: xsdProperties(domainEntityExtension),

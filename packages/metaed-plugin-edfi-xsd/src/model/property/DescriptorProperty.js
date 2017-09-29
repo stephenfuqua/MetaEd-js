@@ -20,6 +20,8 @@ function xsdDescriptorNameWithExtension(descriptorProperty: DescriptorProperty):
 }
 
 export function addDescriptorPropertyEdfiXsdTo(property: DescriptorProperty) {
+  if (property.data.edfiXsd == null) property.data.edfiXsd = {};
+
   Object.assign(property.data.edfiXsd, {
     xsd_IsDescriptor: true,
     xsd_DescriptorName: xsdDescriptorName(property),

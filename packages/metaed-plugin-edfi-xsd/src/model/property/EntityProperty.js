@@ -13,6 +13,8 @@ export type EntityPropertyEdfiXsd = {
 const enhancerName: string = 'EntityPropertySetupEnhancer';
 
 export function addEntityPropertyEdfiXsdTo(property: EntityProperty) {
+  if (property.data.edfiXsd == null) property.data.edfiXsd = {};
+
   Object.assign(property.data.edfiXsd, {
     xsd_Name: '',
     xsd_Type: '',

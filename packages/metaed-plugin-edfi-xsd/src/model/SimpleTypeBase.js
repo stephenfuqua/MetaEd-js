@@ -13,6 +13,8 @@ export type SimpleTypeBase = DecimalType | IntegerType | StringType;
 const enhancerName: string = 'SimpleTypeBaseSetupEnhancer';
 
 export function addSimpleTypeBaseEdfiXsdTo(simpleTypeBase: SimpleTypeBase) {
+  if (simpleTypeBase.data.edfiXsd == null) simpleTypeBase.data.edfiXsd = {};
+
   Object.assign(simpleTypeBase.data.edfiXsd, {
     xsd_SimpleType: NoSimpleType,
   });

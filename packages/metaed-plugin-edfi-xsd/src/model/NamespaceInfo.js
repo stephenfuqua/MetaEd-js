@@ -10,6 +10,8 @@ export type NamespaceInfoEdfiXsd = {
 const enhancerName: string = 'NamespaceInfoSetupEnhancer';
 
 export function addNamespaceInfoEdfiXsdTo(namespaceInfo: NamespaceInfo) {
+  if (namespaceInfo.data.edfiXsd == null) namespaceInfo.data.edfiXsd = {};
+
   Object.assign(namespaceInfo.data.edfiXsd, {
     xsd_Schema: newSchemaContainer(),
   });

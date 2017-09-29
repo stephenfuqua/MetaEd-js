@@ -22,6 +22,7 @@ export function newInterchangeExtension(): InterchangeExtension {
     baseEntity: null,
 
     sourceMap: new InterchangeSourceMap(),
+    data: {},
   });
 }
 

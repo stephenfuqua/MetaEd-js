@@ -25,6 +25,7 @@ export function defaultSharedSimple(): SharedSimple {
     metaEdId: '',
     namespaceInfo: newNamespaceInfo(),
     sourceMap: new SharedSimpleSourceMap(),
+    data: {},
   });
 }
 

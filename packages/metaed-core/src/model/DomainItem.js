@@ -24,6 +24,7 @@ export function newDomainItem(): DomainItem {
     namespaceInfo: newNamespaceInfo(),
     referencedType: 'unknown',
     sourceMap: new DomainItemSourceMap(),
+    data: {},
   });
 }
 

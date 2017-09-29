@@ -129,6 +129,7 @@ export { NoTopLevelEntity } from './src/model/TopLevelEntity';
 
 // Factories
 export { newMetaEdEnvironment, newPluginEnvironment } from './src/MetaEdEnvironment';
+export { newMetaEdPlugin } from './src/plugin/PluginTypes';
 
 export { newAssociationProperty } from './src/model/property/AssociationProperty';
 export { newBooleanProperty } from './src/model/property/BooleanProperty';
