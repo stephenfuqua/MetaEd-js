@@ -21,9 +21,10 @@ function includeBaseClassQueryableFields(
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntities(metaEd.entity).filter(x => asTopLevelEntity(x).baseEntity).forEach(entity => {
-    asTopLevelEntity(entity).queryableFields.push(...includeBaseClassQueryableFields(asTopLevelEntity(entity), []));
-  });
+  getAllEntities(metaEd.entity)
+    .map(x => asTopLevelEntity(x))
+    .filter(x => x.baseEntity && x.baseEntity.queryableFields)
+    .forEach(entity => entity.queryableFields.push(...includeBaseClassQueryableFields(entity, [])));
 
   return {
     enhancerName,

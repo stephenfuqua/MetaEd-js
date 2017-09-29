@@ -14,9 +14,12 @@ export const referenceTypes: Array<ModelType> = [
   'association',
   'associationExtension',
   'associationSubclass',
+  'choice',
+  'common',
   'domainEntity',
   'domainEntityExtension',
   'domainEntitySubclass',
+  'inlineCommon',
 ];
 
 export const commonTypes: Array<PropertyType> = [

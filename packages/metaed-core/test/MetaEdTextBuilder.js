@@ -445,6 +445,13 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  withQueryableFieldPropertyIndicator(): MetaEdTextBuilder {
+    const isQueryableField = 'is queryable field';
+
+    this._addLine(isQueryableField);
+    return this;
+  }
+
   withContext(context: ?string, shortenTo: ?string = null): MetaEdTextBuilder {
     if (context == null) return this;
 

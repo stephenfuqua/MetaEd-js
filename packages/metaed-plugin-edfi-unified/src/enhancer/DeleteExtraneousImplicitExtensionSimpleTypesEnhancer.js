@@ -1,6 +1,5 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
-import { asCommon } from '../../../../packages/metaed-core/src/model/Common';
 import { groupByMetaEdName } from '../shared/GroupByMetaEdName';
 
 const enhancerName: string = 'DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
@@ -19,12 +18,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         // $FlowIgnore - we reference the entity repository by entity.type
         if (entity.namespaceInfo.isExtension) metaEd.entity[entity.type].delete(repositoryId);
       });
-    }
-  });
-
-  metaEd.entity.commonExtension.forEach(extensionEntity => {
-    if (extensionEntity.baseEntity) {
-      asCommon(extensionEntity.baseEntity).extender = extensionEntity;
     }
   });
 

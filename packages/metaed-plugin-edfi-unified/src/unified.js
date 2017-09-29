@@ -115,6 +115,45 @@ import { validate as stringPropertyMustNotMatchACommonString } from './validator
 import { validate as subdomainMustNotDuplicateDomainItems } from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 import { validate as subdomainParentDomainNameMustMatchADomain } from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
 
+import { enhance as deleteExtraneousImplicitExtensionSimpleTypesEnhancer } from './enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
+
+import { enhance as domainBaseEntityEnhancer } from './enhancer/DomainBaseEntityEnhancer';
+import { enhance as subdomainParentEntityEnhancer } from './enhancer/SubdomainParentEntityEnhancer';
+import { enhance as domainSubdomainEnhancer } from './enhancer/DomainSubdomainEnhancer';
+
+import { enhance as associationExtensionBaseClassEnhancer } from './enhancer/AssociationExtensionBaseClassEnhancer';
+import { enhance as associationSubclassBaseClassEnhancer } from './enhancer/AssociationSubclassBaseClassEnhancer';
+import { enhance as commonExtensionBaseClassEnhancer } from './enhancer/CommonExtensionBaseClassEnhancer';
+import { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/DomainEntityExtensionBaseClassEnhancer';
+import { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
+import { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
+import { enhance as commonExtenderEnhancer } from './enhancer/CommonExtenderEnhancer';
+import { enhance as subclassQueryableEnhancer } from './enhancer/QueryableLookupSupport/SubclassQueryableEnhancer';
+
+import { enhance as interchangeBaseItemEnhancer } from './enhancer/InterchangeBaseItemEnhancer';
+import { enhance as associationReferenceEnhancer } from './enhancer/property/AssociationReferenceEnhancer';
+import { enhance as choiceReferenceEnhancer } from './enhancer/property/ChoiceReferenceEnhancer';
+import { enhance as commonReferenceEnhancer } from './enhancer/property/CommonReferenceEnhancer';
+import { enhance as descriptorReferenceEnhancer } from './enhancer/property/DescriptorReferenceEnhancer';
+import { enhance as domainEntityReferenceEnhancer } from './enhancer/property/DomainEntityReferenceEnhancer';
+import { enhance as enumerationReferenceEnhancer } from './enhancer/property/EnumerationReferenceEnhancer';
+import { enhance as inlineCommonReferenceEnhancer } from './enhancer/property/InlineCommonReferenceEnhancer';
+import { enhance as schoolYearEnumerationReferenceEnhancer } from './enhancer/property/SchoolYearEnumerationReferenceEnhancer';
+
+import { enhance as decimalReferenceEnhancer } from './enhancer/property/DecimalReferenceEnhancer';
+import { enhance as integerReferenceEnhancer } from './enhancer/property/IntegerReferenceEnhancer';
+import { enhance as shortReferenceEnhancer } from './enhancer/property/ShortReferenceEnhancer';
+import { enhance as stringReferenceEnhancer } from './enhancer/property/StringReferenceEnhancer';
+
+import { enhance as sharedDecimalPropertyEnhancer } from './enhancer/SharedDecimalPropertyEnhancer';
+import { enhance as sharedIntegerPropertyEnhancer } from './enhancer/SharedIntegerPropertyEnhancer';
+import { enhance as sharedStringPropertyEnhancer } from './enhancer/SharedStringPropertyEnhancer';
+
+import { enhance as inheritedDocumentationCopyingEnhancer } from './enhancer/InheritedDocumentationCopyingEnhancer';
+
+import { enhance as propertyPathNameEnhancer } from './enhancer/PropertyPathNameEnhancer';
+import { enhance as mergedPropertyEnhancer } from './enhancer/MergedPropertyEnhancer';
+
 function validatorList(): Array<Validator> {
   return [
     abstractEntityMustContainAnIdentity,
@@ -234,7 +273,63 @@ function validatorList(): Array<Validator> {
 }
 
 function enhancerList(): Array<Enhancer> {
-  return [];  // TODO: list them
+  return [
+    // enhance :: () => simpleTypes without extension duplicates
+    deleteExtraneousImplicitExtensionSimpleTypesEnhancer,
+
+    // enhance :: () => domainItems.entities
+    domainBaseEntityEnhancer,
+    // enhance :: () => parent
+    subdomainParentEntityEnhancer,
+    // enhance :: () => domain.subdomains
+    domainSubdomainEnhancer,
+
+    // enhance :: () => baseEntity
+    associationExtensionBaseClassEnhancer,
+    associationSubclassBaseClassEnhancer,
+    commonExtensionBaseClassEnhancer,
+    domainEntityExtensionBaseClassEnhancer,
+    domainEntitySubclassBaseClassEnhancer,
+    interchangeExtensionBaseClassEnhancer,
+    // enhance :: (baseEntity) => baseEntity.extender
+    commonExtenderEnhancer,
+    // enhance :: (baseEntity) => queryableFields
+    subclassQueryableEnhancer,
+
+    // enhance :: () => elements.referencedEntity, IdentityTemplates.referencedEntity
+    interchangeBaseItemEnhancer,
+
+    // enhance :: () => referencedEntity
+    associationReferenceEnhancer,
+    choiceReferenceEnhancer,
+    commonReferenceEnhancer,
+    descriptorReferenceEnhancer,
+    domainEntityReferenceEnhancer,
+    enumerationReferenceEnhancer,
+    inlineCommonReferenceEnhancer,
+    schoolYearEnumerationReferenceEnhancer,
+
+    // enhance :: () => referencedEntity, referencedEntity.referringSimpleProperties
+    decimalReferenceEnhancer,
+    integerReferenceEnhancer,
+    shortReferenceEnhancer,
+    stringReferenceEnhancer,
+
+    // enhance :: (referencedEntity) => totalDigits, decimalPlaces, minValue, maxValue
+    sharedDecimalPropertyEnhancer,
+    // enhance :: (referencedEntity) => minValue, maxValue
+    sharedIntegerPropertyEnhancer,
+    // enhance :: (referencedEntity) => minLength, maxLength
+    sharedStringPropertyEnhancer,
+
+    // enhance :: (referencedEntity) => documentation
+    inheritedDocumentationCopyingEnhancer,
+
+    // enhance :: (referencedEntity) => propertyPathName
+    propertyPathNameEnhancer,
+    // enhance :: (referencedEntity, propertyPathName) => mergedProperty.mergeProperty, mergedProperty.targetProperty
+    mergedPropertyEnhancer,
+  ];
 }
 
 export default function initialize(): MetaEdPlugin {
