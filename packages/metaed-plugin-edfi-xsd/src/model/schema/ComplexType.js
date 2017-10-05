@@ -2,6 +2,7 @@
 import type { Annotation } from './Annotation';
 import type { Attribute } from './Attribute';
 import type { ComplexTypeItem } from './ComplexTypeItem';
+import { deepFreezeAssign } from '../../../../../packages/metaed-core/src/Utility';
 import { newAnnotation } from './Annotation';
 
 export type ComplexType = {
@@ -29,6 +30,6 @@ export function newComplexType(): ComplexType {
   };
 }
 
-export const NoComplexType: ComplexType = Object.assign(newComplexType(), {
+export const NoComplexType: ComplexType = deepFreezeAssign(newComplexType(), {
   name: 'NoComplexType',
 });
