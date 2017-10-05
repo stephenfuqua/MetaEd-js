@@ -18,3 +18,5 @@ export function newElement(): Element {
     annotation: newAnnotation(),
   });
 }
+
+export const asElement = (x: any): Element => ((x: any): Element);

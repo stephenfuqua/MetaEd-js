@@ -14,3 +14,5 @@ export function newElementGroup(): ElementGroup {
     items: [],
   });
 }
+
+export const asElementGroup = (x: any): ElementGroup => ((x: any): ElementGroup);
