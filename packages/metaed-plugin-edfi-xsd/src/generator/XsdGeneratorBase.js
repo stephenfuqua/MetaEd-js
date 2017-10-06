@@ -4,6 +4,8 @@ import handlebars from 'handlebars';
 import prettifyXml from 'prettify-xml';
 import fs from 'fs';
 import path from 'path';
+import semverLib from 'semver';
+import type { SemVer } from '../../../metaed-core/index';
 
 // Handlebars instance scoped for this plugin
 export const xsdHandlebars = handlebars.create();
@@ -40,7 +42,17 @@ export const registerPartials = R.once(
 export function formatAndPrependHeader(xsdBody: string): string {
   const completeXsd = template().xsdWithHeader({
     xsdBody,
-    copyrightYear: '1234567890',
+    copyrightYear: new Date().getFullYear(),
   });
   return prettifyXml(completeXsd, { indent: 2, newline: '\n' });
+}
+
+export function formatVersionForSchema(version: SemVer): string {
+  if (!semverLib.valid(version)) return '';
+  const semverified = semverLib.parse(version);
+  const major: string = semverified.major < 10 ? `0${semverified.major}` : `${semverified.major}`;
+  const minor: string = semverified.minor < 10 ? `${semverified.minor}0` : `${semverified.minor}`;
+  const patch: string = semverified.patch === 0 ? '' : `${semverified.minor}`;
+  const prerelease: string = semverified.prerelease.length ? `-${semverified.prerelease.join('.')}` : '';
+  return `${major}${minor}${patch}${prerelease}`;
 }

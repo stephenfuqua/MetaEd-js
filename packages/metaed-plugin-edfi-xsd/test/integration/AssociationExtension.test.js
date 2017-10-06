@@ -1,16 +1,7 @@
 // @flow
-import { DOMParser } from 'xmldom';
-import xpath from 'xpath';
 import type { MetaEdEnvironment } from '../../../metaed-core/index';
 import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, AssociationBuilder, AssociationExtensionBuilder, NamespaceInfoBuilder } from '../../../metaed-core/index';
-import initializeUnifiedPlugin from './GetUnifiedPlugin';
-import initializeXsdPlugin from '../../src/edfiXsd';
-import { generate } from '../../src/generator/XsdGenerator';
-
-const xpathSelect = xpath.useNamespaces({
-  xs: 'http://www.w3.org/2001/XMLSchema',
-  ann: 'http://ed-fi.org/annotation',
-});
+import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for association extension in extension namespace based on core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -64,14 +55,7 @@ describe('when generating xsd for association extension in extension namespace b
     .sendToListener(associationExtensionBuilder)
     .sendToListener(namespaceInfoBuilder);
 
-    initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
-    initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
-
-    const generatorResult = generate(metaEd).generatedOutput;
-    const coreResultString = generatorResult[0].resultString;
-    const extensionResultString = generatorResult[1].resultString;
-    coreResult = new DOMParser().parseFromString(coreResultString);
-    extensionResult = new DOMParser().parseFromString(extensionResultString);
+    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity1', () => {

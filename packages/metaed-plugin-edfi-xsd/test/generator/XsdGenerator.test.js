@@ -6,7 +6,9 @@ import { createElementComplexTypeItem, createComplexType, createStringSimpleType
 import { generate } from '../../src/generator/XsdGenerator';
 
 describe('when generating schema', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
+    dataStandardVersion: '2.1.0',
+  });
   const complexTypeItemName: string = 'Element ComplexTypeItem';
   const complexTypeItemDocumentation: string = 'Element ComplexTypeItem Documentation';
   const complexTypeItemType: string = 'xs:string';

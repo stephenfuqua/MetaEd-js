@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, NamespaceInfo, GeneratorResult, GeneratedOutput } from '../../../metaed-core/index';
 import type { NamespaceInfoEdfiXsd } from '../model/NamespaceInfo';
 import type { SchemaContainer } from '../model/schema/SchemaContainer';
-import { formatAndPrependHeader, registerPartials, template } from './XsdGeneratorBase';
+import { formatAndPrependHeader, registerPartials, template, formatVersionForSchema } from './XsdGeneratorBase';
 
 export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   registerPartials();
@@ -12,12 +12,12 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
 
   namespaces.forEach(namespaceInfo => {
     const schema: SchemaContainer = ((namespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
-    schema.schemaVersion = '9876543210';  // was _metaEdContext.Version.FormatForSchema() in C#
+    schema.schemaVersion = formatVersionForSchema(metaEd.dataStandardVersion);
     const formattedGeneratedResult = formatAndPrependHeader(template().schema(schema));
     results.push({
       name: 'XSD',
       folderName: 'XSD',
-      fileName: namespaceInfo.isExtension ? 'Ed-Fi-Core.xsd' : `${namespaceInfo.projectExtension}-Ed-Fi-Extended-Core.xsd`,
+      fileName: namespaceInfo.isExtension ? `${namespaceInfo.projectExtension}-Ed-Fi-Extended-Core.xsd` : 'Ed-Fi-Core.xsd',
       resultString: formattedGeneratedResult,
     });
   });

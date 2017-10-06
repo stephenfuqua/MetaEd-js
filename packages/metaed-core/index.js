@@ -53,7 +53,7 @@ export type { EnhancerResult } from './src/enhancer/EnhancerResult';
 export type { Generator } from './src/generator/Generator';
 export type { GeneratorResult } from './src/generator/GeneratorResult';
 export type { GeneratedOutput } from './src/generator/GeneratedOutput';
-export type { MetaEdEnvironment, PluginEnvironment } from './src/MetaEdEnvironment';
+export type { MetaEdEnvironment, PluginEnvironment, SemVer } from './src/MetaEdEnvironment';
 export type { MetaEdPlugin, PluginManifest } from './src/plugin/PluginTypes';
 
 // Properties

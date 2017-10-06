@@ -194,7 +194,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const schemaContainer: SchemaContainer = Object.assign(newSchemaContainer(), {
       isExtension: namespaceInfo.isExtension,
       schemaAnnotation: Object.assign(newAnnotation(), {
-        documentation: namespaceInfo.isExtension ? `===== Ed-Fi ${versionString} Extensions =====` : `'===== Ed-Fi-Core Version ${versionString} ===='`,
+        documentation: namespaceInfo.isExtension ? `===== Ed-Fi ${versionString} Extensions =====` : `===== Ed-Fi-Core Version ${versionString} ====`,
       }),
     });
 

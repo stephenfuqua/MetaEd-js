@@ -13,6 +13,7 @@
     "handlebars": "^4.0.10",
     "prettify-xml": "^1.2.0",
     "ramda": "^0.24.1",
+    "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "winston": "^2.3.0",
     "xml-js": "^1.4.2",
