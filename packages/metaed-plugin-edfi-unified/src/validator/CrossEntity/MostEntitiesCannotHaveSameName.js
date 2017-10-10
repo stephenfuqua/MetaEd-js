@@ -14,8 +14,9 @@ import type {
   StringType,
   MetaEdEnvironment,
   EntityRepository,
-  ValidationFailure } from '../../../../../packages/metaed-core/index';
+  ValidationFailure } from '../../../../metaed-core/index';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
+
 
 type MostEntities =
   Association |
@@ -40,20 +41,17 @@ function entitiesNeedingDuplicateChecking(entity: EntityRepository): Array<MostE
   result.push(...entity.choice.values());
   result.push(...entity.common.values());
   result.push(...entity.domainEntity.values());
-  result.push(...entity.decimalType.values());
   result.push(...entity.domainEntitySubclass.values());
-  result.push(...entity.integerType.values());
   result.push(...entity.sharedDecimal.values());
   result.push(...entity.sharedInteger.values());
   result.push(...entity.sharedString.values());
-  result.push(...entity.stringType.values());
   return result;
 }
 
-export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
+function generateValidationErrorsForDuplicates(metaEdEntity: Array<MostEntities>): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  groupByMetaEdName(entitiesNeedingDuplicateChecking(metaEd.entity)).forEach((entities, metaEdName) => {
+  groupByMetaEdName(metaEdEntity).forEach((entities, metaEdName) => {
     if (entities.length > 1) {
       entities.forEach(entity => {
         failures.push({
@@ -66,6 +64,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       });
     }
   });
+  return failures;
+}
+
+export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
+  const failures: Array<ValidationFailure> = [];
+
+  failures.push(...generateValidationErrorsForDuplicates(entitiesNeedingDuplicateChecking(metaEd.entity)));
 
   return failures;
 }

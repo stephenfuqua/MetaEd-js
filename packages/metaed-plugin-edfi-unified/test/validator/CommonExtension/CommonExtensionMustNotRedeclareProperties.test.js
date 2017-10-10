@@ -76,6 +76,37 @@ describe('when common extension has duplicate property name', () => {
   });
 });
 
+describe('when common extension has duplicate property name but different role names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const commonName: string = 'CommonName';
+  const duplicatePropertyName: string = 'DuplicatePropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartCommon(commonName)
+      .withDocumentation('doc')
+      .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartCommonExtension(commonName)
+      .withBooleanProperty(duplicatePropertyName, 'doc', true, false, 'RoleName')
+      .withEndCommonExtension()
+      .withEndNamespace()
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new CommonExtensionBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when common extension has multiple duplicates', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';

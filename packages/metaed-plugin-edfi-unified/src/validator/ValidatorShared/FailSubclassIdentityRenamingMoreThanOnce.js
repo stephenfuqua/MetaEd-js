@@ -1,5 +1,5 @@
 // @flow
-import type { TopLevelEntity, EntityProperty, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { TopLevelEntity, EntityProperty, ValidationFailure } from '../../../../metaed-core/index';
 
 export function failSubclassIdentityRenamingMoreThanOnce(
   validatorName: string,

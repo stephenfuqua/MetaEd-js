@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
 import { failInterchangeItemRedeclarations } from '../ValidatorShared/FailInterchangeItemRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

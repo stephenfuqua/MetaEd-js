@@ -1,6 +1,6 @@
 // @flow
-import type { Enumeration, MapTypeEnumeration, SchoolYearEnumeration, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../../packages/metaed-core/index';
+import type { Enumeration, MapTypeEnumeration, SchoolYearEnumeration, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { getEntitiesOfType } from '../../../../metaed-core/index';
 import { asEnumeration } from '../../../../metaed-core/src/model/Enumeration';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

@@ -4,7 +4,7 @@ import type { FileMap } from '../task/FileIndex';
 
 export type ValidationFailure = {
   validatorName: string,
-  category: 'error' | 'warning',
+  category: 'error' | 'warning' | 'info',
   message: string,
   sourceMap: ?SourceMap,
   fileMap: ?FileMap,

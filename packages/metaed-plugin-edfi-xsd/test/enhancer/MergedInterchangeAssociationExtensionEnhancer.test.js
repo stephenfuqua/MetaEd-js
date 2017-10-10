@@ -81,10 +81,6 @@ describe('when enhances MergedInterchange with association extension', () => {
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);

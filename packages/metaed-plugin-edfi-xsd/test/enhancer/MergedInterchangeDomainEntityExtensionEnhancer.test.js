@@ -77,10 +77,6 @@ describe('when enhances MergedInterchange with no extension', () => {
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
@@ -169,10 +165,6 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
@@ -289,10 +281,6 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
@@ -323,10 +311,6 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, extensionMergedInterchange);
@@ -493,10 +477,6 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
@@ -636,10 +616,6 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     addMergedInterchangeToRepository(metaEd, extensionMergedInterchange);

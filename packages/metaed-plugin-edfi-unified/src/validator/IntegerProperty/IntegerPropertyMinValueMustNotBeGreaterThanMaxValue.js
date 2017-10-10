@@ -1,7 +1,7 @@
 // @flow
-import type { IntegerProperty, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import type { IntegerPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
-import { asIntegerProperty } from '../../../../../packages/metaed-core/src/model/property/IntegerProperty';
+import type { IntegerProperty, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { IntegerPropertySourceMap } from '../../../../metaed-core/src/model/property/IntegerProperty';
+import { asIntegerProperty } from '../../../../metaed-core/src/model/property/IntegerProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

@@ -27,7 +27,7 @@ import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
 import type { TopLevelEntity } from './TopLevelEntity';
 import { asTopLevelEntity } from './TopLevelEntity';
-import { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './ModelType';
+import { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes, allEntityModelTypesNoSimpleTypes } from './ModelType';
 
 export class EntityRepository {
   unknown: Map<string, any>;
@@ -101,6 +101,12 @@ export function getAllTopLevelEntities(repository: EntityRepository): Array<TopL
   return result;
 }
 
+export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array<ModelBase> {
+  const result = [];
+  // $FlowIgnore - using model type repository lookup
+  allEntityModelTypesNoSimpleTypes.forEach(modelType => result.push(...repository[modelType].values()));
+  return result;
+}
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup

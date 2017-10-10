@@ -1,5 +1,5 @@
 // @flow
-import type { Interchange, InterchangeItem, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { Interchange, InterchangeItem, ValidationFailure } from '../../../../metaed-core/index';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
 export function failInterchangeItemRedeclarations(

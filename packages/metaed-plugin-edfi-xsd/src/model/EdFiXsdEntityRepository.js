@@ -1,7 +1,7 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
 import { newPluginEnvironment } from '../../../metaed-core/index';
-import { MergedInterchange } from './MergedInterchange';
+import type { MergedInterchange } from './MergedInterchange';
 
 export type EdFiXsdEntityRepository = {
   mergedInterchange: Map<string, MergedInterchange>,

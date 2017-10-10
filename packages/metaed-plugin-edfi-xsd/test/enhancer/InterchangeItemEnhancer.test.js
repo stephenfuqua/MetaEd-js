@@ -55,10 +55,6 @@ describe('when InterchangeItemEnhancer enhances element', () => {
       elements: [
         element,
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -124,10 +120,6 @@ describe('when InterchangeItemEnhancer enhances identity template', () => {
       identityTemplates: [
         identityTemplate,
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -226,10 +218,6 @@ describe('when InterchangeItemEnhancer enhances element on extension', () => {
         element,
         extensionElement,
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -328,10 +316,6 @@ describe('when InterchangeItemEnhancer enhances identity template on extension',
         element,
         extensionElement,
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);

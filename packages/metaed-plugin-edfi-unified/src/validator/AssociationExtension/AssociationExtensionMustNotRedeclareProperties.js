@@ -1,5 +1,5 @@
 // @flow
-import type { Association, AssociationSubclass, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { Association, AssociationSubclass, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

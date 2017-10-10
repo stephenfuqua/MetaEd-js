@@ -3,7 +3,6 @@ import ffs from 'final-fs';
 import { MetaEdTextBuilder } from '../../../packages/metaed-core/test/MetaEdTextBuilder';
 import { newState, loadFiles } from '../../../packages/metaed-core/index';
 
-
 describe('When a single file', () => {
   beforeAll(() => {
     const metaEdText = MetaEdTextBuilder.build()
@@ -95,3 +94,4 @@ describe('When multiple files', () => {
     expect(associationContents).toMatchSnapshot();
   });
 });
+

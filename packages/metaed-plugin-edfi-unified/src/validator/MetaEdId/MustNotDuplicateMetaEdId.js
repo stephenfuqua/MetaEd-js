@@ -9,8 +9,8 @@ import type {
   ModelBase,
   ValidationFailure,
   TopLevelEntity,
-} from '../../../../../packages/metaed-core/index';
-import { getAllEntities, getAllProperties } from '../../../../../packages/metaed-core/index';
+} from '../../../../metaed-core/index';
+import { getAllEntitiesNoSimpleTypes, getAllProperties } from '../../../../metaed-core/index';
 
 function getDomainItems(entity: EntityRepository): Array<DomainItem> {
   const result = [];
@@ -37,7 +37,7 @@ function getInterchangeItems(entity: EntityRepository): Array<InterchangeItem> {
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   const index: Array<DomainItem | EntityProperty | EnumerationItem | InterchangeItem | ModelBase | TopLevelEntity> = [
-    ...getAllEntities(metaEd.entity),
+    ...getAllEntitiesNoSimpleTypes(metaEd.entity),
     ...getAllProperties(metaEd.propertyIndex),
     ...getDomainItems(metaEd.entity),
     ...getEnumerationItems(metaEd.entity),

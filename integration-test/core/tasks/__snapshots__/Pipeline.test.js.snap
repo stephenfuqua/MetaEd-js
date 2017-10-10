@@ -39,3 +39,13 @@ Object {
   "tokenText": "Domain Entity",
 }
 `;
+
+exports[`when building a domain entity with a integer property that conflicts with a shared integer should have one validation error, four warnings 1`] = `"integer PropertyName has the same name as a Common Integer."`;
+
+exports[`when building entity property with context should have source map for contextName with line, column, text 1`] = `
+Object {
+  "column": 17,
+  "line": 10,
+  "tokenText": "ContextName",
+}
+`;

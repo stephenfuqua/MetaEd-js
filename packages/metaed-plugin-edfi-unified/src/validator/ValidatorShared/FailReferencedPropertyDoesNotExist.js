@@ -1,8 +1,8 @@
 // @flow
 import R from 'ramda';
 import type { SourceMap } from '../../../../metaed-core/src/model/SourceMap';
-import type { ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { EntityRepository, ModelBase } from '../../../../../packages/metaed-core/index';
+import type { ValidationFailure } from '../../../../metaed-core/index';
+import { EntityRepository, ModelBase } from '../../../../metaed-core/index';
 import {
   findReferencedProperty,
   matchAll,

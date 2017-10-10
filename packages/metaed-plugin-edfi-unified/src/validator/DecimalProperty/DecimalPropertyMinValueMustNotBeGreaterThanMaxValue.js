@@ -1,7 +1,7 @@
 // @flow
-import type { DecimalProperty, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import type { DecimalPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
-import { asDecimalProperty } from '../../../../../packages/metaed-core/src/model/property/DecimalProperty';
+import type { DecimalProperty, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { DecimalPropertySourceMap } from '../../../../metaed-core/src/model/property/DecimalProperty';
+import { asDecimalProperty } from '../../../../metaed-core/src/model/property/DecimalProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

@@ -1,7 +1,7 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure, StringProperty } from '../../../../../packages/metaed-core/index';
-import type { StringPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
-import { asStringProperty } from '../../../../../packages/metaed-core/src/model/property/StringProperty';
+import type { MetaEdEnvironment, ValidationFailure, StringProperty } from '../../../../metaed-core/index';
+import type { StringPropertySourceMap } from '../../../../metaed-core/src/model/property/StringProperty';
+import { asStringProperty } from '../../../../metaed-core/src/model/property/StringProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

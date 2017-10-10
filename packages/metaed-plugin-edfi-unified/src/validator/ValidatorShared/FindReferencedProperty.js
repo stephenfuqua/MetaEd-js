@@ -5,20 +5,20 @@ import type {
   ModelBase,
   ModelType,
   PropertyType,
-} from '../../../../../packages/metaed-core/index';
+} from '../../../../metaed-core/index';
 import { asModelType } from '../../../../metaed-core/src/model/ModelType';
 import { asTopLevelEntity } from '../../../../metaed-core/src/model/TopLevelEntity';
-import { getEntity } from '../../../../../packages/metaed-core/index';
+import { getEntity } from '../../../../metaed-core/index';
 
 export const referenceTypes: Array<ModelType> = [
   'association',
   'associationExtension',
   'associationSubclass',
-  'choice',
-  'common',
   'domainEntity',
   'domainEntityExtension',
   'domainEntitySubclass',
+  'choice',
+  'common',
   'inlineCommon',
 ];
 

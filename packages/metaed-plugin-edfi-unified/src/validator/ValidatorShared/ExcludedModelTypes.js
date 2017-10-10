@@ -1,5 +1,5 @@
 // @flow
-import { memoize } from 'ramda';
-import type { ModelType } from '../../../../../packages/metaed-core/index';
+import { memoize, difference } from 'ramda';
+import type { ModelType } from '../../../../metaed-core/index';
 
-export const excludedModelTypes = memoize((allModelTypes: ModelType[], includedModelTypes: ModelType[]) => allModelTypes.filter(type => includedModelTypes.every(x => x !== type)));
+export const excludedModelTypes = memoize((allModelTypes: ModelType[], includedModelTypes: ModelType[]) => difference(allModelTypes, includedModelTypes));

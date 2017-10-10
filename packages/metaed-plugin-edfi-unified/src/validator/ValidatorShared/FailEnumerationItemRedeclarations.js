@@ -1,5 +1,5 @@
 // @flow
-import type { Descriptor, Enumeration, EnumerationItem, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { Descriptor, Enumeration, EnumerationItem, ValidationFailure } from '../../../../metaed-core/index';
 import { findDuplicates } from '../ValidatorShared/FindDuplicates';
 
 export function failEnumerationItemRedeclarations(

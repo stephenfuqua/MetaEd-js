@@ -12,7 +12,7 @@ export type PluginOptions = {
 function loadPluginManifest(directory: string, options: PluginOptions): ?PluginManifest {
   let packageJson;
   try {
-    packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json')));
+    packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json.for.plugin')));
   } catch (err) {
     return null;
   }

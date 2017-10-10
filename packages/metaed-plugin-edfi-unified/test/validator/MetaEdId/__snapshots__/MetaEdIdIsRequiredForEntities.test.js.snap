@@ -70,16 +70,6 @@ Object {
 }
 `;
 
-exports[`when validating decimal type is missing metaEdId for entity should have validation failures -> message 1`] = `"Decimal Type DecimalTypeName is missing a MetaEdId value."`;
-
-exports[`when validating decimal type is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Shared Decimal",
-}
-`;
-
 exports[`when validating descriptor is missing metaEdId for entity should have validation failures -> message 1`] = `"Descriptor DescriptorName is missing a MetaEdId value."`;
 
 exports[`when validating descriptor is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
@@ -147,16 +137,6 @@ Object {
   "column": 2,
   "line": 2,
   "tokenText": "Inline Common",
-}
-`;
-
-exports[`when validating integer type is missing metaEdId for entity should have validation failures -> message 1`] = `"Integer Type IntegerTypeName is missing a MetaEdId value."`;
-
-exports[`when validating integer type is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Shared Integer",
 }
 `;
 
@@ -243,16 +223,6 @@ Object {
 exports[`when validating shared string is missing metaEdId for entity should have validation failures -> message 1`] = `"Shared String SharedStringName is missing a MetaEdId value."`;
 
 exports[`when validating shared string is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Shared String",
-}
-`;
-
-exports[`when validating string type is missing metaEdId for entity should have validation failures -> message 1`] = `"String Type StringTypeName is missing a MetaEdId value."`;
-
-exports[`when validating string type is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

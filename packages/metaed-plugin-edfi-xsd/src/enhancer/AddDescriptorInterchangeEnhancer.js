@@ -8,11 +8,6 @@ import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 const enhancerName: string = 'AddDescriptorInterchangeEnhancer';
 
-// public override int EnhancerPosition()
-// {
-//  return AddDescriptorInterchangePhase;
-// }
-
 export const descriptorInterchangeName: string = 'Descriptors';
 const descriptorInterchangeDocumentation: string =
   `Descriptors provide states, districts, vendors, and other users of the Ed-Fi solution with the flexibility to use their own enumerations and code sets without modifying the Ed-Fi core schema.

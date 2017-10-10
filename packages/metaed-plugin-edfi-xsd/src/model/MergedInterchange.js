@@ -1,14 +1,30 @@
 // @flow
-import { Interchange, newInterchange } from '../../../../packages/metaed-core/index';
-import type { InterchangeItem, MetaEdEnvironment } from '../../../../packages/metaed-core/index';
+import { newNamespaceInfo } from '../../../../packages/metaed-core/index';
+import type { NamespaceInfo, Interchange, InterchangeItem, MetaEdEnvironment } from '../../../../packages/metaed-core/index';
 import { unionOfInterchangeItems } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
-export class MergedInterchange extends Interchange {
-  repositoryId: string;
-  interchangeName: string;
-  schemaLocation: string;
-  orderedElements: Array<InterchangeItem>;
+// From structure of Interchange - if core models move to structural typing, consider using Interchange directly
+type MergedInterchangeBase = {
+  documentation: string,
+  metaEdName: string,
+  metaEdId: string,
+  namespaceInfo: NamespaceInfo,
+
+  elements: Array<InterchangeItem>,
+  identityTemplates: Array<InterchangeItem>,
+  extendedDocumentation: string,
+  useCaseDocumentation: string,
+  baseEntityName: string,
+  baseEntity: ?Interchange,
+}
+
+export type MergedInterchange = {
+  ...$Exact<MergedInterchangeBase>,
+  repositoryId: string,
+  interchangeName: string,
+  schemaLocation: string,
+  orderedElements: Array<InterchangeItem>,
 }
 
 export const combinedElementsAndIdentityTemplatesFor =
@@ -26,11 +42,22 @@ export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, merg
 // warning: limitation of extending base model objects in an extension plugin is that the type field is restricted
 // to base types - so it will have type as 'interchange'
 export function newMergedInterchange(): MergedInterchange {
-  return Object.assign(new MergedInterchange(), newInterchange(), {
-    typeHumanizedName: 'Merged Interchange',
+  return {
+    documentation: '',
+    metaEdName: '',
+    metaEdId: '',
+    namespaceInfo: newNamespaceInfo(),
+
+    elements: [],
+    identityTemplates: [],
+    extendedDocumentation: '',
+    useCaseDocumentation: '',
+    baseEntityName: '',
+    baseEntity: null,
+
     repositoryId: '',
     interchangeName: '',
     schemaLocation: '',
     orderedElements: [],
-  });
+  };
 }

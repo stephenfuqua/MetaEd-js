@@ -80,6 +80,39 @@ describe('when association extension has duplicate property name', () => {
   });
 });
 
+describe('when association extension has duplicate base property name but different role names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  const duplicatePropertyName: string = 'DuplicatePropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation(entityName)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
+      .withAssociationDomainEntityProperty('DomainEntity2', 'doc')
+      .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartAssociationExtension(entityName)
+      .withBooleanProperty(duplicatePropertyName, 'doc', true, false, 'RoleName')
+      .withEndAssociationExtension()
+      .withEndNamespace()
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when association extension has multiple duplicates', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';

@@ -1,5 +1,5 @@
 // @flow
-import type { TopLevelEntity, EntityProperty, CommonProperty, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { TopLevelEntity, EntityProperty, CommonProperty, ValidationFailure } from '../../../../metaed-core/index';
 
 function isNotCommonExtensionOverride(entityProperty: EntityProperty): boolean {
   if (entityProperty.type !== 'common') return true;
@@ -14,6 +14,7 @@ export function failExtensionPropertyRedeclarations(
   extensionEntity.properties.forEach(extensionProperty => {
     baseEntity.properties.forEach(baseProperty => {
       if (extensionProperty.metaEdName === baseProperty.metaEdName &&
+        extensionProperty.withContext === baseProperty.withContext &&
         isNotCommonExtensionOverride(extensionProperty)) {
         failures.push({
           validatorName,

@@ -2,7 +2,7 @@
 import type {
   MetaEdEnvironment,
   ValidationFailure,
- } from '../../../../../packages/metaed-core/index';
+ } from '../../../../metaed-core/index';
 import {
   ChoiceBuilder,
   CommonBuilder,
@@ -10,7 +10,7 @@ import {
   MetaEdTextBuilder,
   newMetaEdEnvironment,
   newSourceMap,
-} from '../../../../../packages/metaed-core/index';
+} from '../../../../metaed-core/index';
 import {
   failReferencedPropertyDoesNotExist,
 } from '../../../src/validator/ValidatorShared/FailReferencedPropertyDoesNotExist';

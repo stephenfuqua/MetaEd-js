@@ -6,19 +6,16 @@ import {
   ChoiceBuilder,
   CommonBuilder,
   CommonExtensionBuilder,
-  DecimalTypeBuilder,
   DescriptorBuilder,
   DomainBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   DomainEntitySubclassBuilder,
   EnumerationBuilder,
-  IntegerTypeBuilder,
   InterchangeBuilder,
   SharedDecimalBuilder,
   SharedIntegerBuilder,
   SharedStringBuilder,
-  StringTypeBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
 } from '../../../../../packages/metaed-core/index';
@@ -235,37 +232,6 @@ describe('when validating common extension is missing metaEdId for entity', () =
   });
 });
 
-describe('when validating decimal type is missing metaEdId for entity', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
-      .withStartSharedDecimal('DecimalTypeName')
-      .withDocumentation('DecimalTypeDocumentation')
-      .withTotalDigits('10')
-      .withDecimalPlaces('2')
-      .withEndSharedDecimal()
-      .withEndNamespace()
-      .sendToListener(new DecimalTypeBuilder(metaEd, []));
-
-    failures = validate(metaEd);
-  });
-
-  it('should build one decimal type', () => {
-    expect(metaEd.entity.decimalType.size).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
-    expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating decimal type is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating decimal type is missing metaEdId for entity should have validation failures -> sourceMap');
-  });
-});
-
 describe('when validating descriptor is missing metaEdId for entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
@@ -473,35 +439,6 @@ describe('when validating inline common is missing metaEdId for entity', () => {
     expect(failures[0].category).toBe('warning');
     expect(failures[0].message).toMatchSnapshot('when validating inline common is missing metaEdId for entity should have validation failures -> message');
     expect(failures[0].sourceMap).toMatchSnapshot('when validating inline common is missing metaEdId for entity should have validation failures -> sourceMap');
-  });
-});
-
-describe('when validating integer type is missing metaEdId for entity', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
-      .withStartSharedInteger('IntegerTypeName')
-      .withDocumentation('IntegerTypeDocumentation')
-      .withEndSharedInteger()
-      .withEndNamespace()
-      .sendToListener(new IntegerTypeBuilder(metaEd, []));
-
-    failures = validate(metaEd);
-  });
-
-  it('should build one integer type', () => {
-    expect(metaEd.entity.integerType.size).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
-    expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating integer type is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating integer type is missing metaEdId for entity should have validation failures -> sourceMap');
   });
 });
 
@@ -756,37 +693,6 @@ describe('when validating shared string is missing metaEdId for entity', () => {
     expect(failures[0].sourceMap).toMatchSnapshot('when validating shared string is missing metaEdId for entity should have validation failures -> sourceMap');
   });
 });
-
-describe('when validating string type is missing metaEdId for entity', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
-      .withStartSharedString('StringTypeName')
-      .withDocumentation('StringTypeDocumentation')
-      .withMaxLength('100')
-      .withEndSharedString()
-      .withEndNamespace()
-      .sendToListener(new StringTypeBuilder(metaEd, []));
-
-    failures = validate(metaEd);
-  });
-
-  it('should build one shared string', () => {
-    expect(metaEd.entity.stringType.size).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
-    expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating string type is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating string type is missing metaEdId for entity should have validation failures -> sourceMap');
-  });
-});
-
 describe('when validating subdomain is missing metaEdId for entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;

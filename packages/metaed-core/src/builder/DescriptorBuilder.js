@@ -91,6 +91,7 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = newEnumerationItem();
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
     this.currentEnumerationItem.sourceMap.namespaceInfo = this.currentTopLevelEntity.sourceMap.namespaceInfo;

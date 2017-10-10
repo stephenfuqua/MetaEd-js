@@ -96,3 +96,36 @@ describe('when association subclass has duplicate property name', () => {
     expect(failures[1].sourceMap).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> sourceMap');
   });
 });
+
+describe('when association subclass has duplicate property name but different role name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation(entityName)
+      .withDocumentation('EntityDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName2', 'PropertyDocumentation')
+      .withBooleanProperty(propertyName, 'PropertyDocumentation3', true, false)
+      .withEndAssociation()
+
+      .withStartAssociationSubclass('SubclassName', entityName)
+      .withDocumentation('EntityDocumentation')
+      .withBooleanProperty(propertyName, 'PropertyDocumentation3', true, false, 'RoleName')
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});

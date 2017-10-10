@@ -160,33 +160,11 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
   exitingIntegerType() {
     if (this.currentIntegerType === NoIntegerType) return;
 
-    if (this.currentIntegerType.metaEdName) {
-      // Another example of why IntegerType belongs in XSD specific, repository key partitions by namespace
-      const projectExtension = this.currentIntegerType.namespaceInfo.projectExtension;
-      const repositoryId = projectExtension ? `${projectExtension}-${this.currentIntegerType.metaEdName}` : this.currentIntegerType.metaEdName;
+    const projectExtension = this.currentIntegerType.namespaceInfo.projectExtension;
+    const repositoryId = projectExtension ? `${projectExtension}-${this.currentIntegerType.metaEdName}` : this.currentIntegerType.metaEdName;
+    // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
+    this.metaEd.entity[this.currentIntegerType.type].set(repositoryId, this.currentIntegerType);
 
-      // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
-      const currentIntegerTypeRepository = this.metaEd.entity[this.currentIntegerType.type];
-      if (currentIntegerTypeRepository.has(repositoryId)) {
-        this.validationFailures.push({
-          validatorName: 'IntegerTypeBuilder',
-          category: 'error',
-          message: `${this.currentIntegerType.typeHumanizedName} named ${this.currentIntegerType.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: this.currentIntegerType.sourceMap.type,
-          fileMap: null,
-        });
-        const duplicateEntity: IntegerType = currentIntegerTypeRepository.get(repositoryId);
-        this.validationFailures.push({
-          validatorName: 'IntegerTypeBuilder',
-          category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
-          fileMap: null,
-        });
-      } else {
-        currentIntegerTypeRepository.set(repositoryId, this.currentIntegerType);
-      }
-    }
     this.currentIntegerType = NoIntegerType;
   }
 }

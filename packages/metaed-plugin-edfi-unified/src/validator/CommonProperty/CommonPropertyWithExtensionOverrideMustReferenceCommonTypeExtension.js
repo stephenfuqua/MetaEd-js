@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { CommonPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { CommonPropertySourceMap } from '../../../../metaed-core/src/model/property/CommonProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

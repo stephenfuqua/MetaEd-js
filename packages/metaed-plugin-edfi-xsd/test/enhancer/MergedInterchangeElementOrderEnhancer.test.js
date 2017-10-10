@@ -46,10 +46,6 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
 
     extensionMergedInterchange = Object.assign(newMergedInterchange(), {
@@ -79,10 +75,6 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
           },
         }),
       ],
-      data: {
-        edfiXsd: {
-        },
-      },
     });
     addMergedInterchangeToRepository(metaEd, coreMergedInterchange);
     addMergedInterchangeToRepository(metaEd, extensionMergedInterchange);

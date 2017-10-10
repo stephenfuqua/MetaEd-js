@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
 import { failEnumerationItemRedeclarations } from '../ValidatorShared/FailEnumerationItemRedeclarations';
 
 // eslint-disable-next-line no-unused-vars

@@ -84,6 +84,37 @@ describe('when domain entity subclass has duplicate property name', () => {
   });
 });
 
+describe('when domain entity subclass has duplicate property name but different role name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  const duplicatePropertyName: string = 'DuplicatePropertyName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('EntityDocumentation')
+      .withBooleanProperty(duplicatePropertyName, 'PropertyDocumentation3', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntitySubclass('SubclassName', entityName)
+      .withDocumentation('EntityDocumentation')
+      .withBooleanProperty(duplicatePropertyName, 'PropertyDocumentation', true, false, 'RoleName')
+      .withEndDomainEntitySubclass()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when domain entity subclass has multiple duplicate property name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';

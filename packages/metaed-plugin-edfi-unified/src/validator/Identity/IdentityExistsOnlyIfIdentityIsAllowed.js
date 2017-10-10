@@ -1,5 +1,5 @@
 // @flow
-import type { ModelType, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+import type { ModelType, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
 import { excludedModelTypes } from '../ValidatorShared/ExcludedModelTypes';
 
 const validTypes: ModelType[] = [
@@ -9,7 +9,11 @@ const validTypes: ModelType[] = [
   'domainEntity',
   'inlineCommon',
 ];
-
+const ignoredTypes: ModelType[] = [
+  'integerType',
+  'stringType',
+  'decimalType',
+];
 const validTypeNames: string = [
   'Abstract Entity',
   'Association',
@@ -20,14 +24,15 @@ const validTypeNames: string = [
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  const invalidTypes: ModelType[] = excludedModelTypes(Object.keys(metaEd.entity), validTypes);
+  const invalidTypes: ModelType[] = excludedModelTypes(Object.keys(metaEd.entity), [...validTypes, ...ignoredTypes]);
   if (invalidTypes.length === 0) return [];
 
   invalidTypes.forEach(invalidType => {
     // $FlowIgnore - allowing entityType to specify the entityRepository Map property
     metaEd.entity[invalidType].forEach(entity => {
-      if (entity.identityProperties.length === 0) return;
+      if (!entity.identityProperties || entity.identityProperties.length === 0) return;
       entity.identityProperties.forEach(property => {
+        if (property.isIdentityRename) return;
         failures.push({
           validatorName: 'IdentityExistsOnlyIfIdentityIsAllowed',
           category: 'error',

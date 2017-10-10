@@ -1,6 +1,6 @@
 // @flow
-import type { PropertyType, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { getPropertiesOfType } from '../../../../../packages/metaed-core/index';
+import type { PropertyType, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { getPropertiesOfType } from '../../../../metaed-core/index';
 import { asReferentialProperty } from '../../../../metaed-core/src/model/property/ReferentialProperty';
 
 

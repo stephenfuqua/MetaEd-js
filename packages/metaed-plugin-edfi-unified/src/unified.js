@@ -91,11 +91,13 @@ import { validate as mergePropertyPathMustExist } from './validator/MergePartOfR
 import { validate as mergeStatementMustStartMergePathWithPropertyName } from './validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
 import { validate as targetPropertyPathMustExist } from './validator/MergePartOfReference/TargetPropertyPathMustExist';
 
+/*
 import { validate as metaEdIdIsRequiredForDomainItems } from './validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
 import { validate as metaEdIdIsRequiredForEntities } from './validator/MetaEdId/MetaEdIdIsRequiredForEntities';
 import { validate as metaEdIdIsRequiredForEnumerationItems } from './validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
 import { validate as metaEdIdIsRequiredForInterchangeItems } from './validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
 import { validate as metaEdIdIsRequiredForProperties } from './validator/MetaEdId/MetaEdIdIsRequiredForProperties';
+*/
 import { validate as mustNotDuplicateMetaEdId } from './validator/MetaEdId/MustNotDuplicateMetaEdId';
 
 import { validate as sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/SharedSimple/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
@@ -246,11 +248,12 @@ function validatorList(): Array<Validator> {
     mergeStatementMustStartMergePathWithPropertyName,
     targetPropertyPathMustExist,
 
-    metaEdIdIsRequiredForDomainItems,
-    metaEdIdIsRequiredForEntities,
-    metaEdIdIsRequiredForEnumerationItems,
-    metaEdIdIsRequiredForInterchangeItems,
-    metaEdIdIsRequiredForProperties,
+    // ////// Commenting out MetaEd ID required warnings -- imports commented out above
+    // metaEdIdIsRequiredForDomainItems,
+    // metaEdIdIsRequiredForEntities,
+    // metaEdIdIsRequiredForEnumerationItems,
+    // metaEdIdIsRequiredForInterchangeItems,
+    // metaEdIdIsRequiredForProperties,
     mustNotDuplicateMetaEdId,
 
     sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits,

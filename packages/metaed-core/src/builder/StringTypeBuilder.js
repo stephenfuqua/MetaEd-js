@@ -133,33 +133,12 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
   exitingStringType() {
     if (this.currentStringType === NoStringType) return;
 
-    if (this.currentStringType.metaEdName) {
-      // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
-      const projectExtension = this.currentStringType.namespaceInfo.projectExtension;
-      const repositoryId = projectExtension ? `${projectExtension}-${this.currentStringType.metaEdName}` : this.currentStringType.metaEdName;
+    // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
+    const projectExtension = this.currentStringType.namespaceInfo.projectExtension;
+    const repositoryId = projectExtension ? `${projectExtension}-${this.currentStringType.metaEdName}` : this.currentStringType.metaEdName;
+    // $FlowIgnore - allowing currentStringType.type to specify the entityRepository Map property
+    this.metaEd.entity[this.currentStringType.type].set(repositoryId, this.currentStringType);
 
-      // $FlowIgnore - allowing currentStringType.type to specify the entityRepository Map property
-      const currentStringTypeRepository = this.metaEd.entity[this.currentStringType.type];
-      if (currentStringTypeRepository.has(repositoryId)) {
-        this.validationFailures.push({
-          validatorName: 'StringTypeBuilder',
-          category: 'error',
-          message: `${this.currentStringType.typeHumanizedName} named ${this.currentStringType.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: this.currentStringType.sourceMap.type,
-          fileMap: null,
-        });
-        const duplicateEntity: StringType = currentStringTypeRepository.get(repositoryId);
-        this.validationFailures.push({
-          validatorName: 'StringTypeBuilder',
-          category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
-          fileMap: null,
-        });
-      } else {
-        currentStringTypeRepository.set(repositoryId, this.currentStringType);
-      }
-    }
     this.currentStringType = NoStringType;
   }
 }

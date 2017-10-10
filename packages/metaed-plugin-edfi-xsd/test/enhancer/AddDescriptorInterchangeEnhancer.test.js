@@ -4,7 +4,7 @@ import type { MetaEdEnvironment, NamespaceInfo, Descriptor } from '../../../meta
 import { enhance, descriptorInterchangeName } from '../../src/enhancer/AddDescriptorInterchangeEnhancer';
 import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
-import { MergedInterchange } from '../../src/model/MergedInterchange';
+import type { MergedInterchange } from '../../src/model/MergedInterchange';
 
 describe('when running with one descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

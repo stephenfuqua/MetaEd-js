@@ -1,4 +1,46 @@
 // @flow
+import type { State } from '../State';
+import type { PluginManifest } from '../plugin/PluginTypes';
+
+import initializeUnified from '../../../metaed-plugin-edfi-unified/src/unified';
+import initializeXsd from '../../../metaed-plugin-edfi-xsd/src/edfiXsd';
+
+// hardcode unified and xsd - this is a reversed dependency that may cause strange ES module circular dependency issues
+export function loadPlugins(state: State): State {
+  const unifiedManifest: PluginManifest = {
+    npmName: 'metaed-plugin-edfi-unified',
+    version: 'N/A',
+    mainModule: 'N/A',
+    displayName: 'N/A',
+    author: 'N/A',
+    metaEdVersionRange: 'N/A',
+    dependencies: [],
+    dataReference: 'N/A',
+    enabled: true,
+    metaEdPlugin: initializeUnified(),
+  };
+
+  const xsdManifest: PluginManifest = {
+    npmName: 'metaed-plugin-edfi-xsd',
+    version: 'N/A',
+    mainModule: 'N/A',
+    displayName: 'N/A',
+    author: 'N/A',
+    metaEdVersionRange: 'N/A',
+    dependencies: [],
+    dataReference: 'N/A',
+    enabled: true,
+    metaEdPlugin: initializeXsd(),
+  };
+  state.pluginManifest.push(unifiedManifest, xsdManifest);
+
+  return state;
+}
+
+
+/* Original directory scanner:
+
+
 import path from 'path';
 import winston from 'winston';
 import { scanDirectories, materializePlugin } from '../plugin/PluginLoader';
@@ -36,3 +78,4 @@ export function loadPlugins(state: State): State {
   state.pluginManifest = cachedPluginManifest;
   return state;
 }
+*/

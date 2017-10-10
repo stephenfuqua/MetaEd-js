@@ -1,7 +1,7 @@
 // @flow
-import type { ShortProperty, MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import type { ShortPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/ShortProperty';
-import { asShortProperty } from '../../../../../packages/metaed-core/src/model/property/ShortProperty';
+import type { ShortProperty, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { ShortPropertySourceMap } from '../../../../metaed-core/src/model/property/ShortProperty';
+import { asShortProperty } from '../../../../metaed-core/src/model/property/ShortProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

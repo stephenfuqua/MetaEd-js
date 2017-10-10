@@ -60,6 +60,30 @@ export const allEntityModelTypes: Array<ModelType> = [
   'subdomain',
 ];
 
+export const allEntityModelTypesNoSimpleTypes: Array<ModelType> = [
+  'unknown',
+  'association',
+  'associationExtension',
+  'associationSubclass',
+  'choice',
+  'common',
+  'commonExtension',
+  'descriptor',
+  'domain',
+  'domainEntity',
+  'domainEntityExtension',
+  'domainEntitySubclass',
+  'enumeration',
+  'interchange',
+  'interchangeExtension',
+  'mapTypeEnumeration',
+  'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedString',
+  'subdomain',
+];
+
 export const allTopLevelEntityModelTypes: Array<ModelType> = [
   'unknown',
   'association',

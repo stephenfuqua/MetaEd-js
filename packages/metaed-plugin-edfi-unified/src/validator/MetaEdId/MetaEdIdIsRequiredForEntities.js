@@ -1,11 +1,11 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { getAllEntities } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { getAllEntitiesNoSimpleTypes } from '../../../../metaed-core/index';
 import { asTopLevelEntity } from '../../../../metaed-core/src/model/TopLevelEntity';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  getAllEntities(metaEd.entity).forEach(entity => {
+  getAllEntitiesNoSimpleTypes(metaEd.entity).forEach(entity => {
     if (entity.metaEdId) return;
     const topLevelEntity = asTopLevelEntity(entity);
     failures.push({

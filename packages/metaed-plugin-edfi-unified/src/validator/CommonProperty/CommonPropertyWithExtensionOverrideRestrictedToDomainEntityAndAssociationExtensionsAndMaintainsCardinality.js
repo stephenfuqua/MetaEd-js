@@ -4,8 +4,8 @@ import type {
   EntityRepository,
   MetaEdEnvironment,
   ModelType,
-  ValidationFailure } from '../../../../../packages/metaed-core/index';
-import { CommonPropertySourceMap } from '../../../../../packages/metaed-core/src/model/property/CommonProperty';
+  ValidationFailure } from '../../../../metaed-core/index';
+import { CommonPropertySourceMap } from '../../../../metaed-core/src/model/property/CommonProperty';
 
 const validEntityTypes: ModelType[] = [
   'domainEntityExtension',

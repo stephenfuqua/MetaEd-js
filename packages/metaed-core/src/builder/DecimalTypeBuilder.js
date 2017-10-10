@@ -147,33 +147,11 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   exitingDecimalType() {
     if (this.currentDecimalType === NoDecimalType) return;
 
-    if (this.currentDecimalType.metaEdName) {
-      // Another example of why DecimalType belongs in XSD specific, repository key partitions by namespace
-      const projectExtension = this.currentDecimalType.namespaceInfo.projectExtension;
-      const repositoryId = projectExtension ? `${projectExtension}-${this.currentDecimalType.metaEdName}` : this.currentDecimalType.metaEdName;
+    const projectExtension = this.currentDecimalType.namespaceInfo.projectExtension;
+    const repositoryId = projectExtension ? `${projectExtension}-${this.currentDecimalType.metaEdName}` : this.currentDecimalType.metaEdName;
+    // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
+    this.metaEd.entity[this.currentDecimalType.type].set(repositoryId, this.currentDecimalType);
 
-      // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
-      const currentDecimalTypeRepository = this.metaEd.entity[this.currentDecimalType.type];
-      if (currentDecimalTypeRepository.has(repositoryId)) {
-        this.validationFailures.push({
-          validatorName: 'DecimalTypeBuilder',
-          category: 'error',
-          message: `${this.currentDecimalType.typeHumanizedName} named ${this.currentDecimalType.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: this.currentDecimalType.sourceMap.type,
-          fileMap: null,
-        });
-        const duplicateEntity: DecimalType = currentDecimalTypeRepository.get(repositoryId);
-        this.validationFailures.push({
-          validatorName: 'DecimalTypeBuilder',
-          category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
-          fileMap: null,
-        });
-      } else {
-        currentDecimalTypeRepository.set(repositoryId, this.currentDecimalType);
-      }
-    }
     this.currentDecimalType = NoDecimalType;
   }
 }
