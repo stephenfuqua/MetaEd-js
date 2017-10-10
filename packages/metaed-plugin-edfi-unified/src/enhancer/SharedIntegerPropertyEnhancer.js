@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
-import { asIntegerType } from '../../../../packages/metaed-core/src/model/IntegerType';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
+import { asIntegerType } from '../../../metaed-core/src/model/IntegerType';
 
 const enhancerName: string = 'SharedIntegerPropertyEnhancer';
 

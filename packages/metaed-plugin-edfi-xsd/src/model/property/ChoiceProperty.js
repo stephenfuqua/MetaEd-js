@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, EntityProperty, ChoiceProperty } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, EntityProperty, ChoiceProperty } from '../../../../metaed-core/index';
 import type { EntityPropertyEdfiXsd } from './EntityProperty';
 
 export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd & {

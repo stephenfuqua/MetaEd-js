@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from '../../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from '../../../../metaed-core/index';
+import { getEntitiesOfType } from '../../../../metaed-core/index';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import type { NamespaceInfoEdfiXsd } from '../../../src/model/NamespaceInfo';
 import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../../src/model/EnumerationBase';

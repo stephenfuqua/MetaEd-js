@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
-import { getAllTopLevelEntities } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
+import { getAllTopLevelEntities } from '../../../metaed-core/index';
 import type { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 const enhancerName: string = 'CopyPropertiesEnhancer';

@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension } from '../../../metaed-core/index';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import { unionOfInterchangeItems } from '../model/InterchangeItem';

@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity, CommonProperty } from '../../../../packages/metaed-core/index';
-import { getAllTopLevelEntities } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity, CommonProperty } from '../../../metaed-core/index';
+import { getAllTopLevelEntities } from '../../../metaed-core/index';
 import { NoComplexType } from './schema/ComplexType';
 import type { ComplexType } from './schema/ComplexType';
 

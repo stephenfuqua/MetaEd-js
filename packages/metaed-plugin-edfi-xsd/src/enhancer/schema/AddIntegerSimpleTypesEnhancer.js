@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, IntegerType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, IntegerType } from '../../../../metaed-core/index';
 import type { SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
 import type { ModelBaseEdfiXsd } from '../../model/ModelBase';
 import { NoSimpleType } from '../../model/schema/SimpleType';

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../../packages/metaed-core/index';
-import { getEntitiesOfType, newInterchangeItem } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
+import { getEntitiesOfType, newInterchangeItem } from '../../../metaed-core/index';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';

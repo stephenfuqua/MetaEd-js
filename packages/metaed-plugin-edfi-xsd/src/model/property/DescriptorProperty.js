@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, DescriptorProperty } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, DescriptorProperty } from '../../../../metaed-core/index';
 import type { EntityPropertyEdfiXsd } from './EntityProperty';
 
 export type DescriptorPropertyEdfiXsd = EntityPropertyEdfiXsd & {

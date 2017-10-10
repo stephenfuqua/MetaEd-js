@@ -1,10 +1,10 @@
 // @flow
 import R from 'ramda';
-import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from '../../../../packages/metaed-core/index';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from '../../../metaed-core/index';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { Element } from '../../src/model/schema/Element';
 import { asElement } from '../../src/model/schema/Element';
-import { getEntity } from '../../../../packages/metaed-core/index';
+import { getEntity } from '../../../metaed-core/index';
 
 // Workaround for METAED-457: Rename StateOfIssueStateAbbreviation to StateOfIssueStateAbbreviationType on Credential Common TYpe
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-819

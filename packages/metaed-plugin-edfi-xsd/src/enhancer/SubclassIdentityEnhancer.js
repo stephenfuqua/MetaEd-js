@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from '../../../../packages/metaed-core/index';
-import { getAllTopLevelEntities } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from '../../../metaed-core/index';
+import { getAllTopLevelEntities } from '../../../metaed-core/index';
 import type { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 const enhancerName: string = 'SubclassIdentityEnhancer';

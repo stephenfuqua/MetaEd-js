@@ -1,5 +1,5 @@
 // @flow
-import type { ModelBase, TopLevelEntity } from '../../../../../packages/metaed-core/index';
+import type { ModelBase, TopLevelEntity } from '../../../../metaed-core/index';
 
 export function metaEdNameWithExtension(extensionEntity: ModelBase): () => string {
   return () => {

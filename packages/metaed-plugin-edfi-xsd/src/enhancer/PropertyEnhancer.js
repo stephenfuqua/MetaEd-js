@@ -22,8 +22,8 @@ import type {
   DescriptorProperty,
   AssociationProperty,
   DomainEntityProperty,
-} from '../../../../packages/metaed-core/index';
-import { NoTopLevelEntity, getAllProperties, getAllTopLevelEntities, isReferenceProperty } from '../../../../packages/metaed-core/index';
+} from '../../../metaed-core/index';
+import { NoTopLevelEntity, getAllProperties, getAllTopLevelEntities, isReferenceProperty } from '../../../metaed-core/index';
 import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';

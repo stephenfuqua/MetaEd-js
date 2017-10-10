@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, DomainEntitySubclass, EntityProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, DomainEntitySubclass, EntityProperty } from '../../../metaed-core/index';
 
 export type DomainEntitySubclassEdfiXsd = {
   xsd_Properties: () => Array<EntityProperty>;

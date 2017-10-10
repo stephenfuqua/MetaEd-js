@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
 
 const enhancerName: string = 'DomainEntityExtensionBaseClassEnhancer';
 

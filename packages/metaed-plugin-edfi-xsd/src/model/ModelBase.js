@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
+import { getEntitiesOfType } from '../../../metaed-core/index';
 import { metaEdNameWithExtension } from './shared/AddMetaEdNameWithExtension';
 
 export type ModelBaseEdfiXsd = {

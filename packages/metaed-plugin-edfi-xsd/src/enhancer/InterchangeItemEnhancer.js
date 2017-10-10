@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { InterchangeItemEdfiXsd } from '../model/InterchangeItem';
 import type { DescriptorEdfiXsd } from '../model/Descriptor';

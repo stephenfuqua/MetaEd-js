@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from '../../../metaed-core/index';
 import type { EnumerationSimpleType } from './schema/EnumerationSimpleType';
 import { NoEnumerationSimpleType } from './schema/EnumerationSimpleType';
 

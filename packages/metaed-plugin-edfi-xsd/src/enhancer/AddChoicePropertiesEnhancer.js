@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Choice, EntityProperty } from '../../../../packages/metaed-core/index';
-import { getAllTopLevelEntities } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Choice, EntityProperty } from '../../../metaed-core/index';
+import { getAllTopLevelEntities } from '../../../metaed-core/index';
 import type { ChoicePropertyEdfiXsd } from '../model/property/ChoiceProperty';
 
 const enhancerName: string = 'AddChoicePropertiesEnhancer';

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from '../../../metaed-core/index';
 
 export type InterchangeItemEdfiXsd = {
   xsd_Name: string;

@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, Descriptor } from '../../../../packages/metaed-core/index';
-import { newInterchangeItem } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, Descriptor } from '../../../metaed-core/index';
+import { newInterchangeItem } from '../../../metaed-core/index';
 import { newMergedInterchange } from '../model/MergedInterchange';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { pluginEnvironment } from './EnhancerHelper';

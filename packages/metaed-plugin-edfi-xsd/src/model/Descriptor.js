@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Descriptor } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Descriptor } from '../../../metaed-core/index';
 
 export type DescriptorEdfiXsd = {
   xsd_DescriptorName: string;

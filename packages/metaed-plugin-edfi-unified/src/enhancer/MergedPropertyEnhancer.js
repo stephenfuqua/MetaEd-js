@@ -6,9 +6,9 @@ import type {
   PropertyType,
   EntityProperty,
   TopLevelEntity,
-} from '../../../../packages/metaed-core/index';
+} from '../../../metaed-core/index';
 import { asReferentialProperty } from '../../../metaed-core/src/model/property/ReferentialProperty';
-import { getPropertiesOfType } from '../../../../packages/metaed-core/index';
+import { getPropertiesOfType } from '../../../metaed-core/index';
 
 const enhancerName: string = 'MergedPropertyEnhancer';
 

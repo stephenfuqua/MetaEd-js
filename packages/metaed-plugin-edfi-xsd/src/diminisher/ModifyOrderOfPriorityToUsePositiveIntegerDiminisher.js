@@ -1,10 +1,10 @@
 // @flow
 import R from 'ramda';
-import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from '../../../../packages/metaed-core/index';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from '../../../metaed-core/index';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { Element } from '../../src/model/schema/Element';
 import { asElement } from '../../src/model/schema/Element';
-import { getEntity } from '../../../../packages/metaed-core/index';
+import { getEntity } from '../../../metaed-core/index';
 import { NoSimpleType } from '../../src/model/schema/SimpleType';
 
 // Workaround for METAED-451: Force Data Type to Positive Integer in Xsd for Order of Priority

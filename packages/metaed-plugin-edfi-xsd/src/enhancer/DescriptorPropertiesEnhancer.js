@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Descriptor } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Descriptor } from '../../../metaed-core/index';
 import type { DescriptorEdfiXsd } from '../model/Descriptor';
 
 const enhancerName: string = 'DescriptorPropertiesEnhancer';

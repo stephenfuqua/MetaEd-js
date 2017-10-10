@@ -5,10 +5,10 @@ import type {
   MetaEdEnvironment,
   ModelBase,
   ModelType,
-} from '../../../../packages/metaed-core/index';
+} from '../../../metaed-core/index';
 import type { ComplexType } from '../model/schema/ComplexType';
 import { NoSimpleType } from '../model/schema/SimpleType';
-import { getEntity } from '../../../../packages/metaed-core/index';
+import { getEntity } from '../../../metaed-core/index';
 
 // Workaround for METAED-453: Force Data Type to xs:integer in Xsd for DisciplineActionLength and ActualDisciplineActionLength
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-870

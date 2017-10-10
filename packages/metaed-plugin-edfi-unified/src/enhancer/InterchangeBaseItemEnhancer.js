@@ -1,7 +1,7 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeItem } from '../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../packages/metaed-core/index';
-import { asInterchange } from '../../../../packages/metaed-core/src/model/Interchange';
+import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeItem } from '../../../metaed-core/index';
+import { getEntitiesOfType } from '../../../metaed-core/index';
+import { asInterchange } from '../../../metaed-core/src/model/Interchange';
 
 const enhancerName: string = 'InterchangeBaseItemEnhancer';
 

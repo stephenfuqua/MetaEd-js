@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../packages/metaed-core/index';
-import { asStringType } from '../../../../packages/metaed-core/src/model/StringType';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
+import { asStringType } from '../../../metaed-core/src/model/StringType';
 
 const enhancerName: string = 'SharedStringPropertyEnhancer';
 

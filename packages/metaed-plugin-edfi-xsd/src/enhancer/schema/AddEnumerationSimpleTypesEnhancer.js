@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from '../../../../metaed-core/index';
+import { getEntitiesOfType } from '../../../../metaed-core/index';
 import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
 import { newEnumerationToken } from '../../model/schema/EnumerationToken';
 import { newEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';

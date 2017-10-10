@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from '../../../../../packages/metaed-core/index';
-import { getAllProperties } from '../../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from '../../../../metaed-core/index';
+import { getAllProperties } from '../../../../metaed-core/index';
 
 export type EntityPropertyEdfiXsd = {
   xsd_Name: string,

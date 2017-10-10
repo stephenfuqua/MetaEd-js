@@ -2,7 +2,7 @@
 import type { Annotation } from './Annotation';
 import type { Attribute } from './Attribute';
 import type { ComplexTypeItem } from './ComplexTypeItem';
-import { deepFreezeAssign } from '../../../../../packages/metaed-core/src/Utility';
+import { deepFreezeAssign } from '../../../../metaed-core/src/Utility';
 import { newAnnotation } from './Annotation';
 
 export type ComplexType = {

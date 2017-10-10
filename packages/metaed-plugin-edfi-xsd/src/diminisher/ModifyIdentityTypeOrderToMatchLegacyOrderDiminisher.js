@@ -6,10 +6,10 @@ import type {
   MetaEdEnvironment,
   ModelBase,
   ModelType,
-} from '../../../../packages/metaed-core/index';
+} from '../../../metaed-core/index';
 import type { ComplexType } from '../model/schema/ComplexType';
 import { asElement } from '../model/schema/Element';
-import { getEntity } from '../../../../packages/metaed-core/index';
+import { getEntity } from '../../../metaed-core/index';
 
 // Workaround for METAED-451: Force Data Type to Positive Integer in Xsd for Order of Priority
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-866
