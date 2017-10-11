@@ -1,4 +1,4 @@
-// @noflow
+// @flow
 import { newMetaEdEnvironment, MetaEdTextBuilder, EnumerationBuilder } from '../../../../../packages/metaed-core/index';
 import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
 import { validate } from '../../../src/validator/Enumeration/EnumerationItemsMustBeUnique';
