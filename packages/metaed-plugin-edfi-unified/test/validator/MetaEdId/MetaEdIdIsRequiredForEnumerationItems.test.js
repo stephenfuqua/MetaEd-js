@@ -67,16 +67,8 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
     expect(metaEd.entity.mapTypeEnumeration.size).toBe(1);
   });
 
-  it('should have validation failures', () => {
-    expect(failures).toHaveLength(2);
-    expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
-    expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating map type enumeration item is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating map type enumeration item is missing metaEdId should have validation failures -> sourceMap');
-    expect(failures[1].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
-    expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating map type enumeration item is missing metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating map type enumeration item is missing metaEdId should have validation failures -> sourceMap');
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });
 
