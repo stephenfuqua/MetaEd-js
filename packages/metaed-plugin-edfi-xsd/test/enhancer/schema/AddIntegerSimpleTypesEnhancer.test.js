@@ -49,7 +49,7 @@ describe('when enhancing integer type', () => {
   });
 
   it('should have base type assigned', () => {
-    expect(createdSimpleType.baseType).toBe('xs:integer');
+    expect(createdSimpleType.baseType).toBe('xs:int');
   });
 
   it('should have max value assigned', () => {

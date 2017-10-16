@@ -75,6 +75,10 @@ describe('when building shared integer in extension namespace', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
+  it('should have data', () => {
+    expect(metaEd.entity.integerType.get(expectedRepositoryId).data).toBeDefined();
+  });
+
   it('should not be a generated type', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
@@ -151,6 +155,10 @@ describe('when building domain entity with integer property in extension namespa
 
   it('should have maxValue', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
+  });
+
+  it('should have data', () => {
+    expect(metaEd.entity.integerType.get(expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {
@@ -231,6 +239,10 @@ describe('when building shared short in extension namespace', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
+  it('should have data', () => {
+    expect(metaEd.entity.integerType.get(expectedRepositoryId).data).toBeDefined();
+  });
+
   it('should not be a generated type', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
@@ -307,6 +319,10 @@ describe('when building domain entity with short property in extension namespace
 
   it('should have maxValue', () => {
     expect(getIntegerType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
+  });
+
+  it('should have data', () => {
+    expect(metaEd.entity.integerType.get(expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {

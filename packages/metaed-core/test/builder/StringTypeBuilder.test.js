@@ -76,6 +76,10 @@ describe('when building shared string in extension namespace', () => {
     expect(getStringType(metaEd.entity, expectedRepositoryId).maxLength).toBe(maxLength);
   });
 
+  it('should have data', () => {
+    expect(metaEd.entity.stringType.get(expectedRepositoryId).data).toBeDefined();
+  });
+
   it('should not be a generated type', () => {
     expect(getStringType(metaEd.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
@@ -148,6 +152,10 @@ describe('when building domain entity with string property in extension namespac
 
   it('should have maxLength', () => {
     expect(getStringType(metaEd.entity, expectedRepositoryId).maxLength).toBe(maxLength);
+  });
+
+  it('should have data', () => {
+    expect(metaEd.entity.stringType.get(expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {

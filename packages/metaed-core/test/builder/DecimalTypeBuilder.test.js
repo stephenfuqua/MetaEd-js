@@ -85,6 +85,10 @@ describe('when building shared decimal in extension namespace', () => {
     expect(getDecimalType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
   });
 
+  it('should have data', () => {
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).data).toBeDefined();
+  });
+
   it('should not be a generated type', () => {
     expect(getDecimalType(metaEd.entity, expectedRepositoryId).generatedSimpleType).toBe(false);
   });
@@ -167,6 +171,10 @@ describe('when building domain entity with decimal property in extension namespa
 
   it('should have maxValue', () => {
     expect(getDecimalType(metaEd.entity, expectedRepositoryId).maxValue).toBe(maxValue);
+  });
+
+  it('should have data', () => {
+    expect(metaEd.entity.decimalType.get(expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {
