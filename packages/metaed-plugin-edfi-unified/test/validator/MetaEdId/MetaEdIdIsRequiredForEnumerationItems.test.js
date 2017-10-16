@@ -4,8 +4,8 @@ import {
   EnumerationBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-} from '../../../../../packages/metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../../packages/metaed-core/index';
+} from '../../../../metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
 
 describe('when validating enumeration item is missing metaEdId', () => {

@@ -185,7 +185,7 @@ describe('When plugins are present', () => {
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
 
@@ -219,7 +219,7 @@ describe('when building entity property with context', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have withContext', () => {
@@ -261,7 +261,7 @@ describe('when building a domain entity with a integer property that conflicts w
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
       createMetaEdFile('/fake/dir', 'SharedInteger1.metaed', metaedSharedInteger),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -295,7 +295,7 @@ describe('when building a valid domain entity with an integer identity', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -331,7 +331,7 @@ describe('when building duplicate domain entities', () => {
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaedDE2Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -360,7 +360,7 @@ describe('when building a domain entity with an integer property', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -390,7 +390,7 @@ describe('when building a valid domain entity with duplicate metaedIds', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -422,7 +422,7 @@ describe('when building a DE with a common property but no common declaration', 
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity', () => {
@@ -471,7 +471,7 @@ describe('when building a DE with a common property and duplicate common declera
       createMetaEdFile('/fake/dir', 'Common1.metaed', metaedCommon1Text),
       createMetaEdFile('/fake/dir', 'Common2.metaed', metaedCommon2Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../../packages/');
+    state.pluginScanDirectory = path.resolve(__dirname, '../../');
     startingFromFileLoadP(state);
   });
   it('should have built one domain entity and one comon', () => {

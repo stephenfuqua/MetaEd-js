@@ -86,7 +86,7 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should have data', () => {
-    expect(metaEd.entity.decimalType.get(expectedRepositoryId).data).toBeDefined();
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).data).toBeDefined();
   });
 
   it('should not be a generated type', () => {
@@ -174,7 +174,7 @@ describe('when building domain entity with decimal property in extension namespa
   });
 
   it('should have data', () => {
-    expect(metaEd.entity.decimalType.get(expectedRepositoryId).data).toBeDefined();
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {

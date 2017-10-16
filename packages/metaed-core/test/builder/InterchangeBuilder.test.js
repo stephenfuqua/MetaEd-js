@@ -80,14 +80,14 @@ describe('when building single interchange', () => {
     expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(1);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toBe('domainEntity');
+    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual(['domainEntity', 'domainEntitySubclass']);
   });
 
   it('should have one identity template', () => {
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toBe('association');
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual(['association', 'associationSubclass']);
   });
 });
 
@@ -120,15 +120,15 @@ describe('when building interchange with additional element and identity types',
   it('should have two element', () => {
     expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(2);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toBe('association');
+    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual(['association', 'associationSubclass']);
     expect(getInterchange(metaEd.entity, interchangeName).elements[1].metaEdName).toBe(interchangeElementName2);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[1].referencedType).toBe('descriptor');
+    expect(getInterchange(metaEd.entity, interchangeName).elements[1].referencedType).toEqual(['descriptor']);
   });
 
   it('should have one identity template', () => {
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toBe('domainEntity');
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual(['domainEntity', 'domainEntitySubclass']);
   });
 });
 

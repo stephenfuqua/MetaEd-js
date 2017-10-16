@@ -77,7 +77,7 @@ describe('when building shared string in extension namespace', () => {
   });
 
   it('should have data', () => {
-    expect(metaEd.entity.stringType.get(expectedRepositoryId).data).toBeDefined();
+    expect(getStringType(metaEd.entity, expectedRepositoryId).data).toBeDefined();
   });
 
   it('should not be a generated type', () => {
@@ -155,7 +155,7 @@ describe('when building domain entity with string property in extension namespac
   });
 
   it('should have data', () => {
-    expect(metaEd.entity.stringType.get(expectedRepositoryId).data).toBeDefined();
+    expect(getStringType(metaEd.entity, expectedRepositoryId).data).toBeDefined();
   });
 
   it('should be a generated type', () => {
