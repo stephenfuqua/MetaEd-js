@@ -59,6 +59,8 @@
     ]
   },
   "scripts": {
+    "metaed": "node ./dist/metaed-commands/index.js",
+    "me": "node ./dist/metaed-commands/index.js",
     "test": "jest",
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:watch": "jest --watch",
