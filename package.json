@@ -13,6 +13,7 @@
     "final-fs": "^1.6.1",
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.4",
+    "prettify-xml": "^1.2.0",
     "ramda": "^0.24.1",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",

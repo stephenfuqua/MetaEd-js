@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from '../../../../metaed-core/index';
+import { getReferencedEntity } from './SimpleReferenceHelper';
 
 const enhancerName: string = 'StringReferenceEnhancer';
 
@@ -9,8 +10,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // Note right now we point shared string properties to the StringType
   // this is a legacy from before we had SharedSimple properties at all
   stringProperties.push(...metaEd.propertyIndex.string, ...metaEd.propertyIndex.sharedString);
+
   stringProperties.forEach(property => {
-    const referencedEntity = metaEd.entity.stringType.get(property.metaEdName);
+    const referencedEntity = getReferencedEntity(metaEd.entity.stringType, property);
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;
       referencedEntity.referringSimpleProperties.push(property);

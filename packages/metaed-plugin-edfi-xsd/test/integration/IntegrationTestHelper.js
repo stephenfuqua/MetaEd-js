@@ -21,9 +21,9 @@ export function enhanceAndGenerate(metaEd: MetaEdEnvironment) {
 
   const generatorResult = generate(metaEd).generatedOutput;
   const coreResultString = generatorResult[0].resultString;
-  const extensionResultString = generatorResult[1].resultString;
+  const extensionResultString = generatorResult[1] ? generatorResult[1].resultString : null;
   return {
     coreResult: parseXml(coreResultString),
-    extensionResult: parseXml(extensionResultString),
+    extensionResult: extensionResultString ? parseXml(extensionResultString) : null,
   };
 }

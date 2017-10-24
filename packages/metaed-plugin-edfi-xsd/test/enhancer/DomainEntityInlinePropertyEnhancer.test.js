@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newCommon, newCommonProperty, newStringProperty } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, Common, DomainEntity } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntity, newInlineCommon, newInlineCommonProperty, newStringProperty } from '../../../../packages/metaed-core/index';
+import type { MetaEdEnvironment, Common, DomainEntity } from '../../../../packages/metaed-core/index';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
@@ -23,7 +23,7 @@ describe('when enhancing domainEntity with inline string property', () => {
       }),
     ];
 
-    const inlineCommon: Common = Object.assign(newCommon(), {
+    const inlineCommon: Common = Object.assign(newInlineCommon(), {
       metaEdName: inlineName,
       inlineInOds: true,
       properties,
@@ -37,7 +37,7 @@ describe('when enhancing domainEntity with inline string property', () => {
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       properties: [
-        Object.assign(newCommonProperty(), {
+        Object.assign(newInlineCommonProperty(), {
           metaEdName: inlineName,
           referencedEntity: inlineCommon,
         }),
@@ -56,7 +56,7 @@ describe('when enhancing domainEntity with inline string property', () => {
 
   it('should add identity properties to domainEntity', () => {
     const domainEntity: any = metaEd.entity.domainEntity.get(entityName);
-    expect(domainEntity.properties[0].type).toBe('common');
+    expect(domainEntity.properties[0].type).toBe('inlineCommon');
     expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(1);
     expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(propertyName2);
   });
@@ -71,7 +71,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
   const property2Name: string = 'Property2Name';
 
   beforeAll(() => {
-    const inlineCommon2: Common = Object.assign(newCommon(), {
+    const inlineCommon2: Common = Object.assign(newInlineCommon(), {
       metaEdName: inline2Name,
       inlineInOds: true,
       properties: [
@@ -87,11 +87,11 @@ describe('when enhancing domainEntity with inline nested string property', () =>
     });
     metaEd.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
 
-    const inlineCommon1: Common = Object.assign(newCommon(), {
+    const inlineCommon1: Common = Object.assign(newInlineCommon(), {
       metaEdName: inline1Name,
       inlineInOds: true,
       properties: [
-        Object.assign(newCommonProperty(), {
+        Object.assign(newInlineCommonProperty(), {
           metaEdName: inline2Name,
           referencedEntity: inlineCommon2,
         }),
@@ -110,7 +110,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       properties: [
-        Object.assign(newCommonProperty(), {
+        Object.assign(newInlineCommonProperty(), {
           metaEdName: inline1Name,
           referencedEntity: inlineCommon1,
         }),
@@ -129,7 +129,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
 
   it('should add identity properties to domainEntity', () => {
     const domainEntity: any = metaEd.entity.domainEntity.get(entityName);
-    expect(domainEntity.properties[0].type).toBe('common');
+    expect(domainEntity.properties[0].type).toBe('inlineCommon');
     expect(domainEntity.data.edfiXsd.xsd_IdentityProperties.length).toBe(2);
     expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[0].metaEdName).toBe(property2Name);
     expect(domainEntity.data.edfiXsd.xsd_IdentityProperties[1].metaEdName).toBe(property1Name);

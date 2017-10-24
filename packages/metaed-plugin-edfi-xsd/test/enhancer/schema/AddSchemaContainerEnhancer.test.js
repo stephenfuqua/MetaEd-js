@@ -226,6 +226,8 @@ describe('when enhancing namespace info for core with children', () => {
   const inlineCommon2Name: string = 'Inline Common Type Name 2';
   const common2ComplexTypeName: string = 'Common Type Complex Type Name 2';
   const inlineCommon2ComplexTypeName: string = 'Inline Common Type Complex Type Name 2';
+  const commonExtension1Name: string = 'Common Extension Name 1';
+  const commonExtension1ComplexTypeName: string = 'Common Extension Type Complex Type Name 1';
 
   const enumeration2Name: string = 'Enumeration Name 2';
   const schoolYearEnumeration2Name: string = 'School Year Enumeration Name 2';
@@ -555,6 +557,19 @@ describe('when enhancing namespace info for core with children', () => {
     });
     metaEd.entity.common.set(common2.metaEdName, common2);
 
+    const commonExtension1 = Object.assign(newCommon(), {
+      metaEdName: commonExtension1Name,
+      namespaceInfo: extensionNamespaceInfo,
+      data: {
+        edfiXsd: {
+          xsd_ComplexTypes: [
+            Object.assign(newComplexType(), { name: commonExtension1ComplexTypeName }),
+          ],
+        },
+      },
+    });
+    metaEd.entity.common.set(commonExtension1.metaEdName, commonExtension1);
+
     const inlineCommon2 = Object.assign(newCommon(), {
       metaEdName: inlineCommon2Name,
       namespaceInfo: extensionNamespaceInfo,
@@ -741,6 +756,14 @@ describe('when enhancing namespace info for core with children', () => {
     expect(section.simpleTypes[0].name).toBe(enumeration1SimpleTypeName);
     expect(section.simpleTypes[1].name).toBe(schoolYearEnumeration1SimpleTypeName);
     expect(section.simpleTypes[2].name).toBe(xsdMapTypeEnumeration1SimpleTypeName);
+  });
+
+  it('should generate common types section in extension', () => {
+    const section: SchemaSection = extensionSchema.sections[5];
+    expect(section.complexTypes.length).toBe(3);
+    expect(section.complexTypes[0].name).toBe(commonExtension1ComplexTypeName);
+    expect(section.complexTypes[1].name).toBe(common2ComplexTypeName);
+    expect(section.complexTypes[2].name).toBe(inlineCommon2ComplexTypeName);
   });
 
   it('should generate string simple types section in extension without base types', () => {

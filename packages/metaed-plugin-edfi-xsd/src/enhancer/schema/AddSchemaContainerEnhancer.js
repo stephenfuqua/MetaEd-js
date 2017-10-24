@@ -275,7 +275,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Common Types =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'common'),
+      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'common', 'commonExtension'),
     });
     schemaContainer.sections.push(commonTypesSection);
 

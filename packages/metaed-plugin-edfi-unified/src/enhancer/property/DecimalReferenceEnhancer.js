@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from '../../../../metaed-core/index';
+import { getReferencedEntity } from './SimpleReferenceHelper';
 
 const enhancerName: string = 'DecimalReferenceEnhancer';
 
@@ -10,7 +11,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // this is a legacy from before we had SharedSimple properties at all
   decimalProperties.push(...metaEd.propertyIndex.decimal, ...metaEd.propertyIndex.sharedDecimal);
   decimalProperties.forEach(property => {
-    const referencedEntity = metaEd.entity.decimalType.get(property.metaEdName);
+    const referencedEntity = getReferencedEntity(metaEd.entity.decimalType, property);
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;
       referencedEntity.referringSimpleProperties.push(property);
