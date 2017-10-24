@@ -10,8 +10,10 @@ export type InterchangeItemEdfiXsd = {
 const equalXsdName = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Name']));
 const equalXsdType = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Type']));
 export const interchangeItemsEqual = R.both(equalXsdName, equalXsdType);
+export const interchangeItemsNameEqual = equalXsdName;
 export const unionOfInterchangeItems = R.unionWith(interchangeItemsEqual);
 export const differenceOfInterchangeItems = R.differenceWith(interchangeItemsEqual);
+export const differenceOfInterchangeItemsNameOnly = R.differenceWith(interchangeItemsNameEqual);
 
 const enhancerName: string = 'InterchangeItemSetupEnhancer';
 

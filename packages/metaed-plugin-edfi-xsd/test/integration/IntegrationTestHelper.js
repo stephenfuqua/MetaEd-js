@@ -3,6 +3,7 @@ import { DOMParser } from 'xmldom';
 import xpath from 'xpath';
 import initializeXsdPlugin from '../../src/edfiXsd';
 import { generate } from '../../src/generator/XsdGenerator';
+import { generate as generateInterchange } from '../../src/generator/InterchangeGenerator';
 import type { MetaEdEnvironment } from '../../../metaed-core/index';
 // This is a cheat until we determine how to access plugin dependencies for testing
 import initializeUnifiedPlugin from '../../../metaed-plugin-edfi-unified/src/unified';
@@ -20,10 +21,12 @@ export function enhanceAndGenerate(metaEd: MetaEdEnvironment) {
   initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
   const generatorResult = generate(metaEd).generatedOutput;
+  const interchangeGeneratorResult = generateInterchange(metaEd).generatedOutput || [];
   const coreResultString = generatorResult[0].resultString;
   const extensionResultString = generatorResult[1] ? generatorResult[1].resultString : null;
   return {
     coreResult: parseXml(coreResultString),
     extensionResult: extensionResultString ? parseXml(extensionResultString) : null,
+    interchangeResults: interchangeGeneratorResult.map(result => parseXml(result.resultString)),
   };
 }

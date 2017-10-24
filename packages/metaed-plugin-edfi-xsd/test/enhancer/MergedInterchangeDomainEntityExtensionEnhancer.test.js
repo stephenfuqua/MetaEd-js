@@ -334,11 +334,13 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     expect(extensionInterchange.metaEdName).toBe(interchangeName);
     expect(extensionInterchange.elements.length).toBe(2);
 
-    expect(extensionInterchange.elements[0].metaEdName).toBe(domainEntity2Name);
-    expect(extensionInterchange.elements[0].documentation).toBe(interchangeItemDomainEntity2Documentation);
-    expect(extensionInterchange.elements[1].metaEdName).toBe(domainEntity1Name);
-    expect(extensionInterchange.elements[1].referencedEntity).toBe(domainEntityExtension);
-    expect(extensionInterchange.elements[1].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    const extensionInterchangeElement1 = extensionInterchange.elements.find(e => e.metaEdName === domainEntity2Name);
+    expect(extensionInterchangeElement1.metaEdName).toBe(domainEntity2Name);
+    expect(extensionInterchangeElement1.documentation).toBe(interchangeItemDomainEntity2Documentation);
+    const extensionInterchangeElement2 = extensionInterchange.elements.find(e => e.metaEdName === domainEntity1Name);
+    expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
+    expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension);
+    expect(extensionInterchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
   });
 });
 
@@ -499,20 +501,23 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     expect(extensionInterchange.useCaseDocumentation).toBe(interchangeUseCaseDocumentation);
     expect(extensionInterchange.elements.length).toBe(3);
 
-    expect(extensionInterchange.elements[2].metaEdName).toBe(domainEntity2Name);
-    expect(extensionInterchange.elements[2].documentation).toBe(interchangeItemDomainEntity2Documentation);
-    expect(extensionInterchange.elements[2].referencedEntity).toBe(domainEntityExtension2);
-    expect(extensionInterchange.elements[2].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    const extensionInterchangeElement1 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity2Name);
+    expect(extensionInterchangeElement1.metaEdName).toBe(domainEntity2Name);
+    expect(extensionInterchangeElement1.documentation).toBe(interchangeItemDomainEntity2Documentation);
+    expect(extensionInterchangeElement1.referencedEntity).toBe(domainEntityExtension2);
+    expect(extensionInterchangeElement1.namespaceInfo.namespace).toBe(extensionNamespaceName);
 
-    expect(extensionInterchange.elements[1].metaEdName).toBe(domainEntity1Name);
-    expect(extensionInterchange.elements[1].documentation).toBe(interchangeItemDomainEntity1Documentation);
-    expect(extensionInterchange.elements[1].referencedEntity).toBe(domainEntityExtension1);
-    expect(extensionInterchange.elements[1].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    const extensionInterchangeElement2 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity1Name);
+    expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
+    expect(extensionInterchangeElement2.documentation).toBe(interchangeItemDomainEntity1Documentation);
+    expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension1);
+    expect(extensionInterchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
 
-    expect(extensionInterchange.elements[0].metaEdName).toBe(domainEntity3Name);
-    expect(extensionInterchange.elements[0].documentation).toBe(interchangeItemDomainEntity3Documentation);
-    expect(extensionInterchange.elements[0].referencedEntity).toBe(domainEntity3);
-    expect(extensionInterchange.elements[0].namespaceInfo.namespace).toBe(namespaceName);
+    const extensionInterchangeElement3 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity3Name);
+    expect(extensionInterchangeElement3.metaEdName).toBe(domainEntity3Name);
+    expect(extensionInterchangeElement3.documentation).toBe(interchangeItemDomainEntity3Documentation);
+    expect(extensionInterchangeElement3.referencedEntity).toBe(domainEntity3);
+    expect(extensionInterchangeElement3.namespaceInfo.namespace).toBe(namespaceName);
   });
 });
 
@@ -638,14 +643,16 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     expect(interchange.useCaseDocumentation).toBe(interchangeUseCaseDocumentation);
     expect(interchange.elements.length).toBe(2);
 
-    expect(interchange.elements[1].metaEdName).toBe(domainEntity1Name);
-    expect(interchange.elements[1].documentation).toBe(interchangeItemDomainEntity1Documentation);
-    expect(interchange.elements[1].referencedEntity).toBe(domainEntityExtension1);
-    expect(interchange.elements[1].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    const interchangeElement1 = interchange.elements.find(x => x.metaEdName === domainEntity1Name);
+    expect(interchangeElement1.metaEdName).toBe(domainEntity1Name);
+    expect(interchangeElement1.documentation).toBe(interchangeItemDomainEntity1Documentation);
+    expect(interchangeElement1.referencedEntity).toBe(domainEntityExtension1);
+    expect(interchangeElement1.namespaceInfo.namespace).toBe(extensionNamespaceName);
 
-    expect(interchange.elements[0].metaEdName).toBe(domainEntity2Name);
-    expect(interchange.elements[0].documentation).toBe(interchangeItemDomainEntity2Documentation);
-    expect(interchange.elements[0].referencedEntity).toBe(domainEntity2);
-    expect(interchange.elements[0].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    const interchangeElement2 = interchange.elements.find(x => x.metaEdName === domainEntity2Name);
+    expect(interchangeElement2.metaEdName).toBe(domainEntity2Name);
+    expect(interchangeElement2.documentation).toBe(interchangeItemDomainEntity2Documentation);
+    expect(interchangeElement2.referencedEntity).toBe(domainEntity2);
+    expect(interchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
   });
 });

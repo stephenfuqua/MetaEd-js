@@ -1,8 +1,8 @@
 // @flow
+import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension } from '../../../metaed-core/index';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
-import { unionOfInterchangeItems } from '../model/InterchangeItem';
 import type { ModelBaseEdfiXsd } from '../model/ModelBase';
 
 const enhancerName: string = 'MergedInterchangeEnhancer';
@@ -36,13 +36,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       useCaseDocumentation: interchange.useCaseDocumentation,
       namespaceInfo: interchangeExtension.namespaceInfo,
     });
-
     Object.assign(mergedInterchange, {
-      elements: unionOfInterchangeItems(
-        interchangeExtension.elements,
+      elements: R.union(
         interchange.elements.filter(e => mergedInterchange.elements.every(mie => mie.metaEdName !== e.metaEdName)),
+        interchangeExtension.elements,
+
       ),
-      identityTemplates: unionOfInterchangeItems(
+      identityTemplates: R.union(
         interchangeExtension.identityTemplates,
         interchange.identityTemplates.filter(e => mergedInterchange.identityTemplates.every(mie => mie.metaEdName !== e.metaEdName)),
       ),

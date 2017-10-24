@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { loadFiles } from '../../../packages/../packages/metaed-core/src/task/FileSystemFilenameLoader';
+import { loadFiles } from '../../../packages/metaed-core/src/task/FileSystemFilenameLoader';
 import { validateSyntax } from '../../../packages/../packages/metaed-core/src/task/ValidateSyntax';
 import { buildTopLevelEntity, buildMetaEd } from '../../../packages/metaed-core/src/grammar/ParseTreeBuilder';
 import loadFileIndex from '../../../packages/metaed-core/src/task/LoadFileIndex';

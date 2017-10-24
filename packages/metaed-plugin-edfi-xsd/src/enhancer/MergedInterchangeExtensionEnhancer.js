@@ -4,8 +4,8 @@ import { getEntitiesOfType, newInterchangeItem } from '../../../metaed-core/inde
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
-import type { MergedInterchange } from '../model/MergedInterchange';
 import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
+import type { MergedInterchange } from '../model/MergedInterchange';
 
 const enhancerName: string = 'MergedInterchangeExtensionEnhancer';
 
@@ -48,7 +48,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           addInterchangeItemEdfiXsdTo(interchangeItem);
           extensionInterchange.elements.push(interchangeItem);
         });
-
         addMergedInterchangeToRepository(metaEd, extensionInterchange);
       }
 
@@ -59,16 +58,21 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         }),
       ).filter(elementPair => elementPair.extensionElement);
 
-      elementsToExtend.forEach(elementToExtend => {
-        extensionInterchange.elements = extensionInterchange.elements.filter(e => e.metaEdName !== elementToExtend.element.metaEdName);
-        const interchangeItem = Object.assign(newInterchangeItem(), {
-          metaEdName: elementToExtend.element.metaEdName,
-          namespaceInfo: extensionNamespaceInfo,
-          referencedEntity: elementToExtend.extensionElement,
-          documentation: elementToExtend.element.documentation,
-        });
-        addInterchangeItemEdfiXsdTo(interchangeItem);
-        extensionInterchange.elements.push(interchangeItem);
+
+      extensionInterchange.elements = extensionInterchange.elements.map(e => {
+        const elementToExtend = elementsToExtend.find(i => i.element.metaEdName === e.metaEdName);
+        if (elementToExtend) {
+          const interchangeItem = Object.assign(newInterchangeItem(), {
+            metaEdName: elementToExtend.element.metaEdName,
+            namespaceInfo: extensionNamespaceInfo,
+            referencedEntity: elementToExtend.extensionElement,
+            documentation: elementToExtend.element.documentation,
+          });
+          addInterchangeItemEdfiXsdTo(interchangeItem);
+          return interchangeItem;
+        }
+        // otherwise leave it alone.
+        return e;
       });
     });
   });
