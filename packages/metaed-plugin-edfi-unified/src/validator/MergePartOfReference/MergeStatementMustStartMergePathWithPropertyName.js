@@ -1,8 +1,6 @@
 // @flow
-import type { PropertyType, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
-import { getPropertiesOfType } from '../../../../metaed-core/index';
-import { asReferentialProperty } from '../../../../metaed-core/src/model/property/ReferentialProperty';
-
+import type { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 
 const validTypes: Array<PropertyType> = [
   'common',

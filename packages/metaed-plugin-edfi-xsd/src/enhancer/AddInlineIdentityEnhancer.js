@@ -1,7 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, EntityProperty } from '../../../../packages/metaed-core/index';
-import { getEntitiesOfType } from '../../../../packages/metaed-core/index';
-import { EntityRepository } from '../../../metaed-core/src/model/EntityRepository';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, EntityProperty } from 'metaed-core';
+import { getEntitiesOfType, EntityRepository } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 // This enhancer covers both the original AssociationBaseInlineIdentityEnhancer and DomainEntityBaseInlineIdentityEnhancer

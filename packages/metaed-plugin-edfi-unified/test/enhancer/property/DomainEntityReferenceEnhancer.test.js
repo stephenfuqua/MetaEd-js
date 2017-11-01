@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newDomainEntityProperty, newDomainEntity, newDomainEntitySubclass } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, DomainEntityProperty, DomainEntity, DomainEntitySubclass } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntityProperty, newDomainEntity, newDomainEntitySubclass } from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntityProperty, DomainEntity, DomainEntitySubclass } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/DomainEntityReferenceEnhancer';
 
 describe('when enhancing domainEntity property referring to domainEntity', () => {

@@ -1,5 +1,5 @@
 // @flow
-import type { EntityProperty } from '../../../../metaed-core/src/model/property/EntityProperty';
+import type { EntityProperty } from 'metaed-core';
 
 export function getReferencedEntity(propertyEntity: Map<string, any>, property: EntityProperty) {
   // Redefine Map key by converting to an Array and back to a Map.

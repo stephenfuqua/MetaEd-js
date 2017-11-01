@@ -1,6 +1,6 @@
 // @flow
-import { getEntitiesOfType } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
+import { getEntitiesOfType } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import type { EnumerationBaseEdfiXsd } from '../model/EnumerationBase';
 
 const enhancerName: string = 'EnumerationBasePropertiesEnhancer';

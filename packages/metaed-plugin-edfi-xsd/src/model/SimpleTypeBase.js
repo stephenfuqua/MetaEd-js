@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, DecimalType, IntegerType, StringType } from '../../../metaed-core/index';
-import { getEntitiesOfType } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, DecimalType, IntegerType, StringType } from 'metaed-core';
+import { getEntitiesOfType } from 'metaed-core';
 import type { SimpleType } from './schema/SimpleType';
 import { NoSimpleType } from './schema/SimpleType';
 

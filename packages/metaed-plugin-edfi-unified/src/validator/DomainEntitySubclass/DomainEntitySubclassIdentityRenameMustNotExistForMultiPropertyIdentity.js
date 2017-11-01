@@ -1,5 +1,5 @@
 // @flow
-import type { DomainEntity, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { DomainEntity, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

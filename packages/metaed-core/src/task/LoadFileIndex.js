@@ -14,7 +14,7 @@ function endNamespace() {
   return createMetaEdFile('InMemory', 'InMemory', 'End Namespace\n');
 }
 
-export default function loadFileIndex(state: State): State {
+export function loadFileIndex(state: State): State {
   if (state.loadedFileSet == null) {
     winston.error('LoadFileIndex: no files to load found');
     return state;

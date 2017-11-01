@@ -4,19 +4,8 @@ import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
 import diff2html from 'diff2html';
-import { newState } from '../../../metaed-core/src/State';
-import { loadPlugins } from '../../../metaed-core/src/task/LoadPlugins';
-import { loadFiles } from '../../../metaed-core/src/task/FileSystemFilenameLoader';
-import loadFileIndex from '../../../metaed-core/src/task/LoadFileIndex';
-import { buildParseTree } from '../../../metaed-core/src/task/BuildParseTree';
-import { buildMetaEd } from '../../../metaed-core/src/grammar/ParseTreeBuilder';
-import { execute as walkBuilders } from '../../../metaed-core/src/task/WalkBuilders';
-import { execute as runValidators } from '../../../metaed-core/src/task/RunValidators';
-import { execute as runEnhancers } from '../../../metaed-core/src/task/RunEnhancers';
-import { execute as runGenerators } from '../../../metaed-core/src/task/RunGenerators';
-import { fileMapForFailure } from '../../../metaed-core/src/task/FileMapForFailure';
-import type { GeneratedOutput } from '../../../metaed-core/src/generator/GeneratedOutput';
-import type { State } from '../../../metaed-core/src/State';
+import type { GeneratedOutput, State } from 'metaed-core';
+import { newState, loadPlugins, loadFiles, loadFileIndex, buildParseTree, buildMetaEd, walkBuilders, runValidators, runEnhancers, runGenerators, fileMapForFailure } from 'metaed-core';
 
 jest.unmock('final-fs');
 

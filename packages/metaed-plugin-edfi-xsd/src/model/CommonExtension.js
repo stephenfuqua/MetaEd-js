@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-core';
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type CommonExtensionEdfiXsd = {

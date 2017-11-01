@@ -1,0 +1,37 @@
+0 silly input [ 'test' ]
+1 silly flags { _: [ 'run' ],
+1 silly flags   scope: 'metaed-console',
+1 silly flags   script: 'test',
+1 silly flags   args: [] }
+2 verbose rootPath /home/brad/work/metaed/metaed-js
+3 info version 2.4.0
+4 silly existsSync /home/brad/work/metaed/metaed-js/VERSION
+5 info scope metaed-console
+6 silly initialize attempt
+7 silly initialize success
+8 silly execute attempt
+9 silly runScriptInDir test [] metaed-console
+10 silly getExecOpts { cwd: '/home/brad/work/metaed/metaed-js/packages/metaed-console' }
+11 error test Errored while running script in 'metaed-console'
+12 error execute callback with error
+13 error Error: Command failed: npm run test
+13 error sh: 1: jest: not found
+13 error npm ERR! file sh
+13 error npm ERR! code ELIFECYCLE
+13 error npm ERR! errno ENOENT
+13 error npm ERR! syscall spawn
+13 error npm ERR! metaed-console@1.1.0 test: `jest`
+13 error npm ERR! spawn ENOENT
+13 error npm ERR!
+13 error npm ERR! Failed at the metaed-console@1.1.0 test script.
+13 error npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+13 error
+13 error npm ERR! A complete log of this run can be found in:
+13 error npm ERR!     /home/brad/.npm/_logs/2017-10-31T20_16_57_469Z-debug.log
+13 error
+13 error > metaed-console@1.1.0 test /home/brad/work/metaed/metaed-js/packages/metaed-console
+13 error > jest
+13 error
+13 error
+13 error     at Promise.all.then.arr (/home/brad/.nvm/versions/node/v8.4.0/lib/node_modules/lerna/node_modules/execa/index.js:236:11)
+13 error     at <anonymous>

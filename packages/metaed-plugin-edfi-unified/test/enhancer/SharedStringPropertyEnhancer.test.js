@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newSharedStringProperty, newStringType, addProperty } from '../../../metaed-core/index';
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newSharedStringProperty, newStringType, addProperty } from 'metaed-core';
+import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SharedStringPropertyEnhancer';
 
 describe('when shared string property refers to a shared string', () => {

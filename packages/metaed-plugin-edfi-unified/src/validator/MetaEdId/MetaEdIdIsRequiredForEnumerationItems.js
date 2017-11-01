@@ -4,9 +4,8 @@ import type {
   SchoolYearEnumeration,
   MetaEdEnvironment,
   ValidationFailure,
-} from '../../../../metaed-core/index';
-import { getEntitiesOfType } from '../../../../metaed-core/index';
-import { asEnumeration } from '../../../../metaed-core/src/model/Enumeration';
+} from 'metaed-core';
+import { getEntitiesOfType, asEnumeration } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

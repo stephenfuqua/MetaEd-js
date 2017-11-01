@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newShortProperty, newSharedShortProperty, newIntegerType } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ShortProperty, SharedShortProperty, IntegerType } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, newShortProperty, newSharedShortProperty, newIntegerType } from 'metaed-core';
+import type { MetaEdEnvironment, ShortProperty, SharedShortProperty, IntegerType } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/ShortReferenceEnhancer';
 
 

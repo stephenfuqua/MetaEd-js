@@ -5,11 +5,11 @@ import type {
   MetaEdEnvironment,
   ModelBase,
   ModelType,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
+import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { Element } from '../../src/model/schema/Element';
 import { asElement } from '../../src/model/schema/Element';
-import { getEntity } from '../../../metaed-core/index';
 
 // Workaround for METAED-455: Force Data Type to xs:int in Xsd for TotalInstructionalDays
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-869

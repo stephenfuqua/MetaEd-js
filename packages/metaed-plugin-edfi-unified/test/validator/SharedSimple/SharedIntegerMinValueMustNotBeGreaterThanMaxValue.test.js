@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, SharedIntegerBuilder } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, MetaEdTextBuilder, SharedIntegerBuilder } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
 
 describe('when validating shared integer with max value greater than min value', () => {

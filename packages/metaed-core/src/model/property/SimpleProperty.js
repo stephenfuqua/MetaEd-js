@@ -26,3 +26,5 @@ export function newSimplePropertyFields() {
 export function newSimpleProperty(): SimpleProperty {
   return Object.assign(new SimpleProperty(), newSimplePropertyFields());
 }
+
+export const asSimpleProperty = (x: EntityProperty): SimpleProperty => ((x: any): SimpleProperty);

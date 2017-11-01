@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, CommonExtensionBuilder } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, CommonExtensionBuilder } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionMustNotRedeclareProperties';
 
 describe('when common extension correctly has different property names', () => {

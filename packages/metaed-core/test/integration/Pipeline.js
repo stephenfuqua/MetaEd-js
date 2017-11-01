@@ -1,12 +1,12 @@
 // @flow
 import R from 'ramda';
-import { loadFiles } from '../../../packages/metaed-core/src/task/FileSystemFilenameLoader';
-import { validateSyntax } from '../../../packages/../packages/metaed-core/src/task/ValidateSyntax';
-import { buildTopLevelEntity, buildMetaEd } from '../../../packages/metaed-core/src/grammar/ParseTreeBuilder';
-import loadFileIndex from '../../../packages/metaed-core/src/task/LoadFileIndex';
-import { buildParseTree } from '../../../packages/metaed-core/src/task/BuildParseTree';
-import { execute as walkBuilders } from '../../../packages/metaed-core/src/task/WalkBuilders';
-import { fileMapForFailure } from '../../../packages/metaed-core/src/task/FileMapForFailure';
+import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
+import { validateSyntax } from '../../src/task/ValidateSyntax';
+import { buildTopLevelEntity, buildMetaEd } from '../../src/grammar/ParseTreeBuilder';
+import { loadFileIndex } from '../../src/task/LoadFileIndex';
+import { buildParseTree } from '../../src/task/BuildParseTree';
+import { execute as walkBuilders } from '../../src/task/WalkBuilders';
+import { fileMapForFailure } from '../../src/task/FileMapForFailure';
 import {
   executeAssociationBuilder,
   executeAssociationExtensionBuilder,
@@ -28,10 +28,10 @@ import {
   executeSharedIntegerBuilder,
   executeSharedStringBuilder,
   executeStringTypeBuilder,
-} from '../../../packages/metaed-core/src/task/WalkBuildersP';
-import { execute as runValidators } from '../../../packages/metaed-core/src/task/RunValidators';
-import { loadPlugins } from '../../../packages/metaed-core/src/task/LoadPlugins';
-import type { State } from '../../../packages/metaed-core/src/State';
+} from '../../src/task/WalkBuildersP';
+import { execute as runValidators } from '../../src/task/RunValidators';
+import { loadPlugins } from '../../src/task/LoadPlugins';
+import type { State } from '../../src/State';
 
 const builders: Array<any> = [
   executeAssociationBuilder,

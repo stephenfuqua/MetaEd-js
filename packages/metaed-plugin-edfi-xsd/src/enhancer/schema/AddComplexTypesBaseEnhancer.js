@@ -1,7 +1,7 @@
 // @flow
 import { String as sugar } from 'sugar';
-import type { TopLevelEntity, EntityProperty, CommonProperty } from '../../../../metaed-core/index';
-import { prependIndefiniteArticle } from '../../../../metaed-core/index';
+import type { TopLevelEntity, EntityProperty, CommonProperty } from 'metaed-core';
+import { prependIndefiniteArticle } from 'metaed-core';
 import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType, NoComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';

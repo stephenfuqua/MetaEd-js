@@ -3,13 +3,13 @@ import R from 'ramda';
 import type {
   DomainEntity,
   MetaEdEnvironment,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import {
   newBooleanProperty,
   newDomainEntity,
   newMetaEdEnvironment,
   newNamespaceInfo,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import { newComplexType, NoComplexType } from '../../src/model/schema/ComplexType';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';

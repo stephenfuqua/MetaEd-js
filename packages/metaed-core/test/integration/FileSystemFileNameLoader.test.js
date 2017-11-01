@@ -1,7 +1,8 @@
 // @flow
 import ffs from 'final-fs';
-import { MetaEdTextBuilder } from '../../../packages/metaed-core/test/MetaEdTextBuilder';
-import { newState, loadFiles } from '../../../packages/metaed-core/index';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { newState } from '../../src/State';
+import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
 
 describe('When a single file', () => {
   beforeAll(() => {

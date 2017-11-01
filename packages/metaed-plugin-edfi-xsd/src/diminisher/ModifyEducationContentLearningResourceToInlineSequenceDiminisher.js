@@ -5,14 +5,15 @@ import type {
   MetaEdEnvironment,
   ModelBase,
   ModelType,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
+import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import type { ComplexTypeItem } from '../model/schema/ComplexTypeItem';
 import type { Element } from '../../src/model/schema/Element';
 import type { ElementGroup } from '../../src/model/schema/ElementGroup';
 import { asElement } from '../../src/model/schema/Element';
 import { asElementGroup, newElementGroup } from '../../src/model/schema/ElementGroup';
-import { getEntity } from '../../../metaed-core/index';
+
 
 // Force generation of LearningStandard common type under EducationContent to output what the ods sql is expecting from an xsd perspective
 // Temporary work around until ODS-904 is resolved

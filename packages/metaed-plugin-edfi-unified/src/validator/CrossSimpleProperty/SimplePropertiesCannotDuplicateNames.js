@@ -6,7 +6,7 @@ import type {
   IntegerProperty,
   MetaEdEnvironment,
   PropertyIndex,
-  ValidationFailure } from '../../../../metaed-core/index';
+  ValidationFailure } from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 type SimpleProperties =

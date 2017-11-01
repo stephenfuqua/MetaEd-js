@@ -1,5 +1,5 @@
 // @flow
-import type { Enhancer } from '../../../metaed-core/index';
+import type { Enhancer } from 'metaed-core';
 
 import { enhance as edFiXsdEntityRepositorySetupEnhancer } from '../model/EdFiXsdEntityRepository';
 import { enhance as choicePropertySetupEnhancer } from '../model/property/ChoiceProperty';

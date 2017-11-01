@@ -1,5 +1,5 @@
 // @flow
-import type { ModelType, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { ModelType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { excludedModelTypes } from '../ValidatorShared/ExcludedModelTypes';
 
 const validTypes: ModelType[] = [

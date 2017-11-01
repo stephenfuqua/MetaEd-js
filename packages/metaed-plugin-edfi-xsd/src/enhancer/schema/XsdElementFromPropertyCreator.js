@@ -1,5 +1,5 @@
 // @flow
-import type { EntityProperty } from '../../../../metaed-core/index';
+import type { EntityProperty } from 'metaed-core';
 import type { ComplexTypeItem } from '../../model/schema/ComplexTypeItem';
 import type { DescriptorPropertyEdfiXsd } from '../../model/property/DescriptorProperty';
 import type { ElementGroup } from '../../model/schema/ElementGroup';

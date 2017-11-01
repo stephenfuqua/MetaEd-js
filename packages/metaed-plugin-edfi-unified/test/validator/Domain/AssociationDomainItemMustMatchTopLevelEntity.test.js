@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, AssociationBuilder, AssociationSubclassBuilder } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, AssociationBuilder, AssociationSubclassBuilder } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 
 describe('when validating association domain item matches top level entity', () => {

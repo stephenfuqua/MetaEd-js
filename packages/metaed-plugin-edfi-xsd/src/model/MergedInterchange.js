@@ -1,6 +1,6 @@
 // @flow
-import { newNamespaceInfo } from '../../../metaed-core/index';
-import type { NamespaceInfo, Interchange, InterchangeItem, MetaEdEnvironment } from '../../../metaed-core/index';
+import { newNamespaceInfo } from 'metaed-core';
+import type { NamespaceInfo, Interchange, InterchangeItem, MetaEdEnvironment } from 'metaed-core';
 import { unionOfInterchangeItems } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 

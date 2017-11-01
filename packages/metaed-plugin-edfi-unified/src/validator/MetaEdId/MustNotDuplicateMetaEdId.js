@@ -9,8 +9,8 @@ import type {
   ModelBase,
   ValidationFailure,
   TopLevelEntity,
-} from '../../../../metaed-core/index';
-import { getAllEntitiesNoSimpleTypes, getAllProperties } from '../../../../metaed-core/index';
+} from 'metaed-core';
+import { getAllEntitiesNoSimpleTypes, getAllProperties } from 'metaed-core';
 
 function getDomainItems(entity: EntityRepository): Array<DomainItem> {
   const result = [];

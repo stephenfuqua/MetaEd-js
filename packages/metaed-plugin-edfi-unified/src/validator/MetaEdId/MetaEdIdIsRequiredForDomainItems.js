@@ -1,7 +1,6 @@
 // @flow
-import type { Domain, Subdomain, MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
-import { getEntitiesOfType } from '../../../../metaed-core/index';
-import { asDomainBase } from '../../../../metaed-core/src/model/Domain';
+import type { Domain, Subdomain, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { getEntitiesOfType, asDomainBase } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

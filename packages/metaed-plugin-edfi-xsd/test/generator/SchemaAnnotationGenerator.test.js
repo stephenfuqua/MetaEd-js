@@ -1,9 +1,9 @@
 // @flow
 import xmlParser from 'xml-js';
-import { addEntity, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespaceInfo } from '../../../metaed-core/index';
+import { addEntity, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
 import { createSchema } from './GeneratorTestBase';
 import { generate } from '../../src/generator/SchemaAnnotationGenerator';
-import type { MetaEdEnvironment, Descriptor } from '../../../metaed-core/index';
 
 describe('when generating schema annotation for a single descriptor', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {

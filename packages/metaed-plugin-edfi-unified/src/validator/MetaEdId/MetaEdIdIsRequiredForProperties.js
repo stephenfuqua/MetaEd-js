@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
-import { getAllProperties } from '../../../../metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { getAllProperties } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

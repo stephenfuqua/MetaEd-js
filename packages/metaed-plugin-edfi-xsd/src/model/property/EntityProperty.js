@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from '../../../../metaed-core/index';
-import { getAllProperties, getAllTopLevelEntities } from '../../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-core';
+import { getAllProperties, getAllTopLevelEntities } from 'metaed-core';
 
 export type EntityPropertyEdfiXsd = {
   xsd_Name: string,

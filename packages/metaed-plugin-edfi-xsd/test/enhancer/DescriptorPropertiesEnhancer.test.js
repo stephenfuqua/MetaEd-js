@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDescriptor, newNamespaceInfo, newStringProperty } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, Descriptor } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newDescriptor, newNamespaceInfo, newStringProperty } from 'metaed-core';
+import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/DescriptorPropertiesEnhancer';
 

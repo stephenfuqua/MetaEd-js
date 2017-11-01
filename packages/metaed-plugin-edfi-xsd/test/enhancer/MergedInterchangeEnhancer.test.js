@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newInterchange, newInterchangeItem, newNamespaceInfo, newInterchangeExtension, newPluginEnvironment } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, InterchangeItem } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newInterchange, newInterchangeItem, newNamespaceInfo, newInterchangeExtension, newPluginEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, InterchangeItem } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeEnhancer';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';

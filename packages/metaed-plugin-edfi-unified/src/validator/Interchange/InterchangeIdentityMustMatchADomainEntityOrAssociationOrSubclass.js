@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { failInterchangeItemNotMatchingBaseClassProperty } from '../ValidatorShared/FailInterchangeItemNotMatchingBaseClassProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

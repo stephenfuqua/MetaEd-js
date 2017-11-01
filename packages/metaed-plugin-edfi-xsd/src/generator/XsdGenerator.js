@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, NamespaceInfo, GeneratorResult, GeneratedOutput } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, NamespaceInfo, GeneratorResult, GeneratedOutput } from 'metaed-core';
 import type { NamespaceInfoEdfiXsd } from '../model/NamespaceInfo';
 import type { SchemaContainer } from '../model/schema/SchemaContainer';
 import { formatAndPrependHeader, registerPartials, template, formatVersionForSchema } from './XsdGeneratorBase';

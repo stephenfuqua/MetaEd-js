@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 const enhancerName: string = 'MergedInterchangeAdditionalPropertiesEnhancer';

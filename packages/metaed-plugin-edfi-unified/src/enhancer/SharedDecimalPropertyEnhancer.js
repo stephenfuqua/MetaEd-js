@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
-import { asDecimalType } from '../../../metaed-core/src/model/DecimalType';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { asDecimalType } from 'metaed-core';
 
 const enhancerName: string = 'SharedDecimalPropertyEnhancer';
 

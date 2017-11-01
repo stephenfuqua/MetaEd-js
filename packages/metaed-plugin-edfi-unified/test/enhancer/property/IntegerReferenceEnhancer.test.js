@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newIntegerProperty, newSharedIntegerProperty, newIntegerType } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, IntegerProperty, SharedIntegerProperty, IntegerType } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, newIntegerProperty, newSharedIntegerProperty, newIntegerType } from 'metaed-core';
+import type { MetaEdEnvironment, IntegerProperty, SharedIntegerProperty, IntegerType } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
 

@@ -7,8 +7,8 @@ import {
   newDomainEntityProperty,
   newMergedProperty,
   newMetaEdEnvironment,
-} from '../../../metaed-core/index';
-import type { DomainEntityProperty, MetaEdEnvironment } from '../../../metaed-core/index';
+} from 'metaed-core';
+import type { DomainEntityProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/MergedPropertyEnhancer';
 
 describe('when enhancing top level entity with no merged properties', () => {

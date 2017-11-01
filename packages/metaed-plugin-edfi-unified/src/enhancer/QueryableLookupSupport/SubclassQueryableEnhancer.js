@@ -4,8 +4,8 @@ import type {
   EntityProperty,
   MetaEdEnvironment,
   TopLevelEntity,
-} from '../../../../metaed-core/index';
-import { asTopLevelEntity, getAllEntities } from '../../../../metaed-core/index';
+} from 'metaed-core';
+import { asTopLevelEntity, getAllEntities } from 'metaed-core';
 
 const enhancerName: string = 'SubclassQueryableEnhancer';
 

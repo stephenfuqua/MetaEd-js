@@ -1,5 +1,5 @@
 // @flow
-import type { Validator, MetaEdPlugin } from '../../metaed-core/index';
+import type { Validator, MetaEdPlugin } from 'metaed-core';
 import { enhancerList } from './enhancer/EnhancerList';
 import { generate as XsdGenerator } from './generator/XsdGenerator';
 import { generate as SchemaAnnotationGenerator } from './generator/SchemaAnnotationGenerator';

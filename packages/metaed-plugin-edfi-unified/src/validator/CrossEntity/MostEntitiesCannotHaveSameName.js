@@ -14,7 +14,7 @@ import type {
   StringType,
   MetaEdEnvironment,
   EntityRepository,
-  ValidationFailure } from '../../../../metaed-core/index';
+  ValidationFailure } from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 

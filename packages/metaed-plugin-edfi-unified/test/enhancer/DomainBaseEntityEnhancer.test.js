@@ -9,7 +9,7 @@ import {
   newAssociation,
   newAssociationSubclass,
   addEntity,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 
 import type {
   MetaEdEnvironment,
@@ -19,7 +19,7 @@ import type {
   DomainEntitySubclass,
   Association,
   AssociationSubclass,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';
 

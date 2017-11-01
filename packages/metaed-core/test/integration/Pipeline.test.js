@@ -1,16 +1,14 @@
 // @flow
 import path from 'path';
 import normalize from 'normalize-path';
-import { asDomainEntity } from '../../../packages/metaed-core/src/model/DomainEntity';
+import { asDomainEntity } from '../../src/model/DomainEntity';
 import { startingFromFileLoad, startingFromFileLoadP } from './Pipeline';
-import {
-  createMetaEdFile,
-  getEntity,
-  loadCoreBufferedFiles,
-  MetaEdTextBuilder,
-  newState,
-} from '../../../packages/metaed-core/index';
-import type { State } from '../../../packages/metaed-core/index';
+import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { createMetaEdFile } from '../../src/task/MetaEdFile';
+import { getEntity } from '../../src/model/EntityRepository';
+import { loadCoreBufferedFiles } from '../../src/task/BufferFileLoader';
+import { newState } from '../../src/State';
+import type { State } from '../../src/State';
 
 
 jest.unmock('final-fs');

@@ -1,6 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
-import type { SharedIntegerSourceMap } from '../../../../metaed-core/src/model/SharedInteger';
+import type { MetaEdEnvironment, ValidationFailure, SharedIntegerSourceMap } from 'metaed-core';
 
 // eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

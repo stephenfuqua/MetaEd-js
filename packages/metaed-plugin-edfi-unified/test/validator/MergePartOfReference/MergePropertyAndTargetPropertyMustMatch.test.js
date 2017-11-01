@@ -6,8 +6,8 @@ import {
   DomainEntityExtensionBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-} from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+} from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyAndTargetPropertyMustMatch';
 
 describe('when validating merge property name and types match', () => {

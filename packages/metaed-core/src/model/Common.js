@@ -37,3 +37,5 @@ export function newInlineCommon(): Common {
 }
 
 export const asCommon = (x: ModelBase): Common => ((x: any): Common);
+
+export const asInlineCommon = (x: ModelBase): Common => ((x: any): Common);

@@ -8,7 +8,7 @@ import type {
     EntityRepository,
     PropertyIndex,
     SharedSimple,
-    ValidationFailure } from '../../../../metaed-core/index';
+    ValidationFailure } from 'metaed-core';
 
 type SimpleProperties =
     ShortProperty |

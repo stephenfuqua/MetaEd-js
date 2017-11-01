@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDecimalProperty, newSharedDecimalProperty, newDecimalType } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, DecimalProperty, SharedDecimalProperty, DecimalType } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, newDecimalProperty, newSharedDecimalProperty, newDecimalType } from 'metaed-core';
+import type { MetaEdEnvironment, DecimalProperty, SharedDecimalProperty, DecimalType } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
 describe('when enhancing decimal property', () => {

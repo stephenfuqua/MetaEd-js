@@ -2,7 +2,7 @@
 import R from 'ramda';
 import type {
   MetaEdEnvironment,
- } from '../../metaed-core/index';
+ } from 'metaed-core';
 import {
   AssociationBuilder,
   AssociationExtensionBuilder,
@@ -25,7 +25,7 @@ import {
   StringTypeBuilder,
   MetaEdTextBuilder,
   newMetaEdEnvironment,
-} from '../../metaed-core/index';
+} from 'metaed-core';
 import initialize from '../src/unified';
 
 describe('when building and enhancing domain item', () => {

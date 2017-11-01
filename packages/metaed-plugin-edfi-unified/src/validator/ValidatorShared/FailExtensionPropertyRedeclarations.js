@@ -1,5 +1,5 @@
 // @flow
-import type { TopLevelEntity, EntityProperty, CommonProperty, ValidationFailure } from '../../../../metaed-core/index';
+import type { TopLevelEntity, EntityProperty, CommonProperty, ValidationFailure } from 'metaed-core';
 
 function isNotCommonExtensionOverride(entityProperty: EntityProperty): boolean {
   if (entityProperty.type !== 'common') return true;

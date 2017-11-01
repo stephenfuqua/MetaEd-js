@@ -1,7 +1,7 @@
 // @flow
 import { String as sugar } from 'sugar';
-import type { MetaEdEnvironment, EnhancerResult, Descriptor } from '../../../../metaed-core/index';
-import { NoMapTypeEnumeration } from '../../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
+import { NoMapTypeEnumeration } from 'metaed-core';
 import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';

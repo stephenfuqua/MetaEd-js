@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Interchange } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Interchange } from 'metaed-core';
 import { formatAndPrependHeader, template, formatVersionForSchema } from './XsdGeneratorBase';
 
 export function generate(metaEd: MetaEdEnvironment): GeneratorResult {

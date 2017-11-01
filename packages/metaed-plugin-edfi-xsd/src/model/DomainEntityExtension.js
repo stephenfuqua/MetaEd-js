@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, DomainEntityExtension, EntityProperty } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, DomainEntityExtension, EntityProperty } from 'metaed-core';
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type DomainEntityExtensionEdfiXsd = {

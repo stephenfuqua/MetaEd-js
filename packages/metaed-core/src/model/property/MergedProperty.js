@@ -38,3 +38,5 @@ export const NoMergedProperty: MergedProperty = Object.assign(newMergedProperty(
   mergeProperty: NoEntityProperty,
   targetProperty: NoEntityProperty,
 });
+
+export const asMergedProperty = (x: EntityProperty): MergedProperty => ((x: any): MergedProperty);

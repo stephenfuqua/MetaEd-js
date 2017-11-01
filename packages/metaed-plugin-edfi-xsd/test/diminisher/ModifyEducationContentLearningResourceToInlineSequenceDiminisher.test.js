@@ -4,7 +4,7 @@ import type {
   DomainEntity,
   Common,
   MetaEdEnvironment,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import {
   addEntity,
   getEntity,
@@ -12,7 +12,7 @@ import {
   newCommon,
   newMetaEdEnvironment,
   newNamespaceInfo,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { ElementGroup } from '../../src/model/schema/ElementGroup';
 import { enhance } from '../../src/diminisher/ModifyEducationContentLearningResourceToInlineSequenceDiminisher';

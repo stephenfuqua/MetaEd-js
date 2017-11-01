@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
-import { asCommon } from '../../../metaed-core/src/model/Common';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { asCommon } from 'metaed-core';
 
 const enhancerName: string = 'CommonExtenderEnhancer';
 

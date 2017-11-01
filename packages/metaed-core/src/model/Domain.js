@@ -44,4 +44,5 @@ export const NoDomain: Domain = Object.assign(newDomain(), {
 });
 
 export const asDomain = (x: ModelBase): Domain => ((x: any): Domain);
+
 export const asDomainBase = (x: ModelBase): Domain | Subdomain => ((x: any): Domain | Subdomain);

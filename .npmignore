@@ -12,3 +12,6 @@ test-integration
 .travis.yml
 npm-debug.log
 .npmignore
+jest.config.js
+lerna.json
+lerna-debug.log

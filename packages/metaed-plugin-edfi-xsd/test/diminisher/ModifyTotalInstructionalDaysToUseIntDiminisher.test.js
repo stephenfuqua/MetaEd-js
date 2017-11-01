@@ -4,13 +4,13 @@ import type {
   DomainEntity,
   IntegerType,
   MetaEdEnvironment,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import {
   addEntity,
   newDomainEntity,
   newIntegerType,
   newMetaEdEnvironment,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';

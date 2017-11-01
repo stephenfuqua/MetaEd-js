@@ -4,9 +4,8 @@ import type {
   PropertyType,
   MetaEdEnvironment,
   ValidationFailure,
-} from '../../../../metaed-core/index';
-import { getPropertiesOfType } from '../../../../metaed-core/index';
-import { asReferentialProperty } from '../../../../metaed-core/src/model/property/ReferentialProperty';
+} from 'metaed-core';
+import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
 
 const validPropertyTypes: Array<PropertyType> = [

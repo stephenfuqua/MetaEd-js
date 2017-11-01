@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from '../../../metaed-core/index';
-import { getEntitiesOfType, getTopLevelCoreEntity } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getEntitiesOfType, getTopLevelCoreEntity } from 'metaed-core';
 import { asDomainBase } from '../../../metaed-core/src/model/Domain';
 
 const enhancerName: string = 'DomainBaseEntityEnhancer';

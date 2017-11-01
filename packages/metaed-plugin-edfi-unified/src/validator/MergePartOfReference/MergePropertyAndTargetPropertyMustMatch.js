@@ -4,9 +4,8 @@ import type {
   MetaEdEnvironment,
   PropertyType,
   ValidationFailure,
-} from '../../../../metaed-core/index';
-import { asReferentialProperty } from '../../../../metaed-core/src/model/property/ReferentialProperty';
-import { asModelType } from '../../../../metaed-core/src/model/ModelType';
+} from 'metaed-core';
+import { asReferentialProperty, asModelType, getPropertiesOfType } from 'metaed-core';
 import {
   findReferencedProperty,
   getReferencedEntity,
@@ -14,7 +13,6 @@ import {
   matchAllButFirstAsIdentityProperties,
   matchAllIdentityReferenceProperties,
 } from '../ValidatorShared/FindReferencedProperty';
-import { getPropertiesOfType } from '../../../../metaed-core/index';
 
 const validPropertyTypes: Array<PropertyType> = [
   'association',

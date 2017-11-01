@@ -1,9 +1,8 @@
 // @flow
 import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, DomainEntitySubclassBuilder,
-  AssociationBuilder, AssociationExtensionBuilder, AssociationSubclassBuilder } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+  AssociationBuilder, AssociationExtensionBuilder, AssociationSubclassBuilder, CommonBuilder } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
-import { CommonBuilder } from '../../../../metaed-core/src/builder/CommonBuilder';
 
 describe('when validating domain entity has merge property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -123,9 +122,8 @@ describe('when validating domain entity has merge property and property is wrong
 
 describe('when validating domain entity has merge property on common type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const domainEntityName = 'Entity1';
-  const secondEntityName = 'SecondEntity2';
-  const propertyName = 'Property1';
+  const domainEntityName = 'DomainEntityName';
+  const commonName = 'CommonName';
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -133,21 +131,22 @@ describe('when validating domain entity has merge property on common type', () =
       .withBeginNamespace('edfi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
-      .withIntegerIdentity(propertyName, 'Documentation')
+      .withIntegerIdentity('Property1', 'Documentation')
       .withEndDomainEntity()
-
-      .withStartCommon(secondEntityName)
-      .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName, 'Documentation')
-      .withEndCommon()
 
       .withStartDomainEntity('Entity3')
       .withDocumentation('Documentation')
       .withIntegerIdentity('Property2', 'Documentation')
-      .withAssociationProperty(domainEntityName, 'Documentation', false, false)
-      .withCommonProperty(secondEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${secondEntityName}.${domainEntityName}`, domainEntityName)
+      .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
+      .withCommonProperty(commonName, 'Documentation', false, false)
+      .withMergePartOfReference(`${commonName}.${domainEntityName}`, domainEntityName)
       .withEndDomainEntity()
+
+      .withStartCommon(commonName)
+      .withDocumentation('Documentation')
+      .withDomainEntityIdentity(domainEntityName, 'Documentation')
+      .withEndCommon()
+
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new CommonBuilder(metaEd, failures));

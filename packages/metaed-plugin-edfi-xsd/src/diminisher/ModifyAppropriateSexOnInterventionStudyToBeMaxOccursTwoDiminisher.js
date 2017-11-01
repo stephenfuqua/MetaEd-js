@@ -5,9 +5,9 @@ import type {
   MetaEdEnvironment,
   ModelBase,
   ModelType,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
+import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
-import { getEntity } from '../../../metaed-core/index';
 
 // Workaround for METAED-456: Force Max Occurs to 2 for AppropriateSex on InterventionStudy
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-818

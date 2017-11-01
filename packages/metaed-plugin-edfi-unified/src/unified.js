@@ -1,6 +1,6 @@
 // @flow
-import type { Enhancer, Validator, MetaEdPlugin } from '../../metaed-core/index';
-import { newMetaEdPlugin } from '../../metaed-core/index';
+import type { Enhancer, Validator, MetaEdPlugin } from 'metaed-core';
+import { newMetaEdPlugin } from 'metaed-core';
 
 import { validate as abstractEntityMustContainAnIdentity } from './validator/AbstractEntity/AbstractEntityMustContainAnIdentity';
 

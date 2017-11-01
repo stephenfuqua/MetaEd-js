@@ -4,7 +4,7 @@ import { Logger, transports } from 'winston';
 import { loadFiles } from './FileSystemFilenameLoader';
 import { validateSyntax } from './ValidateSyntax';
 import { buildTopLevelEntity, buildMetaEd } from '../grammar/ParseTreeBuilder';
-import loadFileIndex from './LoadFileIndex';
+import { loadFileIndex } from './LoadFileIndex';
 import { buildParseTree } from './BuildParseTree';
 import { execute as walkBuilders } from './WalkBuilders';
 import { fileMapForFailure } from './FileMapForFailure';

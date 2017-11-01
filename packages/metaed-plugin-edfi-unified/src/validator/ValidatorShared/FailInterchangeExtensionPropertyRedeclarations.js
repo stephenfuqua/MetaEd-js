@@ -1,5 +1,5 @@
 // @flow
-import type { Interchange, ValidationFailure } from '../../../../metaed-core/index';
+import type { Interchange, ValidationFailure } from 'metaed-core';
 
 export function failInterchangeExtensionPropertyRedeclarations(
   validatorName: string,

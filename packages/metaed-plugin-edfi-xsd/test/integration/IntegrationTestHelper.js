@@ -1,10 +1,11 @@
 // @flow
 import { DOMParser } from 'xmldom';
 import xpath from 'xpath';
+import type { MetaEdEnvironment } from 'metaed-core';
 import initializeXsdPlugin from '../../src/edfiXsd';
 import { generate } from '../../src/generator/XsdGenerator';
 import { generate as generateInterchange } from '../../src/generator/InterchangeGenerator';
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
+
 // This is a cheat until we determine how to access plugin dependencies for testing
 import initializeUnifiedPlugin from '../../../metaed-plugin-edfi-unified/src/unified';
 

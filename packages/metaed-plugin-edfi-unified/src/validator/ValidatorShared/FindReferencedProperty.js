@@ -5,10 +5,8 @@ import type {
   ModelBase,
   ModelType,
   PropertyType,
-} from '../../../../metaed-core/index';
-import { asModelType } from '../../../../metaed-core/src/model/ModelType';
-import { asTopLevelEntity } from '../../../../metaed-core/src/model/TopLevelEntity';
-import { getEntity } from '../../../../metaed-core/index';
+} from 'metaed-core';
+import { asModelType, getEntity, asTopLevelEntity, allEntityModelTypes } from 'metaed-core';
 
 export const referenceTypes: Array<ModelType> = [
   'association',
@@ -31,16 +29,20 @@ export const commonTypes: Array<PropertyType> = [
 const subclassSuffix: string = 'Subclass';
 const extensionSuffix: string = 'Extension';
 
+function possibleModelTypesReferencedByProperty(propertyType: ModelType | PropertyType): Array<ModelType> {
+  const allEntityModelTypesUntyped = ((allEntityModelTypes: any): Array<string>);
+  const result = [propertyType];
+  if (allEntityModelTypesUntyped.includes(`${propertyType}${extensionSuffix}`)) result.push(`${propertyType}${extensionSuffix}`);
+  if (allEntityModelTypesUntyped.includes(`${propertyType}${subclassSuffix}`)) result.push(`${propertyType}${subclassSuffix}`);
+  return result.map(x => asModelType(x));
+}
+
 export function getReferencedEntity(
   repository: EntityRepository,
   name: string,
   propertyType: ModelType | PropertyType,
 ): ?ModelBase {
-  return getEntity(repository, name, ...[
-    propertyType,
-    `${propertyType}${extensionSuffix}`,
-    `${propertyType}${subclassSuffix}`,
-  ].map(x => asModelType(x)));
+  return getEntity(repository, name, ...possibleModelTypesReferencedByProperty(propertyType));
 }
 
 export function getBaseEntity(repository: EntityRepository, entity: ?ModelBase): ?ModelBase {

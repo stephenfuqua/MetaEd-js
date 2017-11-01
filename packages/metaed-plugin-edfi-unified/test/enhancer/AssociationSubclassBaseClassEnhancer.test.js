@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newAssociationSubclass } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, Association, AssociationSubclass } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newAssociation, newAssociationSubclass } from 'metaed-core';
+import type { MetaEdEnvironment, Association, AssociationSubclass } from 'metaed-core';
 import { enhance } from '../../src/enhancer/AssociationSubclassBaseClassEnhancer';
 
 describe('when enhancing association subclass referring to association', () => {

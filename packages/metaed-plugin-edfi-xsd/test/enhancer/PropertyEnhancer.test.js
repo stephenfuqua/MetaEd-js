@@ -11,8 +11,8 @@ import {
   newCommonProperty,
   newDescriptorProperty,
   newEnumerationProperty,
-} from '../../../metaed-core/index';
-import type { MetaEdEnvironment, NamespaceInfo, EntityProperty } from '../../../metaed-core/index';
+} from 'metaed-core';
+import type { MetaEdEnvironment, NamespaceInfo, EntityProperty } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/PropertyEnhancer';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';

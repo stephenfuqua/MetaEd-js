@@ -2,7 +2,7 @@
 import type {
   EntityProperty,
   MetaEdEnvironment,
- } from '../../../../metaed-core/index';
+ } from 'metaed-core';
 import {
   AssociationBuilder,
   AssociationExtensionBuilder,
@@ -12,7 +12,7 @@ import {
   DomainEntitySubclassBuilder,
   MetaEdTextBuilder,
   newMetaEdEnvironment,
-} from '../../../../metaed-core/index';
+} from 'metaed-core';
 import {
   findReferencedProperty,
   matchAllButFirstAsIdentityProperties,

@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass, newDomainEntityExtension } from '../../../metaed-core/index';
-import type { MetaEdEnvironment, DomainEntity, DomainEntitySubclass, DomainEntityExtension } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass, newDomainEntityExtension } from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntity, DomainEntitySubclass, DomainEntityExtension } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DomainEntityExtensionBaseClassEnhancer';
 
 describe('when enhancing domainEntity extension referring to domainEntity', () => {

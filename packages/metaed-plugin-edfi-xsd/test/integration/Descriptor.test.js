@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DescriptorBuilder, DomainEntityBuilder } from '../../../metaed-core/index';
+import type { MetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DescriptorBuilder, DomainEntityBuilder } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for descriptor', () => {

@@ -12,8 +12,8 @@ import {
   newInterchangeExtension,
   addEntity,
   getEntity,
-} from '../../../metaed-core/index';
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
+} from 'metaed-core';
+import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
 
 describe('when enhancing interchange in core', () => {

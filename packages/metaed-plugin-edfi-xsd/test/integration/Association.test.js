@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, AssociationBuilder, NamespaceInfoBuilder, CommonBuilder } from '../../../metaed-core/index';
+import type { MetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, AssociationBuilder, NamespaceInfoBuilder, CommonBuilder } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for association with inline common type as part of identity', () => {

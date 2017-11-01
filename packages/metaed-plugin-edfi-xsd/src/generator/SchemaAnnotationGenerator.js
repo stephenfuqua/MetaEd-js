@@ -1,8 +1,8 @@
 // @flow
+import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput } from 'metaed-core';
+import { getEntitiesOfType } from 'metaed-core';
 import { formatAndPrependHeader, template } from './XsdGeneratorBase';
-import { getEntitiesOfType } from '../../../metaed-core/index';
 import { orderByName } from '../enhancer/schema/AddSchemaContainerEnhancer';
-import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput } from '../../../metaed-core/index';
 
 export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   const results: Array<GeneratedOutput> = [];

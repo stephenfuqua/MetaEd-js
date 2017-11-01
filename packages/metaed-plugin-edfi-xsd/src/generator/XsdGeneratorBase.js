@@ -5,7 +5,7 @@ import { html as Beautify } from 'js-beautify';
 import fs from 'fs';
 import path from 'path';
 import semverLib from 'semver';
-import type { SemVer } from '../../../metaed-core/index';
+import type { SemVer } from 'metaed-core';
 
 // Handlebars instance scoped for this plugin
 export const xsdHandlebars = handlebars.create();

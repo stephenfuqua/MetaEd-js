@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newDomainEntity, newDomainEntityProperty, addEntity, addProperty } from '../../../metaed-core/index';
-import type { MetaEdEnvironment } from '../../../metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntity, newDomainEntityProperty, addEntity, addProperty } from 'metaed-core';
+import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/PropertyPathNameEnhancer';
 
 describe('when enhancing entity property without with context', () => {

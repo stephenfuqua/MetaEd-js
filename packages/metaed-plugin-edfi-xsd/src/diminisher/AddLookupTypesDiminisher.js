@@ -3,10 +3,10 @@ import type {
   MetaEdEnvironment,
   EnhancerResult,
   TopLevelEntity,
-} from '../../../metaed-core/index';
+} from 'metaed-core';
+import { getAllTopLevelEntities, prependIndefiniteArticle } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import type { Element } from '../model/schema/Element';
-import { getAllTopLevelEntities, prependIndefiniteArticle } from '../../../metaed-core/index';
 import { createSchemaComplexTypeItems } from '../enhancer/schema/XsdElementFromPropertyCreator';
 import { newAnnotation } from '../model/schema/Annotation';
 import { newComplexType, NoComplexType } from '../model/schema/ComplexType';

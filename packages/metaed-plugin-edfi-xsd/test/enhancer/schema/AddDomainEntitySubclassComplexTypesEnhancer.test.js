@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass } from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, DomainEntitySubclass } from '../../../../metaed-core/index';
+import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass } from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntitySubclass } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';

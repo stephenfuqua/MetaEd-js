@@ -3,8 +3,8 @@ import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
   DomainEntityBuilder,
-} from '../../../../metaed-core/index';
-import type { MetaEdEnvironment, ValidationFailure } from '../../../../metaed-core/index';
+} from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
 
 describe('when validating reference property starts merge path with matching property name', () => {

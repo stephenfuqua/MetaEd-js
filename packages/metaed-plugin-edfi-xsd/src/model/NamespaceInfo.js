@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo } from 'metaed-core';
 import type { SchemaContainer } from './schema/SchemaContainer';
 import { newSchemaContainer } from './schema/SchemaContainer';
 
