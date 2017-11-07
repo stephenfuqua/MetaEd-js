@@ -22,6 +22,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
       folderName: 'Interchange',
       fileName: interchange.namespaceInfo.isExtension ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd` : `Interchange-${interchange.metaEdName}.xsd`,
       resultString: formattedGeneratedResult,
+      resultStream: null,
     });
   });
   orderedInterchange.filter((i) => i.namespaceInfo.isExtension).forEach((interchange) => {
@@ -37,6 +38,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
       folderName: 'Interchange',
       fileName: interchange.namespaceInfo.isExtension ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd` : `Interchange-${interchange.metaEdName}.xsd`,
       resultString: formattedGeneratedResult,
+      resultStream: null,
     });
   });
 

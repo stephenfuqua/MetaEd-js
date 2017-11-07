@@ -15,6 +15,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
     folderName: 'XSD',
     fileName: 'SchemaAnnotation.xsd',
     resultString: formattedGeneratedResult,
+    resultStream: null,
   });
 
   return {

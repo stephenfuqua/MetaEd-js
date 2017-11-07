@@ -19,6 +19,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
       folderName: 'XSD',
       fileName: namespaceInfo.isExtension ? `${namespaceInfo.projectExtension}-Ed-Fi-Extended-Core.xsd` : 'Ed-Fi-Core.xsd',
       resultString: formattedGeneratedResult,
+      resultStream: null,
     });
   });
 

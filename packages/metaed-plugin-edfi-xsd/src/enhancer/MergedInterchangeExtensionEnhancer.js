@@ -4,8 +4,8 @@ import { getEntitiesOfType, newInterchangeItem } from '../../../metaed-core/inde
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
-import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
 import type { MergedInterchange } from '../model/MergedInterchange';
+import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
 
 const enhancerName: string = 'MergedInterchangeExtensionEnhancer';
 

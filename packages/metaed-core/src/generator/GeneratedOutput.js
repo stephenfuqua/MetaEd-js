@@ -4,4 +4,5 @@ export type GeneratedOutput = {
   fileName: string,
   folderName: string,
   resultString: string,
+  resultStream: ?Buffer,
 }
