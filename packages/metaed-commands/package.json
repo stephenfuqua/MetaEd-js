@@ -3,7 +3,7 @@
   "main": "dist/index.js",
   "version": "1.1.0",
   "description": "MetaEd for JavaScript",
-  "license": "private",
+  "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
@@ -45,11 +45,9 @@
   "scripts": {
     "metaed": "node ./dist/metaed-commands/index.js",
     "me": "node ./dist/metaed-commands/index.js",
-    "test": "jest",
-    "test:coverage": "rimraf coverage/ && jest --coverage",
-    "test:watch": "jest --watch",
-    "build": "rimraf dist/ && babel . -d dist --source-maps --copy-files",
-    "flow": "flow check",
-    "eslint": "eslint ."
+    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build:clean": "rimraf dist",
+    "build:flow": "flow-copy-source -v src dist",
+    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files"
   }
 }

@@ -26,7 +26,7 @@ import {
   MetaEdTextBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
-import initialize from '../src/unified';
+import { initialize } from '../src/unified';
 
 describe('when building and enhancing domain item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

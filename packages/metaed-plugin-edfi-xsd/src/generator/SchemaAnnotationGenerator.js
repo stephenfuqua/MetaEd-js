@@ -19,7 +19,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   });
 
   return {
-    generatorName: 'SchemaAnnotationGenerator',
+    generatorName: 'edfiXsd.SchemaAnnotationGenerator',
     generatedOutput: results,
   };
 }

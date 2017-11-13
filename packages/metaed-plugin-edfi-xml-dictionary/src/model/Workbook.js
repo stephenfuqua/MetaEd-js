@@ -7,6 +7,7 @@ import { newRow } from './Row';
 export type Workbook = {
   sheets: Array<Worksheet>;
 }
+
 export function newWorkbook(): Workbook {
   return {
     sheets: [],
@@ -30,6 +31,7 @@ export function exportWorkbook(workbook: Workbook, type: string): any {
   }
   return '';
 }
+
 export function readWorkbook(input: any, type: string): Workbook {
   const wb: any = xlsx.read(input, { type });
   const workbook: Workbook = newWorkbook();

@@ -2,8 +2,8 @@
 import type { State } from '../State';
 import type { PluginManifest } from '../plugin/PluginTypes';
 
-import initializeUnified from '../../../metaed-plugin-edfi-unified/src/unified';
-import initializeXsd from '../../../metaed-plugin-edfi-xsd/src/edfiXsd';
+import { initialize as initializeUnified } from '../../../metaed-plugin-edfi-unified/src/unified';
+import { initialize as initializeXsd } from '../../../metaed-plugin-edfi-xsd/src/edfiXsd';
 
 // hardcode unified and xsd - this is a reversed dependency that may cause strange ES module circular dependency issues
 export function loadPlugins(state: State): State {

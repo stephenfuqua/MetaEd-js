@@ -8,15 +8,14 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "dependencies": {
-    "antlr4": "4.6.0",
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.4",
+    "metaed-core": "^1.1.0",
     "ramda": "^0.24.1",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "winston": "^2.4.0",
-    "xml-js": "^1.4.2",
-    "metaed-core": "^1.1.0"
+    "xml-js": "^1.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -39,12 +38,9 @@
     "xpath": "^0.0.24"
   },
   "scripts": {
-    "test": "jest",
-    "test:coverage": "rimraf coverage/ && jest --coverage",
-    "test:watch": "jest --watch",
-    "build": "rimraf dist/ && babel . -d dist --source-maps --copy-files",
-    "flow": "flow check",
-    "eslint": "eslint .",
-    "lint-test": "yarn flow && yarn eslint && yarn test"
+    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build:clean": "rimraf dist",
+    "build:flow": "flow-copy-source -v src dist",
+    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files"
   }
 }

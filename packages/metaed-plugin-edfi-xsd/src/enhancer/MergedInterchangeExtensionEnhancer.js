@@ -6,7 +6,6 @@ import { newMergedInterchange, addMergedInterchangeToRepository } from '../model
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { MergedInterchange } from '../model/MergedInterchange';
-import type { MetaEdEnvironment, EnhancerResult, ModelBase } from '../../../metaed-core/index';
 
 const enhancerName: string = 'MergedInterchangeExtensionEnhancer';
 

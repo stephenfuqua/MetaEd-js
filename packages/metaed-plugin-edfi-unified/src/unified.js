@@ -336,7 +336,7 @@ function enhancerList(): Array<Enhancer> {
   ];
 }
 
-export default function initialize(): MetaEdPlugin {
+export function initialize(): MetaEdPlugin {
   return Object.assign(newMetaEdPlugin(), {
     validator: validatorList(),
     enhancer: enhancerList(),

@@ -1,17 +1,13 @@
 // @flow
-import type { Validator, MetaEdPlugin } from 'metaed-core';
+import type { MetaEdPlugin } from 'metaed-core';
 import { enhancerList } from './enhancer/EnhancerList';
-import { generate as XsdGenerator } from './generator/XsdGenerator';
-import { generate as SchemaAnnotationGenerator } from './generator/SchemaAnnotationGenerator';
+import { generate as generateXsd } from './generator/XsdGenerator';
+import { generate as generateSchemaAnnotation } from './generator/SchemaAnnotationGenerator';
 
-function validatorList(): Array<Validator> {
-  return [];
-}
-
-export default function initialize(): MetaEdPlugin {
+export function initialize(): MetaEdPlugin {
   return {
-    validator: validatorList(),
+    validator: [],
     enhancer: enhancerList(),
-    generator: [XsdGenerator, SchemaAnnotationGenerator],
+    generator: [generateXsd, generateSchemaAnnotation],
   };
 }

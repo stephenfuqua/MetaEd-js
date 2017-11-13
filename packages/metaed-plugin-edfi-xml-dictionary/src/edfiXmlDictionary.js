@@ -1,15 +1,11 @@
 // @flow
-import type { Validator, MetaEdPlugin } from '../../metaed-core/index';
-import { generate as XmlDataDictionaryGenerator } from './generator/XmlDataDictionaryGenerator';
-
-function validatorList(): Array<Validator> {
-  return [];
-}
+import type { MetaEdPlugin } from '../../metaed-core/index';
+import { generate as xmlDataDictionaryGenerator } from './generator/XmlDataDictionaryGenerator';
 
 export default function initialize(): MetaEdPlugin {
   return {
-    validator: validatorList(),
+    validator: [],
     enhancer: [],
-    generator: [XmlDataDictionaryGenerator],
+    generator: [xmlDataDictionaryGenerator],
   };
 }

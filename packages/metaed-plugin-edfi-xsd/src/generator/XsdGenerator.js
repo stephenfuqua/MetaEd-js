@@ -24,7 +24,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   });
 
   return {
-    generatorName: 'XsdGenerator',
+    generatorName: 'edfiXsd.XsdGenerator',
     generatedOutput: results,
   };
 }

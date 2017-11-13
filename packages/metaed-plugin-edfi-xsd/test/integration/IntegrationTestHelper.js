@@ -2,12 +2,12 @@
 import { DOMParser } from 'xmldom';
 import xpath from 'xpath';
 import type { MetaEdEnvironment } from 'metaed-core';
-import initializeXsdPlugin from '../../src/edfiXsd';
+import { initialize as initializeXsdPlugin } from '../../src/edfiXsd';
 import { generate } from '../../src/generator/XsdGenerator';
 import { generate as generateInterchange } from '../../src/generator/InterchangeGenerator';
 
 // This is a cheat until we determine how to access plugin dependencies for testing
-import initializeUnifiedPlugin from '../../../metaed-plugin-edfi-unified/src/unified';
+import { initialize as initializeUnifiedPlugin } from '../../../metaed-plugin-edfi-unified/src/unified';
 
 const parser = new DOMParser();
 const parseXml = (xmlString: string) => parser.parseFromString(xmlString);

@@ -1,78 +1,122 @@
 // @flow
-import xpath from 'xpath';
-import { DOMParser } from 'xmldom';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
+import type {
+  SchemaContainer,
+  SchemaSection,
+  DecimalSimpleType,
+  EnumerationSimpleType,
+  IntegerSimpleType,
+  StringSimpleType,
+  EnumerationToken,
+  ComplexType,
+  ComplexTypeItem,
+  Element,
+  ElementGroup,
+  NamespaceInfoEdfiXsd,
+} from 'metaed-plugin-edfi-xsd';
+
 import type { Workbook } from '../model/Workbook';
 import { newWorkbook, exportWorkbook } from '../model/Workbook';
 import type { Row } from '../model/Row';
 import { newRow, createRow, setRow } from '../model/Row';
 import type { Worksheet } from '../model/Worksheet';
 import { newWorksheet } from '../model/Worksheet';
-import InitializeXsdGenerator from '../../../metaed-plugin-edfi-xsd/src/edfiXsd';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from '../../../metaed-core/index';
 
-const generatorName: string = 'Xml Data Dictionary Generator';
-export const xpathSelect = xpath.useNamespaces({
-  xs: 'http://www.w3.org/2001/XMLSchema',
-  ann: 'http://ed-fi.org/annotation',
-});
+type AnySimpleType = DecimalSimpleType | EnumerationSimpleType | IntegerSimpleType | StringSimpleType;
+type AnyComplexTypeItem = Element | ElementGroup;
+
 function byNameDesc(a, b) {
   if (a.Name < b.Name) return -1;
   if (a.Name > b.Name) return 1;
   return 0;
 }
-function getRestrictions(node): string {
-  const results = xpathSelect('./xs:restriction/*', node);
 
-  return results.reduce((res, restriction) => (
-    restriction.nodeName === 'xs:enumeration' ?
+function formatRestrictions(simpleType: AnySimpleType): string {
+  const result: Array<string> = [];
+  if (simpleType.minValue) result.push(`minValue: ${simpleType.minValue}`);
+  if (simpleType.maxValue) result.push(`maxValue: ${simpleType.maxValue}`);
+  if (simpleType.minLength) result.push(`minLength: ${simpleType.minLength}`);
+  if (simpleType.maxLength) result.push(`maxLength: ${simpleType.maxLength}`);
+  if (simpleType.totalDigits) result.push(`totalDigits: ${simpleType.totalDigits}`);
+  if (simpleType.decimalPlaces) result.push(`decimalPlaces: ${simpleType.decimalPlaces}`);
 
-    `${res}${restriction.getAttribute('value')}\n`
-    :
-    `${res}${restriction.localName}: ${restriction.getAttribute('value')}
-`
+  if (simpleType.enumerationTokens) {
+    simpleType.enumerationTokens.forEach((enumerationToken: EnumerationToken) => {
+      result.push(enumerationToken.value);
+    });
+  }
+  return result.join('\n');
+}
 
-  ),
-   '');
+function formatCardinality(element: AnyComplexTypeItem): string {
+  const result: Array<string> = [];
+  if (element.minOccurs) result.push(`minOccurs: ${element.minOccurs}`);
+  if (element.maxOccursIsUnbounded) {
+    result.push('maxOccurs: unbounded');
+  } else if (element.maxOccurs) {
+    result.push(`maxOccurs: ${element.maxOccurs}`);
+  }
+  return result.join('\n');
 }
-function getParentType(node): string {
-  if (!node.attributes) return '';
-  if (node.nodeName === 'xs:complexType') return node.getAttribute('name');
-  return getParentType(node.parentNode);
-}
-function getDocumentation(node): string {
-  const results = xpathSelect('./xs:annotation/xs:documentation', node);
-  if (results.length > 0) return results[0].textContent;
-  return '';
-}
-function getCardinality(node): string {
-  let card = '';
-  if (node.hasAttribute('minOccurs')) card = `${card}minOccurs: ${node.getAttribute('minOccurs')}\n`;
-  if (node.hasAttribute('maxOccurs')) card = `${card}maxOccurs: ${node.getAttribute('maxOccurs')}\n`;
-  return card;
-}
-function generateWorkbookFromXsd(xsdOutput: Array<GeneratedOutput>): GeneratorResult {
-  const parser = new DOMParser();
-  const parseXml = (xmlString: string) => parser.parseFromString(xmlString);
-  const allProps = [];
-  const allComplexTypes = [];
-  const allSimpleTypes = [];
 
-  xsdOutput.forEach((xsd) => {
-    const doc = parseXml(xsd.resultString);
-    allProps.push(...xpathSelect('//xs:element', doc));
-    allComplexTypes.push(...xpathSelect('//xs:complexType', doc));
-    allSimpleTypes.push(...xpathSelect('//xs:simpleType', doc));
+type ElementByComplexType = { complexType: ComplexType, element: Element };
+
+function elementFromElementGroupCollector(items: Array<AnyComplexTypeItem>, results: Array<Element>) {
+  items.forEach((item: AnyComplexTypeItem) => {
+    if (item.items) {
+      elementFromElementGroupCollector(((item.items: any): Array<AnyComplexTypeItem>), results);
+    } else {
+      results.push(item);
+    }
   });
+}
+
+function elementsByComplexType(complexTypes: Array<ComplexType>): Array<ElementByComplexType> {
+  const result: Array<ElementByComplexType> = [];
+  complexTypes.forEach((complexType: ComplexType) => {
+    complexType.items.forEach((item: ComplexTypeItem) => {
+      if (item.items) {
+        const elements: Array<Element> = [];
+        elementFromElementGroupCollector(((item.items: any): Array<AnyComplexTypeItem>), elements);
+        elements.forEach((element: Element) => {
+          result.push({ complexType, element });
+        });
+      } else {
+        const element = ((item: any): Element);
+        result.push({ complexType, element });
+      }
+    });
+  });
+
+  return result;
+}
+
+export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+  const allComplexTypes: Array<ComplexType> = [];
+  const allSimpleTypes: Array<AnySimpleType> = [];
+
+  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+    const schemaContainer: SchemaContainer = ((namespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
+    schemaContainer.sections.forEach((section: SchemaSection) => {
+      allComplexTypes.push(...section.complexTypes);
+      const sectionSimpleTypes: Array<AnySimpleType> = ((section.simpleTypes: any): Array<AnySimpleType>);
+      allSimpleTypes.push(...sectionSimpleTypes);
+    });
+  });
+
+  const allElementsByComplexType: Array<ElementByComplexType> = elementsByComplexType(allComplexTypes);
+
   const eBook: Workbook = newWorkbook();
 
   const elementsSheet: Worksheet = newWorksheet('Elements');
-  allProps.forEach((prop) => {
+
+  allElementsByComplexType.forEach((elementByComplexType: ElementByComplexType) => {
     const eRow: Row = newRow();
-    setRow(eRow, 'Name', prop.getAttribute('name'));
-    setRow(eRow, 'Type', prop.getAttribute('type'));
-    setRow(eRow, 'Parent Type', getParentType(prop));
-    setRow(eRow, 'Cardinality', getCardinality(prop));
-    setRow(eRow, 'Description', getDocumentation(prop));
+    setRow(eRow, 'Name', elementByComplexType.element.name);
+    setRow(eRow, 'Type', elementByComplexType.element.type);
+    setRow(eRow, 'Parent Type', elementByComplexType.complexType.name);
+    setRow(eRow, 'Cardinality', formatCardinality(elementByComplexType.element));
+    setRow(eRow, 'Description', elementByComplexType.element.annotation.documentation);
     elementsSheet.rows.push(createRow(eRow));
     elementsSheet.rows.sort(byNameDesc);
     elementsSheet['!cols'] = [{ wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 100 }, { wpx: 500 }];
@@ -81,8 +125,8 @@ function generateWorkbookFromXsd(xsdOutput: Array<GeneratedOutput>): GeneratorRe
   const complexSheet: Worksheet = newWorksheet('Complex Types');
   allComplexTypes.forEach((complexType) => {
     const eRow: Row = newRow();
-    setRow(eRow, 'Name', complexType.getAttribute('name'));
-    setRow(eRow, 'Description', getDocumentation(complexType));
+    setRow(eRow, 'Name', complexType.name);
+    setRow(eRow, 'Description', complexType.annotation.documentation);
     complexSheet.rows.push(createRow(eRow));
     complexSheet.rows.sort(byNameDesc);
     complexSheet['!cols'] = [{ wpx: 100 }, { wpx: 500 }];
@@ -91,9 +135,9 @@ function generateWorkbookFromXsd(xsdOutput: Array<GeneratedOutput>): GeneratorRe
   const simpleSheet: Worksheet = newWorksheet('Simple Types');
   allSimpleTypes.forEach((simpleType) => {
     const eRow: Row = newRow();
-    setRow(eRow, 'Name', simpleType.getAttribute('name'));
-    setRow(eRow, 'Restrictions', getRestrictions(simpleType));
-    setRow(eRow, 'Description', getDocumentation(simpleType));
+    setRow(eRow, 'Name', simpleType.name);
+    setRow(eRow, 'Restrictions', formatRestrictions(simpleType));
+    setRow(eRow, 'Description', simpleType.annotation.documentation);
     simpleSheet.rows.push(createRow(eRow));
     simpleSheet.rows.sort(byNameDesc);
     simpleSheet['!cols'] = [{ wpx: 100 }, { wpx: 100 }, { wpx: 500 }];
@@ -115,16 +159,7 @@ function generateWorkbookFromXsd(xsdOutput: Array<GeneratedOutput>): GeneratorRe
     ];
 
   return {
-    generatorName,
+    generatorName: 'edfiXmlDataDictionary.XmlDataDictionaryGenerator',
     generatedOutput,
   };
-}
-export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
-  // only need the xsd generator (index 0), not the schema annotation generator.
-  const xsdGenerator = InitializeXsdGenerator().generator[0];
-  const xsdOutput: Array<GeneratedOutput> = xsdGenerator(metaEd).generatedOutput;
-  return generateWorkbookFromXsd(xsdOutput);
-}
-export function generateFromXsd(xsdOutput: GeneratorResult): GeneratorResult {
-  return generateWorkbookFromXsd(xsdOutput.generatedOutput);
 }
