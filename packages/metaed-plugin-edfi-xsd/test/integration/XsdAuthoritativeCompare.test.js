@@ -57,14 +57,14 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
         simpleTypeNames.push(section.sectionAnnotation.documentation, ...section.simpleTypes.map(y => y.name));
       }));
 
-    coreResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'XsdGenerator')).generatedOutput);
+    coreResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'edfiXsd.XsdGenerator')).generatedOutput);
     coreFileBaseName = path.basename(coreResult.fileName, '.xsd');
     generatedCoreXsd = `${outputDirectory}/${coreFileBaseName}.xsd`;
     authoritativeCoreXsd = `${artifactPath}/${coreFileBaseName}-Authoritative.xsd`;
 
     await ffs.writeFile(generatedCoreXsd, coreResult.resultString, 'utf-8');
 
-    schemaResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'SchemaAnnotationGenerator')).generatedOutput);
+    schemaResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'edfiXsd.SchemaAnnotationGenerator')).generatedOutput);
     schemaFileBaseName = path.basename(schemaResult.fileName, '.xsd');
     generatedSchemaXsd = `${outputDirectory}/${schemaFileBaseName}.xsd`;
     authoritativeSchemaXsd = `${artifactPath}/${schemaFileBaseName}-Authoritative.xsd`;
