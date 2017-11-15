@@ -8,7 +8,7 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "dependencies": {
-    "antlr4": "4.6.0",
+    "antlr4": "4.6.1-patched.0",
     "final-fs": "^1.6.1",
     "ramda": "^0.24.1",
     "winston": "^2.4.0"

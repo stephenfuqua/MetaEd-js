@@ -8,18 +8,18 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "dependencies": {
-    "antlr4": "4.6.0",
+    "antlr4": "4.6.1-patched.0",
     "chalk": "^2.1.0",
     "final-fs": "^1.6.1",
     "js-beautify": "^1.7.4",
+    "metaed-core": "^1.1.0",
     "prettify-xml": "^1.2.0",
     "ramda": "^0.24.1",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "winston": "^2.4.0",
     "xml-js": "^1.4.2",
-    "yargs": "^8.0.2",
-    "metaed-core": "^1.1.0"
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
