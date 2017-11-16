@@ -7,6 +7,15 @@
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "metaed-plugin": {
+    "artifact-specific": {
+      "shortName": "edfiXsd",
+      "authorName": "Ed-Fi Alliance",
+      "metaEdVersion": "1.x",
+      "technologyVersion": "2.x",
+      "dependencies": ["metaed-plugin-edfi-unified"]
+    }
+  },
   "dependencies": {
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.4",
@@ -33,6 +42,7 @@
     "flow-bin": "^0.52.0",
     "flow-typed": "^2.1.5",
     "jest": "20.0.4",
+    "metaed-plugin-edfi-unified": "^1.1.0",
     "rimraf": "^2.6.1",
     "xmldom": "^0.1.27",
     "xpath": "^0.0.24"

@@ -12,7 +12,7 @@ export function execute(state: State): State {
         }
       });
     } catch (err) {
-      winston.error(`Plugin ${pluginManifest.displayName} threw an exception, and will be disabled.`);
+      winston.error(`Plugin ${pluginManifest.description} threw an exception, and will be disabled.`);
       pluginManifest.enabled = false;
     }
   });

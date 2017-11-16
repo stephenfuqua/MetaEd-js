@@ -9,10 +9,23 @@ export type PluginOptions = {
   pluginType: string,
 }
 
+// Resolve roughly like require.resolve() does (https://nodejs.org/api/modules.html#modules_all_together)
+function mainModuleResolver(directory: string, packageJson: any): string {
+  const pathFromMain = path.resolve(directory, packageJson.main);
+  if (fs.existsSync(pathFromMain)) return pathFromMain;
+  const pathForIndexJs = path.join(directory, 'index.js');
+  if (fs.existsSync(pathForIndexJs)) return pathForIndexJs;
+  const pathForIndexJson = path.join(directory, 'index.json');
+  if (fs.existsSync(pathForIndexJson)) return pathForIndexJs;
+  const pathForIndexNode = path.join(directory, 'index.node');
+  if (fs.existsSync(pathForIndexNode)) return pathForIndexNode;
+  return '';
+}
+
 function loadPluginManifest(directory: string, options: PluginOptions): ?PluginManifest {
   let packageJson;
   try {
-    packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json.for.plugin')));
+    packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json')));
   } catch (err) {
     return null;
   }
@@ -22,14 +35,14 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
 
   return {
     npmName: packageJson.name,
+    description: packageJson.description,
     version: packageJson.version,
-    mainModule: path.resolve(directory, packageMetadata.mainModule) || 'none',
-    pluginName: packageMetadata.pluginName || 'none',
-    displayName: packageMetadata.displayName || 'none',
-    author: packageMetadata.author || 'none',
-    metaEdVersionRange: packageMetadata.metaEdVersionRange || 'none',
+    mainModule: mainModuleResolver(directory, packageJson),
+    shortName: packageMetadata.shortName || 'none',
+    authorName: packageMetadata.authorName || 'none',
+    metaEdVersion: packageMetadata.metaEdVersion || 'none',
+    technologyVersion: packageMetadata.technologyVersion || 'none',
     dependencies: packageMetadata.dependencies || [],
-    dataReference: packageMetadata.dataReference || '',
     metaEdPlugin: NoMetaEdPlugin,
     enabled: true,
   };
@@ -45,6 +58,7 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
     try {
       const subdirectories = fs.readdirSync(directory).filter(file => fs.statSync(path.join(directory, file)).isDirectory());
       subdirectories.forEach(subdirectory => {
+        if (!subdirectory.startsWith('metaed-plugin-')) return;
         const directoryToTry = path.join(directory, subdirectory);
         const manifest = loadPluginManifest(directoryToTry, options);
         if (manifest) result.push(manifest);
@@ -56,19 +70,27 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
   return result;
 }
 
-export function materializePlugin(pluginData: any, metaEdCore: any, plugManifest: PluginManifest) {
+export function materializePlugin(pluginData: any, pluginManifest: PluginManifest) {
   try {
+    if (!pluginManifest.mainModule) {
+      winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  Module entry point not found.`);
+      return;
+    }
+
     /* eslint-disable */
     // $FlowIgnore - No one likes a dynamic require
-    const pluginFactoryCandidate = require(plugManifest.mainModule);
+    const pluginFactoryCandidate = require(pluginManifest.mainModule);
     /* eslint-enable */
 
-    // handle either ES or CommonJS modules
-    const pluginFactory: (any, any) => MetaEdPlugin = pluginFactoryCandidate.default ? pluginFactoryCandidate.default : pluginFactoryCandidate;
-    plugManifest.metaEdPlugin = pluginFactory(pluginData, metaEdCore);
+    // Plugins must have an "initialize" method?
+    const pluginFactory: (any) => MetaEdPlugin = pluginFactoryCandidate.initialize;
+    if (pluginFactory) {
+      pluginManifest.metaEdPlugin = pluginFactory(pluginData);
+    } else {
+      winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  initialize() not found.`);
+    }
   } catch (err) {
-    winston.error(`PluginLoader: Attempted load of npm package ${plugManifest.npmName} plugin '${plugManifest.displayName}' at '${plugManifest.mainModule}' failed.`);
+    winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.`);
     winston.error(`PluginLoader: Error Message: ${err.message}`);
-    plugManifest.metaEdPlugin = NoMetaEdPlugin;
   }
 }

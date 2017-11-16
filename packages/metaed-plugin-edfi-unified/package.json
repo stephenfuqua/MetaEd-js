@@ -7,6 +7,15 @@
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "metaed-plugin": {
+    "artifact-specific": {
+      "shortName": "edfiUnified",
+      "authorName": "Ed-Fi Alliance",
+      "metaEdVersion": "1.x",
+      "technologyVersion": "*",
+      "dependencies": []
+    }
+  },
   "dependencies": {
     "metaed-core": "^1.1.0",
     "ramda": "^0.24.1",

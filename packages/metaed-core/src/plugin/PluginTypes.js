@@ -21,13 +21,14 @@ export const NoMetaEdPlugin = newMetaEdPlugin();
 
 export type PluginManifest = {
   npmName: string,
+  description: string,
   version: string,
   mainModule: string,
-  displayName: string,
-  author: string,
-  metaEdVersionRange: string,
+  shortName: string,
+  authorName: string,
+  metaEdVersion: string,
+  technologyVersion: string,
   dependencies: Array<string>,
-  dataReference: string,
-  enabled: boolean,
   metaEdPlugin: MetaEdPlugin,
+  enabled: boolean,
 }

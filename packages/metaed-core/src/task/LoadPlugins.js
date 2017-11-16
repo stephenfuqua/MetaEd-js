@@ -1,8 +1,9 @@
 // @flow
+/* hardcode unified and xsd
 import type { State } from '../State';
 import type { PluginManifest } from '../plugin/PluginTypes';
 
-import { initialize as initializeUnified } from '../../../metaed-plugin-edfi-unified/src/unified';
+import { initialize as initializeUnified } from '../../../metaed-plugin-edfi-unified/src/edfiUnified';
 import { initialize as initializeXsd } from '../../../metaed-plugin-edfi-xsd/src/edfiXsd';
 
 // hardcode unified and xsd - this is a reversed dependency that may cause strange ES module circular dependency issues
@@ -36,10 +37,7 @@ export function loadPlugins(state: State): State {
 
   return state;
 }
-
-
-/* Original directory scanner:
-
+*/
 
 import path from 'path';
 import winston from 'winston';
@@ -56,17 +54,19 @@ export function loadPlugins(state: State): State {
     return state;
   }
 
-  // default to local plugin loading if not specified
-  if (!state.pluginScanDirectory) state.pluginScanDirectory = path.resolve(__dirname, '../../plugin');
+  // default to artifact-specific plugin loading from siblings of metaed-core
+  if (!state.pluginScanDirectory) state.pluginScanDirectory = path.resolve(__dirname, '../../..');
 
-  const pluginManifests = scanDirectories(state.pluginScanDirectory, { pluginType: 'artifact-specific' });
+  const pluginManifests: Array<PluginManifest> = scanDirectories(state.pluginScanDirectory, { pluginType: 'artifact-specific' });
 
+  // This is a placeholder implementation - in real implementation,
+  // Artifact-specific configuration files would be loaded and the data provided from that
+  // configuration, but targeted to specific plugins
   const pluginData = { name: 'xyz', annotation: 'pdq' };
-  const interfaceToMetaEdCore: any = { exampleIsModelObjectFactory: 'should be an interface with methods to create new model objects' };
 
-  pluginManifests.forEach(pluginManifest => {
-    materializePlugin(pluginData, interfaceToMetaEdCore, pluginManifest);
-    if (pluginManifest.plugin !== NoMetaEdPlugin) {
+  pluginManifests.forEach((pluginManifest: PluginManifest) => {
+    materializePlugin(pluginData, pluginManifest);
+    if (pluginManifest.metaEdPlugin !== NoMetaEdPlugin) {
       winston.info(`LoadPlugins: Loaded plugin '${pluginManifest.npmName}'`);
     } else {
       winston.info(`LoadPlugins: Could not load plugin '${pluginManifest.npmName}'`);
@@ -78,4 +78,3 @@ export function loadPlugins(state: State): State {
   state.pluginManifest = cachedPluginManifest;
   return state;
 }
-*/

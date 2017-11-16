@@ -15,3 +15,4 @@ npm-debug.log
 jest.config.js
 lerna.json
 lerna-debug.log
+/index.js
