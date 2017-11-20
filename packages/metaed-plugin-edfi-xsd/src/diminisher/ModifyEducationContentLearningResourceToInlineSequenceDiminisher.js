@@ -9,10 +9,10 @@ import type {
 import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import type { ComplexTypeItem } from '../model/schema/ComplexTypeItem';
-import type { Element } from '../../src/model/schema/Element';
-import type { ElementGroup } from '../../src/model/schema/ElementGroup';
-import { asElement } from '../../src/model/schema/Element';
-import { asElementGroup, newElementGroup } from '../../src/model/schema/ElementGroup';
+import type { Element } from '../model/schema/Element';
+import type { ElementGroup } from '../model/schema/ElementGroup';
+import { asElement } from '../model/schema/Element';
+import { asElementGroup, newElementGroup } from '../model/schema/ElementGroup';
 
 
 // Force generation of LearningStandard common type under EducationContent to output what the ods sql is expecting from an xsd perspective

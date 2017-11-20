@@ -1,8 +1,8 @@
 // @flow
+import { deepFreezeAssign } from 'metaed-core';
 import type { Annotation } from './Annotation';
 import type { Attribute } from './Attribute';
 import type { ComplexTypeItem } from './ComplexTypeItem';
-import { deepFreezeAssign } from '../../../../metaed-core/src/Utility';
 import { newAnnotation } from './Annotation';
 
 export type ComplexType = {

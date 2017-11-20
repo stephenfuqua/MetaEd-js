@@ -2,6 +2,7 @@
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
+  CommonBuilder,
   DomainEntityBuilder,
   DomainEntitySubclassBuilder,
   AssociationBuilder,
@@ -10,7 +11,6 @@ import {
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/TargetPropertyPathMustExist';
-import { CommonBuilder } from '../../../../metaed-core/src/builder/CommonBuilder';
 
 describe('when validating domain entity has target property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
