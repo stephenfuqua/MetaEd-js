@@ -31,6 +31,8 @@
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:lint": "yarn lint",
     "test:flow": "yarn flow",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "publish-dev": "yarn build:clean && yarn test && yarn build && yarn lerna-publish-dev",
+    "lerna-publish-dev":"lerna publish --exact --conventional-commits --cd-version=prerelease --preid=dev --npm-tag=dev --yes"
   }
 }
