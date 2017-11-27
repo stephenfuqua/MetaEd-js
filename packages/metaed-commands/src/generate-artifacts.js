@@ -1,5 +1,5 @@
 // @flow
-import { execConsole, getConsoleParams, getNodeModulesPath } from 'metaed-console';
+import { execConsole, getConsoleParams, getNodeModulesPath } from './console-runner';
 
 export const command: string = 'generate-artifacts [options]';
 export const desc: string = 'Generate Artifacts';
