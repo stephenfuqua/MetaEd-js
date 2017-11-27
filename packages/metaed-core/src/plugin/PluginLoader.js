@@ -29,6 +29,7 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
   } catch (err) {
     return null;
   }
+
   if (!packageJson['metaed-plugin'] || !packageJson['metaed-plugin'][options.pluginType]) return null;
 
   const packageMetadata = packageJson['metaed-plugin'][options.pluginType];
