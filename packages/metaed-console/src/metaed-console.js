@@ -1,10 +1,9 @@
 // @flow
 import path from 'path';
+import { newState, build } from 'metaed-core';
+import type { State } from 'metaed-core';
 import { Logger, transports } from 'winston';
 import * as Chalk from 'chalk';
-import { build } from '../../metaed-core/src/task/Pipeline';
-import { newState } from '../../metaed-core/src/State';
-import type { State } from '../../metaed-core/src/State';
 
 const argv = require('yargs')
   .usage('Usage: $0 [options]')
