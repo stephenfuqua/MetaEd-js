@@ -1,6 +1,6 @@
 // @flow
 import { SharedStringBuilder } from '../../src/builder/SharedStringBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getSharedString } from '../TestHelper';
 import type { SharedStringSourceMap } from '../../src/model/SharedString';

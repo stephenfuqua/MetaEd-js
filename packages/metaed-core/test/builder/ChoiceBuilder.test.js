@@ -1,6 +1,6 @@
 // @flow
 import { ChoiceBuilder } from '../../src/builder/ChoiceBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getChoice } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';

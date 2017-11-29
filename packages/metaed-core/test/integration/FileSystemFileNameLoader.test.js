@@ -1,6 +1,6 @@
 // @flow
 import ffs from 'final-fs';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newState } from '../../src/State';
 import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
 

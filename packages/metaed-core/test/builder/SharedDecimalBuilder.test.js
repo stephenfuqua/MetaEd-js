@@ -1,6 +1,6 @@
 // @flow
 import { SharedDecimalBuilder } from '../../src/builder/SharedDecimalBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getSharedDecimal } from '../TestHelper';
 import type { SharedDecimalSourceMap } from '../../src/model/SharedDecimal';

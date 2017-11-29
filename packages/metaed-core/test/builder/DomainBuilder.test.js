@@ -1,6 +1,6 @@
 // @flow
 import { DomainBuilder } from '../../src/builder/DomainBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getDomain, getSubdomain } from '../TestHelper';
 import type { DomainSourceMap } from '../../src/model/Domain';

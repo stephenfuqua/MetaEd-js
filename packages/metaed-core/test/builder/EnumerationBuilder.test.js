@@ -1,6 +1,6 @@
 // @flow
 import { EnumerationBuilder } from '../../src/builder/EnumerationBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getEnumeration, getSchoolYearEnumeration } from '../TestHelper';
 import type { EnumerationSourceMap } from '../../src/model/Enumeration';

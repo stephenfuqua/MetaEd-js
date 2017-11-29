@@ -1,6 +1,36 @@
 // @flow
-import type { MetaEdGrammarListener } from '../src/grammar/gen/MetaEdGrammarListener';
-import { listen } from './TestHelper';
+import antlr4 from 'antlr4';
+
+import { MetaEdGrammar } from './gen/MetaEdGrammar';
+import type { MetaEdGrammarListener } from './gen/MetaEdGrammarListener';
+import { BaseLexer } from './gen/BaseLexer';
+
+class ErrorListener {
+  errorMessages: string[];
+
+  constructor() {
+    antlr4.error.ErrorListener.call(this);
+    this.errorMessages = [];
+  }
+
+  syntaxError(recognizer: any, offendingSymbol: any, line: number, column: number, message: string) {
+    const tokenText = offendingSymbol && offendingSymbol.text ? offendingSymbol.text : '';
+    this.errorMessages.push(`${message}, column: ${column}, line: ${line}, token: ${tokenText}`);
+  }
+}
+
+function listen(metaEdText: string, listener: MetaEdGrammarListener): string[] {
+  const errorListener = new ErrorListener();
+  const lexer = new BaseLexer(new antlr4.InputStream(metaEdText));
+  const parser = new MetaEdGrammar(new antlr4.CommonTokenStream(lexer, undefined));
+  lexer.removeErrorListeners();
+  lexer.addErrorListener(errorListener);
+  parser.removeErrorListeners();
+  parser.addErrorListener(errorListener);
+  const parserContext = parser.metaEd();
+  antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, parserContext);
+  return errorListener.errorMessages;
+}
 
 export class MetaEdTextBuilder {
   textLines: string[];

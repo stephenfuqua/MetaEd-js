@@ -1,6 +1,6 @@
 // @flow
 import { DescriptorBuilder } from '../../src/builder/DescriptorBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getDescriptor, getMapTypeEnumeration } from '../TestHelper';
 import type { DescriptorSourceMap } from '../../src/model/Descriptor';

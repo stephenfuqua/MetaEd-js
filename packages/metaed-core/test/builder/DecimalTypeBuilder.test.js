@@ -1,7 +1,7 @@
 // @flow
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { DecimalTypeBuilder } from '../../src/builder/DecimalTypeBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { getDecimalType } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';

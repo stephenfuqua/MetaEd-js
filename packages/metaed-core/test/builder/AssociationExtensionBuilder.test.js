@@ -1,6 +1,6 @@
 // @flow
 import { AssociationExtensionBuilder } from '../../src/builder/AssociationExtensionBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getAssociationExtension } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';

@@ -1,6 +1,6 @@
 // @flow
 import { SharedIntegerBuilder } from '../../src/builder/SharedIntegerBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getSharedInteger } from '../TestHelper';
 import type { SharedIntegerSourceMap } from '../../src/model/SharedInteger';

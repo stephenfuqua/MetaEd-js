@@ -1,6 +1,6 @@
 // @flow
 import { CommonBuilder } from '../../src/builder/CommonBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getCommon } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';

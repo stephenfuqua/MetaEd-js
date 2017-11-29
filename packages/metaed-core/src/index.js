@@ -194,3 +194,7 @@ export { newSourceMap } from './model/SourceMap';
 export { asStringType, newStringType } from './model/StringType';
 export { asSubdomain, newSubdomain } from './model/Subdomain';
 export { asTopLevelEntity, newTopLevelEntity } from './model/TopLevelEntity';
+
+// for plugin testing
+
+export { MetaEdTextBuilder } from './grammar/MetaEdTextBuilder';

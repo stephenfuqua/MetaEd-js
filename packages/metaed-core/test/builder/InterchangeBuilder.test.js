@@ -1,6 +1,6 @@
 // @flow
 import { InterchangeBuilder } from '../../src/builder/InterchangeBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getInterchange, getInterchangeExtension } from '../TestHelper';
 import type { InterchangeSourceMap } from '../../src/model/Interchange';

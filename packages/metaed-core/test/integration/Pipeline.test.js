@@ -3,7 +3,7 @@ import path from 'path';
 import normalize from 'normalize-path';
 import { asDomainEntity } from '../../src/model/DomainEntity';
 import { startingFromFileLoad, startingFromFileLoadP } from './Pipeline';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { createMetaEdFile } from '../../src/task/MetaEdFile';
 import { getEntity } from '../../src/model/EntityRepository';
 import { loadCoreBufferedFiles } from '../../src/task/BufferFileLoader';

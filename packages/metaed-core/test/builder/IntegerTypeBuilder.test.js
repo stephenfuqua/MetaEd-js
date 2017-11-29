@@ -1,7 +1,7 @@
 // @flow
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { IntegerTypeBuilder } from '../../src/builder/IntegerTypeBuilder';
-import { MetaEdTextBuilder } from '../MetaEdTextBuilder';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { getIntegerType } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
