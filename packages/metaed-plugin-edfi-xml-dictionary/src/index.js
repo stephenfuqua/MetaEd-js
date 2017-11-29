@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdPlugin } from '../../metaed-core/index';
+import type { MetaEdPlugin } from 'metaed-core';
 import { generate as xmlDataDictionaryGenerator } from './generator/XmlDataDictionaryGenerator';
 
 export function initialize(): MetaEdPlugin {
