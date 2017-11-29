@@ -41,7 +41,9 @@ import { validate as descriptorPropertyMustMatchADescriptor } from './validator/
 import { validate as associationDomainItemMustMatchTopLevelEntity } from './validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 import { validate as commonDomainItemMustMatchTopLevelEntity } from './validator/Domain/CommonDomainItemMustMatchTopLevelEntity';
 import { validate as descriptorDomainItemMustMatchTopLevelEntity } from './validator/Domain/DescriptorDomainItemMustMatchTopLevelEntity';
-import { validate as domainEntityDomainItemMustMatchTopLevelEntity } from './validator/Domain/DomainEntityDomainItemMustMatchTopLevelEntity';
+
+// Temporarily comment out until METAED-697 fixed
+// import { validate as domainEntityDomainItemMustMatchTopLevelEntity } from './validator/Domain/DomainEntityDomainItemMustMatchTopLevelEntity';
 import { validate as domainMustNotDuplicateDomainItems } from './validator/Domain/DomainMustNotDuplicateDomainItems';
 import { validate as inlineCommonDomainItemMustMatchTopLevelEntity } from './validator/Domain/InlineCommonDomainItemMustMatchTopLevelEntity';
 
@@ -198,7 +200,10 @@ function validatorList(): Array<Validator> {
     associationDomainItemMustMatchTopLevelEntity,
     commonDomainItemMustMatchTopLevelEntity,
     descriptorDomainItemMustMatchTopLevelEntity,
-    domainEntityDomainItemMustMatchTopLevelEntity,
+
+    // Temporarily comment out until METAED-697 fixed
+    // domainEntityDomainItemMustMatchTopLevelEntity,
+
     domainMustNotDuplicateDomainItems,
     inlineCommonDomainItemMustMatchTopLevelEntity,
 
