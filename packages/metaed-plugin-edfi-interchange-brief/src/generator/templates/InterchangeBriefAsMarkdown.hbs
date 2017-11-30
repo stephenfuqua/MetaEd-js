@@ -1,0 +1,61 @@
+﻿
+# {{{humanizedUppercaseMetaEdName}}} Interchange
+
+# Overview
+
+{{{documentation}}}
+
+{{#if extendedDocumentation}}
+{{{extendedDocumentation}}}
+{{/if}}
+
+Like all standard Ed-Fi interchanges, this schema references the Ed-Fi Core XSD and can be extended using the Ed-Fi Extensions Framework. See the [Ed-Fi Data Standard - Developers' Guide] for more information.
+
+{{#if useCaseDocumentation}}
+# Use Cases
+
+The {{{humanizedUppercaseMetaEdName}}} Interchange can be used to:  
+
+{{{useCaseDocumentation}}}
+{{/if}}
+
+# Model Details
+
+The following figure shows a logical view of the {{{humanizedUppercaseMetaEdName}}} Interchange schema:  
+
+![{{{humanizedUppercaseMetaEdName}}} model details diagram](img/{{{interchangeName}}}-InterchangeBrief.png)
+
+{{#if interchangeBriefEntities}}
+# Entities
+
+The following table describes the primary entities of which the {{{humanizedUppercaseMetaEdName}}} Interchange is composed.  
+
+| Name | Description |
+|----------|-----------------|
+{{#interchangeBriefEntities}}| {{{data.EdfiXsd.xsd_Name}}} | {{{interchangeBriefDescription}}} |
+{{/interchangeBriefEntities}}
+{{/if}}
+
+# Extended References
+
+{{#if interchangeBriefExtendedReferences}}
+This interchange includes the following Extended References.  
+
+| Extended Reference Name | Description |
+|-----------------------------|-----------------|
+{{#interchangeBriefExtendedReferences}}| {{{name}}} (in {{{rootEntityName}}}) | {{{
+    description}}} |
+{{/interchangeBriefExtendedReferences}}
+{{else}}
+This interchange contains no external references.
+{{/if}}
+{{#if interchangeBriefDescriptorReferences}}
+# Descriptor Dependencies
+
+This interchange references the following Ed-Fi Descriptors, thus requiring them to have been defined using the Descriptors interchange prior to this interchange. For more information on the Ed-Fi Descriptor Pattern, see the [Ed-Fi Data Standard - Developers' Guide].  
+
+| Descriptor Name | Description |
+|---------------------|-----------------|
+{{#interchangeBriefDescriptorReferences}}| {{{name}}} | {{{description}}} |
+{{/interchangeBriefDescriptorReferences}}
+{{/if}}

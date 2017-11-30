@@ -20,7 +20,11 @@ export type { SchemaSection } from './model/schema/SchemaSection';
 export type { SimpleType } from './model/schema/SimpleType';
 export type { StringSimpleType } from './model/schema/StringSimpleType';
 export type { NamespaceInfoEdfiXsd } from './model/NamespaceInfo';
+export type { MergedInterchange } from './model/MergedInterchange';
+export type { EdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 
+export { newMergedInterchange } from './model/MergedInterchange';
+export { addEdFiXsdEntityRepositoryTo } from './model/EdFiXsdEntityRepository';
 export function initialize(): MetaEdPlugin {
   return {
     validator: [],

@@ -114,7 +114,7 @@ export type { EnumerationItem, EnumerationItemSourceMap } from './model/Enumerat
 export type { IntegerType, IntegerTypeSourceMap } from './model/IntegerType';
 export type { Interchange, InterchangeSourceMap } from './model/Interchange';
 export type { InterchangeExtension } from './model/InterchangeExtension';
-export type { InterchangeItem, InterchangeItemSourceMap } from './model/InterchangeItem';
+export { InterchangeItem, InterchangeItemSourceMap } from './model/InterchangeItem';
 export type { MapTypeEnumeration } from './model/MapTypeEnumeration';
 export type { ModelBase, ModelBaseSourceMap } from './model/ModelBase';
 export type { ModelType } from './model/ModelType';
