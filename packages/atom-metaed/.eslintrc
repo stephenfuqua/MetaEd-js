@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-base",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype",
+    "json",
+    "import"
+  ],
+  "rules": {
+    "class-methods-use-this": "off",
+    "no-console": "off",
+    "max-len": "off",
+    "no-underscore-dangle": "off",
+    "flowtype/no-types-missing-file-annotation": "off",
+    "linebreak-style": 0
+  },
+  "globals": {
+    "atom": false
+  }
+}

@@ -1,0 +1,126 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.1.1-dev.5"></a>
+## [1.1.1-dev.5](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.1.1-dev.1...v1.1.1-dev.5) (2017-11-29)
+
+
+
+<a name="1.1.1-dev.1"></a>
+## [1.1.1-dev.1](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.1.1-dev.0...v1.1.1-dev.1) (2017-11-29)
+
+
+
+<a name="1.1.1-dev.0"></a>
+## [1.1.1-dev.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.1.0...v1.1.1-dev.0) (2017-11-28)
+
+
+
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.1.0-dev.1...v1.1.0) (2017-09-11)
+
+
+
+<a name="1.1.0-dev.1"></a>
+# [1.1.0-dev.1](https://github.com/tbmeador-dlp/Atom-MetaEd/compare/v1.1.0-dev.0...v1.1.0-dev.1) (2017-08-30)
+
+
+
+<a name="1.1.0-dev.0"></a>
+# [1.1.0-dev.0](https://github.com/tbmeador-dlp/Atom-MetaEd/compare/v1.0.5...v1.1.0-dev.0) (2017-08-30)
+
+
+
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.5-dev.4...v1.0.5) (2017-07-14)
+
+
+
+<a name="1.0.5-dev.4"></a>
+## [1.0.5-dev.4](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.5-dev.3...v1.0.5-dev.4) (2017-07-14)
+
+
+
+<a name="1.0.5-dev.3"></a>
+## [1.0.5-dev.3](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.5-dev.2...v1.0.5-dev.3) (2017-07-14)
+
+
+
+<a name="1.0.5-dev.2"></a>
+## [1.0.5-dev.2](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.5-dev.1...v1.0.5-dev.2) (2017-07-14)
+
+
+
+<a name="1.0.5-dev.1"></a>
+## [1.0.5-dev.1](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.5-dev.0...v1.0.5-dev.1) (2017-06-08)
+
+
+
+<a name="1.0.5-dev.0"></a>
+## [1.0.5-dev.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.4...v1.0.5-dev.0) (2017-05-31)
+
+
+
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.4-dev.1...v1.0.4) (2017-05-26)
+
+
+
+<a name="1.0.4-dev.1"></a>
+## [1.0.4-dev.1](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.4-dev.0...v1.0.4-dev.1) (2017-05-24)
+
+
+
+<a name="1.0.4-dev.0"></a>
+## [1.0.4-dev.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.3...v1.0.4-dev.0) (2017-05-22)
+
+
+
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.3-dev.2...v1.0.3) (2017-05-09)
+
+
+
+<a name="1.0.3-dev.2"></a>
+## [1.0.3-dev.2](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.3-dev.1...v1.0.3-dev.2) (2017-05-09)
+
+
+
+<a name="1.0.3-dev.1"></a>
+## [1.0.3-dev.1](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.3-dev.0...v1.0.3-dev.1) (2017-05-09)
+
+
+
+<a name="1.0.3-dev.0"></a>
+## [1.0.3-dev.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.2...v1.0.3-dev.0) (2017-05-03)
+
+
+
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.2-dev.0...v1.0.2) (2017-04-25)
+
+
+
+<a name="1.0.2-dev.0"></a>
+## [1.0.2-dev.0](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.1...v1.0.2-dev.0) (2017-04-24)
+
+
+
+<a name="1.0.0-dev.16"></a>
+# [1.0.0-dev.16](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.0-dev.15...v1.0.0-dev.16) (2017-04-06)
+
+
+
+<a name="1.0.0-dev.15"></a>
+# [1.0.0-dev.15](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.0-dev.14...v1.0.0-dev.15) (2017-04-05)
+
+
+
+<a name="1.0.0-dev.14"></a>
+# [1.0.0-dev.14](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2017-04-05)
+
+
+
+<a name="1.0.0-dev.13"></a>
+# [1.0.0-dev.13](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2017-03-29)

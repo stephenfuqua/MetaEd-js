@@ -27,12 +27,12 @@
     "lerna": "lerna bootstrap",
     "build": "lerna run build --parallel",
     "build:clean": "lerna run build:clean --parallel",
-    "test": "yarn test:flow && yarn test:lint && yarn test:unit",
+    "test": "yarn test:flow && yarn test:lint && yarn test:unit && yarn test:atom",
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:lint": "yarn lint",
     "test:flow": "yarn flow check",
     "test:unit": "yarn build:clean && jest",
-    "publish-dev": "yarn build:clean && yarn test && yarn build && yarn lerna-publish-dev",
-    "lerna-publish-dev":"lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"
+    "test:atom": "yarn workspace atom-metaed test",
+    "publish-dev": "yarn build:clean && yarn test && yarn build && lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"
   }
 }
