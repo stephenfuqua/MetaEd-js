@@ -9,10 +9,10 @@ function buildReferencedUsageInfo(referentialProperty, rootEntityName, isOptiona
   let name;
   let description;
   if (descriptor.type !== 'descriptor') {
-    name = referentialProperty.data.EdfiXsd.xsd_name;
+    name = referentialProperty.data.EdfiXsd.xsd_Name;
     description = cardinalityDescription + referentialProperty.documentation;
   } else {
-    name = descriptor.data.EdfiXsd.xsd_descriptorName;
+    name = descriptor.data.EdfiXsd.xsd_DescriptorName;
     description = cardinalityDescription + descriptor.documentation;
   }
   return {

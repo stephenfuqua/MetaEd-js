@@ -161,11 +161,13 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
+      data: { EdfiXsd: { xsd_Name: domainEntity1.metaEdName } },
       referencedEntity: domainEntity1,
       interchangeBriefDescription: domainEntity1Documentation,
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
+      data: { EdfiXsd: { xsd_Name: domainEntity2.metaEdName } },
       referencedEntity: domainEntity2,
       interchangeBriefDescription: domainEntity2Documentation,
     });
@@ -179,11 +181,13 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
+      data: { EdfiXsd: { xsd_Name: domainEntity3.metaEdName } },
       referencedEntity: domainEntity3,
       interchangeBriefDescription: domainEntity3Documentation,
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
+      data: { EdfiXsd: { xsd_Name: domainEntity4.metaEdName } },
       referencedEntity: domainEntity4,
       interchangeBriefDescription: domainEntity4Documentation,
     });

@@ -85,12 +85,12 @@ function setupRepository() {
   });
   referencedDescriptor1 = Object.assign(newDescriptor(), {
     metaEdName: 'UNUSED Referenced Descriptor 1',
-    data: { EdfiXsd: { xsd_descriptorName: referencedDescriptor1Name } },
+    data: { EdfiXsd: { xsd_DescriptorName: referencedDescriptor1Name } },
     documentation: referencedDescriptor1Documentation,
   });
   referencedDescriptor2 = Object.assign(newDescriptor(), {
     metaEdName: 'UNUSED Referenced Descriptor 2',
-    data: { EdfiXsd: { xsd_descriptorName: referencedDescriptor2Name } },
+    data: { EdfiXsd: { xsd_DescriptorName: referencedDescriptor2Name } },
     documentation: referencedDescriptor2Documentation,
   });
   referencedCommonType = Object.assign(newCommon(), {
@@ -107,35 +107,35 @@ function setupRepository() {
   });
   referencedDomainEntity1Property = Object.assign(newDomainEntityProperty(), {
     metaEdName: 'UNUSED Domain Entity 1 Property',
-    data: { EdfiXsd: { xsd_name: referencedDomainEntity1PropertyName } },
+    data: { EdfiXsd: { xsd_Name: referencedDomainEntity1PropertyName } },
     documentation: referencedDomainEntity1PropertyDocumentation,
     referencedEntity: referencedDomainEntity1,
     isOptional: true,
   });
   referencedDomainEntity2Property = Object.assign(newDomainEntityProperty(), {
     metaEdName: 'UNUSED Domain Entity 2 Property',
-    data: { EdfiXsd: { xsd_name: referencedDomainEntity2PropertyName } },
+    data: { EdfiXsd: { xsd_Name: referencedDomainEntity2PropertyName } },
     documentation: referencedDomainEntity2PropertyDocumentation,
     referencedEntity: referencedDomainEntity2,
     isOptional: true,
   });
   referencedInlineCommonProperty = Object.assign(newInlineCommonProperty(), {
     metaEdName: 'UNUSED Common Type Property',
-    data: { EdfiXsd: { xsd_name: referencedInlineCommonTypePropertyName } },
+    data: { EdfiXsd: { xsd_Name: referencedInlineCommonTypePropertyName } },
     documentation: referencedInlineCommonTypePropertyDocumentation,
     referencedEntity: referencedInlineCommonType,
     isOptional: true,
   });
   referencedCommonProperty = Object.assign(newCommonProperty(), {
     metaEdName: 'UNUSED Common Type Property',
-    data: { EdfiXsd: { xsd_name: referencedCommonTypePropertyName } },
+    data: { EdfiXsd: { xsd_Name: referencedCommonTypePropertyName } },
     documentation: referencedCommonTypePropertyDocumentation,
     referencedEntity: referencedCommonType,
     isOptional: true,
   });
   referencedChoiceProperty = Object.assign(newChoiceProperty(), {
     metaEdName: 'UNUSED Choice Common Type Property',
-    data: { EdfiXsd: { xsd_name: referencedChoiceCommonTypePropertyName } },
+    data: { EdfiXsd: { xsd_Name: referencedChoiceCommonTypePropertyName } },
     documentation: referencedChoiceCommonTypePropertyDocumentation,
     referencedEntity: referencedChoiceCommonType,
     isOptional: true,
