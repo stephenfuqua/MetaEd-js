@@ -5,22 +5,21 @@ import handlebars from 'handlebars';
 import fs from 'fs';
 import path from 'path';
 import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
-import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
-import type { MergedInterchange } from '../model/MergedInterchange';
+import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { toHumanizedUppercaseMetaEdName } from '../model/MergedInterchange';
 
 const generatorName = 'Interchange Brief Markdown Generator';
 const header = '<head><title>MetaEd Generated Interchange Brief</title><link rel="stylesheet" href="confluence-like.css"></head>';
 
 // Handlebars instance scoped for this plugin
-export const xsdHandlebars = handlebars.create();
+export const markdownHandlebars = handlebars.create();
 
 function templateString(templateName: string) {
   return fs.readFileSync(path.join(__dirname, 'templates', `${templateName}.hbs`)).toString();
 }
 
 export function templateNamed(templateName: string) {
-  return xsdHandlebars.compile(templateString(templateName));
+  return markdownHandlebars.compile(templateString(templateName));
 }
 
 export const template = R.memoize(
@@ -32,7 +31,7 @@ export const template = R.memoize(
 
 export const registerPartials = R.once(
   () => {
-    xsdHandlebars.registerPartial({
+    markdownHandlebars.registerPartial({
       interchangeBrief: templateString('InterchangeBriefAsMarkdown'),
     });
   });
@@ -43,13 +42,13 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   registerPartials();
 
   ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>).forEach((interchange: MergedInterchange) => {
-    interchange.humanizedUppercaseMetaEdName = toHumanizedUppercaseMetaEdName(interchange.metaEdName);
-    const html: string = template().interchangeBrief(interchange);
+    interchange.data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName = toHumanizedUppercaseMetaEdName(interchange.metaEdName);
+    const markdown: string = template().interchangeBrief(interchange);
     generatedOutput.push({
       name: 'MD',
       fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
       folderName: 'InterchangeBrief',
-      resultString: `${header}${marked(html)}`,
+      resultString: `${header}${marked(markdown)}`,
       resultStream: null,
     });
   });

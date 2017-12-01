@@ -1,8 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity } from 'metaed-core';
-import { addEdFiXsdEntityRepositoryTo } from 'metaed-plugin-edfi-xsd';
-import { newMergedInterchange } from '../../src/model/MergedInterchange';
-import { newInterchangeItem } from '../../src/model/InterchangeItem';
+import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
+import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { generate as InterchangeBriefSvgGenerator } from '../../src/generator/InterchangeBriefSvgGenerator';
 
 
@@ -45,15 +43,19 @@ describe('When generating interchange brief with no extended references or descr
     });
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity1.metaEdName } },
+      data: {
+        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation },
+        EdfiXsd: { xsd_Name: domainEntity1.metaEdName },
+      },
       referencedEntity: domainEntity1,
-      interchangeBriefDescription: domainEntity1Documentation,
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity2.metaEdName } },
+      data: {
+        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation },
+        EdfiXsd: { xsd_Name: domainEntity2.metaEdName },
+      },
       referencedEntity: domainEntity2,
-      interchangeBriefDescription: domainEntity2Documentation,
     });
     interchange1.elements.push(interchangeItem1);
     interchange1.elements.push(interchangeItem2);
@@ -65,15 +67,19 @@ describe('When generating interchange brief with no extended references or descr
     });
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity3.metaEdName } },
+      data: {
+        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation },
+        EdfiXsd: { xsd_Name: domainEntity3.metaEdName },
+      },
       referencedEntity: domainEntity3,
-      interchangeBriefDescription: domainEntity3Documentation,
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity4.metaEdName } },
+      data: {
+        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation },
+        EdfiXsd: { xsd_Name: domainEntity4.metaEdName },
+      },
       referencedEntity: domainEntity4,
-      interchangeBriefDescription: domainEntity4Documentation,
     });
     interchange2.elements.push(interchangeItem3);
     interchange2.elements.push(interchangeItem4);

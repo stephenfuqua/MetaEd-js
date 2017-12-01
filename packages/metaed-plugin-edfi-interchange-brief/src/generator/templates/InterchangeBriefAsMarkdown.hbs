@@ -1,5 +1,5 @@
 ﻿
-# {{{humanizedUppercaseMetaEdName}}} Interchange
+# {{{data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName}}} Interchange
 
 # Overview
 
@@ -14,48 +14,48 @@ Like all standard Ed-Fi interchanges, this schema references the Ed-Fi Core XSD 
 {{#if useCaseDocumentation}}
 # Use Cases
 
-The {{{humanizedUppercaseMetaEdName}}} Interchange can be used to:  
+The {{{data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName}}} Interchange can be used to:  
 
 {{{useCaseDocumentation}}}
 {{/if}}
 
 # Model Details
 
-The following figure shows a logical view of the {{{humanizedUppercaseMetaEdName}}} Interchange schema:  
+The following figure shows a logical view of the {{{data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName}}} Interchange schema:  
 
-![{{{humanizedUppercaseMetaEdName}}} model details diagram](img/{{{interchangeName}}}-InterchangeBrief.png)
+![{{{data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName}}} model details diagram](img/{{{interchangeName}}}-InterchangeBrief.png)
 
-{{#if interchangeBriefEntities}}
+{{#if data.EdfiInterchangeBrief.interchangeBriefEntities}}
 # Entities
 
 The following table describes the primary entities of which the {{{humanizedUppercaseMetaEdName}}} Interchange is composed.  
 
 | Name | Description |
 |----------|-----------------|
-{{#interchangeBriefEntities}}| {{{data.EdfiXsd.xsd_Name}}} | {{{interchangeBriefDescription}}} |
-{{/interchangeBriefEntities}}
+{{#data.EdfiInterchangeBrief.interchangeBriefEntities}}| {{{data.EdfiXsd.xsd_Name}}} | {{{data.EdfiInterchangeBrief.interchangeBriefDescription}}} |
+{{/data.EdfiInterchangeBrief.interchangeBriefEntities}}
 {{/if}}
 
 # Extended References
 
-{{#if interchangeBriefExtendedReferences}}
+{{#if data.EdfiInterchangeBrief.interchangeBriefExtendedReferences}}
 This interchange includes the following Extended References.  
 
 | Extended Reference Name | Description |
 |-----------------------------|-----------------|
-{{#interchangeBriefExtendedReferences}}| {{{name}}} (in {{{rootEntityName}}}) | {{{
+{{#data.EdfiInterchangeBrief.interchangeBriefExtendedReferences}}| {{{name}}} (in {{{rootEntityName}}}) | {{{
     description}}} |
-{{/interchangeBriefExtendedReferences}}
+{{/data.EdfiInterchangeBrief.interchangeBriefExtendedReferences}}
 {{else}}
 This interchange contains no external references.
 {{/if}}
-{{#if interchangeBriefDescriptorReferences}}
+{{#if data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences}}
 # Descriptor Dependencies
 
 This interchange references the following Ed-Fi Descriptors, thus requiring them to have been defined using the Descriptors interchange prior to this interchange. For more information on the Ed-Fi Descriptor Pattern, see the [Ed-Fi Data Standard - Developers' Guide].  
 
 | Descriptor Name | Description |
 |---------------------|-----------------|
-{{#interchangeBriefDescriptorReferences}}| {{{name}}} | {{{description}}} |
-{{/interchangeBriefDescriptorReferences}}
+{{#data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences}}| {{{name}}} | {{{description}}} |
+{{/data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences}}
 {{/if}}

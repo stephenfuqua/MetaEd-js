@@ -6,6 +6,7 @@ import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 // From structure of Interchange - if core models move to structural typing, consider using Interchange directly
 type MergedInterchangeBase = {
+  data: any,
   documentation: string,
   metaEdName: string,
   metaEdId: string,
@@ -43,6 +44,7 @@ export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, merg
 // to base types - so it will have type as 'interchange'
 export function newMergedInterchange(): MergedInterchange {
   return {
+    data: {},
     documentation: '',
     metaEdName: '',
     metaEdId: '',

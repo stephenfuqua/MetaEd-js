@@ -2,6 +2,7 @@
 import { ReferentialProperty } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { escapeForMarkdownTableContent } from './Shared';
+import { addEdfiBriefInterchangeTo } from '../model/MergedInterchange';
 
 function buildReferencedUsageInfo(referentialProperty, rootEntityName, isOptional) {
   const descriptor = referentialProperty.referencedEntity;
@@ -70,6 +71,7 @@ function sortByMetaEdName(a: any, b: any) {
 export function enhance(metaEd: MetaEdEnvironment) {
   const xsdRepository = (metaEd.plugin.get('edfi-Xsd'): any).entity;
   xsdRepository.mergedInterchange.forEach(interchange => {
+    addEdfiBriefInterchangeTo(interchange);
     const interchangeTopLevelEntities = interchange.elements.reduce((array, element) => {
       array.push(...getEntityAndParents(element.referencedEntity));
       return array;
@@ -100,6 +102,6 @@ export function enhance(metaEd: MetaEdEnvironment) {
         }
         return arr;
       }, []);
-    interchange.interchangeBriefExtendedReferences.push(...allExtendedReferences);
+    interchange.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(...allExtendedReferences);
   });
 }

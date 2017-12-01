@@ -3,7 +3,7 @@ import { newInlineCommon, newDomainEntityProperty, newChoiceProperty, newInterch
   newEnumeration, newSchoolYearEnumerationProperty, newEnumerationProperty, newBooleanProperty, newCurrencyProperty, newDateProperty, newDecimalProperty, newDurationProperty,
   newIntegerProperty, newPercentProperty, newSharedDecimalProperty, newSharedStringProperty, newSharedIntegerProperty, newSharedShortProperty, newShortProperty, newStringProperty, newTimeProperty } from 'metaed-core';
 import type { Common } from 'metaed-core';
-import { newMergedInterchange } from '../../src/model/MergedInterchange';
+import { newMergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { enhance as mergedInterchangeExtendedReferencesEnhancer } from '../../src/enhancer/MergedInterchangeExtendedReferencesEnhancer';
 
 function byReferenceName(a, b): number {
@@ -165,13 +165,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate exteded references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(escapedDocumentation);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with item with nonreferencing properties', () => {
@@ -201,12 +201,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     mergedInterchange.identityTemplates.push(domainEntityInterchangeItem);
     interchangeLevelDomainEntity.properties.push(schoolYearEnumerationProperty, enumerationProperty, booleanProperty, currencyProperty, dateProperty, decimalProperty, durationProperty, integerProperty,
     percentProperty, sharedDecimalProperty, sharedIntegerProperty, sharedShortProperty, sharedStringProperty, shortProperty, stringProperty, timeProperty, yearProperty);
+    mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
-  it('should generate exteded references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(0);
+  it('should generate extended references', () => {
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -222,14 +223,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -245,14 +246,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Required');
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -264,14 +265,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -284,12 +285,12 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -301,8 +302,8 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should not generate required extended references or descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(0);
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -314,8 +315,8 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should not generate required extended references or descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(0);
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -328,13 +329,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -350,13 +351,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(2);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -368,8 +369,8 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should not generate required extended references or descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(0);
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -382,13 +383,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -404,14 +405,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(2);
-    (mergedInterchange: any).interchangeBriefExtendedReferences.sort(byReferenceName);
-    const extendedReferences = (mergedInterchange: any).interchangeBriefExtendedReferences;
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
+    (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
+    const extendedReferences = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences;
     expect(extendedReferences[0].name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReferences[1].name).toBe(referencedDomainEntity2PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -423,8 +424,8 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should not generate extended references or descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(0);
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing choice common type with single reference', () => {
@@ -436,13 +437,13 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     const extendedReferenceName: string = extendedReference.name;
     expect(extendedReferenceName).toBe(referencedDomainEntity1PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 
@@ -458,14 +459,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(2);
-    (mergedInterchange: any).interchangeBriefExtendedReferences.sort(byReferenceName);
-    const extendedReferences = (mergedInterchange: any).interchangeBriefExtendedReferences;
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(2);
+    (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
+    const extendedReferences = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences;
     expect(extendedReferences[0].name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReferences[1].name).toBe(referencedDomainEntity2PropertyName);
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with all required in path', () => {
@@ -498,15 +499,15 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    (mergedInterchange: any).interchangeBriefExtendedReferences.sort(byReferenceName);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Required');
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterchange referencing recursively with optional in path', () => {
@@ -539,14 +540,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances mergedInterc
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate required extended references', () => {
-    expect((mergedInterchange: any).interchangeBriefExtendedReferences.length).toBe(1);
-    (mergedInterchange: any).interchangeBriefExtendedReferences.sort(byReferenceName);
-    const extendedReference = (mergedInterchange: any).interchangeBriefExtendedReferences[0];
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.length).toBe(1);
+    (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.sort(byReferenceName);
+    const extendedReference = (mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefExtendedReferences[0];
     expect(extendedReference.name).toBe(referencedDomainEntity1PropertyName);
     expect(extendedReference.description).toContain(referencedDomainEntity1Documentation);
     expect(extendedReference.description).toContain('Optional');
   });
   it('should not generate descriptors', () => {
-    expect((mergedInterchange: any).interchangeBriefDescriptorReferences.length).toBe(0);
+    expect((mergedInterchange: any).data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });

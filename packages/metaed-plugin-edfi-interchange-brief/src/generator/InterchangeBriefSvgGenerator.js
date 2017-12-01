@@ -1,9 +1,10 @@
 // @flow
 import Horseman from 'node-horseman';
 import path from 'path';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from '../../../metaed-core/index';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
+import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import type { SvgElement } from '../model/SvgElement';
-import type { MergedInterchange } from '../model/MergedInterchange';
+
 
 const generatorName: string = 'InterchangeBriefImageGenerator';
 

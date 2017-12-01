@@ -1,9 +1,8 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
-import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
-import type { MergedInterchange } from '../../src/model/MergedInterchange';
-import type { InterchangeItem } from '../../src/model/InterchangeItem';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, InterchangeItem } from 'metaed-core';
+import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { escapeForMarkdownTableContent } from './Shared';
+import { addEdfiBriefInterchangeTo } from '../model/MergedInterchange';
 
 const enhancerName: string = 'MergedInterchangeEntitiesEnhancer';
 
@@ -14,13 +13,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   = ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>);
 
   mergedInterchanges.forEach(interchange => {
+    addEdfiBriefInterchangeTo(interchange);
     const entities: Array<InterchangeItem> = ((interchange.identityTemplates.concat(interchange.elements): any): Array<InterchangeItem>);
     entities.forEach(entity => {
       const extension: TopLevelEntity = entity.referencedEntity;
-      entity.interchangeBriefDescription = extension && extension.baseEntity ? escapeForMarkdownTableContent(extension.baseEntity.documentation)
-      : escapeForMarkdownTableContent(entity.referencedEntity.documentation);
+      entity.data.EdfiInterchangeBrief = { interchangeBriefDescription: extension && extension.baseEntity ? escapeForMarkdownTableContent(extension.baseEntity.documentation)
+      : escapeForMarkdownTableContent(entity.referencedEntity.documentation) };
     });
-    interchange.interchangeBriefEntities.push(...entities);
+    interchange.data.EdfiInterchangeBrief.interchangeBriefEntities.push(...entities);
   });
 
   return {

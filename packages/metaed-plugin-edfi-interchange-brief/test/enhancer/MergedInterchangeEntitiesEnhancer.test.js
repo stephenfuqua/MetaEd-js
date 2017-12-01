@@ -1,11 +1,9 @@
 // @flow
 import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
 import type { MetaEdEnvironment, InterchangeItem, DomainEntity } from 'metaed-core';
-import { addEdFiXsdEntityRepositoryTo } from 'metaed-plugin-edfi-xsd';
-import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
+import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
+import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { enhance } from '../../src/enhancer/MergedInterchangeEntitiesEnhancer';
-import { newMergedInterchange } from '../../src/model/MergedInterchange';
-import type { MergedInterchange } from '../../src/model/MergedInterchange';
 
 const interchangeName: string = 'InterchangeName';
 const interchangeLevelDomainEntity1Name: string = 'EntityName1';
@@ -55,10 +53,10 @@ describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with
     enhance(metaEd);
   });
   it('should generate entity with description', () => {
-    expect(mergedInterchange.interchangeBriefEntities.length).toBe(1);
-    const entity = mergedInterchange.interchangeBriefEntities[0];
+    expect(mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
+    const entity = mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities[0];
     expect(entity).toBe(domainEntity1InterchangeItem);
-    expect(entity.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
+    expect(entity.data.EdfiInterchangeBrief.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
   });
 });
 describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity elements', () => {
@@ -68,10 +66,10 @@ describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with
     enhance(metaEd);
   });
   it('should generate entity with description', () => {
-    expect(mergedInterchange.interchangeBriefEntities.length).toBe(1);
-    const entity = mergedInterchange.interchangeBriefEntities[0];
+    expect(mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
+    const entity = mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities[0];
     expect(entity).toBe(domainEntity1InterchangeItem);
-    expect(entity.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
+    expect(entity.data.EdfiInterchangeBrief.interchangeBriefDescription).toBe(interchangeLevelDomainEntity1Documentation);
   });
 });
 describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with multiple items', () => {
@@ -82,7 +80,7 @@ describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with
     enhance(metaEd);
   });
   it('should generate entities', () => {
-    expect(mergedInterchange.interchangeBriefEntities.length).toBe(2);
+    expect(mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities.length).toBe(2);
   });
 });
 describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with element with bad markdown character', () => {
@@ -96,8 +94,8 @@ describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with
     enhance(metaEd);
   });
   it('should generate entity with description', () => {
-    expect(mergedInterchange.interchangeBriefEntities.length).toBe(1);
-    const entity = mergedInterchange.interchangeBriefEntities[0];
-    expect(entity.interchangeBriefDescription).toBe(escapedDocumentation);
+    expect(mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities.length).toBe(1);
+    const entity = mergedInterchange.data.EdfiInterchangeBrief.interchangeBriefEntities[0];
+    expect(entity.data.EdfiInterchangeBrief.interchangeBriefDescription).toBe(escapedDocumentation);
   });
 });
