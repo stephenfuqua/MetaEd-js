@@ -3,7 +3,7 @@ import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEnt
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 
-describe('when an domain entity extension extends a non-education organization domain entity', () => {
+describe('when a domain entity extension extends a non-education organization domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
@@ -37,7 +37,7 @@ describe('when an domain entity extension extends a non-education organization d
   });
 });
 
-describe('when an domain entity extension extends a non-education organization subclass', () => {
+describe('when a domain entity extension extends a non-education organization subclass', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'NotEducationOrganization';
   const coreSubclassName: string = 'CoreSubclassName';
@@ -131,7 +131,7 @@ describe('when a domain entity extension extends a subclass of education organiz
   });
 });
 
-describe('when an domain entity extension extends a subclass of a subclass of education organization', () => {
+describe('when a domain entity extension extends a subclass of a subclass of education organization', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EducationOrganization';
   const coreSubclassName: string = 'CoreSubclassName';
