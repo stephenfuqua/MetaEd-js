@@ -1,6 +1,15 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="1.1.1-dev.6"></a>
+## [1.1.1-dev.6](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.1.1-dev.5...v1.1.1-dev.6) (2017-12-04)
+
+
+
+
+**Note:** Version bump only for package atom-metaed
 
 <a name="1.1.1-dev.5"></a>
 ## [1.1.1-dev.5](https://github.com/Ed-Fi-Alliance/Atom-MetaEd/compare/v1.1.1-dev.1...v1.1.1-dev.5) (2017-11-29)
