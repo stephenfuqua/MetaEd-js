@@ -30,7 +30,7 @@ describe('when validating enumeration type exists in core', () => {
   });
 });
 
-describe('when validating enumeration type exists in extension', () => {
+describe('when validating enumeration exists in extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
 
