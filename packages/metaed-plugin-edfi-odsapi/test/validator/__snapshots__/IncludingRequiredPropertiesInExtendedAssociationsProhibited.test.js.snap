@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when an association extension extends an association with a required property should have validation failure -> message 1`] = `"Association Extension EntityName is an extension with required property RequiredProperty.  The ODS/API does not currently support this pattern."`;
+
+exports[`when an association extension extends an association with a required property should have validation failure -> sourceMap 1`] = `undefined`;
