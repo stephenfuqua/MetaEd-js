@@ -9,23 +9,25 @@ import type { SvgElement } from '../model/SvgElement';
 const generatorName: string = 'InterchangeBriefImageGenerator';
 
 function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
-  const result = [];
+  const result: Array<SvgElement> = [];
   const mergedInterchanges: Array<MergedInterchange> = (metaEd.plugin.get('edfiXsd'): any).entity.mergedInterchange;
 
   mergedInterchanges.forEach(interchange => {
-    const model = {
+    const svgElement: SvgElement = {
       name: interchange.interchangeName,
       children: [{ name: '<xs:choice>', children: [] }],
     };
     interchange.identityTemplates.forEach(identityTemplate => {
       const identityTemplateEntity = { name: identityTemplate.data.EdfiXsd.xsd_Name };
-      model.children[0].children.push(identityTemplateEntity);
+      // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
+      if (svgElement.children[0].children) svgElement.children[0].children.push(identityTemplateEntity);
     });
     interchange.elements.forEach(element => {
       const elementEntity = { name: element.data.EdfiXsd.xsd_Name };
-      model.children[0].children.push(elementEntity);
+      // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
+      if (svgElement.children[0].children) svgElement.children[0].children.push(elementEntity);
     });
-    result.push(model);
+    result.push(svgElement);
   });
   return result;
 }

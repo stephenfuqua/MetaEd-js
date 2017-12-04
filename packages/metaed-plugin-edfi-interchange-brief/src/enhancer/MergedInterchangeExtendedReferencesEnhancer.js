@@ -1,14 +1,16 @@
 // @flow
-import { ReferentialProperty } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import { ReferentialProperty, isReferentialProperty } from 'metaed-core';
+import type { MetaEdEnvironment, TopLevelEntity, EntityProperty } from 'metaed-core';
+import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
 import { escapeForMarkdownTableContent } from './Shared';
 import { addEdfiBriefInterchangeTo } from '../model/MergedInterchange';
+import type { ReferencedUsageInfo } from '../model/ReferencedUsageInfo';
 
-function buildReferencedUsageInfo(referentialProperty, rootEntityName, isOptional) {
-  const descriptor = referentialProperty.referencedEntity;
-  const cardinalityDescription = `${isOptional ? 'Optional' : 'Required'}. `;
-  let name;
-  let description;
+function buildReferencedUsageInfo(referentialProperty: ReferentialProperty, rootEntityName: string, isOptional): ReferencedUsageInfo {
+  const descriptor: TopLevelEntity = referentialProperty.referencedEntity;
+  const cardinalityDescription: string = `${isOptional ? 'Optional' : 'Required'}. `;
+  let name: string;
+  let description: string;
   if (descriptor.type !== 'descriptor') {
     name = referentialProperty.data.EdfiXsd.xsd_Name;
     description = cardinalityDescription + referentialProperty.documentation;
@@ -24,12 +26,8 @@ function buildReferencedUsageInfo(referentialProperty, rootEntityName, isOptiona
   };
 }
 
-function isReferentialProperty(property) {
-  return Object.keys(property).includes('referencedEntity');
-}
-
-function getReferenceUsageInfoList(entityExclusionList, previouslyMatchedProperties, referentialProperty: ReferentialProperty, rootEntityNameParam, isParentRelationshipOptional) {
-  const results = [];
+function getReferenceUsageInfoList(entityExclusionList, previouslyMatchedProperties, referentialProperty: ReferentialProperty, rootEntityNameParam, isParentRelationshipOptional): Array<ReferencedUsageInfo> {
+  const results: Array<ReferencedUsageInfo> = [];
   const rootEntityName = rootEntityNameParam || referentialProperty.parentEntityName;
   const isOptional = isParentRelationshipOptional || referentialProperty.isOptional || referentialProperty.isOptionalCollection;
   if (referentialProperty.type === 'domainEntity'
@@ -45,17 +43,17 @@ function getReferenceUsageInfoList(entityExclusionList, previouslyMatchedPropert
   return results;
 }
 
-function getEntityAndParents(referencedEntity) {
-  const results = [referencedEntity];
+function getEntityAndParents(referencedEntity): Array<TopLevelEntity> {
+  const results: Array<TopLevelEntity> = [referencedEntity];
   if (referencedEntity.baseEntity) {
     results.push(...getEntityAndParents(referencedEntity.baseEntity));
   }
   return results;
 }
 
-function getPropertiesToScan(topLevelEntity, identityOnly) {
-  const results = [];
-  const propertiesToAdd = (identityOnly ? topLevelEntity.identityProperties : topLevelEntity.properties).filter(isReferentialProperty);
+function getPropertiesToScan(topLevelEntity, identityOnly): Array<ReferentialProperty> {
+  const results: Array<ReferentialProperty> = [];
+  const propertiesToAdd: Array<ReferentialProperty> = (((identityOnly ? topLevelEntity.identityProperties : topLevelEntity.properties).filter(isReferentialProperty): any): Array<ReferentialProperty>);
   results.push(...propertiesToAdd);
 
   if (topLevelEntity.baseEntity) {
@@ -69,33 +67,33 @@ function sortByMetaEdName(a: any, b: any) {
   return 0;
 }
 export function enhance(metaEd: MetaEdEnvironment) {
-  const xsdRepository = (metaEd.plugin.get('edfi-Xsd'): any).entity;
+  const xsdRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfi-Xsd'): any).entity;
   xsdRepository.mergedInterchange.forEach(interchange => {
     addEdfiBriefInterchangeTo(interchange);
-    const interchangeTopLevelEntities = interchange.elements.reduce((array, element) => {
+    const interchangeTopLevelEntities: Array<TopLevelEntity> = interchange.elements.reduce((array, element) => {
       array.push(...getEntityAndParents(element.referencedEntity));
       return array;
     }, []);
-    const identityTemplatesTopLevelEntities = interchange.identityTemplates.reduce((array, element) => {
+    const identityTemplatesTopLevelEntities: Array<TopLevelEntity> = interchange.identityTemplates.reduce((array, element) => {
       array.push(...getEntityAndParents(element.referencedEntity));
       return array;
     }, []);
-    const topLevelEntities = interchangeTopLevelEntities.concat(identityTemplatesTopLevelEntities);
+    const topLevelEntities: Array<TopLevelEntity> = interchangeTopLevelEntities.concat(identityTemplatesTopLevelEntities);
 
-    const interchangeTopLevelReferenceProperties = interchange.elements.reduce((array, element) => {
+    const interchangeTopLevelReferenceProperties: Array<ReferentialProperty> = interchange.elements.reduce((array, element) => {
       array.push(...getPropertiesToScan(element.referencedEntity));
       return array;
     }, []);
-    const identityTemplatesTopLevelReferenceProperties = interchange.identityTemplates.reduce((array, element) => {
+    const identityTemplatesTopLevelReferenceProperties: Array<ReferentialProperty> = interchange.identityTemplates.reduce((array, element) => {
       array.push(...getPropertiesToScan(element.referencedEntity));
       return array;
     }, []);
     const topLevelReferenceProperties: Array<ReferentialProperty> = interchangeTopLevelReferenceProperties.concat(identityTemplatesTopLevelReferenceProperties);
-    const previouslyMatchedProperties = [];
-    const referenceExclusionList = topLevelEntities.map(i => i.metaEdName);
-    const allExtendedReferences = topLevelReferenceProperties.reduce(
+    const previouslyMatchedProperties: Array<EntityProperty> = [];
+    const referenceExclusionList: Array<string> = topLevelEntities.map(i => i.metaEdName);
+    const allExtendedReferences: Array<ReferencedUsageInfo> = topLevelReferenceProperties.reduce(
       (arr, tlrp) => {
-        const extendedReferencesFromProperty = [...getReferenceUsageInfoList(referenceExclusionList, previouslyMatchedProperties, tlrp)];
+        const extendedReferencesFromProperty: Array<ReferencedUsageInfo> = [...getReferenceUsageInfoList(referenceExclusionList, previouslyMatchedProperties, tlrp)];
         extendedReferencesFromProperty.sort(sortByMetaEdName);
         if (extendedReferencesFromProperty.length > 0) {
           arr.push(...extendedReferencesFromProperty);
