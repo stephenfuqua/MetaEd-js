@@ -13,10 +13,10 @@ export type InputDirectory = {
   isExtension: boolean,
 }
 
-export function loadFiles(state: State): State {
+export function loadFiles(state: State): void {
   if (state.inputDirectories == null) {
     winston.warn('FileSystemFilenameLoader: no input directories');
-    return state;
+    return;
   }
 
   const fileSets: FileSet[] = [];
@@ -46,6 +46,5 @@ export function loadFiles(state: State): State {
   });
 
   state.loadedFileSet.push(...fileSets);
-  return state;
 }
 

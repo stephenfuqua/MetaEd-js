@@ -94,6 +94,7 @@
     "atom-message-panel": "^1.3.0",
     "atom-package-deps": "^4.6.0",
     "atom-space-pen-views": "2.2.0",
+    "babel-polyfill": "^6.26.0",
     "ed-fi-model-2.0": "metaed-1.0",
     "fs-extra": "^3.0.1",
     "metaed-commands": "1.1.1-dev.6",

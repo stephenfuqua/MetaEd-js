@@ -5,9 +5,10 @@ import ffs from 'final-fs';
 import { exec } from 'child_process';
 import diff2html from 'diff2html';
 import type { GeneratedOutput, State } from 'metaed-core';
-import { newState, loadPlugins, loadFiles, loadFileIndex, buildParseTree, buildMetaEd, walkBuilders, runValidators, runEnhancers, runGenerators, fileMapForFailure } from 'metaed-core';
+import { newState, loadPlugins, loadFiles, loadFileIndex, buildParseTree, buildMetaEd, walkBuilders, runEnhancers, runGenerators, fileMapForFailure } from 'metaed-core';
 
 jest.unmock('final-fs');
+jest.setTimeout(15000);
 
 describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
@@ -39,32 +40,30 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     });
 
     state.metaEd.dataStandardVersion = '2.0.0';
-    const endState: State = R.pipe(
-      loadPlugins,
-      loadFiles,
-      loadFileIndex,
-      buildParseTree(buildMetaEd),
-      walkBuilders,
-      runValidators,
-      runEnhancers,
-      runGenerators,
-      fileMapForFailure,
-    )(state);
 
-    endState.metaEd.entity.namespaceInfo.forEach(namespace =>
+    loadPlugins(state);
+    loadFiles(state);
+    loadFileIndex(state);
+    buildParseTree(buildMetaEd, state);
+    await walkBuilders(state);
+    runEnhancers(state);
+    runGenerators(state);
+    fileMapForFailure(state);
+
+    state.metaEd.entity.namespaceInfo.forEach(namespace =>
       namespace.data.edfiXsd.xsd_Schema.sections.forEach(section => {
         complexTypeNames.push(section.sectionAnnotation.documentation, ...section.complexTypes.map(y => y.name));
         simpleTypeNames.push(section.sectionAnnotation.documentation, ...section.simpleTypes.map(y => y.name));
       }));
 
-    coreResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'edfiXsd.XsdGenerator')).generatedOutput);
+    coreResult = R.head(R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.XsdGenerator')).generatedOutput);
     coreFileBaseName = path.basename(coreResult.fileName, '.xsd');
     generatedCoreXsd = `${outputDirectory}/${coreFileBaseName}.xsd`;
     authoritativeCoreXsd = `${artifactPath}/${coreFileBaseName}-Authoritative.xsd`;
 
     await ffs.writeFile(generatedCoreXsd, coreResult.resultString, 'utf-8');
 
-    schemaResult = R.head(R.head(endState.generatorResults.filter(x => x.generatorName === 'edfiXsd.SchemaAnnotationGenerator')).generatedOutput);
+    schemaResult = R.head(R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.SchemaAnnotationGenerator')).generatedOutput);
     schemaFileBaseName = path.basename(schemaResult.fileName, '.xsd');
     generatedSchemaXsd = `${outputDirectory}/${schemaFileBaseName}.xsd`;
     authoritativeSchemaXsd = `${artifactPath}/${schemaFileBaseName}-Authoritative.xsd`;

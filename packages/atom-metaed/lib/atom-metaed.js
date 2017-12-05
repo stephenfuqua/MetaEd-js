@@ -1,6 +1,9 @@
 /** @babel */
 // @flow
 
+// Get regeneratorRuntime async/await polyfill
+import 'babel-polyfill';
+
 import path from 'path';
 import fs from 'fs-extra';
 import { v4 as newUuid } from 'uuid';
@@ -9,7 +12,7 @@ import {
   createMetaEdFile,
   loadCoreBufferedFiles,
   loadExtensionBufferedFiles,
-  startingFromFileLoadP,
+  executePipeline,
   newState,
 } from 'metaed-core';
 
@@ -59,8 +62,6 @@ let metaEdConsole: ?MetaEdConsole;
 let subscriptions: ?CompositeDisposable;
 let contextMenuHider: Hider;
 let mostRecentState: State = newState();
-
-const stateGetter = (): State => mostRecentState;
 
 function reportError(error) {
   try {
@@ -196,7 +197,7 @@ export function activate(state: any) {
     }));
   }
 
-  subscriptions.add(atom.views.addViewProvider(MetaEdAboutModel, metaEdAboutView(stateGetter)));
+  subscriptions.add(atom.views.addViewProvider(MetaEdAboutModel, metaEdAboutView()));
   subscriptions.add(atom.workspace.addOpener((uri) => {
     if (uri !== 'atom-metaed://about') return null;
     return new MetaEdAboutModel();
@@ -338,7 +339,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
   });
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
-  const linterMessagesP: Promise<?any[]> = startingFromFileLoadP(mostRecentState)
+  const linterMessagesP: Promise<?any[]> = executePipeline(mostRecentState)
     .then((endState: State) => {
       mostRecentState = endState;
       return mostRecentState.validationFailure.map((errorMessage) => {

@@ -2,9 +2,10 @@
 import winston from 'winston';
 import type { State } from '../State';
 import type { Validator } from '../validator/Validator';
+import type { PluginManifest } from '../plugin/PluginTypes';
 
-export function execute(state: State): State {
-  state.pluginManifest.filter(plugin => plugin.enabled).forEach(pluginManifest => {
+export function execute(state: State): void {
+  state.pluginManifest.filter((pluginManifest: PluginManifest) => pluginManifest.enabled).forEach(pluginManifest => {
     try {
       pluginManifest.metaEdPlugin.validator.forEach((validator: Validator) => {
         if (state.metaEd.entity != null && state.metaEd.propertyIndex != null) {
@@ -12,10 +13,8 @@ export function execute(state: State): State {
         }
       });
     } catch (err) {
-      winston.error(`Plugin ${pluginManifest.description} threw an exception, and will be disabled.`);
+      winston.error(`Plugin ${pluginManifest.npmName} threw exception '${err.message}', and will be disabled.`);
       pluginManifest.enabled = false;
     }
   });
-
-  return state;
 }

@@ -21,15 +21,15 @@ describe('When a single file', () => {
   });
 
   it('Should load the file contents', () => {
-    const state = loadFiles(Object.assign(newState(),
-      {
-        inputDirectories: [{
-          path: '/fake/dir',
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
-        }],
-      }));
+    const state = Object.assign(newState(), {
+      inputDirectories: [{
+        path: '/fake/dir',
+        namespace: 'edfi',
+        projectExtension: '',
+        isExtension: false,
+      }],
+    });
+    loadFiles(state);
     const contents = state.loadedFileSet[0].files[0].contents;
     expect(contents).toMatch(new RegExp('Domain Entity'));
     expect(contents).toMatch(new RegExp('DomainEntity1'));
@@ -70,15 +70,16 @@ describe('When multiple files', () => {
 
 
   it('Should load the file contents', () => {
-    const state = loadFiles(Object.assign(newState(),
-      {
-        inputDirectories: [{
-          path: '/fake',
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
-        }],
-      }));
+    const state = Object.assign(newState(), {
+      inputDirectories: [{
+        path: '/fake',
+        namespace: 'edfi',
+        projectExtension: '',
+        isExtension: false,
+      }],
+    });
+    loadFiles(state);
+
     const associationContents = state.loadedFileSet[0].files[0].contents;
     expect(associationContents).toMatch(new RegExp('Association'));
     expect(associationContents).toMatch(new RegExp('Domain1'));

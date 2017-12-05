@@ -7,10 +7,10 @@ import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
 import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
 
 export const validateSyntax = R.curry(
-(parseTreeBuilder: ParseTreeBuilder, state: State): State => {
+(parseTreeBuilder: ParseTreeBuilder, state: State): void => {
   if (state.loadedFileSet == null) {
     winston.error('ValidateSyntax: no files to load found');
-    return state;
+    return;
   }
 
   state.loadedFileSet.forEach(fileToLoad => {
@@ -33,5 +33,4 @@ export const validateSyntax = R.curry(
       state.validationFailure.push(...validationFailures);
     });
   });
-  return state;
 });
