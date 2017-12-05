@@ -1,6 +1,7 @@
 // @flow
 import fs from 'final-fs';
 import path from 'path';
+import Topo from 'topo';
 import winston from 'winston';
 import type { PluginManifest, MetaEdPlugin } from './PluginTypes';
 import { NoMetaEdPlugin } from './PluginTypes';
@@ -27,6 +28,7 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
   try {
     packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json')));
   } catch (err) {
+    // ignore errors on file loading
     return null;
   }
 
@@ -49,26 +51,41 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
   };
 }
 
-// Scans the immediate subdirectories for plugins. Requires absolute path.
+// Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
 export function scanDirectories(directories: string | Array<string>, options: PluginOptions): Array<PluginManifest> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
+  const pluginOrdering: Topo = new Topo();
 
-  const result = [];
   directories.forEach(directory => {
+    let subdirectories: ?Array<string> = null;
+
     try {
-      const subdirectories = fs.readdirSync(directory).filter(file => fs.statSync(path.join(directory, file)).isDirectory());
-      subdirectories.forEach(subdirectory => {
-        if (!subdirectory.startsWith('metaed-plugin-')) return;
-        const directoryToTry = path.join(directory, subdirectory);
-        const manifest = loadPluginManifest(directoryToTry, options);
-        if (manifest) result.push(manifest);
-      });
+      subdirectories = fs.readdirSync(directory).filter(file => fs.statSync(path.join(directory, file)).isDirectory());
     } catch (err) {
       // ignore invalid directories
+      return;
     }
+    if (!subdirectories) return;
+
+    subdirectories.forEach(subdirectory => {
+      if (!subdirectory.startsWith('metaed-plugin-')) return;
+      const directoryToTry: string = path.join(directory, subdirectory);
+      const manifest: ?PluginManifest = loadPluginManifest(directoryToTry, options);
+      if (manifest) {
+        try {
+          pluginOrdering.add(manifest, {
+            group: manifest.npmName,
+            after: manifest.dependencies,
+          });
+        } catch (err) {
+          winston.error(`PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${manifest.description}' failed due to dependency issue: ${err.message}`);
+        }
+      }
+    });
   });
-  return result;
+
+  return pluginOrdering.nodes;
 }
 
 export function materializePlugin(pluginData: any, pluginManifest: PluginManifest) {

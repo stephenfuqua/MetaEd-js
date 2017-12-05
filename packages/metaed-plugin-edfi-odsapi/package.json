@@ -13,7 +13,9 @@
       "authorName": "Ed-Fi Alliance",
       "metaEdVersion": "1.x",
       "technologyVersion": "*",
-      "dependencies": []
+      "dependencies": [
+        "metaed-plugin-edfi-unified"
+      ]
     }
   },
   "dependencies": {

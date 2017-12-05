@@ -23,7 +23,7 @@ import Hider from './context-menu-hider';
 import reportException from './ExceptionReporter';
 import MetaEdLog from './MetaEdLog';
 import MetaEdConfig from './MetaEdConfig';
-import { MetaEdAboutModel, MetaEdAboutView } from './MetaEdAbout';
+import { MetaEdAboutModel, metaEdAboutView } from './MetaEdAbout';
 import { updateEditorIfCore,
   addCopyBackToCore,
   createFromTemplate,
@@ -58,6 +58,9 @@ let metaEdConfig: ?MetaEdConfig;
 let metaEdConsole: ?MetaEdConsole;
 let subscriptions: ?CompositeDisposable;
 let contextMenuHider: Hider;
+let mostRecentState: State = newState();
+
+const stateGetter = (): State => mostRecentState;
 
 function reportError(error) {
   try {
@@ -193,7 +196,7 @@ export function activate(state: any) {
     }));
   }
 
-  subscriptions.add(atom.views.addViewProvider(MetaEdAboutModel, MetaEdAboutView));
+  subscriptions.add(atom.views.addViewProvider(MetaEdAboutModel, metaEdAboutView(stateGetter)));
   subscriptions.add(atom.workspace.addOpener((uri) => {
     if (uri !== 'atom-metaed://about') return null;
     return new MetaEdAboutModel();
@@ -330,14 +333,15 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
     });
   }
 
-  let state: State = Object.assign(newState(), {
+  mostRecentState = Object.assign(newState(), {
     inputDirectories,
   });
-  if (validateOnTheFly()) state = loadFromModifiedEditors(state);
+  if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
-  const linterMessagesP: Promise<?any[]> = startingFromFileLoadP(state)
-    .then((endState: State) =>
-      endState.validationFailure.map((errorMessage) => {
+  const linterMessagesP: Promise<?any[]> = startingFromFileLoadP(mostRecentState)
+    .then((endState: State) => {
+      mostRecentState = endState;
+      return mostRecentState.validationFailure.map((errorMessage) => {
         const tokenLength: number = (errorMessage.sourceMap && errorMessage.sourceMap.tokenText) ? errorMessage.sourceMap.tokenText.length : 0;
         const adjustedLine: number = (!errorMessage.fileMap || errorMessage.fileMap.lineNumber === 0) ? 0 : errorMessage.fileMap.lineNumber - 1;
         const characterPosition: number = errorMessage.sourceMap ? errorMessage.sourceMap.column : 0;
@@ -353,8 +357,8 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
             ],
           },
         };
-      }),
-    )
+      });
+    })
     .catch((exception) => {
       reportException(exception);
       console.error(exception);
