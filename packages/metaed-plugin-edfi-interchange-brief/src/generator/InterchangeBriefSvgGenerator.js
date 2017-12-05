@@ -18,12 +18,12 @@ function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
       children: [{ name: '<xs:choice>', children: [] }],
     };
     interchange.identityTemplates.forEach(identityTemplate => {
-      const identityTemplateEntity = { name: identityTemplate.data.EdfiXsd.xsd_Name };
+      const identityTemplateEntity = { name: identityTemplate.data.edfiXsd.xsd_Name };
       // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
       if (svgElement.children[0].children) svgElement.children[0].children.push(identityTemplateEntity);
     });
     interchange.elements.forEach(element => {
-      const elementEntity = { name: element.data.EdfiXsd.xsd_Name };
+      const elementEntity = { name: element.data.edfiXsd.xsd_Name };
       // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
       if (svgElement.children[0].children) svgElement.children[0].children.push(elementEntity);
     });
@@ -54,8 +54,8 @@ export async function generate(metaEd: MetaEdEnvironment): GeneratorResult {
           name: `${interchange.name}-InterchangeBrief`,
           fileName: `${interchange.name}-InterchangeBrief.png`,
           folderName: 'InterchangeBrief/img',
-          resultString: imageBase64,
-          resultStream: null,
+          resultString: '',
+          resultStream: new Buffer(imageBase64, 'base64'),
         });
         horseman.close();
       });

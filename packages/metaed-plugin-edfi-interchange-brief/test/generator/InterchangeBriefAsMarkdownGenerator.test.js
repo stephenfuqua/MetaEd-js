@@ -162,12 +162,12 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity1.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity1.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
       referencedEntity: domainEntity1,
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity2.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity2.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
       referencedEntity: domainEntity2,
     });
     addEdfiBriefInterchangeTo(interchange1);
@@ -181,12 +181,12 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity3.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity3.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
       referencedEntity: domainEntity3,
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
-      data: { EdfiXsd: { xsd_Name: domainEntity4.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity4.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
       referencedEntity: domainEntity4,
     });
     addEdfiBriefInterchangeTo(interchange2);

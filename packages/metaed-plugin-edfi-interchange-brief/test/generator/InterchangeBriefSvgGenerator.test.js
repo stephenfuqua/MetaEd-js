@@ -45,7 +45,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity1.metaEdName,
       data: {
         EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation },
-        EdfiXsd: { xsd_Name: domainEntity1.metaEdName },
+        edfiXsd: { xsd_Name: domainEntity1.metaEdName },
       },
       referencedEntity: domainEntity1,
     });
@@ -53,7 +53,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity2.metaEdName,
       data: {
         EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation },
-        EdfiXsd: { xsd_Name: domainEntity2.metaEdName },
+        edfiXsd: { xsd_Name: domainEntity2.metaEdName },
       },
       referencedEntity: domainEntity2,
     });
@@ -69,7 +69,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity3.metaEdName,
       data: {
         EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation },
-        EdfiXsd: { xsd_Name: domainEntity3.metaEdName },
+        edfiXsd: { xsd_Name: domainEntity3.metaEdName },
       },
       referencedEntity: domainEntity3,
     });
@@ -77,7 +77,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity4.metaEdName,
       data: {
         EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation },
-        EdfiXsd: { xsd_Name: domainEntity4.metaEdName },
+        edfiXsd: { xsd_Name: domainEntity4.metaEdName },
       },
       referencedEntity: domainEntity4,
     });

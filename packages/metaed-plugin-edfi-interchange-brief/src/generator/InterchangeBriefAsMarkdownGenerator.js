@@ -37,28 +37,34 @@ export const registerPartials = R.once(
   });
 
 export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+  console.log('started markdown generator');
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   const generatedOutput: Array<GeneratedOutput> = [];
   registerPartials();
-
+  console.log('registered partials');
   ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>).forEach((interchange: MergedInterchange) => {
+    console.log('assigning humanized uppercase name');
     interchange.data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName = toHumanizedUppercaseMetaEdName(interchange.metaEdName);
+    console.log('running handlebars markdown template');
     const markdown: string = template().interchangeBrief(interchange);
+    console.log('pushing generated output loop');
     generatedOutput.push({
-      name: 'MD',
+      name: 'Interchange Brief Html',
       fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
       folderName: 'InterchangeBrief',
       resultString: `${header}${marked(markdown)}`,
       resultStream: null,
     });
   });
+  console.log('pushing confluence generated output');
   generatedOutput.push({
-    name: 'MD',
+    name: 'confluence-like.css',
     fileName: 'confluence-like.css',
     folderName: 'InterchangeBrief',
     resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
     resultStream: null,
   });
+  console.log('returning results of markdown generator');
   return {
     generatorName,
     generatedOutput,

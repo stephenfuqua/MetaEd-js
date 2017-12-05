@@ -7,6 +7,14 @@ import type { State } from '../State';
 
 winston.cli();
 
+function writeOutputFiles(result, outputDirectory) {
+  result.generatedOutput.forEach(output => {
+    if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`)) ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
+    if (output.resultString) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
+    else if (output.resultStream) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultStream);
+  });
+}
+
 export function execute(state: State): State {
   const outputDirectory = state.outputDirectory
     ? state.outputDirectory
@@ -21,10 +29,16 @@ export function execute(state: State): State {
   ffs.mkdirRecursiveSync(outputDirectory);
   if (ffs.existsSync(outputDirectory)) {
     state.generatorResults.forEach(result => {
-      result.generatedOutput.forEach(output => {
-        if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`)) ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
-        ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
-      });
+      // if (result is a Promise)
+      if (result.then) {
+        winston.info('Resolving Promise:');
+        // $FlowIgnore - flow was expecting a GeneratorResults not a promise
+        result.then((resolvedResult) => {
+          winston.info('Resolving Promise.');
+          writeOutputFiles(resolvedResult, outputDirectory);
+          winston.info('Done Resolving Promise.');
+        });
+      } else writeOutputFiles(result, outputDirectory);
     });
   }
   return state;

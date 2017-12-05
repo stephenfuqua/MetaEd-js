@@ -3,6 +3,7 @@ import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { String as sugar } from 'sugar';
 
 export function addEdfiBriefInterchangeTo(mergedInterchange: MergedInterchange) {
+  if (mergedInterchange.data.EdfiInterchangeBrief) return;
   mergedInterchange.data.EdfiInterchangeBrief = {
     interchangeBriefEntities: [],
     interchangeBriefExtendedReferences: [],

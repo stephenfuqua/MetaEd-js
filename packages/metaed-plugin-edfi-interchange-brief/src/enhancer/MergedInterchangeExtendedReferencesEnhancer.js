@@ -6,16 +6,18 @@ import { escapeForMarkdownTableContent } from './Shared';
 import { addEdfiBriefInterchangeTo } from '../model/MergedInterchange';
 import type { ReferencedUsageInfo } from '../model/ReferencedUsageInfo';
 
+const enhancerName = 'Merged Interchange Extended References Enhancer';
+
 function buildReferencedUsageInfo(referentialProperty: ReferentialProperty, rootEntityName: string, isOptional): ReferencedUsageInfo {
   const descriptor: TopLevelEntity = referentialProperty.referencedEntity;
   const cardinalityDescription: string = `${isOptional ? 'Optional' : 'Required'}. `;
   let name: string;
   let description: string;
   if (descriptor.type !== 'descriptor') {
-    name = referentialProperty.data.EdfiXsd.xsd_Name;
+    name = referentialProperty.data.edfiXsd.xsd_Name;
     description = cardinalityDescription + referentialProperty.documentation;
   } else {
-    name = descriptor.data.EdfiXsd.xsd_DescriptorName;
+    name = descriptor.data.edfiXsd.xsd_DescriptorName;
     description = cardinalityDescription + descriptor.documentation;
   }
   return {
@@ -102,4 +104,8 @@ export function enhance(metaEd: MetaEdEnvironment) {
       }, []);
     interchange.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(...allExtendedReferences);
   });
+  return {
+    enhancerName,
+    success: true,
+  };
 }
