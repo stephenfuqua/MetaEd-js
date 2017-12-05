@@ -12,6 +12,7 @@ function writeOutputFiles(result, outputDirectory) {
     if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`)) ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
     if (output.resultString) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
     else if (output.resultStream) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultStream);
+    else winston.error(`No output stream or string for ${result.name}`);
   });
 }
 
@@ -34,9 +35,7 @@ export function execute(state: State): State {
         winston.info('Resolving Promise:');
         // $FlowIgnore - flow was expecting a GeneratorResults not a promise
         result.then((resolvedResult) => {
-          winston.info('Resolving Promise.');
           writeOutputFiles(resolvedResult, outputDirectory);
-          winston.info('Done Resolving Promise.');
         });
       } else writeOutputFiles(result, outputDirectory);
     });
