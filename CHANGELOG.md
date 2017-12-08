@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.1-dev.10"></a>
+## [1.1.1-dev.10](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.1.1-dev.9...v1.1.1-dev.10) (2017-12-08)
+
+
+
+
+**Note:** Version bump only for package metaed-js
+
 <a name="1.1.1-dev.9"></a>
 ## [1.1.1-dev.9](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.1.1-dev.8...v1.1.1-dev.9) (2017-12-08)
 
