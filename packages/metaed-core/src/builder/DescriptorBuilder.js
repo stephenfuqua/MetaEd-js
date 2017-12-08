@@ -1,5 +1,5 @@
 // @flow
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newDescriptor, asDescriptor } from '../model/Descriptor';
 import type { DescriptorSourceMap } from '../model/Descriptor';

@@ -48,9 +48,11 @@ export async function execute(state: State): Promise<void> {
   builders.push(new SharedStringBuilder(state.metaEd, state.validationFailure));
   builders.push(new StringTypeBuilder(state.metaEd, state.validationFailure));
 
+  const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
+
   // eslint-disable-next-line no-restricted-syntax
   for (const builder of builders) {
-    antlr4.tree.ParseTreeWalker.DEFAULT.walk(builder, state.parseTree);
+    parseTreeWalker.walk(builder, state.parseTree);
     // eslint-disable-next-line no-await-in-loop
     await nextMacroTask();
   }

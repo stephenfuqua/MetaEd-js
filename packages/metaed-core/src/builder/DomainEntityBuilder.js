@@ -1,5 +1,5 @@
 // @flow
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newDomainEntity, asDomainEntity } from '../model/DomainEntity';
 import { newAbstractEntity } from '../model/AbstractEntity';

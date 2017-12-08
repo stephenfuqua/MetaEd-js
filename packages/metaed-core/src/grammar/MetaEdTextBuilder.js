@@ -28,8 +28,14 @@ function listen(metaEdText: string, listener: MetaEdGrammarListener): string[] {
   parser.removeErrorListeners();
   parser.addErrorListener(errorListener);
   const parserContext = parser.metaEd();
-  antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, parserContext);
-  return errorListener.errorMessages;
+  const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
+  parseTreeWalker.walk(listener, parserContext);
+  const result = errorListener.errorMessages;
+
+  lexer.removeErrorListeners();
+  parser.removeErrorListeners();
+
+  return result;
 }
 
 export class MetaEdTextBuilder {

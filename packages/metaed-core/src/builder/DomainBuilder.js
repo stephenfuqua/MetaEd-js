@@ -1,6 +1,6 @@
 // @flow
 
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 
 import type { Domain, DomainSourceMap } from '../model/Domain';
