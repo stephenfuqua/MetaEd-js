@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import ffs from 'final-fs';
 import path from 'path';
 import winston from 'winston';
@@ -7,14 +6,18 @@ import type { State } from '../State';
 
 winston.cli();
 
-export function execute(state: State): State {
-  const outputDirectory = state.outputDirectory
-    ? state.outputDirectory
-    : path.resolve(R.last(state.inputDirectories).path, './MetaEdOutput');
+export function execute(state: State): void {
+  let outputDirectory: string = '';
+  if (state.outputDirectory) {
+    outputDirectory = state.outputDirectory;
+  } else if (state.inputDirectories && state.inputDirectories.length > 0) {
+    const [defaultRootDirectory] = state.inputDirectories.slice(-1);
+    outputDirectory = path.resolve(defaultRootDirectory.path, './MetaEdOutput');
+  }
 
   if (!ffs.exists(outputDirectory)) {
-    winston.info('No output directory specified. Not writing files.');
-    return state;
+    winston.error(`WriteOutput: Output directory '${outputDirectory}' does not exist. Not writing files.`);
+    return;
   }
   winston.info(`Output directory: ${outputDirectory}`);
   ffs.rmdirRecursiveSync(outputDirectory);
@@ -27,5 +30,4 @@ export function execute(state: State): State {
       });
     });
   }
-  return state;
 }

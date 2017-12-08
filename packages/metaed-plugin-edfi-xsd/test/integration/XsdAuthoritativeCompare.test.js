@@ -8,7 +8,7 @@ import type { GeneratedOutput, State } from 'metaed-core';
 import { newState, loadPlugins, loadFiles, loadFileIndex, buildParseTree, buildMetaEd, walkBuilders, runEnhancers, runGenerators, fileMapForFailure } from 'metaed-core';
 
 jest.unmock('final-fs');
-jest.setTimeout(15000);
+jest.setTimeout(20000);
 
 describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
@@ -46,8 +46,12 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    runEnhancers(state);
-    runGenerators(state);
+
+    state.pluginManifest.forEach(pluginManifest => {
+      runEnhancers(pluginManifest, state);
+      runGenerators(pluginManifest, state);
+    });
+
     fileMapForFailure(state);
 
     state.metaEd.entity.namespaceInfo.forEach(namespace =>

@@ -23,56 +23,71 @@ const logger = new Logger({
 logger.cli();
 
 export async function executePipeline(state: State): Promise<State> {
-  logger.info('Load Files...');
-  loadFiles(state);
-  await nextMacroTask();
-
-  logger.info('Load Plugins...');
+  logger.info('Loading plugins...');
   loadPlugins(state);
   await nextMacroTask();
 
-  logger.info('Validate Syntax...');
+  logger.info('Loading files...');
+  loadFiles(state);
+  await nextMacroTask();
+
+  logger.info('Validating syntax...');
   validateSyntax(buildTopLevelEntity, state);
   await nextMacroTask();
 
-  logger.info('Load File Index...');
+  logger.info('Loading file indexes...');
   loadFileIndex(state);
   await nextMacroTask();
 
-  logger.info('Build Parse Tree...');
+  logger.info('Building parse tree...');
   buildParseTree(buildMetaEd, state);
   await nextMacroTask();
 
-  logger.info('Walk Builders...');
+  logger.info('Walking builders...');
   await walkBuilders(state);
 
-  if (state.pipelineOptions.runValidators) {
-    logger.info('Run Validators...');
-    runValidators(state);
-    await nextMacroTask();
-  } else {
-    logger.info('Skipping Validators...');
-  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const pluginManifest of state.pluginManifest) {
+    if (pluginManifest.enabled) {
+      try {
+        if (state.pipelineOptions.runValidators) {
+          logger.info(`Running ${pluginManifest.npmName} validators`);
 
-  if (state.pipelineOptions.runEnhancers) {
-    logger.info('Run Enhancers...');
-    runEnhancers(state);
-    await nextMacroTask();
-  } else {
-    logger.info('Skipping Enhancers...');
+          runValidators(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+
+        if (state.pipelineOptions.runEnhancers) {
+          logger.info(`Running ${pluginManifest.npmName} enhancers`);
+
+          runEnhancers(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+
+        if (state.pipelineOptions.runGenerators) {
+          logger.info(`Running ${pluginManifest.npmName} generators`);
+
+          runGenerators(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+      } catch (err) {
+        logger.error(`Plugin ${pluginManifest.npmName} threw exception '${err.message}', and will be disabled.`);
+        logger.error(err.stack);
+        pluginManifest.enabled = false;
+      }
+    }
   }
 
   if (state.pipelineOptions.runGenerators) {
-    logger.info('Run Generators...');
-    runGenerators(state);
-    await nextMacroTask();
+    logger.info('Writing output...');
     writeOutput(state);
     await nextMacroTask();
-  } else {
-    logger.info('Skipping Generators...');
   }
 
-  logger.info('Map Failures...');
+  logger.info('Mapping failures...');
   fileMapForFailure(state);
   await nextMacroTask();
 
