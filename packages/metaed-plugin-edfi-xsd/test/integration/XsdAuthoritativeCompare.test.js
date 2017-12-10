@@ -47,10 +47,12 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
 
-    state.pluginManifest.forEach(pluginManifest => {
-      runEnhancers(pluginManifest, state);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const pluginManifest of state.pluginManifest) {
+      // eslint-disable-next-line no-await-in-loop
+      await runEnhancers(pluginManifest, state);
       runGenerators(pluginManifest, state);
-    });
+    }
 
     fileMapForFailure(state);
 

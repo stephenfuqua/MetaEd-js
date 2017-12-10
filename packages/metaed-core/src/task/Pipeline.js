@@ -61,7 +61,8 @@ export async function executePipeline(state: State): Promise<State> {
         if (state.pipelineOptions.runEnhancers) {
           logger.info(`Running ${pluginManifest.npmName} enhancers`);
 
-          runEnhancers(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await runEnhancers(pluginManifest, state);
           // eslint-disable-next-line no-await-in-loop
           await nextMacroTask();
         }
