@@ -336,6 +336,11 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
 
   mostRecentState = Object.assign(newState(), {
     inputDirectories,
+    pipelineOptions: {
+      runValidators: true,
+      runEnhancers: true,
+      runGenerators: false,
+    },
   });
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
