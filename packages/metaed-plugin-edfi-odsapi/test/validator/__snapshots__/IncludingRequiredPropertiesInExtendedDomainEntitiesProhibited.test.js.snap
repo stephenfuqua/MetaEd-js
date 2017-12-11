@@ -4,8 +4,8 @@ exports[`when a domain entity extension extends a domain entity with a required 
 
 exports[`when a domain entity extension extends a domain entity with a required property should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 16,
-  "line": 9,
-  "tokenText": "EntityName",
+  "column": 9,
+  "line": 10,
+  "tokenText": "RequiredProperty",
 }
 `;

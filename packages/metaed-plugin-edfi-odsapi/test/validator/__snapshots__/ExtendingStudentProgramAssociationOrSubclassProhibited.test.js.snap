@@ -2,8 +2,20 @@
 
 exports[`when an association extension extends a subclass of student program association should have validation failure -> message 1`] = `"Association Extension CoreSubclassName is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
-exports[`when an association extension extends a subclass of student program association should have validation failure -> sourceMap 1`] = `undefined`;
+exports[`when an association extension extends a subclass of student program association should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 18,
+  "tokenText": "Association",
+}
+`;
 
 exports[`when an association extension extends student program association should have validation failure -> message 1`] = `"Association Extension StudentProgramAssociation is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
-exports[`when an association extension extends student program association should have validation failure -> sourceMap 1`] = `undefined`;
+exports[`when an association extension extends student program association should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Association",
+}
+`;

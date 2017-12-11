@@ -18,7 +18,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         validatorName: 'ExtendingSubclassOfEducationOrganizationProhibited',
         category: 'warning',
         message: `${domainEntityExtension.typeHumanizedName} ${domainEntityExtension.metaEdName} is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
-        sourceMap: domainEntityExtension.sourceMap.baseEntityName,
+        sourceMap: domainEntityExtension.sourceMap.type,
         fileMap: null,
       });
     }

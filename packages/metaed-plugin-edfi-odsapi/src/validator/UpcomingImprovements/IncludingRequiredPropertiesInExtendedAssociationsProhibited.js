@@ -11,7 +11,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           validatorName: 'IncludingRequiredPropertiesInExtendedAssociationsProhibited',
           category: 'warning',
           message: `${associationExtension.typeHumanizedName} ${associationExtension.metaEdName} is an extension with required property ${property.metaEdName}.  The ODS/API does not currently support this pattern.`,
-          sourceMap: associationExtension.sourceMap.baseEntityName,
+          sourceMap: property.sourceMap.type,
           fileMap: null,
         });
       }
