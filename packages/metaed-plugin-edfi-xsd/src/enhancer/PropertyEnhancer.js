@@ -1,8 +1,8 @@
 // @flow
-import R from 'ramda';
 import type {
   MetaEdEnvironment,
   EnhancerResult,
+  TopLevelEntity,
   EntityProperty,
   ReferentialProperty,
   SimpleProperty,
@@ -28,7 +28,13 @@ import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';
 
-const queryableFieldsFrom = R.chain(x => x.queryableFields);
+// Ramda flatmap was too slow
+const queryableFieldsFrom = (topLevelEntities: Array<TopLevelEntity>): Array<EntityProperty> => {
+  const result: Array<EntityProperty> = [];
+  topLevelEntities.forEach((topLevelEntity: TopLevelEntity) => result.push(...topLevelEntity.queryableFields));
+  return result;
+};
+
 const adjustEnumerationSuffix = (metaEdName: string): string => (metaEdName.endsWith('Type') ? metaEdName : `${metaEdName}Type`);
 
 function noParentOrReferencedEntityProjectExtension(property: ReferentialProperty | SimpleProperty): boolean {
@@ -97,15 +103,19 @@ function xsdNameFor(property: EntityProperty): string {
   return ['choice', 'association', 'domainEntity'].includes(property.type) ? `${baseName}Reference` : baseName;
 }
 
+function applyXsdNameAndType(property: EntityProperty) {
+  const entityPropertyEdfiXsd: EntityPropertyEdfiXsd = property.data.edfiXsd;
+  entityPropertyEdfiXsd.xsd_Name = xsdNameFor(property);
+  entityPropertyEdfiXsd.xsd_Type = xsdTypeFor(property);
+}
 
 // this assumes all properties in propertyIndex **and** all queryable fields have been edfiXsd initialized
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const allPropertiesAndQueryableFields: Array<EntityProperty> = R.union(getAllProperties(metaEd.propertyIndex), queryableFieldsFrom(getAllTopLevelEntities(metaEd.entity)));
-  allPropertiesAndQueryableFields.forEach(property => {
-    const entityPropertyEdfiXsd: EntityPropertyEdfiXsd = property.data.edfiXsd;
-    entityPropertyEdfiXsd.xsd_Name = xsdNameFor(property);
-    entityPropertyEdfiXsd.xsd_Type = xsdTypeFor(property);
-  });
+  const allProperties: Array<EntityProperty> = getAllProperties(metaEd.propertyIndex);
+  allProperties.forEach(property => applyXsdNameAndType(property));
+
+  const allQueryableFields: Array<EntityProperty> = queryableFieldsFrom(getAllTopLevelEntities(metaEd.entity));
+  allQueryableFields.forEach(property => applyXsdNameAndType(property));
 
   return {
     enhancerName,
