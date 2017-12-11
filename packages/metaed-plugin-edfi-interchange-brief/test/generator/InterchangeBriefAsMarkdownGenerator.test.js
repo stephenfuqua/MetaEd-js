@@ -2,10 +2,10 @@
 import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
 import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
 import type { GeneratedOutput } from 'metaed-core';
-import { toHumanizedUppercaseMetaEdName, addEdfiBriefInterchangeTo } from '../../src/model/MergedInterchange';
+import { addMergedInterchangeEdfiInterchangeBriefTo } from '../../src/model/MergedInterchange';
 import { generate as InterchangeBriefAsMarkdownGenerator } from '../../src/generator/InterchangeBriefAsMarkdownGenerator';
-import type { ReferencedUsage } from '../../src/model/ReferencedUsage';
-import { newReferencedUsage } from '../../src/model/ReferencedUsage';
+import type { ReferenceUsageInfo } from '../../src/model/ReferenceUsageInfo';
+import { newReferenceUsageInfo } from '../../src/model/ReferenceUsageInfo';
 
 describe('When generating interchange brief with no extended references or descriptors', () => {
   const interchange1metaEdName: string = 'Interchange1metaEdName';
@@ -49,16 +49,16 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       referencedEntity: domainEntity1,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       referencedEntity: domainEntity2,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -68,16 +68,16 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       referencedEntity: domainEntity3,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       referencedEntity: domainEntity4,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -96,13 +96,11 @@ describe('When generating interchange brief with no extended references or descr
   it('Should include entities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);
@@ -162,17 +160,17 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
-      data: { edfiXsd: { xsd_Name: domainEntity1.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity1.metaEdName }, edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
       referencedEntity: domainEntity1,
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
-      data: { edfiXsd: { xsd_Name: domainEntity2.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity2.metaEdName }, edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
       referencedEntity: domainEntity2,
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -181,17 +179,17 @@ describe('When generating interchange brief with extended documentation', () => 
     });
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
-      data: { edfiXsd: { xsd_Name: domainEntity3.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity3.metaEdName }, edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
       referencedEntity: domainEntity3,
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
-      data: { edfiXsd: { xsd_Name: domainEntity4.metaEdName }, EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiXsd: { xsd_Name: domainEntity4.metaEdName }, edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
       referencedEntity: domainEntity4,
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -210,14 +208,12 @@ describe('When generating interchange brief with extended documentation', () => 
   it('Should include entities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(interchange1ExtendedDocumentation);
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);
@@ -278,16 +274,16 @@ describe('When generating interchange brief with use case documentation', () => 
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       referencedEntity: domainEntity1,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       referencedEntity: domainEntity2,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -297,16 +293,16 @@ describe('When generating interchange brief with use case documentation', () => 
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       referencedEntity: domainEntity3,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       referencedEntity: domainEntity4,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -325,14 +321,12 @@ describe('When generating interchange brief with use case documentation', () => 
   it('Should include entities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(interchange1UseCaseDocumentation);
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);
@@ -395,16 +389,16 @@ describe('When generating interchange brief with extended and use case documenta
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       referencedEntity: domainEntity1,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       referencedEntity: domainEntity2,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -414,16 +408,16 @@ describe('When generating interchange brief with extended and use case documenta
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       referencedEntity: domainEntity3,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       referencedEntity: domainEntity4,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -442,7 +436,6 @@ describe('When generating interchange brief with extended and use case documenta
   it('Shouldincludeentities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(interchange1ExtendedDocumentation);
@@ -450,7 +443,6 @@ describe('When generating interchange brief with extended and use case documenta
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);
@@ -510,19 +502,19 @@ describe('When generating interchange brief with extended references', () => {
       documentation: domainEntity4Documentation,
     });
 
-    const referenceUsage1: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage1: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage1Name,
       description: referenceUsage1Description,
     });
-    const referenceUsage2: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage2: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage2Name,
       description: referenceUsage2Description,
     });
-    const referenceUsage3: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage3: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage3Name,
       description: referenceUsage3Description,
     });
-    const referenceUsage4: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage4: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage4Name,
       description: referenceUsage4Description,
     });
@@ -535,19 +527,19 @@ describe('When generating interchange brief with extended references', () => {
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       referencedEntity: domainEntity1,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       referencedEntity: domainEntity2,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage2);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -557,19 +549,19 @@ describe('When generating interchange brief with extended references', () => {
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       referencedEntity: domainEntity3,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       referencedEntity: domainEntity4,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage4);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -588,13 +580,11 @@ describe('When generating interchange brief with extended references', () => {
   it('Shouldincludeentities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);
@@ -660,19 +650,19 @@ describe('When generating interchange brief with descriptors', () => {
       documentation: domainEntity4Documentation,
     });
 
-    const referenceUsage1: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage1: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage1Name,
       description: referenceUsage1Description,
     });
-    const referenceUsage2: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage2: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage2Name,
       description: referenceUsage2Description,
     });
-    const referenceUsage3: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage3: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage3Name,
       description: referenceUsage3Description,
     });
-    const referenceUsage4: ReferencedUsage = Object.assign(newReferencedUsage(), {
+    const referenceUsage4: ReferenceUsageInfo = Object.assign(newReferenceUsageInfo(), {
       name: referenceUsage4Name,
       description: referenceUsage4Description,
     });
@@ -685,19 +675,19 @@ describe('When generating interchange brief with descriptors', () => {
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       referencedEntity: domainEntity1,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation } },
     });
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       referencedEntity: domainEntity2,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem2);
 
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage1);
-    interchange1.data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage2);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage1);
+    interchange1.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage2);
 
     const interchange2 = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
@@ -707,19 +697,19 @@ describe('When generating interchange brief with descriptors', () => {
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       referencedEntity: domainEntity3,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation } },
     });
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       referencedEntity: domainEntity4,
-      data: { EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
+      data: { edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation } },
     });
-    addEdfiBriefInterchangeTo(interchange2);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
+    addMergedInterchangeEdfiInterchangeBriefTo(interchange2);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage3);
-    interchange2.data.EdfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage4);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage3);
+    interchange2.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
       dataStandardVersion: '2.1.0',
@@ -738,13 +728,11 @@ describe('When generating interchange brief with descriptors', () => {
   it('Should include entities', () => {
     expect(generatedResults.length).toBe(3);
 
-    expect(generatedResults[0].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange1metaEdName));
     expect(generatedResults[0].resultString).toContain(interchange1InterchangeName);
     expect(generatedResults[0].resultString).toContain(interchange1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity1Documentation);
     expect(generatedResults[0].resultString).toContain(domainEntity2Documentation);
 
-    expect(generatedResults[1].resultString).toContain(toHumanizedUppercaseMetaEdName(interchange2metaEdName));
     expect(generatedResults[1].resultString).toContain(interchange2InterchangeName);
     expect(generatedResults[1].resultString).toContain(interchange2Documentation);
     expect(generatedResults[1].resultString).toContain(domainEntity3Documentation);

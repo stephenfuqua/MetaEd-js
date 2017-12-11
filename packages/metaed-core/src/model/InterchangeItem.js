@@ -3,7 +3,7 @@ import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
 import type { ModelType } from './ModelType';
-import { newTopLevelEntity } from './TopLevelEntity';
+import { NoTopLevelEntity } from './TopLevelEntity';
 import type { TopLevelEntity } from './TopLevelEntity';
 
 export class InterchangeItemSourceMap extends ModelBaseSourceMap {
@@ -26,7 +26,7 @@ export function newInterchangeItem(): InterchangeItem {
     metaEdId: '',
     namespaceInfo: newNamespaceInfo(),
     referencedType: [],
-    referencedEntity: newTopLevelEntity(),
+    referencedEntity: NoTopLevelEntity,
     sourceMap: new InterchangeItemSourceMap(),
     data: {},
   });

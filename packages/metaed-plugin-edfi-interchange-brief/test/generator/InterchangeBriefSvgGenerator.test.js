@@ -44,7 +44,7 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem1 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity1.metaEdName,
       data: {
-        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation },
+        edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation },
         edfiXsd: { xsd_Name: domainEntity1.metaEdName },
       },
       referencedEntity: domainEntity1,
@@ -52,7 +52,7 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem2 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity2.metaEdName,
       data: {
-        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation },
+        edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation },
         edfiXsd: { xsd_Name: domainEntity2.metaEdName },
       },
       referencedEntity: domainEntity2,
@@ -68,7 +68,7 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem3 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity3.metaEdName,
       data: {
-        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation },
+        edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation },
         edfiXsd: { xsd_Name: domainEntity3.metaEdName },
       },
       referencedEntity: domainEntity3,
@@ -76,7 +76,7 @@ describe('When generating interchange brief with no extended references or descr
     const interchangeItem4 = Object.assign(newInterchangeItem(), {
       metaEdName: domainEntity4.metaEdName,
       data: {
-        EdfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation },
+        edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation },
         edfiXsd: { xsd_Name: domainEntity4.metaEdName },
       },
       referencedEntity: domainEntity4,
@@ -94,12 +94,8 @@ describe('When generating interchange brief with no extended references or descr
     return builderResult;
   }
 
-  it('Should include results', () => {
-    // This generator returns a Promise<GeneratorResult>
-    // instead of the expected GeneratorResultbecause it's waiting on phantom to finish.
-    // $FlowIgnore
-    InterchangeBriefSvgGenerator(GetBuilderResults()).then(result => {
-      expect(result.generatedOutput.length).toBe(2);
-    });
+  it('Should include results', async () => {
+    const result = await InterchangeBriefSvgGenerator(GetBuilderResults());
+    expect(result.generatedOutput.length).toBe(2);
   });
 });

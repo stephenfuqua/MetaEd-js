@@ -6,7 +6,6 @@ import fs from 'fs';
 import path from 'path';
 import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
-import { toHumanizedUppercaseMetaEdName } from '../model/MergedInterchange';
 
 const generatorName = 'Interchange Brief Markdown Generator';
 const header = '<head><title>MetaEd Generated Interchange Brief</title><link rel="stylesheet" href="confluence-like.css"></head>';
@@ -43,8 +42,6 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
   registerPartials();
   console.log('registered partials');
   ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>).forEach((interchange: MergedInterchange) => {
-    console.log('assigning humanized uppercase name');
-    interchange.data.EdfiInterchangeBrief.humanizedUppercaseMetaEdName = toHumanizedUppercaseMetaEdName(interchange.metaEdName);
     console.log('running handlebars markdown template');
     const markdown: string = template().interchangeBrief(interchange);
     console.log('pushing generated output loop');

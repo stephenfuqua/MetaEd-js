@@ -3,8 +3,11 @@ import Horseman from 'node-horseman';
 import path from 'path';
 import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
-import type { SvgElement } from '../model/SvgElement';
 
+type SvgElement = {
+  name: string,
+  children?: Array<SvgElement>,
+}
 
 const generatorName: string = 'InterchangeBriefImageGenerator';
 
@@ -19,12 +22,12 @@ function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
     };
     interchange.identityTemplates.forEach(identityTemplate => {
       const identityTemplateEntity = { name: identityTemplate.data.edfiXsd.xsd_Name };
-      // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
+      // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
       if (svgElement.children[0].children) svgElement.children[0].children.push(identityTemplateEntity);
     });
     interchange.elements.forEach(element => {
       const elementEntity = { name: element.data.edfiXsd.xsd_Name };
-      // $FlowIgnore Flow thinks svgElement.childent[0] could be undefined, but it was defined above.
+      // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
       if (svgElement.children[0].children) svgElement.children[0].children.push(elementEntity);
     });
     result.push(svgElement);
@@ -33,9 +36,8 @@ function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
 }
 
 // This generator returns a Promise<GeneratorResult>
-// instead of the expected GeneratorResultbecause it's waiting on phantom to finish.
-// $FlowIgnore
-export async function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+// instead of the expected GeneratorResult because it's waiting on phantom to finish.
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const generatedOutput: Array<GeneratedOutput> = [];
   const allInterchangeModels: Array<SvgElement> = getModel(metaEd);
   await Promise.all(allInterchangeModels.map(async (interchange) => {

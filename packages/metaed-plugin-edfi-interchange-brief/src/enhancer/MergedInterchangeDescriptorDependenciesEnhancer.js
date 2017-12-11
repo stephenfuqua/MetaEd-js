@@ -1,14 +1,15 @@
 // @flow
+import R from 'ramda';
 import { ReferentialProperty } from 'metaed-core';
-import type { MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
+import type { MetaEdEnvironment, TopLevelEntity, PropertyType } from 'metaed-core';
 import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
 import type { ReferenceUsageInfo } from '../model/ReferenceUsageInfo';
-import { sortByNameThenRootEntityName } from '../model/ReferenceUsageInfo';
 import type { MergedInterchangeEdfiInterchangeBrief } from '../model/MergedInterchange';
 import { addMergedInterchangeEdfiInterchangeBriefTo } from '../model/MergedInterchange';
 import { getReferenceUsageInfoList, topLevelEntitiesFrom, topLevelReferencePropertiesFrom } from './MergedInterchangeDependenciesEnhancerBase';
 
-const enhancerName = 'MergedInterchangeExtendedReferencesEnhancer';
+const enhancerName = 'MergedInterchangeDescriptorDependenciesEnhancer';
+const descriptorType: PropertyType = 'descriptor';
 
 export function enhance(metaEd: MetaEdEnvironment) {
   const xsdRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
@@ -20,16 +21,23 @@ export function enhance(metaEd: MetaEdEnvironment) {
     const topLevelReferenceProperties: Array<ReferentialProperty> = topLevelReferencePropertiesFrom(mergedInterchange);
 
     const previouslyMatchedProperties: Array<ReferentialProperty> = [];
-    const referenceExclusionList: Array<string> = topLevelEntities.map(i => i.metaEdName);
-    const allExtendedReferences: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce((referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp) => {
-      const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [...getReferenceUsageInfoList(['domainEntity', 'association'], referenceExclusionList, previouslyMatchedProperties, tlrp)];
+    const descriptorExclusionList: Array<string> = topLevelEntities.filter(x => x.type === descriptorType).map(x => x.metaEdName);
+
+    const allDescriptorDependencies: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce((referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp) => {
+      const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [...getReferenceUsageInfoList([descriptorType], descriptorExclusionList, previouslyMatchedProperties, tlrp)];
       if (extendedReferencesFromProperty.length > 0) {
         referencedUsageInfos.push(...extendedReferencesFromProperty);
       }
       return referencedUsageInfos;
     }, []);
-    allExtendedReferences.sort(sortByNameThenRootEntityName);
-    ((mergedInterchange.data.edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefExtendedReferences.push(...allExtendedReferences);
+
+    // Group By and order to filter out duplicates, make sure we're always picking required dependencies over optional ones
+    const groupByName = R.groupBy(x => x.name);
+    const sortByOptional = R.sortBy(x => x.isOptional);
+    const orderByName = R.sortBy(x => x.name);
+    const filteredDescriptorDependencies: Array<ReferenceUsageInfo> = orderByName(R.map(R.head, R.map(sortByOptional, R.values(groupByName(allDescriptorDependencies)))));
+
+    ((mergedInterchange.data.edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefDescriptorReferences.push(...filteredDescriptorDependencies);
   });
   return {
     enhancerName,
