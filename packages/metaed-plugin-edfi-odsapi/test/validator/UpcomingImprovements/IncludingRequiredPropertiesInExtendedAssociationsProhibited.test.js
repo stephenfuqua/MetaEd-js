@@ -1,7 +1,7 @@
 // @flow
 import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationExtensionBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../src/validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';
+import { validate } from '../../../src/validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';
 
 describe('when an association extension extends an association with no required properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
