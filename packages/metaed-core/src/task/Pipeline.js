@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import { Logger, transports } from 'winston';
 import { loadFiles } from './FileSystemFilenameLoader';
 import { validateSyntax } from './ValidateSyntax';
@@ -8,28 +7,7 @@ import { loadFileIndex } from './LoadFileIndex';
 import { buildParseTree } from './BuildParseTree';
 import { execute as walkBuilders } from './WalkBuilders';
 import { fileMapForFailure } from './FileMapForFailure';
-import {
-  executeAssociationBuilder,
-  executeAssociationExtensionBuilder,
-  executeAssociationSubclassBuilder,
-  executeChoiceBuilder,
-  executeCommonBuilder,
-  executeCommonExtensionBuilder,
-  executeDecimalTypeBuilder,
-  executeDescriptorBuilder,
-  executeDomainBuilder,
-  executeDomainEntityBuilder,
-  executeDomainEntityExtensionBuilder,
-  executeDomainEntitySubclassBuilder,
-  executeEnumerationBuilder,
-  executeIntegerTypeBuilder,
-  executeInterchangeBuilder,
-  executeNamespaceInfoBuilder,
-  executeSharedDecimalBuilder,
-  executeSharedIntegerBuilder,
-  executeSharedStringBuilder,
-  executeStringTypeBuilder,
-} from './WalkBuildersP';
+import { nextMacroTask } from './NextMacroTask';
 import { execute as runValidators } from './RunValidators';
 import { execute as runEnhancers } from './RunEnhancers';
 import { execute as runGenerators } from './RunGenerators';
@@ -44,121 +22,75 @@ const logger = new Logger({
 });
 logger.cli();
 
-function nextMacroTask<T>(value: T): Promise<T> {
-  return new Promise(resolve => setImmediate(() => resolve(value)));
-}
+export async function executePipeline(state: State): Promise<State> {
+  logger.info('Loading plugins...');
+  loadPlugins(state);
+  await nextMacroTask();
 
-export function oldStartingFromFileLoadP(state: State): Promise<State> {
-  return Promise.resolve(loadFiles(state))
-    .then(nextMacroTask)
-    .then(s => loadPlugins(s))
-    .then(nextMacroTask)
-    .then(s => validateSyntax(buildTopLevelEntity, s))
-    .then(nextMacroTask)
-    .then(s => loadFileIndex(s))
-    .then(nextMacroTask)
-    .then(s => buildParseTree(buildMetaEd, s))
-    .then(nextMacroTask)
-    .then(s => walkBuilders(s))
-    .then(nextMacroTask)
-    .then(s => runValidators(s))
-    .then(nextMacroTask)
-    .then(s => fileMapForFailure(s))
-    .then(nextMacroTask);
-}
+  logger.info('Loading files...');
+  loadFiles(state);
+  await nextMacroTask();
 
-export function startingFromFileLoadP(state: State): Promise<State> {
-  return Promise.resolve(loadFiles(state))
-    .then(nextMacroTask)
-    .then(s => loadPlugins(s))
-    .then(nextMacroTask)
-    .then(s => validateSyntax(buildTopLevelEntity, s))
-    .then(nextMacroTask)
-    .then(s => loadFileIndex(s))
-    .then(nextMacroTask)
-    .then(s => buildParseTree(buildMetaEd, s))
-    .then(nextMacroTask)
-    .then(s => executeAssociationBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeAssociationExtensionBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeAssociationSubclassBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeChoiceBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeCommonBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeCommonExtensionBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDecimalTypeBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDescriptorBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDomainBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDomainEntityBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDomainEntityExtensionBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeDomainEntitySubclassBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeEnumerationBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeIntegerTypeBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeInterchangeBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeNamespaceInfoBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeSharedDecimalBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeSharedIntegerBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeSharedStringBuilder(s))
-    .then(nextMacroTask)
-    .then(s => executeStringTypeBuilder(s))
-    .then(nextMacroTask)
-    .then(s => runValidators(s))
-    .then(nextMacroTask)
-    .then(s => fileMapForFailure(s))
-    .then(nextMacroTask);
-}
+  logger.info('Validating syntax...');
+  validateSyntax(buildTopLevelEntity, state);
+  await nextMacroTask();
 
-export function startingFromFileLoad(state: State): State {
-  return R.pipe(
-    loadFiles,
-    validateSyntax(buildTopLevelEntity),
-    loadFileIndex,
-    buildParseTree(buildMetaEd),
-    walkBuilders,
-    runValidators,
-    fileMapForFailure,
-  )(state);
-}
+  logger.info('Loading file indexes...');
+  loadFileIndex(state);
+  await nextMacroTask();
 
-export const pipeLog = (text: string) => R.tap(() => logger.info(text));
+  logger.info('Building parse tree...');
+  buildParseTree(buildMetaEd, state);
+  await nextMacroTask();
 
-export function build(state: State): State {
-  return R.pipe(
-    pipeLog('Load Plugins...'),
-    loadPlugins,
-    pipeLog('Load Files...'),
-    loadFiles,
-    pipeLog('Load File Index...'),
-    loadFileIndex,
-    pipeLog('Build Parse Tree...'),
-    buildParseTree(buildMetaEd),
-    pipeLog('Walk Builders...'),
-    walkBuilders,
-    pipeLog('Run Validators...'),
-    runValidators,
-    pipeLog('Run Enhancers...'),
-    runEnhancers,
-    pipeLog('Run Generators...'),
-    runGenerators,
-    pipeLog('Map Failures...'),
-    fileMapForFailure,
-    pipeLog('Writing Output...'),
-    writeOutput,
-  )(state);
+  logger.info('Walking builders...');
+  await walkBuilders(state);
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const pluginManifest of state.pluginManifest) {
+    if (pluginManifest.enabled) {
+      try {
+        if (state.pipelineOptions.runValidators) {
+          logger.info(`Running ${pluginManifest.npmName} validators`);
+
+          runValidators(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+
+        if (state.pipelineOptions.runEnhancers) {
+          logger.info(`Running ${pluginManifest.npmName} enhancers`);
+
+          // eslint-disable-next-line no-await-in-loop
+          await runEnhancers(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+
+        if (state.pipelineOptions.runGenerators) {
+          logger.info(`Running ${pluginManifest.npmName} generators`);
+
+          runGenerators(pluginManifest, state);
+          // eslint-disable-next-line no-await-in-loop
+          await nextMacroTask();
+        }
+      } catch (err) {
+        logger.error(`Plugin ${pluginManifest.npmName} threw exception '${err.message}', and will be disabled.`);
+        logger.error(err.stack);
+        pluginManifest.enabled = false;
+      }
+    }
+  }
+
+  if (state.pipelineOptions.runGenerators) {
+    logger.info('Writing output...');
+    writeOutput(state);
+    await nextMacroTask();
+  }
+
+  logger.info('Mapping failures...');
+  fileMapForFailure(state);
+  await nextMacroTask();
+
+  return state;
 }

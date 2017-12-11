@@ -20,26 +20,6 @@ Object {
 }
 `;
 
-exports[`When files have duplicate entity names Should return an error -> message[0] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
-
-exports[`When files have duplicate entity names Should return an error -> message[1] 1`] = `"Domain Entity named DomainEntity1 is a duplicate declaration of that name."`;
-
-exports[`When files have duplicate entity names Should return an error -> sourceMap[0] 1`] = `
-Object {
-  "column": 0,
-  "line": 9,
-  "tokenText": "Domain Entity",
-}
-`;
-
-exports[`When files have duplicate entity names Should return an error -> sourceMap[1] 1`] = `
-Object {
-  "column": 0,
-  "line": 2,
-  "tokenText": "Domain Entity",
-}
-`;
-
 exports[`when building a domain entity with a integer property that conflicts with a shared integer should have one validation error, four warnings 1`] = `"integer PropertyName has the same name as a Common Integer."`;
 
 exports[`when building entity property with context should have source map for contextName with line, column, text 1`] = `

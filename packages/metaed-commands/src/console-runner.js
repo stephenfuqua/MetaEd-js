@@ -8,7 +8,7 @@ logger.cli();
 
 export const getNodeModulesPath = (): string => path.resolve(__dirname, '../../node_modules');
 
-export const getConsolePath = (): string => path.resolve(__dirname, '../../dist/metaed-console/src/metaed-console.js');
+export const getConsolePath = (): string => path.resolve(__dirname, '../../dist/metaed-console/src/index.js');
 
 export const getConsoleParams = (metaEdPath: string, extensionPath: ?string): Array<string> => {
   const params: Array<string> = [];

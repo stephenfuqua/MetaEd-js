@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty, NoEntityProperty } from '../model/property/EntityProperty';
 import { newMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';

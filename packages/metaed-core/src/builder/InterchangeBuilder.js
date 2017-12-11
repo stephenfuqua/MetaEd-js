@@ -1,5 +1,5 @@
 // @flow
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 
 import type { Interchange, InterchangeSourceMap } from '../model/Interchange';

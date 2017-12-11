@@ -89,10 +89,7 @@ export function getPropertiesOfType(propertyIndex: PropertyIndex, ...propertyTyp
 }
 
 export function getAllProperties(propertyIndex: PropertyIndex): Array<EntityProperty> {
-  const result = [];
-  // $FlowIgnore - using model type repository lookup
-  allPropertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));
-  return result;
+  return getPropertiesOfType(propertyIndex, ...allPropertyTypes);
 }
 
 export function addProperty(propertyIndex: PropertyIndex, property: EntityProperty) {

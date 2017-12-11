@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 1`] = `"Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+
+exports[`when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 2`] = `"Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+
+exports[`when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 18,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 2,
+  "line": 25,
+  "tokenText": "Domain Entity",
+}
+`;

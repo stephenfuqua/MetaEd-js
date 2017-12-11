@@ -1,5 +1,5 @@
 // @flow
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { SharedSimpleBuilder } from './SharedSimpleBuilder';
 import { newSharedInteger } from '../model/SharedInteger';
 import type { SharedInteger, SharedIntegerSourceMap } from '../model/SharedInteger';

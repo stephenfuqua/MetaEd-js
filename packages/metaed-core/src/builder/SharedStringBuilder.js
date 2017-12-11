@@ -1,5 +1,5 @@
 // @flow
-import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { SharedSimpleBuilder } from './SharedSimpleBuilder';
 import { newSharedString } from '../model/SharedString';
 import type { SharedString, SharedStringSourceMap } from '../model/SharedString';

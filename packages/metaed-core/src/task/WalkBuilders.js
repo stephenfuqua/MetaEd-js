@@ -2,6 +2,7 @@
 import antlr4 from 'antlr4';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import type { State } from '../State';
+import { nextMacroTask } from './NextMacroTask';
 import { AssociationBuilder } from '../builder/AssociationBuilder';
 import { AssociationExtensionBuilder } from '../builder/AssociationExtensionBuilder';
 import { AssociationSubclassBuilder } from '../builder/AssociationSubclassBuilder';
@@ -23,7 +24,7 @@ import { SharedIntegerBuilder } from '../builder/SharedIntegerBuilder';
 import { SharedStringBuilder } from '../builder/SharedStringBuilder';
 import { StringTypeBuilder } from '../builder/StringTypeBuilder';
 
-export function execute(state: State): State {
+export async function execute(state: State): Promise<void> {
   const builders: Array<MetaEdGrammarListener> = [];
 
   builders.push(new AssociationBuilder(state.metaEd, state.validationFailure));
@@ -47,6 +48,12 @@ export function execute(state: State): State {
   builders.push(new SharedStringBuilder(state.metaEd, state.validationFailure));
   builders.push(new StringTypeBuilder(state.metaEd, state.validationFailure));
 
-  builders.forEach(builder => antlr4.tree.ParseTreeWalker.DEFAULT.walk(builder, state.parseTree));
-  return state;
+  const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const builder of builders) {
+    parseTreeWalker.walk(builder, state.parseTree);
+    // eslint-disable-next-line no-await-in-loop
+    await nextMacroTask();
+  }
 }

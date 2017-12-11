@@ -1,21 +1,16 @@
 // @flow
-import winston from 'winston';
 import type { State } from '../State';
 import type { Enhancer } from '../enhancer/Enhancer';
+import type { PluginManifest } from '../plugin/PluginTypes';
+import { nextMacroTask } from './NextMacroTask';
 
-export function execute(state: State): State {
-  state.pluginManifest.filter(plugin => plugin.enabled).forEach(pluginManifest => {
-    try {
-      pluginManifest.metaEdPlugin.enhancer.forEach((enhancer: Enhancer) => {
-        if (state.metaEd.entity != null && state.metaEd.propertyIndex != null) {
-          state.enhancerResults.push(enhancer(state.metaEd));
-        }
-      });
-    } catch (err) {
-      winston.error(`Plugin ${pluginManifest.description} threw an exception, and will be disabled. ${err.stack}`);
-      pluginManifest.enabled = false;
-    }
-  });
+export async function execute(pluginManifest: PluginManifest, state: State): Promise<void> {
+  if (state.metaEd.entity == null || state.metaEd.propertyIndex == null) return;
 
-  return state;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const enhancer: Enhancer of pluginManifest.metaEdPlugin.enhancer) {
+    state.enhancerResults.push(enhancer(state.metaEd));
+    // eslint-disable-next-line no-await-in-loop
+    await nextMacroTask();
+  }
 }

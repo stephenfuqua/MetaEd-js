@@ -7,7 +7,7 @@ import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
 import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
 
 export const buildParseTree = R.curry(
-  (parseTreeBuilder: ParseTreeBuilder, state: State): State => {
+  (parseTreeBuilder: ParseTreeBuilder, state: State): void => {
     const validationFailures = [];
 
     const errorListener = new MetaEdErrorListener(validationFailures, 'BuildParseTree - MetaEdErrorListener');
@@ -19,7 +19,6 @@ export const buildParseTree = R.curry(
 
     validationFailures.forEach(failure => {
       if (failure.sourceMap && state.fileIndex) {
-        // eslint-disable-next-line no-param-reassign
         failure.fileMap = getFilenameAndLineNumber(state.fileIndex, failure.sourceMap.line);
       }
     });
@@ -28,5 +27,4 @@ export const buildParseTree = R.curry(
 
     // eslint-disable-next-line no-param-reassign
     state.parseTree = parseTree;
-    return state;
   });

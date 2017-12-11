@@ -3,12 +3,13 @@
 // Functions
 
 export { deepFreeze, deepFreezeAssign, prependIndefiniteArticle } from './Utility';
-export { startingFromFileLoadP, build } from './task/Pipeline';
+export { executePipeline } from './task/Pipeline';
 export { createMetaEdFile } from './task/MetaEdFile';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './task/BufferFileLoader';
 export { loadFiles } from './task/FileSystemFilenameLoader';
-export { loadPlugins } from './task/LoadPlugins';
+export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
 export { newState } from './State';
+export { newPipelineOptions } from './task/PipelineOptions';
 export { loadFileIndex } from './task/LoadFileIndex';
 export { buildParseTree } from './task/BuildParseTree';
 export { buildMetaEd } from './grammar/ParseTreeBuilder';
@@ -51,6 +52,7 @@ export type { State } from './State';
 export type { InputDirectory } from './task/FileSystemFilenameLoader';
 export type { FileSet, MetaEdFile } from './task/MetaEdFile';
 export type { FileIndex } from './task/FileIndex';
+export type { PipelineOptions } from './task/PipelineOptions';
 export type { Validator } from './validator/Validator';
 export type { ValidationFailure } from './validator/ValidationFailure';
 export type { Enhancer } from './enhancer/Enhancer';

@@ -2,14 +2,13 @@
 import path from 'path';
 import normalize from 'normalize-path';
 import { asDomainEntity } from '../../src/model/DomainEntity';
-import { startingFromFileLoad, startingFromFileLoadP } from './Pipeline';
+import { executePipeline } from '../../src/task/Pipeline';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { createMetaEdFile } from '../../src/task/MetaEdFile';
 import { getEntity } from '../../src/model/EntityRepository';
 import { loadCoreBufferedFiles } from '../../src/task/BufferFileLoader';
 import { newState } from '../../src/State';
 import type { State } from '../../src/State';
-
 
 jest.unmock('final-fs');
 
@@ -24,20 +23,13 @@ describe('When a single file', () => {
 
   let state: State;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity.metaed', metaEdText)]);
+    await executePipeline(state);
   });
 
   it('Should parse and validate without errors', () => {
-    const endState = startingFromFileLoad(state);
-    expect(endState.validationFailure).toHaveLength(0);
-  });
-
-  it('Should parse and validate without errors in Promise form', () => {
-    const endStateP = startingFromFileLoadP(state);
-    endStateP.then(endState => {
-      expect(endState.validationFailure).toHaveLength(0);
-    });
+    expect(state.validationFailure).toHaveLength(0);
   });
 });
 
@@ -60,41 +52,25 @@ describe('When files have duplicate entity names', () => {
 
   let state: State;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdText1),
       createMetaEdFile('/fake/dir', 'DomainEntity1Also.metaed', metaEdText2),
     ]);
-  });
-
-  it('Should return an error in Promise form', () => {
-    const endStateP = startingFromFileLoadP(state);
-    return endStateP.then(endState => {
-      expect(endState.validationFailure).toHaveLength(2);
-      // $FlowIgnore - filename could be null
-      expect(normalize(endState.validationFailure[0].fileMap.filename)).toBe('/fake/dir/DomainEntity1Also.metaed');
-      expect(endState.validationFailure[0].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[0]');
-      expect(endState.validationFailure[0].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[0]');
-
-      // $FlowIgnore - filename could be null
-      expect(normalize(endState.validationFailure[1].fileMap.filename)).toBe('/fake/dir/DomainEntity1.metaed');
-      expect(endState.validationFailure[1].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[1]');
-      expect(endState.validationFailure[1].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[1]');
-    });
+    await executePipeline(state);
   });
 
   it('Should return an error', () => {
-    const endState = startingFromFileLoad(state);
-    expect(endState.validationFailure).toHaveLength(2);
+    expect(state.validationFailure).toHaveLength(2);
     // $FlowIgnore - filename could be null
-    expect(normalize(endState.validationFailure[0].fileMap.filename)).toBe('/fake/dir/DomainEntity1Also.metaed');
-    expect(endState.validationFailure[0].message).toMatchSnapshot('When files have duplicate entity names Should return an error -> message[0]');
-    expect(endState.validationFailure[0].sourceMap).toMatchSnapshot('When files have duplicate entity names Should return an error -> sourceMap[0]');
+    expect(normalize(state.validationFailure[0].fileMap.filename)).toBe('/fake/dir/DomainEntity1Also.metaed');
+    expect(state.validationFailure[0].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[0]');
+    expect(state.validationFailure[0].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[0]');
 
     // $FlowIgnore - filename could be null
-    expect(normalize(endState.validationFailure[1].fileMap.filename)).toBe('/fake/dir/DomainEntity1.metaed');
-    expect(endState.validationFailure[1].message).toMatchSnapshot('When files have duplicate entity names Should return an error -> message[1]');
-    expect(endState.validationFailure[1].sourceMap).toMatchSnapshot('When files have duplicate entity names Should return an error -> sourceMap[1]');
+    expect(normalize(state.validationFailure[1].fileMap.filename)).toBe('/fake/dir/DomainEntity1.metaed');
+    expect(state.validationFailure[1].message).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> message[1]');
+    expect(state.validationFailure[1].sourceMap).toMatchSnapshot('When a single file with a duplicate entity name Should return an error -> sourceMap[1]');
   });
 });
 
@@ -127,26 +103,20 @@ describe('When multiple files', () => {
 
   let state: State;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdTextDomainEntity1),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),
     ]);
+    await executePipeline(state);
   });
 
-  it('Should load the file contents', () => {
-    const endState = startingFromFileLoad(state);
-    expect(endState.validationFailure).toHaveLength(0);
-  });
-
-  it('should return state in promise form', () => {
-    const endStateP = startingFromFileLoadP(state);
-    return endStateP.then(endState => {
-      expect(endState.validationFailure).toHaveLength(0);
-    });
+  it('should have no validation failures', () => {
+    expect(state.validationFailure).toHaveLength(0);
   });
 });
+
 describe('When plugins are present', () => {
   const metaEdTextDomainEntity1 = MetaEdTextBuilder.build()
     .withStartDomainEntity('DomainEntity1')
@@ -177,23 +147,25 @@ describe('When plugins are present', () => {
 
   let state: State;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdTextDomainEntity1),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
 
   it('Should load the plugin into pluginManifest', () => {
     expect(state.pluginManifest.length).toBeGreaterThan(0);
   });
+
   it('Should load the validators from plugin', () => {
     expect(state.pluginManifest.length).toBeGreaterThan(0);
   });
 });
+
 describe('when building entity property with context', () => {
   const namespace: string = 'namespace';
 
@@ -204,7 +176,7 @@ describe('when building entity property with context', () => {
   const contextName: string = 'ContextName';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedText = MetaEdTextBuilder.build()
       .withBeginNamespace(namespace)
       .withStartDomainEntity(entityName)
@@ -217,9 +189,10 @@ describe('when building entity property with context', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have withContext', () => {
     const entity: any = getEntity(state.metaEd.entity, entityName, 'domainEntity');
     expect(asDomainEntity(entity).properties[0].withContext).toBe(contextName);
@@ -239,7 +212,7 @@ describe('when building a domain entity with a integer property that conflicts w
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDEText = MetaEdTextBuilder.build()
 
       .withStartDomainEntity(entityName, '100')
@@ -259,12 +232,14 @@ describe('when building a domain entity with a integer property that conflicts w
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
       createMetaEdFile('/fake/dir', 'SharedInteger1.metaed', metaedSharedInteger),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
+
   it('should have built one shared integer', () => {
     expect(state.metaEd.entity.sharedInteger.size).toBe(1);
   });
@@ -276,6 +251,7 @@ describe('when building a domain entity with a integer property that conflicts w
     expect(state.validationFailure.filter(message => message.category === 'warning').length).toBe(0);
   });
 });
+
 describe('when building a valid domain entity with an integer identity', () => {
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
@@ -283,7 +259,7 @@ describe('when building a valid domain entity with an integer identity', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDEText = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '100')
       .withDocumentation(entityDocumentation)
@@ -293,9 +269,10 @@ describe('when building a valid domain entity with an integer identity', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
@@ -305,6 +282,7 @@ describe('when building a valid domain entity with an integer identity', () => {
     expect(state.validationFailure.filter(message => message.category === 'warning').length).toBe(0);
   });
 });
+
 describe('when building duplicate domain entities', () => {
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
@@ -312,7 +290,7 @@ describe('when building duplicate domain entities', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDE1Text = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '101')
       .withDocumentation(entityDocumentation)
@@ -329,9 +307,10 @@ describe('when building duplicate domain entities', () => {
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaedDE2Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
@@ -341,6 +320,7 @@ describe('when building duplicate domain entities', () => {
     expect(state.validationFailure.filter(message => message.category === 'warning').length).toBe(0);
   });
 });
+
 describe('when building a domain entity with an integer property', () => {
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
@@ -348,7 +328,7 @@ describe('when building a domain entity with an integer property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDE1Text = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '100')
       .withDocumentation(entityDocumentation)
@@ -358,9 +338,10 @@ describe('when building a domain entity with an integer property', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
@@ -378,7 +359,7 @@ describe('when building a valid domain entity with duplicate metaedIds', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDEText = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '111')
       .withDocumentation(entityDocumentation)
@@ -388,9 +369,10 @@ describe('when building a valid domain entity with duplicate metaedIds', () => {
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
@@ -402,6 +384,7 @@ describe('when building a valid domain entity with duplicate metaedIds', () => {
     expect(state.validationFailure.filter(message => message.category === 'warning').length).toBe(2);
   });
 });
+
 describe('when building a DE with a common property but no common declaration', () => {
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
@@ -409,7 +392,7 @@ describe('when building a DE with a common property but no common declaration', 
   const propertyDocumentation: string = 'PropertyDocumentation';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDEText = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '111')
       .withDocumentation(entityDocumentation)
@@ -420,9 +403,10 @@ describe('when building a DE with a common property but no common declaration', 
     state = loadCoreBufferedFiles(newState(), [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
   });
@@ -433,7 +417,8 @@ describe('when building a DE with a common property but no common declaration', 
     expect(state.validationFailure.filter(message => message.category === 'warning').length).toBe(0);
   });
 });
-describe('when building a DE with a common property and duplicate common declerations', () => {
+
+describe('when building a DE with a common property and duplicate common declarations', () => {
   const entityName: string = 'EntityName';
   const entityDocumentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
@@ -441,7 +426,7 @@ describe('when building a DE with a common property and duplicate common declera
   const commonName: string = 'Common1';
   let state: State = newState();
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const metaedDEText = MetaEdTextBuilder.build()
       .withStartDomainEntity(entityName, '111')
       .withDocumentation(entityDocumentation)
@@ -469,9 +454,10 @@ describe('when building a DE with a common property and duplicate common declera
       createMetaEdFile('/fake/dir', 'Common1.metaed', metaedCommon1Text),
       createMetaEdFile('/fake/dir', 'Common2.metaed', metaedCommon2Text),
     ]);
-    state.pluginScanDirectory = path.resolve(__dirname, '../../');
-    startingFromFileLoadP(state);
+    state.pluginScanDirectory = path.resolve(__dirname, '../../..');
+    await executePipeline(state);
   });
+
   it('should have built one domain entity and one comon', () => {
     expect(state.metaEd.entity.domainEntity.size).toBe(1);
     expect(state.metaEd.entity.common.size).toBe(1);

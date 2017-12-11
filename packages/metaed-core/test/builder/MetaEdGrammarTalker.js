@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { MetaEdGrammar } from '../../src/grammar/gen/MetaEdGrammar';
+import type { MetaEdGrammar } from '../../src/grammar/gen/MetaEdGrammar';
 import type { MetaEdGrammarListener } from '../../src/grammar/gen/MetaEdGrammarListener';
 
 type MethodName = string;

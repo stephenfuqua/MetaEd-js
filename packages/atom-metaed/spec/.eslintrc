@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    "jasmine"
+  ],
+  "env" : {
+    "jasmine": true,
+    "atomtest": false
+  },
+  "extends": [
+    "plugin:jasmine/recommended"
+  ],
+  "globals": {
+    "waitsForPromise": false
+  },
+  "rules": {
+    "jasmine/prefer-toHaveBeenCalledWith": "off"
+  }
+}

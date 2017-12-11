@@ -1,0 +1,141 @@
+{
+  "name": "atom-metaed",
+  "main": "./lib/atom-metaed",
+  "version": "1.1.1-dev.19",
+  "description": "A MetaEd plugin for Atom",
+  "keywords": [],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "configSchema": {
+    "coreMetaEdSourceDirectory": {
+      "order": 1,
+      "title": "Ed-Fi Data Standard core .metaed directory",
+      "description": "Full path to the set of core MetaEd files for the Ed-Fi Data Standard.",
+      "type": "string",
+      "default": ""
+    },
+    "metaEdConsoleSourceDirectory": {
+      "order": 2,
+      "title": "MetaEd Console executable directory",
+      "description": "Full path to the MetaEd Console directory.",
+      "type": "string",
+      "default": ""
+    },
+    "edfiOdsApiSourceDirectory": {
+      "order": 3,
+      "title": "Ed-Fi ODS / API source directory",
+      "description": "Full path to root folder for the Ed-Fi ODS / API source code.  The folder this points to should contain Ed-Fi-ODS and Ed-Fi-ODS-Implementation folders.",
+      "type": "string",
+      "default": ""
+    },
+    "cmdFullPath": {
+      "order": 5,
+      "title": "Full path to Windows command prompt (cmd.exe)",
+      "description": "Full path to cmd.exe, used to spawn the MetaEd Console and provide highlighted output.",
+      "type": "string",
+      "default": "C:\\Windows\\System32\\cmd.exe"
+    },
+    "validateOnTheFly": {
+      "order": 6,
+      "title": "Enable validation as you type (experimental)",
+      "description": "Performs validation on the fly (instead of on save).  May introduce a delay in the editor UI.  Requires Atom restart after changing.",
+      "type": "boolean",
+      "default": true
+    },
+    "telemetryConsent": {
+      "order": 7,
+      "title": "Consent to anonymous usage reporting",
+      "description": "Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions.",
+      "type": "string",
+      "default": "",
+      "enum": [
+        {
+          "value": "",
+          "description": "Please select:"
+        },
+        {
+          "value": "true",
+          "description": "I consent."
+        },
+        {
+          "value": "false",
+          "description": "I do not consent."
+        }
+      ]
+    },
+    "alliance": {
+      "order": 8,
+      "title": "",
+      "type": "object",
+      "collapsed": true,
+      "properties": {
+        "allianceMode": {
+          "order": 9,
+          "title": "Alliance only",
+          "description": "For Alliance users only.  Requires Atom restart.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "scripts": {
+    "postinstall": "apm link",
+    "postuninstall": "apm unlink atom-metaed",
+    "test": "apm test"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "ansi-html": "^0.0.7",
+    "atom-message-panel": "^1.3.0",
+    "atom-package-deps": "^4.6.0",
+    "atom-space-pen-views": "2.2.0",
+    "babel-polyfill": "^6.26.0",
+    "ed-fi-model-2.0": "metaed-1.0",
+    "fs-extra": "^3.0.1",
+    "metaed-commands": "1.1.1-dev.19",
+    "metaed-console": "1.1.1-dev.19",
+    "metaed-core": "1.1.1-dev.19",
+    "metaed-csharp": "1.1.0",
+    "metaed-plugin-edfi-odsapi": "1.1.1-dev.19",
+    "metaed-plugin-edfi-unified": "1.1.1-dev.19",
+    "metaed-plugin-edfi-xml-dictionary": "1.1.1-dev.19",
+    "metaed-plugin-edfi-xsd": "1.1.1-dev.19",
+    "path": "0.12.7",
+    "ramda": "0.23.0",
+    "stack-trace": "^0.0.10",
+    "stream-splitter": "0.3.2",
+    "uuid": "3.0.1",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.8.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jasmine": "^2.2.0",
+    "eslint-plugin-json": "^1.2.0",
+    "flow-bin": "^0.46.0",
+    "mock-fs": "^4.3.0",
+    "proxyquire": "^1.8.0",
+    "standard-version": "^4.0.0"
+  },
+  "package-deps": [
+    "intentions",
+    "busy-signal",
+    "linter-ui-default",
+    "linter"
+  ],
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "2.0.0": "provideLinter"
+      }
+    }
+  }
+}

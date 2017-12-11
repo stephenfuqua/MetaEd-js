@@ -4,10 +4,6 @@ import type { PropertyIndex } from './model/property/PropertyRepository';
 import { newEntityRepository } from './model/EntityRepository';
 import { newPropertyIndex } from './model/property/PropertyRepository';
 
-// plugin exports:
-//   - specialized model types
-//   - maybe specialized model factories (hopefully not)
-//   - hopefully no behavior
 export type PluginEnvironment = {
   // the plugin-specific entity repository
   entity: any,

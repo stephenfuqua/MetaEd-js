@@ -63,6 +63,7 @@ import { validate as domainEntitySubclassIdentityRenameMustNotExistForMultiPrope
 import { validate as domainEntitySubclassMustNotRedeclareProperties } from './validator/DomainEntitySubclass/DomainEntitySubclassMustNotRedeclareProperties';
 
 import { validate as enumerationItemsMustBeUnique } from './validator/Enumeration/EnumerationItemsMustBeUnique';
+import { validate as enumerationExistsOnlyInCoreNamespace } from './validator/Enumeration/EnumerationExistsOnlyInCoreNamespace';
 
 import { validate as enumerationPropertyMustMatchAnEnumeration } from './validator/EnumerationProperty/EnumerationPropertyMustMatchAnEnumeration';
 
@@ -223,6 +224,7 @@ function validatorList(): Array<Validator> {
     domainEntitySubclassMustNotRedeclareProperties,
 
     enumerationItemsMustBeUnique,
+    enumerationExistsOnlyInCoreNamespace,
 
     enumerationPropertyMustMatchAnEnumeration,
 

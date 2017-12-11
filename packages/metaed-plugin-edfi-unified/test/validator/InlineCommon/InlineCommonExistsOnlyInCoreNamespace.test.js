@@ -35,7 +35,7 @@ describe('when validating inline common type exists in extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('extension', 'ProjectExtension')
       .withStartInlineCommon('EntityName')
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName', 'PropertyDocumentation', true, false)
