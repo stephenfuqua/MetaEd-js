@@ -6,6 +6,9 @@ import { Logger, transports } from 'winston';
 import * as Chalk from 'chalk';
 import Yargs from 'yargs';
 
+// Get regeneratorRuntime async/await polyfill
+import 'babel-polyfill';
+
 async function main() {
   const argv = Yargs
     .usage('Usage: $0 [options]')

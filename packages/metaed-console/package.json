@@ -8,6 +8,7 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "chalk": "^2.1.0",
     "metaed-core": "1.1.1-dev.14",
     "winston": "^2.4.0",
