@@ -1,4 +1,5 @@
 // @flow
 import 'babel-polyfill';
+import { metaEdConsole } from './metaed-console';
 
-export { metaEdConsole } from './metaed-console';
+metaEdConsole();

@@ -149,12 +149,12 @@ export default class MetaEdConsoleJs {
     }
     const artifactPath = path.join(projectPath, 'MetaEdOutput/');
 
-    let consolePath = path.resolve(metaEdJsConsoleSourceDirectory, '../metaed-console/dist/metaed-console.js');
+    let consolePath = path.resolve(metaEdJsConsoleSourceDirectory, '../metaed-console/dist/index.js');
     if (!fs.existsSync(consolePath)) {
-      consolePath = path.resolve(__dirname, '../node_modules/metaed-console/dist/metaed-console.js');
+      consolePath = path.resolve(__dirname, '../node_modules/metaed-console/dist/index.js');
       if (!fs.existsSync(consolePath)) {
         this._metaEdLog.addMessage(consolePath);
-        this._metaEdLog.addMessage(`Unable to find the metaed-console.js executable in the Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}" or its parent.`);
+        this._metaEdLog.addMessage(`Unable to find the index.js executable for metaed-console in the Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}" or its parent.`);
         return null;
       }
     }
