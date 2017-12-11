@@ -1,4 +1,5 @@
 // @flow
+
 import path from 'path';
 import { newState, newPipelineOptions, executePipeline } from 'metaed-core';
 import type { State } from 'metaed-core';
@@ -6,10 +7,7 @@ import { Logger, transports } from 'winston';
 import * as Chalk from 'chalk';
 import Yargs from 'yargs';
 
-// Get regeneratorRuntime async/await polyfill
-import 'babel-polyfill';
-
-async function main() {
+export async function metaEdConsole() {
   const argv = Yargs
     .usage('Usage: $0 [options]')
     .alias('e', 'edfi')
@@ -78,5 +76,3 @@ async function main() {
   logger.info('');
   logger.info('MetaEd Console execution completed.');
 }
-
-main();
