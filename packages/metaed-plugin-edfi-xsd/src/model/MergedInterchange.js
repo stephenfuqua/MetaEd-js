@@ -1,4 +1,5 @@
 // @flow
+import { String as sugar } from 'sugar';
 import { newNamespaceInfo } from 'metaed-core';
 import type { NamespaceInfo, Interchange, InterchangeItem, MetaEdEnvironment } from 'metaed-core';
 import { unionOfInterchangeItems } from '../model/InterchangeItem';
@@ -6,6 +7,7 @@ import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 // From structure of Interchange - if core models move to structural typing, consider using Interchange directly
 type MergedInterchangeBase = {
+  data: any,
   documentation: string,
   metaEdName: string,
   metaEdId: string,
@@ -25,6 +27,7 @@ export type MergedInterchange = {
   interchangeName: string,
   schemaLocation: string,
   orderedElements: Array<InterchangeItem>,
+  humanizedUppercasedMetaEdName: () => string,
 }
 
 export const combinedElementsAndIdentityTemplatesFor =
@@ -43,6 +46,7 @@ export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, merg
 // to base types - so it will have type as 'interchange'
 export function newMergedInterchange(): MergedInterchange {
   return {
+    data: {},
     documentation: '',
     metaEdName: '',
     metaEdId: '',
@@ -54,7 +58,7 @@ export function newMergedInterchange(): MergedInterchange {
     useCaseDocumentation: '',
     baseEntityName: '',
     baseEntity: null,
-
+    humanizedUppercasedMetaEdName() { return this.metaEdName ? sugar.titleize(this.metaEdName) : ''; },
     repositoryId: '',
     interchangeName: '',
     schemaLocation: '',

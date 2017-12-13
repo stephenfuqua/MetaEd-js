@@ -16,7 +16,7 @@ describe('when generating xsd for descriptor', () => {
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntitySubclassBuilder = new DomainEntitySubclassBuilder(metaEd, []);
@@ -43,7 +43,7 @@ describe('when generating xsd for descriptor', () => {
     .sendToListener(domainEntityBuilder)
     .sendToListener(domainEntitySubclassBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity', () => {

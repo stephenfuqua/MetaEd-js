@@ -153,7 +153,7 @@ export { asInlineCommonProperty, newInlineCommonProperty } from './model/propert
 export { asIntegerProperty, newIntegerProperty } from './model/property/IntegerProperty';
 export { asMergedProperty, newMergedProperty } from './model/property/MergedProperty';
 export { asPercentProperty, newPercentProperty } from './model/property/PercentProperty';
-export { asReferentialProperty, newReferentialProperty } from './model/property/ReferentialProperty';
+export { asReferentialProperty, newReferentialProperty, isReferentialProperty } from './model/property/ReferentialProperty';
 export { asSchoolYearEnumerationProperty, newSchoolYearEnumerationProperty } from './model/property/SchoolYearEnumerationProperty';
 export { asSharedDecimalProperty, newSharedDecimalProperty } from './model/property/SharedDecimalProperty';
 export { asSharedIntegerProperty, newSharedIntegerProperty } from './model/property/SharedIntegerProperty';

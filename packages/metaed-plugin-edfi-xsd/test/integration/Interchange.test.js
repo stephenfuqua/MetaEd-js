@@ -14,7 +14,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
   let interchangeResults;
 
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const intengerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
@@ -46,7 +46,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     .sendToListener(interchangeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ interchangeResults } = enhanceAndGenerate(metaEd));
+    ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
   it('should include core xsd', () => {
@@ -73,7 +73,7 @@ describe('when generating xsd for extension interchange with a new domain entity
   let interchangeResults : Array<string>;
 
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const intengerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
@@ -112,7 +112,7 @@ describe('when generating xsd for extension interchange with a new domain entity
     .sendToListener(interchangeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ interchangeResults } = enhanceAndGenerate(metaEd));
+    ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
   it('should include core xsd', () => {
@@ -156,7 +156,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
   let interchangeResults : Array<string>;
 
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -198,7 +198,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
     .sendToListener(domainEntityExtensionBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ interchangeResults } = enhanceAndGenerate(metaEd));
+    ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
   it('should include core xsd', () => {
@@ -242,7 +242,7 @@ describe('when generating xsd for extension interchange with an association exte
   let interchangeResults : Array<string>;
 
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -296,7 +296,7 @@ describe('when generating xsd for extension interchange with an association exte
     .sendToListener(domainEntityExtensionBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ interchangeResults } = enhanceAndGenerate(metaEd));
+    ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
   it('should include core xsd', () => {
@@ -338,7 +338,7 @@ describe('when generating xsd for extension interchange with extension descripto
   let interchangeResults : Array<string>;
 
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -371,7 +371,7 @@ describe('when generating xsd for extension interchange with extension descripto
     .sendToListener(domainEntityExtensionBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ interchangeResults } = enhanceAndGenerate(metaEd));
+    ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
   it('should include core descriptor interchange', () => {

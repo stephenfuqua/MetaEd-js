@@ -54,24 +54,20 @@ export async function executePipeline(state: State): Promise<State> {
           logger.info(`Running ${pluginManifest.npmName} validators`);
 
           runValidators(pluginManifest, state);
-          // eslint-disable-next-line no-await-in-loop
           await nextMacroTask();
         }
 
         if (state.pipelineOptions.runEnhancers) {
           logger.info(`Running ${pluginManifest.npmName} enhancers`);
 
-          // eslint-disable-next-line no-await-in-loop
           await runEnhancers(pluginManifest, state);
-          // eslint-disable-next-line no-await-in-loop
           await nextMacroTask();
         }
 
         if (state.pipelineOptions.runGenerators) {
           logger.info(`Running ${pluginManifest.npmName} generators`);
 
-          runGenerators(pluginManifest, state);
-          // eslint-disable-next-line no-await-in-loop
+          await runGenerators(pluginManifest, state);
           await nextMacroTask();
         }
       } catch (err) {

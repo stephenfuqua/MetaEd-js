@@ -53,7 +53,6 @@ export async function execute(state: State): Promise<void> {
   // eslint-disable-next-line no-restricted-syntax
   for (const builder of builders) {
     parseTreeWalker.walk(builder, state.parseTree);
-    // eslint-disable-next-line no-await-in-loop
     await nextMacroTask();
   }
 }

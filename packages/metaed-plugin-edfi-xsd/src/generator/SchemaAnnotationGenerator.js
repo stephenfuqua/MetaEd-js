@@ -4,7 +4,7 @@ import { getEntitiesOfType } from 'metaed-core';
 import { formatAndPrependHeader, template } from './XsdGeneratorBase';
 import { orderByName } from '../enhancer/schema/AddSchemaContainerEnhancer';
 
-export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
   const descriptors: Array<{name: string}> =

@@ -10,7 +10,6 @@ export async function execute(pluginManifest: PluginManifest, state: State): Pro
   // eslint-disable-next-line no-restricted-syntax
   for (const enhancer: Enhancer of pluginManifest.metaEdPlugin.enhancer) {
     state.enhancerResults.push(enhancer(state.metaEd));
-    // eslint-disable-next-line no-await-in-loop
     await nextMacroTask();
   }
 }

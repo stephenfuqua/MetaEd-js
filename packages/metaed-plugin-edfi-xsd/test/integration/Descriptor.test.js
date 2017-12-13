@@ -11,7 +11,7 @@ describe('when generating xsd for descriptor', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -28,7 +28,7 @@ describe('when generating xsd for descriptor', () => {
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(descriptorBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate descriptor', () => {
@@ -55,7 +55,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -83,7 +83,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     .sendToListener(domainEntityBuilder)
     .sendToListener(descriptorBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core descriptor', () => {
@@ -121,7 +121,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -154,7 +154,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     .sendToListener(domainEntityBuilder)
     .sendToListener(descriptorBuilder);
 
-    ({ extensionResult } = enhanceAndGenerate(metaEd));
+    ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate extension descriptor', () => {
@@ -190,7 +190,7 @@ describe('when generating xsd for descriptor in extension namespace with referen
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -221,7 +221,7 @@ describe('when generating xsd for descriptor in extension namespace with referen
     .sendToListener(domainEntityBuilder)
     .sendToListener(descriptorBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity', () => {

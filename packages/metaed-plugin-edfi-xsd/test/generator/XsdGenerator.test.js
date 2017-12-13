@@ -23,7 +23,7 @@ describe('when generating schema', () => {
 
   let result;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const element = createElementComplexTypeItem(complexTypeItemName, complexTypeItemDocumentation, complexTypeItemType);
     const complexType = createComplexType(complexTypeName, complexTypeDocumentation);
     complexType.items.push(element);
@@ -44,7 +44,7 @@ describe('when generating schema', () => {
     });
 
     metaEd.entity.namespaceInfo.push(namespaceInfo);
-    const rawXsd = generate(metaEd).generatedOutput[0].resultString;
+    const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
     result = xmlParser.xml2js(rawXsd);
   });
 

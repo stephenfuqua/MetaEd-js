@@ -91,7 +91,7 @@ function elementsByComplexType(complexTypes: Array<ComplexType>): Array<ElementB
   return result;
 }
 
-export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const allComplexTypes: Array<ComplexType> = [];
   const allSimpleTypes: Array<AnySimpleType> = [];
 
