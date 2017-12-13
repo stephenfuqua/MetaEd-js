@@ -19,7 +19,7 @@ describe('when generating xsd for association extension in extension namespace b
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const associationBuilder = new AssociationBuilder(metaEd, []);
     const associationSubclassBuilder = new AssociationSubclassBuilder(metaEd, []);
@@ -57,7 +57,7 @@ describe('when generating xsd for association extension in extension namespace b
     .sendToListener(associationSubclassBuilder)
     .sendToListener(namespaceInfoBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity1', () => {

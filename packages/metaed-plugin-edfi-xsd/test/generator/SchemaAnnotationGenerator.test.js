@@ -12,7 +12,7 @@ describe('when generating schema annotation for a single descriptor', () => {
   const xsdDescriptorName: string = 'DescriptorNameDescriptor';
   let descriptorElement;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const schema = createSchema('200', 'Schema Documentation');
     const namespaceInfo = Object.assign(newNamespaceInfo(), {
       namespace: 'edfi',
@@ -46,7 +46,7 @@ describe('when generating schema annotation for a single descriptor', () => {
     });
     addEntity(metaEd.entity, descriptor);
 
-    const rawXsd = generate(metaEd).generatedOutput[0].resultString;
+    const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
     descriptorElement = xmlParser.xml2js(rawXsd).elements[1].elements[1];
   });
 

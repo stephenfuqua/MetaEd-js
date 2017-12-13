@@ -15,7 +15,7 @@ describe('when generating xsd for common type extension in extension namespace b
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const commonExtensionBuilder = new CommonExtensionBuilder(metaEd, []);
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
@@ -42,7 +42,7 @@ describe('when generating xsd for common type extension in extension namespace b
     .sendToListener(commonBuilder)
     .toString();
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core common type', () => {

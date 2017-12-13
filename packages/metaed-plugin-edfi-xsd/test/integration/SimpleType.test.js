@@ -16,7 +16,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
@@ -46,7 +46,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     .sendToListener(stringTypeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity', () => {
@@ -87,7 +87,7 @@ describe('when generating xsd for common string', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
@@ -107,7 +107,7 @@ describe('when generating xsd for common string', () => {
     .sendToListener(stringTypeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate simple type entity', () => {
@@ -143,7 +143,7 @@ describe('when generating xsd for common decimal', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const decimalTypeBuilder = new DecimalTypeBuilder(metaEd, []);
@@ -165,7 +165,7 @@ describe('when generating xsd for common decimal', () => {
     .sendToListener(decimalTypeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate simple type entity', () => {
@@ -208,7 +208,7 @@ describe('when generating xsd for common integer', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
@@ -228,7 +228,7 @@ describe('when generating xsd for common integer', () => {
     .sendToListener(integerTypeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate simple type entity', () => {
@@ -263,7 +263,7 @@ describe('when generating xsd for common short', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
@@ -283,7 +283,7 @@ describe('when generating xsd for common short', () => {
     .sendToListener(integerTypeBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate simple type entity', () => {
@@ -321,7 +321,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -351,7 +351,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
     .sendToListener(domainEntityBuilder)
     .sendToListener(domainEntityExtensionBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core shared string', () => {
@@ -378,7 +378,7 @@ describe('when generating xsd for renamed shared simple property in extension na
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -409,7 +409,7 @@ describe('when generating xsd for renamed shared simple property in extension na
     .sendToListener(domainEntityBuilder)
     .sendToListener(domainEntityExtensionBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core shared string', () => {
@@ -435,7 +435,7 @@ describe('when generating xsd for shared simple property in extension namespace 
 
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -471,7 +471,7 @@ describe('when generating xsd for shared simple property in extension namespace 
     .sendToListener(domainEntityBuilder)
     .sendToListener(domainEntityExtensionBuilder);
 
-    ({ extensionResult } = enhanceAndGenerate(metaEd));
+    ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate extension shared string', () => {

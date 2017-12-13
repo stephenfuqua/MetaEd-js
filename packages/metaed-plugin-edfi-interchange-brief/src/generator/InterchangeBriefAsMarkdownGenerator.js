@@ -35,16 +35,13 @@ export const registerPartials = R.once(
     });
   });
 
-export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
-  console.log('started markdown generator');
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   const generatedOutput: Array<GeneratedOutput> = [];
+
   registerPartials();
-  console.log('registered partials');
   ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>).forEach((interchange: MergedInterchange) => {
-    console.log('running handlebars markdown template');
     const markdown: string = template().interchangeBrief(interchange);
-    console.log('pushing generated output loop');
     generatedOutput.push({
       name: 'Interchange Brief Html',
       fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
@@ -53,7 +50,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
       resultStream: null,
     });
   });
-  console.log('pushing confluence generated output');
+
   generatedOutput.push({
     name: 'confluence-like.css',
     fileName: 'confluence-like.css',
@@ -61,7 +58,7 @@ export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
     resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
     resultStream: null,
   });
-  console.log('returning results of markdown generator');
+
   return {
     generatorName,
     generatedOutput,

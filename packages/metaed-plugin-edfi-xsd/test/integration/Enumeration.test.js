@@ -11,7 +11,7 @@ describe('when generating xsd for enumeration', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -28,7 +28,7 @@ describe('when generating xsd for enumeration', () => {
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(enumerationBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate enumeration', () => {
@@ -55,7 +55,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
@@ -87,7 +87,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     .sendToListener(enumerationBuilder)
     .sendToListener(descriptorBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate enumeration', () => {
@@ -119,7 +119,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -148,7 +148,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
     .sendToListener(domainEntityBuilder)
     .sendToListener(enumerationBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity', () => {

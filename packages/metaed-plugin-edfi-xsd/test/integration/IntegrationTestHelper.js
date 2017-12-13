@@ -1,7 +1,7 @@
 // @flow
 import { DOMParser } from 'xmldom';
 import xpath from 'xpath';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
 import { initialize as initializeXsdPlugin } from '../../index';
 import { generate } from '../../src/generator/XsdGenerator';
@@ -17,12 +17,12 @@ export const xpathSelect = xpath.useNamespaces({
   ann: 'http://ed-fi.org/annotation',
 });
 
-export function enhanceAndGenerate(metaEd: MetaEdEnvironment) {
+export async function enhanceAndGenerate(metaEd: MetaEdEnvironment) {
   initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
   initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
-  const generatorResult = generate(metaEd).generatedOutput;
-  const interchangeGeneratorResult = generateInterchange(metaEd).generatedOutput || [];
+  const generatorResult: Array<GeneratedOutput> = (await generate(metaEd)).generatedOutput;
+  const interchangeGeneratorResult: Array<GeneratedOutput> = (await generateInterchange(metaEd)).generatedOutput || [];
   const coreResultString = generatorResult[0].resultString;
   const extensionResultString = generatorResult[1] ? generatorResult[1].resultString : null;
   return {

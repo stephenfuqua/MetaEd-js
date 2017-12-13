@@ -18,7 +18,7 @@ describe('when generating xsd for domain entity', () => {
   let generatorResults: GeneratorResult;
   let workbook: Workbook;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
@@ -49,7 +49,7 @@ describe('when generating xsd for domain entity', () => {
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 
-    generatorResults = generate(metaEd);
+    generatorResults = await generate(metaEd);
     workbook = readWorkbook(generatorResults.generatedOutput[0].resultStream, 'buffer');
   });
 

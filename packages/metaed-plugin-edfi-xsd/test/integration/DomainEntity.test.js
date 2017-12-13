@@ -11,7 +11,7 @@ describe('when generating xsd for domain entity', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -28,7 +28,7 @@ describe('when generating xsd for domain entity', () => {
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate domain entity', () => {
@@ -59,7 +59,7 @@ describe('when generating xsd for domain entity with inline common type as part 
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -82,7 +82,7 @@ describe('when generating xsd for domain entity with inline common type as part 
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate domain entity', () => {
@@ -117,7 +117,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let coreResult;
   let extensionResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -145,7 +145,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     .sendToListener(domainEntityBuilder)
     .sendToListener(domainEntityExtensionBuilder);
 
-    ({ coreResult, extensionResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate core domain entity', () => {
@@ -195,7 +195,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -218,7 +218,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate domain entity', () => {
@@ -251,7 +251,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -270,7 +270,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
     .sendToListener(namespaceInfoBuilder)
     .sendToListener(domainEntityBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate domain entity', () => {
@@ -304,7 +304,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
 
   let coreResult;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
@@ -332,7 +332,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
     .sendToListener(stringTypeBuilder)
     .sendToListener(sharedStringBuilder);
 
-    ({ coreResult } = enhanceAndGenerate(metaEd));
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
 
   it('should generate domain entity', () => {

@@ -89,8 +89,8 @@ describe('When generating interchange brief with no extended references or descr
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Should include entities', () => {
@@ -201,8 +201,8 @@ describe('When generating interchange brief with extended documentation', () => 
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Should include entities', () => {
@@ -314,8 +314,8 @@ describe('When generating interchange brief with use case documentation', () => 
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Should include entities', () => {
@@ -429,8 +429,8 @@ describe('When generating interchange brief with extended and use case documenta
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Shouldincludeentities', () => {
@@ -573,8 +573,8 @@ describe('When generating interchange brief with extended references', () => {
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Shouldincludeentities', () => {
@@ -721,8 +721,8 @@ describe('When generating interchange brief with descriptors', () => {
     return builderResult;
   }
 
-  beforeAll(() => {
-    generatedResults = InterchangeBriefAsMarkdownGenerator(GetBuilderResults()).generatedOutput;
+  beforeAll(async () => {
+    generatedResults = (await InterchangeBriefAsMarkdownGenerator(GetBuilderResults())).generatedOutput;
   });
 
   it('Should include entities', () => {

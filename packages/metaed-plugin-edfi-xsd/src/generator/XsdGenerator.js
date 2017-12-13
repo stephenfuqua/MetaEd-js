@@ -4,7 +4,7 @@ import type { NamespaceInfoEdfiXsd } from '../model/NamespaceInfo';
 import type { SchemaContainer } from '../model/schema/SchemaContainer';
 import { formatAndPrependHeader, registerPartials, template, formatVersionForSchema } from './XsdGeneratorBase';
 
-export function generate(metaEd: MetaEdEnvironment): GeneratorResult {
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   registerPartials();
 
   const results: Array<GeneratedOutput> = [];
