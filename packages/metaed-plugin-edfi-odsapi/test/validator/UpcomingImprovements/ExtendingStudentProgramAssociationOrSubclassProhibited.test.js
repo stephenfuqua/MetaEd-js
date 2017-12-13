@@ -1,7 +1,7 @@
 // @flow
 import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationSubclassBuilder, AssociationExtensionBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
+import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 
 describe('when an association extension extends a non-student program association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

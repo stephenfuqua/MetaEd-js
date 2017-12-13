@@ -1,7 +1,7 @@
 // @flow
 import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntitySubclassBuilder, DomainEntityExtensionBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
+import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 
 describe('when a domain entity extension extends a non-education organization domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

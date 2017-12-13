@@ -22,8 +22,8 @@ import { newRow, createRow, setRow } from '../model/Row';
 import type { Worksheet } from '../model/Worksheet';
 import { newWorksheet } from '../model/Worksheet';
 
-type AnySimpleType = DecimalSimpleType | EnumerationSimpleType | IntegerSimpleType | StringSimpleType;
-type AnyComplexTypeItem = Element | ElementGroup;
+type AnySimpleType = DecimalSimpleType & EnumerationSimpleType & IntegerSimpleType & StringSimpleType;
+type AnyComplexTypeItem = Element & ElementGroup;
 
 function byNameDesc(a, b) {
   if (a.Name < b.Name) return -1;
@@ -48,7 +48,7 @@ function formatRestrictions(simpleType: AnySimpleType): string {
   return result.join('\n');
 }
 
-function formatCardinality(element: AnyComplexTypeItem): string {
+function formatCardinality(element: Element): string {
   const result: Array<string> = [];
   if (element.minOccurs) result.push(`minOccurs: ${element.minOccurs}`);
   if (element.maxOccursIsUnbounded) {
