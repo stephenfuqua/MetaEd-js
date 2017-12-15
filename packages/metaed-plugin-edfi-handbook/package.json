@@ -1,0 +1,52 @@
+{
+  "name": "metaed-plugin-edfi-handbook",
+  "main": "dist/index.js",
+  "version": "1.1.1-dev.24",
+  "description": "Ed-Fi MetaEd Handbook plugin for MetaEd",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "metaed-plugin": {
+    "artifact-specific": {
+      "shortName": "edfiHandbook",
+      "authorName": "Ed-Fi Alliance",
+      "metaEdVersion": "1.x",
+      "technologyVersion": "1.x",
+      "dependencies": [
+        "metaed-plugin-edfi-xsd"
+      ]
+    }
+  },
+  "dependencies": {
+    "handlebars": "^4.0.10",
+    "js-beautify": "^1.7.5",
+    "metaed-core": "1.1.1-dev.24",
+    "metaed-plugin-edfi-xsd": "1.1.1-dev.24",
+    "ramda": "^0.24.1",
+    "sort-array": "^2.0.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.26.0",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-import": "^2.6.0",
+    "flow-bin": "^0.52.0",
+    "flow-typed": "^2.1.5",
+    "jest": "20.0.4",
+    "metaed-plugin-edfi-unified": "1.1.1-dev.24",
+    "rimraf": "^2.6.1"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build:clean": "rimraf dist",
+    "build:flow": "flow-copy-source -v src dist",
+    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files"
+  }
+}

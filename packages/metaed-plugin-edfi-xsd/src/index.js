@@ -25,6 +25,13 @@ export type { EdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 
 export { newMergedInterchange } from './model/MergedInterchange';
 export { addEdFiXsdEntityRepositoryTo } from './model/EdFiXsdEntityRepository';
+// Factories
+export { newComplexType } from './model/schema/ComplexType';
+export { newAnnotation } from './model/schema/Annotation';
+export { newDecimalSimpleType } from './model/schema/DecimalSimpleType';
+export { newStringSimpleType } from './model/schema/StringSimpleType';
+export { createCurrencySimpleType, createPercentSimpleType, createTimeIntervalSimpleType } from './enhancer/schema/BaseSimpleTypeCreator';
+
 export function initialize(): MetaEdPlugin {
   return {
     validator: [],
