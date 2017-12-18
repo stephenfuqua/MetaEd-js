@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating string property with minimum length greater than maximum length -> message 1`] = `"String Property StringIdentity has min length greater than max length."`;
+exports[`when validating string property with minimum length greater than maximum length should have validation failures: when validating string property with minimum length greater than maximum length -> message 1`] = `"String Property StringIdentity has min length greater than max length."`;
 
-exports[`when validating string property with minimum length greater than maximum length -> message2 1`] = `"String Property StringProperty has min length greater than max length."`;
+exports[`when validating string property with minimum length greater than maximum length should have validation failures: when validating string property with minimum length greater than maximum length -> message2 1`] = `"String Property StringProperty has min length greater than max length."`;
 
-exports[`when validating string property with minimum length greater than maximum length -> sourceMap 1`] = `
+exports[`when validating string property with minimum length greater than maximum length should have validation failures: when validating string property with minimum length greater than maximum length -> sourceMap 1`] = `
 Object {
   "column": 6,
   "line": 9,
@@ -12,7 +12,7 @@ Object {
 }
 `;
 
-exports[`when validating string property with minimum length greater than maximum length -> sourceMap2 1`] = `
+exports[`when validating string property with minimum length greater than maximum length should have validation failures: when validating string property with minimum length greater than maximum length -> sourceMap2 1`] = `
 Object {
   "column": 6,
   "line": 15,

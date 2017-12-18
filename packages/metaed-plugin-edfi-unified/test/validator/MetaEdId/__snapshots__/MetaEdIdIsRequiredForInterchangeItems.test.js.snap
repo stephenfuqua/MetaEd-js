@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating interchange element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+exports[`when validating interchange element is missing metaEdId should have validation failures: when validating interchange element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
 
-exports[`when validating interchange element is missing metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange element is missing metaEdId should have validation failures: when validating interchange element is missing metaEdId should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange extension element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+exports[`when validating interchange extension element is missing metaEdId should have validation failures: when validating interchange extension element is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
 
-exports[`when validating interchange extension element is missing metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange extension element is missing metaEdId should have validation failures: when validating interchange extension element is missing metaEdId should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 3,
@@ -20,9 +20,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange extension identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityIdentityTemplateName is missing a MetaEdId value."`;
+exports[`when validating interchange extension identity template is missing metaEdId should have validation failures: when validating interchange extension identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityIdentityTemplateName is missing a MetaEdId value."`;
 
-exports[`when validating interchange extension identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange extension identity template is missing metaEdId should have validation failures: when validating interchange extension identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 3,
@@ -30,9 +30,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
+exports[`when validating interchange identity template is missing metaEdId should have validation failures: when validating interchange identity template is missing metaEdId should have validation failures -> message 1`] = `"Interchange Item DomainEntityElementName is missing a MetaEdId value."`;
 
-exports[`when validating interchange identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange identity template is missing metaEdId should have validation failures: when validating interchange identity template is missing metaEdId should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,

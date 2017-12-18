@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association subclass extends non existent entity should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName1 which is not part of the identity."`;
+exports[`when association subclass extends non existent entity should have validation failures: when association subclass extends non existent entity should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName1 which is not part of the identity."`;
 
-exports[`when association subclass extends non existent entity should have validation failure -> sourceMap 1`] = `
+exports[`when association subclass extends non existent entity should have validation failures: when association subclass extends non existent entity should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 32,
   "line": 8,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when association subclass renames base identity that does not exist should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName5 which is not part of the identity."`;
+exports[`when association subclass renames base identity that does not exist should have validation failures: when association subclass renames base identity that does not exist should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName5 which is not part of the identity."`;
 
-exports[`when association subclass renames base identity that does not exist should have validation failure -> sourceMap 1`] = `
+exports[`when association subclass renames base identity that does not exist should have validation failures: when association subclass renames base identity that does not exist should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 32,
   "line": 22,
@@ -20,9 +20,9 @@ Object {
 }
 `;
 
-exports[`when association subclass renames base property that is not identity should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName3 which is not part of the identity."`;
+exports[`when association subclass renames base property that is not identity should have validation failures: when association subclass renames base property that is not identity should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename PropertyName3 which is not part of the identity."`;
 
-exports[`when association subclass renames base property that is not identity should have validation failure -> sourceMap 1`] = `
+exports[`when association subclass renames base property that is not identity should have validation failures: when association subclass renames base property that is not identity should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 32,
   "line": 22,

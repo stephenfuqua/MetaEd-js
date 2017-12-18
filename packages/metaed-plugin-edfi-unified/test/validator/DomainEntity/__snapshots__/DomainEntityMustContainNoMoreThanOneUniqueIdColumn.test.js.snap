@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating domain entity with two UniqueId fields -> message 1`] = `"Domain Entity EntityName has multiple properties with a property name of 'UniqueId'.  Only one column in a core domain entity can be named 'UniqueId'."`;
+exports[`when validating domain entity with two UniqueId fields should have validation failure: when validating domain entity with two UniqueId fields -> message 1`] = `"Domain Entity EntityName has multiple properties with a property name of 'UniqueId'.  Only one column in a core domain entity can be named 'UniqueId'."`;
 
-exports[`when validating domain entity with two UniqueId fields -> sourceMap 1`] = `
+exports[`when validating domain entity with two UniqueId fields should have validation failure: when validating domain entity with two UniqueId fields -> sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

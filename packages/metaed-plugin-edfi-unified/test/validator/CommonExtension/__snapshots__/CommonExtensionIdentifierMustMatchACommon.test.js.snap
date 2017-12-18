@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when common extension extends an invalid identifier should have validation failure -> message 1`] = `"Common additions 'CommonName' does not match any declared Common."`;
+exports[`when common extension extends an invalid identifier should have validation failures(): when common extension extends an invalid identifier should have validation failure -> message 1`] = `"Common additions 'CommonName' does not match any declared Common."`;
 
-exports[`when common extension extends an invalid identifier should have validation failure -> sourceMap 1`] = `
+exports[`when common extension extends an invalid identifier should have validation failures(): when common extension extends an invalid identifier should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

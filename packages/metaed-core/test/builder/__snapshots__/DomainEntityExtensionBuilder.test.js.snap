@@ -57,9 +57,9 @@ Array [
 ]
 `;
 
-exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate domain entity extensions should have validation failures for each entity: when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap 1`] = `
+exports[`when building duplicate domain entity extensions should have validation failures for each entity: when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 7,
@@ -67,9 +67,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate domain entity extensions should have validation failures for each entity: when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap 1`] = `
+exports[`when building duplicate domain entity extensions should have validation failures for each entity: when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

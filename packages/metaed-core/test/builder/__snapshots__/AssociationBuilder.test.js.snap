@@ -86,9 +86,9 @@ Array [
 ]
 `;
 
-exports[`when building duplicate associations should have validation failures for each entity -> Association 1 message 1`] = `"Association named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 1 message 1`] = `"Association named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate associations should have validation failures for each entity -> Association 1 sourceMap 1`] = `
+exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 1 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 11,
@@ -96,9 +96,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate associations should have validation failures for each entity -> Association 2 message 1`] = `"Association named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 2 message 1`] = `"Association named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate associations should have validation failures for each entity -> Association 2 sourceMap 1`] = `
+exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating shared decimal property with decimal places greater than total digits -> message 1`] = `"Shared Decimal EntityName has decimal places greater than total digits."`;
+exports[`when validating shared decimal with decimal places greater than total digits should have validation failures: when validating shared decimal property with decimal places greater than total digits -> message 1`] = `"Shared Decimal EntityName has decimal places greater than total digits."`;
 
-exports[`when validating shared decimal property with decimal places greater than total digits -> sourceMap 1`] = `
+exports[`when validating shared decimal with decimal places greater than total digits should have validation failures: when validating shared decimal property with decimal places greater than total digits -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 6,

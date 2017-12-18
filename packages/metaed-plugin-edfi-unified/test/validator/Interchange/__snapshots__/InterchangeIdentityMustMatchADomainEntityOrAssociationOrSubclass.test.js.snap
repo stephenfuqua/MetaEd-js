@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating interchange identity template has invalid name should have validation failures -> message 1`] = `"Interchange identity template DomainEntityIdentityTemplateName does not match any declared Abstract Entity, Association, Association Subclass, Descriptor, Domain Entity, Domain Entity Subclass"`;
+exports[`when validating interchange identity template has invalid name should have validation failures: when validating interchange identity template has invalid name should have validation failures -> message 1`] = `"Interchange identity template DomainEntityIdentityTemplateName does not match any declared Abstract Entity, Association, Association Subclass, Descriptor, Domain Entity, Domain Entity Subclass"`;
 
-exports[`when validating interchange identity template has invalid name should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange identity template has invalid name should have validation failures: when validating interchange identity template has invalid name should have validation failures -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,

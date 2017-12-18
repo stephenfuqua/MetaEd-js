@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> message 1`] = `"Association Subclass SubclassName is not a StudentProgramAssociation subclass.  StudentProgramAssociation subclasses are the only Association subclasses currently supported by the ODS/API."`;
+exports[`when an association subclass subclasses a non-StudentProgramAssociation association should have validation failures: when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> message 1`] = `"Association Subclass SubclassName is not a StudentProgramAssociation subclass.  StudentProgramAssociation subclasses are the only Association subclasses currently supported by the ODS/API."`;
 
-exports[`when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> sourceMap 1`] = `
+exports[`when an association subclass subclasses a non-StudentProgramAssociation association should have validation failures: when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 0,
   "line": 0,

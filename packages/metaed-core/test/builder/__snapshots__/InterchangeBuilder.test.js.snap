@@ -1,18 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message 1`] = `"Interchange named InterchangeName is a duplicate declaration of that name."`;
+exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message 1`] = `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message 2`] = `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`;
-
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 11,
-  "tokenText": "Interchange",
-}
-`;
-
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 2`] = `
+exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 5,
@@ -20,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message 1`] = `"Interchange named InterchangeName is a duplicate declaration of that name."`;
+exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message 1`] = `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message 2`] = `"Interchange Extension named InterchangeName is a duplicate declaration of that name."`;
-
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 1`] = `
+exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,
@@ -32,7 +20,19 @@ Object {
 }
 `;
 
-exports[`when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 2`] = `
+exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message 1`] = `"Interchange named InterchangeName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 11,
+  "tokenText": "Interchange",
+}
+`;
+
+exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message 1`] = `"Interchange named InterchangeName is a duplicate declaration of that name."`;
+
+exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

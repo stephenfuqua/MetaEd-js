@@ -75,9 +75,9 @@ Array [
 ]
 `;
 
-exports[`when building duplicate association subclasses should have validation failures for each entity -> Association 1 message 1`] = `"Association Subclass named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate association subclasses should have validation failures for each entity: when building duplicate association subclasses should have validation failures for each entity -> Association 1 message 1`] = `"Association Subclass named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate association subclasses should have validation failures for each entity -> Association 1 sourceMap 1`] = `
+exports[`when building duplicate association subclasses should have validation failures for each entity: when building duplicate association subclasses should have validation failures for each entity -> Association 1 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 9,
@@ -85,9 +85,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate association subclasses should have validation failures for each entity -> Association 2 message 1`] = `"Association Subclass named EntityName is a duplicate declaration of that name."`;
+exports[`when building duplicate association subclasses should have validation failures for each entity: when building duplicate association subclasses should have validation failures for each entity -> Association 2 message 1`] = `"Association Subclass named EntityName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate association subclasses should have validation failures for each entity -> Association 2 sourceMap 1`] = `
+exports[`when building duplicate association subclasses should have validation failures for each entity: when building duplicate association subclasses should have validation failures for each entity -> Association 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

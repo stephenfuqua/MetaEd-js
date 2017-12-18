@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association subclass renames base identity more than once should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename properties PropertyName3, PropertyName4. Only one identity rename is allowed for a given Association Subclass."`;
+exports[`when association subclass renames base identity more than once should have validation failures: when association subclass renames base identity more than once should have validation failure -> message 1`] = `"Association Subclass SubclassName based on EntityName tries to rename properties PropertyName3, PropertyName4. Only one identity rename is allowed for a given Association Subclass."`;
 
-exports[`when association subclass renames base identity more than once should have validation failure -> message 2`] = `"Association Subclass SubclassName based on EntityName tries to rename properties PropertyName3, PropertyName4. Only one identity rename is allowed for a given Association Subclass."`;
+exports[`when association subclass renames base identity more than once should have validation failures: when association subclass renames base identity more than once should have validation failure -> message 2`] = `"Association Subclass SubclassName based on EntityName tries to rename properties PropertyName3, PropertyName4. Only one identity rename is allowed for a given Association Subclass."`;
 
-exports[`when association subclass renames base identity more than once should have validation failure -> sourceMap 1`] = `
+exports[`when association subclass renames base identity more than once should have validation failures: when association subclass renames base identity more than once should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 32,
   "line": 27,
@@ -12,7 +12,7 @@ Object {
 }
 `;
 
-exports[`when association subclass renames base identity more than once should have validation failure -> sourceMap 2`] = `
+exports[`when association subclass renames base identity more than once should have validation failures: when association subclass renames base identity more than once should have validation failure -> sourceMap 2`] = `
 Object {
   "column": 32,
   "line": 32,

@@ -16,7 +16,7 @@
     "flow-bin": "^0.52.0",
     "flow-copy-source": "^1.2.1",
     "flow-typed": "^2.1.5",
-    "jest": "21.2.1",
+    "jest": "22.0.4",
     "lerna": "^2.5.1",
     "rimraf": "^2.6.1"
   },
@@ -32,7 +32,8 @@
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:lint": "yarn lint",
     "test:flow": "yarn flow check",
-    "test:unit": "yarn build:clean && jest",
+    "test:unit": "yarn build:clean && yarn test:unit:workaround-memory-leak",
+    "test:unit:workaround-memory-leak": "jest packages/metaed-core && jest packages/metaed-plugin-edfi-interchange-brief && jest packages/metaed-plugin-edfi-ods && jest packages/metaed-plugin-edfi-odsapi && jest packages/metaed-plugin-edfi-unified && jest packages/metaed-plugin-edfi-xml-dictionary && jest packages/metaed-plugin-edfi-xsd",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
     "publish-dev": "yarn build:clean && yarn test && yarn build && lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"

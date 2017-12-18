@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating shared string with min value greater than max value -> message 1`] = `"Shared String EntityName has min length greater than max length."`;
+exports[`when validating shared string with min length greater than max length should have validation failures: when validating shared string with min value greater than max value -> message 1`] = `"Shared String EntityName has min length greater than max length."`;
 
-exports[`when validating shared string with min value greater than max value -> sourceMap 1`] = `
+exports[`when validating shared string with min length greater than max length should have validation failures: when validating shared string with min value greater than max value -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,

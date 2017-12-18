@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating domain entity has merge property and entity is wrong -> message 1`] = `"Merge statement EntityNotValid.Property2 must be a valid path. No Property Property2 was found"`;
+exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> message 1`] = `"Merge statement EntityNotValid.Property2 must be a valid path. No Property Property2 was found"`;
 
-exports[`when validating domain entity has merge property and entity is wrong -> sourceMap 1`] = `
+exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> sourceMap 1`] = `
 Object {
   "column": 33,
   "line": 20,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating domain entity has merge property and property is wrong -> message 1`] = `"Merge statement GoodEntity2.NotThere must be a valid path. No Property NotThere was found"`;
+exports[`when validating domain entity has merge property and property is wrong should have one validation failure: when validating domain entity has merge property and property is wrong -> message 1`] = `"Merge statement GoodEntity2.NotThere must be a valid path. No Property NotThere was found"`;
 
-exports[`when validating domain entity has merge property and property is wrong -> sourceMap 1`] = `
+exports[`when validating domain entity has merge property and property is wrong should have one validation failure: when validating domain entity has merge property and property is wrong -> sourceMap 1`] = `
 Object {
   "column": 37,
   "line": 20,

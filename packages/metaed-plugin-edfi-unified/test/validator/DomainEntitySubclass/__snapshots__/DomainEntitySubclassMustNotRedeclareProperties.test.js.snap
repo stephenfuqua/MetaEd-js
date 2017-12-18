@@ -1,12 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when domain entity subclass has invalid extendee should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName of base Domain Entity."`;
+exports[`when domain entity subclass has duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName of base Domain Entity."`;
 
-exports[`when domain entity subclass has invalid extendee should have validation failure -> message 2`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName1 of base Domain Entity."`;
-
-exports[`when domain entity subclass has invalid extendee should have validation failure -> message 3`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName2 of base Domain Entity."`;
-
-exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity subclass has duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 12,
@@ -14,7 +10,11 @@ Object {
 }
 `;
 
-exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 2`] = `
+exports[`when domain entity subclass has multiple duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName1 of base Domain Entity."`;
+
+exports[`when domain entity subclass has multiple duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> message 2`] = `"Domain Entity Subclass SubclassName redeclares property DuplicatePropertyName2 of base Domain Entity."`;
+
+exports[`when domain entity subclass has multiple duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 16,
@@ -22,7 +22,7 @@ Object {
 }
 `;
 
-exports[`when domain entity subclass has invalid extendee should have validation failure -> sourceMap 3`] = `
+exports[`when domain entity subclass has multiple duplicate property name should have validation failures: when domain entity subclass has invalid extendee should have validation failure -> sourceMap 2`] = `
 Object {
   "column": 4,
   "line": 20,

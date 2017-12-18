@@ -83,9 +83,9 @@ Array [
 ]
 `;
 
-exports[`when building duplicate domains should have validation failures for each entity -> Domain 1 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
+exports[`when building duplicate domains should have validation failures for each entity: when building duplicate domains should have validation failures for each entity -> Domain 1 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap 1`] = `
+exports[`when building duplicate domains should have validation failures for each entity: when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 8,
@@ -93,9 +93,9 @@ Object {
 }
 `;
 
-exports[`when building duplicate domains should have validation failures for each entity -> Domain 2 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
+exports[`when building duplicate domains should have validation failures for each entity: when building duplicate domains should have validation failures for each entity -> Domain 2 message 1`] = `"Domain named DomainName is a duplicate declaration of that name."`;
 
-exports[`when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap 1`] = `
+exports[`when building duplicate domains should have validation failures for each entity: when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

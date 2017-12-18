@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when descriptor domain item has no matching top level entity should have validation failure -> message 1`] = `"Descriptor Domain Item property 'DescriptorDomainItemName' does not match any declared Descriptor."`;
+exports[`when validating descriptor domain item does not match top level entity should have one validation failure(): when descriptor domain item has no matching top level entity should have validation failure -> message 1`] = `"Descriptor Domain Item property 'DescriptorDomainItemName' does not match any declared Descriptor."`;
 
-exports[`when descriptor domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;
+exports[`when validating descriptor domain item does not match top level entity should have one validation failure(): when descriptor domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;

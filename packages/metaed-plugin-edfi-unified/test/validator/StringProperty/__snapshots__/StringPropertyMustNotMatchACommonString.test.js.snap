@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating string identity matches common string -> message 1`] = `"String Property StringProperty has the same name as a Common String."`;
+exports[`when validating string identity matches common string should have no validation failures: when validating string identity matches common string -> message 1`] = `"String Property StringProperty has the same name as a Common String."`;
 
-exports[`when validating string identity matches common string -> sourceMap 1`] = `
+exports[`when validating string identity matches common string should have no validation failures: when validating string identity matches common string -> sourceMap 1`] = `
 Object {
   "column": 11,
   "line": 8,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating string property matches common string -> message 1`] = `"String Property StringProperty has the same name as a Common String."`;
+exports[`when validating string property matches common string should have no validation failures: when validating string property matches common string -> message 1`] = `"String Property StringProperty has the same name as a Common String."`;
 
-exports[`when validating string property matches common string -> sourceMap 1`] = `
+exports[`when validating string property matches common string should have no validation failures: when validating string property matches common string -> sourceMap 1`] = `
 Object {
   "column": 11,
   "line": 8,

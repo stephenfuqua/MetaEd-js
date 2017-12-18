@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating short identity matches common decimal -> message 1`] = `"Short Property EntityName has the same name as a Common Decimal."`;
+exports[`when validating short identity matches common decimal should have one validation failure: when validating short identity matches common decimal -> message 1`] = `"Short Property EntityName has the same name as a Common Decimal."`;
 
-exports[`when validating short identity matches common decimal -> sourceMap 1`] = `
+exports[`when validating short identity matches common decimal should have one validation failure: when validating short identity matches common decimal -> sourceMap 1`] = `
 Object {
   "column": 10,
   "line": 10,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating short property matches common decimal -> message 1`] = `"Short Property EntityName has the same name as a Common Decimal."`;
+exports[`when validating short property matches common decimal should have one validation failure: when validating short property matches common decimal -> message 1`] = `"Short Property EntityName has the same name as a Common Decimal."`;
 
-exports[`when validating short property matches common decimal -> sourceMap 1`] = `
+exports[`when validating short property matches common decimal should have one validation failure: when validating short property matches common decimal -> sourceMap 1`] = `
 Object {
   "column": 10,
   "line": 10,

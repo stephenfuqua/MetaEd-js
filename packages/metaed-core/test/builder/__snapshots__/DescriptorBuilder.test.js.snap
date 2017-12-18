@@ -122,26 +122,6 @@ Array [
 ]
 `;
 
-exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
-
-exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 9,
-  "tokenText": "Descriptor",
-}
-`;
-
-exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
-
-exports[`when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap 1`] = `
-Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Descriptor",
-}
-`;
-
 exports[`when building map type enumeration item source map should have line, column, text for each property 1`] = `
 EnumerationItemSourceMap {
   "documentation": Object {
@@ -169,6 +149,26 @@ EnumerationItemSourceMap {
     "line": 12,
     "tokenText": "item",
   },
+}
+`;
+
+exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Descriptor",
+}
+`;
+
+exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message 1`] = `"Descriptor named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap 1`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Descriptor",
 }
 `;
 

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating abstract entity with no identity fields -> message 1`] = `"Abstract Entity EntityName does not have an identity specified."`;
+exports[`when validating abstract entity with no identity fields should have validation failure: when validating abstract entity with no identity fields -> message 1`] = `"Abstract Entity EntityName does not have an identity specified."`;
 
-exports[`when validating abstract entity with no identity fields -> sourceMap 1`] = `
+exports[`when validating abstract entity with no identity fields should have validation failure: when validating abstract entity with no identity fields -> sourceMap 1`] = `
 Object {
   "column": 2,
   "line": 2,

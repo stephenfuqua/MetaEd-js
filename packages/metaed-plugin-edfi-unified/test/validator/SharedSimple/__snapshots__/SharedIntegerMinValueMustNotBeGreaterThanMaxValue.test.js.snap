@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating shared integer with min value greater than max value -> message 1`] = `"Shared Integer EntityName has min value greater than max value."`;
+exports[`when validating shared integer with min value greater than max value should have validation failures: when validating shared integer with min value greater than max value -> message 1`] = `"Shared Integer EntityName has min value greater than max value."`;
 
-exports[`when validating shared integer with min value greater than max value -> sourceMap 1`] = `
+exports[`when validating shared integer with min value greater than max value should have validation failures: when validating shared integer with min value greater than max value -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating shared short with min value greater than max value -> message 1`] = `"Shared Integer EntityName has min value greater than max value."`;
+exports[`when validating shared short with min value greater than max value should have validation failures: when validating shared short with min value greater than max value -> message 1`] = `"Shared Integer EntityName has min value greater than max value."`;
 
-exports[`when validating shared short with min value greater than max value -> sourceMap 1`] = `
+exports[`when validating shared short with min value greater than max value should have validation failures: when validating shared short with min value greater than max value -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 5,

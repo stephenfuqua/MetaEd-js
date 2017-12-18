@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating integer property matches common integer -> message 1`] = `"integer EntityName has the same name as a Common Integer."`;
+exports[`when validating integer property matches common integer should have no validation failures: when validating integer property matches common integer -> message 1`] = `"integer EntityName has the same name as a Common Integer."`;
 
-exports[`when validating integer property matches common integer -> sourceMap 1`] = `
+exports[`when validating integer property matches common integer should have no validation failures: when validating integer property matches common integer -> sourceMap 1`] = `
 Object {
   "column": 12,
   "line": 8,
