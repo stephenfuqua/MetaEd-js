@@ -2,7 +2,7 @@
 import R from 'ramda';
 import type { GeneratedOutput, GeneratorResult, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
 import { orderByProp } from 'metaed-core';
-import { pluginEnvironment } from '../../../metaed-plugin-edfi-ods/src/enhancer/EnhancerHelper';
+import { pluginEnvironment } from '../enhancer/EnhancerHelper';
 import { registerPartials, template } from './OdsGeneratorBase';
 import type { EnumerationRow } from '../model/database/EnumerationRow';
 import type { ForeignKey } from '../model/database/ForeignKey';
