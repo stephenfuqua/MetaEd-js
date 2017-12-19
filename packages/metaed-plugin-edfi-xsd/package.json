@@ -44,7 +44,7 @@
     "final-fs": "^1.6.1",
     "flow-bin": "^0.52.0",
     "flow-typed": "^2.1.5",
-    "jest": "20.0.4",
+    "jest": "21.2.1",
     "metaed-plugin-edfi-unified": "1.1.1-dev.26",
     "rimraf": "^2.6.1",
     "xmldom": "^0.1.27",
@@ -54,6 +54,7 @@
     "build": "yarn build:clean && yarn build:dist && yarn build:flow",
     "build:clean": "rimraf dist",
     "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files"
+    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files",
+    "test:single": "jest"
   }
 }
