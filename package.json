@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "lerna": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build --parallel",
     "build:clean": "lerna run build:clean --parallel",
     "test": "yarn test:flow && yarn test:lint && yarn test:unit && yarn test:atom",
