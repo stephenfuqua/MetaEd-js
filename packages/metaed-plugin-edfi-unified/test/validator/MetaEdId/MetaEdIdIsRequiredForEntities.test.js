@@ -47,8 +47,12 @@ describe('when validating abstract entity is missing metaEdId for entity', () =>
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating abstract entity is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating abstract entity is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating abstract entity is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating abstract entity is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -78,8 +82,12 @@ describe('when validating association is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating association is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating association is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating association is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating association is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -107,8 +115,12 @@ describe('when validating association extension is missing metaEdId for entity',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating association extension is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating association extension is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating association extension is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating association extension is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -137,8 +149,12 @@ describe('when validating association subclass is missing metaEdId for entity', 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating association subclass is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating association subclass is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating association subclass is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating association subclass is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -167,8 +183,12 @@ describe('when validating choice is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating choice is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating choice is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating choice is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating choice is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -197,8 +217,12 @@ describe('when validating common is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating common is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -227,8 +251,12 @@ describe('when validating common extension is missing metaEdId for entity', () =
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating common extension is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common extension is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common extension is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common extension is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -257,8 +285,12 @@ describe('when validating descriptor is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating descriptor is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating descriptor is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating descriptor is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating descriptor is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -287,8 +319,12 @@ describe('when validating domain is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating domain is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -317,8 +353,12 @@ describe('when validating domain entity is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -347,8 +387,12 @@ describe('when validating domain entity extension is missing metaEdId for entity
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity extension is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity extension is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity extension is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity extension is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -377,8 +421,12 @@ describe('when validating domain entity subclass is missing metaEdId for entity'
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity subclass is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity subclass is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity subclass is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity subclass is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -407,8 +455,12 @@ describe('when validating enumeration is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating enumeration is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating enumeration is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating enumeration is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating enumeration is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -437,8 +489,12 @@ describe('when validating inline common is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating inline common is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating inline common is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating inline common is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating inline common is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -467,8 +523,12 @@ describe('when validating interchange is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -505,12 +565,20 @@ describe('when validating map type enumeration is missing metaEdId for entity', 
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating map type enumeration is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating map type enumeration is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating map type enumeration is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating map type enumeration is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating map type enumeration is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating map type enumeration is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating map type enumeration is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating map type enumeration is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -539,11 +607,14 @@ describe('when validating interchange extension is missing metaEdId for entity',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange extension is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange extension is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange extension is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange extension is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
-
 
 describe('when validating school year enumeration is missing metaEdId for entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -570,8 +641,12 @@ describe('when validating school year enumeration is missing metaEdId for entity
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating school year enumeration is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating school year enumeration is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating school year enumeration is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating school year enumeration is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -601,8 +676,12 @@ describe('when validating shared decimal is missing metaEdId for entity', () => 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared decimal is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared decimal is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared decimal is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared decimal is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -630,8 +709,12 @@ describe('when validating shared integer is missing metaEdId for entity', () => 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared integer is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared integer is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared integer is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared integer is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -659,8 +742,12 @@ describe('when validating shared short is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared short is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared short is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared short is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared short is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -689,8 +776,12 @@ describe('when validating shared string is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared string is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared string is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared string is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared string is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });
 describe('when validating subdomain is missing metaEdId for entity', () => {
@@ -718,7 +809,11 @@ describe('when validating subdomain is missing metaEdId for entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEntities');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating subdomain is missing metaEdId for entity should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating subdomain is missing metaEdId for entity should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating subdomain is missing metaEdId for entity should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating subdomain is missing metaEdId for entity should have validation failures -> sourceMap',
+    );
   });
 });

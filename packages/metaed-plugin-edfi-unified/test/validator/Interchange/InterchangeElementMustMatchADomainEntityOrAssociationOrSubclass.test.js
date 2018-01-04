@@ -294,7 +294,11 @@ describe('when validating interchange element has invalid name', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange element has invalid name should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange element has invalid name should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange element has invalid name should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange element has invalid name should have validation failures -> sourceMap',
+    );
   });
 });

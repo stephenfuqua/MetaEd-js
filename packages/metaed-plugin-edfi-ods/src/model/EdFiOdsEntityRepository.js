@@ -10,7 +10,7 @@ export type EdFiOdsEntityRepository = {
   table: Map<string, Table>,
   trigger: Map<string, Trigger>,
   row: Map<string, EnumerationRow | SchoolYearEnumerationRow>,
-}
+};
 
 const enhancerName: string = 'EdFiOdsEntityRepositorySetupEnhancer';
 
@@ -23,9 +23,12 @@ export function newEdFiOdsEntityRepository(): EdFiOdsEntityRepository {
 }
 
 export function addEdFiOdsEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  metaEd.plugin.set('edfiOds', Object.assign(newPluginEnvironment(), {
-    entity: newEdFiOdsEntityRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiOds',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdFiOdsEntityRepository(),
+    }),
+  );
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

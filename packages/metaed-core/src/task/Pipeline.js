@@ -16,9 +16,7 @@ import { loadPlugins } from './LoadPlugins';
 import type { State } from '../State';
 
 const logger = new Logger({
-  transports: [
-    new transports.Console(),
-  ],
+  transports: [new transports.Console()],
 });
 logger.cli();
 

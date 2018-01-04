@@ -141,7 +141,10 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
   it('should have correct foreign key order', () => {
     const foreignKeys: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
-    expect(foreignKeys.map(x => x.name)).toEqual([`FK_${parentTableName1}_${foreignTableName1}`, `FK_${parentTableName2}_${foreignTableName2}`]);
+    expect(foreignKeys.map(x => x.name)).toEqual([
+      `FK_${parentTableName1}_${foreignTableName1}`,
+      `FK_${parentTableName2}_${foreignTableName2}`,
+    ]);
   });
 
   it('should have correct foreign key column order', () => {
@@ -243,10 +246,10 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns with sql escaped description', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const tableName: string = 'TableName';
-  const expectedDescription: string = 'Test \'\'description\'\' with \'\'quotes\'\'';
+  const expectedDescription: string = "Test ''description'' with ''quotes''";
 
   beforeAll(() => {
-    const description: string = 'Test \'description\' with \'quotes\'';
+    const description: string = "Test 'description' with 'quotes'";
     initializeEdFiOdsEntityRepository(metaEd);
 
     const table: Table = Object.assign(newTable(), {

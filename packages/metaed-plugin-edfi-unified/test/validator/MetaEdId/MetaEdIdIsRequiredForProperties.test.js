@@ -1,10 +1,5 @@
 // @flow
-import {
-  AssociationBuilder,
-  DomainEntityBuilder,
-  newMetaEdEnvironment,
-  MetaEdTextBuilder,
-} from 'metaed-core';
+import { AssociationBuilder, DomainEntityBuilder, newMetaEdEnvironment, MetaEdTextBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForProperties';
 
@@ -37,8 +32,12 @@ describe('when validating association property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating association property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating association property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating association property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating association property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -71,8 +70,12 @@ describe('when validating choice property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating choice property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating choice property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating choice property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating choice property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -105,8 +108,12 @@ describe('when validating common property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating common property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -139,8 +146,12 @@ describe('when validating currency property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating currency property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating currency property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating currency property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating currency property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -173,8 +184,12 @@ describe('when validating date property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating date property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating date property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating date property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating date property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -207,8 +222,12 @@ describe('when validating decimal property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating decimal property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating decimal property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating decimal property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating decimal property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -241,8 +260,12 @@ describe('when validating descriptor property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating descriptor property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating descriptor property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating descriptor property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating descriptor property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -275,8 +298,12 @@ describe('when validating domainEntity property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating domainEntity property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domainEntity property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domainEntity property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domainEntity property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -309,8 +336,12 @@ describe('when validating duration property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating duration property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating duration property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating duration property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating duration property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -343,8 +374,12 @@ describe('when validating enumeration property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating enumeration property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating enumeration property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating enumeration property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating enumeration property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -357,8 +392,16 @@ describe('when validating first domain entity property is missing metaEdId', () 
       .withBeginNamespace('edfi')
       .withStartAssociation('AssociationName')
       .withDocumentation('AssociationDocumentation')
-      .withAssociationDomainEntityProperty('FirstAssociationDomainEntityProperty', 'AssociationDomainEntityPropertyDocumentation')
-      .withAssociationDomainEntityProperty('SecondAssociationDomainEntityProperty', 'AssociationDomainEntityPropertyDocumentation', null, '1')
+      .withAssociationDomainEntityProperty(
+        'FirstAssociationDomainEntityProperty',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
+      .withAssociationDomainEntityProperty(
+        'SecondAssociationDomainEntityProperty',
+        'AssociationDomainEntityPropertyDocumentation',
+        null,
+        '1',
+      )
       .withEndAssociation()
       .withEndNamespace()
       .sendToListener(new AssociationBuilder(metaEd, []));
@@ -378,8 +421,12 @@ describe('when validating first domain entity property is missing metaEdId', () 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating first domain entity property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating first domain entity property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating first domain entity property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating first domain entity property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -412,8 +459,12 @@ describe('when validating inline common property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating inline common property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating inline common property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating inline common property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating inline common property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -446,8 +497,12 @@ describe('when validating integer property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating integer property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating integer property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating integer property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating integer property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -480,8 +535,12 @@ describe('when validating percent property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating percent property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating percent property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating percent property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating percent property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -514,8 +573,12 @@ describe('when validating school year enumeration property is missing metaEdId',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating school year enumeration property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating school year enumeration property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating school year enumeration property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating school year enumeration property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -528,8 +591,16 @@ describe('when validating second domain entity property is missing metaEdId', ()
       .withBeginNamespace('edfi')
       .withStartAssociation('AssociationName')
       .withDocumentation('AssociationDocumentation')
-      .withAssociationDomainEntityProperty('FirstAssociationDomainEntityProperty', 'AssociationDomainEntityPropertyDocumentation', null, '1')
-      .withAssociationDomainEntityProperty('SecondAssociationDomainEntityProperty', 'AssociationDomainEntityPropertyDocumentation')
+      .withAssociationDomainEntityProperty(
+        'FirstAssociationDomainEntityProperty',
+        'AssociationDomainEntityPropertyDocumentation',
+        null,
+        '1',
+      )
+      .withAssociationDomainEntityProperty(
+        'SecondAssociationDomainEntityProperty',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
       .withEndAssociation()
       .withEndNamespace()
       .sendToListener(new AssociationBuilder(metaEd, []));
@@ -549,8 +620,12 @@ describe('when validating second domain entity property is missing metaEdId', ()
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating second domain entity property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating second domain entity property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating second domain entity property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating second domain entity property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -583,8 +658,12 @@ describe('when validating shared decimal property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared decimal property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared decimal property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared decimal property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared decimal property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -617,8 +696,12 @@ describe('when validating shared integer property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared integer property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared integer property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared integer property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared integer property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -651,8 +734,12 @@ describe('when validating shared short property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared short property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared short property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared short property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared short property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -685,8 +772,12 @@ describe('when validating shared string property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating shared string property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared string property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared string property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared string property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -719,8 +810,12 @@ describe('when validating short property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating short property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating short property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating short property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating short property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -753,8 +848,12 @@ describe('when validating string property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating string property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating string property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating string property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating string property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -787,8 +886,12 @@ describe('when validating time property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating time property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating time property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating time property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating time property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -821,7 +924,11 @@ describe('when validating year property is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating year property is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating year property is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating year property is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating year property is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });

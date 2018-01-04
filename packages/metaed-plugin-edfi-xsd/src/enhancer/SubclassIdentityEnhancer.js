@@ -10,7 +10,7 @@ function addBaseIdentityProperties(topLevelEntity: TopLevelEntity) {
   if (!topLevelEntity.baseEntity) return;
   addBaseIdentityProperties(topLevelEntity.baseEntity);
   const identityRenames = topLevelEntity.identityProperties.filter(x => x.isIdentityRename);
-  if (!topLevelEntity.baseEntity) return;   // makes Flow happy
+  if (!topLevelEntity.baseEntity) return; // makes Flow happy
   const baseIdentities = ((topLevelEntity.baseEntity.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_IdentityProperties;
   const identitiesWithoutRenamed = baseIdentities.filter(x => identityRenames.every(y => y.baseKeyName !== x.metaEdName));
   // Only add properties that haven't been previously added

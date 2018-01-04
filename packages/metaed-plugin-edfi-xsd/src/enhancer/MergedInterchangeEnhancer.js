@@ -40,11 +40,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       elements: R.union(
         interchange.elements.filter(e => mergedInterchange.elements.every(mie => mie.metaEdName !== e.metaEdName)),
         interchangeExtension.elements,
-
       ),
       identityTemplates: R.union(
         interchangeExtension.identityTemplates,
-        interchange.identityTemplates.filter(e => mergedInterchange.identityTemplates.every(mie => mie.metaEdName !== e.metaEdName)),
+        interchange.identityTemplates.filter(e =>
+          mergedInterchange.identityTemplates.every(mie => mie.metaEdName !== e.metaEdName),
+        ),
       ),
     });
 

@@ -59,13 +59,8 @@ describe('when enhancing domainEntity with string properties', () => {
     });
     domainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      properties: [
-        integerIdentityProperty,
-        integerProperty,
-      ],
-      identityProperties: [
-        integerIdentityProperty,
-      ],
+      properties: [integerIdentityProperty, integerProperty],
+      identityProperties: [integerIdentityProperty],
     });
 
     metaEd.entity.domainEntity.set(domainEntityName, domainEntity);

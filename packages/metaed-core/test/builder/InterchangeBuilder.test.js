@@ -80,14 +80,24 @@ describe('when building single interchange', () => {
     expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(1);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual(['domainEntity', 'domainEntitySubclass']);
+    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual([
+      'domainEntity',
+      'domainEntitySubclass',
+    ]);
   });
 
   it('should have one identity template', () => {
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual(['association', 'associationSubclass']);
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+      interchangeIdentityTemplateName,
+    );
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
+      interchangeIdentityTemplateMetaEdId,
+    );
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
+      'association',
+      'associationSubclass',
+    ]);
   });
 });
 
@@ -120,15 +130,23 @@ describe('when building interchange with additional element and identity types',
   it('should have two element', () => {
     expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(2);
     expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual(['association', 'associationSubclass']);
+    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual([
+      'association',
+      'associationSubclass',
+    ]);
     expect(getInterchange(metaEd.entity, interchangeName).elements[1].metaEdName).toBe(interchangeElementName2);
     expect(getInterchange(metaEd.entity, interchangeName).elements[1].referencedType).toEqual(['descriptor']);
   });
 
   it('should have one identity template', () => {
     expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual(['domainEntity', 'domainEntitySubclass']);
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+      interchangeIdentityTemplateName,
+    );
+    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
+      'domainEntity',
+      'domainEntitySubclass',
+    ]);
   });
 });
 
@@ -188,13 +206,21 @@ describe('when building duplicate interchanges', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap',
+    );
   });
 });
 
@@ -253,8 +279,12 @@ describe('when building single interchange extension', () => {
 
   it('should have one identity template', () => {
     expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(interchangeIdentityTemplateName);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(interchangeIdentityTemplateMetaEdId);
+    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+      interchangeIdentityTemplateName,
+    );
+    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
+      interchangeIdentityTemplateMetaEdId,
+    );
   });
 });
 
@@ -305,13 +335,21 @@ describe('when building duplicate interchange extensions', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('InterchangeBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap',
+    );
   });
 });
 
@@ -673,7 +711,6 @@ describe('when building interchange extension with no element property', () => {
     expect(getInterchangeExtension(metaEd.entity, interchangeName).namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
-
   it('should have no element', () => {
     expect(getInterchangeExtension(metaEd.entity, interchangeName).elements).toHaveLength(0);
   });
@@ -796,11 +833,15 @@ describe('when building single interchange source map', () => {
 
   // InterchangeSourceMap
   it('should have extendedDocumentation', () => {
-    expect(((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).extendedDocumentation).toBeDefined();
+    expect(
+      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).extendedDocumentation,
+    ).toBeDefined();
   });
 
   it('should have useCaseDocumentation', () => {
-    expect(((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).useCaseDocumentation).toBeDefined();
+    expect(
+      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).useCaseDocumentation,
+    ).toBeDefined();
   });
 
   it('should have one element', () => {
@@ -808,7 +849,9 @@ describe('when building single interchange source map', () => {
   });
 
   it('should have one identityTemplate', () => {
-    expect(((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).identityTemplates).toHaveLength(1);
+    expect(
+      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).identityTemplates,
+    ).toHaveLength(1);
   });
 
   it('should have line, column, text for each property', () => {

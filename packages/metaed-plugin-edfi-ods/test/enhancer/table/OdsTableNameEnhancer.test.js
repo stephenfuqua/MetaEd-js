@@ -1,18 +1,6 @@
 // @flow
-import {
-  newDescriptor,
-  newDomainEntity,
-  newEnumeration,
-  newMetaEdEnvironment,
-  newSchoolYearEnumeration,
-} from 'metaed-core';
-import type {
-  Descriptor,
-  DomainEntity,
-  Enumeration,
-  MetaEdEnvironment,
-  SchoolYearEnumeration,
-} from 'metaed-core';
+import { newDescriptor, newDomainEntity, newEnumeration, newMetaEdEnvironment, newSchoolYearEnumeration } from 'metaed-core';
+import type { Descriptor, DomainEntity, Enumeration, MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/OdsTableNameEnhancer';
 
 describe('when enhancing a domain entity with ods table name', () => {
@@ -23,8 +11,7 @@ describe('when enhancing a domain entity with ods table name', () => {
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
@@ -68,8 +55,7 @@ describe('when enhancing an enumeration with ods table name', () => {
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationName,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     metaEd.entity.enumeration.set(enumerationName, enumeration);
@@ -82,7 +68,6 @@ describe('when enhancing an enumeration with ods table name', () => {
   });
 });
 
-
 describe('when enhancing an school year enumeration with ods table name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const schoolYearEnumerationName: string = 'SchoolYearEnumerationName';
@@ -91,8 +76,7 @@ describe('when enhancing an school year enumeration with ods table name', () => 
     const schoolYearEnumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYearEnumerationName,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     metaEd.entity.schoolYearEnumeration.set(schoolYearEnumerationName, schoolYearEnumeration);

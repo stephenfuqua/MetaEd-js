@@ -113,7 +113,11 @@ describe('when validating common property has extension override of non common t
   it('should have validation failure for property', () => {
     expect(failures[0].validatorName).toBe('CommonPropertyWIthExtensionOverrideMustReferenceCommonTypeExtension');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override of non common type extension should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override of non common type extension should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override of non common type extension should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override of non common type extension should have validation failures -> sourceMap',
+    );
   });
 });

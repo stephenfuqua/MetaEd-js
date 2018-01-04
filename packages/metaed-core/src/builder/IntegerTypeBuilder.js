@@ -63,11 +63,14 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     this.enteringIntegerType(context, { isShort: true, generatedSimpleType: true });
   }
 
-  enteringIntegerType(context: MetaEdGrammar.SharedIntegerContext |
-    MetaEdGrammar.IntegerPropertyContext |
-    MetaEdGrammar.SharedShortContext |
-    MetaEdGrammar.ShortPropertyContext,
-    { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean }) {
+  enteringIntegerType(
+    context:
+      | MetaEdGrammar.SharedIntegerContext
+      | MetaEdGrammar.IntegerPropertyContext
+      | MetaEdGrammar.SharedShortContext
+      | MetaEdGrammar.ShortPropertyContext,
+    { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean },
+  ) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     const factory = isShort ? newShortType : newIntegerType;
     this.currentIntegerType = Object.assign(factory(), {
@@ -117,7 +120,13 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentIntegerType === NoIntegerType) return;
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     this.currentIntegerType.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     this.currentIntegerType.sourceMap.metaEdId = sourceMapFrom(context);
@@ -125,14 +134,26 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentIntegerType === NoIntegerType) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (
+      context.exception ||
+      context.signed_int() == null ||
+      context.signed_int().exception ||
+      isErrorText(context.signed_int().getText())
+    )
+      return;
     this.currentIntegerType.minValue = context.signed_int().getText();
     this.currentIntegerType.sourceMap.minValue = sourceMapFrom(context);
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentIntegerType === NoIntegerType) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (
+      context.exception ||
+      context.signed_int() == null ||
+      context.signed_int().exception ||
+      isErrorText(context.signed_int().getText())
+    )
+      return;
     this.currentIntegerType.maxValue = context.signed_int().getText();
     this.currentIntegerType.sourceMap.maxValue = sourceMapFrom(context);
   }
@@ -161,7 +182,9 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     if (this.currentIntegerType === NoIntegerType) return;
 
     const projectExtension = this.currentIntegerType.namespaceInfo.projectExtension;
-    const repositoryId = projectExtension ? `${projectExtension}-${this.currentIntegerType.metaEdName}` : this.currentIntegerType.metaEdName;
+    const repositoryId = projectExtension
+      ? `${projectExtension}-${this.currentIntegerType.metaEdName}`
+      : this.currentIntegerType.metaEdName;
     // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
     this.metaEd.entity[this.currentIntegerType.type].set(repositoryId, this.currentIntegerType);
 

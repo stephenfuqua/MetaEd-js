@@ -15,7 +15,7 @@ import {
   getPrimaryKeys,
   getUniqueIndexes,
   newTable,
- } from '../../../src/model/database/Table';
+} from '../../../src/model/database/Table';
 import {
   newBooleanColumn,
   newCurrencyColumn,
@@ -28,7 +28,7 @@ import {
   newStringColumn,
   newTimeColumn,
   newYearColumn,
- } from '../../../src/model/database/Column';
+} from '../../../src/model/database/Column';
 import { newColumnNamePair } from '../../../src/model/database/ColumnNamePair';
 import { ColumnTransformUnchanged } from '../../../src/model/database/ColumnTransform';
 import { newForeignKey } from '../../../src/model/database/ForeignKey';
@@ -111,19 +111,23 @@ describe('when using add column range', () => {
     table = Object.assign(newTable(), { name: 'TableName' });
     table.columns.push(Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }));
 
-    addColumns(table, [
-      Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }),
-      Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName' }),
-      Object.assign(newDateColumn(), { name: 'DateColumnName' }),
-      Object.assign(newDecimalColumn('10', '4'), { name: 'DecimalColumnName' }),
-      Object.assign(newDurationColumn(), { name: 'DurationColumnName' }),
-      Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' }),
-      Object.assign(newPercentColumn(), { name: 'PercentColumnName' }),
-      Object.assign(newShortColumn(), { name: 'ShortColumnName' }),
-      Object.assign(newStringColumn('100'), { name: 'StringColumnName' }),
-      Object.assign(newTimeColumn(), { name: 'TimeColumnName' }),
-      Object.assign(newYearColumn(), { name: 'YearColumnName' }),
-    ], ColumnTransformUnchanged);
+    addColumns(
+      table,
+      [
+        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName' }),
+        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName' }),
+        Object.assign(newDateColumn(), { name: 'DateColumnName' }),
+        Object.assign(newDecimalColumn('10', '4'), { name: 'DecimalColumnName' }),
+        Object.assign(newDurationColumn(), { name: 'DurationColumnName' }),
+        Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' }),
+        Object.assign(newPercentColumn(), { name: 'PercentColumnName' }),
+        Object.assign(newShortColumn(), { name: 'ShortColumnName' }),
+        Object.assign(newStringColumn('100'), { name: 'StringColumnName' }),
+        Object.assign(newTimeColumn(), { name: 'TimeColumnName' }),
+        Object.assign(newYearColumn(), { name: 'YearColumnName' }),
+      ],
+      ColumnTransformUnchanged,
+    );
   });
 
   it('should add all columns except existing', () => {
@@ -149,84 +153,87 @@ describe('when using table column getters', () => {
 
   beforeAll(() => {
     table = newTable();
-    table.columns.push(...[
-      Object.assign(newBooleanColumn(), {
-        name: booleanColumnName,
-        isPartOfAlternateKey: true,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newCurrencyColumn(), {
-        name: currencyColumnName,
-        isPartOfAlternateKey: true,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newDateColumn(), {
-        name: dateColumnName,
-        isPartOfAlternateKey: true,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newDecimalColumn('10',
-      '4'), {
-        name: decimalColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: true,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newDurationColumn(), {
-        name: durationColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: true,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newIntegerColumn(), {
-        name: integerColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: true,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newPercentColumn(), {
-        name: percentColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: true,
-      }),
-      Object.assign(newShortColumn(), {
-        name: shortColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: true,
-      }),
-      Object.assign(newStringColumn('100'), {
-        name: stringColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: false,
-        isUniqueIndex: true,
-      }),
-      Object.assign(newTimeColumn(), {
-        name: timeColumnName,
-        isPartOfAlternateKey: true,
-        isPartOfPrimaryKey: true,
-        isUniqueIndex: false,
-      }),
-      Object.assign(newYearColumn(), {
-        name: yearColumnName,
-        isPartOfAlternateKey: false,
-        isPartOfPrimaryKey: true,
-        isUniqueIndex: true,
-      }),
-    ]);
+    table.columns.push(
+      ...[
+        Object.assign(newBooleanColumn(), {
+          name: booleanColumnName,
+          isPartOfAlternateKey: true,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newCurrencyColumn(), {
+          name: currencyColumnName,
+          isPartOfAlternateKey: true,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newDateColumn(), {
+          name: dateColumnName,
+          isPartOfAlternateKey: true,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newDecimalColumn('10', '4'), {
+          name: decimalColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: true,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newDurationColumn(), {
+          name: durationColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: true,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newIntegerColumn(), {
+          name: integerColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: true,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newPercentColumn(), {
+          name: percentColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: true,
+        }),
+        Object.assign(newShortColumn(), {
+          name: shortColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: true,
+        }),
+        Object.assign(newStringColumn('100'), {
+          name: stringColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: false,
+          isUniqueIndex: true,
+        }),
+        Object.assign(newTimeColumn(), {
+          name: timeColumnName,
+          isPartOfAlternateKey: true,
+          isPartOfPrimaryKey: true,
+          isUniqueIndex: false,
+        }),
+        Object.assign(newYearColumn(), {
+          name: yearColumnName,
+          isPartOfAlternateKey: false,
+          isPartOfPrimaryKey: true,
+          isUniqueIndex: true,
+        }),
+      ],
+    );
 
-    table.foreignKeys.push(...[
-      Object.assign(newForeignKey(), {
-        name: ForeignKeyName1,
-      }),
-      Object.assign(newForeignKey(), {
-        name: ForeignKeyName2,
-      }),
-    ]);
+    table.foreignKeys.push(
+      ...[
+        Object.assign(newForeignKey(), {
+          name: ForeignKeyName1,
+        }),
+        Object.assign(newForeignKey(), {
+          name: ForeignKeyName2,
+        }),
+      ],
+    );
   });
 
   it('should get all columns with primary keys first', () => {
@@ -249,12 +256,7 @@ describe('when using table column getters', () => {
   });
 
   it('should get all alternate keys', () => {
-    const expectedOrder = [
-      booleanColumnName,
-      currencyColumnName,
-      dateColumnName,
-      timeColumnName,
-    ];
+    const expectedOrder = [booleanColumnName, currencyColumnName, dateColumnName, timeColumnName];
     const columns = getAlternateKeys(table);
     expect(columns).toHaveLength(4);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
@@ -280,10 +282,7 @@ describe('when using table column getters', () => {
   });
 
   it('should get all foreign keys', () => {
-    const expectedOrder = [
-      ForeignKeyName1,
-      ForeignKeyName2,
-    ];
+    const expectedOrder = [ForeignKeyName1, ForeignKeyName2];
     const columns = getForeignKeys(table);
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
@@ -304,25 +303,14 @@ describe('when using table column getters', () => {
   });
 
   it('should get all primary keys', () => {
-    const expectedOrder = [
-      decimalColumnName,
-      durationColumnName,
-      integerColumnName,
-      timeColumnName,
-      yearColumnName,
-    ];
+    const expectedOrder = [decimalColumnName, durationColumnName, integerColumnName, timeColumnName, yearColumnName];
     const columns = getPrimaryKeys(table);
     expect(columns).toHaveLength(5);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
   });
 
   it('should get all unique indexes', () => {
-    const expectedOrder = [
-      percentColumnName,
-      shortColumnName,
-      stringColumnName,
-      yearColumnName,
-    ];
+    const expectedOrder = [percentColumnName, shortColumnName, stringColumnName, yearColumnName];
     const columns = getUniqueIndexes(table);
     expect(columns).toHaveLength(4);
     expect(columns.map(x => x.name)).toEqual(expectedOrder);
@@ -334,10 +322,12 @@ describe('when using has alternate keys on table with no alternate keys', () => 
 
   beforeAll(() => {
     const table: Table = newTable();
-    table.columns.push(...[
-      Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
-      Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: true }),
-    ]);
+    table.columns.push(
+      ...[
+        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
+        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: true }),
+      ],
+    );
     result = hasAlternateKeys(table);
   });
 
@@ -351,10 +341,12 @@ describe('when using has alternate keys on table with no alternate keys', () => 
 
   beforeAll(() => {
     const table: Table = newTable();
-    table.columns.push(...[
-      Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
-      Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: false }),
-    ]);
+    table.columns.push(
+      ...[
+        Object.assign(newBooleanColumn(), { name: 'BooleanColumnName', isPartOfAlternateKey: false }),
+        Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: false }),
+      ],
+    );
     result = hasAlternateKeys(table);
   });
 
@@ -372,20 +364,21 @@ describe('when using is foreign key', () => {
 
     const booleanForeignKey: ForeignKey = Object.assign(newForeignKey(), {
       name: booleanColumnName,
-      columnNames: [
-        Object.assign(newColumnNamePair(), { parentTableColumnName: booleanColumnName }),
-      ],
+      columnNames: [Object.assign(newColumnNamePair(), { parentTableColumnName: booleanColumnName })],
     });
 
     const table: Table = Object.assign(newTable(), {
-      foreignKeys: [
-        booleanForeignKey,
-        Object.assign(newForeignKey(), { name: 'CurrencyColumnName' }),
-      ],
+      foreignKeys: [booleanForeignKey, Object.assign(newForeignKey(), { name: 'CurrencyColumnName' })],
     });
 
-    const booleanColumn: Column = Object.assign(newBooleanColumn(), { name: booleanColumnName, isPartOfAlternateKey: false });
-    const currencyColumn: Column = Object.assign(newCurrencyColumn(), { name: 'CurrencyColumnName', isPartOfAlternateKey: false });
+    const booleanColumn: Column = Object.assign(newBooleanColumn(), {
+      name: booleanColumnName,
+      isPartOfAlternateKey: false,
+    });
+    const currencyColumn: Column = Object.assign(newCurrencyColumn(), {
+      name: 'CurrencyColumnName',
+      isPartOfAlternateKey: false,
+    });
     booleanColumnResult = isForeignKey(table, booleanColumn);
     currencyColumnResult = isForeignKey(table, currencyColumn);
   });
@@ -427,18 +420,27 @@ describe('when adding a foreign key with existing foreign key', () => {
 
   beforeAll(() => {
     table = Object.assign(newTable(), { name: parentTableName, schema: parentTableSchema });
-    addForeignKey(table, Object.assign(newForeignKey(), {
-      parentTableName,
-      foreignTableName,
-    }));
-    addForeignKey(table, Object.assign(newForeignKey(), {
-      parentTableName,
-      foreignTableName,
-    }));
-    addForeignKey(table, Object.assign(newForeignKey(), {
-      parentTableName,
-      foreignTableName,
-    }));
+    addForeignKey(
+      table,
+      Object.assign(newForeignKey(), {
+        parentTableName,
+        foreignTableName,
+      }),
+    );
+    addForeignKey(
+      table,
+      Object.assign(newForeignKey(), {
+        parentTableName,
+        foreignTableName,
+      }),
+    );
+    addForeignKey(
+      table,
+      Object.assign(newForeignKey(), {
+        parentTableName,
+        foreignTableName,
+      }),
+    );
   });
 
   it('should add foreign keys', () => {

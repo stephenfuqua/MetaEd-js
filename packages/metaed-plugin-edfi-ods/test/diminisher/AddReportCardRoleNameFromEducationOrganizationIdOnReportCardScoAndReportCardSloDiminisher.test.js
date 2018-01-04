@@ -49,12 +49,16 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).columns,
+    );
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(reportCard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(educationOrganizationId);
@@ -97,12 +101,16 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).columns,
+    );
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(reportCard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(educationOrganizationId);

@@ -27,7 +27,12 @@ import type { ModelType } from './ModelType';
 import type { ModelBase } from './ModelBase';
 import type { TopLevelEntity } from './TopLevelEntity';
 import { asTopLevelEntity } from './TopLevelEntity';
-import { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes, allEntityModelTypesNoSimpleTypes } from './ModelType';
+import {
+  allEntityModelTypes,
+  allTopLevelEntityModelTypes,
+  topLevelCoreEntityModelTypes,
+  allEntityModelTypesNoSimpleTypes,
+} from './ModelType';
 
 export class EntityRepository {
   unknown: Map<string, any>;

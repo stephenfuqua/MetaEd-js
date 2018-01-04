@@ -38,8 +38,11 @@ describe('when validating common property is part of identity', () => {
   it('should have validation failure for property', () => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustNotContainIdentity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has primary key should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has primary key should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has primary key should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has primary key should have validation failures -> sourceMap',
+    );
   });
 });
-

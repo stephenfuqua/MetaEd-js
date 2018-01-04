@@ -1,7 +1,13 @@
 // @flow
 import R from 'ramda';
 import xmlParser from 'xml-js';
-import { createDecimalSimpleType, createIntegerSimpleType, createStringSimpleType, createEnumerationSimpleType, createEnumerationToken } from '../GeneratorTestBase';
+import {
+  createDecimalSimpleType,
+  createIntegerSimpleType,
+  createStringSimpleType,
+  createEnumerationSimpleType,
+  createEnumerationToken,
+} from '../GeneratorTestBase';
 import {
   elementsArray,
   xsdAttributeName,
@@ -147,7 +153,15 @@ describe('when generating decimal simple type with min and max value', () => {
 
   beforeAll(() => {
     registerPartials();
-    const testObject = createDecimalSimpleType(simpleTypeName, baseType, documentation, minValue, maxValue, totalDigits, decimalPlaces);
+    const testObject = createDecimalSimpleType(
+      simpleTypeName,
+      baseType,
+      documentation,
+      minValue,
+      maxValue,
+      totalDigits,
+      decimalPlaces,
+    );
     const rawXsd = templateNamed('simpleType')(testObject);
     result = xmlParser.xml2js(rawXsd);
   });

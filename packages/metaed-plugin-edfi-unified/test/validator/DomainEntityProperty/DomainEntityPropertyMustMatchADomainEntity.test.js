@@ -89,7 +89,11 @@ describe('when domain entity property has invalid identifier', () => {
   it('should have validation failure for property', () => {
     expect(failures[0].validatorName).toBe('DomainEntityPropertyMustMatchADomainEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity property has invalid identifier should have validation failures for each property -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity property has invalid identifier should have validation failures for each property -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity property has invalid identifier should have validation failures for each property -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity property has invalid identifier should have validation failures for each property -> sourceMap',
+    );
   });
 });

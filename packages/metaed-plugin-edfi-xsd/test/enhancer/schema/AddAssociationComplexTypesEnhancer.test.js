@@ -22,8 +22,7 @@ describe('when enhancing association', () => {
       metaEdName: complexTypeName,
       documentation,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

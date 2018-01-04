@@ -92,11 +92,19 @@ describe('when validating short property with minimum value greater than maximum
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('ShortPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating short identity with minimum value greater than maximum value -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating short identity with minimum value greater than maximum value -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating short identity with minimum value greater than maximum value -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating short identity with minimum value greater than maximum value -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('ShortPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when validating short property with minimum value greater than maximum value -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating short property with minimum value greater than maximum value -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating short property with minimum value greater than maximum value -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating short property with minimum value greater than maximum value -> sourceMap',
+    );
   });
 });

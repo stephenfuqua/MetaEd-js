@@ -1,10 +1,5 @@
 // @flow
-import type {
-  EntityProperty,
-  MetaEdEnvironment,
-  PropertyType,
-  ValidationFailure,
-} from 'metaed-core';
+import type { EntityProperty, MetaEdEnvironment, PropertyType, ValidationFailure } from 'metaed-core';
 import { asReferentialProperty, asModelType, getPropertiesOfType } from 'metaed-core';
 import {
   findReferencedProperty,
@@ -14,13 +9,7 @@ import {
   matchAllIdentityReferenceProperties,
 } from '../ValidatorShared/FindReferencedProperty';
 
-const validPropertyTypes: Array<PropertyType> = [
-  'association',
-  'choice',
-  'common',
-  'domainEntity',
-  'inlineCommon',
-];
+const validPropertyTypes: Array<PropertyType> = ['association', 'choice', 'common', 'domainEntity', 'inlineCommon'];
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
@@ -33,12 +22,14 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         metaEd.entity,
         property.parentEntity,
         mergedProperty.mergePropertyPath,
-        matchAllButFirstAsIdentityProperties());
+        matchAllButFirstAsIdentityProperties(),
+      );
       const targetProperty: ?EntityProperty = findReferencedProperty(
         metaEd.entity,
         property.parentEntity,
         mergedProperty.targetPropertyPath,
-        matchAllIdentityReferenceProperties());
+        matchAllIdentityReferenceProperties(),
+      );
 
       if (!mergeProperty || !targetProperty) return;
 
@@ -46,8 +37,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         if (mergeProperty.type === targetProperty.type) {
           if (mergeProperty.metaEdName === targetProperty.metaEdName) return;
 
-          if (referenceTypes.includes(asModelType(mergeProperty.type))
-            && referenceTypes.includes(asModelType(targetProperty.type))) {
+          if (
+            referenceTypes.includes(asModelType(mergeProperty.type)) &&
+            referenceTypes.includes(asModelType(targetProperty.type))
+          ) {
             const mergeBaseEntity = getReferencedEntity(metaEd.entity, mergeProperty.metaEdName, mergeProperty.type);
             const targetBaseEntity = getReferencedEntity(metaEd.entity, targetProperty.metaEdName, targetProperty.type);
 
@@ -60,9 +53,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'MergePropertyAndTargetPropertyMustMatch',
         category: 'error',
-        message: `The merge paths '${mergedProperty.mergePropertyPath
-          .join('.')}' and '${mergedProperty.targetPropertyPath
-          .join('.')}' do not correspond to the same entity name and/or type.`,
+        message: `The merge paths '${mergedProperty.mergePropertyPath.join(
+          '.',
+        )}' and '${mergedProperty.targetPropertyPath.join('.')}' do not correspond to the same entity name and/or type.`,
         sourceMap: mergedProperty.sourceMap.mergePropertyPath[0],
         fileMap: null,
       });

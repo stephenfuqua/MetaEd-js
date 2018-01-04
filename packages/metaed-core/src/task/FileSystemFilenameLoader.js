@@ -11,7 +11,7 @@ export type InputDirectory = {
   namespace: string,
   projectExtension: string,
   isExtension: boolean,
-}
+};
 
 export function loadFiles(state: State): void {
   if (state.inputDirectories == null) {
@@ -29,8 +29,9 @@ export function loadFiles(state: State): void {
     };
 
     const filenames: string[] = ffs.readdirRecursiveSync(inputDirectory.path, true, inputDirectory.path);
-    const filenamesToLoad: string[] =
-      filenames.filter(filename => filename.endsWith('.metaed') && !state.filepathsToExclude.has(filename));
+    const filenamesToLoad: string[] = filenames.filter(
+      filename => filename.endsWith('.metaed') && !state.filepathsToExclude.has(filename),
+    );
 
     filenamesToLoad.forEach(filename => {
       const contents = ffs.readFileSync(filename, 'utf-8');
@@ -47,4 +48,3 @@ export function loadFiles(state: State): void {
 
   state.loadedFileSet.push(...fileSets);
 }
-

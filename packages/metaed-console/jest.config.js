@@ -1,11 +1,7 @@
 module.exports = {
   testEnvironment: 'node',
-  transformIgnorePatterns: [
-    '<rootDir>.*(node_modules)(?!.*metaed-.*).*$',
-  ],
-  collectCoverageFrom: [
-    'packages/**/src/**/*.js',
-  ],
+  transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*metaed-.*).*$'],
+  collectCoverageFrom: ['packages/**/src/**/*.js'],
   coverageThreshold: {
     global: {
       branches: 10,
@@ -14,7 +10,5 @@ module.exports = {
       statements: 10,
     },
   },
-  modulePathIgnorePatterns: [
-    'dist*',
-  ],
+  modulePathIgnorePatterns: ['dist*'],
 };

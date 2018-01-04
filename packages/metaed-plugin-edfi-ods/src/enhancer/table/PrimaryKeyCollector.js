@@ -5,7 +5,11 @@ import type { Column } from '../../model/database/Column';
 import type { ColumnCreator } from './ColumnCreator';
 import type { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
-export function collectPrimaryKeys(entity: TopLevelEntity, strategy: BuildStrategy, factory: ColumnCreatorFactory): Array<Column> {
+export function collectPrimaryKeys(
+  entity: TopLevelEntity,
+  strategy: BuildStrategy,
+  factory: ColumnCreatorFactory,
+): Array<Column> {
   const columns: Array<Column> = [];
 
   entity.data.edfiOds.ods_IdentityProperties.forEach((property: ReferentialProperty) => {
@@ -15,11 +19,13 @@ export function collectPrimaryKeys(entity: TopLevelEntity, strategy: BuildStrate
 
   entity.data.edfiOds.ods_Properties.forEach((property: ReferentialProperty) => {
     if (property.type !== 'inlineCommon') return;
-    columns.push(...collectPrimaryKeys(
+    columns.push(
+      ...collectPrimaryKeys(
         property.referencedEntity,
         strategy.appendParentContext(property.data.edfiOds.ods_ContextPrefix),
         factory,
-      ));
+      ),
+    );
   });
 
   return columns;

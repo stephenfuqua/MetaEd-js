@@ -35,7 +35,9 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
   });
 
   it('should modify with reverse foreign key index', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys,
+    );
     expect(foreignKey.parentTableName).toBe(assessmentContentStandard);
     expect(foreignKey.foreignTableName).toBe(assessment);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);

@@ -27,8 +27,14 @@ export class ColumnTransform {
     return new ColumnTransformPrependReferenceContext(ColumnTransformPrimaryKey, referenceContext);
   }
 
-  static primaryKeyWithContextCollapsibleAndNewReferenceContext(contextPrefix: string, referenceContext: string): ColumnTransform {
-    return new ColumnTransformPrependReferenceContext(ColumnTransform.primaryKeyWithContextCollapsible(contextPrefix), referenceContext);
+  static primaryKeyWithContextCollapsibleAndNewReferenceContext(
+    contextPrefix: string,
+    referenceContext: string,
+  ): ColumnTransform {
+    return new ColumnTransformPrependReferenceContext(
+      ColumnTransform.primaryKeyWithContextCollapsible(contextPrefix),
+      referenceContext,
+    );
   }
 
   static notNullWithContext(contextPrefix: string): ColumnTransform {
@@ -50,12 +56,10 @@ export class ColumnTransform {
 
     const currentStrategy = strategyStack.pop();
 
-    const newColumns = originalColumns
-      .map(x => cloneColumn(x))
-      .reduce((acc, column) => {
-        currentStrategy.transformSingle(column);
-        return acc.concat(column);
-      }, []);
+    const newColumns = originalColumns.map(x => cloneColumn(x)).reduce((acc, column) => {
+      currentStrategy.transformSingle(column);
+      return acc.concat(column);
+    }, []);
 
     return ColumnTransform._transformTopOfStack(strategyStack, newColumns);
   }
@@ -67,7 +71,9 @@ export class ColumnTransform {
   }
 
   // eslint-disable-next-line no-unused-vars,
-  transformSingle(column: Column): void { /* noop */ }
+  transformSingle(column: Column): void {
+    /* noop */
+  }
 }
 
 export class PrefixWithContext extends ColumnTransform {
@@ -92,9 +98,10 @@ export class ColumnTransformPrefixWithContextCollapsible extends ColumnTransform
   }
 
   transformSingle(column: Column): void {
-    column.name = column.originalContextPrefix === this._contextPrefix
-      ? column.name
-      : appendOverlapping(this._contextPrefix, column.name);
+    column.name =
+      column.originalContextPrefix === this._contextPrefix
+        ? column.name
+        : appendOverlapping(this._contextPrefix, column.name);
   }
 }
 

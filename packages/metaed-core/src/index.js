@@ -18,7 +18,15 @@ export { execute as runValidators } from './task/RunValidators';
 export { execute as runEnhancers } from './task/RunEnhancers';
 export { execute as runGenerators } from './task/RunGenerators';
 export { fileMapForFailure } from './task/FileMapForFailure';
-export { addEntity, getAllEntities, getAllTopLevelEntities, getEntity, getTopLevelCoreEntity, getEntitiesOfType, getAllEntitiesNoSimpleTypes } from './model/EntityRepository';
+export {
+  addEntity,
+  getAllEntities,
+  getAllTopLevelEntities,
+  getEntity,
+  getTopLevelCoreEntity,
+  getEntitiesOfType,
+  getAllEntitiesNoSimpleTypes,
+} from './model/EntityRepository';
 export { addProperty, getAllProperties, getPropertiesOfType, newPropertyIndex } from './model/property/PropertyRepository';
 export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './model/property/PropertyType';
 export { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './model/ModelType';
@@ -83,7 +91,10 @@ export type { PercentProperty, PercentPropertySourceMap } from './model/property
 export type { PropertyIndex } from './model/property/PropertyRepository';
 export type { PropertyType } from './model/property/PropertyType';
 export type { ReferentialProperty, ReferentialPropertySourceMap } from './model/property/ReferentialProperty';
-export type { SchoolYearEnumerationProperty, SchoolYearEnumerationPropertySourceMap } from './model/property/SchoolYearEnumerationProperty';
+export type {
+  SchoolYearEnumerationProperty,
+  SchoolYearEnumerationPropertySourceMap,
+} from './model/property/SchoolYearEnumerationProperty';
 export type { SharedDecimalProperty } from './model/property/SharedDecimalProperty';
 export type { SharedIntegerProperty } from './model/property/SharedIntegerProperty';
 export type { SharedShortProperty } from './model/property/SharedShortProperty';
@@ -155,7 +166,10 @@ export { asIntegerProperty, newIntegerProperty } from './model/property/IntegerP
 export { asMergedProperty, newMergedProperty } from './model/property/MergedProperty';
 export { asPercentProperty, newPercentProperty } from './model/property/PercentProperty';
 export { asReferentialProperty, newReferentialProperty, isReferentialProperty } from './model/property/ReferentialProperty';
-export { asSchoolYearEnumerationProperty, newSchoolYearEnumerationProperty } from './model/property/SchoolYearEnumerationProperty';
+export {
+  asSchoolYearEnumerationProperty,
+  newSchoolYearEnumerationProperty,
+} from './model/property/SchoolYearEnumerationProperty';
 export { asSharedDecimalProperty, newSharedDecimalProperty } from './model/property/SharedDecimalProperty';
 export { asSharedIntegerProperty, newSharedIntegerProperty } from './model/property/SharedIntegerProperty';
 export { asSharedShortProperty, newSharedShortProperty } from './model/property/SharedShortProperty';

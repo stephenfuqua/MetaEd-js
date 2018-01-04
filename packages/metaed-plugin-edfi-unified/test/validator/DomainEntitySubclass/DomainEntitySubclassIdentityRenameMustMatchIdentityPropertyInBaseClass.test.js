@@ -116,8 +116,12 @@ describe('when domain entity subclass renames base identity that does not exist'
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity subclass renames base identity that does not exist should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity subclass renames base identity that does not exist should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity subclass renames base identity that does not exist should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity subclass renames base identity that does not exist should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -158,8 +162,12 @@ describe('when domain entity subclass renames base property that is not identity
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity subclass renames base property that is not identity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity subclass renames base property that is not identity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity subclass renames base property that is not identity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity subclass renames base property that is not identity should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -192,7 +200,11 @@ describe('when domain entity subclass extends non existent entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity subclass extends non existent entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity subclass extends non existent entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity subclass extends non existent entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity subclass extends non existent entity should have validation failure -> sourceMap',
+    );
   });
 });

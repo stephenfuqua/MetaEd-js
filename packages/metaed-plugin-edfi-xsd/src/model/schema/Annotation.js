@@ -7,15 +7,21 @@ export type Annotation = {
   hasTypeGroup: () => boolean,
   hasDescriptorName: () => boolean,
   hasAppInfo: () => boolean,
-}
+};
 
 export function newAnnotation(): Annotation {
   return {
     documentation: '',
     typeGroup: '',
     descriptorName: '',
-    hasTypeGroup() { return !!this.typeGroup; },
-    hasDescriptorName() { return !!this.descriptorName; },
-    hasAppInfo() { return this.hasTypeGroup() || this.hasDescriptorName(); },
+    hasTypeGroup() {
+      return !!this.typeGroup;
+    },
+    hasDescriptorName() {
+      return !!this.descriptorName;
+    },
+    hasAppInfo() {
+      return this.hasTypeGroup() || this.hasDescriptorName();
+    },
   };
 }

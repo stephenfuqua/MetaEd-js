@@ -15,21 +15,17 @@ export function templateNamed(templateName: string) {
   return odsHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(
-  () =>
-    ({
-      table: templateNamed('table'),
-      foreignKey: templateNamed('foreignKey'),
-      deleteEventTable: templateNamed('deleteEventTable'),
-      trigger: templateNamed('trigger'),
-      enumerationRow: templateNamed('enumerationRow'),
-      schoolYearEnumerationRow: templateNamed('schoolYearEnumerationRow'),
-    }),
-  );
+export const template = R.memoize(() => ({
+  table: templateNamed('table'),
+  foreignKey: templateNamed('foreignKey'),
+  deleteEventTable: templateNamed('deleteEventTable'),
+  trigger: templateNamed('trigger'),
+  enumerationRow: templateNamed('enumerationRow'),
+  schoolYearEnumerationRow: templateNamed('schoolYearEnumerationRow'),
+}));
 
-export const registerPartials = R.once(
-  () => {
-    odsHandlebars.registerPartial({
-      column: templateNamed('column'),
-    });
+export const registerPartials = R.once(() => {
+  odsHandlebars.registerPartial({
+    column: templateNamed('column'),
   });
+});

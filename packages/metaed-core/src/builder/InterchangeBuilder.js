@@ -74,7 +74,13 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentInterchange === NoInterchange) return;
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception != null ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     if (this.currentInterchangeItem !== NoInterchangeItem) {
       this.currentInterchangeItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -112,16 +118,22 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange ${extensionMessageString}named ${this.currentInterchange.metaEdName} is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${
+            this.currentInterchange.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: this.currentInterchange.sourceMap.type,
           fileMap: null,
         });
         // $FlowIgnore - we ensure the key is in the map above, and allow currentInterchange.type to specify the entityRepository Map property
-        const duplicateEntity: Interchange = this.entityRepository[this.currentInterchange.type].get(this.currentInterchange.metaEdName);
+        const duplicateEntity: Interchange = this.entityRepository[this.currentInterchange.type].get(
+          this.currentInterchange.metaEdName,
+        );
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
-          message: `Interchange ${extensionMessageString}named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `Interchange ${extensionMessageString}named ${
+            duplicateEntity.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -170,7 +182,8 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
 
     // mutually exclusive in language
     if (context.ASSOCIATION_KEYWORD()) this.currentInterchangeItem.referencedType = ['association', 'associationSubclass'];
-    if (context.DOMAIN_ENTITY_KEYWORD()) this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
+    if (context.DOMAIN_ENTITY_KEYWORD())
+      this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
     if (context.DESCRIPTOR_KEYWORD()) this.currentInterchangeItem.referencedType = ['descriptor'];
     ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).elements.push(sourceMapFrom(context));
   }
@@ -187,7 +200,8 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
 
     // mutually exclusive in language
     if (context.ASSOCIATION_IDENTITY()) this.currentInterchangeItem.referencedType = ['association', 'associationSubclass'];
-    if (context.DOMAIN_ENTITY_IDENTITY()) this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
+    if (context.DOMAIN_ENTITY_IDENTITY())
+      this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
     ((this.currentInterchange.sourceMap: any): InterchangeSourceMap).identityTemplates.push(sourceMapFrom(context));
   }
 

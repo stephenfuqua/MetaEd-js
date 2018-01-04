@@ -71,8 +71,12 @@ describe('when validating subdomain entity domain item has duplicate domain item
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubdomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -111,12 +115,19 @@ describe('when validating subdomain entity domain item has multiple duplicate do
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('SubdomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('SubdomainMustNotDuplicateDomainItems');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when subdomain entity domain item has duplicate should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when subdomain entity domain item has duplicate should have validation failure -> sourceMap',
+    );
   });
 });
-

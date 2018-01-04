@@ -7,7 +7,7 @@ export type MetaEdPlugin = {
   validator: Array<Validator>,
   enhancer: Array<Enhancer>,
   generator: Array<Generator>,
-}
+};
 
 export function newMetaEdPlugin(): MetaEdPlugin {
   return {
@@ -31,4 +31,4 @@ export type PluginManifest = {
   dependencies: Array<string>,
   metaEdPlugin: MetaEdPlugin,
   enabled: boolean,
-}
+};

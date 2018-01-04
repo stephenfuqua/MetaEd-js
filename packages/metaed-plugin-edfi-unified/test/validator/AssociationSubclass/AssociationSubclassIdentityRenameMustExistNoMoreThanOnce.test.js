@@ -44,11 +44,19 @@ describe('when association subclass renames base identity more than once', () =>
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentityRenameMustExistNoMoreThanOnce');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass renames base identity more than once should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass renames base identity more than once should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass renames base identity more than once should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass renames base identity more than once should have validation failure -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('AssociationSubclassIdentityRenameMustExistNoMoreThanOnce');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when association subclass renames base identity more than once should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when association subclass renames base identity more than once should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when association subclass renames base identity more than once should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when association subclass renames base identity more than once should have validation failure -> sourceMap',
+    );
   });
 });

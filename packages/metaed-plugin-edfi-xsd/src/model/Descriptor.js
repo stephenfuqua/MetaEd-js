@@ -2,10 +2,10 @@
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
 
 export type DescriptorEdfiXsd = {
-  xsd_DescriptorName: string;
-  xsd_DescriptorNameWithExtension: string;
-  xsd_IsMapType: boolean;
-  xsd_HasPropertiesOrMapType: boolean;
+  xsd_DescriptorName: string,
+  xsd_DescriptorNameWithExtension: string,
+  xsd_IsMapType: boolean,
+  xsd_HasPropertiesOrMapType: boolean,
 };
 
 const enhancerName: string = 'DescriptorSetupEnhancer';

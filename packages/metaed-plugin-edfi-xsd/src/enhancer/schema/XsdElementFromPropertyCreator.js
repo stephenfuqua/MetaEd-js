@@ -19,20 +19,31 @@ function calculateMaxOccursIsUnbounded(entityProperty: EntityProperty, maxOccurs
 }
 
 // Finds primary key columns for entity by traversing properties
-export function createXsdElementFromProperty(property: EntityProperty, minOccursOverride: ?string, maxOccursIsUnboundedOverride: ?boolean): Element {
+export function createXsdElementFromProperty(
+  property: EntityProperty,
+  minOccursOverride: ?string,
+  maxOccursIsUnboundedOverride: ?boolean,
+): Element {
   return Object.assign(newElement(), {
     name: property.data.edfiXsd.xsd_Name,
     type: property.data.edfiXsd.xsd_Type,
     annotation: Object.assign(newAnnotation(), {
       documentation: property.documentation,
-      descriptorName: property.type === 'descriptor' ? ((property.data.edfiXsd: any): DescriptorPropertyEdfiXsd).xsd_DescriptorNameWithExtension() : '',
+      descriptorName:
+        property.type === 'descriptor'
+          ? ((property.data.edfiXsd: any): DescriptorPropertyEdfiXsd).xsd_DescriptorNameWithExtension()
+          : '',
     }),
     minOccurs: calculateMinOccurs(property, minOccursOverride),
     maxOccursIsUnbounded: calculateMaxOccursIsUnbounded(property, maxOccursIsUnboundedOverride),
   });
 }
 
-export function createSchemaComplexTypeItems(complexTypeItemProperties: Array<EntityProperty>, minOccursOverride: ?string, maxOccursIsUnboundedOverride: ?boolean): Array<ComplexTypeItem> {
+export function createSchemaComplexTypeItems(
+  complexTypeItemProperties: Array<EntityProperty>,
+  minOccursOverride: ?string,
+  maxOccursIsUnboundedOverride: ?boolean,
+): Array<ComplexTypeItem> {
   const complexTypeItems: Array<ComplexTypeItem> = [];
   complexTypeItemProperties.forEach(complexTypeItemProperty => {
     if (complexTypeItemProperty.type === 'choice') {
@@ -41,10 +52,18 @@ export function createSchemaComplexTypeItems(complexTypeItemProperties: Array<En
         maxOccursIsUnbounded: calculateMaxOccursIsUnbounded(complexTypeItemProperty, maxOccursIsUnboundedOverride),
         isChoice: true,
       });
-      choiceElement.items.push(...createSchemaComplexTypeItems(complexTypeItemProperty.data.edfiXsd.xsd_Properties, minOccursOverride, maxOccursIsUnboundedOverride));
+      choiceElement.items.push(
+        ...createSchemaComplexTypeItems(
+          complexTypeItemProperty.data.edfiXsd.xsd_Properties,
+          minOccursOverride,
+          maxOccursIsUnboundedOverride,
+        ),
+      );
       complexTypeItems.push(choiceElement);
     } else {
-      complexTypeItems.push(createXsdElementFromProperty(complexTypeItemProperty, minOccursOverride, maxOccursIsUnboundedOverride));
+      complexTypeItems.push(
+        createXsdElementFromProperty(complexTypeItemProperty, minOccursOverride, maxOccursIsUnboundedOverride),
+      );
     }
   });
   return complexTypeItems;

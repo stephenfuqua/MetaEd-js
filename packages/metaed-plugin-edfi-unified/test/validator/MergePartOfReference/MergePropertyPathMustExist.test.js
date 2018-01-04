@@ -1,6 +1,15 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, DomainEntitySubclassBuilder,
-  AssociationBuilder, AssociationExtensionBuilder, AssociationSubclassBuilder, CommonBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  DomainEntitySubclassBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+  AssociationSubclassBuilder,
+  CommonBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
 
@@ -75,8 +84,12 @@ describe('when validating domain entity has merge property and entity is wrong',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity has merge property and entity is wrong -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity has merge property and entity is wrong -> sourceMap',
+    );
   });
 });
 
@@ -115,8 +128,12 @@ describe('when validating domain entity has merge property and property is wrong
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity has merge property and property is wrong -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity has merge property and property is wrong -> sourceMap',
+    );
   });
 });
 

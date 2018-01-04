@@ -7,7 +7,7 @@ import {
   schoolId,
   studentCompetencyObjective,
   studentLearningObjective,
- } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
+} from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
 import { getTable, removeColumn, renameForeignKeyColumn } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';

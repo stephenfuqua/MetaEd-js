@@ -1,4 +1,3 @@
-
 // @flow
 import { newTrigger, insertUpdateDelete } from '../../../src/model/database/Trigger';
 import type { Trigger } from '../../../src/model/database/Trigger';

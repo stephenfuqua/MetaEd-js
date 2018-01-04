@@ -62,7 +62,6 @@ import { enhance as removeStartTimeFromPkOfInterventionMeetingTimeDiminisher } f
 
 export function enhancerList(): Array<Enhancer> {
   return [
-
     // Property Collection Cloning Phase
     edFiOdsEntityRepository,
     topLevelEntity,

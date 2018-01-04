@@ -18,8 +18,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     domain.domainItems.forEach(domainItem => {
       if (domainItem.referencedType === 'common') {
         if (!metaEd.entity.common.has(domainItem.metaEdName)) {
-          failures.push(getFailure(domainItem, 'CommonDomainItemMustMatchTopLevelEntity',
-            `Common Domain Item property '${domainItem.metaEdName}' does not match any declared Common.`));
+          failures.push(
+            getFailure(
+              domainItem,
+              'CommonDomainItemMustMatchTopLevelEntity',
+              `Common Domain Item property '${domainItem.metaEdName}' does not match any declared Common.`,
+            ),
+          );
         }
       }
     });

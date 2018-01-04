@@ -63,9 +63,16 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           ForeignKeyStrategy.foreignColumnCascade(true, enumeration.parentEntity.data.edfiOds.ods_CascadePrimaryKeyUpdates),
         );
         addForeignKey(joinTable, parentForeignKey);
-        addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
+        addColumns(
+          joinTable,
+          parentPrimaryKeys,
+          ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
+        );
 
-        const columns: Array<Column> = columnCreator.createColumns(enumeration, buildStrategy.columnNamerIgnoresWithContext());
+        const columns: Array<Column> = columnCreator.createColumns(
+          enumeration,
+          buildStrategy.columnNamerIgnoresWithContext(),
+        );
         const foreignKey: ForeignKey = createForeignKey(
           columns,
           enumeration.referencedEntity.namespaceInfo.namespace,

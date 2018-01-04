@@ -1,16 +1,7 @@
 // @flow
 import R from 'ramda';
-import type {
-  MetaEdEnvironment,
-  DomainEntity,
-  EnhancerResult,
-  IntegerType,
-} from 'metaed-core';
-import {
-  newDomainEntity,
-  newIntegerType,
-  newMetaEdEnvironment,
-} from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntity, EnhancerResult, IntegerType } from 'metaed-core';
+import { newDomainEntity, newIntegerType, newMetaEdEnvironment } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
@@ -150,4 +141,3 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     expect(result.success).toBe(true);
   });
 });
-

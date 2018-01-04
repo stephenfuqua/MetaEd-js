@@ -19,7 +19,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'ExtendingStudentProgramAssociationOrSubclassProhibited',
         category: 'warning',
-        message: `${associationExtension.typeHumanizedName} ${associationExtension.metaEdName} is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
+        message: `${associationExtension.typeHumanizedName} ${
+          associationExtension.metaEdName
+        } is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
         sourceMap: associationExtension.sourceMap.type,
         fileMap: null,
       });

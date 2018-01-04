@@ -128,13 +128,21 @@ describe('when building duplicate shared decimals', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate shared decimals should have validation failures for each entity -> SD 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate shared decimals should have validation failures for each entity -> SD 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate shared decimals should have validation failures for each entity -> SD 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate shared decimals should have validation failures for each entity -> SD 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate shared decimals should have validation failures for each entity -> SD 2 sourceMap',
+    );
   });
 });
 
@@ -839,7 +847,9 @@ describe('when building shared decimal source map', () => {
   });
 
   it('should have decimalPlaces', () => {
-    expect(((getSharedDecimal(metaEd.entity, entityName).sourceMap: any): SharedDecimalSourceMap).decimalPlaces).toBeDefined();
+    expect(
+      ((getSharedDecimal(metaEd.entity, entityName).sourceMap: any): SharedDecimalSourceMap).decimalPlaces,
+    ).toBeDefined();
   });
 
   it('should have minValue', () => {

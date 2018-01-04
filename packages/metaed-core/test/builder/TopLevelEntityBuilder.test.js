@@ -107,9 +107,15 @@ describe('when building association property with weak reference', () => {
   });
 
   it('should have source map for isWeak with line, column, text', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak).not.toBe(NoSourceMap);
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak).toMatchSnapshot();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak,
+    ).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): AssociationPropertySourceMap).isWeak,
+    ).toMatchSnapshot();
   });
 });
 
@@ -276,9 +282,18 @@ describe('when building common property with extension override', () => {
   });
 
   it('should have source map for isExtensionOverride with line, column, text', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap).isExtensionOverride).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap).isExtensionOverride).not.toBe(NoSourceMap);
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap).isExtensionOverride).toMatchSnapshot();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap)
+        .isExtensionOverride,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap)
+        .isExtensionOverride,
+    ).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): CommonPropertySourceMap)
+        .isExtensionOverride,
+    ).toMatchSnapshot();
   });
 });
 
@@ -417,8 +432,12 @@ describe('when building decimal property', () => {
   });
 
   it('should have source map for totalDigits', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).totalDigits).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).totalDigits).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).totalDigits,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).totalDigits,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have decimalPlaces', () => {
@@ -426,8 +445,12 @@ describe('when building decimal property', () => {
   });
 
   it('should have source map for decimalPlaces', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).decimalPlaces).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).decimalPlaces).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).decimalPlaces,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).decimalPlaces,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have minValue', () => {
@@ -435,8 +458,12 @@ describe('when building decimal property', () => {
   });
 
   it('should have source map for minValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).minValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).minValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).minValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).minValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have maxValue', () => {
@@ -444,8 +471,12 @@ describe('when building decimal property', () => {
   });
 
   it('should have source map for maxValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).maxValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).maxValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).maxValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DecimalPropertySourceMap).maxValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have source map with line, column, text', () => {
@@ -579,9 +610,15 @@ describe('when building domain entity property with weak reference', () => {
   });
 
   it('should have source map for isWeak with line, column, text', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak).not.toBe(NoSourceMap);
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak).toMatchSnapshot();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak,
+    ).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): DomainEntityPropertySourceMap).isWeak,
+    ).toMatchSnapshot();
   });
 });
 
@@ -808,7 +845,9 @@ describe('when building identity entity property', () => {
 
   it('should have source map for isPartOfIdentity with line, column, text', () => {
     expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).toBeDefined();
-    expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).not.toBe(NoSourceMap);
+    expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).not.toBe(
+      NoSourceMap,
+    );
     expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isPartOfIdentity).toMatchSnapshot();
   });
 });
@@ -1031,7 +1070,9 @@ describe('when building renamed identity entity property', () => {
 
   it('should have source map for isIdentityRename with line, column, text', () => {
     expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).toBeDefined();
-    expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).not.toBe(NoSourceMap);
+    expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).not.toBe(
+      NoSourceMap,
+    );
     expect(getDomainEntity(metaEd.entity, entityName).identityProperties[0].sourceMap.isIdentityRename).toMatchSnapshot();
   });
 
@@ -1254,8 +1295,12 @@ describe('when building integer property', () => {
   });
 
   it('should have source map for minValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).minValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).minValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).minValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).minValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have maxValue', () => {
@@ -1263,8 +1308,12 @@ describe('when building integer property', () => {
   });
 
   it('should have source map for maxValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).maxValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).maxValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).maxValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): IntegerPropertySourceMap).maxValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have source map with line, column, text', () => {
@@ -1303,27 +1352,61 @@ describe('when building merged property reference', () => {
   });
 
   it('should have mergedPropertyPath', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath).toHaveLength(2);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath[0]).toBe(mergePropertyPath.split('.')[0]);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath[1]).toBe(mergePropertyPath.split('.')[1]);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath,
+    ).toHaveLength(2);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .mergePropertyPath[0],
+    ).toBe(mergePropertyPath.split('.')[0]);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .mergePropertyPath[1],
+    ).toBe(mergePropertyPath.split('.')[1]);
   });
 
   it('should have source map for mergePropertyPath with line, column, text', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.mergePropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.mergePropertyPath).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.mergePropertyPath).toMatchSnapshot();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath,
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath,
+    ).toMatchSnapshot();
   });
 
   it('should have targetPropertyPath', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath).toHaveLength(2);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath[0]).toBe(targetPropertyPath.split('.')[0]);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath[1]).toBe(targetPropertyPath.split('.')[1]);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath,
+    ).toHaveLength(2);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .targetPropertyPath[0],
+    ).toBe(targetPropertyPath.split('.')[0]);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .targetPropertyPath[1],
+    ).toBe(targetPropertyPath.split('.')[1]);
   });
 
   it('should have source map for targetPropertyPath with line, column, text', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.targetPropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.targetPropertyPath).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.targetPropertyPath).toMatchSnapshot();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath,
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath,
+    ).toMatchSnapshot();
   });
 });
 
@@ -1359,33 +1442,81 @@ describe('when building multiple merge property references', () => {
   });
 
   it('should have mergedPropertyPath and targetPropertyPath for first merged property', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath[0]).toBe(mergePropertyPath0);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath[0]).toBe(targetPropertyPath0);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].mergePropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].targetPropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .mergePropertyPath[0],
+    ).toBe(mergePropertyPath0);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0]
+        .targetPropertyPath[0],
+    ).toBe(targetPropertyPath0);
   });
 
   it('should have source map for first merged property', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.mergePropertyPath[0]).toBeDefined();
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.mergePropertyPath[0]).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.targetPropertyPath[0]).toBeDefined();
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap.targetPropertyPath[0]).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap).toMatchSnapshot();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[0].sourceMap,
+    ).toMatchSnapshot();
   });
 
   it('should have mergedPropertyPath and targetPropertyPath for second merged property', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].mergePropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].targetPropertyPath).toHaveLength(1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].mergePropertyPath[0]).toBe(mergePropertyPath1);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].targetPropertyPath[0]).toBe(targetPropertyPath1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].mergePropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].targetPropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1]
+        .mergePropertyPath[0],
+    ).toBe(mergePropertyPath1);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1]
+        .targetPropertyPath[0],
+    ).toBe(targetPropertyPath1);
   });
 
   it('should have source map for second merged property', () => {
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap.mergePropertyPath[0]).toBeDefined();
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap.mergePropertyPath[0]).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap.targetPropertyPath[0]).toBeDefined();
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap.targetPropertyPath[0]).not.toBe(NoSourceMap);
-    expect(asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap).toMatchSnapshot();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .mergePropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .mergePropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .targetPropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .targetPropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asReferentialProperty(getDomainEntity(metaEd.entity, entityName).properties[0]).mergedProperties[1].sourceMap,
+    ).toMatchSnapshot();
   });
 });
 
@@ -1462,9 +1593,18 @@ describe('when building referential property with merged properties', () => {
   });
 
   it('should have source map for mergedProperties with line, column, text', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap).mergedProperties).not.toBe(NoSourceMap);
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap).mergedProperties).toMatchSnapshot();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap).mergedProperties).toHaveLength(1);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap)
+        .mergedProperties,
+    ).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap)
+        .mergedProperties,
+    ).toMatchSnapshot();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ReferentialPropertySourceMap)
+        .mergedProperties,
+    ).toHaveLength(1);
   });
 });
 
@@ -1681,8 +1821,12 @@ describe('when building short property', () => {
   });
 
   it('should have source map for minValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).minValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).minValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).minValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).minValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have maxValue', () => {
@@ -1690,8 +1834,12 @@ describe('when building short property', () => {
   });
 
   it('should have source map for maxValue', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).maxValue).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).maxValue).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).maxValue,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): ShortPropertySourceMap).maxValue,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have source map with line, column, text', () => {
@@ -1752,8 +1900,12 @@ describe('when building string property', () => {
   });
 
   it('should have source map for minLength', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).minLength).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).minLength).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).minLength,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).minLength,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have maxLength', () => {
@@ -1761,8 +1913,12 @@ describe('when building string property', () => {
   });
 
   it('should have source map for maxLength', () => {
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).maxLength).toBeDefined();
-    expect(((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).maxLength).not.toBe(NoSourceMap);
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).maxLength,
+    ).toBeDefined();
+    expect(
+      ((getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap: any): StringPropertySourceMap).maxLength,
+    ).not.toBe(NoSourceMap);
   });
 
   it('should have source map with line, column, text', () => {

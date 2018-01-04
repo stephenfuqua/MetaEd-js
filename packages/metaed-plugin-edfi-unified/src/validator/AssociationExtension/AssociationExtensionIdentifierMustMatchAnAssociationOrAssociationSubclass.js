@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass',
         category: 'error',
-        message: `Association additions '${entity.metaEdName}' does not match any declared Association or Association Subclass.`,
+        message: `Association additions '${
+          entity.metaEdName
+        }' does not match any declared Association or Association Subclass.`,
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });

@@ -66,8 +66,11 @@ describe('when domain entity extension is in core namespace', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionExistsOnlyInExtensionNamespace');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity extension is in core namespace should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity extension is in core namespace should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity extension is in core namespace should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity extension is in core namespace should have validation failure -> sourceMap',
+    );
   });
 });
-

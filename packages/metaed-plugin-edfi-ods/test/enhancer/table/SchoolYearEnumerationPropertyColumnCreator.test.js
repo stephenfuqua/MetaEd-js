@@ -145,7 +145,6 @@ describe('when creating columns for nullable school year enumeration property', 
   });
 });
 
-
 describe('when creating columns for primary key school year enumeration property', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   let property: SchoolYearEnumerationProperty;
@@ -213,7 +212,6 @@ describe('when creating columns for identity rename school year enumeration prop
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
-
 
 describe('when creating columns for primary key school year enumeration property with suppress primary key creation strategy', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';

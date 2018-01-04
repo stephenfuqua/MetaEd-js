@@ -1,13 +1,13 @@
 // @flow
 
 export type EnumerationRowBase = {
-  name: string;
-  type: string;
-  namespace: string;
-  schemaName: string;
-  tableName: string;
-  documentation: string;
-}
+  name: string,
+  type: string,
+  namespace: string,
+  schemaName: string,
+  tableName: string,
+  documentation: string,
+};
 
 export function newEnumerationRowBase(): EnumerationRowBase {
   return {

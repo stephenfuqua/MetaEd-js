@@ -1,16 +1,6 @@
 // @flow
-import {
-  addEntity,
-  newEnumeration,
-  newEnumerationItem,
-  newMetaEdEnvironment,
-  newNamespaceInfo,
-} from 'metaed-core';
-import type {
-  Enumeration,
-  EnumerationItem,
-  MetaEdEnvironment,
-} from 'metaed-core';
+import { addEntity, newEnumeration, newEnumerationItem, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import type { Enumeration, EnumerationItem, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/EnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import type { EnumerationRow } from '../../src/model/database/EnumerationRow';
@@ -85,7 +75,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
   });
 });
 
-describe('when EnumerationRowEnhancer enhances enumeration with name that ends with \'Type\'', () => {
+describe("when EnumerationRowEnhancer enhances enumeration with name that ends with 'Type'", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';

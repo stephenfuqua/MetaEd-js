@@ -5,7 +5,7 @@ import type { MergedInterchange } from './MergedInterchange';
 
 export type EdFiXsdEntityRepository = {
   mergedInterchange: Map<string, MergedInterchange>,
-}
+};
 
 const enhancerName: string = 'EdFiXsdEntityRepositorySetupEnhancer';
 
@@ -16,9 +16,12 @@ export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
 }
 
 export function addEdFiXsdEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  metaEd.plugin.set('edfiXsd', Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiXsd',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdFiXsdEntityRepository(),
+    }),
+  );
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

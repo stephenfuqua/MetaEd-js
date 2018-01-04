@@ -45,7 +45,13 @@ export function createAttribute(name: string, type: string, documentation: strin
   });
 }
 
-export function createIntegerSimpleType(name: string, baseType: string, documentation: string, minValue: string = '', maxValue: string = ''): IntegerSimpleType {
+export function createIntegerSimpleType(
+  name: string,
+  baseType: string,
+  documentation: string,
+  minValue: string = '',
+  maxValue: string = '',
+): IntegerSimpleType {
   return Object.assign(newIntegerSimpleType(), {
     name,
     baseType,
@@ -55,8 +61,15 @@ export function createIntegerSimpleType(name: string, baseType: string, document
   });
 }
 
-export function createDecimalSimpleType(name: string, baseType: string, documentation: string, minValue: string = '',
-  maxValue: string = '', totalDigits: string = '', decimalPlaces: string = ''): DecimalSimpleType {
+export function createDecimalSimpleType(
+  name: string,
+  baseType: string,
+  documentation: string,
+  minValue: string = '',
+  maxValue: string = '',
+  totalDigits: string = '',
+  decimalPlaces: string = '',
+): DecimalSimpleType {
   return Object.assign(newDecimalSimpleType(), {
     name,
     baseType,
@@ -68,8 +81,13 @@ export function createDecimalSimpleType(name: string, baseType: string, document
   });
 }
 
-export function createStringSimpleType(name: string, baseType: string, documentation: string, minLength: string = '',
-  maxLength: string = ''): StringSimpleType {
+export function createStringSimpleType(
+  name: string,
+  baseType: string,
+  documentation: string,
+  minLength: string = '',
+  maxLength: string = '',
+): StringSimpleType {
   return Object.assign(newStringSimpleType(), {
     name,
     baseType,
@@ -94,7 +112,14 @@ export function createEnumerationToken(value: string, documentation: string): En
   });
 }
 
-export function createElementComplexTypeItem(name: string, documentation: string, type: string, minOccurs: string = '', maxOccurs: string = '', maxOccursIsUnbounded: boolean = false): Element {
+export function createElementComplexTypeItem(
+  name: string,
+  documentation: string,
+  type: string,
+  minOccurs: string = '',
+  maxOccurs: string = '',
+  maxOccursIsUnbounded: boolean = false,
+): Element {
   return Object.assign(newElement(), {
     name,
     type,
@@ -105,7 +130,12 @@ export function createElementComplexTypeItem(name: string, documentation: string
   });
 }
 
-export function createElementGroupComplexTypeItem(isChoice: boolean = false, minOccurs: string = '', maxOccurs: string = '', maxOccursIsUnbounded: boolean = false): ElementGroup {
+export function createElementGroupComplexTypeItem(
+  isChoice: boolean = false,
+  minOccurs: string = '',
+  maxOccurs: string = '',
+  maxOccursIsUnbounded: boolean = false,
+): ElementGroup {
   return Object.assign(newElementGroup(), {
     isChoice,
     minOccurs,
@@ -114,7 +144,12 @@ export function createElementGroupComplexTypeItem(isChoice: boolean = false, min
   });
 }
 
-export function createComplexType(name: string, documentation: string, baseType: string = '', isAbstract: boolean = false): ComplexType {
+export function createComplexType(
+  name: string,
+  documentation: string,
+  baseType: string = '',
+  isAbstract: boolean = false,
+): ComplexType {
   return Object.assign(newComplexType(), {
     name,
     baseType,

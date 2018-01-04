@@ -3,7 +3,7 @@ import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type CommonExtensionEdfiXsd = {
-  xsd_MetaEdNameWithExtension: () => string;
+  xsd_MetaEdNameWithExtension: () => string,
 };
 
 const enhancerName: string = 'CommonExtensionSetupEnhancer';

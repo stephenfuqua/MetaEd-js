@@ -23,8 +23,7 @@ export type State = {
   generatorResults: Array<GeneratorResult>,
 
   // the specified directories to load .metaed files from
-  inputDirectories: ?InputDirectory[],
-
+  inputDirectories: ?(InputDirectory[]),
   // filepaths to exclude from loading, usually used to allow upstream tasks to provide their own versions in a FileSet
   // e.g. files that are open and unsaved in an editor
   filepathsToExclude: Set<string>,
@@ -54,19 +53,18 @@ export type State = {
   pipelineOptions: PipelineOptions,
 };
 
-export const newState: () => State = () =>
-  ({
-    validationFailure: [],
-    enhancerResults: [],
-    generatorResults: [],
-    inputDirectories: [],
-    filepathsToExclude: new Set(),
-    loadedFileSet: [],
-    fileIndex: null,
-    parseTree: null,
-    metaEd: newMetaEdEnvironment(),
-    outputDirectory: null,
-    pluginScanDirectory: null,
-    pluginManifest: [],
-    pipelineOptions: newPipelineOptions(),
-  });
+export const newState: () => State = () => ({
+  validationFailure: [],
+  enhancerResults: [],
+  generatorResults: [],
+  inputDirectories: [],
+  filepathsToExclude: new Set(),
+  loadedFileSet: [],
+  fileIndex: null,
+  parseTree: null,
+  metaEd: newMetaEdEnvironment(),
+  outputDirectory: null,
+  pluginScanDirectory: null,
+  pluginManifest: [],
+  pipelineOptions: newPipelineOptions(),
+});

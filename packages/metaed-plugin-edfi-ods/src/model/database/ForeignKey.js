@@ -8,20 +8,20 @@ import type { Table } from './Table';
 winston.cli();
 
 export type ForeignKey = {
-  columnNames: Array<ColumnNamePair>;
-  parentTable: Table;
-  parentTableName: string;
-  parentTableSchema: string;
-  foreignTableName: string;
-  foreignTableSchema: string;
-  foreignKeyNameSuffix: string;
-  parentTableColumnNames: Array<string>;
-  foreignTableColumnNames: Array<string>;
-  withDeleteCascade: boolean;
-  withUpdateCascade: boolean;
-  withReverseForeignKeyIndex: boolean;
-  name: string;
-}
+  columnNames: Array<ColumnNamePair>,
+  parentTable: Table,
+  parentTableName: string,
+  parentTableSchema: string,
+  foreignTableName: string,
+  foreignTableSchema: string,
+  foreignKeyNameSuffix: string,
+  parentTableColumnNames: Array<string>,
+  foreignTableColumnNames: Array<string>,
+  withDeleteCascade: boolean,
+  withUpdateCascade: boolean,
+  withReverseForeignKeyIndex: boolean,
+  name: string,
+};
 
 export function newForeignKey(): ForeignKey {
   return {
@@ -50,17 +50,19 @@ export function getForeignTableColumnNames(foreignKey: ForeignKey): Array<string
 }
 
 export function addColumnNamePair(foreignKey: ForeignKey, columnNamePair: ColumnNamePair): void {
-  const existingPair = foreignKey.columnNames.find((x: ColumnNamePair) =>
-    x.parentTableColumnName === columnNamePair.parentTableColumnName
-    && x.foreignTableColumnName === columnNamePair.foreignTableColumnName);
+  const existingPair = foreignKey.columnNames.find(
+    (x: ColumnNamePair) =>
+      x.parentTableColumnName === columnNamePair.parentTableColumnName &&
+      x.foreignTableColumnName === columnNamePair.foreignTableColumnName,
+  );
 
   if (existingPair == null) {
     foreignKey.columnNames.push(columnNamePair);
   } else {
     winston.warn(
       `Attempt to add duplicate column name pair: [${columnNamePair.parentTableColumnName}, ${
-      columnNamePair.foreignTableColumnName}] on foreign key referencing ${
-      foreignKey.foreignTableSchema}.${foreignKey.foreignTableName} failed.`,
+        columnNamePair.foreignTableColumnName
+      }] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableName} failed.`,
     );
   }
 }

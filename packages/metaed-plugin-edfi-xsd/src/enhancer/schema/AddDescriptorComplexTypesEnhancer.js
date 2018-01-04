@@ -12,7 +12,7 @@ import {
   baseTypeDescriptorReference,
   typeGroupDescriptor,
   baseTypeDescriptor,
- } from './AddComplexTypesBaseEnhancer';
+} from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddDescriptorComplexTypesEnhancer';
 
@@ -45,7 +45,9 @@ function createComplexType(descriptor: Descriptor): Array<ComplexType> {
 function createReferenceType(descriptor: Descriptor): ComplexType {
   return Object.assign(newComplexType(), {
     annotation: Object.assign(newAnnotation(), {
-      documentation: `Provides references for ${sugar.spacify(descriptor.data.edfiXsd.xsd_DescriptorName)} and its details during interchange. Use XML IDREF to reference a record that is included in the interchange.`,
+      documentation: `Provides references for ${sugar.spacify(
+        descriptor.data.edfiXsd.xsd_DescriptorName,
+      )} and its details during interchange. Use XML IDREF to reference a record that is included in the interchange.`,
       typeGroup: typeGroupDescriptorExtendedReference,
     }),
     baseType: baseTypeDescriptorReference,

@@ -7,12 +7,14 @@ export type EnumerationSimpleType = {
   ...$Exact<SimpleType>,
   enumerationTokens: Array<EnumerationToken>,
   hasRestrictions: () => boolean,
-}
+};
 
 export function newEnumerationSimpleType(): EnumerationSimpleType {
   return Object.assign({}, newSimpleType(), {
     enumerationTokens: [],
-    hasRestrictions() { return this.enumerationTokens.length > 0; },
+    hasRestrictions() {
+      return this.enumerationTokens.length > 0;
+    },
   });
 }
 

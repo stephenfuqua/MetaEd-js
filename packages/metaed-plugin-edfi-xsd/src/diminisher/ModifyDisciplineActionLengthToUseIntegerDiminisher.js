@@ -1,11 +1,6 @@
 // @flow
 import R from 'ramda';
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  ModelBase,
-  ModelType,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
 import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import { NoSimpleType } from '../model/schema/SimpleType';
@@ -30,13 +25,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const complexType: ComplexType = entity.data.edfiXsd.xsd_ComplexTypes.find(x => x.name === entityName1);
 
     if (complexType != null && complexType.hasItems()) {
-      const element1: any = complexType.items.find(x => x.name != null && x.name === elementNameType1
-        && x.type != null && x.type === elementNameType1);
+      const element1: any = complexType.items.find(
+        x => x.name != null && x.name === elementNameType1 && x.type != null && x.type === elementNameType1,
+      );
       if (element1 != null) Object.assign(element1, { type: integerType });
 
       const element2: any = complexType.items.find(
-        x => x.name != null && x.name === elementName2
-        && x.type != null && x.type === elementNameType1);
+        x => x.name != null && x.name === elementName2 && x.type != null && x.type === elementNameType1,
+      );
       if (element2 != null) Object.assign(element2, { type: integerType });
     }
   }

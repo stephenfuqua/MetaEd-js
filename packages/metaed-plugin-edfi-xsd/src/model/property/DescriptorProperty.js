@@ -6,7 +6,7 @@ export type DescriptorPropertyEdfiXsd = EntityPropertyEdfiXsd & {
   xsd_IsDescriptor: boolean,
   xsd_DescriptorName: () => string,
   xsd_DescriptorNameWithExtension: () => string,
-}
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'DescriptorPropertySetupEnhancer';

@@ -8,7 +8,7 @@ export type SchemaSection = {
   sectionAnnotation: Annotation,
   complexTypes: Array<ComplexType>,
   simpleTypes: Array<SimpleType>,
-}
+};
 
 export function newSchemaSection(): SchemaSection {
   return {

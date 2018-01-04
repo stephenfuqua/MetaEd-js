@@ -6,7 +6,11 @@ import type { ReferenceUsageInfo } from '../model/ReferenceUsageInfo';
 import { sortByNameThenRootEntityName } from '../model/ReferenceUsageInfo';
 import type { MergedInterchangeEdfiInterchangeBrief } from '../model/MergedInterchange';
 import { addMergedInterchangeEdfiInterchangeBriefTo } from '../model/MergedInterchange';
-import { getReferenceUsageInfoList, topLevelEntitiesFrom, topLevelReferencePropertiesFrom } from './MergedInterchangeDependenciesEnhancerBase';
+import {
+  getReferenceUsageInfoList,
+  topLevelEntitiesFrom,
+  topLevelReferencePropertiesFrom,
+} from './MergedInterchangeDependenciesEnhancerBase';
 
 const enhancerName = 'MergedInterchangeExtendedReferencesEnhancer';
 
@@ -21,15 +25,28 @@ export function enhance(metaEd: MetaEdEnvironment) {
 
     const previouslyMatchedProperties: Array<ReferentialProperty> = [];
     const referenceExclusionList: Array<string> = topLevelEntities.map(i => i.metaEdName);
-    const allExtendedReferences: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce((referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp) => {
-      const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [...getReferenceUsageInfoList(['domainEntity', 'association'], referenceExclusionList, previouslyMatchedProperties, tlrp)];
-      if (extendedReferencesFromProperty.length > 0) {
-        referencedUsageInfos.push(...extendedReferencesFromProperty);
-      }
-      return referencedUsageInfos;
-    }, []);
+    const allExtendedReferences: Array<ReferenceUsageInfo> = topLevelReferenceProperties.reduce(
+      (referencedUsageInfos: Array<ReferenceUsageInfo>, tlrp) => {
+        const extendedReferencesFromProperty: Array<ReferenceUsageInfo> = [
+          ...getReferenceUsageInfoList(
+            ['domainEntity', 'association'],
+            referenceExclusionList,
+            previouslyMatchedProperties,
+            tlrp,
+          ),
+        ];
+        if (extendedReferencesFromProperty.length > 0) {
+          referencedUsageInfos.push(...extendedReferencesFromProperty);
+        }
+        return referencedUsageInfos;
+      },
+      [],
+    );
     allExtendedReferences.sort(sortByNameThenRootEntityName);
-    ((mergedInterchange.data.edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefExtendedReferences.push(...allExtendedReferences);
+    ((mergedInterchange.data
+      .edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefExtendedReferences.push(
+      ...allExtendedReferences,
+    );
   });
   return {
     enhancerName,

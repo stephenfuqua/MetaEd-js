@@ -5,4 +5,4 @@ export type GeneratedOutput = {
   folderName: string,
   resultString: string,
   resultStream: ?Buffer,
-}
+};

@@ -31,6 +31,5 @@ export function prependWithContextToMetaEdName(metaEdName: string, withContext: 
 }
 
 export function escapeSqlSingleQuote(string: string): string {
-  return string.replace(/'/g, '\'\'');
+  return string.replace(/'/g, "''");
 }
-

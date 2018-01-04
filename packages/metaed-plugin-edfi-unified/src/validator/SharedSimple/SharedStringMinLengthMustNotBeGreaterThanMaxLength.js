@@ -5,7 +5,11 @@ import type { MetaEdEnvironment, ValidationFailure, SharedStringSourceMap } from
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.sharedString.forEach(entity => {
-    if (entity.minLength && entity.maxLength && Number.parseInt(entity.minLength, 10) > Number.parseInt(entity.maxLength, 10)) {
+    if (
+      entity.minLength &&
+      entity.maxLength &&
+      Number.parseInt(entity.minLength, 10) > Number.parseInt(entity.maxLength, 10)
+    ) {
       failures.push({
         validatorName: 'SharedStringMinLengthMustNotBeGreaterThanMaxLength',
         category: 'error',

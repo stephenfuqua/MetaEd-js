@@ -20,19 +20,13 @@ describe('when enhancing association subclass without identity renames', () => {
 
     const baseAssociation: Association = Object.assign(newAssociation(), {
       metaEdName: baseAssociationName,
-      properties: [
-        baseIdentityProperty,
-      ],
-      identityProperties: [
-        baseIdentityProperty,
-      ],
+      properties: [baseIdentityProperty],
+      identityProperties: [baseIdentityProperty],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.association.set(baseAssociation.metaEdName, baseAssociation);
-
 
     subclassIdentityProperty = Object.assign(newAssociationProperty(), {
       metaEdName: 'SubclassIdentityProperty',
@@ -43,15 +37,10 @@ describe('when enhancing association subclass without identity renames', () => {
       metaEdName: subclassAssociationName,
       baseEntityName: baseAssociationName,
       baseEntity: baseAssociation,
-      properties: [
-        subclassIdentityProperty,
-      ],
-      identityProperties: [
-        subclassIdentityProperty,
-      ],
+      properties: [subclassIdentityProperty],
+      identityProperties: [subclassIdentityProperty],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);
@@ -94,15 +83,10 @@ describe('when enhancing association subclass with identity renames', () => {
 
     const baseAssociation: Association = Object.assign(newAssociation(), {
       metaEdName: baseAssociationName,
-      properties: [
-        baseIdentityProperty,
-      ],
-      identityProperties: [
-        baseIdentityProperty,
-      ],
+      properties: [baseIdentityProperty],
+      identityProperties: [baseIdentityProperty],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.association.set(baseAssociation.metaEdName, baseAssociation);
@@ -122,17 +106,10 @@ describe('when enhancing association subclass with identity renames', () => {
       metaEdName: subclassAssociationName,
       baseEntityName: baseAssociationName,
       baseEntity: baseAssociation,
-      properties: [
-        subclassIdentityProperty,
-        subclassIdentityRenameProperty,
-      ],
-      identityProperties: [
-        subclassIdentityProperty,
-        subclassIdentityRenameProperty,
-      ],
+      properties: [subclassIdentityProperty, subclassIdentityRenameProperty],
+      identityProperties: [subclassIdentityProperty, subclassIdentityRenameProperty],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);

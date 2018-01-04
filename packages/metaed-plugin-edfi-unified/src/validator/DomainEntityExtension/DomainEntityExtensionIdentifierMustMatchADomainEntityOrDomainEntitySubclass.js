@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass',
         category: 'error',
-        message: `Domain Entity additions '${entity.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass.`,
+        message: `Domain Entity additions '${
+          entity.metaEdName
+        }' does not match any declared Domain Entity or Domain Entity Subclass.`,
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
@@ -18,4 +20,3 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   return failures;
 }
-

@@ -12,8 +12,8 @@ export function schoolYearEnumerationPropertyColumnCreator(): ColumnCreator {
         name: `${strategy.parentContext()}${property.data.edfiOds.ods_ContextPrefix}SchoolYear`,
         description: property.documentation,
         isNullable: property.isOptional,
-        isPartOfPrimaryKey: !strategy.suppressPrimaryKeyCreation()
-          && (property.isPartOfIdentity || property.isIdentityRename),
+        isPartOfPrimaryKey:
+          !strategy.suppressPrimaryKeyCreation() && (property.isPartOfIdentity || property.isIdentityRename),
         sourceEntityProperties: [property],
       });
       return [column];

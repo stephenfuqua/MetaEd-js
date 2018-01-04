@@ -16,7 +16,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const primaryKeyColumnNames: Array<string> = getPrimaryKeys(table).map((pk: Column) => pk.name);
 
     R.compose(
-      R.forEach((fk: ForeignKey) => { fk.withReverseForeignKeyIndex = true; }),
+      R.forEach((fk: ForeignKey) => {
+        fk.withReverseForeignKeyIndex = true;
+      }),
       R.reject((fk: ForeignKey) => R.equals(getParentTableColumnNames(fk), primaryKeyColumnNames)),
     )(getForeignKeys(table));
   });

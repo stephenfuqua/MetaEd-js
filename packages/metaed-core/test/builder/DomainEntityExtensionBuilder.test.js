@@ -108,13 +108,21 @@ describe('when building duplicate domain entity extensions', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate domain entity extensions should have validation failures for each entity -> DEX 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate domain entity extensions should have validation failures for each entity -> DEX 2 sourceMap',
+    );
   });
 });
 

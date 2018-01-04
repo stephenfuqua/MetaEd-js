@@ -16,5 +16,5 @@ export function newSchoolYearEnumerationProperty(): SchoolYearEnumerationPropert
   });
 }
 
-export const asSchoolYearEnumerationProperty = (x: EntityProperty): SchoolYearEnumerationProperty => ((x: any): SchoolYearEnumerationProperty);
-
+export const asSchoolYearEnumerationProperty = (x: EntityProperty): SchoolYearEnumerationProperty =>
+  ((x: any): SchoolYearEnumerationProperty);

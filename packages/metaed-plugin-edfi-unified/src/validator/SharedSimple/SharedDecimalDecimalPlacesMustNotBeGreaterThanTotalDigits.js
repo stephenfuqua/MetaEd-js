@@ -5,7 +5,11 @@ import type { MetaEdEnvironment, ValidationFailure, SharedDecimalSourceMap } fro
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.sharedDecimal.forEach(entity => {
-    if (entity.decimalPlaces && entity.totalDigits && Number.parseInt(entity.decimalPlaces, 10) > Number.parseInt(entity.totalDigits, 10)) {
+    if (
+      entity.decimalPlaces &&
+      entity.totalDigits &&
+      Number.parseInt(entity.decimalPlaces, 10) > Number.parseInt(entity.totalDigits, 10)
+    ) {
       failures.push({
         validatorName: 'SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits',
         category: 'error',

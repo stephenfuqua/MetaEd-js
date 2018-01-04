@@ -11,8 +11,8 @@ import { simplePropertyColumnCreator } from './SimplePropertyColumnCreator';
 import type { ColumnCreator } from './ColumnCreator';
 
 export type ColumnCreatorFactory = {
-  columnCreatorFor(property: EntityProperty): ColumnCreator
-}
+  columnCreatorFor(property: EntityProperty): ColumnCreator,
+};
 
 export const columnCreatorFactory: ColumnCreatorFactory = {
   columnCreatorFor: (property: EntityProperty): ColumnCreator => {

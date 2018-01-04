@@ -14,15 +14,18 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyCascadingUpdatesDefinitionsDiminisher';
 const targetVersions: string = '2.0.x';
 
-const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) =>
-  (parentTableName: string, foreignTableName: string, withUpdateCascade: boolean = false): void => {
-    const table: ?Table = getTable(repository, parentTableName);
-    if (table == null) return;
+const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) => (
+  parentTableName: string,
+  foreignTableName: string,
+  withUpdateCascade: boolean = false,
+): void => {
+  const table: ?Table = getTable(repository, parentTableName);
+  if (table == null) return;
 
-    const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
-    if (foreignKey == null) return;
-    foreignKey.withUpdateCascade = withUpdateCascade;
-  };
+  const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
+  if (foreignKey == null) return;
+  foreignKey.withUpdateCascade = withUpdateCascade;
+};
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };

@@ -20,9 +20,6 @@ export function initialize(): MetaEdPlugin {
       mergedInterchangeEntitiesEnhancer,
       mergedInterchangeExtendedReferencesEnhancer,
     ],
-    generator: [
-      interchangeBriefSvgGenerator,
-      interchangeBriefAsMarkdownGenerator,
-    ],
+    generator: [interchangeBriefSvgGenerator, interchangeBriefAsMarkdownGenerator],
   };
 }

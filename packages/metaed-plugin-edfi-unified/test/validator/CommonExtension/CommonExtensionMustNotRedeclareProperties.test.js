@@ -71,8 +71,12 @@ describe('when common extension has duplicate property name', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when common extension has duplicate property name should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when common extension has duplicate property name should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when common extension has duplicate property name should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when common extension has duplicate property name should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -143,14 +147,22 @@ describe('when common extension has multiple duplicates', () => {
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[0].message).toMatchSnapshot('when common extension has multiple duplicates should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when common extension has multiple duplicates should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when common extension has multiple duplicates should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when common extension has multiple duplicates should have validation failure -> sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
     expect(failures[1].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[1].message).toMatchSnapshot('when common extension has multiple duplicates should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when common extension has multiple duplicates should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when common extension has multiple duplicates should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when common extension has multiple duplicates should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -184,8 +196,12 @@ describe('when common extension has duplicate common property', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when common extension has duplicate common property should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when common extension has duplicate common property should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when common extension has duplicate common property should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when common extension has duplicate common property should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -219,4 +235,3 @@ describe('when common extension has duplicate common extension override property
     expect(failures).toHaveLength(0);
   });
 });
-

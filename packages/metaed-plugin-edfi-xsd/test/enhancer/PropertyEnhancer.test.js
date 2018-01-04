@@ -29,18 +29,23 @@ const extensionNamespace = Object.assign(newNamespaceInfo(), {
   isExtension: true,
 });
 
-function createRepositoryEntityWithProperty(metaEd: MetaEdEnvironment, namespaceInfo: NamespaceInfo, property: EntityProperty) {
+function createRepositoryEntityWithProperty(
+  metaEd: MetaEdEnvironment,
+  namespaceInfo: NamespaceInfo,
+  property: EntityProperty,
+) {
   const metaEdName = 'DomainEntityName';
 
-  metaEd.entity.domainEntity.set(metaEdName, Object.assign(newDomainEntity(), {
+  metaEd.entity.domainEntity.set(
     metaEdName,
-    documentation: 'doc',
-    namespaceInfo,
-    properties: [
-      property,
-    ],
-    data: { edfiXsd: {} },
-  }));
+    Object.assign(newDomainEntity(), {
+      metaEdName,
+      documentation: 'doc',
+      namespaceInfo,
+      properties: [property],
+      data: { edfiXsd: {} },
+    }),
+  );
   addProperty(metaEd.propertyIndex, property);
 }
 
@@ -191,8 +196,7 @@ describe('when enhancing extension association property referring to core entity
       documentation: 'doc',
       namespaceInfo: coreNamespace,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     }),
     data: { edfiXsd: {} },
@@ -267,8 +271,7 @@ describe('when enhancing extension descriptor property referring to core entity'
       documentation: 'doc',
       namespaceInfo: coreNamespace,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     }),
     data: { edfiXsd: {} },

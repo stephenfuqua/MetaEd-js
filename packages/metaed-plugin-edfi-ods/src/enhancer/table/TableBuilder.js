@@ -13,5 +13,5 @@ export type TableBuilder = {
     buildStrategy: BuildStrategy,
     tables: Array<Table>,
     parentIsRequired: ?boolean,
-  ): void;
-}
+  ): void,
+};

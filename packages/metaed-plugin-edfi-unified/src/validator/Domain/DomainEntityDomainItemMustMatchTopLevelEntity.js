@@ -17,9 +17,19 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.entity.domain.forEach(domain => {
     domain.domainItems.forEach(domainItem => {
       if (domainItem.referencedType === 'domainEntity') {
-        if (!metaEd.entity.domainEntity.has(domainItem.metaEdName) && !metaEd.entity.domainEntitySubclass.has(domainItem.metaEdName)) {
-          failures.push(getFailure(domainItem, 'DomainEntityDomainItemMustMatchTopLevelEntity',
-            `Domain Entity Domain Item property '${domainItem.metaEdName}' does not match any declared Domain Entity or Domain Entity Subclass.`));
+        if (
+          !metaEd.entity.domainEntity.has(domainItem.metaEdName) &&
+          !metaEd.entity.domainEntitySubclass.has(domainItem.metaEdName)
+        ) {
+          failures.push(
+            getFailure(
+              domainItem,
+              'DomainEntityDomainItemMustMatchTopLevelEntity',
+              `Domain Entity Domain Item property '${
+                domainItem.metaEdName
+              }' does not match any declared Domain Entity or Domain Entity Subclass.`,
+            ),
+          );
         }
       }
     });

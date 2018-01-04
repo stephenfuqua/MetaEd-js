@@ -13,7 +13,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported',
         category: 'warning',
-        message: `${domainEntitySubclass.typeHumanizedName} ${domainEntitySubclass.metaEdName} is not an EducationOrganization subclass.  EducationOrganization subclasses are the only Domain Entity subclasses currently supported by the ODS/API.`,
+        message: `${domainEntitySubclass.typeHumanizedName} ${
+          domainEntitySubclass.metaEdName
+        } is not an EducationOrganization subclass.  EducationOrganization subclasses are the only Domain Entity subclasses currently supported by the ODS/API.`,
         sourceMap: domainEntitySubclass.sourceMap.type,
         fileMap: null,
       });

@@ -2,4 +2,4 @@
 import type { EnhancerResult } from './EnhancerResult';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 
-export type Enhancer = (MetaEdEnvironment) => EnhancerResult;
+export type Enhancer = MetaEdEnvironment => EnhancerResult;

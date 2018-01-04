@@ -29,20 +29,23 @@ function renameVersionColumnOnAssessmentContentStandardTable(repository: EdFiOds
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
 
-  addColumn(table, initializeColumn(
-    newIntegerColumn(),
-    Object.assign(newIntegerProperty(), {
-      isPartOfIdentity: true,
-      data: {
-        edfiOds: {
-          ods_IsIdentityDatabaseType: false,
-          ods_IsUniqueIndex: false,
+  addColumn(
+    table,
+    initializeColumn(
+      newIntegerColumn(),
+      Object.assign(newIntegerProperty(), {
+        isPartOfIdentity: true,
+        data: {
+          edfiOds: {
+            ods_IsIdentityDatabaseType: false,
+            ods_IsUniqueIndex: false,
+          },
         },
-      },
-    }),
-    () => assessmentVersion,
-    false,
-  ));
+      }),
+      () => assessmentVersion,
+      false,
+    ),
+  );
 
   const column: ?Column = table.columns.find((x: Column) => x.name === version);
   if (column == null) return;

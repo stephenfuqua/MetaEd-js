@@ -21,7 +21,14 @@ export class AssociationBuilder extends TopLevelEntityBuilder {
   }
 
   enterAssociationName(context: MetaEdGrammar.AssociationNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (
+      this.currentTopLevelEntity === NoTopLevelEntity ||
+      context.exception ||
+      context.ID() == null ||
+      context.ID().exception ||
+      isErrorText(context.ID().getText())
+    )
+      return;
     this.enteringName(context.ID().getText());
     this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
   }

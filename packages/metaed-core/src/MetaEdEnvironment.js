@@ -9,10 +9,9 @@ export type PluginEnvironment = {
   entity: any,
 };
 
-export const newPluginEnvironment: () => PluginEnvironment = () =>
-  ({
-    entity: {},
-  });
+export const newPluginEnvironment: () => PluginEnvironment = () => ({
+  entity: {},
+});
 
 export type SemVer = string;
 
@@ -32,11 +31,10 @@ export type MetaEdEnvironment = {
   dataStandardVersion: SemVer,
 };
 
-export const newMetaEdEnvironment: () => MetaEdEnvironment = () =>
-  ({
-    entity: newEntityRepository(),
-    propertyIndex: newPropertyIndex(),
-    plugin: new Map(),
-    metaEdVersion: '',
-    dataStandardVersion: '',
-  });
+export const newMetaEdEnvironment: () => MetaEdEnvironment = () => ({
+  entity: newEntityRepository(),
+  propertyIndex: newPropertyIndex(),
+  plugin: new Map(),
+  metaEdVersion: '',
+  dataStandardVersion: '',
+});

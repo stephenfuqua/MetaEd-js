@@ -9,32 +9,32 @@ import type { ColumnNamer } from './ColumnNamer';
 winston.cli();
 
 export type Column = {
-  name: string;
-  type: ColumnType;
-  dataType: string;
-  referenceContext: string;
-  description: string;
-  sqlEscapedDescription: string;
-  originalContextPrefix: string;
-  isNullable: boolean;
-  isPartOfPrimaryKey: boolean;
-  isPartOfAlternateKey: boolean;
-  isUniqueIndex: boolean;
-  isIdentityDatabaseType: boolean;
-  sourceEntityProperties: Array<EntityProperty>;
-  mergedReferenceContexts: Array<string>;
-}
+  name: string,
+  type: ColumnType,
+  dataType: string,
+  referenceContext: string,
+  description: string,
+  sqlEscapedDescription: string,
+  originalContextPrefix: string,
+  isNullable: boolean,
+  isPartOfPrimaryKey: boolean,
+  isPartOfAlternateKey: boolean,
+  isUniqueIndex: boolean,
+  isIdentityDatabaseType: boolean,
+  sourceEntityProperties: Array<EntityProperty>,
+  mergedReferenceContexts: Array<string>,
+};
 
 export type DecimalColumn = {
-  ...$Exact<Column>;
-  precision: string;
-  scale: string;
-}
+  ...$Exact<Column>,
+  precision: string,
+  scale: string,
+};
 
 export type StringColumn = {
-  ...$Exact<Column>;
-  length: string;
-}
+  ...$Exact<Column>,
+  length: string,
+};
 
 export function newColumn(): Column {
   return {
@@ -113,11 +113,17 @@ export function columnConstraintMerge(existing: Column, received: Column): Colum
 }
 
 export function addSourceEntityProperty(column: Column, property: EntityProperty): void {
-  const existingProperty = column.sourceEntityProperties.find(x => x.metaEdName === property.metaEdName && x.type === property.type);
+  const existingProperty = column.sourceEntityProperties.find(
+    x => x.metaEdName === property.metaEdName && x.type === property.type,
+  );
   if (existingProperty == null) {
     column.sourceEntityProperties.push(property);
   } else {
-    winston.warn(`Attempt to add duplicate source entity property: ${property.metaEdName} (${property.typeHumanizedName})  to column ${column.name} failed.`);
+    winston.warn(
+      `Attempt to add duplicate source entity property: ${property.metaEdName} (${property.typeHumanizedName})  to column ${
+        column.name
+      } failed.`,
+    );
   }
 }
 

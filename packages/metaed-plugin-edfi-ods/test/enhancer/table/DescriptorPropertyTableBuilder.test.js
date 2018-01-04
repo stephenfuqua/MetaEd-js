@@ -81,7 +81,13 @@ describe('when building descriptor property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
-    tableBuilder.buildTables(entityDescriptorProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDescriptorProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -180,7 +186,13 @@ describe('when building collection descriptor property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDescriptorProperty);
-    tableBuilder.buildTables(entityDescriptorProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDescriptorProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return join table', () => {

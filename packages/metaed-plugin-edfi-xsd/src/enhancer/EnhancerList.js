@@ -31,7 +31,6 @@ import { enhance as mergedInterchangeElementOrderEnhancer } from '../enhancer/Me
 import { enhance as mergedInterchangeEnhancer } from '../enhancer/MergedInterchangeEnhancer';
 import { enhance as mergedInterchangeExtensionEnhancer } from '../enhancer/MergedInterchangeExtensionEnhancer';
 
-
 import { enhance as propertyEnhancer } from '../enhancer/PropertyEnhancer';
 import { enhance as subclassIdentityEnhancer } from '../enhancer/SubclassIdentityEnhancer';
 

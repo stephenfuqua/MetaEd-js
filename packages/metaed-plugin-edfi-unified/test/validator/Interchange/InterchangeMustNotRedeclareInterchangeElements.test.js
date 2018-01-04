@@ -57,8 +57,12 @@ describe('when validating interchange interchange element has duplicate names', 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeMustNotRedeclareInterchangeElements');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange interchange element has duplicate names should have no validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange interchange element has duplicate names should have no validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange interchange element has duplicate names should have no validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange interchange element has duplicate names should have no validation failures -> sourceMap',
+    );
   });
 });
 
@@ -92,11 +96,19 @@ describe('when validating interchange interchange element has multiple duplicate
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('InterchangeMustNotRedeclareInterchangeElements');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange interchange element has multiple duplicate names should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange interchange element has multiple duplicate names should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('InterchangeMustNotRedeclareInterchangeElements');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when validating interchange interchange element has multiple duplicate names should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating interchange interchange element has multiple duplicate names should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap',
+    );
   });
 });

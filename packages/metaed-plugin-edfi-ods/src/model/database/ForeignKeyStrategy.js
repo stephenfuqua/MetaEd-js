@@ -16,10 +16,18 @@ export class ForeignKeyStrategy {
     return ForeignKeyStrategyDefault;
   }
 
-  hasDeleteCascade() { return false; }
-  hasUpdateCascade() { return false; }
-  parentColumnName(column: Column) { return column.name; }
-  foreignColumnName(column: Column) { return column.name; }
+  hasDeleteCascade() {
+    return false;
+  }
+  hasUpdateCascade() {
+    return false;
+  }
+  parentColumnName(column: Column) {
+    return column.name;
+  }
+  foreignColumnName(column: Column) {
+    return column.name;
+  }
 }
 
 class AddDeleteCascade extends ForeignKeyStrategy {
@@ -28,10 +36,18 @@ class AddDeleteCascade extends ForeignKeyStrategy {
     this._decoratedStrategy = decoratedStrategy;
   }
 
-  hasDeleteCascade() { return true; }
-  hasUpdateCascade() { return this._decoratedStrategy.hasUpdateCascade(); }
-  parentColumnName(column: Column) { return this._decoratedStrategy.parentColumnName(column); }
-  foreignColumnName(column: Column) { return this._decoratedStrategy.foreignColumnName(column); }
+  hasDeleteCascade() {
+    return true;
+  }
+  hasUpdateCascade() {
+    return this._decoratedStrategy.hasUpdateCascade();
+  }
+  parentColumnName(column: Column) {
+    return this._decoratedStrategy.parentColumnName(column);
+  }
+  foreignColumnName(column: Column) {
+    return this._decoratedStrategy.foreignColumnName(column);
+  }
 }
 
 class AddUpdateCascade extends ForeignKeyStrategy {
@@ -40,10 +56,18 @@ class AddUpdateCascade extends ForeignKeyStrategy {
     this._decoratedStrategy = decoratedStrategy;
   }
 
-  hasDeleteCascade() { return this._decoratedStrategy.hasDeleteCascade(); }
-  hasUpdateCascade() { return true; }
-  parentColumnName(column: Column) { return this._decoratedStrategy.parentColumnName(column); }
-  foreignColumnName(column: Column) { return this._decoratedStrategy.foreignColumnName(column); }
+  hasDeleteCascade() {
+    return this._decoratedStrategy.hasDeleteCascade();
+  }
+  hasUpdateCascade() {
+    return true;
+  }
+  parentColumnName(column: Column) {
+    return this._decoratedStrategy.parentColumnName(column);
+  }
+  foreignColumnName(column: Column) {
+    return this._decoratedStrategy.foreignColumnName(column);
+  }
 }
 
 class RenameForeignColumn extends ForeignKeyStrategy {
@@ -55,14 +79,24 @@ class RenameForeignColumn extends ForeignKeyStrategy {
     this._foreignColumnName = foreignColumnName;
   }
 
-  hasDeleteCascade() { return this._decoratedStrategy.hasDeleteCascade(); }
-  hasUpdateCascade() { return this._decoratedStrategy.hasUpdateCascade(); }
-  parentColumnName(column: Column) { return this._decoratedStrategy.parentColumnName(column); }
+  hasDeleteCascade() {
+    return this._decoratedStrategy.hasDeleteCascade();
+  }
+  hasUpdateCascade() {
+    return this._decoratedStrategy.hasUpdateCascade();
+  }
+  parentColumnName(column: Column) {
+    return this._decoratedStrategy.parentColumnName(column);
+  }
   // eslint-disable-next-line no-unused-vars,
-  foreignColumnName(column: Column) { return this._foreignColumnName; }
+  foreignColumnName(column: Column) {
+    return this._foreignColumnName;
+  }
 }
 
 export const ForeignKeyStrategyDefault: ForeignKeyStrategy = new ForeignKeyStrategy();
 export const ForeignKeyStrategyDeleteCascade: ForeignKeyStrategy = new AddDeleteCascade(ForeignKeyStrategyDefault);
 export const ForeignKeyStrategyUpdateCascade: ForeignKeyStrategy = new AddUpdateCascade(ForeignKeyStrategyDefault);
-export const ForeignKeyStrategyUpdateDeleteCascade: ForeignKeyStrategy = new AddUpdateCascade(ForeignKeyStrategyDeleteCascade);
+export const ForeignKeyStrategyUpdateDeleteCascade: ForeignKeyStrategy = new AddUpdateCascade(
+  ForeignKeyStrategyDeleteCascade,
+);

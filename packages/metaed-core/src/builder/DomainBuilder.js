@@ -62,7 +62,13 @@ export class DomainBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception != null ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     if (this.currentDomainItem !== NoDomainItem) {
       this.currentDomainItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -96,7 +102,9 @@ export class DomainBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'DomainBuilder',
           category: 'error',
-          message: `${this.currentDomain.typeHumanizedName} named ${this.currentDomain.metaEdName} is a duplicate declaration of that name.`,
+          message: `${this.currentDomain.typeHumanizedName} named ${
+            this.currentDomain.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: this.currentDomain.sourceMap.type,
           fileMap: null,
         });
@@ -104,7 +112,9 @@ export class DomainBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'DomainBuilder',
           category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `${duplicateEntity.typeHumanizedName} named ${
+            duplicateEntity.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -150,7 +160,13 @@ export class DomainBuilder extends MetaEdGrammarListener {
 
   enterSubdomainPosition(context: MetaEdGrammar.SubdomainPositionContext) {
     if (this.currentDomain === NoDomain) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     ((this.currentDomain: any): Subdomain).position = Number(context.UNSIGNED_INT().getText());
     ((this.currentDomain.sourceMap: any): SubdomainSourceMap).position = sourceMapFrom(context);
   }

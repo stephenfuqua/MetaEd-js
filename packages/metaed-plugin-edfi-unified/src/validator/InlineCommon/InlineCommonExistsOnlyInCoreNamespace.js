@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     failures.push({
       validatorName: 'InlineCommonExistsOnlyInCoreNamespace',
       category: 'error',
-      message: `${common.typeHumanizedName} ${common.metaEdName} is not valid in extension namespace ${common.namespaceInfo.projectExtension} .`,
+      message: `${common.typeHumanizedName} ${common.metaEdName} is not valid in extension namespace ${
+        common.namespaceInfo.projectExtension
+      } .`,
       sourceMap: common.sourceMap.type,
       fileMap: null,
     });

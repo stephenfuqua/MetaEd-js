@@ -1,6 +1,13 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DescriptorBuilder, EnumerationBuilder, DomainEntityBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  DescriptorBuilder,
+  EnumerationBuilder,
+  DomainEntityBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for enumeration', () => {
@@ -16,17 +23,17 @@ describe('when generating xsd for enumeration', () => {
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartEnumeration(coreEntity)
-    .withDocumentation('doc')
-    .withEnumerationItem(enumerationItem)
-    .withEndEnumeration()
+      .withStartEnumeration(coreEntity)
+      .withDocumentation('doc')
+      .withEnumerationItem(enumerationItem)
+      .withEndEnumeration()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(enumerationBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(enumerationBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -37,7 +44,10 @@ describe('when generating xsd for enumeration', () => {
   });
 
   it('should generate enumeration item', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CoreEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='CoreEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -63,29 +73,29 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartEnumeration(coreEntity)
-    .withDocumentation('doc')
-    .withEnumerationItem(enumerationItem)
-    .withEndEnumeration()
+      .withStartEnumeration(coreEntity)
+      .withDocumentation('doc')
+      .withEnumerationItem(enumerationItem)
+      .withEndEnumeration()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionNamespace, extension)
+      .withBeginNamespace(extensionNamespace, extension)
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntityPk, 'doc')
-    .withEnumerationProperty(coreEntity, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntityPk, 'doc')
+      .withEnumerationProperty(coreEntity, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(enumerationBuilder)
-    .sendToListener(descriptorBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(enumerationBuilder)
+      .sendToListener(descriptorBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -101,7 +111,10 @@ describe('when generating xsd for domain entity in extension namespace with refe
   });
 
   it('should generate extension domain entity reference to core entity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity'][@type='CoreEntityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity'][@type='CoreEntityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -126,27 +139,27 @@ describe('when generating xsd for enumeration in extension namespace with refere
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionNamespace, extension)
+      .withBeginNamespace(extensionNamespace, extension)
 
-    .withStartEnumeration(extensionEntity)
-    .withDocumentation('doc')
-    .withEnumerationItem(enumerationItem)
-    .withEndEnumeration()
+      .withStartEnumeration(extensionEntity)
+      .withDocumentation('doc')
+      .withEnumerationItem(enumerationItem)
+      .withEndEnumeration()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(enumerationBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(enumerationBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -162,7 +175,10 @@ describe('when generating xsd for enumeration in extension namespace with refere
   });
 
   it('should generate enumeration item', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityType']/xs:restriction/xs:enumeration[@value='EnumerationItem']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

@@ -9,7 +9,6 @@ import { validate as subclassingPostSecondaryEventIsUnsupported } from './valida
 import { validate as subclassingStudentAcademicRecordIsUnsupported } from './validator/UnsupportedExtension/SubclassingStudentAcademicRecordIsUnsupported';
 import { validate as subclassingStudentIsUnsupported } from './validator/UnsupportedExtension/SubclassingStudentIsUnsupported';
 
-
 import { validate as extendingSubclassOfEducationOrganizationProhibited } from './validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 import { validate as extendingStudentProgramAssociationOrSubclassProhibited } from './validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 import { validate as includingRequiredPropertiesInExtendedAssociationsProhibited } from './validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';

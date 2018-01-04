@@ -1,37 +1,37 @@
 // @flow
 
 export type ModelType =
-  'unknown' |
-  'abstractEntity' |
-  'association' |
-  'associationExtension' |
-  'associationSubclass' |
-  'choice' |
-  'common' |
-  'commonExtension' |
-  'decimalType' |
-  'descriptor' |
-  'domain' |
-  'domainItem' |
-  'domainEntity' |
-  'domainEntityExtension' |
-  'domainEntitySubclass' |
-  'enumeration' |
-  'enumerationItem' |
-  'integerType' |
-  'interchange' |
-  'interchangeExtension' |
-  'interchangeItem' |
-  'inlineCommon' |
-  'mapTypeEnumeration' |
-  'namespaceInfo' |
-  'schoolYearEnumeration' |
-  'sharedDecimal' |
-  'sharedInteger' |
-  'sharedShort' |
-  'sharedString' |
-  'stringType' |
-  'subdomain';
+  | 'unknown'
+  | 'abstractEntity'
+  | 'association'
+  | 'associationExtension'
+  | 'associationSubclass'
+  | 'choice'
+  | 'common'
+  | 'commonExtension'
+  | 'decimalType'
+  | 'descriptor'
+  | 'domain'
+  | 'domainItem'
+  | 'domainEntity'
+  | 'domainEntityExtension'
+  | 'domainEntitySubclass'
+  | 'enumeration'
+  | 'enumerationItem'
+  | 'integerType'
+  | 'interchange'
+  | 'interchangeExtension'
+  | 'interchangeItem'
+  | 'inlineCommon'
+  | 'mapTypeEnumeration'
+  | 'namespaceInfo'
+  | 'schoolYearEnumeration'
+  | 'sharedDecimal'
+  | 'sharedInteger'
+  | 'sharedShort'
+  | 'sharedString'
+  | 'stringType'
+  | 'subdomain';
 
 export const allEntityModelTypes: Array<ModelType> = [
   'unknown',

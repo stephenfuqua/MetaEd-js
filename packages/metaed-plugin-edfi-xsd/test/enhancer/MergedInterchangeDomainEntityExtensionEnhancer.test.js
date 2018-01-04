@@ -1,5 +1,13 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newNamespaceInfo, newPluginEnvironment, newDomainEntity, newDomainEntityExtension, newInterchange } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newInterchangeItem,
+  newNamespaceInfo,
+  newPluginEnvironment,
+  newDomainEntity,
+  newDomainEntityExtension,
+  newInterchange,
+} from 'metaed-core';
 import type { MetaEdEnvironment, DomainEntity, Interchange } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeExtensionEnhancer';
@@ -40,8 +48,7 @@ describe('when enhances MergedInterchange with no extension', () => {
       metaEdName: domainEntity1Name,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
@@ -53,14 +60,12 @@ describe('when enhances MergedInterchange with no extension', () => {
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.interchange.set(interchange.metaEdName, interchange);
@@ -72,8 +77,7 @@ describe('when enhances MergedInterchange with no extension', () => {
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
@@ -132,8 +136,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
       documentation: domainEntity1Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
@@ -142,8 +145,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
       metaEdName: domainEntity1Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
@@ -160,8 +162,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
           metaEdName: domainEntity1Name,
           documentation: interchangeItemDomainEntity1Documentation,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
@@ -237,8 +238,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
       documentation: domainEntity1Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
@@ -248,8 +248,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
       documentation: domainEntity2Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
@@ -258,8 +257,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
       metaEdName: domainEntity1Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
@@ -276,8 +274,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
           documentation: interchangeItemDomainEntity1Documentation,
           referencedEntity: domainEntity1,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
@@ -297,8 +294,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
           documentation: interchangeItemDomainEntity1Documentation,
           referencedEntity: domainEntity1,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
         Object.assign(newInterchangeItem(), {
@@ -306,8 +302,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
           documentation: interchangeItemDomainEntity2Documentation,
           referencedEntity: domainEntity2,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
@@ -392,8 +387,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       documentation: domainEntity1Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
@@ -403,8 +397,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       documentation: domainEntity2Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
@@ -414,8 +407,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       documentation: domainEntity3Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity3.metaEdName, domainEntity3);
@@ -424,8 +416,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       metaEdName: domainEntity1Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntityExtension.set(domainEntityExtension1.metaEdName, domainEntityExtension1);
@@ -434,8 +425,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       metaEdName: domainEntity2Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntityExtension.set(domainEntityExtension2.metaEdName, domainEntityExtension2);
@@ -454,8 +444,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           referencedEntity: domainEntity1,
           namespaceInfo: extensionNamespaceInfo,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
         Object.assign(newInterchangeItem(), {
@@ -464,8 +453,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           referencedEntity: domainEntity2,
           namespaceInfo: extensionNamespaceInfo,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
         Object.assign(newInterchangeItem(), {
@@ -474,8 +462,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           referencedEntity: domainEntity3,
           namespaceInfo: coreNamespaceInfo,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],
@@ -566,8 +553,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
       documentation: domainEntity1Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
@@ -577,8 +563,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
       documentation: domainEntity2Documentation,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
@@ -587,8 +572,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
       metaEdName: domainEntity1Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntityExtension.set(domainEntityExtension1.metaEdName, domainEntityExtension1);
@@ -606,8 +590,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
           referencedEntity: domainEntity1,
           namespaceInfo: extensionNamespaceInfo,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
         Object.assign(newInterchangeItem(), {
@@ -616,8 +599,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
           referencedEntity: domainEntity2,
           namespaceInfo: extensionNamespaceInfo,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],

@@ -658,7 +658,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
   });
 });
 
-describe('when DomainEntityTableEnhancer enhances entity with collection property whose name starts with the referenced entity\'s name', () => {
+describe("when DomainEntityTableEnhancer enhances entity with collection property whose name starts with the referenced entity's name", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const referencedEntityName: string = 'EntityNameOfReference';
@@ -907,7 +907,9 @@ describe('when DomainEntityTableEnhancer enhances entity with optional collectio
   });
 
   it('should have join table with context', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + contextName + optionalCollectionPropertyName)).toBeDefined();
+    expect(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + contextName + optionalCollectionPropertyName),
+    ).toBeDefined();
   });
 });
 
@@ -1046,7 +1048,7 @@ describe('when DomainEntityTableEnhancer enhances entity with enumeration proper
   });
 });
 
-describe('when DomainEntityTableEnhancer enhances entity with enumeration property whose name starts with the parent entity\'s name', () => {
+describe("when DomainEntityTableEnhancer enhances entity with enumeration property whose name starts with the parent entity's name", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const enumerationName: string = 'EntityNameForEnumeration';
@@ -1247,7 +1249,7 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor propert
   });
 });
 
-describe('when DomainEntityTableEnhancer enhances entity with descriptor collection property whose name starts with the parent entity\'s name', () => {
+describe("when DomainEntityTableEnhancer enhances entity with descriptor collection property whose name starts with the parent entity's name", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const descriptorName: string = 'EntityNameForDescriptor';
@@ -1313,7 +1315,7 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor collect
   });
 });
 
-describe('when DomainEntityTableEnhancer enhances entity with common collection property whose name starts with the parent entity\'s name', () => {
+describe("when DomainEntityTableEnhancer enhances entity with common collection property whose name starts with the parent entity's name", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   const entityPkPropertyName: string = 'EntityPkPropertyName';

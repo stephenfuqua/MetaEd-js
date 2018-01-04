@@ -7,13 +7,7 @@ import {
   newSharedString,
   NoSharedSimple,
 } from 'metaed-core';
-import type {
-  MetaEdEnvironment,
-  SharedString,
-  SharedStringProperty,
-  StringProperty,
-  StringType,
-} from 'metaed-core';
+import type { MetaEdEnvironment, SharedString, SharedStringProperty, StringProperty, StringType } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
 
 describe('when enhancing string property', () => {

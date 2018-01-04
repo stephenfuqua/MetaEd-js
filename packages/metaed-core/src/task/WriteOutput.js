@@ -9,9 +9,12 @@ winston.cli();
 
 function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {
   result.generatedOutput.forEach(output => {
-    if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`)) ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
-    if (output.resultString) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
-    else if (output.resultStream) ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultStream);
+    if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`))
+      ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
+    if (output.resultString)
+      ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
+    else if (output.resultStream)
+      ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultStream);
     else winston.info(`No output stream or string for ${result.generatorName}`);
   });
 }
@@ -38,7 +41,7 @@ export function execute(state: State): void {
       if (result.then) {
         winston.info('Resolving Promise:');
         // $FlowIgnore - flow was expecting a GeneratorResults not a promise
-        result.then((resolvedResult) => {
+        result.then(resolvedResult => {
           writeOutputFiles(resolvedResult, outputDirectory);
         });
       } else writeOutputFiles(result, outputDirectory);

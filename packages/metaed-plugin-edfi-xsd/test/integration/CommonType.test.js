@@ -1,6 +1,13 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, CommonBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  CommonBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for common type', () => {
@@ -16,17 +23,17 @@ describe('when generating xsd for common type', () => {
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartCommon(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerProperty(coreProperty, 'doc', false, false)
-    .withEndCommon()
+      .withStartCommon(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerProperty(coreProperty, 'doc', false, false)
+      .withEndCommon()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(commonBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(commonBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -61,28 +68,28 @@ describe('when generating xsd for domain entity in extension namespace with refe
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartCommon(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerProperty(coreProperty, 'doc', true, false)
-    .withEndCommon()
+      .withStartCommon(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerProperty(coreProperty, 'doc', true, false)
+      .withEndCommon()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionName, extension)
+      .withBeginNamespace(extensionName, extension)
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntityPk, 'doc')
-    .withCommonProperty(coreEntity, 'doc', true, false)
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntityPk, 'doc')
+      .withCommonProperty(coreEntity, 'doc', true, false)
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(commonBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(commonBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -117,28 +124,28 @@ describe('when generating xsd for common type in extension namespace with refere
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartCommon(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withEndCommon()
+      .withStartCommon(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withEndCommon()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionName, extension)
+      .withBeginNamespace(extensionName, extension)
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withDomainEntityProperty(coreEntity, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withDomainEntityProperty(coreEntity, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder)
-    .sendToListener(commonBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder)
+      .sendToListener(commonBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });

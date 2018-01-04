@@ -63,7 +63,9 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(assessment);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(assessmentVersion);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);
@@ -106,13 +108,16 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   });
 
   it('should rename Version column to AssessmentVersion', () => {
-    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).columns;
+    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor)
+      .columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(assessmentVersion);
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(assessmentContentStandard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(assessmentVersion);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(assessmentVersion);
@@ -161,7 +166,9 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   });
 
   it('should have unmodified foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandard).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(assessment);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(version);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);
@@ -204,13 +211,16 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
   });
 
   it('should have AssessmentVersion column', () => {
-    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).columns;
+    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor)
+      .columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(assessmentVersion);
   });
 
   it('should have unmodified foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentContentStandardAuthor).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(assessmentContentStandard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(version);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(version);

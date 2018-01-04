@@ -84,8 +84,12 @@ describe('when validating domain entity has merge property and entity is wrong',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and entity is wrong -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity has merge property and entity is wrong -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity has merge property and entity is wrong -> sourceMap',
+    );
   });
 });
 
@@ -125,8 +129,12 @@ describe('when validating domain entity has merge property and property is wrong
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('TargetPropertyPathMustExist');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity has merge property and property is wrong -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity has merge property and property is wrong -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity has merge property and property is wrong -> sourceMap',
+    );
   });
 });
 

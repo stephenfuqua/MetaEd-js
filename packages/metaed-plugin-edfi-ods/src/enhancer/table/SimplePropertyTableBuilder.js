@@ -43,7 +43,11 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
         );
         addForeignKey(joinTable, foreignKey);
 
-        addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
+        addColumns(
+          joinTable,
+          parentPrimaryKeys,
+          ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
+        );
         addColumns(
           joinTable,
           columnCreator.createColumns(property, buildStrategy.columnNamerIgnoresWithContext()),

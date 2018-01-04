@@ -7,7 +7,7 @@ import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 type SvgElement = {
   name: string,
   children?: Array<SvgElement>,
-}
+};
 
 const generatorName: string = 'InterchangeBriefImageGenerator';
 
@@ -40,29 +40,31 @@ function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const generatedOutput: Array<GeneratedOutput> = [];
   const allInterchangeModels: Array<SvgElement> = getModel(metaEd);
-  await Promise.all(allInterchangeModels.map(async (interchange) => {
-    const horseman = new Horseman();
-    const phantomResults = await horseman
-      .viewport(1000, 1000)
-      .open(`file:///${path.join(__dirname, './svg/InterchangeBriefSvg.html')}`)
-      .injectJs(path.join(__dirname, './svg/treeLayout.js'))
-      /* eslint-disable */
+  await Promise.all(
+    allInterchangeModels.map(async interchange => {
+      const horseman = new Horseman();
+      const phantomResults = await horseman
+        .viewport(1000, 1000)
+        .open(`file:///${path.join(__dirname, './svg/InterchangeBriefSvg.html')}`)
+        .injectJs(path.join(__dirname, './svg/treeLayout.js'))
+        /* eslint-disable */
       // $FlowIgnore: draw() will be called within phantom, where it will be defined.
       .evaluate(function (model) { draw(model); }, interchange)
       /* eslint-enable */
-      .cropBase64('g', 'PNG')
-      .then(imageBase64 => {
-        generatedOutput.push({
-          name: `${interchange.name}-InterchangeBrief`,
-          fileName: `${interchange.name}-InterchangeBrief.png`,
-          folderName: 'InterchangeBrief/img',
-          resultString: '',
-          resultStream: new Buffer(imageBase64, 'base64'),
+        .cropBase64('g', 'PNG')
+        .then(imageBase64 => {
+          generatedOutput.push({
+            name: `${interchange.name}-InterchangeBrief`,
+            fileName: `${interchange.name}-InterchangeBrief.png`,
+            folderName: 'InterchangeBrief/img',
+            resultString: '',
+            resultStream: new Buffer(imageBase64, 'base64'),
+          });
+          horseman.close();
         });
-        horseman.close();
-      });
-    return phantomResults;
-  }));
+      return phantomResults;
+    }),
+  );
 
   return {
     generatorName,

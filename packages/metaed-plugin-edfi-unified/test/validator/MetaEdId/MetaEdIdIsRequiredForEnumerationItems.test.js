@@ -1,10 +1,5 @@
 // @flow
-import {
-  DescriptorBuilder,
-  EnumerationBuilder,
-  newMetaEdEnvironment,
-  MetaEdTextBuilder,
-} from 'metaed-core';
+import { DescriptorBuilder, EnumerationBuilder, newMetaEdEnvironment, MetaEdTextBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
 
@@ -33,8 +28,12 @@ describe('when validating enumeration item is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating enumeration item is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating enumeration item is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating enumeration item is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating enumeration item is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -97,7 +96,11 @@ describe('when validating school year enumeration item is missing metaEdId', () 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating school year enumeration item is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating school year enumeration item is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating school year enumeration item is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating school year enumeration item is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });

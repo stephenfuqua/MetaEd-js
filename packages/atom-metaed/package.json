@@ -117,14 +117,17 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "eslint": "^3.8.0",
+    "eslint": "3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-flowtype": "^2.33.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jasmine": "^2.2.0",
     "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "flow-bin": "^0.46.0",
     "mock-fs": "^4.3.0",
+    "prettier": "^1.9.2",
     "proxyquire": "^1.8.0",
     "standard-version": "^4.0.0"
   },

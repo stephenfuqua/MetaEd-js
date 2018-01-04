@@ -1,13 +1,7 @@
 // @flow
 import type { EntityRepository, ModelType, ValidationFailure } from 'metaed-core';
 
-const validTypes: ModelType[] = [
-  'association',
-  'associationSubclass',
-  'descriptor',
-  'domainEntity',
-  'domainEntitySubclass',
-];
+const validTypes: ModelType[] = ['association', 'associationSubclass', 'descriptor', 'domainEntity', 'domainEntitySubclass'];
 
 const validTypeNames: string = [
   'Abstract Entity',
@@ -23,7 +17,8 @@ export function failInterchangeItemNotMatchingBaseClassProperty(
   entity: EntityRepository,
   interchangeItemType: 'elements' | 'identityTemplates',
   messagePrefix: string,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   entity.interchange.forEach(interchange => {
     if (interchange.elements.length === 0) return;
     // $FlowIgnore - allowing interchangeItemType to specify either elements or identityTemplates property

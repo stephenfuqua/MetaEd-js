@@ -5,7 +5,7 @@ export type ReferenceUsageInfo = {
   rootEntityName: string,
   isOptional: boolean,
   description: string,
-}
+};
 
 export function newReferenceUsageInfo() {
   return {

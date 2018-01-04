@@ -1,6 +1,12 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DomainEntityBuilder, DomainEntitySubclassBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  DomainEntityBuilder,
+  DomainEntitySubclassBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for descriptor', () => {
@@ -22,26 +28,26 @@ describe('when generating xsd for descriptor', () => {
     const domainEntitySubclassBuilder = new DomainEntitySubclassBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionNamespace, extension)
+      .withBeginNamespace(extensionNamespace, extension)
 
-    .withStartDomainEntitySubclass(extensionEntity, coreEntity)
-    .withIntegerProperty(extensionEntityProperty, 'doc', true, false)
-    .withEndDomainEntitySubclass()
+      .withStartDomainEntitySubclass(extensionEntity, coreEntity)
+      .withIntegerProperty(extensionEntityProperty, 'doc', true, false)
+      .withEndDomainEntitySubclass()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntitySubclassBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntitySubclassBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -57,7 +63,10 @@ describe('when generating xsd for descriptor', () => {
   });
 
   it('should generate extension domain entity as extending core entity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension[@base='CoreEntity']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension[@base='CoreEntity']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

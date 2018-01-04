@@ -2,19 +2,19 @@
 import path from 'path';
 
 export type MetaEdFile = {
-  contents: string;
-  lineCount: number;
-  directoryName: string;
-  filename: string;
-  fullName: string;
-}
+  contents: string,
+  lineCount: number,
+  directoryName: string,
+  filename: string,
+  fullName: string,
+};
 
 export type FileSet = {
   namespace: string,
   projectExtension: string,
   isExtension: boolean,
   files: MetaEdFile[],
-}
+};
 
 export function createMetaEdFile(directoryName: string, filename: string, originalContents: string): MetaEdFile {
   let contents = originalContents;

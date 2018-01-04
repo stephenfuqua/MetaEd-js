@@ -5,8 +5,8 @@ import { newWorksheet } from './Worksheet';
 import { newRow } from './Row';
 
 export type Workbook = {
-  sheets: Array<Worksheet>;
-}
+  sheets: Array<Worksheet>,
+};
 
 export function newWorkbook(): Workbook {
   return {
@@ -16,7 +16,7 @@ export function newWorkbook(): Workbook {
 
 export function exportWorkbook(workbook: Workbook, type: string): any {
   const wb = { SheetNames: [], Sheets: {} };
-  workbook.sheets.forEach((sheet) => {
+  workbook.sheets.forEach(sheet => {
     wb.SheetNames.push(sheet.name);
     wb.Sheets[sheet.name] = xlsx.utils.json_to_sheet(sheet.rows);
     wb.Sheets[sheet.name]['!cols'] = sheet['!cols'];

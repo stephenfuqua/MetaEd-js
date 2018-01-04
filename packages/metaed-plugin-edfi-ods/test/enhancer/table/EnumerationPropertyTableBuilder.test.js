@@ -82,7 +82,13 @@ describe('when building enumeration property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityEnumerationProperty);
-    tableBuilder.buildTables(entityEnumerationProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityEnumerationProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -182,7 +188,13 @@ describe('when building collection enumeration property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityEnumerationProperty);
-    tableBuilder.buildTables(entityEnumerationProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityEnumerationProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return join table', () => {

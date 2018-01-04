@@ -5,12 +5,12 @@ import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-c
 import { prependWithContextToMetaEdName } from '../../shared/Utility';
 
 export type EntityPropertyEdfiOds = {
-  ods_Name: string;
-  ods_IsCollection: boolean;
-  ods_IsIdentityDatabaseType: boolean;
-  ods_IsUniqueIndex: boolean;
-  ods_ContextPrefix: string;
-}
+  ods_Name: string,
+  ods_IsCollection: boolean,
+  ods_IsIdentityDatabaseType: boolean,
+  ods_IsUniqueIndex: boolean,
+  ods_ContextPrefix: string,
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'EntityPropertySetupEnhancer';
@@ -40,8 +40,10 @@ export function addEntityPropertyEdfiOdsTo(property: EntityProperty) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  [...getAllProperties(metaEd.propertyIndex), ...R.chain(x => x.queryableFields, getAllTopLevelEntities(metaEd.entity))]
-  .forEach((property: EntityProperty) => {
+  [
+    ...getAllProperties(metaEd.propertyIndex),
+    ...R.chain(x => x.queryableFields, getAllTopLevelEntities(metaEd.entity)),
+  ].forEach((property: EntityProperty) => {
     addEntityPropertyEdfiOdsTo(property);
   });
 

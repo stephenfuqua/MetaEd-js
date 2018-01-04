@@ -1,19 +1,7 @@
 // @flow
 import R from 'ramda';
-import {
-  asReferentialProperty,
-  asTopLevelEntity,
-  getAllTopLevelEntities,
-  getEntitiesOfType,
-} from 'metaed-core';
-import type
- {
-  EnhancerResult,
-  EntityProperty,
-  MetaEdEnvironment,
-  TopLevelEntity,
-  ModelBase,
-} from 'metaed-core';
+import { asReferentialProperty, asTopLevelEntity, getAllTopLevelEntities, getEntitiesOfType } from 'metaed-core';
+import type { EnhancerResult, EntityProperty, MetaEdEnvironment, TopLevelEntity, ModelBase } from 'metaed-core';
 import { isOdsReferenceProperty } from '../model/property/ReferenceProperty';
 
 const enhancerName: string = 'UpdateCascadeTopLevelEntityEnhancer';
@@ -21,11 +9,11 @@ const enhancerName: string = 'UpdateCascadeTopLevelEntityEnhancer';
 export type Edge<T> = {
   source: T,
   target: T,
-}
+};
 export type BidirectionalGraph<T> = {
   vertices: Array<T>,
-  edges: Array<Edge<T>>
-}
+  edges: Array<Edge<T>>,
+};
 export function inEdges<T>(graph: BidirectionalGraph<T>, vertex: T): Array<Edge<T>> {
   return graph.edges.filter((edge: Edge<T>) => edge.target === vertex);
 }
@@ -45,7 +33,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   );
 
   const referenceEntityProperties: Array<EntityProperty> = R.chain(
-    (entity: TopLevelEntity) => entity.data.edfiOds.ods_Properties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
+    (entity: TopLevelEntity) =>
+      entity.data.edfiOds.ods_Properties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
     getAllTopLevelEntities(metaEd.entity),
   );
 
@@ -89,8 +78,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
       edgesToPrune.forEach((edge: Edge<TopLevelEntity>) => {
         multipleCascadeTopLevelEntity.data.edfiOds.ods_IdentityProperties.forEach((property: EntityProperty) => {
-          if (!isOdsReferenceProperty(property)
-            || asReferentialProperty(property).referencedEntity !== edge.source) return;
+          if (!isOdsReferenceProperty(property) || asReferentialProperty(property).referencedEntity !== edge.source) return;
 
           property.data.edfiOds.ods_CausesCyclicUpdateCascade = true;
           cascadeGraph.edges = R.reject(x => x.edge === edge)(cascadeGraph).edges;

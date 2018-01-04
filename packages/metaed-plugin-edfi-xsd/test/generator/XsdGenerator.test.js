@@ -2,7 +2,13 @@
 import xmlParser from 'xml-js';
 import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
-import { createElementComplexTypeItem, createComplexType, createStringSimpleType, createSchemaSection, createSchema } from './GeneratorTestBase';
+import {
+  createElementComplexTypeItem,
+  createComplexType,
+  createStringSimpleType,
+  createSchemaSection,
+  createSchema,
+} from './GeneratorTestBase';
 import { generate } from '../../src/generator/XsdGenerator';
 
 describe('when generating schema', () => {

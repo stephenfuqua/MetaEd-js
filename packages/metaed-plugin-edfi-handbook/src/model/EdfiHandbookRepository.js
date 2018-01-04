@@ -15,9 +15,12 @@ export function newEdfiHandbookRepository(): EdfiHandbookRepository {
 }
 
 export function addEdfiHandbookRepositoryTo(metaEd: MetaEdEnvironment) {
-  metaEd.plugin.set('edfiHandbook', Object.assign(newPluginEnvironment(), {
-    entity: newEdfiHandbookRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiHandbook',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdfiHandbookRepository(),
+    }),
+  );
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

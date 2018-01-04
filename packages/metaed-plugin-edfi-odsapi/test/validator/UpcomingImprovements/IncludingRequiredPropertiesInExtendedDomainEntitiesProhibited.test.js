@@ -61,7 +61,11 @@ describe('when a domain entity extension extends a domain entity with a required
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IncludingRequiredPropertiesInExtendedDomainEntitiesProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when a domain entity extension extends a domain entity with a required property should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when a domain entity extension extends a domain entity with a required property should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when a domain entity extension extends a domain entity with a required property should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when a domain entity extension extends a domain entity with a required property should have validation failure -> sourceMap',
+    );
   });
 });

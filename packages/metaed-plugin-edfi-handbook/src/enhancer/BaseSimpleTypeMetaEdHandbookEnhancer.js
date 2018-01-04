@@ -17,14 +17,19 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const getSimpleTypeTemplate: () => (any) => string = ramda.once(() => handlbars.compile(getTemplateString('simpleType')));
+const getSimpleTypeTemplate: () => any => string = ramda.once(() => handlbars.compile(getTemplateString('simpleType')));
 
 function generatedXsdFor(entity: SimpleType): string {
-  const template: (any) => string = getSimpleTypeTemplate();
+  const template: any => string = getSimpleTypeTemplate();
   return template(entity);
 }
 
-export function createDefaultHandbookEntry(property: SimpleType, edfiId: string, name: string, documentation: string): HandbookEntry {
+export function createDefaultHandbookEntry(
+  property: SimpleType,
+  edfiId: string,
+  name: string,
+  documentation: string,
+): HandbookEntry {
   return Object.assign(newHandbookEntry(), {
     definition: documentation,
     edFiId: edfiId,

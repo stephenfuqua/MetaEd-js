@@ -2,10 +2,12 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "prettier"
   ],
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "prettier"
   ],
   "rules": {
     "arrow-parens": "off",
@@ -16,6 +18,8 @@
     "import/prefer-default-export": "off",
     "no-param-reassign": [2, {
       "props": false
-    }]
+    }],
+    "flowtype/space-after-type-colon": "off",
+    "prettier/prettier": "warn"
   }
 }

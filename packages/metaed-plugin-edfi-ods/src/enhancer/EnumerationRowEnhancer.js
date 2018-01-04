@@ -20,7 +20,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     rows.forEach((row: EnumerationRow) => pluginEnvironment(metaEd).entity.row.set(row.name + row.description, row));
   });
 
-
   return {
     enhancerName,
     success: true,

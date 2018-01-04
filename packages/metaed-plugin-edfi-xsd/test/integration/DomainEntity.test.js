@@ -1,6 +1,14 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, SharedStringBuilder, StringTypeBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  SharedStringBuilder,
+  StringTypeBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for domain entity', () => {
@@ -16,17 +24,17 @@ describe('when generating xsd for domain entity', () => {
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(sample)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(sample)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -64,23 +72,23 @@ describe('when generating xsd for domain entity with inline common type as part 
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(sample)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withInlineCommonProperty(foo, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(sample)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withInlineCommonProperty(foo, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withStartInlineCommon(foo)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property2, 'doc')
-    .withEndInlineCommon()
+      .withStartInlineCommon(foo)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property2, 'doc')
+      .withEndInlineCommon()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -98,7 +106,10 @@ describe('when generating xsd for domain entity with inline common type as part 
     expect(elements).toHaveLength(1);
   });
   it('should include inline common type in identity type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleIdentityType']/xs:sequence/xs:element[@name='Property2']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='SampleIdentityType']/xs:sequence/xs:element[@name='Property2']",
+      coreResult,
+    );
     expect(elements).toHaveLength(0);
   });
 });
@@ -123,27 +134,27 @@ describe('when generating xsd for domain entity in extension namespace with refe
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
-    .withBeginNamespace(extensionNamespace, extension)
+      .withEndNamespace()
+      .withBeginNamespace(extensionNamespace, extension)
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntityPk, 'doc')
-    .withDomainEntityProperty(coreEntity, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntityPk, 'doc')
+      .withDomainEntityProperty(coreEntity, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -161,7 +172,10 @@ describe('when generating xsd for domain entity in extension namespace with refe
     expect(elements).toHaveLength(1);
   });
   it('should include core domain entity primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityPk']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityPk']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate extension domain entity', () => {
@@ -169,19 +183,31 @@ describe('when generating xsd for domain entity in extension namespace with refe
     expect(elements).toHaveLength(1);
   });
   it('should generate extension domain entity reference', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate extension domain entity identity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityIdentityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntityIdentityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate extention domain entity primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityPk']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityPk']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate extenion domain entity reference to core entity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityReference'][@type='CoreEntityReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntityReference'][@type='CoreEntityReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -200,23 +226,23 @@ describe('when generating xsd for domain entity with queryable only field', () =
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(assessment)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withQueryableOnlyDomainEntityProperty(foo, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(assessment)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withQueryableOnlyDomainEntityProperty(foo, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(foo)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property2, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(foo)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property2, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -234,11 +260,17 @@ describe('when generating xsd for domain entity with queryable only field', () =
     expect(elements).toHaveLength(1);
   });
   it('should generate domain entity lookup in reference type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate domain entity reference in lookup type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='FooReference']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='FooReference']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -256,19 +288,19 @@ describe('when generating xsd for domain entity with queryable field', () => {
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(assessment)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withIntegerProperty(foo, 'doc', true, false)
-    .withQueryableFieldPropertyIndicator()
-    .withEndDomainEntity()
+      .withStartDomainEntity(assessment)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withIntegerProperty(foo, 'doc', true, false)
+      .withQueryableFieldPropertyIndicator()
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -286,11 +318,17 @@ describe('when generating xsd for domain entity with queryable field', () => {
     expect(elements).toHaveLength(1);
   });
   it('should generate domain entity lookup in reference type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='AssessmentReferenceType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='AssessmentLookup']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate field reference in lookup type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='Foo']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='AssessmentLookupType']/xs:sequence/xs:element[@name='Foo']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -311,26 +349,26 @@ describe('when generating xsd for domain entity with queryable field', () => {
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedString(commonStringReference)
-    .withDocumentation('doc')
-    .withMinLength('10')
-    .withMaxLength('100')
-    .withEndSharedString()
+      .withStartSharedString(commonStringReference)
+      .withDocumentation('doc')
+      .withMinLength('10')
+      .withMaxLength('100')
+      .withEndSharedString()
 
-    .withStartDomainEntity(sample)
-    .withDocumentation('doc')
-    .withIntegerIdentity(pkProperty, 'doc')
-    .withSharedStringProperty(commonStringReference, sharedProperty, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(sample)
+      .withDocumentation('doc')
+      .withIntegerIdentity(pkProperty, 'doc')
+      .withSharedStringProperty(commonStringReference, sharedProperty, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(sharedStringBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(sharedStringBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -340,11 +378,17 @@ describe('when generating xsd for domain entity with queryable field', () => {
     expect(elements).toHaveLength(1);
   });
   it('should generate shared property', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='Sample']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedProperty' and @type='CommonStringReference']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='Sample']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedProperty' and @type='CommonStringReference']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
   it('should generate correct simple type for common string', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='CommonStringReference']/xs:annotation/xs:appinfo/ann:TypeGroup", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='CommonStringReference']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

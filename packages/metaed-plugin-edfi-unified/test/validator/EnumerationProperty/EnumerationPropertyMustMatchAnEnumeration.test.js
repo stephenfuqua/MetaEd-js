@@ -68,7 +68,11 @@ describe('when enumeration property has invalid identifier', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('EnumerationPropertyMustMatchAEnumeration');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when enumeration property has invalid identifier should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when enumeration property has invalid identifier should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when enumeration property has invalid identifier should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when enumeration property has invalid identifier should have validation failure -> sourceMap',
+    );
   });
 });

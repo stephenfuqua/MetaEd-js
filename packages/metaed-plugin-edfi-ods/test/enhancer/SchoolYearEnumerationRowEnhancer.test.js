@@ -6,11 +6,7 @@ import {
   newMetaEdEnvironment,
   newNamespaceInfo,
 } from 'metaed-core';
-import type {
-  EnumerationItem,
-  MetaEdEnvironment,
-  SchoolYearEnumeration,
-} from 'metaed-core';
+import type { EnumerationItem, MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import type { SchoolYearEnumerationRow } from '../../src/model/database/SchoolYearEnumerationRow';

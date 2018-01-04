@@ -84,10 +84,16 @@ describe('when validating common property has extension override on non domain e
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on non domain entity or association extensions should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on non domain entity or association extensions should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on non domain entity or association extensions should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on non domain entity or association extensions should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -138,10 +144,16 @@ describe('when validating common property has extension override on domain entit
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -194,10 +206,16 @@ describe('when validating common property has extension override on association 
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on association extension without include on extendee should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on association extension without include on extendee should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on association extension without include on extendee should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on association extension without include on extendee should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -355,10 +373,16 @@ describe('when validating common property has extension override on domain entit
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -412,10 +436,16 @@ describe('when validating common property has extension override on association 
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -467,10 +497,16 @@ describe('when validating common property has extension override on domain entit
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -524,9 +560,15 @@ describe('when validating common property has extension override on association 
   });
 
   it('should have validation failure', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality');
+    expect(failures[0].validatorName).toBe(
+      'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+    );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> sourceMap',
+    );
   });
 });

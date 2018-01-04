@@ -80,7 +80,11 @@ describe('when validating integer property with minimum value greater than maxim
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IntegerPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating integer property with minimum value greater than maximum value -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating integer property with minimum value greater than maximum value -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating integer property with minimum value greater than maximum value -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating integer property with minimum value greater than maximum value -> sourceMap',
+    );
   });
 });

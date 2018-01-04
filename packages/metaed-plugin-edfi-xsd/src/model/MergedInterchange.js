@@ -19,7 +19,7 @@ type MergedInterchangeBase = {
   useCaseDocumentation: string,
   baseEntityName: string,
   baseEntity: ?Interchange,
-}
+};
 
 export type MergedInterchange = {
   ...$Exact<MergedInterchangeBase>,
@@ -28,16 +28,16 @@ export type MergedInterchange = {
   schemaLocation: string,
   orderedElements: Array<InterchangeItem>,
   humanizedUppercasedMetaEdName: () => string,
-}
+};
 
-export const combinedElementsAndIdentityTemplatesFor =
-(mergedInterchange: MergedInterchange) => unionOfInterchangeItems(mergedInterchange.elements, mergedInterchange.identityTemplates);
+export const combinedElementsAndIdentityTemplatesFor = (mergedInterchange: MergedInterchange) =>
+  unionOfInterchangeItems(mergedInterchange.elements, mergedInterchange.identityTemplates);
 
 export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, mergedInterchange: MergedInterchange) => {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  mergedInterchange.repositoryId = mergedInterchange.namespaceInfo.isExtension ?
-    `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}` :
-    mergedInterchange.metaEdName;
+  mergedInterchange.repositoryId = mergedInterchange.namespaceInfo.isExtension
+    ? `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}`
+    : mergedInterchange.metaEdName;
 
   edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 };
@@ -58,7 +58,9 @@ export function newMergedInterchange(): MergedInterchange {
     useCaseDocumentation: '',
     baseEntityName: '',
     baseEntity: null,
-    humanizedUppercasedMetaEdName() { return this.metaEdName ? sugar.titleize(this.metaEdName) : ''; },
+    humanizedUppercasedMetaEdName() {
+      return this.metaEdName ? sugar.titleize(this.metaEdName) : '';
+    },
     repositoryId: '',
     interchangeName: '',
     schemaLocation: '',

@@ -22,12 +22,9 @@ describe('when enhancing domainEntity with string properties', () => {
           isPartOfIdentity: false,
         }),
       ],
-      identityProperties: [
-        identityProperty,
-      ],
+      identityProperties: [identityProperty],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);

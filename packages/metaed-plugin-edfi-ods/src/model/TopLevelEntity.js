@@ -5,12 +5,12 @@ import { NoTable } from './database/Table';
 import type { Table } from './database/Table';
 
 export type TopLevelEntityEdfiOds = {
-  ods_TableName: string;
-  ods_CascadePrimaryKeyUpdates: boolean;
-  ods_Properties: Array<EntityProperty>;
-  ods_IdentityProperties: Array<EntityProperty>;
-  ods_EntityTable: Table;
-  ods_Tables: Array<Table>;
+  ods_TableName: string,
+  ods_CascadePrimaryKeyUpdates: boolean,
+  ods_Properties: Array<EntityProperty>,
+  ods_IdentityProperties: Array<EntityProperty>,
+  ods_EntityTable: Table,
+  ods_Tables: Array<Table>,
 };
 
 const enhancerName: string = 'OdsTopLevelEntitySetupEnhancer';
@@ -29,15 +29,11 @@ export function addTopLevelEntityEdfiOdsTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(
-    metaEd.entity,
-    'enumeration',
-    'schoolYearEnumeration',
-    ...allTopLevelEntityModelTypes,
-  ).forEach(entity => {
-    addTopLevelEntityEdfiOdsTo(asTopLevelEntity(entity));
-  });
-
+  getEntitiesOfType(metaEd.entity, 'enumeration', 'schoolYearEnumeration', ...allTopLevelEntityModelTypes).forEach(
+    entity => {
+      addTopLevelEntityEdfiOdsTo(asTopLevelEntity(entity));
+    },
+  );
 
   return {
     enhancerName,

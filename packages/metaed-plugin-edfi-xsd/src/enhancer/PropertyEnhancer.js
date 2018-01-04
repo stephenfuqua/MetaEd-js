@@ -35,10 +35,15 @@ const queryableFieldsFrom = (topLevelEntities: Array<TopLevelEntity>): Array<Ent
   return result;
 };
 
-const adjustEnumerationSuffix = (metaEdName: string): string => (metaEdName.endsWith('Type') ? metaEdName : `${metaEdName}Type`);
+const adjustEnumerationSuffix = (metaEdName: string): string =>
+  metaEdName.endsWith('Type') ? metaEdName : `${metaEdName}Type`;
 
 function noParentOrReferencedEntityProjectExtension(property: ReferentialProperty | SimpleProperty): boolean {
-  return !property.parentEntityName || property.referencedEntity === NoTopLevelEntity || property.referencedEntity.namespaceInfo.projectExtension == null;
+  return (
+    !property.parentEntityName ||
+    property.referencedEntity === NoTopLevelEntity ||
+    property.referencedEntity.namespaceInfo.projectExtension == null
+  );
 }
 
 function prependedWithProjectExtension(projectExtension: string, typeName: string) {
@@ -54,7 +59,10 @@ function prependReferencedProjectExtension(property: ReferentialProperty, typeNa
 
 function prependReferencedProjectExtensionForCommonProperty(property: CommonProperty, typeName: string) {
   if (property.isExtensionOverride) {
-    return prependedWithProjectExtension(property.namespaceInfo.projectExtension, `${typeName}${property.namespaceInfo.extensionEntitySuffix}`);
+    return prependedWithProjectExtension(
+      property.namespaceInfo.projectExtension,
+      `${typeName}${property.namespaceInfo.extensionEntitySuffix}`,
+    );
   }
 
   return prependReferencedProjectExtension(property, typeName);
@@ -81,17 +89,37 @@ function xsdTypeFor(property: EntityProperty): string {
     time: () => 'xs:time',
     year: () => 'xs:gYear',
     decimal: () => reconcileSimpleTypeExtension(((property: any): DecimalProperty), property.metaEdName),
-    integer: () => (property.hasRestriction ? reconcileSimpleTypeExtension(((property: any): IntegerProperty), property.metaEdName) : 'xs:int'),
-    short: () => (property.hasRestriction ? reconcileSimpleTypeExtension(((property: any): ShortProperty), property.metaEdName) : 'xs:short'),
+    integer: () =>
+      property.hasRestriction
+        ? reconcileSimpleTypeExtension(((property: any): IntegerProperty), property.metaEdName)
+        : 'xs:int',
+    short: () =>
+      property.hasRestriction
+        ? reconcileSimpleTypeExtension(((property: any): ShortProperty), property.metaEdName)
+        : 'xs:short',
     string: () => reconcileSimpleTypeExtension(((property: any): StringProperty), property.metaEdName),
     choice: () => 'ChoiceEntityPropertyHasNoType',
     inlineCommon: () => prependReferencedProjectExtension(((property: any): InlineCommonProperty), property.metaEdName),
     common: () => prependReferencedProjectExtensionForCommonProperty(((property: any): CommonProperty), property.metaEdName),
-    enumeration: () => prependReferencedProjectExtension(((property: any): EnumerationProperty), adjustEnumerationSuffix(property.metaEdName)),
-    schoolYearEnumeration: () => prependReferencedProjectExtension(((property: any): SchoolYearEnumerationProperty), adjustEnumerationSuffix(property.metaEdName)),
-    descriptor: () => prependReferencedProjectExtension(((property: any): DescriptorProperty), `${property.metaEdName}DescriptorReferenceType`),
-    association: () => prependReferencedProjectExtension(((property: any): AssociationProperty), `${property.metaEdName}ReferenceType`),
-    domainEntity: () => prependReferencedProjectExtension(((property: any): DomainEntityProperty), `${property.metaEdName}ReferenceType`),
+    enumeration: () =>
+      prependReferencedProjectExtension(
+        ((property: any): EnumerationProperty),
+        adjustEnumerationSuffix(property.metaEdName),
+      ),
+    schoolYearEnumeration: () =>
+      prependReferencedProjectExtension(
+        ((property: any): SchoolYearEnumerationProperty),
+        adjustEnumerationSuffix(property.metaEdName),
+      ),
+    descriptor: () =>
+      prependReferencedProjectExtension(
+        ((property: any): DescriptorProperty),
+        `${property.metaEdName}DescriptorReferenceType`,
+      ),
+    association: () =>
+      prependReferencedProjectExtension(((property: any): AssociationProperty), `${property.metaEdName}ReferenceType`),
+    domainEntity: () =>
+      prependReferencedProjectExtension(((property: any): DomainEntityProperty), `${property.metaEdName}ReferenceType`),
   };
 
   return typeStringFor[property.type]();
@@ -99,7 +127,8 @@ function xsdTypeFor(property: EntityProperty): string {
 
 // Note: XSD ignores 'with context' entry if same name as entity (typically used for ODS naming)
 function xsdNameFor(property: EntityProperty): string {
-  const baseName = (property.withContext === property.metaEdName) ? property.metaEdName : `${property.withContext}${property.metaEdName}`;
+  const baseName =
+    property.withContext === property.metaEdName ? property.metaEdName : `${property.withContext}${property.metaEdName}`;
   return ['choice', 'association', 'domainEntity'].includes(property.type) ? `${baseName}Reference` : baseName;
 }
 

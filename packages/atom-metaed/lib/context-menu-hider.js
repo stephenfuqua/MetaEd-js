@@ -66,9 +66,9 @@ export default class CommandGroups {
 
     this.reset();
 
-    this.itemsByOriginMenu.forEach((itemsForOriginMenu) => {
+    this.itemsByOriginMenu.forEach(itemsForOriginMenu => {
       const itemsForOriginMenuSorted = R.reverse(sortByPosition(itemsForOriginMenu));
-      itemsForOriginMenuSorted.forEach((item) => {
+      itemsForOriginMenuSorted.forEach(item => {
         item.originMenu.items.splice(item.position, 1);
         // eslint-disable-next-line no-param-reassign
         item.currentParent = null;
@@ -83,9 +83,9 @@ export default class CommandGroups {
   reset() {
     if (!this.items) return;
 
-    this.itemsByOriginMenu.forEach((itemsForOriginMenu) => {
+    this.itemsByOriginMenu.forEach(itemsForOriginMenu => {
       const itemsForOriginMenuSorted = sortByPosition(itemsForOriginMenu);
-      itemsForOriginMenuSorted.forEach((item) => {
+      itemsForOriginMenuSorted.forEach(item => {
         const origin = item.originMenu;
         if (item.currentParent !== origin) {
           // eslint-disable-next-line no-param-reassign

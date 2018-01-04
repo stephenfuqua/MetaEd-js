@@ -4,8 +4,8 @@ import { normalizeDescriptorSuffix, prependWithContextToMetaEdName } from '../..
 import type { EntityPropertyEdfiOds } from './EntityProperty';
 
 export type DescriptorPropertyEdfiOds = EntityPropertyEdfiOds & {
-  ods_DescriptorfiedBaseName: string;
-}
+  ods_DescriptorfiedBaseName: string,
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'DescriptorPropertySetupEnhancer';

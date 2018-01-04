@@ -5,7 +5,18 @@ import ffs from 'final-fs';
 import { exec } from 'child_process';
 import diff2html from 'diff2html';
 import type { GeneratedOutput, State } from 'metaed-core';
-import { newState, loadPlugins, loadFiles, loadFileIndex, buildParseTree, buildMetaEd, walkBuilders, runEnhancers, runGenerators, fileMapForFailure } from 'metaed-core';
+import {
+  newState,
+  loadPlugins,
+  loadFiles,
+  loadFileIndex,
+  buildParseTree,
+  buildMetaEd,
+  walkBuilders,
+  runEnhancers,
+  runGenerators,
+  fileMapForFailure,
+} from 'metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(30000);
@@ -59,16 +70,21 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
       namespace.data.edfiXsd.xsd_Schema.sections.forEach(section => {
         complexTypeNames.push(section.sectionAnnotation.documentation, ...section.complexTypes.map(y => y.name));
         simpleTypeNames.push(section.sectionAnnotation.documentation, ...section.simpleTypes.map(y => y.name));
-      }));
+      }),
+    );
 
-    coreResult = R.head(R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.XsdGenerator')).generatedOutput);
+    coreResult = R.head(
+      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.XsdGenerator')).generatedOutput,
+    );
     coreFileBaseName = path.basename(coreResult.fileName, '.xsd');
     generatedCoreXsd = `${outputDirectory}/${coreFileBaseName}.xsd`;
     authoritativeCoreXsd = `${artifactPath}/${coreFileBaseName}-Authoritative.xsd`;
 
     await ffs.writeFile(generatedCoreXsd, coreResult.resultString, 'utf-8');
 
-    schemaResult = R.head(R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.SchemaAnnotationGenerator')).generatedOutput);
+    schemaResult = R.head(
+      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiXsd.SchemaAnnotationGenerator')).generatedOutput,
+    );
     schemaFileBaseName = path.basename(schemaResult.fileName, '.xsd');
     generatedSchemaXsd = `${outputDirectory}/${schemaFileBaseName}.xsd`;
     authoritativeSchemaXsd = `${artifactPath}/${schemaFileBaseName}-Authoritative.xsd`;
@@ -97,10 +113,12 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     await new Promise(resolve => exec(gitDiffToFile, () => resolve()))
       .then(() => ffs.readFile(diffFile))
       .then(result => diff2html.Diff2Html.getPrettyHtml(result.toString()))
-      .then(result => ffs.readFile(cssFile).then(css => {
-        const html: string = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
-        return ffs.writeFile(htmlFile, html, 'utf-8');
-      }));
+      .then(result =>
+        ffs.readFile(cssFile).then(css => {
+          const html: string = `<html>\n<style>\n${css}\n</style>\n${result}\n</html>`;
+          return ffs.writeFile(htmlFile, html, 'utf-8');
+        }),
+      );
   });
 
   it('should have complex types in the correct order', () => {

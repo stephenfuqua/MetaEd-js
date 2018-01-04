@@ -85,7 +85,6 @@ describe('when enhancing entity with non unique id property', () => {
 
   beforeAll(() => {
     integerProperty = Object.assign(newIntegerProperty(), {
-
       metaEdName: 'UniqueID',
       withContext: 'WithContextName',
       shortenTo: 'ShortenToName',
@@ -134,7 +133,6 @@ describe('when enhancing entity with unique id property in extension namespace',
 
   beforeAll(() => {
     integerProperty = Object.assign(newIntegerProperty(), {
-
       metaEdName: 'UniqueID',
       withContext: 'WithContextName',
       shortenTo: 'ShortenToName',

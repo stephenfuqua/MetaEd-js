@@ -1,12 +1,6 @@
 // @flow
 import R from 'ramda';
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  PropertyType,
-  EntityProperty,
-  TopLevelEntity,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, PropertyType, EntityProperty, TopLevelEntity } from 'metaed-core';
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 
 const enhancerName: string = 'MergedPropertyEnhancer';
@@ -23,7 +17,7 @@ const referenceTypes: Array<PropertyType> = [
 ];
 
 function findProperty(entity: TopLevelEntity, paths: Array<string>): ?EntityProperty {
-  const propertyName:string = paths.pop();
+  const propertyName: string = paths.pop();
   const property: ?EntityProperty = entity.properties.find(x => x.propertyPathName === propertyName);
   if (!property || R.isEmpty(paths)) return property;
   return findProperty(asReferentialProperty(property).referencedEntity, paths);
@@ -45,4 +39,3 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     success: true,
   };
 }
-

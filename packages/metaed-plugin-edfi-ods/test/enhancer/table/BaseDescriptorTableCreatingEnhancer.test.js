@@ -45,4 +45,3 @@ describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
     ]);
   });
 });
-

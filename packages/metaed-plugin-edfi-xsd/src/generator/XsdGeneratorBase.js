@@ -18,26 +18,22 @@ export function templateNamed(templateName: string) {
   return xsdHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(
-  () =>
-    ({
-      interchange: templateNamed('interchange'),
-      schema: templateNamed('schema'),
-      schemaAnnotation: templateNamed('schemaAnnotation'),
-      xsdWithHeader: templateNamed('xsdWithHeader'),
-    }),
-  );
+export const template = R.memoize(() => ({
+  interchange: templateNamed('interchange'),
+  schema: templateNamed('schema'),
+  schemaAnnotation: templateNamed('schemaAnnotation'),
+  xsdWithHeader: templateNamed('xsdWithHeader'),
+}));
 
-export const registerPartials = R.once(
-  () => {
-    xsdHandlebars.registerPartial({
-      annotation: templateString('annotation'),
-      attribute: templateString('attribute'),
-      complexType: templateString('complexType'),
-      complexTypeItem: templateString('complexTypeItem'),
-      simpleType: templateString('simpleType'),
-    });
+export const registerPartials = R.once(() => {
+  xsdHandlebars.registerPartial({
+    annotation: templateString('annotation'),
+    attribute: templateString('attribute'),
+    complexType: templateString('complexType'),
+    complexTypeItem: templateString('complexTypeItem'),
+    simpleType: templateString('simpleType'),
   });
+});
 
 const EOL = '\n';
 const beautify = R.flip(Beautify)({

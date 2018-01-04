@@ -19,7 +19,9 @@ describe('when shared integer property refers to a shared integer', () => {
 
   beforeAll(() => {
     const referencedEntity = Object.assign(newSharedInteger(), {
-      metaEdName, maxValue, minValue,
+      metaEdName,
+      maxValue,
+      minValue,
     });
 
     const property = Object.assign(newSharedIntegerProperty(), {
@@ -47,7 +49,9 @@ describe('when shared short property refers to a shared short', () => {
 
   beforeAll(() => {
     const referencedEntity = Object.assign(newSharedInteger(), {
-      metaEdName, maxValue, minValue,
+      metaEdName,
+      maxValue,
+      minValue,
     });
 
     const property = Object.assign(newSharedShortProperty(), {

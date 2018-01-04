@@ -50,7 +50,9 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(studentLearningObjective).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(studentLearningObjective).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(studentSectionAssociation);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(studentSectionAssociationBeginDate);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(beginDate);

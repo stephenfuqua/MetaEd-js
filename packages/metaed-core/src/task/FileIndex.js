@@ -5,17 +5,17 @@ import type { MetaEdFile } from './MetaEdFile';
 export type FileAndLineNumber = {
   file: MetaEdFile,
   lineNumber: number,
-}
+};
 
 export type FileMap = {
   filename: string,
   lineNumber: number,
-}
+};
 
 export type FileIndex = {
-  fileAndLineNumbersSorted: FileAndLineNumber[];
-  totalLineCount: number;
-}
+  fileAndLineNumbersSorted: FileAndLineNumber[],
+  totalLineCount: number,
+};
 
 export function getAllContents(fileIndex: ?FileIndex): string {
   if (fileIndex == null) return '';
@@ -23,13 +23,16 @@ export function getAllContents(fileIndex: ?FileIndex): string {
 }
 
 export function getFilenameAndLineNumber(fileIndex: FileIndex, concatenatedLineNumber: number): FileMap {
-  const matchingFileAndLineNumber = R.findLast(x => x.lineNumber <= concatenatedLineNumber, fileIndex.fileAndLineNumbersSorted);
+  const matchingFileAndLineNumber = R.findLast(
+    x => x.lineNumber <= concatenatedLineNumber,
+    fileIndex.fileAndLineNumbersSorted,
+  );
 
   if (matchingFileAndLineNumber == null) {
     return { filename: 'Error/matchingFileAndLineNumber/null', lineNumber: -1 };
   }
 
-  const lineNumber = (concatenatedLineNumber - matchingFileAndLineNumber.lineNumber) + 1;
+  const lineNumber = concatenatedLineNumber - matchingFileAndLineNumber.lineNumber + 1;
   return { filename: matchingFileAndLineNumber.file.fullName, lineNumber };
 }
 

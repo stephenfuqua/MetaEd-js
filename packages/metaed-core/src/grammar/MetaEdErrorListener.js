@@ -12,7 +12,13 @@ export class MetaEdErrorListener {
     this.validatorName = validatorName;
   }
 
-  syntaxError(recognizer: any, offendingSymbol: any, concatenatedLineNumber: number, characterPosition: number, message: string) {
+  syntaxError(
+    recognizer: any,
+    offendingSymbol: any,
+    concatenatedLineNumber: number,
+    characterPosition: number,
+    message: string,
+  ) {
     this.messageCollection.push({
       validatorName: this.validatorName,
       category: 'error',

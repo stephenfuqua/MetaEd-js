@@ -1,8 +1,5 @@
 // @flow
-import type {
-  EntityProperty,
-  MetaEdEnvironment,
- } from 'metaed-core';
+import type { EntityProperty, MetaEdEnvironment } from 'metaed-core';
 import {
   AssociationBuilder,
   AssociationExtensionBuilder,
@@ -603,7 +600,6 @@ describe('when looking for property on parent association from subclass', () => 
     expect(metaEd.entity.association.size).toBe(1);
   });
 
-
   it('should build one association subclass', () => {
     expect(metaEd.entity.associationSubclass.size).toBe(1);
   });
@@ -668,7 +664,6 @@ describe('when looking for property on parent association from extension', () =>
   it('should build one association', () => {
     expect(metaEd.entity.association.size).toBe(1);
   });
-
 
   it('should build one association extension', () => {
     expect(metaEd.entity.associationExtension.size).toBe(1);

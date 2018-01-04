@@ -41,7 +41,9 @@ function removeGradingPeriodSchoolIdOnReportCardGradeTable(repository: EdFiOdsEn
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjectiveTable(repository: EdFiOdsEntityRepository): void {
+function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjectiveTable(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, reportCard + studentCompetencyObjective);
   if (table == null) return;
 
@@ -51,7 +53,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjec
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjectiveTable(repository: EdFiOdsEntityRepository): void {
+function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjectiveTable(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, reportCard + studentLearningObjective);
   if (table == null) return;
 
@@ -61,7 +65,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjecti
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardTable(repository: EdFiOdsEntityRepository): void {
+function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardTable(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, studentAcademicRecord + reportCard);
   if (table == null) return;
 

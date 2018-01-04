@@ -18,12 +18,15 @@ const targetVersions: string = '2.0.x';
 
 const derivativeSourceLearningResourceMetadataURI: string = 'DerivativeSourceLearningResourceMetadataURI';
 const derivativeSourceURI: string = 'DerivativeSourceURI';
-const educationContentDerivativeSourceLearningResourceMetadataURI: string = 'EducationContentDerivativeSourceLearningResourceMetadataURI';
+const educationContentDerivativeSourceLearningResourceMetadataURI: string =
+  'EducationContentDerivativeSourceLearningResourceMetadataURI';
 const educationContentDerivativeSourceURI: string = 'EducationContentDerivativeSourceURI';
 const learningResourceMetadataURI: string = 'LearningResourceMetadataURI';
 const uri: string = 'URI';
 
-function renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(repository: EdFiOdsEntityRepository): void {
+function renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, educationContentDerivativeSourceLearningResourceMetadataURI);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === learningResourceMetadataURI) != null) return;

@@ -1,18 +1,7 @@
 // @flow
 import R from 'ramda';
-import type {
-  DomainEntity,
-  Common,
-  MetaEdEnvironment,
-} from 'metaed-core';
-import {
-  addEntity,
-  getEntity,
-  newDomainEntity,
-  newCommon,
-  newMetaEdEnvironment,
-  newNamespaceInfo,
-} from 'metaed-core';
+import type { DomainEntity, Common, MetaEdEnvironment } from 'metaed-core';
+import { addEntity, getEntity, newDomainEntity, newCommon, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { ElementGroup } from '../../src/model/schema/ElementGroup';
 import { enhance } from '../../src/diminisher/ModifyEducationContentLearningResourceToInlineSequenceDiminisher';
@@ -60,9 +49,7 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
           Object.assign(newElement(), { name: 'Item1' }),
           Object.assign(newElementGroup(), {
             isChoice: true,
-            items: [
-              Object.assign(newElement(), { name: 'Item2' }),
-            ],
+            items: [Object.assign(newElement(), { name: 'Item2' })],
           }),
         ],
       }),
@@ -85,7 +72,8 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
 
   it('should clear complex types for LearningResource entity', () => {
     // $FlowIgnore - entity could be undefined
-    const entityComplexTypes: Array<ComplexType> = getEntity(metaEd.entity, learningResourceName, 'common').data.edfiXsd.xsd_ComplexTypes;
+    const entityComplexTypes: Array<ComplexType> = getEntity(metaEd.entity, learningResourceName, 'common').data.edfiXsd
+      .xsd_ComplexTypes;
     expect(entityComplexTypes).toBeDefined();
     expect(entityComplexTypes).toHaveLength(0);
     expect(entityComplexTypes).toEqual([]);

@@ -8,7 +8,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.entity.descriptor.forEach(descriptor => {
     if (descriptor.mapTypeEnumeration.enumerationItems.length > 1) {
-      failEnumerationItemRedeclarations('DescriptorMapTypeItemsMustBeUnique', descriptor, descriptor.mapTypeEnumeration.enumerationItems, failures);
+      failEnumerationItemRedeclarations(
+        'DescriptorMapTypeItemsMustBeUnique',
+        descriptor,
+        descriptor.mapTypeEnumeration.enumerationItems,
+        failures,
+      );
     }
   });
 

@@ -1,13 +1,7 @@
 // @flow
 import R from 'ramda';
 import { getEntitiesOfType } from 'metaed-core';
-import type {
-  Descriptor,
-  EnhancerResult,
-  EntityProperty,
-  MetaEdEnvironment,
-  ModelBase,
-} from 'metaed-core';
+import type { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, getPrimaryKeys, newTable } from '../../model/database/Table';
 import { addTables } from '../table/TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
@@ -28,7 +22,8 @@ import type { TableBuilder } from './TableBuilder';
 
 const enhancerName: string = 'DescriptorTableEnhancer';
 
-const PRIMARY_KEY_DESCRIPTOR: string = 'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.';
+const PRIMARY_KEY_DESCRIPTOR: string =
+  'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.';
 
 function createTables(descriptor: Descriptor): Array<Table> {
   const tables: Array<Table> = [];
@@ -53,10 +48,13 @@ function createTables(descriptor: Descriptor): Array<Table> {
     foreignTableName: 'Descriptor',
     withDeleteCascade: true,
   });
-  addColumnNamePair(foreignKey, Object.assign(newColumnNamePair(), {
-    parentTableColumnName: `${mainTable.name}Id`,
-    foreignTableColumnName: 'DescriptorId',
-  }));
+  addColumnNamePair(
+    foreignKey,
+    Object.assign(newColumnNamePair(), {
+      parentTableColumnName: `${mainTable.name}Id`,
+      foreignTableColumnName: 'DescriptorId',
+    }),
+  );
   addForeignKey(mainTable, foreignKey);
 
   if (descriptor.data.edfiOds.ods_IsMapType) {
@@ -67,14 +65,18 @@ function createTables(descriptor: Descriptor): Array<Table> {
     );
     tables.push(mapTypeTable);
 
-    addColumns(mainTable, [
-      Object.assign(newIntegerColumn(), {
-        name: R.head(getPrimaryKeys(mapTypeTable)).name,
-        isPartOfPrimaryKey: false,
-        isNullable: descriptor.isMapTypeOptional,
-        description: PRIMARY_KEY_DESCRIPTOR,
-      }),
-    ], ColumnTransformUnchanged);
+    addColumns(
+      mainTable,
+      [
+        Object.assign(newIntegerColumn(), {
+          name: R.head(getPrimaryKeys(mapTypeTable)).name,
+          isPartOfPrimaryKey: false,
+          isNullable: descriptor.isMapTypeOptional,
+          description: PRIMARY_KEY_DESCRIPTOR,
+        }),
+      ],
+      ColumnTransformUnchanged,
+    );
 
     const mapTypeForeignKey: ForeignKey = createForeignKey(
       getPrimaryKeys(mapTypeTable),

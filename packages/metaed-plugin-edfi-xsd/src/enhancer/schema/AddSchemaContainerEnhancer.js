@@ -28,7 +28,9 @@ const enhancerName: string = 'AddSchemaContainerEnhancer';
 const complexTypesFrom = R.chain((x: TopLevelEntity) => ((x.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_ComplexTypes);
 const referenceTypesFrom = R.map((x: TopLevelEntity) => ((x.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_ReferenceType);
 const simpleTypesFrom = R.map((x: SimpleTypeBase) => ((x.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType);
-const enumerationSimpleTypesFrom = R.map((x: EnumerationBase) => ((x.data.edfiXsd: any): EnumerationBaseEdfiXsd).xsd_EnumerationSimpleType);
+const enumerationSimpleTypesFrom = R.map(
+  (x: EnumerationBase) => ((x.data.edfiXsd: any): EnumerationBaseEdfiXsd).xsd_EnumerationSimpleType,
+);
 const manyReferenceTypesFrom = R.chain((x: TopLevelEntity) => {
   const edfiXsd = ((x.data.edfiXsd: any): TopLevelEntityEdfiXsd);
   return [edfiXsd.xsd_IdentityType, edfiXsd.xsd_LookupType, edfiXsd.xsd_ReferenceType];
@@ -70,7 +72,8 @@ function baseSchemaSection() {
     name: 'DescriptorReferenceType',
     baseType: 'ReferenceType',
     annotation: Object.assign(newAnnotation(), {
-      documentation: 'Provides references for descriptors during interchange. Use XML IDREF to reference a descriptor record that is included in the interchange. To lookup when already loaded, specify the full URI or the final segment of the URI.',
+      documentation:
+        'Provides references for descriptors during interchange. Use XML IDREF to reference a descriptor record that is included in the interchange. To lookup when already loaded, specify the full URI or the final segment of the URI.',
       typeGroup: 'Base',
     }),
     items: [
@@ -86,7 +89,8 @@ function baseSchemaSection() {
         type: 'URI',
         minOccurs: '0',
         annotation: Object.assign(newAnnotation(), {
-          documentation: 'An optional globally unique namespace that identifies this descriptor set. If supplied, the author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary. Actual usage of this element for matching descriptors will be system-specific.',
+          documentation:
+            'An optional globally unique namespace that identifies this descriptor set. If supplied, the author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary. Actual usage of this element for matching descriptors will be system-specific.',
         }),
       }),
     ],
@@ -129,7 +133,8 @@ function baseSchemaSection() {
         type: 'xs:date',
         minOccurs: '0',
         annotation: Object.assign(newAnnotation(), {
-          documentation: 'The beginning date of the period when the descriptor is in effect. If omitted, the default is immediate effectiveness.',
+          documentation:
+            'The beginning date of the period when the descriptor is in effect. If omitted, the default is immediate effectiveness.',
         }),
       }),
       Object.assign(newElement(), {
@@ -193,7 +198,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const schemaContainer: SchemaContainer = Object.assign(newSchemaContainer(), {
       isExtension: namespaceInfo.isExtension,
       schemaAnnotation: Object.assign(newAnnotation(), {
-        documentation: namespaceInfo.isExtension ? `===== Ed-Fi ${versionString} Extensions =====` : `===== Ed-Fi-Core Version ${versionString} ====`,
+        documentation: namespaceInfo.isExtension
+          ? `===== Ed-Fi ${versionString} Extensions =====`
+          : `===== Ed-Fi-Core Version ${versionString} ====`,
       }),
     });
 
@@ -210,7 +217,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Domain Entities =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'domainEntity', 'domainEntityExtension', 'domainEntitySubclass'),
+      complexTypes: complexTypesForEntitiesOfType(
+        metaEd.entity,
+        'domainEntity',
+        'domainEntityExtension',
+        'domainEntitySubclass',
+      ),
     });
     schemaContainer.sections.push(domainEntitiesSection);
 
@@ -228,7 +240,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Associations =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'association', 'associationExtension', 'associationSubclass'),
+      complexTypes: complexTypesForEntitiesOfType(
+        metaEd.entity,
+        'association',
+        'associationExtension',
+        'associationSubclass',
+      ),
     });
     schemaContainer.sections.push(associationsSection);
 
@@ -248,7 +265,15 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Extended Reference Types =====',
       }),
-      complexTypes: manyReferenceTypesForEntitiesOfType(metaEd.entity, 'association', 'associationExtension', 'associationSubclass', 'domainEntity', 'domainEntityExtension', 'domainEntitySubclass'),
+      complexTypes: manyReferenceTypesForEntitiesOfType(
+        metaEd.entity,
+        'association',
+        'associationExtension',
+        'associationSubclass',
+        'domainEntity',
+        'domainEntityExtension',
+        'domainEntitySubclass',
+      ),
     });
     schemaContainer.sections.push(extendedReferencesSection);
 
@@ -291,7 +316,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Enumerations and Enumerated Collections =====',
       }),
-      simpleTypes: enumerationSimpleTypesForEntitiesOfType(metaEd.entity, 'enumeration', 'mapTypeEnumeration', 'schoolYearEnumeration'),
+      simpleTypes: enumerationSimpleTypesForEntitiesOfType(
+        metaEd.entity,
+        'enumeration',
+        'mapTypeEnumeration',
+        'schoolYearEnumeration',
+      ),
     });
     schemaContainer.sections.push(enumerationsSection);
 

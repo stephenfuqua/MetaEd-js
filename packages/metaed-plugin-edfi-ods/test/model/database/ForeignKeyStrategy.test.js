@@ -146,7 +146,8 @@ describe('when using foreign column rename foreign key strategy', () => {
 });
 
 describe('when using foreign column cascade', () => {
-  const strategy: (deleteCascade: boolean, updateCascade: boolean) => ForeignKeyStrategy = ForeignKeyStrategy.foreignColumnCascade;
+  const strategy: (deleteCascade: boolean, updateCascade: boolean) => ForeignKeyStrategy =
+    ForeignKeyStrategy.foreignColumnCascade;
 
   it('should return default strategy', () => {
     expect(strategy(false, false)).toBe(ForeignKeyStrategyDefault);

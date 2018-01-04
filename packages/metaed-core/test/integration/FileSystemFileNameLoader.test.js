@@ -7,11 +7,11 @@ import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
 describe('When a single file', () => {
   beforeAll(() => {
     const metaEdText = MetaEdTextBuilder.build()
-    .withStartDomainEntity('DomainEntity1')
-    .withDocumentation('doc1')
-    .withStringIdentity('Property1', 'doc2', '100')
-    .withEndDomainEntity()
-    .toString();
+      .withStartDomainEntity('DomainEntity1')
+      .withDocumentation('doc1')
+      .withStringIdentity('Property1', 'doc2', '100')
+      .withEndDomainEntity()
+      .toString();
 
     const domainEntity1 = {
       path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
@@ -22,12 +22,14 @@ describe('When a single file', () => {
 
   it('Should load the file contents', () => {
     const state = Object.assign(newState(), {
-      inputDirectories: [{
-        path: '/fake/dir',
-        namespace: 'edfi',
-        projectExtension: '',
-        isExtension: false,
-      }],
+      inputDirectories: [
+        {
+          path: '/fake/dir',
+          namespace: 'edfi',
+          projectExtension: '',
+          isExtension: false,
+        },
+      ],
     });
     loadFiles(state);
     const contents = state.loadedFileSet[0].files[0].contents;
@@ -41,20 +43,20 @@ describe('When a single file', () => {
 describe('When multiple files', () => {
   beforeAll(() => {
     const metaEdTextDomainEntity = MetaEdTextBuilder.build()
-    .withStartDomainEntity('DomainEntity1')
-    .withDocumentation('doc')
-    .withStringIdentity('Property1', 'doc', '100')
-    .withEndDomainEntity()
-    .toString();
+      .withStartDomainEntity('DomainEntity1')
+      .withDocumentation('doc')
+      .withStringIdentity('Property1', 'doc', '100')
+      .withEndDomainEntity()
+      .toString();
 
     const metaEdTextAssociation = MetaEdTextBuilder.build()
-    .withStartAssociation('Association1')
-    .withDocumentation('doc')
-    .withAssociationDomainEntityProperty('Domain1', 'doc')
-    .withAssociationDomainEntityProperty('Domain2', 'doc')
-    .withIntegerIdentity('Property2', 'doc', '100')
-    .withEndDomainEntity()
-    .toString();
+      .withStartAssociation('Association1')
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('Domain1', 'doc')
+      .withAssociationDomainEntityProperty('Domain2', 'doc')
+      .withIntegerIdentity('Property2', 'doc', '100')
+      .withEndDomainEntity()
+      .toString();
 
     const association1 = {
       path: '/fake/dir/Associations/Association1.metaed',
@@ -68,15 +70,16 @@ describe('When multiple files', () => {
     ffs.addMockFile(domainEntity1);
   });
 
-
   it('Should load the file contents', () => {
     const state = Object.assign(newState(), {
-      inputDirectories: [{
-        path: '/fake',
-        namespace: 'edfi',
-        projectExtension: '',
-        isExtension: false,
-      }],
+      inputDirectories: [
+        {
+          path: '/fake',
+          namespace: 'edfi',
+          projectExtension: '',
+          isExtension: false,
+        },
+      ],
     });
     loadFiles(state);
 
@@ -96,4 +99,3 @@ describe('When multiple files', () => {
     expect(associationContents).toMatchSnapshot();
   });
 });
-

@@ -75,7 +75,11 @@ describe('when a domain entity subclass subclasses a non-EducationOrganization d
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when a domain entity subclass subclasses a non-EducationOrganization domain entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when a domain entity subclass subclasses a non-EducationOrganization domain entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when a domain entity subclass subclasses a non-EducationOrganization domain entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when a domain entity subclass subclasses a non-EducationOrganization domain entity should have validation failure -> sourceMap',
+    );
   });
 });

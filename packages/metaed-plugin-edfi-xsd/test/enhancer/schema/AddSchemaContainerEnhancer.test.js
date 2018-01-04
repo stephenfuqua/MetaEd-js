@@ -1,5 +1,6 @@
 // @flow
-import { newMetaEdEnvironment,
+import {
+  newMetaEdEnvironment,
   newNamespaceInfo,
   newDomainEntity,
   newDomainEntitySubclass,
@@ -266,10 +267,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: domainEntity1ComplexTypeName }),
-            NoComplexType,
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntity1ComplexTypeName }), NoComplexType],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntity1ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntity1LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: domainEntity1IdentityTypeName }),
@@ -300,9 +298,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: domainEntitySubclass1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass1ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntitySubclass1ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntitySubclass1LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: domainEntitySubclass1IdentityTypeName }),
@@ -316,9 +312,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: descriptor1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor1ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: descriptor1ReferenceTypeName }),
         },
       },
@@ -330,9 +324,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: association1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: association1ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: association1ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: association1LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: association1IdentityTypeName }),
@@ -346,9 +338,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: associationSubclass1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass1ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: associationSubclass1ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: associationSubclass1LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: associationSubclass1IdentityTypeName }),
@@ -362,9 +352,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: common1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: common1ComplexTypeName })],
         },
       },
     });
@@ -376,9 +364,7 @@ describe('when enhancing namespace info for core with children', () => {
       inlineInOds: true,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: inlineCommon1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: inlineCommon1ComplexTypeName })],
         },
       },
     });
@@ -400,7 +386,9 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: schoolYearEnumeration1SimpleTypeName }),
+          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
+            name: schoolYearEnumeration1SimpleTypeName,
+          }),
         },
       },
     });
@@ -411,7 +399,9 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: coreNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: xsdMapTypeEnumeration1SimpleTypeName }),
+          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
+            name: xsdMapTypeEnumeration1SimpleTypeName,
+          }),
         },
       },
     });
@@ -455,9 +445,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: domainEntity2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntity2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntity2ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntity2LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: domainEntity2IdentityTypeName }),
@@ -471,9 +459,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: domainEntityExtension2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntityExtension2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntityExtension2ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntityExtension2LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: domainEntityExtension2IdentityTypeName }),
@@ -487,9 +473,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: domainEntitySubclass2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: domainEntitySubclass2ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: domainEntitySubclass2LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: domainEntitySubclass2IdentityTypeName }),
@@ -503,9 +487,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: descriptor2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: descriptor2ReferenceTypeName }),
         },
       },
@@ -517,9 +499,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: association2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: association2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: association2ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: association2LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: association2IdentityTypeName }),
@@ -533,9 +513,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: associationSubclass2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass2ComplexTypeName })],
           xsd_ReferenceType: Object.assign(newComplexType(), { name: associationSubclass2ReferenceTypeName }),
           xsd_LookupType: Object.assign(newComplexType(), { name: associationSubclass2LookupTypeName }),
           xsd_IdentityType: Object.assign(newComplexType(), { name: associationSubclass2IdentityTypeName }),
@@ -549,9 +527,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: common2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: common2ComplexTypeName })],
         },
       },
     });
@@ -562,9 +538,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: commonExtension1ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: commonExtension1ComplexTypeName })],
         },
       },
     });
@@ -576,9 +550,7 @@ describe('when enhancing namespace info for core with children', () => {
       inlineInOds: true,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            Object.assign(newComplexType(), { name: inlineCommon2ComplexTypeName }),
-          ],
+          xsd_ComplexTypes: [Object.assign(newComplexType(), { name: inlineCommon2ComplexTypeName })],
         },
       },
     });
@@ -600,7 +572,9 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: schoolYearEnumeration2SimpleTypeName }),
+          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
+            name: schoolYearEnumeration2SimpleTypeName,
+          }),
         },
       },
     });
@@ -611,7 +585,9 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: xsdMapTypeEnumeration2SimpleTypeName }),
+          xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
+            name: xsdMapTypeEnumeration2SimpleTypeName,
+          }),
         },
       },
     });
@@ -655,9 +631,7 @@ describe('when enhancing namespace info for core with children', () => {
       namespaceInfo: extensionNamespaceInfo,
       data: {
         edfiXsd: {
-          xsd_ComplexTypes: [
-            NoComplexType,
-          ],
+          xsd_ComplexTypes: [NoComplexType],
           xsd_ReferenceType: NoComplexType,
           xsd_LookupType: NoComplexType,
           xsd_IdentityType: NoComplexType,
@@ -693,7 +667,6 @@ describe('when enhancing namespace info for core with children', () => {
     coreSchema = ((coreNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
     extensionSchema = ((extensionNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
   });
-
 
   it('should generate domain entities section', () => {
     const section: SchemaSection = coreSchema.sections[0];

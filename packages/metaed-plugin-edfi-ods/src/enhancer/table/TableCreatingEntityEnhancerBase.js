@@ -14,13 +14,10 @@ import type { TableBuilder } from './TableBuilder';
 
 // Build top level and sub level tables for the given top level entity,
 // including columns for each property and cascading through special property types as needed
-export function buildTablesFromProperties(
-  entity: TopLevelEntity,
-  mainTable: Table,
-  tables: Array<Table>,
-): void {
-  const primaryKeys: Array<Column> =
-    collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory).map((x: Column) => cloneColumn(x));
+export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Table, tables: Array<Table>): void {
+  const primaryKeys: Array<Column> = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory).map(
+    (x: Column) => cloneColumn(x),
+  );
 
   entity.data.edfiOds.ods_Properties.forEach((property: EntityProperty) => {
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);

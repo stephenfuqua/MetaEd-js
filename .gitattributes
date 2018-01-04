@@ -16,7 +16,7 @@
 * text eol=lf
 
 ## SOURCE CODE
-*.bat      text eol=crlf
+*.bat  text eol=crlf
 
 ## GRAPHICS
 *.ai   binary

@@ -11,7 +11,8 @@ const enhancerName: string = 'GraduationPlanRequiredAssessmentPerformanceLevelDi
 const targetVersions: string = '2.0.x';
 
 const graduationPlanRequiredAssessmentPerformanceLevel: string = 'GraduationPlanRequiredAssessmentPerformanceLevel';
-const graduationPlanRequiredAssessmentAssessmentPerformanceLevel: string = 'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
+const graduationPlanRequiredAssessmentAssessmentPerformanceLevel: string =
+  'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
 
 function renameGraduationPlanRequiredAssessmentPerformanceLevelTable(plugin: PluginEnvironment): void {
   const table: ?Table = getTable(plugin.entity, graduationPlanRequiredAssessmentPerformanceLevel);

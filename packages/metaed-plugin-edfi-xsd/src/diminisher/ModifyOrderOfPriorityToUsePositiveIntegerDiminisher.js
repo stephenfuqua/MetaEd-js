@@ -24,9 +24,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const commonEntity: ?ModelBase = getEntity(metaEd.entity, commonEntityName, commonEntityType);
   const complexType: ?ComplexType = commonEntity != null ? R.head(commonEntity.data.edfiXsd.xsd_ComplexTypes) : null;
 
-  const element: ?Element = complexType != null
-    ? complexType.items.map(x => asElement(x)).find(x => x.name === nameType && x.type === nameType)
-    : null;
+  const element: ?Element =
+    complexType != null
+      ? complexType.items.map(x => asElement(x)).find(x => x.name === nameType && x.type === nameType)
+      : null;
   if (element != null) element.type = positiveIntegerType;
 
   const integerType: ?ModelBase = getEntity(metaEd.entity, nameType, integerTypeEntityType);

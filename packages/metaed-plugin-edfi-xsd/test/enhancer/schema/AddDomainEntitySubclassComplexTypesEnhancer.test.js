@@ -22,8 +22,7 @@ describe('when enhancing domainEntity subclass', () => {
     const baseEntity = Object.assign(newDomainEntity(), {
       metaEdName: baseTypeName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
@@ -34,8 +33,7 @@ describe('when enhancing domainEntity subclass', () => {
       documentation,
       baseEntity,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

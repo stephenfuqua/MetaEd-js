@@ -4,5 +4,5 @@ import type { Column } from '../../model/database/Column';
 import type { BuildStrategy } from './BuildStrategy';
 
 export type ColumnCreator = {
-  createColumns(property: EntityProperty, strategy: BuildStrategy): Array<Column>;
-}
+  createColumns(property: EntityProperty, strategy: BuildStrategy): Array<Column>,
+};

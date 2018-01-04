@@ -17,33 +17,37 @@ export const enumerationTableCreator: { build(name: string, namespace: string, d
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
     });
-    addColumns(table, [
-      Object.assign(newIntegerColumn(), {
-        name: `${table.name}Id`,
-        isIdentityDatabaseType: true,
-        isPartOfPrimaryKey: true,
-        isNullable: false,
-        description: `Key for ${removeTypeSuffix(name)}`,
-      }),
-      Object.assign(newStringColumn('50'), {
-        name: 'CodeValue',
-        isPartOfPrimaryKey: false,
-        isNullable: false,
-        description: 'This column is deprecated.',
-      }),
-      Object.assign(newStringColumn('1024'), {
-        name: 'Description',
-        isPartOfPrimaryKey: false,
-        isNullable: false,
-        description: `The description for the ${removeTypeSuffix(name)} type.`,
-      }),
-      Object.assign(newStringColumn('450'), {
-        name: 'ShortDescription',
-        isPartOfPrimaryKey: false,
-        isNullable: false,
-        description: `The value for the ${removeTypeSuffix(name)} type.`,
-      }),
-    ], ColumnTransformUnchanged);
+    addColumns(
+      table,
+      [
+        Object.assign(newIntegerColumn(), {
+          name: `${table.name}Id`,
+          isIdentityDatabaseType: true,
+          isPartOfPrimaryKey: true,
+          isNullable: false,
+          description: `Key for ${removeTypeSuffix(name)}`,
+        }),
+        Object.assign(newStringColumn('50'), {
+          name: 'CodeValue',
+          isPartOfPrimaryKey: false,
+          isNullable: false,
+          description: 'This column is deprecated.',
+        }),
+        Object.assign(newStringColumn('1024'), {
+          name: 'Description',
+          isPartOfPrimaryKey: false,
+          isNullable: false,
+          description: `The description for the ${removeTypeSuffix(name)} type.`,
+        }),
+        Object.assign(newStringColumn('450'), {
+          name: 'ShortDescription',
+          isPartOfPrimaryKey: false,
+          isNullable: false,
+          description: `The value for the ${removeTypeSuffix(name)} type.`,
+        }),
+      ],
+      ColumnTransformUnchanged,
+    );
     return table;
   },
 };

@@ -74,8 +74,11 @@ describe('when validating descriptor domain item does not match top level entity
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DescriptorDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when descriptor domain item has no matching top level entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when descriptor domain item has no matching top level entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when descriptor domain item has no matching top level entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when descriptor domain item has no matching top level entity should have validation failure -> sourceMap',
+    );
   });
 });
-

@@ -8,4 +8,4 @@ export type ValidationFailure = {
   message: string,
   sourceMap: ?SourceMap,
   fileMap: ?FileMap,
-}
+};

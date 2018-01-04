@@ -1,20 +1,20 @@
 // @flow
 
 export type Trigger = {
-  schema: string;
-  name: string;
-  tableSchema: string;
-  tableName: string;
-  onInsert: boolean;
-  onUpdate: boolean;
-  onDelete: boolean;
-  isAfter: boolean;
-  body: string;
-  repositoryId: string;
-  namespace: string;
-  metaEdType: string;
-  insertUpdateDelete: Array<string>;
-}
+  schema: string,
+  name: string,
+  tableSchema: string,
+  tableName: string,
+  onInsert: boolean,
+  onUpdate: boolean,
+  onDelete: boolean,
+  isAfter: boolean,
+  body: string,
+  repositoryId: string,
+  namespace: string,
+  metaEdType: string,
+  insertUpdateDelete: Array<string>,
+};
 
 export function newTrigger(): Trigger {
   return {

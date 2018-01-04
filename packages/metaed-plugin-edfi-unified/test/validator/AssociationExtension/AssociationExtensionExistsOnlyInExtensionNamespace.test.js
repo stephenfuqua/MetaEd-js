@@ -70,7 +70,11 @@ describe('when association extension is in core namespace', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionExistsOnlyInExtensionNamespace');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association extension is in core namespace should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association extension is in core namespace should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association extension is in core namespace should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association extension is in core namespace should have validation failure -> sourceMap',
+    );
   });
 });

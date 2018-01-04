@@ -7,12 +7,7 @@ import {
   newMetaEdEnvironment,
   newNamespaceInfo,
 } from 'metaed-core';
-import type {
-  Descriptor,
-  EnumerationItem,
-  MapTypeEnumeration,
-  MetaEdEnvironment,
-} from 'metaed-core';
+import type { Descriptor, EnumerationItem, MapTypeEnumeration, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DescriptorMapTypeRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import type { EnumerationRow } from '../../src/model/database/EnumerationRow';
@@ -71,7 +66,7 @@ describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor', () =>
   });
 });
 
-describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor with name that ends with \'Type\'', () => {
+describe("when DescriptorMapTypeRowEnhancer enhances map type descriptor with name that ends with 'Type'", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const entityName: string = 'EntityName';
@@ -124,4 +119,3 @@ describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor with na
     expect(row.shortDescription).toBe(shortDescription1);
   });
 });
-

@@ -17,9 +17,19 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.entity.domain.forEach(domain => {
     domain.domainItems.forEach(domainItem => {
       if (domainItem.referencedType === 'association') {
-        if (!metaEd.entity.association.has(domainItem.metaEdName) && !metaEd.entity.associationSubclass.has(domainItem.metaEdName)) {
-          failures.push(getFailure(domainItem, 'AssociationDomainItemMustMatchTopLevelEntity',
-            `Association Domain Item property '${domainItem.metaEdName}' does not match any declared Association or Association Subclass.`));
+        if (
+          !metaEd.entity.association.has(domainItem.metaEdName) &&
+          !metaEd.entity.associationSubclass.has(domainItem.metaEdName)
+        ) {
+          failures.push(
+            getFailure(
+              domainItem,
+              'AssociationDomainItemMustMatchTopLevelEntity',
+              `Association Domain Item property '${
+                domainItem.metaEdName
+              }' does not match any declared Association or Association Subclass.`,
+            ),
+          );
         }
       }
     });

@@ -23,7 +23,14 @@ export class DomainEntityExtensionBuilder extends TopLevelEntityBuilder {
   }
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity || context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    if (
+      this.currentTopLevelEntity === NoTopLevelEntity ||
+      context.exception ||
+      context.ID() == null ||
+      context.ID().exception ||
+      isErrorText(context.ID().getText())
+    )
+      return;
 
     const extendeeName = context.ID().getText();
     this.enteringName(extendeeName);

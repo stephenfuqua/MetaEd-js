@@ -10,5 +10,5 @@ export function escapeForMarkdownTableContent(s: string): string {
 }
 
 export function escapeForMarkdownNewLine(s: string): string {
-  return s.replace(newlineRegex, '$&$&');  // $& means the whole matched string
+  return s.replace(newlineRegex, '$&$&'); // $& means the whole matched string
 }

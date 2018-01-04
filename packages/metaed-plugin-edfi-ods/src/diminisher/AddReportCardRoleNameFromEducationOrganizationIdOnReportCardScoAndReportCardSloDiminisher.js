@@ -17,7 +17,9 @@ const reportCardStudentLearningObjective: string = 'ReportCardStudentLearningObj
 const educationOrganizationId: string = 'EducationOrganizationId';
 const reportCard: string = 'ReportCard';
 
-function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(repository: EdFiOdsEntityRepository): void {
+function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, reportCardStudentCompetencyObjective);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
@@ -33,7 +35,9 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
   );
 }
 
-function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(repository: EdFiOdsEntityRepository): void {
+function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(
+  repository: EdFiOdsEntityRepository,
+): void {
   const table: ?Table = getTable(repository, reportCardStudentLearningObjective);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
@@ -52,8 +56,12 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
 
-  renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
+  renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(
+    pluginEnvironment(metaEd).entity,
+  );
+  renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(
+    pluginEnvironment(metaEd).entity,
+  );
 
   return {
     enhancerName,

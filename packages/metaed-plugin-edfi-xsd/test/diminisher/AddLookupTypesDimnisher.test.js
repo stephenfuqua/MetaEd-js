@@ -1,15 +1,7 @@
 // @flow
 import R from 'ramda';
-import type {
-  DomainEntity,
-  MetaEdEnvironment,
-} from 'metaed-core';
-import {
-  newBooleanProperty,
-  newDomainEntity,
-  newMetaEdEnvironment,
-  newNamespaceInfo,
-} from 'metaed-core';
+import type { DomainEntity, MetaEdEnvironment } from 'metaed-core';
+import { newBooleanProperty, newDomainEntity, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
 import { newComplexType, NoComplexType } from '../../src/model/schema/ComplexType';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
@@ -98,8 +90,7 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
   });
 
   it('should have lookup type item annotation documentation', () => {
-    expect(R.head(entity.data.edfiXsd.xsd_LookupType.items).annotation.documentation)
-      .toBe(booleanPropertyDocumentation);
+    expect(R.head(entity.data.edfiXsd.xsd_LookupType.items).annotation.documentation).toBe(booleanPropertyDocumentation);
   });
 
   it('should have no lookup type item annotation descriptorName', () => {
@@ -125,13 +116,11 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
   });
 
   it('should have reference type item name', () => {
-    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).name)
-      .toBe(`${domainEntityName1}${typeGroup}`);
+    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).name).toBe(`${domainEntityName1}${typeGroup}`);
   });
 
   it('should have reference type item type', () => {
-    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).type)
-      .toBe(`${domainEntityName1}${typeGroup}Type`);
+    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).type).toBe(`${domainEntityName1}${typeGroup}Type`);
   });
 
   it('should have reference type item annotation', () => {
@@ -139,8 +128,9 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
   });
 
   it('should have reference type item annotation documentation', () => {
-    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).annotation.documentation)
-      .toBe(entity.data.edfiXsd.xsd_LookupType.annotation.documentation);
+    expect(R.head(entity.data.edfiXsd.xsd_ReferenceType.items).annotation.documentation).toBe(
+      entity.data.edfiXsd.xsd_LookupType.annotation.documentation,
+    );
   });
 
   it('should have no reference type item annotation descriptorName', () => {

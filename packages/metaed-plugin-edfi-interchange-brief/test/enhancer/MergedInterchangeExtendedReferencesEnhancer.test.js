@@ -1,7 +1,33 @@
 // @flow
-import { newInlineCommon, newDomainEntityProperty, newChoiceProperty, newInterchangeItem, newMetaEdEnvironment, newDomainEntity, newDescriptor, newCommonProperty, newInlineCommonProperty, newCommon,
-  newEnumeration, newSchoolYearEnumerationProperty, newEnumerationProperty, newBooleanProperty, newCurrencyProperty, newDateProperty, newDecimalProperty, newDurationProperty,
-  newIntegerProperty, newPercentProperty, newSharedDecimalProperty, newSharedStringProperty, newSharedIntegerProperty, newSharedShortProperty, newShortProperty, newStringProperty, newTimeProperty } from 'metaed-core';
+import {
+  newInlineCommon,
+  newDomainEntityProperty,
+  newChoiceProperty,
+  newInterchangeItem,
+  newMetaEdEnvironment,
+  newDomainEntity,
+  newDescriptor,
+  newCommonProperty,
+  newInlineCommonProperty,
+  newCommon,
+  newEnumeration,
+  newSchoolYearEnumerationProperty,
+  newEnumerationProperty,
+  newBooleanProperty,
+  newCurrencyProperty,
+  newDateProperty,
+  newDecimalProperty,
+  newDurationProperty,
+  newIntegerProperty,
+  newPercentProperty,
+  newSharedDecimalProperty,
+  newSharedStringProperty,
+  newSharedIntegerProperty,
+  newSharedShortProperty,
+  newShortProperty,
+  newStringProperty,
+  newTimeProperty,
+} from 'metaed-core';
 import type { Common } from 'metaed-core';
 import { newMergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { enhance as mergedInterchangeExtendedReferencesEnhancer } from '../../src/enhancer/MergedInterchangeExtendedReferencesEnhancer';
@@ -155,8 +181,10 @@ function setupRepository() {
 }
 
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with element with bad markdown character', () => {
-  const inputDocumentation: string = 'Documentation for logic (X | Y) \r\n Some Windows Documentation \n Some Unix Documentation \r Some Old Mac Documentation';
-  const escapedDocumentation: string = 'Documentation for logic (X \\| Y) <br/> Some Windows Documentation <br/> Some Unix Documentation <br/> Some Old Mac Documentation';
+  const inputDocumentation: string =
+    'Documentation for logic (X | Y) \r\n Some Windows Documentation \n Some Unix Documentation \r Some Old Mac Documentation';
+  const escapedDocumentation: string =
+    'Documentation for logic (X \\| Y) <br/> Some Windows Documentation <br/> Some Unix Documentation <br/> Some Old Mac Documentation';
   beforeAll(() => {
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
@@ -178,8 +206,14 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
   const schoolYearEnumeration = Object.assign(newEnumeration(), { metaEdName: 'SchoolYearEnumeration' });
   const enumeration = Object.assign(newEnumeration(), { metaEdName: 'Enumeration' });
 
-  const schoolYearEnumerationProperty = Object.assign(newSchoolYearEnumerationProperty(), { metaEdName: 'SchoolYearEnumerationProperty', referencedEntity: schoolYearEnumeration });
-  const enumerationProperty = Object.assign(newEnumerationProperty(), { metaEdName: 'EnumerationProperty', referencedEntity: enumeration });
+  const schoolYearEnumerationProperty = Object.assign(newSchoolYearEnumerationProperty(), {
+    metaEdName: 'SchoolYearEnumerationProperty',
+    referencedEntity: schoolYearEnumeration,
+  });
+  const enumerationProperty = Object.assign(newEnumerationProperty(), {
+    metaEdName: 'EnumerationProperty',
+    referencedEntity: enumeration,
+  });
   const booleanProperty = newBooleanProperty();
   const currencyProperty = newCurrencyProperty();
   const dateProperty = newDateProperty();
@@ -199,8 +233,25 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     setupRepository();
     mergedInterchange.elements.push(domainEntityInterchangeItem);
     mergedInterchange.identityTemplates.push(domainEntityInterchangeItem);
-    interchangeLevelDomainEntity.properties.push(schoolYearEnumerationProperty, enumerationProperty, booleanProperty, currencyProperty, dateProperty, decimalProperty, durationProperty, integerProperty,
-    percentProperty, sharedDecimalProperty, sharedIntegerProperty, sharedShortProperty, sharedStringProperty, shortProperty, stringProperty, timeProperty, yearProperty);
+    interchangeLevelDomainEntity.properties.push(
+      schoolYearEnumerationProperty,
+      enumerationProperty,
+      booleanProperty,
+      currencyProperty,
+      dateProperty,
+      decimalProperty,
+      durationProperty,
+      integerProperty,
+      percentProperty,
+      sharedDecimalProperty,
+      sharedIntegerProperty,
+      sharedShortProperty,
+      sharedStringProperty,
+      shortProperty,
+      stringProperty,
+      timeProperty,
+      yearProperty,
+    );
     mergedInterchangeExtendedReferencesEnhancer(metaEd);
   });
   it('should generate extended references', () => {

@@ -7,7 +7,7 @@ import {
   schoolId,
   studentCompetencyObjective,
   studentLearningObjective,
- } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
+} from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
 import { getTable, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
 import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
@@ -28,9 +28,7 @@ export const gradingPeriodToSchoolIdOnForeignTableOnly: Array<string> = [
   gradingPeriodSchoolId,
 ];
 
-function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(
-  repository: EdFiOdsEntityRepository,
-): void {
+function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(repository: EdFiOdsEntityRepository): void {
   const table: ?Table = getTable(repository, studentLearningObjective);
   if (table == null) return;
 
@@ -38,9 +36,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(
   renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
 }
 
-function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(
-  repository: EdFiOdsEntityRepository,
-): void {
+function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(repository: EdFiOdsEntityRepository): void {
   const table: ?Table = getTable(repository, studentCompetencyObjective);
   if (table == null) return;
 
@@ -89,10 +85,18 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
   renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(pluginEnvironment(metaEd).entity);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(
+    pluginEnvironment(metaEd).entity,
+  );
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(
+    pluginEnvironment(metaEd).entity,
+  );
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(
+    pluginEnvironment(metaEd).entity,
+  );
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(
+    pluginEnvironment(metaEd).entity,
+  );
 
   return {
     enhancerName,

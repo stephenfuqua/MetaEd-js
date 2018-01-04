@@ -1,5 +1,12 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newNamespaceInfo, newPluginEnvironment, newAssociation, newAssociationExtension } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newInterchangeItem,
+  newNamespaceInfo,
+  newPluginEnvironment,
+  newAssociation,
+  newAssociationExtension,
+} from 'metaed-core';
 import type { MetaEdEnvironment, Association } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeExtensionEnhancer';
@@ -48,8 +55,7 @@ describe('when enhances MergedInterchange with association extension', () => {
       documentation: association1Documentation,
       namespaceInfo: coreNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.association.set(association.metaEdName, association);
@@ -58,8 +64,7 @@ describe('when enhances MergedInterchange with association extension', () => {
       metaEdName: association1Name,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
@@ -76,8 +81,7 @@ describe('when enhances MergedInterchange with association extension', () => {
           metaEdName: association1Name,
           documentation: interchangeItemAssociation1Documentation,
           data: {
-            edfiXsd: {
-            },
+            edfiXsd: {},
           },
         }),
       ],

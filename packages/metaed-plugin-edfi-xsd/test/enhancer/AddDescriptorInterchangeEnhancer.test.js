@@ -8,9 +8,12 @@ import type { MergedInterchange } from '../../src/model/MergedInterchange';
 
 describe('when running with one descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiXsd',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdFiXsdEntityRepository(),
+    }),
+  );
   const namespace: string = 'edfi';
   const descriptorBaseName: string = 'DescriptorBaseName';
   const descriptorName: string = 'DescriptorName';
@@ -52,9 +55,12 @@ describe('when running with one descriptor', () => {
 
 describe('when running with one extension descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiXsd',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdFiXsdEntityRepository(),
+    }),
+  );
   const namespace: string = 'edfi';
   const descriptorBaseName: string = 'DescriptorBaseName';
   const descriptorName: string = 'DescriptorName';
@@ -120,7 +126,9 @@ describe('when running with one extension descriptor', () => {
   });
 
   it('should create one extension descriptor interchange element', () => {
-    const entity: MergedInterchange = pluginEnvironment(metaEd).entity.mergedInterchange.get(`${projectExtension}-${descriptorInterchangeName}`);
+    const entity: MergedInterchange = pluginEnvironment(metaEd).entity.mergedInterchange.get(
+      `${projectExtension}-${descriptorInterchangeName}`,
+    );
     expect(entity.namespaceInfo.isExtension).toBe(true);
     expect(entity.elements.length).toBe(2);
     expect(entity.elements[0].metaEdName).toBe(descriptorName);
@@ -130,9 +138,12 @@ describe('when running with one extension descriptor', () => {
 
 describe('when running with no descriptors', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  }));
+  metaEd.plugin.set(
+    'edfiXsd',
+    Object.assign(newPluginEnvironment(), {
+      entity: newEdFiXsdEntityRepository(),
+    }),
+  );
   const namespace: string = 'edfi';
 
   beforeAll(() => {

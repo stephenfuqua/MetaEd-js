@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-core';
 
 export type CommonExtensionEdfiOds = {
-  ods_ExtensionName: string;
+  ods_ExtensionName: string,
 };
 
 const enhancerName: string = 'OdsCommonExtensionSetupEnhancer';

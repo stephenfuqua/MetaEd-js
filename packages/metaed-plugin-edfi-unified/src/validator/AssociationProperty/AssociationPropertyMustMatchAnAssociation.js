@@ -8,7 +8,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'AssociationPropertyMustMatchAnAssociation',
         category: 'error',
-        message: `Association property '${property.metaEdName}' does not match any declared Association or Association Subclass.`,
+        message: `Association property '${
+          property.metaEdName
+        }' does not match any declared Association or Association Subclass.`,
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });

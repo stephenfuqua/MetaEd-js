@@ -12,18 +12,24 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyColumnDataTypesDiminisher';
 const targetVersions: string = '2.0.x';
 
-const modifyColumnDataTypes = (repository: EdFiOdsEntityRepository) =>
-  (tableName: string, columnName: string, dataType: string): void => {
-    const table: ?Table = getTable(repository, tableName);
-    if (table == null) return;
+const modifyColumnDataTypes = (repository: EdFiOdsEntityRepository) => (
+  tableName: string,
+  columnName: string,
+  dataType: string,
+): void => {
+  const table: ?Table = getTable(repository, tableName);
+  if (table == null) return;
 
-    const column: ?Column = table.columns.find((x: Column) => x.name === columnName);
-    if (column == null) return;
-    column.dataType = dataType;
-  };
+  const column: ?Column = table.columns.find((x: Column) => x.name === columnName);
+  if (column == null) return;
+  column.dataType = dataType;
+};
 
-const modifyStringColumnLength = (repository: EdFiOdsEntityRepository) =>
-(tableName: string, columnName: string, length: string): void => {
+const modifyStringColumnLength = (repository: EdFiOdsEntityRepository) => (
+  tableName: string,
+  columnName: string,
+  length: string,
+): void => {
   const table: ?Table = getTable(repository, tableName);
   if (table == null) return;
 

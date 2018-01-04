@@ -15,25 +15,25 @@ winston.cli();
 const maxSqlServerIdentifierLength = R.take(128);
 
 export type Table = {
-  name: string;
-  schema: string;
-  namespace: string;
-  type: string;
-  description: string;
-  sqlEscapedDescription: string;
-  typeHumanizedName: string;
-  typeHumanizedNameWithIndefiniteArticle: string;
-  includeCreateDateColumn: boolean;
-  includeLastModifiedDateAndIdColumn: boolean;
-  isRequiredCollectionTable: boolean;
-  isTypeTable: boolean;
-  hasAlternateKeys: boolean;
-  columns: Array<Column>;
-  primaryKeys: Array<Column>;
-  foreignKeys: Array<ForeignKey>;
-  alternateKeys: Array<Column>;
-  uniqueIndexes: Array<Column>;
-}
+  name: string,
+  schema: string,
+  namespace: string,
+  type: string,
+  description: string,
+  sqlEscapedDescription: string,
+  typeHumanizedName: string,
+  typeHumanizedNameWithIndefiniteArticle: string,
+  includeCreateDateColumn: boolean,
+  includeLastModifiedDateAndIdColumn: boolean,
+  isRequiredCollectionTable: boolean,
+  isTypeTable: boolean,
+  hasAlternateKeys: boolean,
+  columns: Array<Column>,
+  primaryKeys: Array<Column>,
+  foreignKeys: Array<ForeignKey>,
+  alternateKeys: Array<Column>,
+  uniqueIndexes: Array<Column>,
+};
 
 export function newTable(): Table {
   return {
@@ -98,7 +98,7 @@ export function getPrimaryKeys(table: Table): Array<Column> {
 }
 
 export function getNonPrimaryKeys(table: Table): Array<Column> {
-  return (table.columns.filter(x => !x.isPartOfPrimaryKey));
+  return table.columns.filter(x => !x.isPartOfPrimaryKey);
 }
 
 export function getUniqueIndexes(table: Table): Array<Column> {
@@ -122,7 +122,9 @@ export function isForeignKey(table: Table, column: Column): boolean {
 }
 
 export function getForeignKeyName(foreignKey: ForeignKey): string {
-  return maxSqlServerIdentifierLength(`FK_${foreignKey.parentTableName}_${foreignKey.foreignTableName}${foreignKey.foreignKeyNameSuffix}`);
+  return maxSqlServerIdentifierLength(
+    `FK_${foreignKey.parentTableName}_${foreignKey.foreignTableName}${foreignKey.foreignKeyNameSuffix}`,
+  );
 }
 
 function getForeignKeyNameSuffix(table: Table, foreignKey: ForeignKey): string {
@@ -162,12 +164,14 @@ export function createForeignKey(
     withUpdateCascade: strategy.hasUpdateCascade(),
   });
   foreignKeyColumns.forEach(column =>
-    addColumnNamePair(foreignKey,
+    addColumnNamePair(
+      foreignKey,
       Object.assign(newColumnNamePair(), {
         parentTableColumnName: strategy.parentColumnName(column),
         foreignTableColumnName: strategy.foreignColumnName(column),
-      })),
-    );
+      }),
+    ),
+  );
 
   return foreignKey;
 }

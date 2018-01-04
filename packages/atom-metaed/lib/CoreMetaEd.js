@@ -45,7 +45,8 @@ export function createFromTemplate(targetPath: string, targetFileName: string, t
   while (fs.existsSync(targetFullFilePath)) {
     targetFullFilePath = path.join(
       path.dirname(targetFullFilePath),
-      startOfFile + counter + path.extname(targetFullFilePath));
+      startOfFile + counter + path.extname(targetFullFilePath),
+    );
     counter += 1;
   }
   fs.writeFileSync(targetFullFilePath, template());
@@ -57,7 +58,9 @@ export function createFromTemplate(targetPath: string, targetFileName: string, t
 // this is a bit of overkill, in that pretty much all actions on a TextBuffer flow through transact(), even
 // ones that don't modify the TextBuffer
 function patchBuffer(buffer: any) {
-  if (buffer.__hasTROPatch === true) { return; }
+  if (buffer.__hasTROPatch === true) {
+    return;
+  }
   const editedBuffer = buffer;
   editedBuffer.__hasTROPatch = true;
   editedBuffer.__isReadOnly = false;
@@ -81,7 +84,9 @@ function patchBuffer(buffer: any) {
 // when the file is to be considered read only.  Delegates to a TextBuffer monkey patch for
 // actual read only behavior.
 function patchEditor(editor: any) {
-  if (editor.__hasTROPatch === true) { return patchBuffer(editor.getBuffer()); }
+  if (editor.__hasTROPatch === true) {
+    return patchBuffer(editor.getBuffer());
+  }
   const editedEditor = editor;
   editedEditor.__hasTROPatch = true;
   editedEditor.__getTitle = editor.getTitle;
@@ -100,9 +105,11 @@ function patchEditor(editor: any) {
     return this.getBuffer().setReadOnly(state);
   };
   patchBuffer(editor.getBuffer());
-  const disp = editor.onDidChangePath((function onDidChangePath() {
-    return this.updateReadOnlyTitle(this.getBuffer().__isReadOnly);
-  }).bind(editor));
+  const disp = editor.onDidChangePath(
+    function onDidChangePath() {
+      return this.updateReadOnlyTitle(this.getBuffer().__isReadOnly);
+    }.bind(editor),
+  );
   editor.onDidDestroy(() => disp.dispose());
   return editor.setReadOnly(editor.getBuffer().__isReadOnly); // Sync state with buffer
 }

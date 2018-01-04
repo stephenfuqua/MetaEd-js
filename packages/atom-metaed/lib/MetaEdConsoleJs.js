@@ -19,19 +19,19 @@ import {
 import type MetaEdLog from './MetaEdLog';
 
 type TaskInputs = {
-  'taskName': string,
-  'isExtensionProject': boolean,
-  'projectPath': string,
-  'metaEdJsConsoleSourceDirectory': string,
-  'coreMetaEdSourceDirectory': string,
-  'cmdFullPath': string,
-  'packageFilePath': string,
-  'artifactPath': string,
-  'edfiOdsApiSourceDirectory': ?string,
-  'edfiOdsRepoDirectory': ?string,
-  'edfiOdsImplementationRepoDirectory': ?string,
-  'consolePath': string,
-}
+  taskName: string,
+  isExtensionProject: boolean,
+  projectPath: string,
+  metaEdJsConsoleSourceDirectory: string,
+  coreMetaEdSourceDirectory: string,
+  cmdFullPath: string,
+  packageFilePath: string,
+  artifactPath: string,
+  edfiOdsApiSourceDirectory: ?string,
+  edfiOdsRepoDirectory: ?string,
+  edfiOdsImplementationRepoDirectory: ?string,
+  consolePath: string,
+};
 
 export default class MetaEdConsoleJs {
   // this is to allow mocking of spawn in tests
@@ -50,11 +50,9 @@ export default class MetaEdConsoleJs {
   deploy(isExtensionProject: boolean = false) {
     const result = atom.confirm({
       message: 'Are you sure you want to deploy MetaEd artifacts?',
-      detailedMessage: 'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
-      buttons: [
-        'OK',
-        'Cancel',
-      ],
+      detailedMessage:
+        'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
+      buttons: ['OK', 'Cancel'],
     });
     if (result !== 0) {
       return;
@@ -75,15 +73,14 @@ export default class MetaEdConsoleJs {
     }
     this._metaEdLog.addMessage(`Beginning execution of MetaEd task ${taskName}...`);
 
-    return this._cleanUpMetaEdArtifacts(inputs.artifactPath)
-    .then(() => this._executeTask(inputs));
+    return this._cleanUpMetaEdArtifacts(inputs.artifactPath).then(() => this._executeTask(inputs));
   }
 
   _cleanUpMetaEdArtifacts(artifactPath: string): Promise<void> {
     // close all MetaEdOutput tabs
     const panes = atom.workspace.getPanes();
-    panes.forEach((pane) => {
-      pane.getItems().forEach((editor) => {
+    panes.forEach(pane => {
+      pane.getItems().forEach(editor => {
         if (typeof editor.getPath === 'function') {
           const editorPath = editor.getPath();
           if (editorPath && editorPath.startsWith(artifactPath)) {
@@ -93,21 +90,23 @@ export default class MetaEdConsoleJs {
       });
     });
 
-      // collapse MetaEdOutputDirectory in tree-view if exists
-      // (workaround for Atom GitHub issue #3365)
-    return this._collapseTreeViewDirectory(artifactPath).then(() => {
-      // remove MetaEdOutput directory
-      fs.removeSync(artifactPath);
-    }).catch((exception) => {
-      console.error(exception);
-      if (fs.existsSync(artifactPath)) {
-        this._metaEdLog.addMessage(`Unable to delete output directory at path "${artifactPath}".`);
-      }
-      if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
-        this._metaEdLog.addMessage('Please close any files or folders that may be open in other applications.');
-      }
-      return Promise.reject(exception);
-    });
+    // collapse MetaEdOutputDirectory in tree-view if exists
+    // (workaround for Atom GitHub issue #3365)
+    return this._collapseTreeViewDirectory(artifactPath)
+      .then(() => {
+        // remove MetaEdOutput directory
+        fs.removeSync(artifactPath);
+      })
+      .catch(exception => {
+        console.error(exception);
+        if (fs.existsSync(artifactPath)) {
+          this._metaEdLog.addMessage(`Unable to delete output directory at path "${artifactPath}".`);
+        }
+        if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
+          this._metaEdLog.addMessage('Please close any files or folders that may be open in other applications.');
+        }
+        return Promise.reject(exception);
+      });
   }
 
   _verifyInputs(taskName: string, isExtensionProject: boolean = false): ?TaskInputs {
@@ -119,7 +118,9 @@ export default class MetaEdConsoleJs {
 
     if (!projectPath && allianceMode()) {
       if (atom.project.getPaths().length < 1) {
-        this._metaEdLog.addMessage('Please set up a core MetaEd directory under File -> Settings -> Packages -> atom-metaed.');
+        this._metaEdLog.addMessage(
+          'Please set up a core MetaEd directory under File -> Settings -> Packages -> atom-metaed.',
+        );
         return null;
       }
       projectPath = atom.project.getPaths()[0];
@@ -133,18 +134,28 @@ export default class MetaEdConsoleJs {
     const cmdFullPath = getCmdFullPath();
     const packageFilePath = path.join(metaEdJsConsoleSourceDirectory, 'package.json');
     if (!fs.existsSync(packageFilePath)) {
-      this._metaEdLog.addMessage(`Unable to find package.json file in metaed-console at configured path "${metaEdJsConsoleSourceDirectory}".`);
-      this._metaEdLog.addMessage('Please configure MetaEd JS Console Source Directory under the atom-metaed package to target the metaed-console root directory.');
+      this._metaEdLog.addMessage(
+        `Unable to find package.json file in metaed-console at configured path "${metaEdJsConsoleSourceDirectory}".`,
+      );
+      this._metaEdLog.addMessage(
+        'Please configure MetaEd JS Console Source Directory under the atom-metaed package to target the metaed-console root directory.',
+      );
       return null;
     }
     if (!fs.existsSync(coreMetaEdSourceDirectory)) {
-      this._metaEdLog.addMessage(`Unable to find Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}".`);
-      this._metaEdLog.addMessage('Please configure Core MetaEd Source Directory under the atom-metaed package to target a core Ed-Fi Model root directory.');
+      this._metaEdLog.addMessage(
+        `Unable to find Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}".`,
+      );
+      this._metaEdLog.addMessage(
+        'Please configure Core MetaEd Source Directory under the atom-metaed package to target a core Ed-Fi Model root directory.',
+      );
       return null;
     }
     if (!fs.existsSync(cmdFullPath) && os.platform() === 'win32') {
       this._metaEdLog.addMessage(`Unable to find cmd.exe at configured path "${cmdFullPath}".`);
-      this._metaEdLog.addMessage('Please configure "Full Path to Cmd.exe" under the atom-metaed package to target the command prompt for Windows (Usually found at C:\\Windows\\System32\\cmd.exe).');
+      this._metaEdLog.addMessage(
+        'Please configure "Full Path to Cmd.exe" under the atom-metaed package to target the command prompt for Windows (Usually found at C:\\Windows\\System32\\cmd.exe).',
+      );
       return null;
     }
     const artifactPath = path.join(projectPath, 'MetaEdOutput/');
@@ -154,7 +165,9 @@ export default class MetaEdConsoleJs {
       consolePath = path.resolve(__dirname, '../node_modules/metaed-console/dist/index.js');
       if (!fs.existsSync(consolePath)) {
         this._metaEdLog.addMessage(consolePath);
-        this._metaEdLog.addMessage(`Unable to find the index.js executable for metaed-console in the Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}" or its parent.`);
+        this._metaEdLog.addMessage(
+          `Unable to find the index.js executable for metaed-console in the Core MetaEd Source Directory at configured path "${coreMetaEdSourceDirectory}" or its parent.`,
+        );
         return null;
       }
     }
@@ -167,8 +180,12 @@ export default class MetaEdConsoleJs {
       edfiOdsRepoDirectory = path.join(edfiOdsApiSourceDirectory, 'Ed-Fi-ODS/');
       edfiOdsImplementationRepoDirectory = path.join(edfiOdsApiSourceDirectory, 'Ed-Fi-ODS-Implementation/');
       if (!fs.existsSync(edfiOdsRepoDirectory) || !fs.existsSync(edfiOdsImplementationRepoDirectory)) {
-        this._metaEdLog.addMessage(`Unable to find Ed-Fi-ODS and Ed-Fi-ODS-Implementation folders at configured path "${edfiOdsApiSourceDirectory}".`);
-        this._metaEdLog.addMessage('Please configure Ed-Fi ODS Api Source Directory under the atom-metaed package to target the local copy of the Ed-Fi-ODS Api source code.  The targeted folder should contain the repositories for Ed-Fi-ODS and Ed-Fi-ODS-Implementation.');
+        this._metaEdLog.addMessage(
+          `Unable to find Ed-Fi-ODS and Ed-Fi-ODS-Implementation folders at configured path "${edfiOdsApiSourceDirectory}".`,
+        );
+        this._metaEdLog.addMessage(
+          'Please configure Ed-Fi ODS Api Source Directory under the atom-metaed package to target the local copy of the Ed-Fi-ODS Api source code.  The targeted folder should contain the repositories for Ed-Fi-ODS and Ed-Fi-ODS-Implementation.',
+        );
         return null;
       }
     }
@@ -190,11 +207,7 @@ export default class MetaEdConsoleJs {
   }
 
   _createTaskParams(inputs: TaskInputs) {
-    const params = [
-      '/s',
-      '/c',
-      `node ${inputs.consolePath}`,
-    ];
+    const params = ['/s', '/c', `node ${inputs.consolePath}`];
     if (inputs.isExtensionProject) {
       params.push(...['-e', inputs.coreMetaEdSourceDirectory]);
       params.push(...['-x', inputs.projectPath]);
@@ -219,7 +232,8 @@ export default class MetaEdConsoleJs {
       notification.onDidDisplay(() => {
         startNotification.dismiss();
         setTimeout(() => notification.dismiss(), 3000);
-      }));
+      }),
+    );
 
     setImmediate(() => atom.notifications.addNotification(startNotification));
 
@@ -230,22 +244,20 @@ export default class MetaEdConsoleJs {
 
     console.log(`Executing cmd.exe with parameters ${JSON.stringify(taskParams)}.`);
 
-    const childProcess = this._spawn(
-      inputs.cmdFullPath,
-      taskParams, { cwd: inputs.metaEdJsConsoleSourceDirectory });
+    const childProcess = this._spawn(inputs.cmdFullPath, taskParams, { cwd: inputs.metaEdJsConsoleSourceDirectory });
 
     const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
     outputSplitter.encoding = 'utf8';
-    outputSplitter.on('token', (token) => {
+    outputSplitter.on('token', token => {
       this._metaEdLog.addMessage(ansihtml(token), true);
     });
 
-    childProcess.stderr.on('data', (data) => {
+    childProcess.stderr.on('data', data => {
       this._metaEdLog.addMessage(ansihtml(data.toString()).replace(/(?:\r\n|\r|\n)/g, '<br />'), true);
       resultNotification = buildErrorsNotification;
     });
 
-    childProcess.on('close', (code) => {
+    childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
         this._metaEdLog.addMessage(`Successfully executed MetaEd task ${inputs.taskName}.`);
@@ -257,9 +269,9 @@ export default class MetaEdConsoleJs {
     });
   }
 
-    // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
+  // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
   _collapseTreeViewDirectory(pathString: string): Promise<void> {
-    return atom.packages.activatePackage('tree-view').then((treeViewPackage) => {
+    return atom.packages.activatePackage('tree-view').then(treeViewPackage => {
       const treeView = treeViewPackage.mainModule.treeView;
       const directoryEntry = treeView.selectEntryForPath(pathString);
       if (directoryEntry) {

@@ -118,13 +118,21 @@ describe('when building duplicate shared integers', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate shared integers should have validation failures for each entity -> SI 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate shared integers should have validation failures for each entity -> SI 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('SharedSimpleBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate shared integers should have validation failures for each entity -> SI 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate shared integers should have validation failures for each entity -> SI 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate shared integers should have validation failures for each entity -> SI 2 sourceMap',
+    );
   });
 });
 
@@ -189,7 +197,6 @@ describe('when building shared short in extension namespace', () => {
     expect(getSharedInteger(metaEd.entity, entityName).isShort).toBe(true);
   });
 });
-
 
 describe('when building shared integer with no shared integer name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

@@ -34,7 +34,9 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
   });
 
   it('should rename InnovativeDollarsSpentStrategicPriorities column to InnovativeDollarsSpentOnStrategicPriorities', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(localEducationAgencyFederalFunds).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(localEducationAgencyFederalFunds).columns,
+    );
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });
 });
@@ -62,7 +64,9 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
   });
 
   it('should have InnovativeDollarsSpentOnStrategicPriorities column', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(localEducationAgencyFederalFunds).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(localEducationAgencyFederalFunds).columns,
+    );
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });
 });

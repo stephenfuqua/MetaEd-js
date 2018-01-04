@@ -402,7 +402,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 });
 
-describe('when DescriptorTableEnhancer enhances descriptor with map type name ending with \'Type\'', () => {
+describe("when DescriptorTableEnhancer enhances descriptor with map type name ending with 'Type'", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespaceName';
   const descriptorName: string = 'DescriptorName';

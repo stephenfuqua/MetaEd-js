@@ -22,7 +22,9 @@ export function inlineCommonPropertyTableBuilder(factory: TableBuilderFactory): 
       const inlineCommonProperty: ReferentialProperty = asReferentialProperty(property);
 
       let strategy: BuildStrategy = buildStrategy.appendInlineContext(inlineCommonProperty.data.edfiOds.ods_ContextPrefix);
-      if (inlineCommonProperty.isOptional) { strategy = strategy.makeLeafColumnsNullable(); }
+      if (inlineCommonProperty.isOptional) {
+        strategy = strategy.makeLeafColumnsNullable();
+      }
 
       inlineCommonProperty.referencedEntity.data.edfiOds.ods_Properties.forEach((odsProperty: EntityProperty) => {
         const tableBuilder: TableBuilder = factory.tableBuilderFor(odsProperty);

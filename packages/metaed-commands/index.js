@@ -5,5 +5,4 @@ import yargs from 'yargs';
 yargs
   .commandDir('src')
   .demandCommand()
-  .help()
-  .argv;
+  .help().argv;

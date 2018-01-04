@@ -23,8 +23,7 @@ describe('when enhancing string type', () => {
       minLength,
       maxLength,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -80,8 +79,7 @@ describe('when enhancing generated string type with min length only', () => {
       generatedSimpleType: true,
       minLength,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -120,8 +118,7 @@ describe('when enhancing generated string type with max length only', () => {
       generatedSimpleType: true,
       maxLength,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -158,8 +155,7 @@ describe('when enhancing non-generated string type with no restrictions', () => 
       documentation,
       generatedSimpleType: false,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -196,8 +192,7 @@ describe('when enhancing generated string type with no restrictions', () => {
       documentation,
       generatedSimpleType: true,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

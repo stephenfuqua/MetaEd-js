@@ -15,9 +15,10 @@ export function referencePropertyColumnCreator(factory: ColumnCreatorFactory): C
       const referentialProperty: ReferentialProperty = asReferentialProperty(property);
       let buildStrategy: BuildStrategy = strategy.appendParentContext(referentialProperty.data.edfiOds.ods_ContextPrefix);
       // NOTE: Add test coverage here once we understand how skip path should work? see SkipPathStrategy class in BuildStrategy
-      buildStrategy = referentialProperty.mergedProperties.length > 0
-        ? buildStrategy.skipPath(referentialProperty.mergedProperties.map(x => x.mergePropertyPath.slice(1)))
-        : buildStrategy;
+      buildStrategy =
+        referentialProperty.mergedProperties.length > 0
+          ? buildStrategy.skipPath(referentialProperty.mergedProperties.map(x => x.mergePropertyPath.slice(1)))
+          : buildStrategy;
 
       const columns: Array<Column> = collectPrimaryKeys(referentialProperty.referencedEntity, buildStrategy, factory);
       columns.forEach((column: Column) => {

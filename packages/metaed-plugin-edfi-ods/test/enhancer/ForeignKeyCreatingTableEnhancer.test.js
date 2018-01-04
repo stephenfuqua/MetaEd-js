@@ -7,12 +7,7 @@ import {
   newMergedProperty,
   newMetaEdEnvironment,
 } from 'metaed-core';
-import type {
-  DomainEntity,
-  DomainEntityProperty,
-  IntegerProperty,
-  MetaEdEnvironment,
-} from 'metaed-core';
+import type { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newTable } from '../../src/model/database/Table';
 import { newIntegerColumn } from '../../src/model/database/Column';
@@ -180,37 +175,25 @@ describe('when using get matching column from source entity properties with no m
     const integerPropertyName1: string = 'IntegerPropertyName1';
     const integerColumn1: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName1',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 })],
       referenceContext: integerPropertyName1,
-      mergedReferenceContexts: [
-        integerPropertyName1,
-      ],
+      mergedReferenceContexts: [integerPropertyName1],
     });
 
     const integerPropertyName2: string = 'IntegerPropertyName2';
     const integerColumn2: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName2',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 })],
       referenceContext: integerPropertyName2,
-      mergedReferenceContexts: [
-        integerPropertyName2,
-      ],
+      mergedReferenceContexts: [integerPropertyName2],
     });
 
     const integerPropertyName3: string = 'IntegerPropertyName3';
     const integerColumn3: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName3',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
-      mergedReferenceContexts: [
-        integerPropertyName3,
-      ],
+      mergedReferenceContexts: [integerPropertyName3],
     });
 
     column = getMatchingColumnFromSourceEntityProperties(integerColumn1, [integerColumn2, integerColumn3]);
@@ -238,9 +221,7 @@ describe('when using get matching column from source entity properties with matc
         Object.assign(newIntegerProperty(), { metaEdName: 'IntegerPropertyName1' }),
       ],
       referenceContext: matchingIntegerPropertyName,
-      mergedReferenceContexts: [
-        matchingIntegerPropertyName,
-      ],
+      mergedReferenceContexts: [matchingIntegerPropertyName],
     });
 
     const integerPropertyName2: string = 'IntegerPropertyName2';
@@ -251,21 +232,15 @@ describe('when using get matching column from source entity properties with matc
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
-      mergedReferenceContexts: [
-        integerPropertyName2,
-      ],
+      mergedReferenceContexts: [integerPropertyName2],
     });
 
     const integerPropertyName3: string = 'IntegerPropertyName3';
     const integerColumn: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
-      mergedReferenceContexts: [
-        integerPropertyName3,
-      ],
+      mergedReferenceContexts: [integerPropertyName3],
     });
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]);
@@ -296,9 +271,7 @@ describe('when using get matching column from source entity properties with matc
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 }),
       ],
       referenceContext: matchingIntegerPropertyName,
-      mergedReferenceContexts: [
-        integerPropertyName1,
-      ],
+      mergedReferenceContexts: [integerPropertyName1],
     });
 
     const integerPropertyName2: string = 'IntegerPropertyName2';
@@ -309,9 +282,7 @@ describe('when using get matching column from source entity properties with matc
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
-      mergedReferenceContexts: [
-        integerPropertyName2,
-      ],
+      mergedReferenceContexts: [integerPropertyName2],
     });
 
     const integerPropertyName3: string = 'IntegerPropertyName3';
@@ -322,21 +293,15 @@ describe('when using get matching column from source entity properties with matc
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
-      mergedReferenceContexts: [
-        integerPropertyName2,
-      ],
+      mergedReferenceContexts: [integerPropertyName2],
     });
 
     const integerPropertyName4: string = 'IntegerPropertyName4';
     const integerColumn: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4 })],
       referenceContext: integerPropertyName3,
-      mergedReferenceContexts: [
-        integerPropertyName3,
-      ],
+      mergedReferenceContexts: [integerPropertyName3],
     });
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn1, integerColumn, matchingColumn2]);
@@ -366,10 +331,7 @@ describe('when using get matching column from source entity properties with matc
         Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName1 }),
       ],
       referenceContext: matchingIntegerPropertyName,
-      mergedReferenceContexts: [
-        matchingIntegerPropertyName,
-        integerPropertyName1,
-      ],
+      mergedReferenceContexts: [matchingIntegerPropertyName, integerPropertyName1],
     });
 
     const integerPropertyName2: string = 'IntegerPropertyName2';
@@ -380,22 +342,15 @@ describe('when using get matching column from source entity properties with matc
         matchingIntegerProperty,
       ],
       referenceContext: integerPropertyName2,
-      mergedReferenceContexts: [
-        integerPropertyName2,
-        matchingIntegerPropertyName,
-      ],
+      mergedReferenceContexts: [integerPropertyName2, matchingIntegerPropertyName],
     });
 
     const integerPropertyName3: string = 'IntegerPropertyName3';
     const integerColumn: Column = Object.assign(newIntegerColumn(), {
       name: 'IntegerColumnName',
-      sourceEntityProperties: [
-        Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 }),
-      ],
+      sourceEntityProperties: [Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 })],
       referenceContext: integerPropertyName3,
-      mergedReferenceContexts: [
-        integerPropertyName3,
-      ],
+      mergedReferenceContexts: [integerPropertyName3],
     });
 
     column = getMatchingColumnFromSourceEntityProperties(columnToMatch, [matchingColumn, integerColumn]);
@@ -527,12 +482,12 @@ describe('when using get merge property column with reference property', () => {
   beforeAll(() => {
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
-      data: { edfiOds: { } },
+      data: { edfiOds: {} },
     });
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
-      data: { edfiOds: { } },
+      data: { edfiOds: {} },
     });
     const domainEntity3Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,
@@ -600,12 +555,12 @@ describe('when using get merge property column with multiple source entity prope
   beforeAll(() => {
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName2,
-      data: { edfiOds: { } },
+      data: { edfiOds: {} },
     });
 
     const domainEntity3: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName3,
-      data: { edfiOds: { } },
+      data: { edfiOds: {} },
     });
     const domainEntity3Property2: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName2,

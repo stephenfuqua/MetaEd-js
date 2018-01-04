@@ -127,13 +127,21 @@ describe('when building duplicate commons', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate commons should have validation failures for each entity -> Common 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate commons should have validation failures for each entity -> Common 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate commons should have validation failures for each entity -> Common 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate commons should have validation failures for each entity -> Common 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate commons should have validation failures for each entity -> Common 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate commons should have validation failures for each entity -> Common 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate commons should have validation failures for each entity -> Common 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate commons should have validation failures for each entity -> Common 2 sourceMap',
+    );
   });
 });
 
@@ -221,7 +229,6 @@ describe('when building common with no common name', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   const propertyMetaEdId: string = '2';
 
-
   beforeAll(() => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
@@ -258,7 +265,6 @@ describe('when building common with lowercase common name', () => {
   const propertyDocumentation: string = 'PropertyDocumentation';
   const propertyMetaEdId: string = '2';
 
-
   beforeAll(() => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
@@ -293,7 +299,6 @@ describe('when building common with no documentation', () => {
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const propertyMetaEdId: string = '2';
-
 
   beforeAll(() => {
     const builder = new CommonBuilder(metaEd, validationFailures);
@@ -617,7 +622,6 @@ describe('when building inline common with no documentation', () => {
   const propertyName: string = 'PropertyName';
   const propertyDocumentation: string = 'PropertyDocumentation';
   const propertyMetaEdId: string = '2';
-
 
   beforeAll(() => {
     const builder = new CommonBuilder(metaEd, validationFailures);

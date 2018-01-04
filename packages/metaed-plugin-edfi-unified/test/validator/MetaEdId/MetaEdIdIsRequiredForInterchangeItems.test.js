@@ -1,12 +1,7 @@
 // @flow
-import {
-  InterchangeBuilder,
-  newMetaEdEnvironment,
-  MetaEdTextBuilder,
-} from 'metaed-core';
+import { InterchangeBuilder, newMetaEdEnvironment, MetaEdTextBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
-
 
 describe('when validating interchange element is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -33,8 +28,12 @@ describe('when validating interchange element is missing metaEdId', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange element is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange element is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange element is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange element is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -62,8 +61,12 @@ describe('when validating interchange extension element is missing metaEdId', ()
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange extension element is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange extension element is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange extension element is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange extension element is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -93,8 +96,12 @@ describe('when validating interchange identity template is missing metaEdId', ()
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange identity template is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange identity template is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange identity template is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange identity template is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -122,7 +129,11 @@ describe('when validating interchange extension identity template is missing met
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForInterchangeItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange extension identity template is missing metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange extension identity template is missing metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange extension identity template is missing metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange extension identity template is missing metaEdId should have validation failures -> sourceMap',
+    );
   });
 });

@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newInlineCommon, newInlineCommonProperty, newStringProperty } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newAssociation,
+  newInlineCommon,
+  newInlineCommonProperty,
+  newStringProperty,
+} from 'metaed-core';
 import type { MetaEdEnvironment, Common, Association } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
@@ -28,8 +34,7 @@ describe('when enhancing association with inline string property', () => {
       inlineInOds: true,
       properties,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.common.set(inlineCommon.metaEdName, inlineCommon);
@@ -43,8 +48,7 @@ describe('when enhancing association with inline string property', () => {
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.association.set(association.metaEdName, association);
@@ -52,7 +56,6 @@ describe('when enhancing association with inline string property', () => {
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
   });
-
 
   it('should add identity properties to association', () => {
     const association: any = metaEd.entity.association.get(entityName);
@@ -80,8 +83,7 @@ describe('when enhancing association with inline nested string property', () => 
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
@@ -96,8 +98,7 @@ describe('when enhancing association with inline nested string property', () => 
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
@@ -111,8 +112,7 @@ describe('when enhancing association with inline nested string property', () => 
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.association.set(association.metaEdName, association);
@@ -120,7 +120,6 @@ describe('when enhancing association with inline nested string property', () => 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
   });
-
 
   it('should add identity properties to association', () => {
     const association: any = metaEd.entity.association.get(entityName);

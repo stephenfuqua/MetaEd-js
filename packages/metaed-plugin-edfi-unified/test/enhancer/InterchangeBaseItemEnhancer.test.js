@@ -40,18 +40,22 @@ describe('when enhancing interchange in core', () => {
     addEntity(metaEd.entity, interchange);
 
     elementEntities.forEach(entity => {
-      interchange.elements.push(Object.assign(newInterchangeItem(), {
-        metaEdName: entity.metaEdName,
-        referencedType: [entity.type],
-      }));
+      interchange.elements.push(
+        Object.assign(newInterchangeItem(), {
+          metaEdName: entity.metaEdName,
+          referencedType: [entity.type],
+        }),
+      );
       addEntity(metaEd.entity, entity);
     });
 
     identityTemplateEntities.forEach(entity => {
-      interchange.identityTemplates.push(Object.assign(newInterchangeItem(), {
-        metaEdName: entity.metaEdName,
-        referencedType: [entity.type],
-      }));
+      interchange.identityTemplates.push(
+        Object.assign(newInterchangeItem(), {
+          metaEdName: entity.metaEdName,
+          referencedType: [entity.type],
+        }),
+      );
       addEntity(metaEd.entity, entity);
     });
 
@@ -92,15 +96,19 @@ describe('when enhancing interchange extension', () => {
     const interchangeExtension = Object.assign(newInterchangeExtension(), { metaEdName: interchangeMetaEdName });
     addEntity(metaEd.entity, interchangeExtension);
 
-    interchange.elements.push(Object.assign(newInterchangeItem(), {
-      metaEdName: domainEntity.metaEdName,
-      referencedType: [domainEntity.type],
-    }));
+    interchange.elements.push(
+      Object.assign(newInterchangeItem(), {
+        metaEdName: domainEntity.metaEdName,
+        referencedType: [domainEntity.type],
+      }),
+    );
 
-    interchangeExtension.elements.push(Object.assign(newInterchangeItem(), {
-      metaEdName: domainEntityExtension.metaEdName,
-      referencedType: [domainEntityExtension.type],
-    }));
+    interchangeExtension.elements.push(
+      Object.assign(newInterchangeItem(), {
+        metaEdName: domainEntityExtension.metaEdName,
+        referencedType: [domainEntityExtension.type],
+      }),
+    );
 
     enhance(metaEd);
   });
@@ -113,4 +121,3 @@ describe('when enhancing interchange extension', () => {
     expect(interchangeExtension.elements[0].referencedEntity).toBe(domainEntityExtension);
   });
 });
-

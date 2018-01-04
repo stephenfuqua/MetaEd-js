@@ -18,16 +18,17 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const getSimpleTypeTemplate: () => (any) => string = ramda.memoize(() => handlbars.compile(getTemplateString('simpleType')));
+const getSimpleTypeTemplate: () => any => string = ramda.memoize(() => handlbars.compile(getTemplateString('simpleType')));
 
 function generatedXsdFor(entity: ModelBase): string {
   if (!entity.data.edfiXsd.xsd_SimpleType) return '';
-  const template: (any) => string = getSimpleTypeTemplate();
+  const template: any => string = getSimpleTypeTemplate();
   return template(entity.data.edfiXsd.xsd_SimpleType);
 }
 
 function getCardinalityStringFor(property: EntityProperty, isHandbookEntityReferenceProperty: boolean = false): string {
-  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename)) return 'required';
+  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename))
+    return 'required';
   if (property.isPartOfIdentity) return 'identity';
   if (property.isRequired) return 'required';
   if (property.isRequiredCollection) return 'required collection';
@@ -36,12 +37,17 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
   return 'UNKNOWN CARDINALITY';
 }
 
-
 function referringProperties(metaEd: MetaEdEnvironment, entity: ModelBase): Array<string> {
-  return getAllReferentialProperties(metaEd).filter((x) => x.referencedEntity.metaEdName === entity.metaEdName).map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);
+  return getAllReferentialProperties(metaEd)
+    .filter(x => x.referencedEntity.metaEdName === entity.metaEdName)
+    .map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);
 }
 
-export function createDefaultHandbookEntry(property: ModelBase, entityTypeName: string, metaEd: MetaEdEnvironment): HandbookEntry {
+export function createDefaultHandbookEntry(
+  property: ModelBase,
+  entityTypeName: string,
+  metaEd: MetaEdEnvironment,
+): HandbookEntry {
   return Object.assign(newHandbookEntry(), {
     definition: property.documentation,
     edFiId: property.metaEdId,

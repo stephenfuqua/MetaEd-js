@@ -21,12 +21,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
 
   const common: ?ModelBase = getEntity(metaEd.entity, commonName, commonModelType);
-  const complexType: ?ComplexType = common != null
-    ? R.head(common.data.edfiXsd.xsd_ComplexTypes)
-    : null;
-  const element: ?Element = complexType != null
-    ? complexType.items.map(x => asElement(x)).find(x => x.name === elementName && x.type === elementType)
-    : null;
+  const complexType: ?ComplexType = common != null ? R.head(common.data.edfiXsd.xsd_ComplexTypes) : null;
+  const element: ?Element =
+    complexType != null
+      ? complexType.items.map(x => asElement(x)).find(x => x.name === elementName && x.type === elementType)
+      : null;
 
   if (element != null) element.name = newElementName;
 

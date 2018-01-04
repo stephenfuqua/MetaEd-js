@@ -7,12 +7,14 @@ export type StringSimpleType = {
   minLength: string,
   maxLength: string,
   hasRestrictions: () => boolean,
-}
+};
 
 export function newStringSimpleType(): StringSimpleType {
   return Object.assign({}, newSimpleType(), {
     minLength: '',
     maxLength: '',
-    hasRestrictions() { return !!this.minLength || !!this.maxLength; },
+    hasRestrictions() {
+      return !!this.minLength || !!this.maxLength;
+    },
   });
 }

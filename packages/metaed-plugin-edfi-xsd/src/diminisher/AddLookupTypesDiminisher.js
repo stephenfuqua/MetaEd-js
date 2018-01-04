@@ -1,9 +1,5 @@
 // @flow
-import type {
-  MetaEdEnvironment,
-  EnhancerResult,
-  TopLevelEntity,
-} from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
 import { getAllTopLevelEntities, prependIndefiniteArticle } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import type { Element } from '../model/schema/Element';
@@ -17,7 +13,8 @@ import { newElement } from '../model/schema/Element';
 const enhancerName: string = 'AddLookupTypesDiminisher';
 
 const typeGroup: string = 'Lookup';
-const documentation: string = 'Encapsulates alternative attributes that can be used to look up the identity of {entity.metaEdName}.';
+const documentation: string =
+  'Encapsulates alternative attributes that can be used to look up the identity of {entity.metaEdName}.';
 const lookupTypeNames: Array<string> = [
   'Assessment',
   'AssessmentFamily',

@@ -18,8 +18,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     domain.domainItems.forEach(domainItem => {
       if (domainItem.referencedType === 'descriptor') {
         if (!metaEd.entity.descriptor.has(domainItem.metaEdName)) {
-          failures.push(getFailure(domainItem, 'DescriptorDomainItemMustMatchTopLevelEntity',
-            `Descriptor Domain Item property '${domainItem.metaEdName}' does not match any declared Descriptor.`));
+          failures.push(
+            getFailure(
+              domainItem,
+              'DescriptorDomainItemMustMatchTopLevelEntity',
+              `Descriptor Domain Item property '${domainItem.metaEdName}' does not match any declared Descriptor.`,
+            ),
+          );
         }
       }
     });

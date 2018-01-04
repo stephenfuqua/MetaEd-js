@@ -123,7 +123,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   const complexSheet: Worksheet = newWorksheet('Complex Types');
-  allComplexTypes.forEach((complexType) => {
+  allComplexTypes.forEach(complexType => {
     const eRow: Row = newRow();
     setRow(eRow, 'Name', complexType.name);
     setRow(eRow, 'Description', complexType.annotation.documentation);
@@ -133,7 +133,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   const simpleSheet: Worksheet = newWorksheet('Simple Types');
-  allSimpleTypes.forEach((simpleType) => {
+  allSimpleTypes.forEach(simpleType => {
     const eRow: Row = newRow();
     setRow(eRow, 'Name', simpleType.name);
     setRow(eRow, 'Restrictions', formatRestrictions(simpleType));
@@ -147,16 +147,15 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   eBook.sheets.push(complexSheet);
   eBook.sheets.push(simpleSheet);
 
-  const generatedOutput: Array<GeneratedOutput> =
-    [
-      {
-        name: 'XmlDataDictionary',
-        fileName: 'XmlDataDictionary.xlsx',
-        folderName: 'Documentation',
-        resultString: '',
-        resultStream: exportWorkbook(eBook, 'buffer'),
-      },
-    ];
+  const generatedOutput: Array<GeneratedOutput> = [
+    {
+      name: 'XmlDataDictionary',
+      fileName: 'XmlDataDictionary.xlsx',
+      folderName: 'Documentation',
+      resultString: '',
+      resultStream: exportWorkbook(eBook, 'buffer'),
+    },
+  ];
 
   return {
     generatorName: 'edfiXmlDataDictionary.XmlDataDictionaryGenerator',

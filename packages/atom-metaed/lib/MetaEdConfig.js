@@ -20,9 +20,9 @@ export default class MetaEdConfig {
     if (!this._coreMetaEdSourceDirectory) {
       this._coreMetaEdSourceDirectory = newCoreMetaEdSourceDirectory;
     }
-    const projectPaths = atom.project.getPaths()
-    .filter(projectPath =>
-    path.normalize(projectPath) !== path.normalize(this._coreMetaEdSourceDirectory));
+    const projectPaths = atom.project
+      .getPaths()
+      .filter(projectPath => path.normalize(projectPath) !== path.normalize(this._coreMetaEdSourceDirectory));
     projectPaths.unshift(newCoreMetaEdSourceDirectory);
     atom.project.setPaths(projectPaths);
     this._coreMetaEdSourceDirectory = newCoreMetaEdSourceDirectory;

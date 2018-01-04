@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, DomainEntityBuilder, DomainEntitySubclassBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainBuilder,
+  DomainEntityBuilder,
+  DomainEntitySubclassBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/DomainEntityDomainItemMustMatchTopLevelEntity';
 
@@ -123,7 +129,11 @@ describe('when validating domain entity domain item does not match top level ent
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity domain item has no matching top level entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity domain item has no matching top level entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity domain item has no matching top level entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity domain item has no matching top level entity should have validation failure -> sourceMap',
+    );
   });
 });

@@ -12,15 +12,18 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyCascadingDeletesDefinitionsDiminisher';
 const targetVersions: string = '2.0.x';
 
-const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) =>
-  (parentTableName: string, foreignTableName: string, withDeleteCascade: boolean = false): void => {
-    const table: ?Table = getTable(repository, parentTableName);
-    if (table == null) return;
+const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) => (
+  parentTableName: string,
+  foreignTableName: string,
+  withDeleteCascade: boolean = false,
+): void => {
+  const table: ?Table = getTable(repository, parentTableName);
+  if (table == null) return;
 
-    const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
-    if (foreignKey == null) return;
-    foreignKey.withDeleteCascade = withDeleteCascade;
-  };
+  const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
+  if (foreignKey == null) return;
+  foreignKey.withDeleteCascade = withDeleteCascade;
+};
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
@@ -37,7 +40,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   modifyCascadingDeletesFor('CourseTranscriptEarnedAdditionalCredits', 'CourseTranscript');
   modifyCascadingDeletesFor('GradebookEntryLearningObjective', 'GradebookEntry');
   modifyCascadingDeletesFor('GraduationPlanRequiredAssessment', 'GraduationPlan');
-  modifyCascadingDeletesFor('GraduationPlanRequiredAssessmentAssessmentPerformanceLevel', 'GraduationPlanRequiredAssessment');
+  modifyCascadingDeletesFor(
+    'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel',
+    'GraduationPlanRequiredAssessment',
+  );
   modifyCascadingDeletesFor('GraduationPlanRequiredAssessmentScore', 'GraduationPlanRequiredAssessment');
   modifyCascadingDeletesFor('LearningStandardGradeLevel', 'LearningStandard');
   modifyCascadingDeletesFor('LocalEducationAgencyFederalFunds', 'LocalEducationAgency');

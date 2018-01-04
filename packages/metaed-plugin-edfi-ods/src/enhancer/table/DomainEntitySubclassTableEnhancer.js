@@ -30,24 +30,29 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
       withDeleteCascade: true,
     });
 
-    const localColumnNames: Array<string> = columnCreatorFactory.columnCreatorFor(keyRenameProperty)
+    const localColumnNames: Array<string> = columnCreatorFactory
+      .columnCreatorFor(keyRenameProperty)
       .createColumns(keyRenameProperty, BuildStrategyDefault)
       .map((x: Column) => x.name);
 
-    // $FlowIgnore - baseEntity could be null/undefined
-    const baseColumnProperty: EntityProperty = R.head(entity.baseEntity.data.edfiOds.ods_Properties
-        .filter((property: EntityProperty) => property.data.edfiOds.ods_Name === keyRenameProperty.baseKeyName));
+    const baseColumnProperty: EntityProperty = R.head(
+      // $FlowIgnore - baseEntity could be null/undefined
+      entity.baseEntity.data.edfiOds.ods_Properties.filter(
+        (property: EntityProperty) => property.data.edfiOds.ods_Name === keyRenameProperty.baseKeyName,
+      ),
+    );
 
-    const baseColumnNames: Array<string> = columnCreatorFactory.columnCreatorFor(baseColumnProperty)
-        .createColumns(baseColumnProperty, BuildStrategyDefault)
-        .map((x: Column) => x.name);
+    const baseColumnNames: Array<string> = columnCreatorFactory
+      .columnCreatorFor(baseColumnProperty)
+      .createColumns(baseColumnProperty, BuildStrategyDefault)
+      .map((x: Column) => x.name);
 
-    const columnNamePairs: Array<ColumnNamePair> = R.zipWith(
-        (localColumnName, baseColumnName) => Object.assign(newColumnNamePair(), {
-          parentTableColumnName: localColumnName,
-          foreignTableColumnName: baseColumnName,
-        }),
-      )(localColumnNames, baseColumnNames);
+    const columnNamePairs: Array<ColumnNamePair> = R.zipWith((localColumnName, baseColumnName) =>
+      Object.assign(newColumnNamePair(), {
+        parentTableColumnName: localColumnName,
+        foreignTableColumnName: baseColumnName,
+      }),
+    )(localColumnNames, baseColumnNames);
 
     addColumnNamePairs(foreignKey, columnNamePairs);
     addForeignKey(table, foreignKey);
@@ -57,15 +62,15 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'domainEntitySubclass')
     .map((x: ModelBase) => asTopLevelEntity(x))
-      .forEach((entity: TopLevelEntity) => {
-        const tables: Array<Table> = [];
-        const mainTable: Table = buildMainTable(entity, false);
-        tables.push(mainTable);
-        addForeignKeyToPrimaryKeyRename(mainTable, entity);
-        buildTablesFromProperties(entity, mainTable, tables);
-        entity.data.edfiOds.ods_Tables = tables;
-        addTables(metaEd, tables);
-      });
+    .forEach((entity: TopLevelEntity) => {
+      const tables: Array<Table> = [];
+      const mainTable: Table = buildMainTable(entity, false);
+      tables.push(mainTable);
+      addForeignKeyToPrimaryKeyRename(mainTable, entity);
+      buildTablesFromProperties(entity, mainTable, tables);
+      entity.data.edfiOds.ods_Tables = tables;
+      addTables(metaEd, tables);
+    });
 
   return {
     enhancerName,

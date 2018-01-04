@@ -20,16 +20,18 @@ function addInlineIdentities(topLevelEntity: TopLevelEntity, properties: Array<E
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity,
+  getEntitiesOfType(
+    metaEd.entity,
     'association',
     'associationExtension',
     'associationSubclass',
     'domainEntity',
     'domainEntityExtension',
-    'domainEntitySubclass').forEach(entity => {
-      const topLevelEntity = ((entity: any): TopLevelEntity);
-      addInlineIdentities(topLevelEntity, topLevelEntity.properties, metaEd.entity);
-    });
+    'domainEntitySubclass',
+  ).forEach(entity => {
+    const topLevelEntity = ((entity: any): TopLevelEntity);
+    addInlineIdentities(topLevelEntity, topLevelEntity.properties, metaEd.entity);
+  });
 
   return {
     enhancerName,

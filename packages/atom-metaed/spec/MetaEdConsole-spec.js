@@ -189,7 +189,9 @@ describe('MetaEdConsole', () => {
 
     it('returns null and logs a message if deploy task and edfi ods api source directory does not exist', () => {
       atom.project.getPaths.andReturn(['project 1', 'project 2']);
-      spyOn(fs, 'existsSync').andCallFake(filepath => !filepath.includes('metaEdConsoleSourceDirectory') && !filepath.includes('cmdFullPath'));
+      spyOn(fs, 'existsSync').andCallFake(
+        filepath => !filepath.includes('metaEdConsoleSourceDirectory') && !filepath.includes('cmdFullPath'),
+      );
       const gulpInputs = metaEdConsole._verifyGulpInputs('deploy');
 
       expect(gulpInputs).toBeNull();
@@ -211,7 +213,10 @@ describe('MetaEdConsole', () => {
       expect(gulpInputs.artifactPath).toEqual(path.join('project 2/MetaEdOutput/'));
       expect(gulpInputs.edfiOdsApiSourceDirectory).toEqual('edfiOdsApiSourceDirectory');
       expect(gulpInputs.edfiOdsRepoDirectory).toEqual(path.join('edfiOdsApiSourceDirectory/Ed-Fi-ODS/'));
-      expect(gulpInputs.edfiOdsImplementationRepoDirectory).toEqual(path.join('edfiOdsApiSourceDirectory/Ed-Fi-ODS-Implementation/'));
+      expect(gulpInputs.edfiOdsImplementationRepoDirectory).toEqual(
+        path.join('edfiOdsApiSourceDirectory/Ed-Fi-ODS-Implementation/'),
+      );
+
       expect(gulpInputs.gulpPath).toContain(path.join('/.bin/gulp.cmd'));
 
       expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
@@ -320,7 +325,7 @@ describe('MetaEdConsole', () => {
 
     it('destroys all editors and removes the artifact path', () => {
       spyOn(fs, 'removeSync');
-      const editor1 = { };
+      const editor1 = {};
       const editor2Spy = jasmine.createSpyObj('Editor 2', ['getPath']);
       const editor3Spy = jasmine.createSpyObj('Editor 3', ['getPath']);
       editorToDestroySpy = jasmine.createSpyObj('Editor 4', ['getPath']);

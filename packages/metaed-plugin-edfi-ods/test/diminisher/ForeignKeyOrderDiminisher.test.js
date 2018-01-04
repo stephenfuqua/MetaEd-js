@@ -54,8 +54,8 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
-      primaryKeys: primaryKeyOrder.map(
-        (name: string) => Object.assign(newColumn(), {
+      primaryKeys: primaryKeyOrder.map((name: string) =>
+        Object.assign(newColumn(), {
           name,
           isPartOfPrimaryKey: true,
         }),
@@ -65,18 +65,21 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
-      columns: primaryKeyNames.map((name: string) => Object.assign(newColumn(), {
-        name,
-      }),
+      columns: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
+          name,
+        }),
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableSchema: namespace,
           foreignTableName: foreignTable.name,
-          columnNames: primaryKeyNames.map((name: string) => Object.assign(newColumnNamePair(), {
-            parentTableColumnName: name,
-            foreignTableColumnName: name,
-          })),
+          columnNames: primaryKeyNames.map((name: string) =>
+            Object.assign(newColumnNamePair(), {
+              parentTableColumnName: name,
+              foreignTableColumnName: name,
+            }),
+          ),
         }),
       ],
     });
@@ -126,8 +129,8 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: foreignTableName,
-      primaryKeys: primaryKeyNames.map(
-        (name: string) => Object.assign(newColumn(), {
+      primaryKeys: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
           name,
           isPartOfPrimaryKey: true,
         }),
@@ -137,18 +140,21 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
-      columns: primaryKeyNames.map((name: string) => Object.assign(newColumn(), {
-        name,
-      }),
+      columns: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
+          name,
+        }),
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
           foreignTableSchema: namespace,
           foreignTableName: foreignTable.name,
-          columnNames: primaryKeyNames.map((name: string) => Object.assign(newColumnNamePair(), {
-            parentTableColumnName: name,
-            foreignTableColumnName: name,
-          })),
+          columnNames: primaryKeyNames.map((name: string) =>
+            Object.assign(newColumnNamePair(), {
+              parentTableColumnName: name,
+              foreignTableColumnName: name,
+            }),
+          ),
         }),
       ],
     });

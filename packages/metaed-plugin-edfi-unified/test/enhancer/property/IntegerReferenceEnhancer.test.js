@@ -7,13 +7,7 @@ import {
   newSharedInteger,
   NoSharedSimple,
 } from 'metaed-core';
-import type {
-  IntegerProperty,
-  IntegerType,
-  MetaEdEnvironment,
-  SharedInteger,
-  SharedIntegerProperty,
-} from 'metaed-core';
+import type { IntegerProperty, IntegerType, MetaEdEnvironment, SharedInteger, SharedIntegerProperty } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
 describe('when enhancing integer property', () => {

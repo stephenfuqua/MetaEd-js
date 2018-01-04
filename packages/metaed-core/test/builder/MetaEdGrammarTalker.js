@@ -8,19 +8,19 @@ type TestContext = any;
 
 type ListenerMethodCall = {
   listenerMethod: MethodName,
-  grammarContext: MetaEdGrammar.ParserRuleContext
+  grammarContext: MetaEdGrammar.ParserRuleContext,
 };
 
 const emptyContext = () => ({});
 
-const appendToContext = R.curry(
-  (functionName: string, result: string, originalContext: any): TestContext => Object.assign({}, originalContext, { [functionName]: () => result }),
+const appendToContext = R.curry((functionName: string, result: string, originalContext: any): TestContext =>
+  Object.assign({}, originalContext, { [functionName]: () => result }),
 );
 
 const newContext = appendToContext(R.__, R.__, emptyContext());
 
-const appendTextContext = R.curry(
-  (tokenName: string, textToReturn: string, originalContext: any): TestContext => Object.assign({}, originalContext, { [tokenName]: () => ({ getText: () => textToReturn }) }),
+const appendTextContext = R.curry((tokenName: string, textToReturn: string, originalContext: any): TestContext =>
+  Object.assign({}, originalContext, { [tokenName]: () => ({ getText: () => textToReturn }) }),
 );
 
 const textContext = appendTextContext(R.__, R.__, emptyContext());
@@ -164,10 +164,15 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withDecimalType(identifier: string, documentation: string,
-    totalDigits: string, decimalPlaces: string,
-    maxValue: ?string = null, minValue: ?string = null,
-    metaEdId: ?string = null) {
+  withDecimalType(
+    identifier: string,
+    documentation: string,
+    totalDigits: string,
+    decimalPlaces: string,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addMethodCall('enterDecimalType', emptyContext());
 
     const decimalTypeNameContext = idTextContext(identifier);
@@ -185,10 +190,15 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withSharedDecimal(identifier: string, documentation: string,
-    totalDigits: string, decimalPlaces: string,
-    maxValue: ?string = null, minValue: ?string = null,
-    metaEdId: ?string = null) {
+  withSharedDecimal(
+    identifier: string,
+    documentation: string,
+    totalDigits: string,
+    decimalPlaces: string,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addMethodCall('enterSharedDecimal', emptyContext());
 
     const sharedDecimalNameContext = idTextContext(identifier);
@@ -206,9 +216,13 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withSharedInteger(identifier: string, documentation: string,
-    maxValue: ?string = null, minValue: ?string = null,
-    metaEdId: ?string = null) {
+  withSharedInteger(
+    identifier: string,
+    documentation: string,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addMethodCall('enterSharedInteger', emptyContext());
 
     const sharedIntegerNameContext = idTextContext(identifier);
@@ -225,9 +239,13 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withSharedShort(identifier: string, documentation: string,
-    maxValue: ?string = null, minValue: ?string = null,
-    metaEdId: ?string = null) {
+  withSharedShort(
+    identifier: string,
+    documentation: string,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addMethodCall('enterSharedShort', emptyContext());
 
     const sharedShortNameContext = idTextContext(identifier);
@@ -244,9 +262,13 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withSharedString(identifier: string, documentation: string,
-    maxLength: string, minLength: ?string = null,
-    metaEdId: ?string = null) {
+  withSharedString(
+    identifier: string,
+    documentation: string,
+    maxLength: string,
+    minLength: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addMethodCall('enterSharedString', emptyContext());
 
     const sharedStringNameContext = idTextContext(identifier);
@@ -465,7 +487,11 @@ export class MetaEdGrammarTalker {
     if (documentationLines.join() === 'inherited') {
       documentationContext = appendToContext('INHERITED', true, textContext('TEXT', null));
     } else {
-      documentationContext = appendToContext('INHERITED', null, textContext('TEXT', joinDocumentationLines(documentationLines)));
+      documentationContext = appendToContext(
+        'INHERITED',
+        null,
+        textContext('TEXT', joinDocumentationLines(documentationLines)),
+      );
     }
 
     this.addMethodCall('enterPropertyDocumentation', documentationContext);
@@ -624,31 +650,56 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withBooleanProperty(identifier: string, documentation: string, isRequired: boolean, isCollection: boolean, metaEdId: ?string = null) {
+  withBooleanProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Boolean');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Boolean');
     return this;
   }
 
-  withCurrencyProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, metaEdId: ?string = null) {
+  withCurrencyProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Currency');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Currency');
     return this;
   }
 
-  withDateProperty(identifier: string, documentation: string, isRequired: boolean, isCollection: boolean, metaEdId: ?string = null) {
+  withDateProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Date');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Date');
     return this;
   }
 
-  withDecimalProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, totalDigits: string, decimalPlaces: string,
-    maxValue: ?string = null, minValue: ?string = null, metaEdId: ?string = null) {
+  withDecimalProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    totalDigits: string,
+    decimalPlaces: string,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Decimal');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
 
@@ -659,54 +710,101 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withDescriptorProperty(descriptorName: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, metaEdId: ?string = null) {
+  withDescriptorProperty(
+    descriptorName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Descriptor');
     this.addPropertyNameAndComponents(descriptorName, metaEdId, documentation, isRequired, isCollection, context);
     this.addPropertyExit('Descriptor');
     return this;
   }
 
-  withDurationProperty(identifier: string, documentation: string, isRequired: boolean, isCollection: boolean, metaEdId: ?string = null) {
+  withDurationProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Duration');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Duration');
     return this;
   }
 
-  withEnumerationProperty(enumerationName: string, documentation: string, isRequired: boolean, isCollection: boolean, context: ?string = null, metaEdId: ?string = null) {
+  withEnumerationProperty(
+    enumerationName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Enumeration');
     this.addPropertyNameAndComponents(enumerationName, metaEdId, documentation, isRequired, isCollection, context);
     this.addPropertyExit('Enumeration');
     return this;
   }
 
-  withCommonProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withCommonProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Common');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addPropertyExit('Common');
     return this;
   }
 
-  withInlineCommonProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withInlineCommonProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('InlineCommon');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addPropertyExit('InlineCommon');
     return this;
   }
 
-  withChoiceProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withChoiceProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Choice');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addPropertyExit('Choice');
     return this;
   }
 
-  withCommonPropertyWithExtensionOverride(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withCommonPropertyWithExtensionOverride(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Common');
     this.addMethodCall('enterCommonExtensionOverride', emptyContext());
     this.addMethodCall('exitCommonExtensionOverride', emptyContext());
@@ -715,8 +813,15 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withStartCommonProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withStartCommonProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Common');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     return this;
@@ -727,8 +832,15 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withStartChoiceProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withStartChoiceProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Choice');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     return this;
@@ -739,8 +851,15 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withStartInlineCommonProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withStartInlineCommonProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Common');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     return this;
@@ -751,8 +870,16 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withDomainEntityProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, isWeak: ?boolean = null, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withDomainEntityProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: ?boolean = null,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('DomainEntity');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addIsWeakReference(isWeak);
@@ -760,8 +887,16 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withAssociationProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, isWeak: ?boolean = null, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withAssociationProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: ?boolean = null,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Association');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addIsWeakReference(isWeak);
@@ -769,16 +904,32 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withStartAssociationProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, isWeak: ?boolean = null, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withStartAssociationProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: ?boolean = null,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Association');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addIsWeakReference(isWeak);
     return this;
   }
 
-  withStartDomainEntityProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, isWeak: ?boolean = null, context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withStartDomainEntityProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: ?boolean = null,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('DomainEntity');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection, context, shortenTo);
     this.addIsWeakReference(isWeak);
@@ -800,8 +951,16 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withSharedProperty(identifier: ?string, sharedPropertyType: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, context: ?string, shortenTo: ?string, metaEdId: ?string = null) {
+  withSharedProperty(
+    identifier: ?string,
+    sharedPropertyType: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string,
+    shortenTo: ?string,
+    metaEdId: ?string = null,
+  ) {
     const sharedPropertyTypeContext = idTextContext(sharedPropertyType);
 
     this.addMethodCall('enterSharedPropertyType', sharedPropertyTypeContext);
@@ -812,34 +971,102 @@ export class MetaEdGrammarTalker {
     this.addPropertyComponents(documentation, isRequired, isCollection, context, shortenTo);
   }
 
-  withSharedDecimalProperty(identifier: ?string, sharedPropertyType: string, documentation: string, isRequired: boolean, isCollection: boolean,
-    context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withSharedDecimalProperty(
+    identifier: ?string,
+    sharedPropertyType: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('SharedDecimal');
-    this.withSharedProperty(identifier, sharedPropertyType, documentation, isRequired, isCollection, context, shortenTo, metaEdId);
+    this.withSharedProperty(
+      identifier,
+      sharedPropertyType,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      shortenTo,
+      metaEdId,
+    );
     this.addPropertyExit('SharedDecimal');
     return this;
   }
 
-  withSharedIntegerProperty(identifier: ?string, sharedPropertyType: string, documentation: string, isRequired: boolean, isCollection: boolean,
-    context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withSharedIntegerProperty(
+    identifier: ?string,
+    sharedPropertyType: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('SharedInteger');
-    this.withSharedProperty(identifier, sharedPropertyType, documentation, isRequired, isCollection, context, shortenTo, metaEdId);
+    this.withSharedProperty(
+      identifier,
+      sharedPropertyType,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      shortenTo,
+      metaEdId,
+    );
     this.addPropertyExit('SharedInteger');
     return this;
   }
 
-  withSharedShortProperty(identifier: ?string, sharedPropertyType: string, documentation: string, isRequired: boolean, isCollection: boolean,
-    context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withSharedShortProperty(
+    identifier: ?string,
+    sharedPropertyType: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('SharedShort');
-    this.withSharedProperty(identifier, sharedPropertyType, documentation, isRequired, isCollection, context, shortenTo, metaEdId);
+    this.withSharedProperty(
+      identifier,
+      sharedPropertyType,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      shortenTo,
+      metaEdId,
+    );
     this.addPropertyExit('SharedShort');
     return this;
   }
 
-  withSharedStringProperty(identifier: ?string, sharedPropertyType: string, documentation: string, isRequired: boolean, isCollection: boolean,
-    context: ?string = null, shortenTo: ?string = null, metaEdId: ?string = null) {
+  withSharedStringProperty(
+    identifier: ?string,
+    sharedPropertyType: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    shortenTo: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('SharedString');
-    this.withSharedProperty(identifier, sharedPropertyType, documentation, isRequired, isCollection, context, shortenTo, metaEdId);
+    this.withSharedProperty(
+      identifier,
+      sharedPropertyType,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      shortenTo,
+      metaEdId,
+    );
     this.addPropertyExit('SharedString');
     return this;
   }
@@ -866,17 +1093,22 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withDomainEntityIdentity(identifier: string, documentation: string,
-    context: ?string = null, metaEdId: ?string = null) {
+  withDomainEntityIdentity(identifier: string, documentation: string, context: ?string = null, metaEdId: ?string = null) {
     this.addPropertyEnter('DomainEntity');
     this.addPropertyIdentityComponents(identifier, metaEdId, documentation, context);
     this.addPropertyExit('DomainEntity');
     return this;
   }
 
-  withIntegerProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, maxValue: ?string = null, minValue: ?string = null,
-    metaEdId: ?string = null) {
+  withIntegerProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Integer');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
 
@@ -900,16 +1132,28 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withPercentProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, metaEdId: ?string = null) {
+  withPercentProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Percent');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Percent');
     return this;
   }
 
-  withShortProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, maxValue: ?string = null, minValue: ?string = null, metaEdId: ?string = null) {
+  withShortProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxValue: ?string = null,
+    minValue: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Short');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
 
@@ -919,8 +1163,16 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withStringProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, isQueryableField: boolean, maxLength: string, minLength: ?string = null, metaEdId: ?string = null) {
+  withStringProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isQueryableField: boolean,
+    maxLength: string,
+    minLength: ?string = null,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('String');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addIsQueryableField(isQueryableField);
@@ -931,15 +1183,26 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
-  withTimeProperty(identifier: string, documentation: string, isRequired: boolean, isCollection: boolean, metaEdId: ?string = null) {
+  withTimeProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Time');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Time');
     return this;
   }
 
-  withYearProperty(identifier: string, documentation: string, isRequired: boolean,
-    isCollection: boolean, metaEdId: ?string = null) {
+  withYearProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
     this.addPropertyEnter('Year');
     this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
     this.addPropertyExit('Year');
@@ -1015,13 +1278,27 @@ export class MetaEdGrammarTalker {
     }
   }
 
-  addPropertyNameAndComponents(identifier: string, metaEdId: ?string, documentation: string, isRequired: boolean, isCollection: boolean, withContext: ?string = null, shortenTo: ?string = null) {
+  addPropertyNameAndComponents(
+    identifier: string,
+    metaEdId: ?string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    withContext: ?string = null,
+    shortenTo: ?string = null,
+  ) {
     this.withPropertyName(identifier);
     this.withMetaEdId(metaEdId);
     this.addPropertyComponents(documentation, isRequired, isCollection, withContext, shortenTo);
   }
 
-  addPropertyComponents(documentation: string, isRequired: boolean, isCollection: boolean, withContext: ?string, shortenTo: ?string) {
+  addPropertyComponents(
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    withContext: ?string,
+    shortenTo: ?string,
+  ) {
     this.addMethodCall('enterPropertyComponents', emptyContext());
 
     this.withPropertyDocumentation(documentation);
@@ -1071,7 +1348,13 @@ export class MetaEdGrammarTalker {
     this.addMethodCall('exitPropertyComponents', emptyContext());
   }
 
-  addPropertyIdentityRenameComponents(identifier: string, metaEdId: ?string, documentation: string, baseKeyName: string, withContext: ?string = null) {
+  addPropertyIdentityRenameComponents(
+    identifier: string,
+    metaEdId: ?string,
+    documentation: string,
+    baseKeyName: string,
+    withContext: ?string = null,
+  ) {
     const baseKeyNameContext = idTextContext(baseKeyName);
 
     this.withPropertyName(identifier);

@@ -24,16 +24,19 @@ const endDate: string = 'EndDate';
 const schoolId: string = 'SchoolId';
 
 function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: string): void {
-  if (table == null || getForeignKeys(table).find(
-    (fk: ForeignKey) =>
-      fk.foreignTableSchema === namespace
-      && fk.foreignTableName === calendarDate
-      && fk.columnNames.find(
-        (columnNamePair: ColumnNamePair) =>
-        columnNamePair.parentTableColumnName === parentTableColumnName
-        && columnNamePair.foreignTableColumnName === date,
-      ),
-    ) != null) return;
+  if (
+    table == null ||
+    getForeignKeys(table).find(
+      (fk: ForeignKey) =>
+        fk.foreignTableSchema === namespace &&
+        fk.foreignTableName === calendarDate &&
+        fk.columnNames.find(
+          (columnNamePair: ColumnNamePair) =>
+            columnNamePair.parentTableColumnName === parentTableColumnName && columnNamePair.foreignTableColumnName === date,
+        ),
+    ) != null
+  )
+    return;
 
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
     foreignTableSchema: namespace,

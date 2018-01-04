@@ -1,11 +1,6 @@
 // @flow
 import R from 'ramda';
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  ModelBase,
-  ModelType,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
 import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 
@@ -26,8 +21,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (entity != null && !R.isEmpty(entity.data.edfiXsd.xsd_ComplexTypes)) {
     const complexType: ComplexType = entity.data.edfiXsd.xsd_ComplexTypes.find(x => x.name === entityName);
     if (complexType != null && complexType.hasItems()) {
-      const element = complexType.items.find(x => x.name != null && x.name === elementName
-        && x.type != null && x.type === elementType);
+      const element = complexType.items.find(
+        x => x.name != null && x.name === elementName && x.type != null && x.type === elementType,
+      );
       if (element != null) {
         Object.assign(element, {
           maxOccurs: '2',

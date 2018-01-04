@@ -3,8 +3,8 @@ import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from 'metaed-core';
 
 export type InterchangeItemEdfiXsd = {
-  xsd_Name: string;
-  xsd_Type: string;
+  xsd_Name: string,
+  xsd_Type: string,
 };
 
 const equalXsdName = R.eqBy(R.path(['data', 'edfiXsd', 'xsd_Name']));

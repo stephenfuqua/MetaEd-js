@@ -1,6 +1,12 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for descriptor', () => {
@@ -21,26 +27,26 @@ describe('when generating xsd for descriptor', () => {
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace(extensionNamespace, extension)
+      .withBeginNamespace(extensionNamespace, extension)
 
-    .withStartDomainEntityExtension(coreEntity)
-    .withIntegerProperty(extensionProperty, 'doc', true, false)
-    .withEndDomainEntityExtension()
+      .withStartDomainEntityExtension(coreEntity)
+      .withIntegerProperty(extensionProperty, 'doc', true, false)
+      .withEndDomainEntityExtension()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -56,12 +62,18 @@ describe('when generating xsd for descriptor', () => {
   });
 
   it('should generate descriptor reference', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension[@base='CoreEntity']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension[@base='CoreEntity']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate descriptor reference', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-CoreEntityExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

@@ -8,26 +8,25 @@ import * as Chalk from 'chalk';
 import Yargs from 'yargs';
 
 export async function metaEdConsole() {
-  const argv = Yargs
-    .usage('Usage: $0 [options]')
+  const argv = Yargs.usage('Usage: $0 [options]')
     .alias('e', 'edfi')
     .nargs('e', 1)
     .describe('e', 'The base path where core MetaEd files will be loaded from. The directory must currently exist.')
     .alias('x', 'ext')
     .nargs('x', 1)
-    .describe('x', 'The base path where extension MetaEd files will be loaded from. If provided, the directory must currently exist.')
+    .describe(
+      'x',
+      'The base path where extension MetaEd files will be loaded from. If provided, the directory must currently exist.',
+    )
     .demand(['e'])
     .help('h')
-    .alias('h', 'help')
-    .argv;
+    .alias('h', 'help').argv;
 
   const chalk = new Chalk.constructor({ level: 2 });
 
   const logger = new Logger({
     level: 'info',
-    transports: [
-      new transports.Console(),
-    ],
+    transports: [new transports.Console()],
   });
   logger.cli();
 

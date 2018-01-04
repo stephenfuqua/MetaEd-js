@@ -15,10 +15,12 @@ export function squareBracketRemoval(metaEdIdWithBrackets: string) {
 export const isErrorText = (text: string): boolean => text == null || text.startsWith('<');
 
 function extractText(contextWithText: any): string {
-  if (contextWithText.exception ||
+  if (
+    contextWithText.exception ||
     contextWithText.TEXT() == null ||
     contextWithText.TEXT().exception != null ||
-    isErrorText(contextWithText.TEXT().getText())) {
+    isErrorText(contextWithText.TEXT().getText())
+  ) {
     return '';
   }
   return quoteCorrection(contextWithText.TEXT().getText());

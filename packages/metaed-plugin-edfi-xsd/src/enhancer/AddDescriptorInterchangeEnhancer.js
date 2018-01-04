@@ -10,12 +10,10 @@ import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 const enhancerName: string = 'AddDescriptorInterchangeEnhancer';
 
 export const descriptorInterchangeName: string = 'Descriptors';
-const descriptorInterchangeDocumentation: string =
-  `Descriptors provide states, districts, vendors, and other users of the Ed-Fi solution with the flexibility to use their own enumerations and code sets without modifying the Ed-Fi core schema.
+const descriptorInterchangeDocumentation: string = `Descriptors provide states, districts, vendors, and other users of the Ed-Fi solution with the flexibility to use their own enumerations and code sets without modifying the Ed-Fi core schema.
 The Descriptor interchange is used to describe metadata about the descriptors and their structure. It is used to define enumeration vocabularies that are not "fixed" within the XML schema, but are loaded in XML files and linked to their source.`;
 
-const descriptorUseCaseDocumentation: string =
-  `1. Exchange state, district, or vendor code sets in a way that Ed-Fi technology implementations can understand the semantics
+const descriptorUseCaseDocumentation: string = `1. Exchange state, district, or vendor code sets in a way that Ed-Fi technology implementations can understand the semantics
 2. Exchange code or enumeration values that change over time, but where longitudinal analysis is still important`;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -51,7 +49,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
     if (descriptorInterchange.elements.length > 0) {
-      ((pluginEnvironment(metaEd).entity: any): EdFiXsdEntityRepository).mergedInterchange.set(descriptorInterchange.repositoryId, descriptorInterchange);
+      ((pluginEnvironment(metaEd).entity: any): EdFiXsdEntityRepository).mergedInterchange.set(
+        descriptorInterchange.repositoryId,
+        descriptorInterchange,
+      );
     }
   });
 

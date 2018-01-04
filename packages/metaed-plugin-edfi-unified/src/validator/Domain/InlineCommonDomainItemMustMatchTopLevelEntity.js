@@ -19,8 +19,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (domainItem.referencedType === 'inlineCommon') {
         const inlineCommon = metaEd.entity.common.get(domainItem.metaEdName);
         if (inlineCommon == null || !inlineCommon.inlineInOds) {
-          failures.push(getFailure(domainItem, 'CommonDomainItemMustMatchTopLevelEntity',
-            `Inline Common Domain Item property '${domainItem.metaEdName}' does not match any declared Inline Common.`));
+          failures.push(
+            getFailure(
+              domainItem,
+              'CommonDomainItemMustMatchTopLevelEntity',
+              `Inline Common Domain Item property '${domainItem.metaEdName}' does not match any declared Inline Common.`,
+            ),
+          );
         }
       }
     });

@@ -68,7 +68,13 @@ describe('when building domain entity property table that is not an identity, re
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
-    tableBuilder.buildTables(entityDomainEntityProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDomainEntityProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -149,7 +155,13 @@ describe('when building identity domain entity property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
-    tableBuilder.buildTables(entityDomainEntityProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDomainEntityProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -235,7 +247,13 @@ describe('when building required domain entity property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
-    tableBuilder.buildTables(entityDomainEntityProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDomainEntityProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -321,7 +339,13 @@ describe('when building optional domain entity property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
-    tableBuilder.buildTables(entityDomainEntityProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDomainEntityProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return no join table', () => {
@@ -412,7 +436,13 @@ describe('when building collection domain entity property table', () => {
     const primaryKeys: Array<Column> = columnCreator.createColumns(entityPkProperty, BuildStrategyDefault);
 
     const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(entityDomainEntityProperty);
-    tableBuilder.buildTables(entityDomainEntityProperty, TableStrategy.default(table), primaryKeys, BuildStrategyDefault, tables);
+    tableBuilder.buildTables(
+      entityDomainEntityProperty,
+      TableStrategy.default(table),
+      primaryKeys,
+      BuildStrategyDefault,
+      tables,
+    );
   });
 
   it('should return join table', () => {

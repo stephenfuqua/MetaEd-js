@@ -1,5 +1,14 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newChoice, newCommon, newCommonProperty, newChoiceProperty, newDescriptor, newDomainEntity } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newAssociation,
+  newChoice,
+  newCommon,
+  newCommonProperty,
+  newChoiceProperty,
+  newDescriptor,
+  newDomainEntity,
+} from 'metaed-core';
 import type { MetaEdEnvironment, Association, Choice, Common, Descriptor, DomainEntity } from 'metaed-core';
 import { enhance } from '../../src/enhancer/AddChoicePropertiesEnhancer';
 
@@ -16,10 +25,12 @@ describe('when enhancing association with choice', () => {
     });
     metaEd.entity.association.set(association.metaEdName, association);
 
-    association.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName,
-      data: { edfiXsd: {} },
-    }));
+    association.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
@@ -27,10 +38,12 @@ describe('when enhancing association with choice', () => {
     });
     metaEd.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -58,10 +71,12 @@ describe('when enhancing association with choices nested', () => {
     });
     metaEd.entity.association.set(association.metaEdName, association);
 
-    association.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName1,
-      data: { edfiXsd: {} },
-    }));
+    association.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName1,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice1: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName1,
@@ -69,10 +84,12 @@ describe('when enhancing association with choices nested', () => {
     });
     metaEd.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName2,
-      data: { edfiXsd: {} },
-    }));
+    choice1.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName2,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice2: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName2,
@@ -80,10 +97,12 @@ describe('when enhancing association with choices nested', () => {
     });
     metaEd.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice2.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -116,10 +135,12 @@ describe('when enhancing common with choice', () => {
     });
     metaEd.entity.common.set(common.metaEdName, common);
 
-    common.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName,
-      data: { edfiXsd: {} },
-    }));
+    common.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
@@ -127,10 +148,12 @@ describe('when enhancing common with choice', () => {
     });
     metaEd.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -158,10 +181,12 @@ describe('when enhancing common with choices nested', () => {
     });
     metaEd.entity.common.set(common.metaEdName, common);
 
-    common.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName1,
-      data: { edfiXsd: {} },
-    }));
+    common.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName1,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice1: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName1,
@@ -169,10 +194,12 @@ describe('when enhancing common with choices nested', () => {
     });
     metaEd.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName2,
-      data: { edfiXsd: {} },
-    }));
+    choice1.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName2,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice2: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName2,
@@ -180,10 +207,12 @@ describe('when enhancing common with choices nested', () => {
     });
     metaEd.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice2.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -216,10 +245,12 @@ describe('when enhancing descriptor with choice', () => {
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
-    descriptor.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName,
-      data: { edfiXsd: {} },
-    }));
+    descriptor.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
@@ -227,10 +258,12 @@ describe('when enhancing descriptor with choice', () => {
     });
     metaEd.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -258,10 +291,12 @@ describe('when enhancing descriptor with choices nested', () => {
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
-    descriptor.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName1,
-      data: { edfiXsd: {} },
-    }));
+    descriptor.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName1,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice1: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName1,
@@ -269,10 +304,12 @@ describe('when enhancing descriptor with choices nested', () => {
     });
     metaEd.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName2,
-      data: { edfiXsd: {} },
-    }));
+    choice1.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName2,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice2: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName2,
@@ -280,10 +317,12 @@ describe('when enhancing descriptor with choices nested', () => {
     });
     metaEd.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice2.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -316,10 +355,12 @@ describe('when enhancing domainEntity with choice', () => {
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    domainEntity.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName,
-      data: { edfiXsd: {} },
-    }));
+    domainEntity.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName,
@@ -327,10 +368,12 @@ describe('when enhancing domainEntity with choice', () => {
     });
     metaEd.entity.choice.set(choice.metaEdName, choice);
 
-    choice.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -358,10 +401,12 @@ describe('when enhancing domainEntity with choices nested', () => {
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    domainEntity.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName1,
-      data: { edfiXsd: {} },
-    }));
+    domainEntity.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName1,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice1: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName1,
@@ -369,10 +414,12 @@ describe('when enhancing domainEntity with choices nested', () => {
     });
     metaEd.entity.choice.set(choice1.metaEdName, choice1);
 
-    choice1.properties.push(Object.assign(newChoiceProperty(), {
-      metaEdName: choiceName2,
-      data: { edfiXsd: {} },
-    }));
+    choice1.properties.push(
+      Object.assign(newChoiceProperty(), {
+        metaEdName: choiceName2,
+        data: { edfiXsd: {} },
+      }),
+    );
 
     const choice2: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName2,
@@ -380,10 +427,12 @@ describe('when enhancing domainEntity with choices nested', () => {
     });
     metaEd.entity.choice.set(choice2.metaEdName, choice2);
 
-    choice2.properties.push(Object.assign(newCommonProperty(), {
-      metaEdName: propertyName,
-      data: { edfiXsd: {} },
-    }));
+    choice2.properties.push(
+      Object.assign(newCommonProperty(), {
+        metaEdName: propertyName,
+        data: { edfiXsd: {} },
+      }),
+    );
     enhance(metaEd);
   });
 
@@ -402,4 +451,3 @@ describe('when enhancing domainEntity with choices nested', () => {
     expect(choiceProperty2.data.edfiXsd.xsd_Properties[0].metaEdName).toBe(propertyName);
   });
 });
-

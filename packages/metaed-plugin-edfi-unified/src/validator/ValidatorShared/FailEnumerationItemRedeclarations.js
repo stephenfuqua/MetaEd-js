@@ -6,7 +6,8 @@ export function failEnumerationItemRedeclarations(
   validatorName: string,
   entity: Descriptor | Enumeration,
   enumerationItems: Array<EnumerationItem>,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   const shortDescriptions: Array<string> = enumerationItems.map(x => x.shortDescription);
   const duplicates: Array<string> = findDuplicates(shortDescriptions);
 

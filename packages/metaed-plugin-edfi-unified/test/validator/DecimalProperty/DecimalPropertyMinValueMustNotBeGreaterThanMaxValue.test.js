@@ -113,11 +113,19 @@ describe('when validating decimal property with minimum value greater than maxim
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DecimalPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating decimal property with minimum value greater than maximum value -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating decimal property with minimum value greater than maximum value -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating decimal property with minimum value greater than maximum value -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating decimal property with minimum value greater than maximum value -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('DecimalPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when validating decimal property with minimum value greater than maximum value -> message2');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating decimal property with minimum value greater than maximum value -> sourceMap2');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating decimal property with minimum value greater than maximum value -> message2',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating decimal property with minimum value greater than maximum value -> sourceMap2',
+    );
   });
 });

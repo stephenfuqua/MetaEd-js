@@ -52,7 +52,6 @@ export class PropertyIndex {
   year: Array<YearProperty>;
 }
 
-
 export function newPropertyIndex(): PropertyIndex {
   return Object.assign(new PropertyIndex(), {
     association: [],
@@ -81,7 +80,10 @@ export function newPropertyIndex(): PropertyIndex {
   });
 }
 
-export function getPropertiesOfType(propertyIndex: PropertyIndex, ...propertyTypes: Array<PropertyType>): Array<EntityProperty> {
+export function getPropertiesOfType(
+  propertyIndex: PropertyIndex,
+  ...propertyTypes: Array<PropertyType>
+): Array<EntityProperty> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
   propertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));

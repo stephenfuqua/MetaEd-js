@@ -25,11 +25,28 @@ import { generate as htmlGenerator } from './generator/MetaEdHandbookAsHtmlIndex
 export function initialize(): MetaEdPlugin {
   return {
     validator: [],
-    enhancer: [edfiHandbookRepositorySetup, AssociationEnhancer, AssociationSubclassEnhancer,
-      BooleanEnhancer, ChoiceEnhancer, CommonEnhancer, CurrencyEnhancer,
-      DateEnhancer, DecimalEnhancer, DescriptorEnhancer, DomainEntityEnhancer, DomainEntitySubclassEnhancer,
-      EnumerationEnhancer, InlineCommonEnhancer, IntegerEnhancer, PercentEnhancer, StringEnhancer,
-      TimeIntervalEnhancer, TimeEnhancer, YearEnhancer],
+    enhancer: [
+      edfiHandbookRepositorySetup,
+      AssociationEnhancer,
+      AssociationSubclassEnhancer,
+      BooleanEnhancer,
+      ChoiceEnhancer,
+      CommonEnhancer,
+      CurrencyEnhancer,
+      DateEnhancer,
+      DecimalEnhancer,
+      DescriptorEnhancer,
+      DomainEntityEnhancer,
+      DomainEntitySubclassEnhancer,
+      EnumerationEnhancer,
+      InlineCommonEnhancer,
+      IntegerEnhancer,
+      PercentEnhancer,
+      StringEnhancer,
+      TimeIntervalEnhancer,
+      TimeEnhancer,
+      YearEnhancer,
+    ],
     generator: [htmlGenerator],
   };
 }

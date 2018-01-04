@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, DomainEntitySubclass, EntityProperty } from 'metaed-core';
 
 export type DomainEntitySubclassEdfiXsd = {
-  xsd_Properties: () => Array<EntityProperty>;
+  xsd_Properties: () => Array<EntityProperty>,
 };
 
 const enhancerName: string = 'DomainEntitySubclassSetupEnhancer';

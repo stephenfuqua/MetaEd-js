@@ -1,11 +1,5 @@
 // @flow
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  SharedInteger,
-  SharedIntegerProperty,
-  IntegerType,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, SharedInteger, SharedIntegerProperty, IntegerType } from 'metaed-core';
 
 const enhancerName: string = 'IntegerReferenceEnhancer';
 

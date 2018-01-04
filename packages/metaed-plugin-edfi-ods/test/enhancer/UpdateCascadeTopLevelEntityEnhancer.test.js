@@ -40,8 +40,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity1.data.edfiOds.ods_Properties.push(domainEntity1Property);
@@ -65,8 +64,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity2.data.edfiOds.ods_Properties.push(domainEntity2Property);
@@ -89,8 +87,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property1);
@@ -101,8 +98,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property2);
@@ -151,8 +147,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity1.data.edfiOds.ods_Properties.push(domainEntity1Property);
@@ -175,8 +170,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity2.data.edfiOds.ods_Properties.push(domainEntity2Property);
@@ -200,8 +194,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     association.data.edfiOds.ods_Properties.push(associationProperty1);
@@ -212,8 +205,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     association.data.edfiOds.ods_Properties.push(associationProperty2);
@@ -236,8 +228,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property);
@@ -291,8 +282,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity1.data.edfiOds.ods_Properties.push(domainEntity1Property);
@@ -315,8 +305,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity2.data.edfiOds.ods_Properties.push(domainEntity2Property);
@@ -339,8 +328,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property);
@@ -363,8 +351,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity3,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity4.data.edfiOds.ods_Properties.push(domainEntity4Property);
@@ -420,8 +407,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity1.data.edfiOds.ods_Properties.push(domainEntity1Property);
@@ -445,8 +431,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity2.data.edfiOds.ods_Properties.push(domainEntity2Property);
@@ -470,8 +455,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property);
@@ -508,8 +492,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity3,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity4.data.edfiOds.ods_Properties.push(domainEntity4Property2);
@@ -569,8 +552,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity1,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity1.data.edfiOds.ods_Properties.push(domainEntity1Property);
@@ -592,8 +574,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       parentEntity: domainEntity2,
       referencedEntity: domainEntity1,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity2.data.edfiOds.ods_Properties.push(domainEntity2Property);
@@ -615,8 +596,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
       referencedEntity: domainEntity2,
       isPartOfIdentity: true,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
     domainEntity3.data.edfiOds.ods_Properties.push(domainEntity3Property);

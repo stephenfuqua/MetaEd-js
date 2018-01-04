@@ -33,8 +33,7 @@ describe('when enhancing association extension', () => {
       metaEdName: baseTypeName,
       documentation,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
@@ -45,8 +44,7 @@ describe('when enhancing association extension', () => {
       documentation,
       baseEntity,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -119,8 +117,7 @@ describe('when enhancing association extension with common type override', () =>
     const baseCommon = Object.assign(newCommon(), {
       metaEdName: baseCommonTypeName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseCommon);
@@ -132,8 +129,7 @@ describe('when enhancing association extension with common type override', () =>
       baseEntity: baseCommon,
       namespaceInfo: extensionNamespaceInfo,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(commonExtension);
@@ -161,8 +157,7 @@ describe('when enhancing association extension with common type override', () =>
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseAssociation);
@@ -193,8 +188,7 @@ describe('when enhancing association extension with common type override', () =>
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(associationExtension);

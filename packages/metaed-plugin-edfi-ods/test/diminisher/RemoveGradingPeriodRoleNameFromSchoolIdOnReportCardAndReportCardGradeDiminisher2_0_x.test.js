@@ -60,7 +60,9 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(studentCompetencyObjective).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(studentCompetencyObjective).foreignKeys,
+    );
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -120,7 +122,9 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(studentLearningObjective).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(studentLearningObjective).foreignKeys,
+    );
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
   });

@@ -87,13 +87,21 @@ describe('when association subclass has duplicate property name', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> sourceMap',
+    );
   });
 });
 

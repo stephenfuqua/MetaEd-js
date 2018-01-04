@@ -21,8 +21,8 @@ declare module 'atom' {
 }
 
 declare class AtomCommandRegistry {
-  add(target: string, commandName: string, callback: (domNode: any) => void) : Disposable;
-  add(target: string, commandRegistration: any) : Disposable;
+  add(target: string, commandName: string, callback: (domNode: any) => void): Disposable;
+  add(target: string, commandRegistration: any): Disposable;
 }
 
 declare class AtomConfig {
@@ -65,20 +65,20 @@ declare class AtomTextEditor {
 
 declare class AtomWorkspace {
   open(url: string): AtomTextEditor;
-  addOpener(string => any): Disposable;
-  getActiveTextEditor() : AtomTextEditor;
+  addOpener((string) => any): Disposable;
+  getActiveTextEditor(): AtomTextEditor;
   getTextEditors(): AtomTextEditor[];
-  observeTextEditors(callback: (editor: AtomTextEditor) => void) : Disposable;
-  getPanes() : any[];
+  observeTextEditors(callback: (editor: AtomTextEditor) => void): Disposable;
+  getPanes(): any[];
 }
 
 declare class AtomClipboard {
-  write(thing: any) : void;
+  write(thing: any): void;
 }
 
 declare class AtomViews {
   addViewProvider(model: any, view: any): Disposable;
-  getView(view: any) : void;
+  getView(view: any): void;
 }
 
 declare class AtomEnvironment {

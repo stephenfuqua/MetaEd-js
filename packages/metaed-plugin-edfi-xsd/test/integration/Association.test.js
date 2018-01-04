@@ -1,6 +1,13 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, AssociationBuilder, NamespaceInfoBuilder, CommonBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  AssociationBuilder,
+  NamespaceInfoBuilder,
+  CommonBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for association with inline common type as part of identity', () => {
@@ -21,37 +28,37 @@ describe('when generating xsd for association with inline common type as part of
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(sampleEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(sampleEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(sample2Entity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property1, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(sample2Entity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property1, 'doc')
+      .withEndDomainEntity()
 
-    .withStartAssociation(sampleSample2Association)
-    .withDocumentation('doc')
-    .withAssociationDomainEntityProperty(sampleEntity, 'doc')
-    .withAssociationDomainEntityProperty(sample2Entity, 'doc')
-    .withInlineCommonProperty(fooCommon, 'doc', true, false)
-    .withEndAssociation()
+      .withStartAssociation(sampleSample2Association)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty(sampleEntity, 'doc')
+      .withAssociationDomainEntityProperty(sample2Entity, 'doc')
+      .withInlineCommonProperty(fooCommon, 'doc', true, false)
+      .withEndAssociation()
 
-    .withStartInlineCommon(fooCommon)
-    .withDocumentation('doc')
-    .withIntegerIdentity(property2, 'doc')
-    .withEndInlineCommon()
+      .withStartInlineCommon(fooCommon)
+      .withDocumentation('doc')
+      .withIntegerIdentity(property2, 'doc')
+      .withEndInlineCommon()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(associationBuilder)
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(commonBuilder)
-    .toString();
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(associationBuilder)
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(commonBuilder)
+      .toString();
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -72,7 +79,10 @@ describe('when generating xsd for association with inline common type as part of
   });
 
   it('should include inline common type in identity type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='SampleSample2AssociationIdentityType']/xs:sequence/xs:element[@name='Property2']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='SampleSample2AssociationIdentityType']/xs:sequence/xs:element[@name='Property2']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -97,33 +107,33 @@ describe('when generating xsd for association in extension namespace with refere
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1PK, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1PK, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(coreEntity2)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity2PK, 'doc')
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withStartDomainEntity(coreEntity2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity2PK, 'doc')
+      .withEndDomainEntity()
+      .withEndNamespace()
 
-    .withBeginNamespace(namespace, projectExtension)
-    .withStartAssociation(extensionAssociation)
-    .withDocumentation('doc')
-    .withAssociationDomainEntityProperty(coreEntity1, 'doc')
-    .withAssociationDomainEntityProperty(coreEntity2, 'doc')
-    .withEndAssociation()
+      .withBeginNamespace(namespace, projectExtension)
+      .withStartAssociation(extensionAssociation)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty(coreEntity1, 'doc')
+      .withAssociationDomainEntityProperty(coreEntity2, 'doc')
+      .withEndAssociation()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(associationBuilder)
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(commonBuilder)
-    .toString();
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(associationBuilder)
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(commonBuilder)
+      .toString();
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -144,7 +154,10 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should generate core domain entity 1 primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Pk']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='CoreEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Pk']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -164,7 +177,10 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should generate core domain entity 2 primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Pk']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='CoreEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Pk']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -174,22 +190,34 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should genrate extension association references', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should gerneate extension association identity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension association reference to core entity 1', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Reference'][@type='CoreEntity1ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity1Reference'][@type='CoreEntity1ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should genreate extension association refrence to core entity 2', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Reference'][@type='CoreEntity2ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreEntity2Reference'][@type='CoreEntity2ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -215,39 +243,39 @@ describe('when generating xsd for association in extension namespace with refere
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1PK, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1PK, 'doc')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
-    .withBeginNamespace(namespace, projectExtension)
+      .withEndNamespace()
+      .withBeginNamespace(namespace, projectExtension)
 
-    .withStartDomainEntity(extensionEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntity1PK, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntity1PK, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(extensionEntity2)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntity2PK, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntity2PK, 'doc')
+      .withEndDomainEntity()
 
-    .withStartAssociation(extensionAssociation)
-    .withDocumentation('doc')
-    .withAssociationDomainEntityProperty(extensionEntity1, 'doc')
-    .withAssociationDomainEntityProperty(extensionEntity2, 'doc')
-    .withEndAssociation()
+      .withStartAssociation(extensionAssociation)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty(extensionEntity1, 'doc')
+      .withAssociationDomainEntityProperty(extensionEntity2, 'doc')
+      .withEndAssociation()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(associationBuilder)
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(commonBuilder)
-    .toString();
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(associationBuilder)
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(commonBuilder)
+      .toString();
 
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -258,17 +286,26 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should generate extension domain entity 1 reference', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should gerneate extension domain entity 1 identity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1IdentityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1IdentityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension domain entity 1 primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Pk']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity1']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Pk']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -278,22 +315,34 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should generate extension domain entity 2 reference', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension domain entity 2 identity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension domain entity 2 primary key', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2IdentityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2IdentityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension association', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Pk']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity2']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Pk']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -303,17 +352,26 @@ describe('when generating xsd for association in extension namespace with refere
   });
 
   it('should generate extension association identity', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociationIdentityType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension association reference to extension entity 1', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Reference'][@type='EXTENSION-ExtensionEntity1ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity1Reference'][@type='EXTENSION-ExtensionEntity1ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension association reference to extension entity 2', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Reference'][@type='EXTENSION-ExtensionEntity2ReferenceType']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionAssociation']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntity2Reference'][@type='EXTENSION-ExtensionEntity2ReferenceType']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

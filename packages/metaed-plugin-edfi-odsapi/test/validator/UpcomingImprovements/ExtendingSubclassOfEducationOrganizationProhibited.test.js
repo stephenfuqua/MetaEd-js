@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntitySubclassBuilder, DomainEntityExtensionBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  DomainEntitySubclassBuilder,
+  DomainEntityExtensionBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 
@@ -126,8 +132,12 @@ describe('when a domain entity extension extends a subclass of education organiz
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingSubclassOfEducationOrganizationProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -183,7 +193,11 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingSubclassOfEducationOrganizationProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap',
+    );
   });
 });

@@ -34,7 +34,9 @@ describe('when ModifyCascadingDeletesDefinitionsDiminisher diminishes matching t
   });
 
   it('should modify with delete cascade', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentCategoryDescriptor).foreignKeys);
+    const foreignKey: ForeignKey = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(assessmentCategoryDescriptor).foreignKeys,
+    );
     expect(foreignKey.foreignTableName).toBe(descriptor);
     expect(foreignKey.withDeleteCascade).toBe(false);
   });

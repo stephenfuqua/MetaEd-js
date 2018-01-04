@@ -36,7 +36,6 @@ describe('when validating interchange extension has valid extendee', () => {
     expect(metaEd.entity.interchangeExtension.size).toBe(1);
   });
 
-
   it('should have no validation failures', () => {
     expect(failures).toHaveLength(0);
   });
@@ -66,7 +65,11 @@ describe('when validating interchange extension has invalid extendee', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionIdentifierMustMatchAnInterchange');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange extension has invalid extendee should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange extension has invalid extendee should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange extension has invalid extendee should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange extension has invalid extendee should have validation failures -> sourceMap',
+    );
   });
 });

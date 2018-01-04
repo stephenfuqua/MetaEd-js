@@ -1,8 +1,5 @@
 // @flow
-import type {
-  MetaEdEnvironment,
-  ValidationFailure,
- } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import {
   ChoiceBuilder,
   CommonBuilder,
@@ -11,9 +8,7 @@ import {
   newMetaEdEnvironment,
   newSourceMap,
 } from 'metaed-core';
-import {
-  failReferencedPropertyDoesNotExist,
-} from '../../../src/validator/ValidatorShared/FailReferencedPropertyDoesNotExist';
+import { failReferencedPropertyDoesNotExist } from '../../../src/validator/ValidatorShared/FailReferencedPropertyDoesNotExist';
 
 describe('when validating merge property path', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -40,7 +35,8 @@ describe('when validating merge property path', () => {
       [integerIdentityName1],
       'IntegerIdentityName2',
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build one domain entity', () => {
@@ -76,7 +72,8 @@ describe('when validating path with no matching merge property', () => {
       ['IntegerIdentityName2'],
       'DomainEntityName2',
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build one domain entity', () => {
@@ -123,7 +120,8 @@ describe('when validating path with merge property collection targeting non iden
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -171,7 +169,8 @@ describe('when validating path with merge property collection targeting identity
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -217,7 +216,8 @@ describe('when validating path with merge property targeting non identity on cur
       [integerPropertyName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -270,7 +270,8 @@ describe('when validating path with merge property targeting identity on referen
       [`${contextName1}${domainEntityName1}`, `${contextName1}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build three domain entities', () => {
@@ -322,7 +323,8 @@ describe('when validating path with merge property targeting non identity on ref
       [`${contextName1}${domainEntityName1}`, `${contextName2}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build three domain entities', () => {
@@ -377,7 +379,8 @@ describe('when validating path with merge property targeting optional on common 
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -434,7 +437,8 @@ describe('when validating path with merge property targeting non identity inline
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -493,7 +497,8 @@ describe('when validating path with merge property targeting non identity choice
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -550,7 +555,8 @@ describe('when validating path with merge property collection targeting non iden
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {
@@ -609,7 +615,8 @@ describe('when validating path with merge property collection targeting identity
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
-      failures);
+      failures,
+    );
   });
 
   it('should build two domain entities', () => {

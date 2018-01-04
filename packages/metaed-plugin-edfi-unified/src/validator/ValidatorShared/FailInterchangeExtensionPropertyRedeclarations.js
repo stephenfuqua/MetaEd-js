@@ -6,7 +6,8 @@ export function failInterchangeExtensionPropertyRedeclarations(
   interchangeItemType: 'elements' | 'identityTemplates',
   extensionEntity: Interchange,
   baseEntity: Interchange,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   // $FlowIgnore - allowing interchangeItemType to specify either elements or identityTemplates property
   extensionEntity[interchangeItemType].forEach(extensionItem => {
     // $FlowIgnore - allowing interchangeItemType to specify either elements or identityTemplates property
@@ -15,7 +16,9 @@ export function failInterchangeExtensionPropertyRedeclarations(
       failures.push({
         validatorName,
         category: 'error',
-        message: `Interchange additions ${extensionEntity.metaEdName} redeclares property ${extensionItem.metaEdName} of base Interchange.`,
+        message: `Interchange additions ${extensionEntity.metaEdName} redeclares property ${
+          extensionItem.metaEdName
+        } of base Interchange.`,
         sourceMap: extensionItem.sourceMap.metaEdName,
         fileMap: null,
       });

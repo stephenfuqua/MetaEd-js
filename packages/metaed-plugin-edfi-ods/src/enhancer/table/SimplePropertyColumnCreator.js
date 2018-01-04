@@ -20,7 +20,8 @@ import type { Column } from '../../model/database/Column';
 import type { ColumnCreator } from './ColumnCreator';
 import type { ColumnNamer } from '../../model/database/ColumnNamer';
 
-const createDecimalColumn = (property: SimpleProperty): Column => newDecimalColumn(...R.props(['totalDigits', 'decimalPlaces'])(property));
+const createDecimalColumn = (property: SimpleProperty): Column =>
+  newDecimalColumn(...R.props(['totalDigits', 'decimalPlaces'])(property));
 const createStringColumn = (property: SimpleProperty): Column => newStringColumn(R.prop('maxLength')(property));
 
 export function createNewColumnFor(property: SimpleProperty): Column {

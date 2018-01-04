@@ -14,10 +14,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const interchangeItemEdfiXsd = ((elementItem.data.edfiXsd: any): InterchangeItemEdfiXsd);
       interchangeItemEdfiXsd.xsd_Name = elementItem.metaEdName;
       if (elementItem.referencedEntity.type === 'descriptor') {
-        const referencedEntityEdfiXsd: DescriptorEdfiXsd = ((elementItem.referencedEntity.data.edfiXsd: any): DescriptorEdfiXsd);
+        const referencedEntityEdfiXsd: DescriptorEdfiXsd = ((elementItem.referencedEntity.data
+          .edfiXsd: any): DescriptorEdfiXsd);
         interchangeItemEdfiXsd.xsd_Type = referencedEntityEdfiXsd.xsd_DescriptorNameWithExtension;
       } else {
-        const referencedEntityEdfiXsd: ModelBaseEdfiXsd = ((elementItem.referencedEntity.data.edfiXsd: any): ModelBaseEdfiXsd);
+        const referencedEntityEdfiXsd: ModelBaseEdfiXsd = ((elementItem.referencedEntity.data
+          .edfiXsd: any): ModelBaseEdfiXsd);
         interchangeItemEdfiXsd.xsd_Type = referencedEntityEdfiXsd.xsd_MetaEdNameWithExtension();
       }
     });

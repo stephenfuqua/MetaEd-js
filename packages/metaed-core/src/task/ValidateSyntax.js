@@ -6,8 +6,7 @@ import { createFileIndex, getFilenameAndLineNumber } from './FileIndex';
 import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
 import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
 
-export const validateSyntax = R.curry(
-(parseTreeBuilder: ParseTreeBuilder, state: State): void => {
+export const validateSyntax = R.curry((parseTreeBuilder: ParseTreeBuilder, state: State): void => {
   if (state.loadedFileSet == null) {
     winston.error('ValidateSyntax: no files to load found');
     return;

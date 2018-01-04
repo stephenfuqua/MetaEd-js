@@ -4,7 +4,11 @@ import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { combinedElementsAndIdentityTemplatesFor } from '../model/MergedInterchange';
-import { unionOfInterchangeItems, differenceOfInterchangeItems, differenceOfInterchangeItemsNameOnly } from '../model/InterchangeItem';
+import {
+  unionOfInterchangeItems,
+  differenceOfInterchangeItems,
+  differenceOfInterchangeItemsNameOnly,
+} from '../model/InterchangeItem';
 
 const enhancerName: string = 'MergedInterchangeElementOrderEnhancer';
 
@@ -18,9 +22,18 @@ function addElementsInOrder(coreInterchanges: Array<MergedInterchange>, extensio
     const matchingCoreInterchange = R.find(R.eqProps('metaEdName', extension), coreInterchanges);
     if (matchingCoreInterchange) {
       const initialCoreElements = combinedElementsAndIdentityTemplatesFor(matchingCoreInterchange);
-      const extensionElementsLessCoreElements = differenceOfInterchangeItemsNameOnly(initialExtensionElements, initialCoreElements);
-      const extensionElementsThatExtendCore = differenceOfInterchangeItems(initialExtensionElements, extensionElementsLessCoreElements);
-      const extensionElementsThatExtendCoreThenOnesThatAreNew = unionOfInterchangeItems(extensionElementsThatExtendCore, extensionElementsLessCoreElements);
+      const extensionElementsLessCoreElements = differenceOfInterchangeItemsNameOnly(
+        initialExtensionElements,
+        initialCoreElements,
+      );
+      const extensionElementsThatExtendCore = differenceOfInterchangeItems(
+        initialExtensionElements,
+        extensionElementsLessCoreElements,
+      );
+      const extensionElementsThatExtendCoreThenOnesThatAreNew = unionOfInterchangeItems(
+        extensionElementsThatExtendCore,
+        extensionElementsLessCoreElements,
+      );
       extension.orderedElements = extensionElementsThatExtendCoreThenOnesThatAreNew;
     } else {
       extension.orderedElements = initialExtensionElements;

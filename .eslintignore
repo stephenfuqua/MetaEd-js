@@ -1,4 +1,5 @@
+coverage/
 dist/
 flow-typed/
-packages/metaed-core/src/grammar/gen/
 packages/**/node_modules/*
+packages/metaed-core/src/grammar/gen/

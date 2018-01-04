@@ -10,16 +10,21 @@ export function failExtensionPropertyRedeclarations(
   validatorName: string,
   extensionEntity: TopLevelEntity,
   baseEntity: TopLevelEntity,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   extensionEntity.properties.forEach(extensionProperty => {
     baseEntity.properties.forEach(baseProperty => {
-      if (extensionProperty.metaEdName === baseProperty.metaEdName &&
+      if (
+        extensionProperty.metaEdName === baseProperty.metaEdName &&
         extensionProperty.withContext === baseProperty.withContext &&
-        isNotCommonExtensionOverride(extensionProperty)) {
+        isNotCommonExtensionOverride(extensionProperty)
+      ) {
         failures.push({
           validatorName,
           category: 'error',
-          message: `${extensionEntity.typeHumanizedName} ${extensionEntity.metaEdName} redeclares property ${extensionProperty.metaEdName} of base ${baseEntity.typeHumanizedName}.`,
+          message: `${extensionEntity.typeHumanizedName} ${extensionEntity.metaEdName} redeclares property ${
+            extensionProperty.metaEdName
+          } of base ${baseEntity.typeHumanizedName}.`,
           sourceMap: extensionProperty.sourceMap.type,
           fileMap: null,
         });

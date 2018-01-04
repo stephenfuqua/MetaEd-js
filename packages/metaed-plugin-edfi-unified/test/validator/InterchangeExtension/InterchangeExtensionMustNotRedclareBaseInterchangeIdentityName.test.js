@@ -81,8 +81,12 @@ describe('when validating interchange extension identity template duplicates nam
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange extension identity template duplicates names in base interchange should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange extension identity template duplicates names in base interchange should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange extension identity template duplicates names in base interchange should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange extension identity template duplicates names in base interchange should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -131,13 +135,21 @@ describe('when interchange extension identity templates duplicates multiple name
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).not.toMatch(new RegExp(notDuplicateDomainEntityTemplateName));
-    expect(failures[0].message).toMatchSnapshot('when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName');
     expect(failures[1].category).toBe('error');
     expect(failures[1].message).not.toMatch(new RegExp(notDuplicateDomainEntityTemplateName));
-    expect(failures[1].message).toMatchSnapshot('when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when interchange extension identity templates duplicates multiple names in base interchange should have validation failure -> sourceMap',
+    );
   });
 });

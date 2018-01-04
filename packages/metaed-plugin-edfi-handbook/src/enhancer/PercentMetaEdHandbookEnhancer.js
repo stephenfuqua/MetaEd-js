@@ -1,9 +1,5 @@
 // @flow
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  PluginEnvironment,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
 import { createPercentSimpleType } from 'metaed-plugin-edfi-xsd';
 import { createDefaultHandbookEntry } from './BaseSimpleTypeMetaEdHandbookEnhancer';
 import type { HandbookEntry } from '../model/HandbookEntry';
@@ -15,8 +11,15 @@ const percentyDocumentation: string = 'A proportion in relation to the whole (as
 const percentEdfiId: string = '80';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const result: HandbookEntry = createDefaultHandbookEntry(createPercentSimpleType(), percentEdfiId, percentName, percentyDocumentation);
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(result);
+  const result: HandbookEntry = createDefaultHandbookEntry(
+    createPercentSimpleType(),
+    percentEdfiId,
+    percentName,
+    percentyDocumentation,
+  );
+  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
+    result,
+  );
 
   return {
     enhancerName,

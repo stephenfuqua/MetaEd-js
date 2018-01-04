@@ -3,8 +3,8 @@ import type { MetaEdEnvironment, EnhancerResult, DomainEntityExtension, EntityPr
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type DomainEntityExtensionEdfiXsd = {
-  xsd_MetaEdNameWithExtension: () => string;
-  xsd_Properties: () => Array<EntityProperty>;
+  xsd_MetaEdNameWithExtension: () => string,
+  xsd_Properties: () => Array<EntityProperty>,
 };
 
 const enhancerName: string = 'DomainEntityExtensionSetupEnhancer';

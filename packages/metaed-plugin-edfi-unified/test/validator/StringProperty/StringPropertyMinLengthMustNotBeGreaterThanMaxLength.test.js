@@ -107,11 +107,19 @@ describe('when validating string property with minimum length greater than maxim
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('StringPropertyMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating string property with minimum length greater than maximum length -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating string property with minimum length greater than maximum length -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating string property with minimum length greater than maximum length -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating string property with minimum length greater than maximum length -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('StringPropertyMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when validating string property with minimum length greater than maximum length -> message2');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating string property with minimum length greater than maximum length -> sourceMap2');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating string property with minimum length greater than maximum length -> message2',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating string property with minimum length greater than maximum length -> sourceMap2',
+    );
   });
 });

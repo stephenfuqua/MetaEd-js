@@ -15,7 +15,7 @@ export type ComplexType = {
   items: Array<ComplexTypeItem>,
 
   hasItems: () => boolean,
-}
+};
 
 export function newComplexType(): ComplexType {
   return {
@@ -26,7 +26,9 @@ export function newComplexType(): ComplexType {
     isRestriction: false,
     attributes: [],
     items: [],
-    hasItems() { return this.items.length > 0; },
+    hasItems() {
+      return this.items.length > 0;
+    },
   };
 }
 

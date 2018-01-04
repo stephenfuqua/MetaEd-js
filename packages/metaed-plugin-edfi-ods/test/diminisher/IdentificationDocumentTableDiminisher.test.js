@@ -36,9 +36,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
-          ods_Tables: [
-            identificationDocumentTable,
-          ],
+          ods_Tables: [identificationDocumentTable],
         },
       },
     });
@@ -49,10 +47,14 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
   });
 
   it('should rename table in repository', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(`${domainEntityName}Schema${identificationDocument}`);
+    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      `${domainEntityName}Schema${identificationDocument}`,
+    );
     expect(table).toBeUndefined();
 
-    const targetTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + identificationDocument);
+    const targetTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      domainEntityName + identificationDocument,
+    );
     expect(targetTable).toBeDefined();
     expect(targetTable).toBe(identificationDocumentTable);
   });
@@ -64,8 +66,9 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
   });
 
   it('should update foreign key parent table name', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(domainEntityName + identificationDocument).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      domainEntityName + identificationDocument,
+    ).foreignKeys;
     expect(foreignKeys.every(fk => fk.parentTableName === domainEntityName + identificationDocument)).toBe(true);
   });
 });
@@ -93,10 +96,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
-          ods_Tables: [
-            identificationDocumentTable1,
-            identificationDocumentTable2,
-          ],
+          ods_Tables: [identificationDocumentTable1, identificationDocumentTable2],
         },
       },
     });
@@ -107,14 +107,20 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
   });
 
   it('should rename tables in repository', () => {
-    const table1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(`${domainEntityName}Schema${identificationDocument}`);
+    const table1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      `${domainEntityName}Schema${identificationDocument}`,
+    );
     expect(table1).toBeUndefined();
 
-    const targetTable1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + identificationDocument);
+    const targetTable1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      domainEntityName + identificationDocument,
+    );
     expect(targetTable1).toBeDefined();
     expect(targetTable1).toBe(identificationDocumentTable1);
 
-    const table2: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(`${domainEntityName}OtherSchema${identificationDocument}`);
+    const table2: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      `${domainEntityName}OtherSchema${identificationDocument}`,
+    );
     expect(table2).toBeUndefined();
   });
 
@@ -148,10 +154,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
-          ods_Tables: [
-            identificationDocumentTable1,
-            identificationDocumentTable2,
-          ],
+          ods_Tables: [identificationDocumentTable1, identificationDocumentTable2],
         },
       },
     });
@@ -162,14 +165,20 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
   });
 
   it('should not modify tables in repository', () => {
-    const table1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(`${domainEntityName}Schema${identificationDocument}1`);
+    const table1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      `${domainEntityName}Schema${identificationDocument}1`,
+    );
     expect(table1).toBeDefined();
     expect(table1).toBe(identificationDocumentTable1);
 
-    const targetTable1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + identificationDocument);
+    const targetTable1: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      domainEntityName + identificationDocument,
+    );
     expect(targetTable1).toBeUndefined();
 
-    const table2: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(`${domainEntityName}OtherSchema${identificationDocument}2`);
+    const table2: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      `${domainEntityName}OtherSchema${identificationDocument}2`,
+    );
     expect(table2).toBeDefined();
     expect(table2).toBe(identificationDocumentTable2);
   });

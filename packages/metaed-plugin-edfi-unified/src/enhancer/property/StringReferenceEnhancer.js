@@ -1,11 +1,5 @@
 // @flow
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  SharedString,
-  SharedStringProperty,
-  StringType,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, SharedString, SharedStringProperty, StringType } from 'metaed-core';
 
 const enhancerName: string = 'StringReferenceEnhancer';
 

@@ -7,13 +7,7 @@ import {
   newMetaEdEnvironment,
   newNamespaceInfo,
 } from 'metaed-core';
-import type {
-  DomainEntity,
-  DomainEntitySubclass,
-  IntegerProperty,
-  MetaEdEnvironment,
-  NamespaceInfo,
-} from 'metaed-core';
+import type { DomainEntity, DomainEntitySubclass, IntegerProperty, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyIdentityForEducationOrganizationAndSubTypesDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 
@@ -146,7 +140,9 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should modify EducationOrganizationIdentifier property on EducationOrganization', () => {
-    const property: IntegerProperty = R.head((metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties);
+    const property: IntegerProperty = R.head(
+      (metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
+    );
     expect(property.metaEdName).toBe(educationOrganizationIdentifier);
     expect(property.data.edfiOds.ods_IsUniqueIndex).toBe(true);
     expect(property.isPartOfIdentity).toBe(false);
@@ -274,7 +270,9 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should modify EducationOrganizationIdentifier property on EducationOrganization', () => {
-    const property: IntegerProperty = R.head((metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties);
+    const property: IntegerProperty = R.head(
+      (metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
+    );
     expect(property.metaEdName).toBe(educationOrganizationIdentifier);
     expect(property.data.edfiOds.ods_IsUniqueIndex).toBe(true);
     expect(property.isPartOfIdentity).toBe(false);

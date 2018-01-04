@@ -9,8 +9,10 @@ const enhancerName = 'MergedInterchangeDocumentationEnhancer';
 export function enhance(metaEd: MetaEdEnvironment) {
   const xsdRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   xsdRepository.mergedInterchange.forEach(mergedInterchange => {
-    ((mergedInterchange.data.edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefMarkdownEscapedDocumentation =
-      escapeForMarkdownNewLine(mergedInterchange.documentation);
+    ((mergedInterchange.data
+      .edfiInterchangeBrief: any): MergedInterchangeEdfiInterchangeBrief).interchangeBriefMarkdownEscapedDocumentation = escapeForMarkdownNewLine(
+      mergedInterchange.documentation,
+    );
   });
 
   return {

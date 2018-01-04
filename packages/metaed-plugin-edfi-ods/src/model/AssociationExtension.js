@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, AssociationExtension } from 'metaed-core';
 
 export type AssociationExtensionEdfiOds = {
-  ods_ExtensionName: string;
+  ods_ExtensionName: string,
 };
 
 const enhancerName: string = 'OdsAssociationExtensionSetupEnhancer';

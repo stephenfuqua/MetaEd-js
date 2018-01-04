@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainBuilder, AssociationBuilder, AssociationSubclassBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainBuilder,
+  AssociationBuilder,
+  AssociationSubclassBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 
@@ -123,8 +129,11 @@ describe('when validating association domain item does not match top level entit
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association domain item has no matching top level entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association domain item has no matching top level entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association domain item has no matching top level entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association domain item has no matching top level entity should have validation failure -> sourceMap',
+    );
   });
 });
-

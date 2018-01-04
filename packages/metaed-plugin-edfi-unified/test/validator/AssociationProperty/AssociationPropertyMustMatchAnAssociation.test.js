@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationSubclassBuilder, DomainEntityBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  AssociationBuilder,
+  AssociationSubclassBuilder,
+  DomainEntityBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/AssociationProperty/AssociationPropertyMustMatchAnAssociation';
 
@@ -92,7 +98,11 @@ describe('when association property has invalid identifier', () => {
   it('should have validation failure for property', () => {
     expect(failures[0].validatorName).toBe('AssociationPropertyMustMatchAnAssociation');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association property has invalid identifier should have validation failures for each property -> message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association property has invalid identifier should have validation failures for each property -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association property has invalid identifier should have validation failures for each property -> message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association property has invalid identifier should have validation failures for each property -> sourceMap',
+    );
   });
 });

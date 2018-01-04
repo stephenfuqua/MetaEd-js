@@ -2,7 +2,15 @@
 import R from 'ramda';
 import xmlParser from 'xml-js';
 import { createAttribute } from '../GeneratorTestBase';
-import { nextHeadText, nextHeadName, nextHead, nextLength, xsdAttributeName, xsdAttributeType, xsdAttributeUse } from './TemplateTestHelper';
+import {
+  nextHeadText,
+  nextHeadName,
+  nextHead,
+  nextLength,
+  xsdAttributeName,
+  xsdAttributeType,
+  xsdAttributeUse,
+} from './TemplateTestHelper';
 import { templateNamed, registerPartials } from '../../../src/generator/XsdGeneratorBase';
 
 const attribute = nextHead;

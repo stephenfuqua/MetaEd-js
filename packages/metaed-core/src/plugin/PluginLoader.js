@@ -8,7 +8,7 @@ import { NoMetaEdPlugin } from './PluginTypes';
 
 export type PluginOptions = {
   pluginType: string,
-}
+};
 
 // Resolve roughly like require.resolve() does (https://nodejs.org/api/modules.html#modules_all_together)
 function mainModuleResolver(directory: string, packageJson: any): string {
@@ -79,7 +79,11 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
             after: manifest.dependencies,
           });
         } catch (err) {
-          winston.error(`PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${manifest.description}' failed due to dependency issue: ${err.message}`);
+          winston.error(
+            `PluginLoader: Attempted load of npm package ${manifest.npmName} plugin '${
+              manifest.description
+            }' failed due to dependency issue: ${err.message}`,
+          );
         }
       }
     });
@@ -91,7 +95,11 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
 export function materializePlugin(pluginData: any, pluginManifest: PluginManifest) {
   try {
     if (!pluginManifest.mainModule) {
-      winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  Module entry point not found.`);
+      winston.error(
+        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
+          pluginManifest.mainModule
+        }' failed.  Module entry point not found.`,
+      );
       return;
     }
 
@@ -101,14 +109,22 @@ export function materializePlugin(pluginData: any, pluginManifest: PluginManifes
     /* eslint-enable */
 
     // Plugins must have an "initialize" method?
-    const pluginFactory: (any) => MetaEdPlugin = pluginFactoryCandidate.initialize;
+    const pluginFactory: any => MetaEdPlugin = pluginFactoryCandidate.initialize;
     if (pluginFactory) {
       pluginManifest.metaEdPlugin = pluginFactory(pluginData);
     } else {
-      winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.  initialize() not found.`);
+      winston.error(
+        `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
+          pluginManifest.mainModule
+        }' failed.  initialize() not found.`,
+      );
     }
   } catch (err) {
-    winston.error(`PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${pluginManifest.mainModule}' failed.`);
+    winston.error(
+      `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
+        pluginManifest.mainModule
+      }' failed.`,
+    );
     winston.error(`PluginLoader: Error Message: ${err.message}`);
   }
 }

@@ -38,8 +38,12 @@ describe('when validating association with invalid identity rename property', ()
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityRenameExistsOnlyIfIdentityRenameIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating association with invalid identity rename property should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating association with invalid identity rename property should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating association with invalid identity rename property should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating association with invalid identity rename property should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -69,8 +73,12 @@ describe('when validating domain entity with invalid identity rename property', 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityRenameExistsOnlyIfIdentityRenameIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity with invalid identity rename property should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity with invalid identity rename property should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating domain entity with invalid identity rename property should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating domain entity with invalid identity rename property should have validation failure -> sourceMap',
+    );
   });
 });
 

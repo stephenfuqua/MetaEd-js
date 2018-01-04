@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationBuilder, AssociationSubclassBuilder, AssociationExtensionBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  AssociationBuilder,
+  AssociationSubclassBuilder,
+  AssociationExtensionBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 
@@ -70,8 +76,12 @@ describe('when an association extension extends student program association', ()
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingStudentProgramAssociationOrSubclassProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when an association extension extends student program association should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when an association extension extends student program association should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when an association extension extends student program association should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when an association extension extends student program association should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -119,7 +129,11 @@ describe('when an association extension extends a subclass of student program as
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('ExtendingStudentProgramAssociationOrSubclassProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when an association extension extends a subclass of student program association should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when an association extension extends a subclass of student program association should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when an association extension extends a subclass of student program association should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when an association extension extends a subclass of student program association should have validation failure -> sourceMap',
+    );
   });
 });

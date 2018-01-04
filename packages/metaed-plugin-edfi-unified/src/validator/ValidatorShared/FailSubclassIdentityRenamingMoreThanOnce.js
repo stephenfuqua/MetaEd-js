@@ -4,7 +4,8 @@ import type { TopLevelEntity, EntityProperty, ValidationFailure } from 'metaed-c
 export function failSubclassIdentityRenamingMoreThanOnce(
   validatorName: string,
   subclassEntity: TopLevelEntity,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   const identityRenames: Array<EntityProperty> = subclassEntity.properties.filter(x => x.isIdentityRename === true);
   if (identityRenames.length <= 1) return;
 
@@ -13,7 +14,11 @@ export function failSubclassIdentityRenamingMoreThanOnce(
     failures.push({
       validatorName,
       category: 'error',
-      message: `${subclassEntity.typeHumanizedName} ${subclassEntity.metaEdName} based on ${subclassEntity.baseEntityName} tries to rename properties ${baseKeyNames}. Only one identity rename is allowed for a given ${subclassEntity.typeHumanizedName}.`,
+      message: `${subclassEntity.typeHumanizedName} ${subclassEntity.metaEdName} based on ${
+        subclassEntity.baseEntityName
+      } tries to rename properties ${baseKeyNames}. Only one identity rename is allowed for a given ${
+        subclassEntity.typeHumanizedName
+      }.`,
       sourceMap: identityRename.sourceMap.baseKeyName,
       fileMap: null,
     });

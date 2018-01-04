@@ -14,23 +14,23 @@ import type {
   StringType,
   MetaEdEnvironment,
   EntityRepository,
-  ValidationFailure } from 'metaed-core';
+  ValidationFailure,
+} from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
-
 type MostEntities =
-  Association |
-  AssociationSubclass |
-  Choice |
-  Common |
-  DecimalType |
-  DomainEntity |
-  DomainEntitySubclass |
-  IntegerType |
-  SharedDecimal |
-  SharedInteger |
-  SharedString |
-  StringType;
+  | Association
+  | AssociationSubclass
+  | Choice
+  | Common
+  | DecimalType
+  | DomainEntity
+  | DomainEntitySubclass
+  | IntegerType
+  | SharedDecimal
+  | SharedInteger
+  | SharedString
+  | StringType;
 
 // Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
 // and extension entities don't define a new identifier

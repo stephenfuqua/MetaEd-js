@@ -10,9 +10,13 @@ import { newAnnotation } from '../../model/schema/Annotation';
 const enhancerName: string = 'AddDecimalSimpleTypesEnhancer';
 
 function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
-  if (decimalType.generatedSimpleType && decimalType.minValue === '' &&
-    decimalType.maxValue === '' && decimalType.decimalPlaces === '' &&
-    decimalType.totalDigits === '') {
+  if (
+    decimalType.generatedSimpleType &&
+    decimalType.minValue === '' &&
+    decimalType.maxValue === '' &&
+    decimalType.decimalPlaces === '' &&
+    decimalType.totalDigits === ''
+  ) {
     return NoSimpleType;
   }
 

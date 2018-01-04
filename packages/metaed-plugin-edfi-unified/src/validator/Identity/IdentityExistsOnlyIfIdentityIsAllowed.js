@@ -2,25 +2,9 @@
 import type { ModelType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { excludedModelTypes } from '../ValidatorShared/ExcludedModelTypes';
 
-const validTypes: ModelType[] = [
-  'abstractEntity',
-  'association',
-  'common',
-  'domainEntity',
-  'inlineCommon',
-];
-const ignoredTypes: ModelType[] = [
-  'integerType',
-  'stringType',
-  'decimalType',
-];
-const validTypeNames: string = [
-  'Abstract Entity',
-  'Association',
-  'Common',
-  'Domain Entity',
-  'InlineCommon',
-].join(', ');
+const validTypes: ModelType[] = ['abstractEntity', 'association', 'common', 'domainEntity', 'inlineCommon'];
+const ignoredTypes: ModelType[] = ['integerType', 'stringType', 'decimalType'];
+const validTypeNames: string = ['Abstract Entity', 'Association', 'Common', 'Domain Entity', 'InlineCommon'].join(', ');
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
@@ -36,7 +20,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         failures.push({
           validatorName: 'IdentityExistsOnlyIfIdentityIsAllowed',
           category: 'error',
-          message: `'is part of identity' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${entity.metaEdName}. 'is part of identity' is only valid for properties on ${validTypeNames}.`,
+          message: `'is part of identity' is invalid for property ${property.metaEdName} on ${entity.typeHumanizedName} ${
+            entity.metaEdName
+          }. 'is part of identity' is only valid for properties on ${validTypeNames}.`,
           sourceMap: property.sourceMap.isPartOfIdentity,
           fileMap: null,
         });

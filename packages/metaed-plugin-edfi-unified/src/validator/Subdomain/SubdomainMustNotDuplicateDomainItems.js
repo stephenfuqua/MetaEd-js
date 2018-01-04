@@ -10,7 +10,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
     const duplicates: Array<string> = findDuplicates(names);
     duplicates.forEach(val => {
-      const domainItem = subdomain.domainItems.find((d) => d.metaEdName === val);
+      const domainItem = subdomain.domainItems.find(d => d.metaEdName === val);
       if (domainItem !== undefined) {
         failures.push({
           validatorName: 'SubdomainMustNotDuplicateDomainItems',
@@ -25,4 +25,3 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   return failures;
 }
-

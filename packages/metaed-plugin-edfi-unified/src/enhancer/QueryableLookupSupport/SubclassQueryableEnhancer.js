@@ -1,10 +1,5 @@
 // @flow
-import type {
-  EnhancerResult,
-  EntityProperty,
-  MetaEdEnvironment,
-  TopLevelEntity,
-} from 'metaed-core';
+import type { EnhancerResult, EntityProperty, MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
 import { asTopLevelEntity, getAllEntities } from 'metaed-core';
 
 const enhancerName: string = 'SubclassQueryableEnhancer';

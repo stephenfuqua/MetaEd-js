@@ -8,6 +8,7 @@ import type { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
 export function commonPropertyColumnCreator(factory: ColumnCreatorFactory): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => collectColumns(property, strategy, factory),
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> =>
+      collectColumns(property, strategy, factory),
   };
 }

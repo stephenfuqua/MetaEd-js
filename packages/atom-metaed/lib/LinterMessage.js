@@ -11,5 +11,4 @@ export type LinterMessage = {
   // ^ MUST be an absolute path (relative paths are not supported)
   range?: Range,
   severity?: 'error' | 'warning' | 'info',
-}
-
+};

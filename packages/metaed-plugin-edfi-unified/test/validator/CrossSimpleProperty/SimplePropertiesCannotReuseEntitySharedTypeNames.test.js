@@ -1,14 +1,13 @@
 // @flow
 import {
-    newMetaEdEnvironment,
-    MetaEdTextBuilder,
-    DomainEntityBuilder,
-    SharedDecimalBuilder,
-    SharedIntegerBuilder,
-  } from 'metaed-core';
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  SharedDecimalBuilder,
+  SharedIntegerBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CrossSimpleProperty/SimplePropertiesCannotReuseEntitySharedTypeNames';
-
 
 describe('when building shared integer with duplicate integer property in extension namespace', () => {
   let validationFailures: Array<ValidationFailure> = [];
@@ -71,13 +70,23 @@ describe('when building shared decimal with duplicate decimal property in extens
   const minValue = '2';
   const maxValue = '100';
 
-
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
-      .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withDecimalProperty(
+        entityName,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId,
+      )
       .withEndDomainEntity()
 
       .withStartSharedDecimal(entityName, metaEdId)

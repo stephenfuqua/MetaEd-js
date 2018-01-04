@@ -58,7 +58,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'MustNotDuplicateMetaEdId',
         category: 'warning',
-        message: `MetaEdId '${entity.metaEdId}' on ${entity.typeHumanizedName} ${metaEdName} already exists on another entity. All MetaEdIds must be globally unique.`,
+        message: `MetaEdId '${entity.metaEdId}' on ${
+          entity.typeHumanizedName
+        } ${metaEdName} already exists on another entity. All MetaEdIds must be globally unique.`,
         sourceMap: entity.sourceMap.metaEdId,
         fileMap: null,
       });

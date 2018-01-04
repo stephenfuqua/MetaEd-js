@@ -5,11 +5,15 @@ import { failInterchangeExtensionPropertyRedeclarations } from '../ValidatorShar
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.interchangeExtension.forEach(interchangeExtension => {
-    const extendedEntity : Interchange | void = metaEd.entity.interchange.get(interchangeExtension.metaEdName);
+    const extendedEntity: Interchange | void = metaEd.entity.interchange.get(interchangeExtension.metaEdName);
     if (!extendedEntity) return;
     failInterchangeExtensionPropertyRedeclarations(
-      'InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName', 'identityTemplates', interchangeExtension, extendedEntity, failures);
+      'InterchangeExtensionMustNotRedeclareBaseInterchangeIdentityName',
+      'identityTemplates',
+      interchangeExtension,
+      extendedEntity,
+      failures,
+    );
   });
   return failures;
 }
-

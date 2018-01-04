@@ -6,7 +6,9 @@ const enhancerName: string = 'PropertyPathNameEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllProperties(metaEd.propertyIndex).forEach(entityProperty => {
-    entityProperty.propertyPathName = (entityProperty.withContext !== entityProperty.metaEdName ? entityProperty.withContext : '') + entityProperty.metaEdName;
+    entityProperty.propertyPathName =
+      (entityProperty.withContext !== entityProperty.metaEdName ? entityProperty.withContext : '') +
+      entityProperty.metaEdName;
   });
 
   return {

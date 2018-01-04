@@ -21,7 +21,10 @@ describe('when enhancing domain entity subclass queryables', () => {
   beforeAll(() => {
     const domainEntityName1 = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1 });
-    const integerProperty1 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName1' });
+    const integerProperty1 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName1',
+    });
     domainEntity1.properties.push(integerProperty1);
     domainEntity1.identityProperties.push(integerProperty1);
 
@@ -30,8 +33,15 @@ describe('when enhancing domain entity subclass queryables', () => {
     domainEntity1.queryableFields.push(integerProperty2);
     addEntity(metaEd.entity, domainEntity1);
 
-    const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclassName1, baseEntityName: domainEntityName1, baseEntity: domainEntity1 });
-    const integerProperty3 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName3' });
+    const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
+      metaEdName: domainEntitySubclassName1,
+      baseEntityName: domainEntityName1,
+      baseEntity: domainEntity1,
+    });
+    const integerProperty3 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName3',
+    });
     domainEntitySubclass1.properties.push(integerProperty3);
     domainEntitySubclass1.identityProperties.push(integerProperty3);
 
@@ -64,14 +74,24 @@ describe('when enhancing domain entity subclass with identity rename of base cla
   beforeAll(() => {
     const domainEntityName1 = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1 });
-    const integerProperty1 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName1' });
+    const integerProperty1 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName1',
+    });
     domainEntity1.properties.push(integerProperty1);
     domainEntity1.identityProperties.push(integerProperty1);
     domainEntity1.queryableFields.push(integerProperty1);
     addEntity(metaEd.entity, domainEntity1);
 
-    const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclassName1, baseEntityName: domainEntityName1, baseEntity: domainEntity1 });
-    const integerProperty2 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName2' });
+    const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
+      metaEdName: domainEntitySubclassName1,
+      baseEntityName: domainEntityName1,
+      baseEntity: domainEntity1,
+    });
+    const integerProperty2 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName2',
+    });
     domainEntitySubclass1.properties.push(integerProperty2);
     domainEntitySubclass1.identityProperties.push(integerProperty2);
 
@@ -101,7 +121,10 @@ describe('when enhancing association subclass queryables', () => {
   beforeAll(() => {
     const associationName1 = 'AssociationName1';
     const association1 = Object.assign(newAssociation(), { metaEdName: associationName1 });
-    const integerProperty1 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName1' });
+    const integerProperty1 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName1',
+    });
     association1.properties.push(integerProperty1);
     association1.identityProperties.push(integerProperty1);
 
@@ -110,8 +133,15 @@ describe('when enhancing association subclass queryables', () => {
     association1.queryableFields.push(integerProperty2);
     addEntity(metaEd.entity, association1);
 
-    const associationSubclass1 = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclassName1, baseEntityName: associationName1, baseEntity: association1 });
-    const integerProperty3 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: 'IntegerPropertyName3' });
+    const associationSubclass1 = Object.assign(newAssociationSubclass(), {
+      metaEdName: associationSubclassName1,
+      baseEntityName: associationName1,
+      baseEntity: association1,
+    });
+    const integerProperty3 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: 'IntegerPropertyName3',
+    });
     associationSubclass1.properties.push(integerProperty3);
     associationSubclass1.identityProperties.push(integerProperty3);
 
@@ -145,13 +175,24 @@ describe('when enhancing association subclass with identity rename of base class
     const associationName1 = 'AssociationName1';
     const integerPropertyName1 = 'IntegerPropertyName1';
     const association1 = Object.assign(newAssociation(), { metaEdName: associationName1 });
-    const integerProperty1 = Object.assign(newIntegerProperty(), { isPartOfIdentity: true, metaEdName: integerPropertyName1 });
+    const integerProperty1 = Object.assign(newIntegerProperty(), {
+      isPartOfIdentity: true,
+      metaEdName: integerPropertyName1,
+    });
     association1.properties.push(integerProperty1);
     association1.identityProperties.push(integerProperty1);
     association1.queryableFields.push(integerProperty1);
 
-    const associationSubclass1 = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclassName1, baseEntityName: associationName1, baseEntity: association1 });
-    const integerProperty2 = Object.assign(newIntegerProperty(), { isIdentityRename: true, baseKeyName: integerPropertyName1, metaEdName: 'IntegerPropertyRename' });
+    const associationSubclass1 = Object.assign(newAssociationSubclass(), {
+      metaEdName: associationSubclassName1,
+      baseEntityName: associationName1,
+      baseEntity: association1,
+    });
+    const integerProperty2 = Object.assign(newIntegerProperty(), {
+      isIdentityRename: true,
+      baseKeyName: integerPropertyName1,
+      metaEdName: 'IntegerPropertyRename',
+    });
     associationSubclass1.properties.push(integerProperty2);
     associationSubclass1.identityProperties.push(integerProperty2);
 

@@ -4,7 +4,12 @@ import R from 'ramda';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty, NoEntityProperty } from '../model/property/EntityProperty';
-import { newMergedProperty, MergedProperty, NoMergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
+import {
+  newMergedProperty,
+  MergedProperty,
+  NoMergedProperty,
+  MergedPropertySourceMap,
+} from '../model/property/MergedProperty';
 import { TopLevelEntity, NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
@@ -25,8 +30,16 @@ import { newInlineCommonProperty } from '../model/property/InlineCommonProperty'
 import { newChoiceProperty } from '../model/property/ChoiceProperty';
 import { IntegerProperty, newIntegerProperty, IntegerPropertySourceMap } from '../model/property/IntegerProperty';
 import { newPercentProperty } from '../model/property/PercentProperty';
-import { AssociationProperty, newAssociationProperty, AssociationPropertySourceMap } from '../model/property/AssociationProperty';
-import { DomainEntityProperty, newDomainEntityProperty, DomainEntityPropertySourceMap } from '../model/property/DomainEntityProperty';
+import {
+  AssociationProperty,
+  newAssociationProperty,
+  AssociationPropertySourceMap,
+} from '../model/property/AssociationProperty';
+import {
+  DomainEntityProperty,
+  newDomainEntityProperty,
+  DomainEntityPropertySourceMap,
+} from '../model/property/DomainEntityProperty';
 import { newSharedDecimalProperty } from '../model/property/SharedDecimalProperty';
 import { newSharedIntegerProperty } from '../model/property/SharedIntegerProperty';
 import { newSharedStringProperty } from '../model/property/SharedStringProperty';
@@ -105,7 +118,9 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
-          message: `${this.currentTopLevelEntity.typeHumanizedName} named ${this.currentTopLevelEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `${this.currentTopLevelEntity.typeHumanizedName} named ${
+            this.currentTopLevelEntity.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
           fileMap: null,
         });
@@ -113,7 +128,9 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
           category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${duplicateEntity.metaEdName} is a duplicate declaration of that name.`,
+          message: `${duplicateEntity.typeHumanizedName} named ${
+            duplicateEntity.metaEdName
+          } is a duplicate declaration of that name.`,
           sourceMap: duplicateEntity.sourceMap.type,
           fileMap: null,
         });
@@ -136,10 +153,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.exception ||
+    if (
+      context.exception ||
       context.METAED_ID() == null ||
       context.METAED_ID().exception != null ||
-      isErrorText(context.METAED_ID().getText())) return;
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     if (this.currentProperty !== NoEntityProperty) {
       this.currentProperty.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
@@ -398,43 +418,40 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterIsQueryableField(context: MetaEdGrammar.IsQueryableFieldContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentProperty === NoEntityProperty) return;
-    this.whenExitingPropertyCommand.push(
-      () => {
-        this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
-        this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
-      },
-    );
+    this.whenExitingPropertyCommand.push(() => {
+      this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
+      this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
+    });
   }
 
   enterIsQueryableOnly(context: MetaEdGrammar.IsQueryableOnlyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity || this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isQueryableOnly = true;
     this.currentProperty.sourceMap.isQueryableOnly = sourceMapFrom(context);
-    this.whenExitingPropertyCommand.push(
-      () => {
-        this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
-        this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
-      },
-    );
+    this.whenExitingPropertyCommand.push(() => {
+      this.currentTopLevelEntity.queryableFields.push(this.currentProperty);
+      this.currentTopLevelEntity.sourceMap.queryableFields.push(sourceMapFrom(context));
+    });
   }
 
   enterIdentity(context: MetaEdGrammar.IdentityContext) {
     this.enteringIdentity(context);
   }
 
-  enteringIdentity(context: MetaEdGrammar.FirstDomainEntityContext |
-    MetaEdGrammar.SecondDomainEntityContext |
-    MetaEdGrammar.IdentityContext |
-    MetaEdGrammar.IdentityRenameContext) {
+  enteringIdentity(
+    context:
+      | MetaEdGrammar.FirstDomainEntityContext
+      | MetaEdGrammar.SecondDomainEntityContext
+      | MetaEdGrammar.IdentityContext
+      | MetaEdGrammar.IdentityRenameContext,
+  ) {
     if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.isPartOfIdentity = true;
     this.currentProperty.sourceMap.isPartOfIdentity = sourceMapFrom(context);
-    this.whenExitingPropertyCommand.push(
-      () => {
-        this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
-        this.currentTopLevelEntity.sourceMap.identityProperties.push(sourceMapFrom(context));
-      },
-    );
+    this.whenExitingPropertyCommand.push(() => {
+      this.currentTopLevelEntity.identityProperties.push(this.currentProperty);
+      this.currentTopLevelEntity.sourceMap.identityProperties.push(sourceMapFrom(context));
+    });
   }
 
   enterIdentityRename(context: MetaEdGrammar.IdentityRenameContext) {
@@ -477,7 +494,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     ((this.currentProperty: any): StringProperty).minLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): StringPropertySourceMap).minLength = sourceMapFrom(context);
@@ -486,7 +509,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     ((this.currentProperty: any): StringProperty).maxLength = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): StringPropertySourceMap).maxLength = sourceMapFrom(context);
@@ -495,7 +524,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     ((this.currentProperty: any): DecimalProperty).decimalPlaces = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).decimalPlaces = sourceMapFrom(context);
@@ -504,7 +539,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     ((this.currentProperty: any): DecimalProperty).totalDigits = context.UNSIGNED_INT().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).totalDigits = sourceMapFrom(context);
@@ -513,25 +554,47 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMinValue(context: MetaEdGrammar.MinValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (
+      context.exception ||
+      context.signed_int() == null ||
+      context.signed_int().exception ||
+      isErrorText(context.signed_int().getText())
+    )
+      return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).minValue = context.signed_int().getText();
-    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).minValue = sourceMapFrom(context);
+    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).minValue = sourceMapFrom(
+      context,
+    );
     this.currentProperty.hasRestriction = true;
     this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMaxValue(context: MetaEdGrammar.MaxValueContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.signed_int() == null || context.signed_int().exception || isErrorText(context.signed_int().getText())) return;
+    if (
+      context.exception ||
+      context.signed_int() == null ||
+      context.signed_int().exception ||
+      isErrorText(context.signed_int().getText())
+    )
+      return;
     ((this.currentProperty: any): IntegerProperty | ShortProperty).maxValue = context.signed_int().getText();
-    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).maxValue = sourceMapFrom(context);
+    ((this.currentProperty.sourceMap: any): IntegerPropertySourceMap | ShortPropertySourceMap).maxValue = sourceMapFrom(
+      context,
+    );
     this.currentProperty.hasRestriction = true;
     this.currentProperty.sourceMap.hasRestriction = sourceMapFrom(context);
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (
+      context.exception ||
+      context.decimalValue() == null ||
+      context.decimalValue().exception ||
+      isErrorText(context.decimalValue().getText())
+    )
+      return;
     ((this.currentProperty: any): DecimalProperty).minValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).minValue = sourceMapFrom(context);
@@ -540,7 +603,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentProperty === NoEntityProperty) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (
+      context.exception ||
+      context.decimalValue() == null ||
+      context.decimalValue().exception ||
+      isErrorText(context.decimalValue().getText())
+    )
+      return;
     ((this.currentProperty: any): DecimalProperty).maxValue = context.decimalValue().getText();
     this.currentProperty.hasRestriction = true;
     ((this.currentProperty.sourceMap: any): DecimalPropertySourceMap).maxValue = sourceMapFrom(context);
@@ -550,7 +619,9 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterIsWeakReference(context: MetaEdGrammar.IsWeakReferenceContext) {
     if (this.currentProperty === NoEntityProperty) return;
     ((this.currentProperty: any): DomainEntityProperty | AssociationProperty).isWeak = true;
-    ((this.currentProperty.sourceMap: any): DomainEntityPropertySourceMap | AssociationPropertySourceMap).isWeak = sourceMapFrom(context);
+    ((this.currentProperty.sourceMap: any):
+      | DomainEntityPropertySourceMap
+      | AssociationPropertySourceMap).isWeak = sourceMapFrom(context);
   }
 
   // eslint-disable-next-line no-unused-vars

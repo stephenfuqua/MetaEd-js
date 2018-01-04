@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     failures.push({
       validatorName: 'EnumerationExistsOnlyInCoreNamespace',
       category: 'warning',
-      message: `${enumeration.typeHumanizedName} ${enumeration.metaEdName} will no longer be valid in extension namespace ${enumeration.namespaceInfo.projectExtension} in future releases.  Please convert to a Descriptor.`,
+      message: `${enumeration.typeHumanizedName} ${enumeration.metaEdName} will no longer be valid in extension namespace ${
+        enumeration.namespaceInfo.projectExtension
+      } in future releases.  Please convert to a Descriptor.`,
       sourceMap: enumeration.sourceMap.type,
       fileMap: null,
     });

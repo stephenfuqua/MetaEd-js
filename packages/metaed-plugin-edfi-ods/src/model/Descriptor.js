@@ -3,8 +3,8 @@ import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core'
 import { normalizeDescriptorSuffix } from '../shared/Utility';
 
 export type DescriptorEdfiOds = {
-  ods_DescriptorName: string;
-  ods_IsMapType: boolean;
+  ods_DescriptorName: string,
+  ods_IsMapType: boolean,
 };
 
 const enhancerName: string = 'OdsDescriptorSetupEnhancer';

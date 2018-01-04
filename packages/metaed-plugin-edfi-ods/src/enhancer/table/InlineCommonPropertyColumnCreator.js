@@ -8,9 +8,7 @@ import type { ColumnCreatorFactory } from './ColumnCreatorFactory';
 
 export function inlineCommonPropertyColumnCreator(factory: ColumnCreatorFactory): ColumnCreator {
   return {
-    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> => collectColumns(
-      property,
-      strategy.appendInlineContext(property.data.edfiOds.ods_ContextPrefix),
-      factory),
+    createColumns: (property: EntityProperty, strategy: BuildStrategy): Array<Column> =>
+      collectColumns(property, strategy.appendInlineContext(property.data.edfiOds.ods_ContextPrefix), factory),
   };
 }

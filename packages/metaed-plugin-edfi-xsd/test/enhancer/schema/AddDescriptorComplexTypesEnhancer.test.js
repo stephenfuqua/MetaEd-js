@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, newDescriptor, newMapTypeEnumeration, newBooleanProperty, newDescriptorProperty } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newDescriptor,
+  newMapTypeEnumeration,
+  newBooleanProperty,
+  newDescriptorProperty,
+} from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor, MapTypeEnumeration } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import type { Element } from '../../../src/model/schema/Element';
@@ -569,12 +575,8 @@ describe('when enhancing descriptor with both queryable and identity property', 
     enhancedItem = Object.assign(newDescriptor(), {
       metaEdName: complexTypeName,
       documentation,
-      properties: [
-        identityProperty,
-      ],
-      identityProperties: [
-        identityProperty,
-      ],
+      properties: [identityProperty],
+      identityProperties: [identityProperty],
       queryableFields: [
         Object.assign(newBooleanProperty(), {
           metaEdName: property2Name,

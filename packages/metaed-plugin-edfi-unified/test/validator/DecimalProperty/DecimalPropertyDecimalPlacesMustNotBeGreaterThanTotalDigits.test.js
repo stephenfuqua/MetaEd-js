@@ -92,7 +92,11 @@ describe('when validating decimal property with decimal places greater than tota
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating decimal property with decimal places greater than total digits -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating decimal property with decimal places greater than total digits -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating decimal property with decimal places greater than total digits -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating decimal property with decimal places greater than total digits -> sourceMap',
+    );
   });
 });

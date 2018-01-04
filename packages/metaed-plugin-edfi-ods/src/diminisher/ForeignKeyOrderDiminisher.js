@@ -19,8 +19,8 @@ const targetVersions: string = '2.0.x';
 const namespace: string = 'edfi';
 
 function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void {
-  const foreignKeys: Array<ForeignKey> = R.chain((table: Table) => getForeignKeys(table).filter(
-    (fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespace),
+  const foreignKeys: Array<ForeignKey> = R.chain((table: Table) =>
+    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespace),
   )([...repository.table.values()]);
   if (foreignKeys.length === 0) return;
 
@@ -35,9 +35,9 @@ function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void 
     );
     const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnNamePair = R.prop(R.__, foreignKeyColumnPairLookup);
 
-    const foreignKeyOrder: Array<ColumnNamePair> = R.chain(
-      (pkName: string) => foreignKeyColumnPairFor(pkName),
-    )(primaryKeyOrder);
+    const foreignKeyOrder: Array<ColumnNamePair> = R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(
+      primaryKeyOrder,
+    );
 
     fk.parentTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.parentTableColumnName);
     fk.foreignTableColumnNames = foreignKeyOrder.map((x: ColumnNamePair) => x.foreignTableColumnName);

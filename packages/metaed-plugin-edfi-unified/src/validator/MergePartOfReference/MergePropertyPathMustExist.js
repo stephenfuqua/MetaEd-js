@@ -1,20 +1,10 @@
 // @flow
 import R from 'ramda';
-import type {
-  PropertyType,
-  MetaEdEnvironment,
-  ValidationFailure,
-} from 'metaed-core';
+import type { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
 
-const validPropertyTypes: Array<PropertyType> = [
-  'association',
-  'choice',
-  'common',
-  'domainEntity',
-  'inlineCommon',
-];
+const validPropertyTypes: Array<PropertyType> = ['association', 'choice', 'common', 'domainEntity', 'inlineCommon'];
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

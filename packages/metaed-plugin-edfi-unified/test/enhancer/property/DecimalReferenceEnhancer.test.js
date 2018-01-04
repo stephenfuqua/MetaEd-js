@@ -7,13 +7,7 @@ import {
   newSharedDecimal,
   NoSharedSimple,
 } from 'metaed-core';
-import type {
-  DecimalProperty,
-  DecimalType,
-  MetaEdEnvironment,
-  SharedDecimal,
-  SharedDecimalProperty,
-} from 'metaed-core';
+import type { DecimalProperty, DecimalType, MetaEdEnvironment, SharedDecimal, SharedDecimalProperty } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
 describe('when enhancing decimal property', () => {

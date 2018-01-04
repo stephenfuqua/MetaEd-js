@@ -61,7 +61,11 @@ describe('when an association extension extends an association with a required p
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IncludingRequiredPropertiesInExtendedAssociationsProhibited');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when an association extension extends an association with a required property should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when an association extension extends an association with a required property should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when an association extension extends an association with a required property should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when an association extension extends an association with a required property should have validation failure -> sourceMap',
+    );
   });
 });

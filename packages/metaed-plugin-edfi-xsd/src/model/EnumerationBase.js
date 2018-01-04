@@ -4,9 +4,9 @@ import type { EnumerationSimpleType } from './schema/EnumerationSimpleType';
 import { NoEnumerationSimpleType } from './schema/EnumerationSimpleType';
 
 export type EnumerationBaseEdfiXsd = {
-  xsd_EnumerationName: string;
-  xsd_EnumerationNameWithExtension: string;
-  xsd_EnumerationSimpleType: EnumerationSimpleType;
+  xsd_EnumerationName: string,
+  xsd_EnumerationNameWithExtension: string,
+  xsd_EnumerationSimpleType: EnumerationSimpleType,
 };
 
 export type EnumerationBase = Enumeration | MapTypeEnumeration | SchoolYearEnumeration;

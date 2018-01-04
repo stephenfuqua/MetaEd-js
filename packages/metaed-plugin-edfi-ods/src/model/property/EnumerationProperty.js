@@ -4,8 +4,8 @@ import { normalizeEnumerationSuffix, prependWithContextToMetaEdName } from '../.
 import type { EntityPropertyEdfiOds } from './EntityProperty';
 
 export type EnumerationPropertyEdfiOds = EntityPropertyEdfiOds & {
-  ods_TypeifiedBaseName: string;
-}
+  ods_TypeifiedBaseName: string,
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'EnumerationPropertySetupEnhancer';

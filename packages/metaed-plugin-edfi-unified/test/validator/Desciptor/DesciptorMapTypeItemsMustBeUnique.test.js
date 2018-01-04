@@ -62,8 +62,12 @@ describe('when map type enumeration items have duplicate short descriptions', ()
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DescriptorMapTypeItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when map type enumeration items have duplicate short descriptions should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when map type enumeration items have duplicate short descriptions should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when map type enumeration items have duplicate short descriptions should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when map type enumeration items have duplicate short descriptions should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -98,11 +102,19 @@ describe('when map type enumeration items have multiple duplicate short descript
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DescriptorMapTypeItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('DescriptorMapTypeItemsMustBeUnique');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap',
+    );
   });
 });

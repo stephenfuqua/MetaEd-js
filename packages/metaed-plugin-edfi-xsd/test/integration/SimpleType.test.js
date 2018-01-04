@@ -32,29 +32,29 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withStringProperty(sharedNameString, 'doc', true, false, '10')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withStringProperty(sharedNameString, 'doc', true, false, '10')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntityPk, 'doc')
-    .withStringProperty(sharedNameString, 'doc', true, false, '10')
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntityPk, 'doc')
+      .withStringProperty(sharedNameString, 'doc', true, false, '10')
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -65,7 +65,10 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
   });
 
   it('should generate core domain entity string property', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -80,7 +83,10 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
   });
 
   it('should generate extension domain entity string property reference core', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
@@ -103,19 +109,19 @@ describe('when generating xsd for common string', () => {
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedString(simpleTypeEntity)
-    .withDocumentation('doc')
-    .withMinLength('10')
-    .withMaxLength('100')
-    .withEndSharedString()
+      .withStartSharedString(simpleTypeEntity)
+      .withDocumentation('doc')
+      .withMinLength('10')
+      .withMaxLength('100')
+      .withEndSharedString()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -126,27 +132,42 @@ describe('when generating xsd for common string', () => {
   });
 
   it('should generate correct type annotation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct documentation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of corrext xsd base type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct min length', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:minLength[@value='10']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:minLength[@value='10']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct max length', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:maxLength[@value='100']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:string']/xs:maxLength[@value='100']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -164,21 +185,21 @@ describe('when generating xsd for common decimal', () => {
     const decimalTypeBuilder = new DecimalTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedDecimal(simpleTypeEntity)
-    .withDocumentation('doc')
-    .withTotalDigits('5')
-    .withDecimalPlaces('4')
-    .withMinValue('10')
-    .withMaxValue('100')
-    .withEndSharedDecimal()
+      .withStartSharedDecimal(simpleTypeEntity)
+      .withDocumentation('doc')
+      .withTotalDigits('5')
+      .withDecimalPlaces('4')
+      .withMinValue('10')
+      .withMaxValue('100')
+      .withEndSharedDecimal()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(decimalTypeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(decimalTypeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -189,37 +210,58 @@ describe('when generating xsd for common decimal', () => {
   });
 
   it('should generate correct type annotation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct documentation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of correct xsd base type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of correct total digits', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:totalDigits[@value='5']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:totalDigits[@value='5']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of correct decimal places', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:fractionDigits[@value='4']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:fractionDigits[@value='4']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct min value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:minInclusive[@value='10']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:minInclusive[@value='10']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct max value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:maxInclusive[@value='100']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:decimal']/xs:maxInclusive[@value='100']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -237,19 +279,19 @@ describe('when generating xsd for common integer', () => {
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedInteger(simpleTypeEntity)
-    .withDocumentation('doc')
-    .withMinValue('10')
-    .withMaxValue('100')
-    .withEndSharedInteger()
+      .withStartSharedInteger(simpleTypeEntity)
+      .withDocumentation('doc')
+      .withMinValue('10')
+      .withMaxValue('100')
+      .withEndSharedInteger()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(integerTypeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(integerTypeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -260,27 +302,42 @@ describe('when generating xsd for common integer', () => {
   });
 
   it('should generate correct type annotation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct documentation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of correct xsd base type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct min value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:minInclusive[@value='10']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:minInclusive[@value='10']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct max value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:maxInclusive[@value='100']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:int']/xs:maxInclusive[@value='100']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -298,19 +355,19 @@ describe('when generating xsd for common short', () => {
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedShort(simpleTypeEntity)
-    .withDocumentation('doc')
-    .withMinValue('10')
-    .withMaxValue('100')
-    .withEndSharedShort()
+      .withStartSharedShort(simpleTypeEntity)
+      .withDocumentation('doc')
+      .withMinValue('10')
+      .withMaxValue('100')
+      .withEndSharedShort()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(integerTypeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(integerTypeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
   });
@@ -321,27 +378,42 @@ describe('when generating xsd for common short', () => {
   });
 
   it('should generate correct type annotation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct documentation', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:annotation/xs:documentation",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate restriction of correct xsd base type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct min value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:minInclusive[@value='10']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:minInclusive[@value='10']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate correct max value', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:maxInclusive[@value='100']", coreResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:simpleType[@name='SimpleTypeEntity']/xs:restriction[@base='xs:short']/xs:maxInclusive[@value='100']",
+      coreResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -363,28 +435,28 @@ describe('when generating xsd for shared simpel property in extension namespace 
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedString(coreSharedString)
-    .withDocumentation('doc')
-    .withMaxLength('20')
-    .withEndSharedString()
+      .withStartSharedString(coreSharedString)
+      .withDocumentation('doc')
+      .withMaxLength('20')
+      .withEndSharedString()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withSharedStringProperty(coreSharedString, coreSharedString, 'doc', true, false)
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withSharedStringProperty(coreSharedString, coreSharedString, 'doc', true, false)
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -400,7 +472,10 @@ describe('when generating xsd for shared simpel property in extension namespace 
   });
 
   it('should generate extension domain entity reference to core shared type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='CoreSharedString']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='CoreSharedString']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -424,28 +499,28 @@ describe('when generating xsd for renamed shared simple property in extension na
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedString(coreSharedString)
-    .withDocumentation('doc')
-    .withMaxLength('20')
-    .withEndSharedString()
+      .withStartSharedString(coreSharedString)
+      .withDocumentation('doc')
+      .withMaxLength('20')
+      .withEndSharedString()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withSharedStringProperty(coreSharedString, differentName, 'doc', true, false)
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withSharedStringProperty(coreSharedString, differentName, 'doc', true, false)
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -461,7 +536,10 @@ describe('when generating xsd for renamed shared simple property in extension na
   });
 
   it('should generate extension domain entity reference to core shared type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='DifferentName'][@type='CoreSharedString']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='DifferentName'][@type='CoreSharedString']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -485,35 +563,35 @@ describe('when generating xsd for shared simple property in extension namespace 
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartSharedString(dummy)
-    .withDocumentation('doc')
-    .withMaxLength('1')
-    .withEndSharedString()
+      .withStartSharedString(dummy)
+      .withDocumentation('doc')
+      .withMaxLength('1')
+      .withEndSharedString()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntityPk, 'doc')
-    .withSharedStringProperty(coreSharedString, coreSharedString, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntityPk, 'doc')
+      .withSharedStringProperty(coreSharedString, coreSharedString, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withStartSharedString(coreSharedString)
-    .withDocumentation('doc')
-    .withMaxLength('20')
-    .withEndSharedString()
+      .withStartSharedString(coreSharedString)
+      .withDocumentation('doc')
+      .withMaxLength('20')
+      .withEndSharedString()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(stringTypeBuilder)
-    .sendToListener(sharedStringBuilder)
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(stringTypeBuilder)
+      .sendToListener(sharedStringBuilder)
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(domainEntityExtensionBuilder);
 
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -524,7 +602,10 @@ describe('when generating xsd for shared simple property in extension namespace 
   });
 
   it('should generate extension domain entity reference to core shared type', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='EXTENSION-CoreSharedString']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='CoreSharedString'][@type='EXTENSION-CoreSharedString']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

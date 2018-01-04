@@ -27,8 +27,7 @@ describe('when enhancing decimal type', () => {
       decimalPlaces,
       totalDigits,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -92,8 +91,7 @@ describe('when enhancing generated decimal type with min value only', () => {
       generatedSimpleType: true,
       minValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -140,8 +138,7 @@ describe('when enhancing generated decimal type with max value only', () => {
       generatedSimpleType: true,
       maxValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -188,8 +185,7 @@ describe('when enhancing generated decimal type with decimal places only', () =>
       generatedSimpleType: true,
       decimalPlaces,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -236,8 +232,7 @@ describe('when enhancing generated decimal type with total digits only', () => {
       generatedSimpleType: true,
       totalDigits,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -282,8 +277,7 @@ describe('when enhancing non-generated decimal type with no restrictions', () =>
       documentation,
       generatedSimpleType: false,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -328,8 +322,7 @@ describe('when enhancing generated decimal type with no restrictions', () => {
       documentation,
       generatedSimpleType: true,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

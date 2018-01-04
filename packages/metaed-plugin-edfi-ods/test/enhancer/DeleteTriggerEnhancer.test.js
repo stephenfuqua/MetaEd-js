@@ -8,13 +8,7 @@ import {
   newMetaEdEnvironment,
   newNamespaceInfo,
 } from 'metaed-core';
-import type {
-  Association,
-  AssociationSubclass,
-  DomainEntity,
-  DomainEntitySubclass,
-  MetaEdEnvironment,
-} from 'metaed-core';
+import type { Association, AssociationSubclass, DomainEntity, DomainEntitySubclass, MetaEdEnvironment } from 'metaed-core';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
@@ -23,7 +17,6 @@ import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/Ed
 
 import type { Trigger } from '../../src/model/database/Trigger';
 import type { Table } from '../../src/model/database/Table';
-
 
 describe('when DeleteTriggerEnhancer enhances domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

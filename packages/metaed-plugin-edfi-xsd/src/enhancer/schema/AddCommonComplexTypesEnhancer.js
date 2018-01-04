@@ -1,9 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
-import {
-  typeGroupCommon,
-  createDefaultComplexType,
- } from './AddComplexTypesBaseEnhancer';
+import { typeGroupCommon, createDefaultComplexType } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddCommonComplexTypesEnhancer';
 

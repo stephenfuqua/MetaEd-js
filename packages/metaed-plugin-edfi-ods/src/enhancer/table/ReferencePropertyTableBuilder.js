@@ -49,7 +49,9 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       let strategy: BuildStrategy = buildStrategy;
 
       if (!R.isEmpty(referenceProperty.mergedProperties)) {
-        strategy = strategy.skipPath(referenceProperty.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)));
+        strategy = strategy.skipPath(
+          referenceProperty.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
+        );
       }
 
       const buildColumns = referenceColumnBuilder(referenceProperty, parentTableStrategy, strategy, factory);
@@ -57,10 +59,14 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
         buildColumns(ColumnTransform.primaryKeyWithContextCollapsible(referenceProperty.data.edfiOds.ods_ContextPrefix));
       }
       if (referenceProperty.isRequired) {
-        buildColumns(strategy.leafColumns(ColumnTransform.notNullWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix)));
+        buildColumns(
+          strategy.leafColumns(ColumnTransform.notNullWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix)),
+        );
       }
       if (referenceProperty.isOptional) {
-        buildColumns(strategy.leafColumns(ColumnTransform.nullWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix)));
+        buildColumns(
+          strategy.leafColumns(ColumnTransform.nullWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix)),
+        );
       }
 
       if (!referenceProperty.data.edfiOds.ods_IsCollection) return;
@@ -77,14 +83,21 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
         parentPrimaryKeys,
         parentTableStrategy.schema,
         parentTableStrategy.name,
-        ForeignKeyStrategy.foreignColumnCascade(true, referenceProperty.parentEntity.data.edfiOds.ods_CascadePrimaryKeyUpdates),
+        ForeignKeyStrategy.foreignColumnCascade(
+          true,
+          referenceProperty.parentEntity.data.edfiOds.ods_CascadePrimaryKeyUpdates,
+        ),
       );
       addForeignKey(joinTable, foreignKey);
       addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
 
       const primaryKeys: Array<Column> = collectPrimaryKeys(referenceProperty.referencedEntity, strategy, factory);
       primaryKeys.forEach((pk: Column) => addSourceEntityProperty(pk, property));
-      addColumns(joinTable, primaryKeys, ColumnTransform.primaryKeyWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix));
+      addColumns(
+        joinTable,
+        primaryKeys,
+        ColumnTransform.primaryKeyWithContext(referenceProperty.data.edfiOds.ods_ContextPrefix),
+      );
     },
   };
 }

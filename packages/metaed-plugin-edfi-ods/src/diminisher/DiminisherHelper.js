@@ -19,15 +19,11 @@ export function renameForeignKeyColumn(
   parentColumnName: string,
   newParentColumnName: string,
 ): void {
-  const foreignKey: ?ForeignKey = getForeignKeys(table).find(
-    (fk: ForeignKey) => fk.foreignTableName === foreignTableName,
-  );
+  const foreignKey: ?ForeignKey = getForeignKeys(table).find((fk: ForeignKey) => fk.foreignTableName === foreignTableName);
   if (foreignKey == null) return;
 
   const columnNamePair: ?ColumnNamePair = foreignKey.columnNames.find(
-    (x: ColumnNamePair) =>
-      x.foreignTableColumnName === foreignColumnName
-      && x.parentTableColumnName === parentColumnName,
+    (x: ColumnNamePair) => x.foreignTableColumnName === foreignColumnName && x.parentTableColumnName === parentColumnName,
   );
   if (columnNamePair == null) return;
 

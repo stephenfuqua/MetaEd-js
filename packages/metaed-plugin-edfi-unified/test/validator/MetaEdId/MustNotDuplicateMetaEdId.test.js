@@ -73,12 +73,20 @@ describe('when validating two entities have duplicate metaEdId', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -118,12 +126,20 @@ describe('when validating two domain items have duplicate metaEdId', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating two domain items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating two domain items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating two domain items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating two domain items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -163,12 +179,20 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating two enumeration items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating two enumeration items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating two enumeration items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating two enumeration items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -210,12 +234,20 @@ describe('when validating two map type enumeration items have duplicate metaEdId
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -253,12 +285,20 @@ describe('when validating interchange items have duplicate metaEdId', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating interchange elements have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating interchange elements have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating interchange elements have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating interchange elements have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });
 
@@ -328,23 +368,43 @@ describe('when validating multiple entities, properties, and items have duplicat
     expect(failures).toHaveLength(5);
     expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[1].category).toBe('warning');
-    expect(failures[1].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[2].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[2].category).toBe('warning');
-    expect(failures[2].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[2].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[2].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[2].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[3].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[3].category).toBe('warning');
-    expect(failures[3].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[3].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[3].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[3].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
     expect(failures[4].validatorName).toBe('MustNotDuplicateMetaEdId');
     expect(failures[4].category).toBe('warning');
-    expect(failures[4].message).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> message');
-    expect(failures[4].sourceMap).toMatchSnapshot('when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap');
+    expect(failures[4].message).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> message',
+    );
+    expect(failures[4].sourceMap).toMatchSnapshot(
+      'when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap',
+    );
   });
 });

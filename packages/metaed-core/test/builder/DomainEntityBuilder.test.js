@@ -135,13 +135,21 @@ describe('when building duplicate domain entities', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate domain entities should have validation failures for each entity -> DE 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate domain entities should have validation failures for each entity -> DE 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domain entities should have validation failures for each entity -> DE 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate domain entities should have validation failures for each entity -> DE 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate domain entities should have validation failures for each entity -> DE 2 sourceMap',
+    );
   });
 });
 
@@ -178,13 +186,21 @@ describe('when building duplicate property names', () => {
   it('should have validation failures for each property', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate property names should have validation failures for each property -> property 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate property names should have validation failures for each property -> property 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate property names should have validation failures for each property -> property 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate property names should have validation failures for each property -> property 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate property names should have validation failures for each property -> property 2 sourceMap',
+    );
   });
 });
 
@@ -252,13 +268,21 @@ describe('when building duplicate property names with same with context name', (
   it('should have validation failures for each property', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate property names with same with context name should have validation failures for each property -> property 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate property names with same with context name should have validation failures for each property -> property 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate property names with same with context name should have validation failures for each property -> property 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate property names with same with context name should have validation failures for each property -> property 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate property names with same with context name should have validation failures for each property -> property 2 sourceMap',
+    );
   });
 });
 
@@ -1719,7 +1743,9 @@ describe('when building domain entity namespace info source map', () => {
   it('should have projectExtension', () => {
     expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.projectExtension).toBeDefined();
     // $FlowIgnore - projectExtension could be null
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(
+      projectExtension,
+    );
   });
 
   it('should have isExtension', () => {

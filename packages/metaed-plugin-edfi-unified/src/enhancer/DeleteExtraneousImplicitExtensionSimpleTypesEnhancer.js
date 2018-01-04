@@ -9,7 +9,11 @@ const enhancerName: string = 'DeleteExtraneousImplicitExtensionSimpleTypesEnhanc
  */
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const simpleTypes = [];
-  simpleTypes.push(...metaEd.entity.decimalType.values(), ...metaEd.entity.integerType.values(), ...metaEd.entity.stringType.values());
+  simpleTypes.push(
+    ...metaEd.entity.decimalType.values(),
+    ...metaEd.entity.integerType.values(),
+    ...metaEd.entity.stringType.values(),
+  );
   // eslint-disable-next-line no-unused-vars
   groupByMetaEdName(simpleTypes).forEach((entities, metaEdName) => {
     if (entities.length > 1) {

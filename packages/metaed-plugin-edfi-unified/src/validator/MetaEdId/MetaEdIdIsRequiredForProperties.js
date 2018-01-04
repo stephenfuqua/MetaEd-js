@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     failures.push({
       validatorName: 'MetaEdIdIsRequiredForProperties',
       category: 'warning',
-      message: `${property.typeHumanizedName} ${property.metaEdName} on ${property.parentEntity.typeHumanizedName} ${property.parentEntity.metaEdName} is missing a MetaEdId value.`,
+      message: `${property.typeHumanizedName} ${property.metaEdName} on ${property.parentEntity.typeHumanizedName} ${
+        property.parentEntity.metaEdName
+      } is missing a MetaEdId value.`,
       sourceMap: property.sourceMap.type,
       fileMap: null,
     });

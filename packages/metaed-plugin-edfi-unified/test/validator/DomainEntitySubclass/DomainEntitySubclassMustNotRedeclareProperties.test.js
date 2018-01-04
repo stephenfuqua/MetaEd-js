@@ -79,8 +79,12 @@ describe('when domain entity subclass has duplicate property name', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -157,12 +161,20 @@ describe('when domain entity subclass has multiple duplicate property name', () 
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when domain entity subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
+    );
   });
 });

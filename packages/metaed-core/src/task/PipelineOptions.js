@@ -6,9 +6,8 @@ export type PipelineOptions = {
   runGenerators: boolean,
 };
 
-export const newPipelineOptions: () => PipelineOptions = () =>
-  ({
-    runValidators: true,
-    runEnhancers: false,
-    runGenerators: false,
-  });
+export const newPipelineOptions: () => PipelineOptions = () => ({
+  runValidators: true,
+  runEnhancers: false,
+  runGenerators: false,
+});

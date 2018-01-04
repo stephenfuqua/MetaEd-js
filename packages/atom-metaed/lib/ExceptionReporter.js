@@ -24,23 +24,23 @@ const isDevEnvironment = R.memoize(() => fs.existsSync(path.resolve(__dirname, '
 
 // $FlowIgnore
 const atomMetaEdPackageJson = require(path.resolve(__dirname, '../package.json'));
-const metaEdJsPackageJson = isDevEnvironment() ?
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../../node_modules/metaed-core/package.json')) :
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../metaed-core/package.json'));
+const metaEdJsPackageJson = isDevEnvironment()
+  ? // $FlowIgnore
+    require(path.resolve(__dirname, '../../../node_modules/metaed-core/package.json'))
+  : // $FlowIgnore
+    require(path.resolve(__dirname, '../../metaed-core/package.json'));
 
-const metaCsharpPackageJson = isDevEnvironment() ?
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../../node_modules/metaed-csharp/package.json')) :
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../metaed-csharp/package.json'));
+const metaCsharpPackageJson = isDevEnvironment()
+  ? // $FlowIgnore
+    require(path.resolve(__dirname, '../../../node_modules/metaed-csharp/package.json'))
+  : // $FlowIgnore
+    require(path.resolve(__dirname, '../../metaed-csharp/package.json'));
 
-const edFiModel20PackageJson = isDevEnvironment() ?
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../../node_modules/ed-fi-model-2.0/package.json')) :
-  // $FlowIgnore
-  require(path.resolve(__dirname, '../../ed-fi-model-2.0/package.json'));
+const edFiModel20PackageJson = isDevEnvironment()
+  ? // $FlowIgnore
+    require(path.resolve(__dirname, '../../../node_modules/ed-fi-model-2.0/package.json'))
+  : // $FlowIgnore
+    require(path.resolve(__dirname, '../../ed-fi-model-2.0/package.json'));
 
 // Temporary until Ed-Fi-Model 2.1 is included
 const edFiModel21PackageJson = {
@@ -50,7 +50,7 @@ const edFiModel21PackageJson = {
 const API_KEY = '572fefe3d435ced414e482499146e61e';
 const StackTraceCache = new WeakMap();
 
-const request = window.fetch;  // eslint-disable-line no-undef
+const request = window.fetch; // eslint-disable-line no-undef
 const alwaysReport = true;
 const reportPreviousErrors = true;
 const reportedErrors = [];
@@ -66,23 +66,25 @@ function parseStackTrace(error) {
 
 function normalizePath(filepath) {
   if (!filepath) return '';
-  return filepath.replace('file:///', '')             // Randomly inserted file url protocols
-    .replace(/[/]/g, '\\')                            // Temp switch for Windows home matching
-    .replace(os.homedir(), '~')                       // Remove users home dir for apm-dev'ed packages
-    .replace(/\\/g, '/')                              // Switch \ back to / for everyone
+  return filepath
+    .replace('file:///', '') // Randomly inserted file url protocols
+    .replace(/[/]/g, '\\') // Temp switch for Windows home matching
+    .replace(os.homedir(), '~') // Remove users home dir for apm-dev'ed packages
+    .replace(/\\/g, '/') // Switch \ back to / for everyone
     .replace(/.*(\/(app\.asar|packages\/).*)/, '$1'); // Remove everything before app.asar or pacakges
 }
 
 function buildStackTraceJSON(error) {
-  return parseStackTrace(error).map((callSite) => {   // eslint-disable-line arrow-body-style
-    return {
+  return parseStackTrace(error).map(callSite =>
+    // eslint-disable-line arrow-body-style
+    ({
       file: normalizePath(callSite.getFileName()),
       method: callSite.getMethodName() || callSite.getFunctionName() || 'none',
       lineNumber: callSite.getLineNumber(),
       columnNumber: callSite.getColumnNumber(),
       inProject: !/node_modules/.test(callSite.getFileName()),
-    };
-  });
+    }),
+  );
 }
 
 function buildExceptionJSON(error) {
@@ -101,36 +103,36 @@ function buildNotificationJSON(error) {
       version: atomMetaEdPackageJson.version,
       url: 'https://github.com/Ed-Fi-Alliance/MetaEd-IDE',
     },
-    events: [{
-      payloadVersion: '2',
-      exceptions: [buildExceptionJSON(error)],
-      severity: 'error',
-      user: {
-        id: atom.config.get('metaed-exception-report.user'),
+    events: [
+      {
+        payloadVersion: '2',
+        exceptions: [buildExceptionJSON(error)],
+        severity: 'error',
+        user: {
+          id: atom.config.get('metaed-exception-report.user'),
+        },
+        app: {
+          version: atomMetaEdPackageJson.version,
+        },
+        device: {
+          osVersion: `${os.platform()}-${os.arch()}-${os.release()}`,
+        },
+        metaData: error.metadata,
       },
-      app: {
-        version: atomMetaEdPackageJson.version,
-      },
-      device: {
-        osVersion: `${os.platform()}-${os.arch()}-${os.release()}`,
-      },
-      metaData: error.metadata,
-    }],
+    ],
   };
 }
 
 function getAtomReleaseChannel(version) {
-  return (version.indexOf('beta') > -1)     // eslint-disable-line no-nested-ternary
+  return version.indexOf('beta') > -1 // eslint-disable-line no-nested-ternary
     ? 'beta'
-    : (version.indexOf('dev') > -1)
-      ? 'dev'
-      : 'stable';
+    : version.indexOf('dev') > -1 ? 'dev' : 'stable';
 }
 
 function performRequest(json) {
   request.call(null, 'https://notify.bugsnag.com', {
     method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json' }),  // eslint-disable-line no-undef
+    headers: new Headers({ 'Content-Type': 'application/json' }), // eslint-disable-line no-undef
     body: JSON.stringify(json),
   });
 }
@@ -140,9 +142,7 @@ function shouldReport(error) {
   if (alwaysReport) return true; // Used in specs
 
   const topFrame = parseStackTrace(error)[0];
-  return topFrame &&
-    topFrame.getFileName() &&
-    topFrame.getFileName().indexOf(atom.getLoadSettings().resourcePath) === 0;
+  return topFrame && topFrame.getFileName() && topFrame.getFileName().indexOf(atom.getLoadSettings().resourcePath) === 0;
 }
 
 function addAtomMetadata(error) {
@@ -222,33 +222,37 @@ export default function reportException(error: any) {
   }
 
   if (telemetryConsent() == null || telemetryConsent() === '') {
-    const dialog = atom.notifications.addInfo('The Ed-Fi Alliance would like to collect anonymous information to resolve an error that has occurred.', {
-      description: 'Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions. Your selection can be changed at any time in atom-metaed package settings.',
-      dismissable: true,
-      buttons: [
-        {
-          text: 'Never',
-          onDidClick: () => {
-            setTelemetryConsent('false');
-            if (dialog) dialog.dismiss();
+    const dialog = atom.notifications.addInfo(
+      'The Ed-Fi Alliance would like to collect anonymous information to resolve an error that has occurred.',
+      {
+        description:
+          'Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions. Your selection can be changed at any time in atom-metaed package settings.',
+        dismissable: true,
+        buttons: [
+          {
+            text: 'Never',
+            onDidClick: () => {
+              setTelemetryConsent('false');
+              if (dialog) dialog.dismiss();
+            },
           },
-        },
-        {
-          text: 'Submit This Exception',
-          onDidClick: () => {
-            if (dialog) dialog.dismiss();
-            submitReport(error);
+          {
+            text: 'Submit This Exception',
+            onDidClick: () => {
+              if (dialog) dialog.dismiss();
+              submitReport(error);
+            },
           },
-        },
-        {
-          text: 'Always',
-          onDidClick: () => {
-            setTelemetryConsent('true');
-            if (dialog) dialog.dismiss();
-            submitReport(error);
+          {
+            text: 'Always',
+            onDidClick: () => {
+              setTelemetryConsent('true');
+              if (dialog) dialog.dismiss();
+              submitReport(error);
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+    );
   }
 }

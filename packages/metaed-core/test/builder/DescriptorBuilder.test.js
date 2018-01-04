@@ -122,13 +122,21 @@ describe('when building multiple descriptors', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap',
+    );
   });
 });
 
@@ -213,11 +221,15 @@ describe('when building descriptor with optional map type', () => {
   });
 
   it('should have enumeration item with short description', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(
+      itemShortDescription,
+    );
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(
+      itemDocumentation,
+    );
   });
 
   it('should have enumeration item with metaEdId ', () => {
@@ -306,11 +318,15 @@ describe('when building descriptor with required map type', () => {
   });
 
   it('should have enumeration item with short description', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(
+      itemShortDescription,
+    );
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(
+      itemDocumentation,
+    );
   });
 
   it('should have enumeration item with metaEdId ', () => {
@@ -577,11 +593,15 @@ describe('when building descriptor with no documentation in map type', () => {
   });
 
   it('should have enumeration item with short description', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(itemShortDescription);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].shortDescription).toBe(
+      itemShortDescription,
+    );
   });
 
   it('should have enumeration item with documentation', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(itemDocumentation);
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].documentation).toBe(
+      itemDocumentation,
+    );
   });
 
   it('should have enumeration item with metaEdId ', () => {
@@ -837,7 +857,9 @@ describe('when building descriptor source map with required map type', () => {
   });
 
   it('should have mapTypeEnumeration', () => {
-    expect(((getDescriptor(metaEd.entity, entityName).sourceMap: any): DescriptorSourceMap).mapTypeEnumeration).toBeDefined();
+    expect(
+      ((getDescriptor(metaEd.entity, entityName).sourceMap: any): DescriptorSourceMap).mapTypeEnumeration,
+    ).toBeDefined();
   });
 
   it('should have source map with line, column, text for each property', () => {
@@ -888,7 +910,9 @@ describe('when building required map type enumeration source map', () => {
   });
 
   it('should have enumerationItems', () => {
-    expect(((getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.sourceMap: any): EnumerationSourceMap).enumerationItems).toHaveLength(1);
+    expect(
+      ((getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.sourceMap: any): EnumerationSourceMap).enumerationItems,
+    ).toHaveLength(1);
   });
 
   it('should have line, column, text for each property', () => {
@@ -931,7 +955,9 @@ describe('when building map type enumeration item source map', () => {
   });
 
   it('should have documentation', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.documentation).toBeDefined();
+    expect(
+      getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.documentation,
+    ).toBeDefined();
   });
 
   it('should have metaEdId', () => {
@@ -939,11 +965,15 @@ describe('when building map type enumeration item source map', () => {
   });
 
   it('should have namespaceInfo', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.namespaceInfo).toBeDefined();
+    expect(
+      getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.namespaceInfo,
+    ).toBeDefined();
   });
 
   it('should have shortDescription', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.shortDescription).toBeDefined();
+    expect(
+      getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.shortDescription,
+    ).toBeDefined();
   });
 
   it('should have line, column, text for each property', () => {

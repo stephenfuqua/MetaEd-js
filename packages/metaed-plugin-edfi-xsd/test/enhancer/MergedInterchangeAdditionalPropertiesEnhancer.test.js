@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newInterchange, newNamespaceInfo, newPluginEnvironment } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newInterchangeItem,
+  newInterchange,
+  newNamespaceInfo,
+  newPluginEnvironment,
+} from 'metaed-core';
 import type { MetaEdEnvironment, InterchangeItem, Interchange } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeAdditionalPropertiesEnhancer';
@@ -25,12 +31,9 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
-      elements: [
-        element,
-      ],
+      elements: [element],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.interchange.set(interchange.metaEdName, interchange);
@@ -38,9 +41,7 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
     mergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
       repositoryId: interchangeName,
-      elements: [
-        element,
-      ],
+      elements: [element],
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
@@ -77,12 +78,9 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
-      elements: [
-        element,
-      ],
+      elements: [element],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.interchange.set(interchange.metaEdName, interchange);
@@ -94,9 +92,7 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
         projectExtension,
         isExtension: true,
       }),
-      elements: [
-        element,
-      ],
+      elements: [element],
     });
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);

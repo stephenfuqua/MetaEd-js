@@ -25,7 +25,6 @@ describe('when enumeration items have different short descriptions', () => {
     expect(metaEd.entity.enumeration.size).toBe(1);
   });
 
-
   it('should have no validation failures()', () => {
     expect(failures).toHaveLength(0);
   });
@@ -57,8 +56,12 @@ describe('when enumeration items have duplicate short descriptions', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when enumeration items have duplicate short descriptions should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when enumeration items have duplicate short descriptions should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when enumeration items have duplicate short descriptions should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when enumeration items have duplicate short descriptions should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -90,11 +93,19 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when enumeration items have multiple duplicate short descriptions should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap',
+    );
     expect(failures[1].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> message');
-    expect(failures[1].sourceMap).toMatchSnapshot('when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when enumeration items have multiple duplicate short descriptions should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap',
+    );
   });
 });

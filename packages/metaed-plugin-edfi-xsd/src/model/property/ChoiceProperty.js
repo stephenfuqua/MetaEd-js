@@ -5,7 +5,7 @@ import type { EntityPropertyEdfiXsd } from './EntityProperty';
 export type ChoicePropertyEdfiXsd = EntityPropertyEdfiXsd & {
   xsd_Properties: Array<EntityProperty>,
   xsd_IsChoice: boolean,
-}
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'ChoicePropertySetupEnhancer';

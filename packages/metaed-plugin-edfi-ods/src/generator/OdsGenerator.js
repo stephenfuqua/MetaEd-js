@@ -29,12 +29,12 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
     const triggers: Array<Trigger> = orderByProp('name')([...pluginEnvironment(metaEd).entity.trigger.values()]);
     const rows: Array<EnumerationRow | SchoolYearEnumerationRow> = [...pluginEnvironment(metaEd).entity.row.values()];
-    const enumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(rows.filter(
-      (row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'enumerationRow',
-    ));
-    const schoolYearEnumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(rows.filter(
-      (row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'schoolYearEnumerationRow',
-    ));
+    const enumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(
+      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'enumerationRow'),
+    );
+    const schoolYearEnumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(
+      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'schoolYearEnumerationRow'),
+    );
 
     const generatedResult: string = [
       template().table({ tables }),

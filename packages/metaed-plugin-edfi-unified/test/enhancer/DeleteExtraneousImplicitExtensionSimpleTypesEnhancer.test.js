@@ -9,19 +9,34 @@ describe('when there are duplicate string types', () => {
   const coreDuplicatedSimpleTypeName: string = 'CoreDuplicatedSimpleTypeName';
   const extensionOnlySimpleTypeName: string = 'ExtensionOnlySimpleTypeName';
 
-  const extensionNamespaceInfo : NamespaceInfo = Object.assign(newNamespaceInfo(), { isExtension: true, projectExtension: 'extension' });
+  const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+    isExtension: true,
+    projectExtension: 'extension',
+  });
 
   beforeAll(() => {
-    metaEd.entity.stringType.set(coreOnlySimpleTypeName, Object.assign(newStringType(), { metaEdName: coreOnlySimpleTypeName }));
-    metaEd.entity.stringType.set(coreDuplicatedSimpleTypeName, Object.assign(newStringType(), { metaEdName: coreDuplicatedSimpleTypeName }));
-    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`, Object.assign(newStringType(), {
-      metaEdName: coreDuplicatedSimpleTypeName,
-      namespaceInfo: extensionNamespaceInfo,
-    }));
-    metaEd.entity.stringType.set(`${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`, Object.assign(newStringType(), {
-      metaEdName: extensionOnlySimpleTypeName,
-      namespaceInfo: extensionNamespaceInfo,
-    }));
+    metaEd.entity.stringType.set(
+      coreOnlySimpleTypeName,
+      Object.assign(newStringType(), { metaEdName: coreOnlySimpleTypeName }),
+    );
+    metaEd.entity.stringType.set(
+      coreDuplicatedSimpleTypeName,
+      Object.assign(newStringType(), { metaEdName: coreDuplicatedSimpleTypeName }),
+    );
+    metaEd.entity.stringType.set(
+      `${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`,
+      Object.assign(newStringType(), {
+        metaEdName: coreDuplicatedSimpleTypeName,
+        namespaceInfo: extensionNamespaceInfo,
+      }),
+    );
+    metaEd.entity.stringType.set(
+      `${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`,
+      Object.assign(newStringType(), {
+        metaEdName: extensionOnlySimpleTypeName,
+        namespaceInfo: extensionNamespaceInfo,
+      }),
+    );
 
     enhance(metaEd);
   });
@@ -31,7 +46,9 @@ describe('when there are duplicate string types', () => {
   });
 
   it('should not have removed the extension only type', () => {
-    expect(metaEd.entity.stringType.get(`${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`)).toBeDefined();
+    expect(
+      metaEd.entity.stringType.get(`${extensionNamespaceInfo.projectExtension}-${extensionOnlySimpleTypeName}`),
+    ).toBeDefined();
   });
 
   it('should not have removed the core duplicated type', () => {
@@ -39,6 +56,8 @@ describe('when there are duplicate string types', () => {
   });
 
   it('should have removed the extension duplicated type', () => {
-    expect(metaEd.entity.stringType.get(`${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`)).toBeUndefined();
+    expect(
+      metaEd.entity.stringType.get(`${extensionNamespaceInfo.projectExtension}-${coreDuplicatedSimpleTypeName}`),
+    ).toBeUndefined();
   });
 });

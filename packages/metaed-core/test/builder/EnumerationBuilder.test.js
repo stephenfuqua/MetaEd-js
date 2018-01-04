@@ -180,13 +180,21 @@ describe('when building duplicate enumerations', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate enumerations should have validation failures for each entity -> Enumeration 2 sourceMap',
+    );
   });
 });
 
@@ -490,7 +498,6 @@ describe('when building enumeration with no enumeration item', () => {
       .sendToListener(builder);
   });
 
-
   it('should build one enumeration', () => {
     expect(metaEd.entity.enumeration.size).toBe(1);
   });
@@ -751,7 +758,9 @@ describe('when building enumeration source map', () => {
   });
 
   it('should have for enumerationItems', () => {
-    expect(((getEnumeration(metaEd.entity, entityName).sourceMap: any): EnumerationSourceMap).enumerationItems).toHaveLength(2);
+    expect(((getEnumeration(metaEd.entity, entityName).sourceMap: any): EnumerationSourceMap).enumerationItems).toHaveLength(
+      2,
+    );
   });
 
   it('should have first enumeration item type', () => {

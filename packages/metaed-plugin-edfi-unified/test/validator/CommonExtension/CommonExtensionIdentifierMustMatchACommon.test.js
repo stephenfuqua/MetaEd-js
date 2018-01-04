@@ -62,8 +62,11 @@ describe('when common extension extends an invalid identifier', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionIdentifierMustMatchACommon');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when common extension extends an invalid identifier should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when common extension extends an invalid identifier should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when common extension extends an invalid identifier should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when common extension extends an invalid identifier should have validation failure -> sourceMap',
+    );
   });
 });
-

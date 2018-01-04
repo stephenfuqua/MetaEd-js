@@ -5,11 +5,15 @@ import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExte
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.commonExtension.forEach(commonExtension => {
-    const extendedEntity : Common | void = metaEd.entity.common.get(commonExtension.metaEdName);
+    const extendedEntity: Common | void = metaEd.entity.common.get(commonExtension.metaEdName);
     if (extendedEntity) {
-      failExtensionPropertyRedeclarations('CommonExtensionMustNotRedeclareProperties', commonExtension, extendedEntity, failures);
+      failExtensionPropertyRedeclarations(
+        'CommonExtensionMustNotRedeclareProperties',
+        commonExtension,
+        extendedEntity,
+        failures,
+      );
     }
   });
   return failures;
 }
-

@@ -1,6 +1,17 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder, InterchangeBuilder, IntegerTypeBuilder, DescriptorBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, AssociationBuilder, AssociationExtensionBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  InterchangeBuilder,
+  IntegerTypeBuilder,
+  DescriptorBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for domain entity in both namespaces sharing a simple type', () => {
@@ -13,7 +24,6 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
 
   let interchangeResults;
 
-
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -21,30 +31,30 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(entityAsElement)
-    .withDocumentation('doc')
-    .withIntegerIdentity(key, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(entityAsElement)
+      .withDocumentation('doc')
+      .withIntegerIdentity(key, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(entityAsIdentityTemplate)
-    .withDocumentation('doc')
-    .withIntegerIdentity(key, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(entityAsIdentityTemplate)
+      .withDocumentation('doc')
+      .withIntegerIdentity(key, 'doc')
+      .withEndDomainEntity()
 
-    .withStartInterchange(xYZ)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(entityAsElement)
-    .withDomainEntityIdentityTemplate(entityAsIdentityTemplate)
-    .withEndInterchange()
+      .withStartInterchange(xYZ)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(entityAsElement)
+      .withDomainEntityIdentityTemplate(entityAsIdentityTemplate)
+      .withEndInterchange()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(intengerTypeBuilder)
-    .sendToListener(interchangeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(intengerTypeBuilder)
+      .sendToListener(interchangeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
@@ -54,11 +64,17 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     expect(elements).toHaveLength(1);
   });
   it('should identity template', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsIdentityTemplateReference'][@type='EntityAsIdentityTemplateReferenceType']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsIdentityTemplateReference'][@type='EntityAsIdentityTemplateReferenceType']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsElement'][@type='EntityAsElement']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='EntityAsElement'][@type='EntityAsElement']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
 });
@@ -70,8 +86,7 @@ describe('when generating xsd for extension interchange with a new domain entity
   const coreEntity1Pk: string = 'CoreEntityPk';
   const extensionEntityPk: string = 'ExtensionEntityPk';
 
-  let interchangeResults : Array<string>;
-
+  let interchangeResults: Array<string>;
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
@@ -80,37 +95,37 @@ describe('when generating xsd for extension interchange with a new domain entity
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartInterchange(xYZ)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(coreEntity1)
-    .withEndInterchange()
+      .withStartInterchange(xYZ)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(coreEntity1)
+      .withEndInterchange()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntity(extensionEntity)
-    .withDocumentation('doc')
-    .withIntegerIdentity(extensionEntityPk, 'doc')
-    .withDomainEntityProperty(coreEntity1, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDomainEntity(extensionEntity)
+      .withDocumentation('doc')
+      .withIntegerIdentity(extensionEntityPk, 'doc')
+      .withDomainEntityProperty(coreEntity1, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withStartInterchangeExtension(xYZ)
-    .withDomainEntityDomainItem(extensionEntity)
-    .withEndInterchangeExtension()
-    .withEndNamespace()
+      .withStartInterchangeExtension(xYZ)
+      .withDomainEntityDomainItem(extensionEntity)
+      .withEndInterchangeExtension()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(intengerTypeBuilder)
-    .sendToListener(interchangeBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(intengerTypeBuilder)
+      .sendToListener(interchangeBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
@@ -120,26 +135,47 @@ describe('when generating xsd for extension interchange with a new domain entity
     expect(elements).toHaveLength(1);
   });
   it('should include extension xsd', () => {
-    const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have core in extension interchange', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have extension element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should list core element before extensions', () => {
-    const extension = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[1]);
-    const coreElement = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']", interchangeResults[1])[0];
-    const extensionElement = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']", interchangeResults[1])[0];
+    const extension = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[1],
+    );
+    const coreElement = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      interchangeResults[1],
+    )[0];
+    const extensionElement = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
+      interchangeResults[1],
+    )[0];
     expect(extension[0].getAttribute('name')).toEqual(coreElement.getAttribute('name'));
     expect(extension[1].getAttribute('name')).toEqual(extensionElement.getAttribute('name'));
   });
@@ -153,8 +189,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
   const coreEntity2Pk: string = 'CoreEntity2Pk';
   const extensionProperty: string = 'ExtensionProperty';
 
-  let interchangeResults : Array<string>;
-
+  let interchangeResults: Array<string>;
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
@@ -164,39 +199,39 @@ describe('when generating xsd for extension interchange with a domain entity ext
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(coreEntity2)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity2Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity2Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartInterchange(xYZ)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(coreEntity1)
-    .withDomainEntityDomainItem(coreEntity2)
-    .withEndInterchange()
+      .withStartInterchange(xYZ)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(coreEntity1)
+      .withDomainEntityDomainItem(coreEntity2)
+      .withEndInterchange()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDomainEntityExtension(coreEntity1)
-    .withIntegerProperty(extensionProperty, 'doc', true, false)
-    .withEndDomainEntityExtension()
+      .withStartDomainEntityExtension(coreEntity1)
+      .withIntegerProperty(extensionProperty, 'doc', true, false)
+      .withEndDomainEntityExtension()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(intengerTypeBuilder)
-    .sendToListener(interchangeBuilder)
-    .sendToListener(domainEntityExtensionBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(intengerTypeBuilder)
+      .sendToListener(interchangeBuilder)
+      .sendToListener(domainEntityExtensionBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
@@ -206,26 +241,47 @@ describe('when generating xsd for extension interchange with a domain entity ext
     expect(elements).toHaveLength(1);
   });
   it('should include extension xsd', () => {
-    const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='CoreEntity1']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='CoreEntity1']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have extension element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='EXTENSION-CoreEntity1Extension']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity1'][@type='EXTENSION-CoreEntity1Extension']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should list extension domain entity in same position as core', () => {
-    const core = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[0])[0];
-    const extension = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[1])[0];
+    const core = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[0],
+    )[0];
+    const extension = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[1],
+    )[0];
     expect(extension.getAttribute('name')).toEqual(core.getAttribute('name'));
     expect(extension.getAttribute('type')).toEqual(`EXTENSION-${core.getAttribute('type')}Extension`);
   });
   it('should have the same number of elements', () => {
-    const core = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[0]);
-    const extension = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[1]);
+    const core = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[0],
+    );
+    const extension = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[1],
+    );
     expect(extension.length).toEqual(core.length);
   });
 });
@@ -239,8 +295,7 @@ describe('when generating xsd for extension interchange with an association exte
   const extensionProperty: string = 'ExtensionProperty';
   const coreAssociation: string = 'CoreAssociation';
 
-  let interchangeResults : Array<string>;
-
+  let interchangeResults: Array<string>;
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
@@ -252,49 +307,49 @@ describe('when generating xsd for extension interchange with an association exte
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(coreEntity2)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity2Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity2Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartAssociation(coreAssociation)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(coreEntity1)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(coreEntity2)
-    .withDocumentation('doc')
-    .withEndAssociation()
+      .withStartAssociation(coreAssociation)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(coreEntity1)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(coreEntity2)
+      .withDocumentation('doc')
+      .withEndAssociation()
 
-    .withStartInterchange(xYZ)
-    .withDocumentation('doc')
-    .withDomainEntityDomainItem(coreEntity1)
-    .withDomainEntityDomainItem(coreEntity2)
-    .withAssociationDomainItem(coreAssociation)
-    .withEndInterchange()
+      .withStartInterchange(xYZ)
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(coreEntity1)
+      .withDomainEntityDomainItem(coreEntity2)
+      .withAssociationDomainItem(coreAssociation)
+      .withEndInterchange()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartAssociationExtension(coreAssociation)
-    .withIntegerProperty(extensionProperty, 'doc', true, false)
-    .withEndAssociationExtension()
+      .withStartAssociationExtension(coreAssociation)
+      .withIntegerProperty(extensionProperty, 'doc', true, false)
+      .withEndAssociationExtension()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(associationBuilder)
-    .sendToListener(associationExtensionBuilder)
-    .sendToListener(interchangeBuilder)
-    .sendToListener(domainEntityExtensionBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(associationBuilder)
+      .sendToListener(associationExtensionBuilder)
+      .sendToListener(interchangeBuilder)
+      .sendToListener(domainEntityExtensionBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
@@ -304,26 +359,47 @@ describe('when generating xsd for extension interchange with an association exte
     expect(elements).toHaveLength(1);
   });
   it('should include extension xsd', () => {
-    const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='CoreAssociation']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='CoreAssociation']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have extension element', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='EXTENSION-CoreAssociationExtension']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreAssociation'][@type='EXTENSION-CoreAssociationExtension']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should list extension domain entity in same position as core', () => {
-    const core = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[0])[2];
-    const extension = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[1])[2];
+    const core = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[0],
+    )[2];
+    const extension = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[1],
+    )[2];
     expect(extension.getAttribute('name')).toEqual(core.getAttribute('name'));
     expect(extension.getAttribute('type')).toEqual(`EXTENSION-${core.getAttribute('type')}Extension`);
   });
   it('should have the same number of elements', () => {
-    const core = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[0]);
-    const extension = xpathSelect("/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element", interchangeResults[1]);
+    const core = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[0],
+    );
+    const extension = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      interchangeResults[1],
+    );
     expect(extension.length).toEqual(core.length);
   });
 });
@@ -334,9 +410,7 @@ describe('when generating xsd for extension interchange with extension descripto
   const extension: string = 'Extension';
   const extensionProperty: string = 'ExtensionProperty';
 
-
-  let interchangeResults : Array<string>;
-
+  let interchangeResults: Array<string>;
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
@@ -347,29 +421,29 @@ describe('when generating xsd for extension interchange with extension descripto
 
     MetaEdTextBuilder.build()
 
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDescriptor(core)
-    .withDocumentation('doc')
-    .withIntegerProperty(coreProperty, 'doc', true, false)
-    .withEndDomainEntity()
+      .withStartDescriptor(core)
+      .withDocumentation('doc')
+      .withIntegerProperty(coreProperty, 'doc', true, false)
+      .withEndDomainEntity()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('EXTENSION', 'Extension')
 
-    .withStartDescriptor(extension)
-    .withDocumentation('doc')
-    .withIntegerProperty(extensionProperty, 'doc', true, false)
-    .withEndDescriptor()
+      .withStartDescriptor(extension)
+      .withDocumentation('doc')
+      .withIntegerProperty(extensionProperty, 'doc', true, false)
+      .withEndDescriptor()
 
-    .withEndNamespace()
+      .withEndNamespace()
 
-    .sendToListener(namespaceInfoBuilder)
-    .sendToListener(descriptorBuilder)
-    .sendToListener(interchangeBuilder)
-    .sendToListener(domainEntityExtensionBuilder)
-    .sendToListener(domainEntityBuilder);
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(descriptorBuilder)
+      .sendToListener(interchangeBuilder)
+      .sendToListener(domainEntityExtensionBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
@@ -379,19 +453,31 @@ describe('when generating xsd for extension interchange with extension descripto
     expect(elements).toHaveLength(1);
   });
   it('should have core descriptor', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']", interchangeResults[0]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']",
+      interchangeResults[0],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should include extension descriptor interchange', () => {
-    const elements = xpathSelect("/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:include[@schemaLocation='EXTENSION-Ed-Fi-Extended-Core.xsd']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have core descriptor in extension interchange', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='CoreDescriptor'][@type='CoreDescriptor']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
   it('should have extension descriptor', () => {
-    const elements = xpathSelect("/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='ExtensionDescriptor'][@type='EXTENSION-ExtensionDescriptor']", interchangeResults[1]);
+    const elements = xpathSelect(
+      "/xs:schema/xs:element[@name='InterchangeDescriptors']/xs:complexType/xs:choice/xs:element[@name='ExtensionDescriptor'][@type='EXTENSION-ExtensionDescriptor']",
+      interchangeResults[1],
+    );
     expect(elements).toHaveLength(1);
   });
 });

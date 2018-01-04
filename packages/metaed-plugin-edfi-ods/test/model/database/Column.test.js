@@ -34,10 +34,7 @@ describe('when merging column constraints on existing primary key column', () =>
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName2,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
       }),
       Object.assign(newIntegerColumn(), {
         name: 'IntegerColumnName2',
@@ -49,10 +46,7 @@ describe('when merging column constraints on existing primary key column', () =>
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName3,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
       }),
     );
   });
@@ -109,10 +103,7 @@ describe('when merging column constraints on received primary key column', () =>
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName2,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
       }),
       Object.assign(newIntegerColumn(), {
         name: 'IntegerColumnName2',
@@ -124,10 +115,7 @@ describe('when merging column constraints on received primary key column', () =>
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName3,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
       }),
     );
   });
@@ -184,10 +172,7 @@ describe('when merging column constraints on existing non nullable column', () =
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName2,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
       }),
       Object.assign(newIntegerColumn(), {
         name: 'IntegerColumnName2',
@@ -199,10 +184,7 @@ describe('when merging column constraints on existing non nullable column', () =
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName3,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
       }),
     );
   });
@@ -259,10 +241,7 @@ describe('when merging column constraints on received non nullable column', () =
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName2,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
       }),
       Object.assign(newIntegerColumn(), {
         name: 'IntegerColumnName2',
@@ -274,10 +253,7 @@ describe('when merging column constraints on received non nullable column', () =
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName3,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
       }),
     );
   });
@@ -334,10 +310,7 @@ describe('when merging column constraints on nullable column', () => {
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName2 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName2,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName2],
       }),
       Object.assign(newIntegerColumn(), {
         name: 'IntegerColumnName2',
@@ -349,10 +322,7 @@ describe('when merging column constraints on nullable column', () => {
           domainEntityProperty,
           Object.assign(newDomainEntityProperty(), { metaEdName: domainEntityPropertyName3 }),
         ],
-        mergedReferenceContexts: [
-          domainEntityPropertyName1,
-          domainEntityPropertyName3,
-        ],
+        mergedReferenceContexts: [domainEntityPropertyName1, domainEntityPropertyName3],
       }),
     );
   });
@@ -410,7 +380,7 @@ describe('when using initialize column', () => {
     });
 
     column = newIntegerColumn();
-    initializeColumn(column, ((domainEntityProperty: any): (EntityPropertyEdfiOds & EntityProperty)), mockColumnNamer, false);
+    initializeColumn(column, ((domainEntityProperty: any): EntityPropertyEdfiOds & EntityProperty), mockColumnNamer, false);
   });
 
   it('should call column namer', () => {
@@ -452,9 +422,12 @@ describe('when using add source entity property to a column with no existing dup
 
   beforeAll(() => {
     column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
-    addSourceEntityProperty(column, Object.assign(newDomainEntityProperty(), {
-      metaEdName: domainEntityPropertyName,
-    }));
+    addSourceEntityProperty(
+      column,
+      Object.assign(newDomainEntityProperty(), {
+        metaEdName: domainEntityPropertyName,
+      }),
+    );
   });
 
   it('should successfully add source entity property', () => {
@@ -469,12 +442,18 @@ describe('when using add source entity property to a column with existing duplic
 
   beforeAll(() => {
     column = Object.assign(newIntegerColumn(), { name: 'IntegerColumnName' });
-    addSourceEntityProperty(column, Object.assign(newDomainEntityProperty(), {
-      metaEdName: domainEntityPropertyName,
-    }));
-    addSourceEntityProperty(column, Object.assign(newDomainEntityProperty(), {
-      metaEdName: domainEntityPropertyName,
-    }));
+    addSourceEntityProperty(
+      column,
+      Object.assign(newDomainEntityProperty(), {
+        metaEdName: domainEntityPropertyName,
+      }),
+    );
+    addSourceEntityProperty(
+      column,
+      Object.assign(newDomainEntityProperty(), {
+        metaEdName: domainEntityPropertyName,
+      }),
+    );
   });
 
   it('should reject incoming source entity property', () => {

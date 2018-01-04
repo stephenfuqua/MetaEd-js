@@ -115,7 +115,18 @@ describe('when building domain entity with decimal property in extension namespa
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
-      .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withDecimalProperty(
+        entityName,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId,
+      )
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
@@ -255,8 +266,30 @@ describe('when building domain entity with multiple decimal properties in extens
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
-      .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
-      .withDecimalProperty(entityName2, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId2)
+      .withDecimalProperty(
+        entityName,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId,
+      )
+      .withDecimalProperty(
+        entityName2,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId2,
+      )
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));

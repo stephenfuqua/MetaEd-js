@@ -5,4 +5,4 @@ export type EnhancerResult = {
   enhancerName: string,
   success: boolean,
   validationFailure?: ValidationFailure,
-}
+};

@@ -107,7 +107,13 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception != null || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception != null ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
     if (this.currentEnumerationItem !== NoEnumerationItem) {
       this.currentEnumerationItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
       this.currentEnumerationItem.sourceMap.metaEdId = sourceMapFrom(context);

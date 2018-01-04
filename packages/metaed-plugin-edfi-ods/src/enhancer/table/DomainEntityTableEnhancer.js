@@ -9,14 +9,14 @@ const enhancerName: string = 'DomainEntityTableEnhancer';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'domainEntity')
     .map((x: ModelBase) => asTopLevelEntity(x))
-      .forEach((entity: TopLevelEntity) => {
-        const tables: Array<Table> = [];
-        const mainTable: Table = buildMainTable(entity, true);
-        tables.push(mainTable);
-        buildTablesFromProperties(entity, mainTable, tables);
-        entity.data.edfiOds.ods_Tables = tables;
-        addTables(metaEd, tables);
-      });
+    .forEach((entity: TopLevelEntity) => {
+      const tables: Array<Table> = [];
+      const mainTable: Table = buildMainTable(entity, true);
+      tables.push(mainTable);
+      buildTablesFromProperties(entity, mainTable, tables);
+      entity.data.edfiOds.ods_Tables = tables;
+      addTables(metaEd, tables);
+    });
 
   return {
     enhancerName,

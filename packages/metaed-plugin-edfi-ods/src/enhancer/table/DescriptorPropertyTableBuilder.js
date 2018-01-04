@@ -56,9 +56,16 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           ForeignKeyStrategy.foreignColumnCascade(true, descriptor.parentEntity.data.edfiOds.ods_CascadePrimaryKeyUpdates),
         );
         addForeignKey(joinTable, parentForeignKey);
-        addColumns(joinTable, parentPrimaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name));
+        addColumns(
+          joinTable,
+          parentPrimaryKeys,
+          ColumnTransform.primaryKeyWithNewReferenceContext(parentTableStrategy.name),
+        );
 
-        const columns: Array<Column> = columnCreator.createColumns(descriptor, buildStrategy.columnNamerIgnoresWithContext());
+        const columns: Array<Column> = columnCreator.createColumns(
+          descriptor,
+          buildStrategy.columnNamerIgnoresWithContext(),
+        );
         const foreignKey: ForeignKey = createForeignKey(
           columns,
           descriptor.referencedEntity.namespaceInfo.namespace,

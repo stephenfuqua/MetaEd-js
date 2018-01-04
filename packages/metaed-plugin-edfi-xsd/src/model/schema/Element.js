@@ -9,7 +9,7 @@ export type Element = {
   name: string,
   type: string,
   annotation: Annotation,
-}
+};
 
 export function newElement(): Element {
   return Object.assign({}, newComplexTypeItem(), {

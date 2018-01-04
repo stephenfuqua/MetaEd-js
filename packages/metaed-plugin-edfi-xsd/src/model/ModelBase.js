@@ -4,7 +4,7 @@ import { getEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtension } from './shared/AddMetaEdNameWithExtension';
 
 export type ModelBaseEdfiXsd = {
-  xsd_MetaEdNameWithExtension: () => string;
+  xsd_MetaEdNameWithExtension: () => string,
 };
 
 const enhancerName: string = 'ModelBaseSetupEnhancer';
@@ -18,7 +18,8 @@ export function addModelBaseEdfiXsdTo(modelBase: ModelBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity,
+  getEntitiesOfType(
+    metaEd.entity,
     'association',
     'associationSubclass',
     'choice',

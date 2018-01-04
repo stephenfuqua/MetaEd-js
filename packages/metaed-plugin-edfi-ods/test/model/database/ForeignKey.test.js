@@ -10,10 +10,13 @@ describe('when using add column name pair to a foreign key with no existing dupl
 
   beforeAll(() => {
     foreignKey = Object.assign(newForeignKey(), { name: 'ForeignKeyName' });
-    addColumnNamePair(foreignKey, Object.assign(newColumnNamePair(), {
-      parentTableColumnName,
-      foreignTableColumnName,
-    }));
+    addColumnNamePair(
+      foreignKey,
+      Object.assign(newColumnNamePair(), {
+        parentTableColumnName,
+        foreignTableColumnName,
+      }),
+    );
   });
 
   it('should successfully add column name pair', () => {
@@ -30,14 +33,20 @@ describe('when using add column name pair to a foreign key with existing duplica
 
   beforeAll(() => {
     foreignKey = Object.assign(newForeignKey(), { name: 'ForeignKeyName' });
-    addColumnNamePair(foreignKey, Object.assign(newColumnNamePair(), {
-      parentTableColumnName,
-      foreignTableColumnName,
-    }));
-    addColumnNamePair(foreignKey, Object.assign(newColumnNamePair(), {
-      parentTableColumnName,
-      foreignTableColumnName,
-    }));
+    addColumnNamePair(
+      foreignKey,
+      Object.assign(newColumnNamePair(), {
+        parentTableColumnName,
+        foreignTableColumnName,
+      }),
+    );
+    addColumnNamePair(
+      foreignKey,
+      Object.assign(newColumnNamePair(), {
+        parentTableColumnName,
+        foreignTableColumnName,
+      }),
+    );
   });
 
   it('should reject incoming column name pair', () => {

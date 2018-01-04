@@ -7,13 +7,7 @@ import {
   newMetaEdEnvironment,
   newNamespaceInfo,
 } from 'metaed-core';
-import type {
-  Association,
-  AssociationSubclass,
-  IntegerProperty,
-  MetaEdEnvironment,
-  NamespaceInfo,
-} from 'metaed-core';
+import type { Association, AssociationSubclass, IntegerProperty, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/AssociationSubclassTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';

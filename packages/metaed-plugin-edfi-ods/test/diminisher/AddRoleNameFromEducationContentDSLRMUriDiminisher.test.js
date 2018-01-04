@@ -12,7 +12,8 @@ import type { Table } from '../../src/model/database/Table';
 
 describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceLearningResourceMetadataURI table', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const educationContentDerivativeSourceLearningResourceMetadataURI: string = 'EducationContentDerivativeSourceLearningResourceMetadataURI';
+  const educationContentDerivativeSourceLearningResourceMetadataURI: string =
+    'EducationContentDerivativeSourceLearningResourceMetadataURI';
   const learningResourceMetadataURI: string = 'LearningResourceMetadataURI';
 
   beforeAll(() => {
@@ -34,14 +35,18 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 
   it('should rename DerivativeSourceLearningResourceMetadataURI column to LearningResourceMetadataURI', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(educationContentDerivativeSourceLearningResourceMetadataURI).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(educationContentDerivativeSourceLearningResourceMetadataURI)
+        .columns,
+    );
     expect(column.name).toBe(learningResourceMetadataURI);
   });
 
   it('should set column length', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(educationContentDerivativeSourceLearningResourceMetadataURI).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(educationContentDerivativeSourceLearningResourceMetadataURI)
+        .columns,
+    );
     expect(R.prop('length', column)).toBe('225');
     expect(column.dataType).toBe('[NVARCHAR](225)');
   });
@@ -71,14 +76,16 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 
   it('should rename DerivativeSourceURI column to URI', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(educationContentDerivativeSourceURI).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(educationContentDerivativeSourceURI).columns,
+    );
     expect(column.name).toBe(uri);
   });
 
   it('should set column length', () => {
-    const column: Column = R.head((metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(educationContentDerivativeSourceURI).columns);
+    const column: Column = R.head(
+      (metaEd.plugin.get('edfiOds'): any).entity.table.get(educationContentDerivativeSourceURI).columns,
+    );
     expect(R.prop('length', column)).toBe('225');
     expect(column.dataType).toBe('[NVARCHAR](225)');
   });

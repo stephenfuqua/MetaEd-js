@@ -1,10 +1,5 @@
 // @flow
-import type {
-  EnhancerResult,
-  MetaEdEnvironment,
-  PluginEnvironment,
-  StringType,
-} from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment, StringType } from 'metaed-core';
 import { createDefaultHandbookEntry } from './SimpleTypeMetaEdHandbookEnhancerBase';
 import type { HandbookEntry } from '../model/HandbookEntry';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
@@ -20,9 +15,14 @@ function getTypeCharacteristicsFor(entity: StringType): Array<string> {
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const results: Array<HandbookEntry> = Array.from(metaEd.entity.stringType.values()).map(entity =>
-    Object.assign(createDefaultHandbookEntry(entity, 'String Type', metaEd), { typeCharacteristics: getTypeCharacteristicsFor(entity) }));
+    Object.assign(createDefaultHandbookEntry(entity, 'String Type', metaEd), {
+      typeCharacteristics: getTypeCharacteristicsFor(entity),
+    }),
+  );
 
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(...results);
+  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
+    ...results,
+  );
 
   return {
     enhancerName,

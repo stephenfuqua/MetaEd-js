@@ -6,7 +6,7 @@ export type SimpleType = {
   name: string,
   baseType: string,
   annotation: Annotation,
-}
+};
 
 export function newSimpleType(): SimpleType {
   return {

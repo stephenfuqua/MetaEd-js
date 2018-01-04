@@ -1,11 +1,5 @@
 // @flow
-import type {
-  EntityProperty,
-  EntityRepository,
-  ModelBase,
-  ModelType,
-  PropertyType,
-} from 'metaed-core';
+import type { EntityProperty, EntityRepository, ModelBase, ModelType, PropertyType } from 'metaed-core';
 import { asModelType, getEntity, asTopLevelEntity, allEntityModelTypes } from 'metaed-core';
 
 export const referenceTypes: Array<ModelType> = [
@@ -20,11 +14,7 @@ export const referenceTypes: Array<ModelType> = [
   'inlineCommon',
 ];
 
-export const commonTypes: Array<PropertyType> = [
-  'choice',
-  'common',
-  'inlineCommon',
-];
+export const commonTypes: Array<PropertyType> = ['choice', 'common', 'inlineCommon'];
 
 const subclassSuffix: string = 'Subclass';
 const extensionSuffix: string = 'Extension';
@@ -32,8 +22,10 @@ const extensionSuffix: string = 'Extension';
 function possibleModelTypesReferencedByProperty(propertyType: ModelType | PropertyType): Array<ModelType> {
   const allEntityModelTypesUntyped = ((allEntityModelTypes: any): Array<string>);
   const result = [propertyType];
-  if (allEntityModelTypesUntyped.includes(`${propertyType}${extensionSuffix}`)) result.push(`${propertyType}${extensionSuffix}`);
-  if (allEntityModelTypesUntyped.includes(`${propertyType}${subclassSuffix}`)) result.push(`${propertyType}${subclassSuffix}`);
+  if (allEntityModelTypesUntyped.includes(`${propertyType}${extensionSuffix}`))
+    result.push(`${propertyType}${extensionSuffix}`);
+  if (allEntityModelTypesUntyped.includes(`${propertyType}${subclassSuffix}`))
+    result.push(`${propertyType}${subclassSuffix}`);
   return result.map(x => asModelType(x));
 }
 
@@ -55,11 +47,10 @@ export function getBaseEntity(repository: EntityRepository, entity: ?ModelBase):
 
 export const matchAll = () => (): boolean => true;
 
-export const matchAllIdentityReferenceProperties = () =>
-  (property: EntityProperty, parentContext: ModelBase): boolean =>
-    ['choice', 'inlineCommon'].includes(parentContext.type)
-    || ((property.isPartOfIdentity || property.isIdentityRename)
-    && ['association', 'descriptor', 'domainEntity', 'enumeration'].includes(property.type));
+export const matchAllIdentityReferenceProperties = () => (property: EntityProperty, parentContext: ModelBase): boolean =>
+  ['choice', 'inlineCommon'].includes(parentContext.type) ||
+  ((property.isPartOfIdentity || property.isIdentityRename) &&
+    ['association', 'descriptor', 'domainEntity', 'enumeration'].includes(property.type));
 
 export const matchAllButFirstAsIdentityProperties = () => {
   let firstProperty: EntityProperty;
@@ -92,11 +83,13 @@ export function findReferencedProperty(
     propertyContext = undefined;
     let currentFilter = filter;
     while (entityContext && !propertyContext) {
-      propertyContext = asTopLevelEntity(entityContext).properties
+      propertyContext = asTopLevelEntity(entityContext).properties.find(
         // eslint-disable-next-line no-loop-func
-        .find(x => (x.metaEdName === pathSegment || withContext(x) === pathSegment)
+        x =>
+          (x.metaEdName === pathSegment || withContext(x) === pathSegment) &&
           // $FlowIgnore entityContext could be null
-          && currentFilter(x, entityContext));
+          currentFilter(x, entityContext),
+      );
       if (propertyContext) break;
       entityContext = getBaseEntity(repository, entityContext);
       currentFilter = matchAllIdentityReferenceProperties();

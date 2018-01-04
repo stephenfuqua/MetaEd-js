@@ -6,7 +6,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   metaEd.entity.associationSubclass.forEach(associationSubclass => {
-    failSubclassIdentityRenamingMoreThanOnce('AssociationSubclassIdentityRenameMustExistNoMoreThanOnce', associationSubclass, failures);
+    failSubclassIdentityRenamingMoreThanOnce(
+      'AssociationSubclassIdentityRenameMustExistNoMoreThanOnce',
+      associationSubclass,
+      failures,
+    );
   });
 
   return failures;

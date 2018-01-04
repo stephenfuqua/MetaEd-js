@@ -3,7 +3,6 @@ import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metae
 import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { generate as InterchangeBriefSvgGenerator } from '../../src/generator/InterchangeBriefSvgGenerator';
 
-
 describe('When generating interchange brief with no extended references or descriptors', () => {
   const interchange1metaEdName: string = 'Interchange1metaEdName';
   const interchange2metaEdName: string = 'Interchange2metaEdName';

@@ -48,8 +48,7 @@ describe('when building choice property table with two integer properties', () =
     const entityChoiceProperty: ChoiceProperty = Object.assign(newChoiceProperty(), {
       parentEntity: entity,
       data: {
-        edfiOds: {
-        },
+        edfiOds: {},
       },
     });
 

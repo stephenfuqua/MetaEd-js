@@ -11,7 +11,8 @@ import type { Table } from '../../src/model/database/Table';
 
 describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher diminishes GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const graduationPlanRequiredAssessmentAssessmentPerformanceLevel: string = 'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
+  const graduationPlanRequiredAssessmentAssessmentPerformanceLevel: string =
+    'GraduationPlanRequiredAssessmentAssessmentPerformanceLevel';
   const graduationPlanRequiredAssessmentPerformanceLevel: string = 'GraduationPlanRequiredAssessmentPerformanceLevel';
 
   beforeAll(() => {
@@ -35,17 +36,24 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
   });
 
   it('should rename GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(graduationPlanRequiredAssessmentPerformanceLevel);
+    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      graduationPlanRequiredAssessmentPerformanceLevel,
+    );
     expect(table).toBeUndefined();
 
-    const targetTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
+    const targetTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+    );
     expect(targetTable).toBeDefined();
     expect(targetTable.name).toBe(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
   });
 
   it('should update foreign key parent table name', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table
-      .get(graduationPlanRequiredAssessmentAssessmentPerformanceLevel).foreignKeys;
-    expect(foreignKeys.every(fk => fk.parentTableName === graduationPlanRequiredAssessmentAssessmentPerformanceLevel)).toBe(true);
+    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(
+      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+    ).foreignKeys;
+    expect(foreignKeys.every(fk => fk.parentTableName === graduationPlanRequiredAssessmentAssessmentPerformanceLevel)).toBe(
+      true,
+    );
   });
 });

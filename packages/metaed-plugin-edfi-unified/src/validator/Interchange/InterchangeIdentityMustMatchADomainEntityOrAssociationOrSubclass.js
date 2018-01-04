@@ -5,6 +5,11 @@ import { failInterchangeItemNotMatchingBaseClassProperty } from '../ValidatorSha
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   failInterchangeItemNotMatchingBaseClassProperty(
-    'InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass', metaEd.entity, 'identityTemplates', 'Interchange identity template', failures);
+    'InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass',
+    metaEd.entity,
+    'identityTemplates',
+    'Interchange identity template',
+    failures,
+  );
   return failures;
 }

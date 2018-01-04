@@ -31,7 +31,9 @@ export function failReferencedPropertyDoesNotExist(
     failures.push({
       validatorName,
       category: 'error',
-      message: `Merge statement ${propertyPath.join('.')} must be a valid path. No Property ${R.last(propertyPath)} was found`,
+      message: `Merge statement ${propertyPath.join('.')} must be a valid path. No Property ${R.last(
+        propertyPath,
+      )} was found`,
       sourceMap,
       fileMap: null,
     });

@@ -48,8 +48,8 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
 
     const table: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
-      columns: primaryKeyNames.map(
-        (name: string) => Object.assign(newColumn(), {
+      columns: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
           name,
           isPartOfPrimaryKey: true,
         }),
@@ -62,7 +62,8 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
   });
 
   it('should have correct primary key order', () => {
-    const primaryKeys: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(gradebookEntryLearningObjective).primaryKeys;
+    const primaryKeys: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(gradebookEntryLearningObjective)
+      .primaryKeys;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
@@ -126,8 +127,8 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
 
     const table: Table = Object.assign(newTable(), {
       name: gradebookEntryLearningObjective,
-      columns: primaryKeyNames.map(
-        (name: string) => Object.assign(newColumn(), {
+      columns: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
           name,
           isPartOfPrimaryKey: true,
         }),
@@ -140,7 +141,8 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
   });
 
   it('should have correct primary key order', () => {
-    const primaryKeys: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(gradebookEntryLearningObjective).primaryKeys;
+    const primaryKeys: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(gradebookEntryLearningObjective)
+      .primaryKeys;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
@@ -166,8 +168,8 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
 
     const table: Table = Object.assign(newTable(), {
       name: TableName,
-      columns: primaryKeyNames.map(
-        (name: string) => Object.assign(newColumn(), {
+      columns: primaryKeyNames.map((name: string) =>
+        Object.assign(newColumn(), {
           name,
           isPartOfPrimaryKey: true,
         }),

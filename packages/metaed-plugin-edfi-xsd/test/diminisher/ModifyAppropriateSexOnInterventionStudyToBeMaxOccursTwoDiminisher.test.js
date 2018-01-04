@@ -1,16 +1,7 @@
 // @flow
 import R from 'ramda';
-import type {
-  MetaEdEnvironment,
-  DomainEntity,
-  EnhancerResult,
-  IntegerType,
-} from 'metaed-core';
-import {
-  newDomainEntity,
-  newIntegerType,
-  newMetaEdEnvironment,
-} from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntity, EnhancerResult, IntegerType } from 'metaed-core';
+import { newDomainEntity, newIntegerType, newMetaEdEnvironment } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { enhance } from '../../src/diminisher/ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher';
@@ -50,7 +41,7 @@ describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher
     expect(entity).toBeDefined();
   });
 
-  it('should have maxOccurs set to \'2\'', () => {
+  it("should have maxOccurs set to '2'", () => {
     expect(R.head(R.head(entity.data.edfiXsd.xsd_ComplexTypes).items).maxOccursIsUnbounded).toBe(false);
     expect(R.head(R.head(entity.data.edfiXsd.xsd_ComplexTypes).items).maxOccurs).toBe('2');
   });

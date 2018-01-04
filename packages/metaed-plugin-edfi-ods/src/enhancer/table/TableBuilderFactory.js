@@ -11,8 +11,8 @@ import { simplePropertyTableBuilder } from './SimplePropertyTableBuilder';
 import type { TableBuilder } from './TableBuilder';
 
 export type TableBuilderFactory = {
-  tableBuilderFor(property: EntityProperty): TableBuilder
-}
+  tableBuilderFor(property: EntityProperty): TableBuilder,
+};
 
 export const tableBuilderFactory: TableBuilderFactory = {
   tableBuilderFor: (property: EntityProperty): TableBuilder => {

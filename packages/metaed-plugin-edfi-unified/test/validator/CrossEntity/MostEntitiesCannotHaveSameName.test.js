@@ -86,13 +86,21 @@ describe('when DE and Association have identical names', () => {
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when DE and Association have identical names should have validation failures for each entity -> association message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when DE and Association have identical names should have validation failures for each entity -> association sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when DE and Association have identical names should have validation failures for each entity -> association message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when DE and Association have identical names should have validation failures for each entity -> association sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when DE and Association have identical names should have validation failures for each entity -> DE message ');
-    expect(failures[1].sourceMap).toMatchSnapshot('when DE and Association have identical names should have validation failures for each entity -> DE sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when DE and Association have identical names should have validation failures for each entity -> DE message ',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when DE and Association have identical names should have validation failures for each entity -> DE sourceMap',
+    );
   });
 });
 
@@ -203,13 +211,21 @@ describe('when DE and SharedInteger have identical names', () => {
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> DE message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> DE sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when DE and SharedInteger have identical names should have validation failures for each entity -> DE message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when DE and SharedInteger have identical names should have validation failures for each entity -> DE sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger message ');
-    expect(failures[1].sourceMap).toMatchSnapshot('when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger message ',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger sourceMap',
+    );
   });
 });
 
@@ -248,13 +264,21 @@ describe('when DE and Common have identical names', () => {
 
     expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when DE and Common have identical names should have validation failures for each entity -> DE message ');
-    expect(failures[0].sourceMap).toMatchSnapshot('when DE and Common have identical names should have validation failures for each entity -> DE sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> DE message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> DE sourceMap',
+    );
 
     expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot('when DE and Common have identical names should have validation failures for each entity -> SharedInteger message ');
-    expect(failures[1].sourceMap).toMatchSnapshot('when DE and Common have identical names should have validation failures for each entity -> SharedInteger sourceMap');
+    expect(failures[1].message).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> SharedInteger message ',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> SharedInteger sourceMap',
+    );
   });
 });
 

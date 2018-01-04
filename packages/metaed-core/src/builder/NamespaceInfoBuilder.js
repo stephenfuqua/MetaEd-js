@@ -9,20 +9,29 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
-export function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
+export function enteringNamespaceName(
+  context: MetaEdGrammar.NamespaceNameContext,
+  namespaceInfo: NamespaceInfo,
+): NamespaceInfo {
   if (namespaceInfo === NoNamespaceInfo || isErrorText(context.NAMESPACE_ID().getText())) return newNamespaceInfo();
 
-  if (context.exception ||
+  if (
+    context.exception ||
     context.NAMESPACE_ID() == null ||
     context.NAMESPACE_ID().exception != null ||
-    context.NAMESPACE_ID().getText() == null) return namespaceInfo;
+    context.NAMESPACE_ID().getText() == null
+  )
+    return namespaceInfo;
 
   Object.assign(namespaceInfo, { namespace: context.NAMESPACE_ID().getText() });
   Object.assign(namespaceInfo.sourceMap, { namespace: sourceMapFrom(context) });
   return namespaceInfo;
 }
 
-export function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContext, namespaceInfo: NamespaceInfo): NamespaceInfo {
+export function enteringNamespaceType(
+  context: MetaEdGrammar.NamespaceTypeContext,
+  namespaceInfo: NamespaceInfo,
+): NamespaceInfo {
   if (namespaceInfo === NoNamespaceInfo) return namespaceInfo;
   if (context.exception) return namespaceInfo;
   if (context.CORE() != null) return namespaceInfo;

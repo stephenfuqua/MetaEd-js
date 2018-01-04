@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeItem } from 'metaed-core';
 
 export type InterchangeItemEdfiInterchangeBrief = {
-  interchangeBriefDescription: string;
+  interchangeBriefDescription: string,
 };
 
 const enhancerName: string = 'InterchangeItemSetupEnhancer';

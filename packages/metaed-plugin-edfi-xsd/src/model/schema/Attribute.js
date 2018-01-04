@@ -7,7 +7,7 @@ export type Attribute = {
   type: string,
   annotation: Annotation,
   isRequired: boolean,
-}
+};
 
 export function newAttribute(): Attribute {
   return {

@@ -10,7 +10,8 @@ import type { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 
 function getCardinalityStringFor(property: EntityProperty, isHandbookEntityReferenceProperty: boolean = false): string {
-  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename)) return 'required';
+  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename))
+    return 'required';
   if (property.isPartOfIdentity) return 'identity';
   if (property.isRequired) return 'required';
   if (property.isRequiredCollectioon) return 'required collection';
@@ -43,25 +44,30 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const registerPartials: () => void = ramda.once(
-  () => {
-    handlebars.registerPartial({
-      complexTypeItem: getTemplateString('complexTypeItem'),
-      annotation: getTemplateString('annotation'),
-    });
+const registerPartials: () => void = ramda.once(() => {
+  handlebars.registerPartial({
+    complexTypeItem: getTemplateString('complexTypeItem'),
+    annotation: getTemplateString('annotation'),
   });
+});
 
-const getComplexTypeTemplate: () => ()=> string = ramda.once(() => handlebars.compile(getTemplateString('complexType')));
+const getComplexTypeTemplate: () => () => string = ramda.once(() => handlebars.compile(getTemplateString('complexType')));
 
 function calculateMinOccurs(property: EntityProperty, minOccursOverride: string): string {
   return minOccursOverride || (property.isOptional || property.isOptionalCollection) ? '0' : '';
 }
 
 function calculateMaxOccursIsUnbounded(property: EntityProperty, maxOccursIsUnboundedOverride: ?boolean): boolean {
-  return maxOccursIsUnboundedOverride !== null ? ((maxOccursIsUnboundedOverride: any): boolean) : (property.isOptionalCollection || property.isRequiredCollection);
+  return maxOccursIsUnboundedOverride !== null
+    ? ((maxOccursIsUnboundedOverride: any): boolean)
+    : property.isOptionalCollection || property.isRequiredCollection;
 }
 
-function createXsdElementFromProperty(property: EntityProperty, minOccursOverride: string = '', maxOccursIsUnboundedOverride: ?boolean = null): ComplexType {
+function createXsdElementFromProperty(
+  property: EntityProperty,
+  minOccursOverride: string = '',
+  maxOccursIsUnboundedOverride: ?boolean = null,
+): ComplexType {
   return Object.assign({}, newComplexType(), {
     name: property.data.edfiXsd.xsd_Name,
     type: property.data.edfiXsd.xsd_Type,
@@ -77,7 +83,7 @@ function createXsdElementFromProperty(property: EntityProperty, minOccursOverrid
 function generatedXsdFor(property: EntityProperty): string {
   registerPartials();
   const element: ComplexType = createXsdElementFromProperty(property);
-  const template: (any) => string = getComplexTypeTemplate();
+  const template: any => string = getComplexTypeTemplate();
   return template(element);
 }
 

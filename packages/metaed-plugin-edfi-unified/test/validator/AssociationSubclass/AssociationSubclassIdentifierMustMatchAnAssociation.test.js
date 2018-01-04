@@ -62,7 +62,11 @@ describe('when association subclass has invalid extendee', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentifierMustMatchAnAssociation');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass has invalid extendee should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass has invalid extendee should have validation failure -> sourceMap',
+    );
   });
 });

@@ -1,9 +1,5 @@
 // @flow
-import {
-  newMetaEdEnvironment,
-  newCommon,
-  newCommonExtension,
-} from 'metaed-core';
+import { newMetaEdEnvironment, newCommon, newCommonExtension } from 'metaed-core';
 import type { MetaEdEnvironment, CommonExtension } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -27,8 +23,7 @@ describe('when enhancing common extension', () => {
       metaEdName: baseTypeName,
       documentation,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
@@ -39,8 +34,7 @@ describe('when enhancing common extension', () => {
       documentation,
       baseEntity,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

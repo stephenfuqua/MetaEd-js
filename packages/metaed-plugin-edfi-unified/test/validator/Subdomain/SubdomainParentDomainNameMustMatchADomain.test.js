@@ -72,7 +72,11 @@ describe('when validating subdomain entity parent domain name does not match a d
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubdomainParentDomainNameMustMatchADomain');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when subdomain entity parent domain name does not match a domain should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when subdomain entity parent domain name does not match a domain should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when subdomain entity parent domain name does not match a domain should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when subdomain entity parent domain name does not match a domain should have validation failure -> sourceMap',
+    );
   });
 });

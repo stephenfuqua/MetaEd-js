@@ -8,7 +8,7 @@ export type SchemaContainer = {
   schemaAnnotation: Annotation,
   sections: Array<SchemaSection>,
   schemaVersion: string,
-}
+};
 
 export function newSchemaContainer(): SchemaContainer {
   return {

@@ -41,14 +41,22 @@ describe('when enhancing domain', () => {
   const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity1MetaEdName });
   const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity2MetaEdName });
 
-  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass1MetaEdName });
-  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass2MetaEdName });
+  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass1MetaEdName,
+  });
+  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass2MetaEdName,
+  });
 
   const association1: Association = Object.assign(newAssociation(), { metaEdName: association1MetaEdName });
   const association2: Association = Object.assign(newAssociation(), { metaEdName: association2MetaEdName });
 
-  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass1MetaEdName });
-  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass2MetaEdName });
+  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass1MetaEdName,
+  });
+  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass2MetaEdName,
+  });
 
   const domainMetaEdName = 'domainMetaEdName';
 
@@ -119,14 +127,22 @@ describe('when enhancing subdomain', () => {
   const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity1MetaEdName });
   const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity2MetaEdName });
 
-  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass1MetaEdName });
-  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), { metaEdName: domainEntitySubclass2MetaEdName });
+  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass1MetaEdName,
+  });
+  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass2MetaEdName,
+  });
 
   const association1: Association = Object.assign(newAssociation(), { metaEdName: association1MetaEdName });
   const association2: Association = Object.assign(newAssociation(), { metaEdName: association2MetaEdName });
 
-  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass1MetaEdName });
-  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), { metaEdName: associationSubclass2MetaEdName });
+  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass1MetaEdName,
+  });
+  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass2MetaEdName,
+  });
 
   const subdomainMetaEdName = 'domainMetaEdName';
 

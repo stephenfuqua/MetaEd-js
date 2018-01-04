@@ -13,8 +13,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor', () => {
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorBaseName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
@@ -60,8 +59,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with extension',
         projectExtension,
       }),
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
@@ -91,8 +89,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with required ma
       metaEdName: descriptorBaseName,
       isMapTypeRequired: true,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
@@ -122,8 +119,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with optional ma
       metaEdName: descriptorBaseName,
       isMapTypeOptional: true,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
@@ -158,8 +154,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with items', () 
         }),
       ],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);

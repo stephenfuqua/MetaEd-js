@@ -1,22 +1,16 @@
 // @flow
-import type {
-  EntityProperty,
-  EntityRepository,
-  MetaEdEnvironment,
-  ModelType,
-  ValidationFailure } from 'metaed-core';
+import type { EntityProperty, EntityRepository, MetaEdEnvironment, ModelType, ValidationFailure } from 'metaed-core';
 import { CommonPropertySourceMap } from 'metaed-core';
 
-const validEntityTypes: ModelType[] = [
-  'domainEntityExtension',
-  'associationExtension',
-];
+const validEntityTypes: ModelType[] = ['domainEntityExtension', 'associationExtension'];
 
 function cardinalitiesMatch(originalProperty: EntityProperty, overrideProperty: EntityProperty): boolean {
-  return ((originalProperty.isRequired && overrideProperty.isRequired)
-    || (originalProperty.isOptional && overrideProperty.isOptional)
-    || (originalProperty.isRequiredCollection && overrideProperty.isRequiredCollection)
-    || (originalProperty.isOptionalCollection && overrideProperty.isOptionalCollection));
+  return (
+    (originalProperty.isRequired && overrideProperty.isRequired) ||
+    (originalProperty.isOptional && overrideProperty.isOptional) ||
+    (originalProperty.isRequiredCollection && overrideProperty.isRequiredCollection) ||
+    (originalProperty.isOptionalCollection && overrideProperty.isOptionalCollection)
+  );
 }
 
 function parentEntityProperty(entity: EntityRepository, overrideProperty: EntityProperty): EntityProperty | void {
@@ -24,9 +18,9 @@ function parentEntityProperty(entity: EntityRepository, overrideProperty: Entity
   const parentType = overrideProperty.parentEntity.type.replace('Extension', '');
   // $FlowIgnore - allowing parentType to specify the entityRepository Map property
   const parentEntity = entity[parentType].get(overrideProperty.parentEntityName);
-  return parentEntity.properties.find(property =>
-      property.metaEdName === overrideProperty.metaEdName
-      && property.type === overrideProperty.type);
+  return parentEntity.properties.find(
+    property => property.metaEdName === overrideProperty.metaEdName && property.type === overrideProperty.type,
+  );
 }
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
@@ -36,9 +30,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     const parentProperty = parentEntityProperty(metaEd.entity, common);
     if (parentProperty && cardinalitiesMatch(parentProperty, common)) return;
     failures.push({
-      validatorName: 'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
+      validatorName:
+        'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
       category: 'error',
-      message: `'common extension' is invalid for property ${common.metaEdName} on ${common.parentEntity.typeHumanizedName} ${common.parentEntity.metaEdName}. 'common extension' is only valid for referencing Common extensions.`,
+      message: `'common extension' is invalid for property ${common.metaEdName} on ${
+        common.parentEntity.typeHumanizedName
+      } ${common.parentEntity.metaEdName}. 'common extension' is only valid for referencing Common extensions.`,
       sourceMap: ((common.sourceMap: any): CommonPropertySourceMap).isExtensionOverride,
       fileMap: null,
     });

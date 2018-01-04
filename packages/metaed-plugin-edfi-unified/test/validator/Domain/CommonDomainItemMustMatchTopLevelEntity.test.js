@@ -74,7 +74,11 @@ describe('when validating common domain item does not match top level entity', (
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when common domain item has no matching top level entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when common domain item has no matching top level entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when common domain item has no matching top level entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when common domain item has no matching top level entity should have validation failure -> sourceMap',
+    );
   });
 });

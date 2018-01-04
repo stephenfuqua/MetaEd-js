@@ -7,7 +7,8 @@ export function failInterchangeItemRedeclarations(
   duplicateItemName: string,
   entity: Interchange,
   interchangeItems: Array<InterchangeItem>,
-  failures: Array<ValidationFailure>) {
+  failures: Array<ValidationFailure>,
+) {
   const itemNames: Array<string> = interchangeItems.map(x => x.metaEdName);
   const duplicates: Array<string> = findDuplicates(itemNames);
 

@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, newEnumeration, newNamespaceInfo, newMapTypeEnumeration, newSchoolYearEnumeration } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newEnumeration,
+  newNamespaceInfo,
+  newMapTypeEnumeration,
+  newSchoolYearEnumeration,
+} from 'metaed-core';
 import type { MetaEdEnvironment, Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/EnumerationBasePropertiesEnhancer';
@@ -13,8 +19,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration', () => {
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationBaseName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.enumeration.set(enumeration.metaEdName, enumeration);
@@ -50,8 +55,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration with exten
         projectExtension,
       }),
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.enumeration.set(enumeration.metaEdName, enumeration);
@@ -80,8 +84,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration that ends 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationBaseName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.enumeration.set(enumeration.metaEdName, enumeration);
@@ -110,8 +113,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances MapTypeEnumeration', (
     const enumeration: MapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
       metaEdName: enumerationBaseName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.mapTypeEnumeration.set(enumeration.metaEdName, enumeration);
@@ -140,8 +142,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances SchoolYearEnumeration'
     const enumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: enumerationBaseName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     metaEd.entity.schoolYearEnumeration.set(enumeration.metaEdName, enumeration);

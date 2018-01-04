@@ -7,13 +7,7 @@ import {
   newSharedInteger,
   NoSharedSimple,
 } from 'metaed-core';
-import type {
-  IntegerType,
-  MetaEdEnvironment,
-  SharedInteger,
-  SharedShortProperty,
-  ShortProperty,
-} from 'metaed-core';
+import type { IntegerType, MetaEdEnvironment, SharedInteger, SharedShortProperty, ShortProperty } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/ShortReferenceEnhancer';
 
 describe('when enhancing short property', () => {

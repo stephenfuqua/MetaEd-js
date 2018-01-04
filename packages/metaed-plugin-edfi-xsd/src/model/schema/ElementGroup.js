@@ -6,7 +6,7 @@ export type ElementGroup = {
   ...$Exact<ComplexTypeItem>,
   isChoice: boolean,
   items: Array<ComplexTypeItem>,
-}
+};
 
 export function newElementGroup(): ElementGroup {
   return Object.assign({}, newComplexTypeItem(), {

@@ -13,7 +13,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'SubclassingStudentIsUnsupported',
         category: 'warning',
-        message: `${domainEntitySubclass.typeHumanizedName} ${domainEntitySubclass.metaEdName} is a Student subclass.  Student subclasses are currently unsupported by the ODS/API.`,
+        message: `${domainEntitySubclass.typeHumanizedName} ${
+          domainEntitySubclass.metaEdName
+        } is a Student subclass.  Student subclasses are currently unsupported by the ODS/API.`,
         sourceMap: domainEntitySubclass.sourceMap.type,
         fileMap: null,
       });

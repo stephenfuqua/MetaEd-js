@@ -6,14 +6,11 @@ import type {
   IntegerProperty,
   MetaEdEnvironment,
   PropertyIndex,
-  ValidationFailure } from 'metaed-core';
+  ValidationFailure,
+} from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
-type SimpleProperties =
-  ShortProperty |
-  DecimalProperty |
-  IntegerProperty |
-  StringProperty;
+type SimpleProperties = ShortProperty | DecimalProperty | IntegerProperty | StringProperty;
 
 function propertiesNeedingDuplicateChecking(properties: PropertyIndex): Array<SimpleProperties> {
   const result: Array<SimpleProperties> = [];

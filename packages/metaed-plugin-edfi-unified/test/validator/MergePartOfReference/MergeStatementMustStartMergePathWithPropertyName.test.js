@@ -1,9 +1,5 @@
 // @flow
-import {
-  newMetaEdEnvironment,
-  MetaEdTextBuilder,
-  DomainEntityBuilder,
-} from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
 
@@ -63,8 +59,12 @@ describe('when validating reference property starts merge path with mismatched p
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergeStatementMustStartMergePathWithPropertyName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating reference property starts merge path with mismatched property name should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating reference property starts merge path with mismatched property name should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating reference property starts merge path with mismatched property name should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating reference property starts merge path with mismatched property name should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -156,8 +156,11 @@ describe('when validating reference property starts merge path with property nam
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MergeStatementMustStartMergePathWithPropertyName');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating reference property starts merge path with property name and missing context should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating reference property starts merge path with property name and missing context should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating reference property starts merge path with property name and missing context should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating reference property starts merge path with property name and missing context should have validation failure -> sourceMap',
+    );
   });
 });
-

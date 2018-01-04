@@ -246,13 +246,21 @@ describe('when building duplicate domains', () => {
   it('should have validation failures for each entity', () => {
     expect(validationFailures[0].validatorName).toBe('DomainBuilder');
     expect(validationFailures[0].category).toBe('error');
-    expect(validationFailures[0].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when building duplicate domains should have validation failures for each entity -> Domain 1 message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when building duplicate domains should have validation failures for each entity -> Domain 1 sourceMap',
+    );
 
     expect(validationFailures[1].validatorName).toBe('DomainBuilder');
     expect(validationFailures[1].category).toBe('error');
-    expect(validationFailures[1].message).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap');
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when building duplicate domains should have validation failures for each entity -> Domain 2 message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when building duplicate domains should have validation failures for each entity -> Domain 2 sourceMap',
+    );
   });
 });
 

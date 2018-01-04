@@ -5,7 +5,7 @@ import type { SimpleType } from './schema/SimpleType';
 import { NoSimpleType } from './schema/SimpleType';
 
 export type SimpleTypeBaseEdfiXsd = {
-  xsd_SimpleType: SimpleType;
+  xsd_SimpleType: SimpleType,
 };
 
 export type SimpleTypeBase = DecimalType | IntegerType | StringType;
@@ -21,11 +21,7 @@ export function addSimpleTypeBaseEdfiXsdTo(simpleTypeBase: SimpleTypeBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity,
-    'decimalType',
-    'integerType',
-    'stringType',
-  ).forEach(entity => {
+  getEntitiesOfType(metaEd.entity, 'decimalType', 'integerType', 'stringType').forEach(entity => {
     const simpleTypeBase = ((entity: any): SimpleTypeBase);
     addSimpleTypeBaseEdfiXsdTo(simpleTypeBase);
   });

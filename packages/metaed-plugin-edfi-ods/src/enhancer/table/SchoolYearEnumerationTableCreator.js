@@ -13,26 +13,30 @@ export const schoolYearEnumerationTableCreator: { build(namespace: string, docum
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
     });
-    addColumns(table, [
-      Object.assign(newShortColumn(), {
-        name: 'SchoolYear',
-        isPartOfPrimaryKey: true,
-        isNullable: false,
-        description: 'Key for School Year',
-      }),
-      Object.assign(newStringColumn('50'), {
-        name: 'SchoolYearDescription',
-        isPartOfPrimaryKey: false,
-        isNullable: false,
-        description: 'The description for the SchoolYear type.',
-      }),
-      Object.assign(newBooleanColumn(), {
-        name: 'CurrentSchoolYear',
-        isPartOfPrimaryKey: false,
-        isNullable: false,
-        description: 'The code for the current school year.',
-      }),
-    ], ColumnTransformUnchanged);
+    addColumns(
+      table,
+      [
+        Object.assign(newShortColumn(), {
+          name: 'SchoolYear',
+          isPartOfPrimaryKey: true,
+          isNullable: false,
+          description: 'Key for School Year',
+        }),
+        Object.assign(newStringColumn('50'), {
+          name: 'SchoolYearDescription',
+          isPartOfPrimaryKey: false,
+          isNullable: false,
+          description: 'The description for the SchoolYear type.',
+        }),
+        Object.assign(newBooleanColumn(), {
+          name: 'CurrentSchoolYear',
+          isPartOfPrimaryKey: false,
+          isNullable: false,
+          description: 'The code for the current school year.',
+        }),
+      ],
+      ColumnTransformUnchanged,
+    );
     return table;
   },
 };

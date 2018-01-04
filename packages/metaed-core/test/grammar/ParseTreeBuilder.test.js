@@ -32,8 +32,12 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities should not parse with extraneous xyz - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing top level entities should not parse with extraneous xyz - sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when parsing top level entities should not parse with extraneous xyz - message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when parsing top level entities should not parse with extraneous xyz - sourceMap',
+    );
   });
 
   it('should not parse with multiple keyword syntax errors', () => {
@@ -60,10 +64,18 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities should not parse with multiple keyword syntax errors - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap');
-    expect(validationFailures[1].message).toMatchSnapshot('when parsing top level entities should not parse with multiple keyword syntax errors - message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when parsing top level entities should not parse with multiple keyword syntax errors - message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap',
+    );
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when parsing top level entities should not parse with multiple keyword syntax errors - message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap',
+    );
   });
 
   it('another example', () => {
@@ -102,7 +114,9 @@ describe('when parsing top level entities', () => {
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
     expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities and another example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing top level entities and another example - sourceMap');
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when parsing top level entities and another example - sourceMap',
+    );
   });
 
   it('one more example', () => {
@@ -159,8 +173,12 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing full MetaEd should not parse with extraneous xyz - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing full MetaEd should not parse with extraneous xyz - sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with extraneous xyz - message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with extraneous xyz - sourceMap',
+    );
   });
 
   it('should not parse with multiple keyword syntax errors', () => {
@@ -189,10 +207,18 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing full MetaEd should not parse with multiple keyword syntax errors - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap');
-    expect(validationFailures[1].message).toMatchSnapshot('when parsing full MetaEd should not parse with multiple keyword syntax errors - message');
-    expect(validationFailures[1].sourceMap).toMatchSnapshot('when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap');
+    expect(validationFailures[0].message).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with multiple keyword syntax errors - message',
+    );
+    expect(validationFailures[0].sourceMap).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap',
+    );
+    expect(validationFailures[1].message).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with multiple keyword syntax errors - message',
+    );
+    expect(validationFailures[1].sourceMap).toMatchSnapshot(
+      'when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap',
+    );
   });
 
   it('another example', () => {

@@ -22,8 +22,7 @@ describe('when enhancing association subclass', () => {
     const baseEntity = Object.assign(newAssociation(), {
       metaEdName: baseTypeName,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
@@ -34,8 +33,7 @@ describe('when enhancing association subclass', () => {
       documentation,
       baseEntity,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

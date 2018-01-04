@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, EnhancerResult, DomainEntityExtension } from 'metaed-core';
 
 export type DomainEntityExtensionEdfiOds = {
-  ods_ExtensionName: string;
+  ods_ExtensionName: string,
 };
 
 const enhancerName: string = 'OdsDomainEntityExtensionSetupEnhancer';

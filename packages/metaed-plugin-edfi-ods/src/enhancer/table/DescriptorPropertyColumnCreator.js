@@ -20,8 +20,8 @@ export function descriptorPropertyColumnCreator(): ColumnCreator {
         name: `${columnNamer()}Id`,
         description: property.documentation,
         isNullable: property.isOptional,
-        isPartOfPrimaryKey: !strategy.suppressPrimaryKeyCreation()
-          && (property.isPartOfIdentity || property.data.edfiOds.ods_IsCollection),
+        isPartOfPrimaryKey:
+          !strategy.suppressPrimaryKeyCreation() && (property.isPartOfIdentity || property.data.edfiOds.ods_IsCollection),
         referenceContext: property.data.edfiOds.ods_Name,
         sourceEntityProperties: [property],
       });

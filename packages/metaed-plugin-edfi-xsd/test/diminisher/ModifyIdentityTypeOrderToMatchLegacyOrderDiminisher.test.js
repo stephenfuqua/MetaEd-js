@@ -1,11 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
-import {
-  addEntity,
-  newAssociation,
-  newDomainEntity,
-  newMetaEdEnvironment,
-} from 'metaed-core';
+import { addEntity, newAssociation, newDomainEntity, newMetaEdEnvironment } from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import { asElement, newElement } from '../../src/model/schema/Element';
 import { newComplexType } from '../../src/model/schema/ComplexType';
@@ -24,23 +19,17 @@ const testBase = (
 
     complexType = Object.assign(newComplexType(), {
       name: `${testEntityName}IdentityType`,
-      items: originalElementOrder.reduce(
-        (arr, x) => arr.concat([Object.assign(newElement(), { name: x })]),
-        [],
-      ),
+      items: originalElementOrder.reduce((arr, x) => arr.concat([Object.assign(newElement(), { name: x })]), []),
     });
 
-    const topLevelEntity1: TopLevelEntity = Object.assign(
-      isAssociation ? newAssociation() : newDomainEntity(),
-      {
-        metaEdName: testEntityName,
-        data: {
-          edfiXsd: {
-            xsd_IdentityType: complexType,
-          },
+    const topLevelEntity1: TopLevelEntity = Object.assign(isAssociation ? newAssociation() : newDomainEntity(), {
+      metaEdName: testEntityName,
+      data: {
+        edfiXsd: {
+          xsd_IdentityType: complexType,
         },
       },
-    );
+    });
     addEntity(metaEd.entity, topLevelEntity1);
 
     metaEd.dataStandardVersion = '2.0.0';
@@ -71,19 +60,11 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes st
 });
 
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes assessmentItem', () => {
-  testBase(
-    'AssessmentItem',
-    ['IdentificationCode', 'AssessmentReference'],
-    ['AssessmentReference', 'IdentificationCode'],
-  );
+  testBase('AssessmentItem', ['IdentificationCode', 'AssessmentReference'], ['AssessmentReference', 'IdentificationCode']);
 });
 
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes classPeriod', () => {
-  testBase(
-    'ClassPeriod',
-    ['SchoolReference', 'ClassPeriodName'],
-    ['ClassPeriodName', 'SchoolReference'],
-  );
+  testBase('ClassPeriod', ['SchoolReference', 'ClassPeriodName'], ['ClassPeriodName', 'SchoolReference']);
 });
 
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes courseOffering', () => {
@@ -161,29 +142,13 @@ describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes pr
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes section', () => {
   testBase(
     'Section',
-    [
-      'UniqueSectionCode',
-      'SequenceOfCourse',
-      'CourseOfferingReference',
-      'LocationReference',
-      'ClassPeriodReference',
-    ],
-    [
-      'LocationReference',
-      'ClassPeriodReference',
-      'CourseOfferingReference',
-      'UniqueSectionCode',
-      'SequenceOfCourse',
-    ],
+    ['UniqueSectionCode', 'SequenceOfCourse', 'CourseOfferingReference', 'LocationReference', 'ClassPeriodReference'],
+    ['LocationReference', 'ClassPeriodReference', 'CourseOfferingReference', 'UniqueSectionCode', 'SequenceOfCourse'],
   );
 });
 
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes session', () => {
-  testBase(
-    'Session',
-    ['SchoolYear', 'Term', 'SchoolReference'],
-    ['SchoolReference', 'SchoolYear', 'Term'],
-  );
+  testBase('Session', ['SchoolYear', 'Term', 'SchoolReference'], ['SchoolReference', 'SchoolYear', 'Term']);
 });
 
 describe('when ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher diminishes studentAssessment', () => {

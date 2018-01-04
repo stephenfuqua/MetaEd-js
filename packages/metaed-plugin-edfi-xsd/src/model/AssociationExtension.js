@@ -3,7 +3,7 @@ import type { MetaEdEnvironment, EnhancerResult, AssociationExtension } from 'me
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type AssociationExtensionEdfiXsd = {
-  xsd_MetaEdNameWithExtension: () => string;
+  xsd_MetaEdNameWithExtension: () => string,
 };
 
 const enhancerName: string = 'AssociationExtensionSetupEnhancer';

@@ -55,7 +55,10 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     this.enteringStringType(context, true);
   }
 
-  enteringStringType(context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext, generatedSimpleType: boolean = false) {
+  enteringStringType(
+    context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext,
+    generatedSimpleType: boolean = false,
+  ) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentStringType = Object.assign(newStringType(), {
       namespaceInfo: this.namespaceInfo,
@@ -100,7 +103,13 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentStringType === NoStringType) return;
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     this.currentStringType.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     this.currentStringType.sourceMap.metaEdId = sourceMapFrom(context);
@@ -108,14 +117,26 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
 
   enterMinLength(context: MetaEdGrammar.MinLengthContext) {
     if (this.currentStringType === NoStringType) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     this.currentStringType.minLength = context.UNSIGNED_INT().getText();
     this.currentStringType.sourceMap.minLength = sourceMapFrom(context);
   }
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
     if (this.currentStringType === NoStringType) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     this.currentStringType.maxLength = context.UNSIGNED_INT().getText();
     this.currentStringType.sourceMap.maxLength = sourceMapFrom(context);
   }
@@ -135,7 +156,9 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
 
     // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
     const projectExtension = this.currentStringType.namespaceInfo.projectExtension;
-    const repositoryId = projectExtension ? `${projectExtension}-${this.currentStringType.metaEdName}` : this.currentStringType.metaEdName;
+    const repositoryId = projectExtension
+      ? `${projectExtension}-${this.currentStringType.metaEdName}`
+      : this.currentStringType.metaEdName;
     // $FlowIgnore - allowing currentStringType.type to specify the entityRepository Map property
     this.metaEd.entity[this.currentStringType.type].set(repositoryId, this.currentStringType);
 

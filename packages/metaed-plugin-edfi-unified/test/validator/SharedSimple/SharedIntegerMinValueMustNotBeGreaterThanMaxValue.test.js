@@ -52,8 +52,12 @@ describe('when validating shared integer with min value greater than max value',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating shared integer with min value greater than max value -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared integer with min value greater than max value -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared integer with min value greater than max value -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared integer with min value greater than max value -> sourceMap',
+    );
   });
 });
 
@@ -106,7 +110,11 @@ describe('when validating shared short with min value greater than max value', (
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating shared short with min value greater than max value -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating shared short with min value greater than max value -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when validating shared short with min value greater than max value -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating shared short with min value greater than max value -> sourceMap',
+    );
   });
 });

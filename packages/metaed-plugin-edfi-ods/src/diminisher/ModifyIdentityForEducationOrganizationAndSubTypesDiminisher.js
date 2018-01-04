@@ -12,7 +12,6 @@ import type {
 } from 'metaed-core';
 import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 
-
 // METAED-498
 // Replacing EducationOrganization and subclasses with surrogate key identity
 const enhancerName: string = 'ModifyIdentityForEducationOrganizationAndSubTypesDiminisher';
@@ -26,8 +25,8 @@ const educationOrganizationSurrogateKeyName: string = Sugar.String.format(surrog
 
 function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepository): void {
   getEntitiesOfType(repository, 'domainEntitySubclass').forEach((entitySubclass: ModelBase) => {
-    if (entitySubclass.baseEntityName !== educationOrganization
-      && entitySubclass.namespaceInfo.namespace !== coreNamespace) return;
+    if (entitySubclass.baseEntityName !== educationOrganization && entitySubclass.namespaceInfo.namespace !== coreNamespace)
+      return;
 
     const identifierProperty: ?EntityProperty = entitySubclass.data.edfiOds.ods_IdentityProperties.find(
       (x: EntityProperty) => x.metaEdName === educationOrganizationIdentifier,
@@ -51,9 +50,7 @@ function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepo
     entitySubclass.data.edfiOds.ods_IdentityProperties = removeIdentityRenames(
       entitySubclass.data.edfiOds.ods_IdentityProperties,
     );
-    entitySubclass.data.edfiOds.ods_Properties = removeIdentityRenames(
-      entitySubclass.data.edfiOds.ods_Properties,
-    );
+    entitySubclass.data.edfiOds.ods_Properties = removeIdentityRenames(entitySubclass.data.edfiOds.ods_Properties);
 
     const surrogateKeyProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: Sugar.String.format(surrogateKeyNameTemplate, entitySubclass.metaEdName),

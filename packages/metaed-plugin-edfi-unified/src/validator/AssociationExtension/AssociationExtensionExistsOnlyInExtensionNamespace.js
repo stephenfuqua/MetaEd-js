@@ -8,7 +8,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'AssociationExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
-        message: `Association additions '${entity.metaEdName}' is not valid in core namespace '${entity.namespaceInfo.namespace}`,
+        message: `Association additions '${entity.metaEdName}' is not valid in core namespace '${
+          entity.namespaceInfo.namespace
+        }`,
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });

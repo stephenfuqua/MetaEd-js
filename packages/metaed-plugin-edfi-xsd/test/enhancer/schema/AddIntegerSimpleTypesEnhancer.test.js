@@ -23,8 +23,7 @@ describe('when enhancing integer type', () => {
       minValue,
       maxValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -83,8 +82,7 @@ describe('when enhancing integer type is short', () => {
       minValue,
       maxValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -140,8 +138,7 @@ describe('when enhancing generated integer type with min value only', () => {
       generatedSimpleType: true,
       minValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -180,8 +177,7 @@ describe('when enhancing generated integer type with max value only', () => {
       generatedSimpleType: true,
       maxValue,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -218,8 +214,7 @@ describe('when enhancing non-generated integer type with no restrictions', () =>
       documentation,
       generatedSimpleType: false,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
@@ -256,8 +251,7 @@ describe('when enhancing generated integer type with no restrictions', () => {
       documentation,
       generatedSimpleType: true,
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);

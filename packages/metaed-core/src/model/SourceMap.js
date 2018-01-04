@@ -6,7 +6,7 @@ export type SourceMap = {
   line: number,
   column: number,
   tokenText: string,
-}
+};
 
 export function newSourceMap(): SourceMap {
   return {
@@ -20,10 +20,17 @@ export const NoSourceMap: SourceMap = Object.assign(newSourceMap(), {
   tokenText: 'NoSourceMap',
 });
 
-const memoizedSourceMapFactory =
-  R.memoize((line: number, column: number, tokenText: string): SourceMap => ({ line, column, tokenText }));
+const memoizedSourceMapFactory = R.memoize((line: number, column: number, tokenText: string): SourceMap => ({
+  line,
+  column,
+  tokenText,
+}));
 
 export function sourceMapFrom(context: ParserRuleContext): SourceMap {
   if (context.exception || context.start == null) return NoSourceMap;
-  return memoizedSourceMapFactory(context.start.line, context.start.column, context.start.text == null ? '' : context.start.text);
+  return memoizedSourceMapFactory(
+    context.start.line,
+    context.start.column,
+    context.start.text == null ? '' : context.start.text,
+  );
 }

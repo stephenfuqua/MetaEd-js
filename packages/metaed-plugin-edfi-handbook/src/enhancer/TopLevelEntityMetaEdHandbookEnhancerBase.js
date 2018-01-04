@@ -5,7 +5,15 @@ import fs from 'fs';
 import path from 'path';
 import ramda from 'ramda';
 import handlebars from 'handlebars';
-import type { TopLevelEntity, EntityProperty, Enumeration, ReferentialProperty, Descriptor, MetaEdEnvironment, ModelBase } from 'metaed-core';
+import type {
+  TopLevelEntity,
+  EntityProperty,
+  Enumeration,
+  ReferentialProperty,
+  Descriptor,
+  MetaEdEnvironment,
+  ModelBase,
+} from 'metaed-core';
 import { getAllEntities } from 'metaed-core';
 import type { HandbookEntry, HandbookEntityReferenceProperty } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
@@ -16,7 +24,8 @@ function generateUniqueId(entity: TopLevelEntity): string {
 }
 
 function getCardinalityStringFor(property: EntityProperty, isHandbookEntityReferenceProperty: boolean = false): string {
-  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename)) return 'required';
+  if (isHandbookEntityReferenceProperty && (property.isRequired || property.isPartOfIdentity || property.isIdentityRename))
+    return 'required';
   if (property.isPartOfIdentity) return 'identity';
   if (property.isRequired) return 'required';
   if (property.isRequiredCollection) return 'required collection';
@@ -26,11 +35,13 @@ function getCardinalityStringFor(property: EntityProperty, isHandbookEntityRefer
 }
 
 function getPropertyNames(entity: TopLevelEntity): Array<string> {
-  return entity.properties.map((p) => {
-    const withContextName: string = p.withContext ? p.metaEdName : p.withContext + p.metaEdName;
-    const cardinalityString: string = getCardinalityStringFor(p);
-    return `${withContextName} (${cardinalityString})`;
-  }).sort();
+  return entity.properties
+    .map(p => {
+      const withContextName: string = p.withContext ? p.metaEdName : p.withContext + p.metaEdName;
+      const cardinalityString: string = getCardinalityStringFor(p);
+      return `${withContextName} (${cardinalityString})`;
+    })
+    .sort();
 }
 
 // sql is not implemented yet
@@ -55,22 +66,21 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const registerPartials: () => void = ramda.once(
-  () => {
-    handlebars.registerPartial({
-      complexTypeItem: getTemplateString('complexTypeItem'),
-      annotation: getTemplateString('annotation'),
-    });
+const registerPartials: () => void = ramda.once(() => {
+  handlebars.registerPartial({
+    complexTypeItem: getTemplateString('complexTypeItem'),
+    annotation: getTemplateString('annotation'),
   });
+});
 
-const getComplexTypeTemplate: () => (any) => string = ramda.once(() => handlebars.compile(getTemplateString('complexType')));
+const getComplexTypeTemplate: () => any => string = ramda.once(() => handlebars.compile(getTemplateString('complexType')));
 
 function generatedXsdFor(entity: TopLevelEntity): string {
   registerPartials();
   const results: Array<string> = [];
   if (!entity.data.edfiXsd.xsd_ComplexTypes) return '';
-  entity.data.edfiXsd.xsd_ComplexTypes.forEach((complexType) => {
-    const complexTypeTemplate: (any) => string = getComplexTypeTemplate();
+  entity.data.edfiXsd.xsd_ComplexTypes.forEach(complexType => {
+    const complexTypeTemplate: any => string = getComplexTypeTemplate();
     results.push(complexTypeTemplate(complexType));
   });
   return beautify(results.join('\n'), { indent_size: 2 });
@@ -81,7 +91,7 @@ function findEntityByMetaEdName(allEntities: Array<ModelBase>, metaEdName: strin
 }
 
 function findEntityByUniqueId(allEntities: Array<ModelBase>, uniqueId: string): boolean {
-  return allEntities.some(x => (x.metaEdName + x.metaEdId) === uniqueId);
+  return allEntities.some(x => x.metaEdName + x.metaEdId === uniqueId);
 }
 
 function getReferenceUniqueIdentifier(allEntities: Array<ModelBase>, property: EntityProperty): string {
@@ -117,7 +127,10 @@ function getDataTypeName(property: EntityProperty): string {
   return `${titleName}Property`;
 }
 
-function entityPropertyToHandbookEntityReferenceProperty(allEntities: Array<ModelBase>, property: EntityProperty): HandbookEntityReferenceProperty {
+function entityPropertyToHandbookEntityReferenceProperty(
+  allEntities: Array<ModelBase>,
+  property: EntityProperty,
+): HandbookEntityReferenceProperty {
   const referentialProperty: ReferentialProperty = ((property: any): ReferentialProperty);
   return {
     edFiId: property.metaEdId,
@@ -126,22 +139,30 @@ function entityPropertyToHandbookEntityReferenceProperty(allEntities: Array<Mode
     name: `${property.withContext}${property.metaEdName}`,
     dataType: getDataTypeName(property),
     definition: property.documentation,
-    isIdentity: (property.isPartOfIdentity || property.isIdentityRename),
+    isIdentity: property.isPartOfIdentity || property.isIdentityRename,
     cardinality: getCardinalityStringFor(property, true),
   };
 }
 
 function propertyMetadataFor(allEntities: Array<ModelBase>, entity: TopLevelEntity): Array<HandbookEntityReferenceProperty> {
-  let results: Array<HandbookEntityReferenceProperty> = entity.properties.map(x => entityPropertyToHandbookEntityReferenceProperty(allEntities, x));
+  let results: Array<HandbookEntityReferenceProperty> = entity.properties.map(x =>
+    entityPropertyToHandbookEntityReferenceProperty(allEntities, x),
+  );
   results = sort(results, ['isIdentity', 'name'], { isIdentity: [true, false] });
   return results;
 }
 
 function referringProperties(allReferentialProperties: Array<ReferentialProperty>, entity: TopLevelEntity): Array<string> {
-  return allReferentialProperties.filter((x) => x.referencedEntity.metaEdName === entity.metaEdName).map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);
+  return allReferentialProperties
+    .filter(x => x.referencedEntity.metaEdName === entity.metaEdName)
+    .map(x => `${x.parentEntityName}.${x.metaEdName} (as ${getCardinalityStringFor(x)})`);
 }
 
-export function createDefaultHandbookEntry(entity: TopLevelEntity, entityTypeName: string, metaEd: MetaEdEnvironment): HandbookEntry {
+export function createDefaultHandbookEntry(
+  entity: TopLevelEntity,
+  entityTypeName: string,
+  metaEd: MetaEdEnvironment,
+): HandbookEntry {
   const allEntities: Array<ModelBase> = getAllEntities(metaEd.entity);
   const allReferentialProperties: Array<ReferentialProperty> = getAllReferentialProperties(metaEd);
   return Object.assign(newHandbookEntry(), {

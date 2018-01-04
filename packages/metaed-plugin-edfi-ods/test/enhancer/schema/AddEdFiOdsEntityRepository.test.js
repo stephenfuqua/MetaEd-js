@@ -23,4 +23,3 @@ describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.row.size).toBe(0);
   });
 });
-

@@ -55,7 +55,10 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     this.enteringDecimalType(context, true);
   }
 
-  enteringDecimalType(context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext, generatedSimpleType: boolean = false) {
+  enteringDecimalType(
+    context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext,
+    generatedSimpleType: boolean = false,
+  ) {
     if (this.namespaceInfo === NoNamespaceInfo) return;
     this.currentDecimalType = Object.assign(newDecimalType(), {
       namespaceInfo: this.namespaceInfo,
@@ -100,7 +103,13 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
     if (this.currentDecimalType === NoDecimalType) return;
-    if (context.exception || context.METAED_ID() == null || context.METAED_ID().exception || isErrorText(context.METAED_ID().getText())) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
 
     this.currentDecimalType.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
     this.currentDecimalType.sourceMap.metaEdId = sourceMapFrom(context);
@@ -108,28 +117,52 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
 
   enterTotalDigits(context: MetaEdGrammar.TotalDigitsContext) {
     if (this.currentDecimalType === NoDecimalType) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     this.currentDecimalType.totalDigits = context.UNSIGNED_INT().getText();
     this.currentDecimalType.sourceMap.totalDigits = sourceMapFrom(context);
   }
 
   enterDecimalPlaces(context: MetaEdGrammar.DecimalPlacesContext) {
     if (this.currentDecimalType === NoDecimalType) return;
-    if (context.exception || context.UNSIGNED_INT() == null || context.UNSIGNED_INT().exception || isErrorText(context.UNSIGNED_INT().getText())) return;
+    if (
+      context.exception ||
+      context.UNSIGNED_INT() == null ||
+      context.UNSIGNED_INT().exception ||
+      isErrorText(context.UNSIGNED_INT().getText())
+    )
+      return;
     this.currentDecimalType.decimalPlaces = context.UNSIGNED_INT().getText();
     this.currentDecimalType.sourceMap.decimalPlaces = sourceMapFrom(context);
   }
 
   enterMinValueDecimal(context: MetaEdGrammar.MinValueDecimalContext) {
     if (this.currentDecimalType === NoDecimalType) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (
+      context.exception ||
+      context.decimalValue() == null ||
+      context.decimalValue().exception ||
+      isErrorText(context.decimalValue().getText())
+    )
+      return;
     this.currentDecimalType.minValue = context.decimalValue().getText();
     this.currentDecimalType.sourceMap.minValue = sourceMapFrom(context);
   }
 
   enterMaxValueDecimal(context: MetaEdGrammar.MaxValueDecimalContext) {
     if (this.currentDecimalType === NoDecimalType) return;
-    if (context.exception || context.decimalValue() == null || context.decimalValue().exception || isErrorText(context.decimalValue().getText())) return;
+    if (
+      context.exception ||
+      context.decimalValue() == null ||
+      context.decimalValue().exception ||
+      isErrorText(context.decimalValue().getText())
+    )
+      return;
     this.currentDecimalType.maxValue = context.decimalValue().getText();
     this.currentDecimalType.sourceMap.maxValue = sourceMapFrom(context);
   }
@@ -148,7 +181,9 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     if (this.currentDecimalType === NoDecimalType) return;
 
     const projectExtension = this.currentDecimalType.namespaceInfo.projectExtension;
-    const repositoryId = projectExtension ? `${projectExtension}-${this.currentDecimalType.metaEdName}` : this.currentDecimalType.metaEdName;
+    const repositoryId = projectExtension
+      ? `${projectExtension}-${this.currentDecimalType.metaEdName}`
+      : this.currentDecimalType.metaEdName;
     // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
     this.metaEd.entity[this.currentDecimalType.type].set(repositoryId, this.currentDecimalType);
 

@@ -1,6 +1,13 @@
 // @flow
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, AssociationBuilder, AssociationExtensionBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  AssociationBuilder,
+  AssociationExtensionBuilder,
+  NamespaceInfoBuilder,
+} from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for association extension in extension namespace based on core association', () => {
@@ -24,36 +31,36 @@ describe('when generating xsd for association extension in extension namespace b
     const associationExtensionBuilder = new AssociationExtensionBuilder(metaEd, []);
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-    .withBeginNamespace('edfi')
+      .withBeginNamespace('edfi')
 
-    .withStartDomainEntity(coreEntity1)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity1Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity1)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity1Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartDomainEntity(coreEntity2)
-    .withDocumentation('doc')
-    .withIntegerIdentity(coreEntity2Pk, 'doc')
-    .withEndDomainEntity()
+      .withStartDomainEntity(coreEntity2)
+      .withDocumentation('doc')
+      .withIntegerIdentity(coreEntity2Pk, 'doc')
+      .withEndDomainEntity()
 
-    .withStartAssociation(coreAssociation)
-    .withDocumentation('doc')
-    .withAssociationDomainEntityProperty(coreEntity1, 'doc')
-    .withAssociationDomainEntityProperty(coreEntity2, 'doc')
-    .withEndAssociation()
+      .withStartAssociation(coreAssociation)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty(coreEntity1, 'doc')
+      .withAssociationDomainEntityProperty(coreEntity2, 'doc')
+      .withEndAssociation()
 
-    .withEndNamespace()
-    .withBeginNamespace(namespace, projectExtension)
+      .withEndNamespace()
+      .withBeginNamespace(namespace, projectExtension)
 
-    .withStartAssociationExtension(coreAssociation)
-    .withIntegerProperty(extensionProperty, 'doc', true, false)
-    .withEndAssociationExtension()
+      .withStartAssociationExtension(coreAssociation)
+      .withIntegerProperty(extensionProperty, 'doc', true, false)
+      .withEndAssociationExtension()
 
-    .withEndNamespace()
-    .sendToListener(domainEntityBuilder)
-    .sendToListener(associationBuilder)
-    .sendToListener(associationExtensionBuilder)
-    .sendToListener(namespaceInfoBuilder);
+      .withEndNamespace()
+      .sendToListener(domainEntityBuilder)
+      .sendToListener(associationBuilder)
+      .sendToListener(associationExtensionBuilder)
+      .sendToListener(namespaceInfoBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -79,12 +86,18 @@ describe('when generating xsd for association extension in extension namespace b
   });
 
   it('should generate extension association as extending core association', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreAssociationExtension']/xs:complexContent/xs:extension[@base='CoreAssociation']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-CoreAssociationExtension']/xs:complexContent/xs:extension[@base='CoreAssociation']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 
   it('should generate extension association new property', () => {
-    const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-CoreAssociationExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']", extensionResult);
+    const elements = xpathSelect(
+      "/xs:schema/xs:complexType[@name='EXTENSION-CoreAssociationExtension']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionProperty']",
+      extensionResult,
+    );
     expect(elements).toHaveLength(1);
   });
 });

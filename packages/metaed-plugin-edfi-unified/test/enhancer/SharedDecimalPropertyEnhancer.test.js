@@ -15,7 +15,11 @@ describe('when shared decimal property refers to a shared decimal', () => {
 
   beforeAll(() => {
     const referencedEntity = Object.assign(newSharedDecimal(), {
-      metaEdName, totalDigits, decimalPlaces, maxValue, minValue,
+      metaEdName,
+      totalDigits,
+      decimalPlaces,
+      maxValue,
+      minValue,
     });
 
     const property = Object.assign(newSharedDecimalProperty(), {

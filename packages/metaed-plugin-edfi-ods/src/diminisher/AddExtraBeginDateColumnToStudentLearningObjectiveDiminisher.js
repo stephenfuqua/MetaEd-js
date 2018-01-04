@@ -27,7 +27,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       isNullable: true,
     });
     addColumn(table, column);
-    renameForeignKeyColumn(table, studentSectionAssociation, beginDate, beginDate, beginDate, studentSectionAssociationBeginDate);
+    renameForeignKeyColumn(
+      table,
+      studentSectionAssociation,
+      beginDate,
+      beginDate,
+      beginDate,
+      studentSectionAssociationBeginDate,
+    );
   }
 
   return {

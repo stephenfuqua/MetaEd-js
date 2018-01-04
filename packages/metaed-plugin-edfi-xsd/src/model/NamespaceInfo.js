@@ -4,7 +4,7 @@ import type { SchemaContainer } from './schema/SchemaContainer';
 import { newSchemaContainer } from './schema/SchemaContainer';
 
 export type NamespaceInfoEdfiXsd = {
-  xsd_Schema: SchemaContainer;
+  xsd_Schema: SchemaContainer,
 };
 
 const enhancerName: string = 'NamespaceInfoSetupEnhancer';

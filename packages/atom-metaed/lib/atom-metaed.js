@@ -8,13 +8,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import { v4 as newUuid } from 'uuid';
 import { install as packageDepsInstall } from 'atom-package-deps';
-import {
-  createMetaEdFile,
-  loadCoreBufferedFiles,
-  loadExtensionBufferedFiles,
-  executePipeline,
-  newState,
-} from 'metaed-core';
+import { createMetaEdFile, loadCoreBufferedFiles, loadExtensionBufferedFiles, executePipeline, newState } from 'metaed-core';
 
 import type { MetaEdFile, State } from 'metaed-core';
 
@@ -27,11 +21,13 @@ import reportException from './ExceptionReporter';
 import MetaEdLog from './MetaEdLog';
 import MetaEdConfig from './MetaEdConfig';
 import { MetaEdAboutModel, metaEdAboutView } from './MetaEdAbout';
-import { updateEditorIfCore,
+import {
+  updateEditorIfCore,
   addCopyBackToCore,
   createFromTemplate,
   createNewExtensionProject,
-  isCoreMetaEdFile } from './CoreMetaEd';
+  isCoreMetaEdFile,
+} from './CoreMetaEd';
 import MetaEdConsole from './MetaEdConsole';
 import MetaEdConsoleJs from './MetaEdConsoleJs';
 import {
@@ -47,14 +43,16 @@ import {
   sharedIntegerTemplate,
   sharedStringTemplate,
 } from './templates/TemplateEngine';
-import { getCoreMetaEdSourceDirectory,
+import {
+  getCoreMetaEdSourceDirectory,
   setCoreMetaEdSourceDirectory,
   getMetaEdConsoleSourceDirectory,
   setMetaEdConsoleSourceDirectory,
   getMetaEdJsConsoleSourceDirectory,
   setMetaEdJsConsoleSourceDirectory,
   validateOnTheFly,
-  allianceMode } from './Settings';
+  allianceMode,
+} from './Settings';
 
 let metaEdLog: ?MetaEdLog;
 let metaEdConfig: ?MetaEdConfig;
@@ -100,7 +98,7 @@ function getContextPaths(commandTarget: any) {
 
 function hideTreeViewContextMenuOperationsWhenCore() {
   if (!atom.packages.isPackageLoaded('tree-view')) return;
-  atom.packages.activatePackage('tree-view').then((pkg) => {
+  atom.packages.activatePackage('tree-view').then(pkg => {
     const contextMenuCommandsToHide = [
       'tree-view:move',
       'tree-view:duplicate',
@@ -118,7 +116,7 @@ function hideTreeViewContextMenuOperationsWhenCore() {
     const treeViewEl = atom.views.getView(treeView);
 
     // TODO: how to dispose/make disposable?
-    $(treeViewEl).on('mousedown', (event) => {
+    $(treeViewEl).on('mousedown', event => {
       if (event.which !== 3) return;
       if (isCoreMetaEdFile(treeView.selectedPath)) {
         contextMenuHider.hide();
@@ -171,110 +169,167 @@ export function activate(state: any) {
   }
 
   // eslint-disable-next-line no-unused-vars
-  subscriptions.add(atom.onWillThrowError(
-    ({ originalError, preventDefault }) => {
+  subscriptions.add(
+    atom.onWillThrowError(({ originalError, preventDefault }) => {
       reportError(originalError);
       preventDefault();
-    }));
+    }),
+  );
 
   if (atom.onDidFailAssertion != null) {
     subscriptions.add(atom.onDidFailAssertion(error => reportError(error)));
   }
 
-  // eslint-disable-next-line no-unused-vars
-  subscriptions.add(atom.config.observe('atom-metaed.coreMetaEdSourceDirectory', (value) => {
-    if (metaEdConfig != null) {
-      metaEdConfig.updateCoreMetaEdSourceDirectory();
-    }
-  }));
+  subscriptions.add(
+    // eslint-disable-next-line no-unused-vars
+    atom.config.observe('atom-metaed.coreMetaEdSourceDirectory', value => {
+      if (metaEdConfig != null) {
+        metaEdConfig.updateCoreMetaEdSourceDirectory();
+      }
+    }),
+  );
 
   if (!allianceMode()) {
-    subscriptions.add(atom.workspace.observeTextEditors((editor: AtomTextEditor) => {
-      updateEditorIfCore(editor);
-    }));
-    subscriptions.add(atom.commands.add('atom-text-editor', {
-      'core:copy': commandEvent => addCopyBackToCore(commandEvent),
-    }));
+    subscriptions.add(
+      atom.workspace.observeTextEditors((editor: AtomTextEditor) => {
+        updateEditorIfCore(editor);
+      }),
+    );
+    subscriptions.add(
+      atom.commands.add('atom-text-editor', {
+        'core:copy': commandEvent => addCopyBackToCore(commandEvent),
+      }),
+    );
   }
 
   subscriptions.add(atom.views.addViewProvider(MetaEdAboutModel, metaEdAboutView()));
-  subscriptions.add(atom.workspace.addOpener((uri) => {
-    if (uri !== 'atom-metaed://about') return null;
-    return new MetaEdAboutModel();
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:about': () => {
-      atom.workspace.open('atom-metaed://about');
-    },
-  }));
+  subscriptions.add(
+    atom.workspace.addOpener(uri => {
+      if (uri !== 'atom-metaed://about') return null;
+      return new MetaEdAboutModel();
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:about': () => {
+        atom.workspace.open('atom-metaed://about');
+      },
+    }),
+  );
 
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:build': () => {
-      if (metaEdConsole != null) metaEdConsole.build(!allianceMode());
-    },
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:deploy': () => {
-      if (metaEdConsole != null) metaEdConsole.deploy(!allianceMode());
-    },
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:build-js': () => {
-      if (metaEdLog != null) {
-        const metaEdConsoleJs = new MetaEdConsoleJs(metaEdLog);
-        metaEdConsoleJs.build(!allianceMode());
-      }
-    },
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:crash': () => {
-      this.subscriptions.add(null);  // force a crash -- this.subscriptions is undefined
-    },
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:createNewExtensionProject': () => {
-      if (metaEdLog != null && metaEdConfig != null) {
-        createNewExtensionProject(metaEdLog, metaEdConfig);
-      }
-    },
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addAssociationTemplate': commandEvent => fileFromTemplate(commandEvent, 'Association.metaed', associationTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addChoiceTemplate': commandEvent => fileFromTemplate(commandEvent, 'Choice.metaed', choiceTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addSharedDecimalTemplate': commandEvent => fileFromTemplate(commandEvent, 'SharedDecimal.metaed', sharedDecimalTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addSharedIntegerTemplate': commandEvent => fileFromTemplate(commandEvent, 'SharedInteger.metaed', sharedIntegerTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addSharedStringTemplate': commandEvent => fileFromTemplate(commandEvent, 'SharedString.metaed', sharedStringTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addCommonTemplate': commandEvent => fileFromTemplate(commandEvent, 'Common.metaed', commonTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addDescriptorTemplate': commandEvent => fileFromTemplate(commandEvent, 'Descriptor.metaed', descriptorTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addDomainEntityTemplate': commandEvent => fileFromTemplate(commandEvent, 'DomainEntity.metaed', domainEntityTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addDomainTemplate': commandEvent => fileFromTemplate(commandEvent, 'Domain.metaed', domainTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addEnumerationTemplate': commandEvent => fileFromTemplate(commandEvent, 'Enumeration.metaed', enumerationTemplate),
-  }));
-  subscriptions.add(atom.commands.add('atom-workspace', {
-    'atom-metaed:addInterchangeTemplate': commandEvent => fileFromTemplate(commandEvent, 'Interchange.metaed', interchangeTemplate),
-  }));
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:build': () => {
+        if (metaEdConsole != null) metaEdConsole.build(!allianceMode());
+      },
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:deploy': () => {
+        if (metaEdConsole != null) metaEdConsole.deploy(!allianceMode());
+      },
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:build-js': () => {
+        if (metaEdLog != null) {
+          const metaEdConsoleJs = new MetaEdConsoleJs(metaEdLog);
+          metaEdConsoleJs.build(!allianceMode());
+        }
+      },
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:crash': () => {
+        this.subscriptions.add(null); // force a crash -- this.subscriptions is undefined
+      },
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:createNewExtensionProject': () => {
+        if (metaEdLog != null && metaEdConfig != null) {
+          createNewExtensionProject(metaEdLog, metaEdConfig);
+        }
+      },
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addAssociationTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'Association.metaed', associationTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addChoiceTemplate': commandEvent => fileFromTemplate(commandEvent, 'Choice.metaed', choiceTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addSharedDecimalTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'SharedDecimal.metaed', sharedDecimalTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addSharedIntegerTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'SharedInteger.metaed', sharedIntegerTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addSharedStringTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'SharedString.metaed', sharedStringTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addCommonTemplate': commandEvent => fileFromTemplate(commandEvent, 'Common.metaed', commonTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addDescriptorTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'Descriptor.metaed', descriptorTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addDomainEntityTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'DomainEntity.metaed', domainEntityTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addDomainTemplate': commandEvent => fileFromTemplate(commandEvent, 'Domain.metaed', domainTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addEnumerationTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'Enumeration.metaed', enumerationTemplate),
+    }),
+  );
+  subscriptions.add(
+    atom.commands.add('atom-workspace', {
+      'atom-metaed:addInterchangeTemplate': commandEvent =>
+        fileFromTemplate(commandEvent, 'Interchange.metaed', interchangeTemplate),
+    }),
+  );
 
-  atom.notifications.addInfo('MetaEd is ©2017 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.', { dismissable: true });
+  atom.notifications.addInfo(
+    'MetaEd is ©2017 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.',
+    { dismissable: true },
+  );
   if (allianceMode()) {
-    atom.notifications.addWarning('This is an Ed-Fi Alliance only beta version of MetaEd and is not suitable for extension authoring.', { dismissable: true });
+    atom.notifications.addWarning(
+      'This is an Ed-Fi Alliance only beta version of MetaEd and is not suitable for extension authoring.',
+      { dismissable: true },
+    );
   }
 }
 
@@ -290,19 +345,16 @@ export function deactivate() {
   subscriptions = null;
 }
 
-export function serialize() {
-}
+export function serialize() {}
 
 function filesFrom(textEditors: AtomTextEditor[]): MetaEdFile[] {
-  return textEditors.map(
-    te => createMetaEdFile(path.dirname(te.getPath()), path.basename(te.getPath()), te.getText()),
-  );
+  return textEditors.map(te => createMetaEdFile(path.dirname(te.getPath()), path.basename(te.getPath()), te.getText()));
 }
 
 function loadFromModifiedEditors(state: State): State {
-  const editors = atom.workspace.getTextEditors().filter(
-    editor => editor.isModified() && editor.getPath() && editor.getPath().endsWith('.metaed'),
-  );
+  const editors = atom.workspace
+    .getTextEditors()
+    .filter(editor => editor.isModified() && editor.getPath() && editor.getPath().endsWith('.metaed'));
   const coreFiles = filesFrom(editors.filter(editor => editor.getPath().startsWith(getCoreMetaEdSourceDirectory())));
   const extensionFiles = filesFrom(editors.filter(editor => editor.getPath().startsWith(atom.project.getPaths()[1])));
 
@@ -310,9 +362,11 @@ function loadFromModifiedEditors(state: State): State {
 }
 
 // eslint-disable-next-line no-unused-vars
-function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
+function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
   if (!fs.existsSync(path.resolve(getCoreMetaEdSourceDirectory()))) {
-    atom.notifications.addWarning('The "Ed-Fi Data Standard core .metaed directory" in your Atom-MetaEd settings is not valid.');
+    atom.notifications.addWarning(
+      'The "Ed-Fi Data Standard core .metaed directory" in your Atom-MetaEd settings is not valid.',
+    );
     return null;
   }
 
@@ -344,12 +398,14 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
   });
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
-  const linterMessagesP: Promise<?any[]> = executePipeline(mostRecentState)
+  const linterMessagesP: Promise<?(any[])> = executePipeline(mostRecentState)
     .then((endState: State) => {
       mostRecentState = endState;
-      return mostRecentState.validationFailure.map((errorMessage) => {
-        const tokenLength: number = (errorMessage.sourceMap && errorMessage.sourceMap.tokenText) ? errorMessage.sourceMap.tokenText.length : 0;
-        const adjustedLine: number = (!errorMessage.fileMap || errorMessage.fileMap.lineNumber === 0) ? 0 : errorMessage.fileMap.lineNumber - 1;
+      return mostRecentState.validationFailure.map(errorMessage => {
+        const tokenLength: number =
+          errorMessage.sourceMap && errorMessage.sourceMap.tokenText ? errorMessage.sourceMap.tokenText.length : 0;
+        const adjustedLine: number =
+          !errorMessage.fileMap || errorMessage.fileMap.lineNumber === 0 ? 0 : errorMessage.fileMap.lineNumber - 1;
         const characterPosition: number = errorMessage.sourceMap ? errorMessage.sourceMap.column : 0;
 
         return {
@@ -357,19 +413,16 @@ function lint(textEditor: AtomTextEditor): ?Promise<?any[]> {
           excerpt: errorMessage.message,
           location: {
             file: errorMessage.fileMap ? errorMessage.fileMap.filename : '',
-            position: [
-              [adjustedLine, characterPosition],
-              [adjustedLine, characterPosition + tokenLength],
-            ],
+            position: [[adjustedLine, characterPosition], [adjustedLine, characterPosition + tokenLength]],
           },
         };
       });
     })
-    .catch((exception) => {
+    .catch(exception => {
       reportException(exception);
       console.error(exception);
       if (atom.inDevMode()) throw exception;
-      return null;  // null means no changes to linter messages
+      return null; // null means no changes to linter messages
     });
 
   return linterMessagesP;

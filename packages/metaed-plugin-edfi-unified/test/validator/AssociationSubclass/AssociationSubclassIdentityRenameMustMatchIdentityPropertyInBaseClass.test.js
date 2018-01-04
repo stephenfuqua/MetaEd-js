@@ -122,8 +122,12 @@ describe('when association subclass renames base identity that does not exist', 
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass renames base identity that does not exist should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass renames base identity that does not exist should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass renames base identity that does not exist should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass renames base identity that does not exist should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -166,8 +170,12 @@ describe('when association subclass renames base property that is not identity',
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass renames base property that is not identity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass renames base property that is not identity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass renames base property that is not identity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass renames base property that is not identity should have validation failure -> sourceMap',
+    );
   });
 });
 
@@ -200,7 +208,11 @@ describe('when association subclass extends non existent entity', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when association subclass extends non existent entity should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when association subclass extends non existent entity should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when association subclass extends non existent entity should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when association subclass extends non existent entity should have validation failure -> sourceMap',
+    );
   });
 });

@@ -20,10 +20,12 @@ function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
   getEntitiesOfType(metaEd.entity, 'domainEntity').forEach((entity: ModelBase) => {
     const identificationDocumentTableNames: Array<string> = entity.data.edfiOds.ods_Tables.reduce(
       (names: Array<string>, table: Table) => {
-        if (table.name.startsWith(entity.metaEdName)
-          && table.name.endsWith(identificationDocument)
-          && table.name !== entity.metaEdName + identificationDocument
-        ) return names.concat(table.name);
+        if (
+          table.name.startsWith(entity.metaEdName) &&
+          table.name.endsWith(identificationDocument) &&
+          table.name !== entity.metaEdName + identificationDocument
+        )
+          return names.concat(table.name);
         return names;
       },
       [],
@@ -45,9 +47,9 @@ function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
 
     // remove from domain entity table list and repository
     identificationDocumentTableNames.forEach((identificationDocumentTableName: string) => {
-      entity.data.edfiOds.ods_Tables = R.reject(
-        (x: Table) => x.name === identificationDocumentTableName,
-      )(entity.data.edfiOds.ods_Tables);
+      entity.data.edfiOds.ods_Tables = R.reject((x: Table) => x.name === identificationDocumentTableName)(
+        entity.data.edfiOds.ods_Tables,
+      );
 
       repository.table.delete(identificationDocumentTableName);
     });

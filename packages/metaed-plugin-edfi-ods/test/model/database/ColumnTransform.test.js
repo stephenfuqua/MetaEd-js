@@ -13,11 +13,13 @@ describe('when using default column transform strategy', () => {
   const columns: Array<Column> = [];
 
   beforeAll(() => {
-    columns.push(...ColumnTransformUnchanged.transform([
-      Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: 'NotNull', isPartOfPrimaryKey: false, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransformUnchanged.transform([
+        Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: 'NotNull', isPartOfPrimaryKey: false, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should not change primary key column', () => {
@@ -40,9 +42,11 @@ describe('when using primary key column transform strategy', () => {
   const columns: Array<Column> = [];
 
   beforeAll(() => {
-    columns.push(...ColumnTransformPrimaryKey.transform([
-      Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransformPrimaryKey.transform([
+        Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should convert column to primary key', () => {
@@ -55,10 +59,12 @@ describe('when using not null column transform strategy', () => {
   const columns: Array<Column> = [];
 
   beforeAll(() => {
-    columns.push(...ColumnTransformNotNull.transform([
-      Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransformNotNull.transform([
+        Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: 'Null', isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should convert primary key column to not null', () => {
@@ -76,9 +82,11 @@ describe('when using null column transform strategy', () => {
   const columns: Array<Column> = [];
 
   beforeAll(() => {
-    columns.push(...ColumnTransformNull.transform([
-      Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
-    ]));
+    columns.push(
+      ...ColumnTransformNull.transform([
+        Object.assign(newIntegerColumn(), { name: 'PrimaryKey', isPartOfPrimaryKey: true, isNullable: false }),
+      ]),
+    );
   });
 
   it('should convert column to nullable', () => {
@@ -95,11 +103,13 @@ describe('when using with context column transform strategy', () => {
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    columns.push(...ColumnTransform.withContext(contextName).transform([
-      Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: notNullName, isPartOfPrimaryKey: false, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransform.withContext(contextName).transform([
+        Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: notNullName, isPartOfPrimaryKey: false, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should not change primary key column', () => {
@@ -136,9 +146,11 @@ describe('when using primary key with context column transform strategy', () => 
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    columns.push(...ColumnTransform.primaryKeyWithContext(contextName).transform([
-      Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransform.primaryKeyWithContext(contextName).transform([
+        Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should convert column to primary key', () => {
@@ -158,10 +170,12 @@ describe('when using not null with context column transform strategy', () => {
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    columns.push(...ColumnTransform.notNullWithContext(contextName).transform([
-      Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
-      Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
-    ]));
+    columns.push(
+      ...ColumnTransform.notNullWithContext(contextName).transform([
+        Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
+        Object.assign(newIntegerColumn(), { name: nullName, isPartOfPrimaryKey: false, isNullable: true }),
+      ]),
+    );
   });
 
   it('should convert primary key column to not nullable', () => {
@@ -189,9 +203,11 @@ describe('when using null with context column transform strategy', () => {
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    columns.push(...ColumnTransform.nullWithContext(contextName).transform([
-      Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
-    ]));
+    columns.push(
+      ...ColumnTransform.nullWithContext(contextName).transform([
+        Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
+      ]),
+    );
   });
 
   it('should convert primary key column to nullable', () => {
@@ -210,9 +226,11 @@ describe('when using primary key with context collapsible column transform strat
   const contextName: string = 'ContextName';
 
   beforeAll(() => {
-    columns.push(...ColumnTransform.primaryKeyWithContextCollapsible(contextName).transform([
-      Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
-    ]));
+    columns.push(
+      ...ColumnTransform.primaryKeyWithContextCollapsible(contextName).transform([
+        Object.assign(newIntegerColumn(), { name: primaryKeyName, isPartOfPrimaryKey: true, isNullable: false }),
+      ]),
+    );
   });
 
   it('should prefix primary key column name with context', () => {

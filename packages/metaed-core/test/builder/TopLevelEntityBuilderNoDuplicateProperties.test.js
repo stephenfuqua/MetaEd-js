@@ -25,8 +25,30 @@ describe('when building domain entity with duplicate decimal properties in exten
       .withBeginNamespace(namespace, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
-      .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
-      .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue, null, metaEdId)
+      .withDecimalProperty(
+        entityName,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId,
+      )
+      .withDecimalProperty(
+        entityName,
+        documentation,
+        true,
+        false,
+        totalDigits,
+        decimalPlaces,
+        minValue,
+        maxValue,
+        null,
+        metaEdId,
+      )
       .withEndDomainEntity()
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
@@ -89,7 +111,6 @@ describe('when building domain entity with duplicate integer properties in exten
   });
 });
 
-
 describe('when building domain entity with duplicate string properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
@@ -141,13 +162,13 @@ describe('when building entities with duplicate boolean properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withBooleanProperty(propertyName, documentation, true, false)
-    .withBooleanProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withBooleanProperty(propertyName, documentation, true, false)
+      .withBooleanProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -179,13 +200,13 @@ describe('when building entities with duplicate currency properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCurrencyProperty(propertyName, documentation, true, false)
-    .withCurrencyProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCurrencyProperty(propertyName, documentation, true, false)
+      .withCurrencyProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -217,13 +238,13 @@ describe('when building entities with duplicate date properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withDateProperty(propertyName, documentation, true, false)
-    .withDateProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withDateProperty(propertyName, documentation, true, false)
+      .withDateProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -255,13 +276,13 @@ describe('when building entities with duplicate duration properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withDurationProperty(propertyName, documentation, true, false)
-    .withDurationProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withDurationProperty(propertyName, documentation, true, false)
+      .withDurationProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -293,13 +314,13 @@ describe('when building entities with duplicate enumeration properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withEnumerationProperty(propertyName, documentation, true, false)
-    .withEnumerationProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withEnumerationProperty(propertyName, documentation, true, false)
+      .withEnumerationProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -330,13 +351,13 @@ describe('when building entities with duplicate common properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -367,13 +388,13 @@ describe('when building entities with an association property that duplicates na
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withAssociationProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withAssociationProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -406,13 +427,13 @@ describe('when building entities with a short property that duplicates name of a
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withShortProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withShortProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -444,13 +465,13 @@ describe('when building entities with an shared decimal property that duplicates
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withSharedDecimalProperty(propertyName, '', documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withSharedDecimalProperty(propertyName, '', documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -482,17 +503,17 @@ describe('when building entities with a time property that duplicates name of an
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withTimeProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withTimeProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
-  it('should build one common, zero Time\'s', () => {
+  it("should build one common, zero Time's", () => {
     expect(metaEd.propertyIndex.common.length).toBe(1);
     expect(metaEd.propertyIndex.time.length).toBe(0);
   });
@@ -520,13 +541,13 @@ describe('when building entities with a year property that duplicates name of an
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withCommonProperty(propertyName, documentation, true, false)
-    .withYearProperty(propertyName, documentation, true, false)
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withYearProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -558,13 +579,13 @@ describe('when building entities with two association properties duplicate prope
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
-    .withAssociationProperty(propertyName, documentation, true, false, false, 'Context2')
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
+      .withAssociationProperty(propertyName, documentation, true, false, false, 'Context2')
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -587,13 +608,13 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
-    .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
+      .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -624,15 +645,15 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withAssociationProperty(propertyName, documentation, true, false, false)
-    .withContext('context1', 'Short1')
-    .withAssociationProperty(propertyName, documentation, true, false, false)
-    .withContext('context1', 'Short2')
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, documentation, true, false, false)
+      .withContext('context1', 'Short1')
+      .withAssociationProperty(propertyName, documentation, true, false, false)
+      .withContext('context1', 'Short2')
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -664,15 +685,15 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-    .withBeginNamespace(namespace)
-    .withStartDomainEntity(entityName)
-    .withDocumentation(documentation)
-    .withAssociationProperty(propertyName, documentation, true, false, false)
-    .withContext('context1', 'ShortOne')
-    .withAssociationProperty(propertyName, documentation, true, false, false)
-    .withContext('context1', 'ShortOne')
-    .withEndDomainEntity()
-    .withEndNamespace()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName, documentation, true, false, false)
+      .withContext('context1', 'ShortOne')
+      .withAssociationProperty(propertyName, documentation, true, false, false)
+      .withContext('context1', 'ShortOne')
+      .withEndDomainEntity()
+      .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 

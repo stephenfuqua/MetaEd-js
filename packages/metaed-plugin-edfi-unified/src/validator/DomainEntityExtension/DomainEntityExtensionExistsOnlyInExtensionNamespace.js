@@ -9,7 +9,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'DomainEntityExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
-        message: `DomainEntity additions '${entity.metaEdName}' is not valid in core namespace '${entity.namespaceInfo.namespace}`,
+        message: `DomainEntity additions '${entity.metaEdName}' is not valid in core namespace '${
+          entity.namespaceInfo.namespace
+        }`,
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
@@ -18,4 +20,3 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   return failures;
 }
-

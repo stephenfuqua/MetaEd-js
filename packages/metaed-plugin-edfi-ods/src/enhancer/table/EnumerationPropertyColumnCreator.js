@@ -14,16 +14,14 @@ export function enumerationPropertyColumnCreator(): ColumnCreator {
       const columnNamer: ColumnNamer = strategy.columnNamer(
         strategy.parentContext(),
         property.data.edfiOds.ods_ContextPrefix,
-        property.isIdentityRename
-          ? property.baseKeyName
-          : property.data.edfiOds.ods_TypeifiedBaseName,
+        property.isIdentityRename ? property.baseKeyName : property.data.edfiOds.ods_TypeifiedBaseName,
       );
       const column: Column = Object.assign(newIntegerColumn(), {
         name: `${columnNamer()}Id`,
         description: property.documentation,
         isNullable: property.isOptional,
-        isPartOfPrimaryKey: !strategy.suppressPrimaryKeyCreation()
-          && (property.isPartOfIdentity || property.isIdentityRename),
+        isPartOfPrimaryKey:
+          !strategy.suppressPrimaryKeyCreation() && (property.isPartOfIdentity || property.isIdentityRename),
         referenceContext: property.data.edfiOds.ods_Name,
         sourceEntityProperties: [property],
       });

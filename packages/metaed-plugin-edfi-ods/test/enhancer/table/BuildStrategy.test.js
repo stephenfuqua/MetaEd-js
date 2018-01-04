@@ -40,8 +40,7 @@ describe('when composing default, append parent context, append inline context, 
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault
-      .appendParentContext(parentContext)
+    strategy = BuildStrategyDefault.appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
       .columnNamerIgnoresWithContext()
       .makeLeafColumnsNullable()
@@ -74,8 +73,7 @@ describe('when using skip path build strategy with no eligible property paths', 
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault
-      .skipPath([]);
+    strategy = BuildStrategyDefault.skipPath([]);
   });
 
   it('should return empty string when calling parent context', () => {
@@ -108,8 +106,7 @@ describe('when composing skip path with no eligible property paths, append paren
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault
-      .skipPath([])
+    strategy = BuildStrategyDefault.skipPath([])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
       .columnNamerIgnoresWithContext()
@@ -146,8 +143,7 @@ describe('when composing skip path with eligible property paths, append parent c
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault
-      .skipPath([[integerPropertyPathName]])
+    strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName]])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
       .columnNamerIgnoresWithContext()
@@ -186,8 +182,7 @@ describe('when composing skip path with eligible property paths, append parent c
   let strategy: BuildStrategy;
 
   beforeAll(() => {
-    strategy = BuildStrategyDefault
-      .skipPath([[integerPropertyPathName, 'PropertyName']])
+    strategy = BuildStrategyDefault.skipPath([[integerPropertyPathName, 'PropertyName']])
       .appendParentContext(parentContext)
       .appendInlineContext(inlineContext)
       .columnNamerIgnoresWithContext()

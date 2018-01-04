@@ -84,7 +84,7 @@ describe('when EnumerationTableEnhancer enhances enumeration', () => {
   });
 });
 
-describe('when EnumerationTableEnhancer enhances enumeration name ending with \'Type\'', () => {
+describe("when EnumerationTableEnhancer enhances enumeration name ending with 'Type'", () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespaceName';
   const enumerationNameType: string = 'EnumerationNameType';

@@ -8,7 +8,7 @@ export type EntityPropertyEdfiXsd = {
   xsd_Type: string,
   xsd_IsDescriptor: boolean,
   xsd_IsChoice: boolean,
-}
+};
 
 // Enhancer for object setup
 const enhancerName: string = 'EntityPropertySetupEnhancer';
@@ -25,8 +25,10 @@ export function addEntityPropertyEdfiXsdTo(property: EntityProperty) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  [...getAllProperties(metaEd.propertyIndex), ...R.chain(x => x.queryableFields, getAllTopLevelEntities(metaEd.entity))]
-  .forEach((property: EntityProperty) => {
+  [
+    ...getAllProperties(metaEd.propertyIndex),
+    ...R.chain(x => x.queryableFields, getAllTopLevelEntities(metaEd.entity)),
+  ].forEach((property: EntityProperty) => {
     addEntityPropertyEdfiXsdTo(property);
   });
 

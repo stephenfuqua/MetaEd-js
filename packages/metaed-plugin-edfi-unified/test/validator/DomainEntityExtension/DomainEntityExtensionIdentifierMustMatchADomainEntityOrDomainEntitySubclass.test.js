@@ -1,5 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, DomainEntityExtensionBuilder, DomainEntitySubclassBuilder } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  DomainEntitySubclassBuilder,
+} from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DomainEntityExtension/DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass';
 
@@ -103,7 +109,11 @@ describe('when domain entity extension extends an invalid identifier', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when domain entity extension extends an invalid identifier should have validation failure -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when domain entity extension extends an invalid identifier should have validation failure -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot(
+      'when domain entity extension extends an invalid identifier should have validation failure -> message',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when domain entity extension extends an invalid identifier should have validation failure -> sourceMap',
+    );
   });
 });

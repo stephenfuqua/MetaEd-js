@@ -20,7 +20,6 @@ export class ReferentialProperty extends EntityProperty {
   sourceMap: EntityPropertySourceMap | ReferentialPropertySourceMap;
 }
 
-
 export function isReferentialProperty(property: EntityProperty) {
   return Object.keys(property).includes('mergedProperties');
 }

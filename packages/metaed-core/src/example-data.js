@@ -52,21 +52,12 @@ export const repository = {
           name: 'Name',
           type: 'VARCHAR(50)',
           isPrimaryKey: false,
-          sourceProperties: [
-            { ref: 'core/domainEntity/blah' },
-            { ref: 'core/domainEntity/blah2' },
-          ],
+          sourceProperties: [{ ref: 'core/domainEntity/blah' }, { ref: 'core/domainEntity/blah2' }],
         },
-        foreignKey: [
-          { localColumn: 'Name', parentColumnRef: 'Student/column/' },
-        ],
+        foreignKey: [{ localColumn: 'Name', parentColumnRef: 'Student/column/' }],
       },
     },
-    EdFiXsd: {
-
-    },
-    EdFiHandbook: {
-
-    },
+    EdFiXsd: {},
+    EdFiHandbook: {},
   },
 };

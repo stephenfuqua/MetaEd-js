@@ -1,5 +1,12 @@
 // @flow
-import { newMetaEdEnvironment, newInterchange, newInterchangeItem, newNamespaceInfo, newInterchangeExtension, newPluginEnvironment } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newInterchange,
+  newInterchangeItem,
+  newNamespaceInfo,
+  newInterchangeExtension,
+  newPluginEnvironment,
+} from 'metaed-core';
 import type { MetaEdEnvironment, InterchangeItem } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeEnhancer';
@@ -20,7 +27,6 @@ describe('when running with no interchange extensions', () => {
   const elementBaseName: string = 'InterchangeElement';
   const elementBaseType: string = 'InterchangeElementType';
 
-
   beforeAll(() => {
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementBaseName,
@@ -36,12 +42,9 @@ describe('when running with no interchange extensions', () => {
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCase,
-      elements: [
-        element,
-      ],
+      elements: [element],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
 
@@ -117,13 +120,9 @@ describe('when running with interchange extensions', () => {
         isExtension: false,
       }),
       documentation: interchangeDocumentation,
-      elements: [
-        element,
-        elementNoExtension,
-      ],
+      elements: [element, elementNoExtension],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
 
@@ -138,12 +137,9 @@ describe('when running with interchange extensions', () => {
       }),
       baseEntity: interchangeToBeExtended,
       documentation: interchangeDocumentation,
-      elements: [
-        extensionElement,
-      ],
+      elements: [extensionElement],
       data: {
-        edfiXsd: {
-        },
+        edfiXsd: {},
       },
     });
 

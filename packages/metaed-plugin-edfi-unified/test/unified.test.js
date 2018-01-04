@@ -1,8 +1,6 @@
 // @flow
 import R from 'ramda';
-import type {
-  MetaEdEnvironment,
- } from 'metaed-core';
+import type { MetaEdEnvironment } from 'metaed-core';
 import {
   AssociationBuilder,
   AssociationExtensionBuilder,
@@ -170,8 +168,14 @@ describe('when building and enhancing association extension', () => {
       .withBeginNamespace('edfi')
       .withStartAssociation(associationName1)
       .withDocumentation('AssociationDocumentation')
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty1', 'AssociationDomainEntityPropertyDocumentation')
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty2', 'AssociationDomainEntityPropertyDocumentation')
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty1',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty2',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
       .withQueryableFieldPropertyIndicator()
       .withEndAssociation()
@@ -225,8 +229,14 @@ describe('when building and enhancing association subclass', () => {
       .withBeginNamespace('edfi')
       .withStartAssociation(associationName1)
       .withDocumentation('AssociationDocumentation')
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty1', 'AssociationDomainEntityPropertyDocumentation')
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty2', 'AssociationDomainEntityPropertyDocumentation')
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty1',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty2',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
       .withQueryableFieldPropertyIndicator()
       .withEndAssociation()
@@ -552,8 +562,14 @@ describe('when building and enhancing association property', () => {
       .withBeginNamespace('edfi')
       .withStartAssociation(associationName1)
       .withDocumentation(associationDocumentation)
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty1', 'AssociationDomainEntityPropertyDocumentation')
-      .withAssociationDomainEntityProperty('AssociationDomainEntityProperty2', 'AssociationDomainEntityPropertyDocumentation')
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty1',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
+      .withAssociationDomainEntityProperty(
+        'AssociationDomainEntityProperty2',
+        'AssociationDomainEntityPropertyDocumentation',
+      )
       .withEndAssociation()
 
       .withStartDomainEntity(domainEntityName1)
@@ -972,13 +988,17 @@ describe('when building and enhancing school year enumeration property', () => {
   });
 
   it('should enhance property path name with context', () => {
-    const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1));
+    const property = R.head(
+      metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
+    );
     expect(property).toBeDefined();
     expect(property.propertyPathName).toBe(`${contextName}${schoolYearEnumerationName1}`);
   });
 
   it('should enhance referenced entity', () => {
-    const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1));
+    const property = R.head(
+      metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
+    );
     const referencedEntity = metaEd.entity.schoolYearEnumeration.get(schoolYearEnumerationName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
@@ -986,7 +1006,9 @@ describe('when building and enhancing school year enumeration property', () => {
   });
 
   it('should enhance inherited documentation', () => {
-    const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1));
+    const property = R.head(
+      metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
+    );
     expect(property).toBeDefined();
     expect(property.documentationInherited).toBe(true);
     expect(property.documentation).toBe(schoolYearEnumerationDocumentation);
@@ -1379,7 +1401,10 @@ describe('when building and enhancing domain entity merged properties', () => {
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityProperty(domainEntityName2, 'inherited', false, false, false, contextName2)
       .withDomainEntityProperty(domainEntityName3, 'inherited', false, false, false, contextName3)
-      .withMergePartOfReference(`${contextName3}${domainEntityName3}.${contextName1}${domainEntityName2}`, `${contextName2}${domainEntityName2}`)
+      .withMergePartOfReference(
+        `${contextName3}${domainEntityName3}.${contextName1}${domainEntityName2}`,
+        `${contextName2}${domainEntityName2}`,
+      )
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -1393,27 +1418,39 @@ describe('when building and enhancing domain entity merged properties', () => {
   });
 
   it('should enhance property path name with context', () => {
-    const property2 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2));
+    const property2 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,
+      ),
+    );
     expect(property2).toBeDefined();
     expect(property2.propertyPathName).toBe(`${contextName2}${domainEntityName2}`);
 
-    const property3 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3));
+    const property3 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
+      ),
+    );
     expect(property3).toBeDefined();
     expect(property3.propertyPathName).toBe(`${contextName3}${domainEntityName3}`);
   });
 
   it('should enhance referenced entity', () => {
-    const property2 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2));
+    const property2 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,
+      ),
+    );
     const referencedEntity2 = metaEd.entity.domainEntity.get(domainEntityName2);
     expect(property2).toBeDefined();
     expect(referencedEntity2).toBeDefined();
     expect(property2.referencedEntity).toBe(referencedEntity2);
 
-    const property3 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3));
+    const property3 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
+      ),
+    );
     const referencedEntity3 = metaEd.entity.domainEntity.get(domainEntityName3);
     expect(property3).toBeDefined();
     expect(referencedEntity3).toBeDefined();
@@ -1421,34 +1458,52 @@ describe('when building and enhancing domain entity merged properties', () => {
   });
 
   it('should enhance inherited documentation', () => {
-    const property2 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2));
+    const property2 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,
+      ),
+    );
     expect(property2).toBeDefined();
     expect(property2.documentationInherited).toBe(true);
     expect(property2.documentation).toBe(domainEntityDocumentation2);
 
-    const property3 = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3));
+    const property3 = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
+      ),
+    );
     expect(property3).toBeDefined();
     expect(property3.documentationInherited).toBe(true);
     expect(property3.documentation).toBe(domainEntityDocumentation3);
   });
 
   it('should enhance merged properties with merge', () => {
-    const property = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3));
-    const referencedProperty = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName3 && x.metaEdName === domainEntityName2));
+    const property = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
+      ),
+    );
+    const referencedProperty = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName3 && x.metaEdName === domainEntityName2,
+      ),
+    );
     expect(property).toBeDefined();
     expect(referencedProperty).toBeDefined();
     expect(R.head(property.mergedProperties).mergeProperty).toBe(referencedProperty);
   });
 
   it('should enhance merged properties with target', () => {
-    const property = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3));
-    const referencedProperty = R.head(metaEd.propertyIndex.domainEntity
-      .filter(x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2));
+    const property = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
+      ),
+    );
+    const referencedProperty = R.head(
+      metaEd.propertyIndex.domainEntity.filter(
+        x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,
+      ),
+    );
     expect(property).toBeDefined();
     expect(referencedProperty).toBeDefined();
     expect(R.head(property.mergedProperties).targetProperty).toBe(referencedProperty);
