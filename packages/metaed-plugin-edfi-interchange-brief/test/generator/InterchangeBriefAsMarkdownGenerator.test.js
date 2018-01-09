@@ -80,7 +80,7 @@ describe('When generating interchange brief with no extended references or descr
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);
@@ -204,7 +204,7 @@ describe('When generating interchange brief with extended documentation', () => 
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);
@@ -317,7 +317,7 @@ describe('When generating interchange brief with use case documentation', () => 
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);
@@ -432,7 +432,7 @@ describe('When generating interchange brief with extended and use case documenta
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);
@@ -576,7 +576,7 @@ describe('When generating interchange brief with extended references', () => {
     interchange2.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);
@@ -724,7 +724,7 @@ describe('When generating interchange brief with descriptors', () => {
     interchange2.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);

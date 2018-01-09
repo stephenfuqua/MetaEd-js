@@ -42,7 +42,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -102,7 +102,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -160,7 +160,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
     });
     metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

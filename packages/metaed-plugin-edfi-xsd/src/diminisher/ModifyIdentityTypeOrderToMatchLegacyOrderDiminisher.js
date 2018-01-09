@@ -1,14 +1,14 @@
 // @flow
 import R from 'ramda';
+import { getEntity, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, EntityRepository, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
-import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import { asElement } from '../model/schema/Element';
 
 // Workaround for METAED-451: Force Data Type to Positive Integer in Xsd for Order of Priority
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-866
 const enhancerName: string = 'ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher';
-const targetVersions: string = '2.0.0';
+const targetVersions: string = '2.0.x';
 
 function reorderIdentityType(
   repository: EntityRepository,
@@ -30,7 +30,7 @@ function reorderIdentityType(
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const domainEntity: ModelType = 'domainEntity';
   const association: ModelType = 'association';

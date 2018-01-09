@@ -8,10 +8,13 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "dependencies": {
+    "ajv": "^6.0.0",
     "antlr4": "4.6.1-patched.0",
     "babel-polyfill": "^6.26.0",
+    "chalk": "^2.3.0",
     "final-fs": "^1.6.1",
     "ramda": "^0.24.1",
+    "semver": "^5.4.1",
     "topo": "2.0.2",
     "winston": "^2.4.0"
   },

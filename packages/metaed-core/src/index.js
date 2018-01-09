@@ -1,10 +1,10 @@
 // @flow
 
 // Functions
-
-export { deepFreeze, deepFreezeAssign, prependIndefiniteArticle, orderByProp } from './Utility';
+export { deepFreeze, deepFreezeAssign, prependIndefiniteArticle, orderByProp, versionSatisfies } from './Utility';
 export { executePipeline } from './task/Pipeline';
 export { createMetaEdFile } from './task/MetaEdFile';
+export { validateConfiguration } from './task/ValidateConfiguration';
 export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './task/BufferFileLoader';
 export { loadFiles } from './task/FileSystemFilenameLoader';
 export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
@@ -32,7 +32,6 @@ export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './model
 export { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './model/ModelType';
 
 // Builders
-
 export { AssociationBuilder } from './builder/AssociationBuilder';
 export { AssociationExtensionBuilder } from './builder/AssociationExtensionBuilder';
 export { AssociationSubclassBuilder } from './builder/AssociationSubclassBuilder';
@@ -55,7 +54,6 @@ export { SharedStringBuilder } from './builder/SharedStringBuilder';
 export { StringTypeBuilder } from './builder/StringTypeBuilder';
 
 // Flow types
-
 export type { State } from './State';
 export type { InputDirectory } from './task/FileSystemFilenameLoader';
 export type { FileSet, MetaEdFile } from './task/MetaEdFile';
@@ -68,7 +66,9 @@ export type { EnhancerResult } from './enhancer/EnhancerResult';
 export type { Generator } from './generator/Generator';
 export type { GeneratorResult } from './generator/GeneratorResult';
 export type { GeneratedOutput } from './generator/GeneratedOutput';
-export type { MetaEdEnvironment, PluginEnvironment, SemVer } from './MetaEdEnvironment';
+export type { MetaEdEnvironment, SemVer } from './MetaEdEnvironment';
+export type { PluginEnvironment } from './plugin/PluginEnvironment';
+export type { MetaEdConfiguration } from './MetaEdConfiguration';
 export type { MetaEdPlugin, PluginManifest } from './plugin/PluginTypes';
 
 // Properties
@@ -147,8 +147,10 @@ export { NoTopLevelEntity } from './model/TopLevelEntity';
 export { NoSharedSimple } from './model/SharedSimple';
 
 // Factories
-export { newMetaEdEnvironment, newPluginEnvironment } from './MetaEdEnvironment';
+export { newMetaEdEnvironment } from './MetaEdEnvironment';
 export { newMetaEdPlugin } from './plugin/PluginTypes';
+export { newPluginEnvironment } from './plugin/PluginEnvironment';
+export { newMetaEdConfiguration } from './MetaEdConfiguration';
 
 export { asAssociationProperty, newAssociationProperty } from './model/property/AssociationProperty';
 export { asBooleanProperty, newBooleanProperty } from './model/property/BooleanProperty';
@@ -213,5 +215,4 @@ export { asSubdomain, newSubdomain } from './model/Subdomain';
 export { asTopLevelEntity, newTopLevelEntity } from './model/TopLevelEntity';
 
 // for plugin testing
-
 export { MetaEdTextBuilder } from './grammar/MetaEdTextBuilder';

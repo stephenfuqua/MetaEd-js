@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import Sugar from 'sugar';
-import { asTopLevelEntity, getEntitiesOfType, newIntegerProperty } from 'metaed-core';
+import { asTopLevelEntity, getEntitiesOfType, newIntegerProperty, versionSatisfies } from 'metaed-core';
 import type {
   EnhancerResult,
   EntityProperty,
@@ -15,7 +15,7 @@ import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 // METAED-498
 // Replacing EducationOrganization and subclasses with surrogate key identity
 const enhancerName: string = 'ModifyIdentityForEducationOrganizationAndSubTypesDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const coreNamespace: string = 'edfi';
 const educationOrganization: string = 'EducationOrganization';
@@ -106,7 +106,7 @@ function modifyIdentityForEducationOrganization(repository: EntityRepository): v
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   modifyIdentityForEducationOrganization(metaEd.entity);
 

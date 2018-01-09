@@ -6,20 +6,22 @@ import { exec } from 'child_process';
 import diff2html from 'diff2html';
 import type { GeneratedOutput, State } from 'metaed-core';
 import {
-  newState,
-  loadPlugins,
-  loadFiles,
-  loadFileIndex,
-  buildParseTree,
   buildMetaEd,
-  walkBuilders,
+  buildParseTree,
+  fileMapForFailure,
+  loadFileIndex,
+  loadFiles,
+  loadPlugins,
+  newMetaEdConfiguration,
+  newState,
   runEnhancers,
   runGenerators,
-  fileMapForFailure,
+  validateConfiguration,
+  walkBuilders,
 } from 'metaed-core';
 
 jest.unmock('final-fs');
-jest.setTimeout(30000);
+jest.setTimeout(40000);
 
 describe('when generating xsd and comparing it to data standard 2.0 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
@@ -39,19 +41,38 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
   beforeAll(async () => {
     const state: State = Object.assign(newState(), {
-      pluginScanDirectory: `${projectRootPath}/packages`,
-      inputDirectories: [
-        {
-          path: `${nodeModulesPath}/ed-fi-model-2.0`,
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
+      metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
+        title: 'Xsd Authoritative Comparison DS v2.0.0',
+        dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-2.0/',
+        artifactDirectory: './MetaEdArtifacts/',
+        dataStandardCoreSourceVersion: '2.0.0',
+        pluginConfig: {
+          edfiUnified: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiOds: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiOdsApi: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiXsd: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiHandbook: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiInterchangeBrief: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiXmlDictionary: {
+            targetTechnologyVersion: '2.0.0',
+          },
         },
-      ],
+      }),
     });
 
-    state.metaEd.dataStandardVersion = '2.0.0';
-
+    validateConfiguration(state);
     loadPlugins(state);
     loadFiles(state);
     loadFileIndex(state);
@@ -93,6 +114,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
   });
 
   it('should have core with no differences', async () => {
+    expect(generatedCoreXsd).toBeDefined();
     const gitCommand: string = `git diff --shortstat --no-index -- ${authoritativeCoreXsd} ${generatedCoreXsd}`;
     const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     expect(result).toMatchSnapshot();
@@ -100,11 +122,13 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
   it('should have schema annotation with no differences', async () => {
     const gitCommand: string = `git diff --shortstat --no-index -- ${authoritativeSchemaXsd} ${generatedSchemaXsd}`;
+    expect(generatedCoreXsd).toBeDefined();
     const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     expect(result).toMatchSnapshot();
   });
 
   it('should create diff files', async () => {
+    expect(generatedCoreXsd).toBeDefined();
     const cssFile: string = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
     const htmlFile: string = `${outputDirectory}/${coreFileBaseName}.html`;
     const diffFile: string = `${outputDirectory}/${coreFileBaseName}.diff`;
@@ -122,10 +146,12 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
   });
 
   it('should have complex types in the correct order', () => {
+    expect(generatedCoreXsd).toBeDefined();
     expect(complexTypeNames).toMatchSnapshot();
   });
 
   it('should have simple types in the correct order', () => {
+    expect(generatedCoreXsd).toBeDefined();
     expect(simpleTypeNames).toMatchSnapshot();
   });
 });

@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumnNamePairs, newForeignKey } from '../model/database/ForeignKey';
 import { addForeignKey, getForeignKeys } from '../model/database/Table';
@@ -10,9 +11,9 @@ import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
 // METAED-266
-// EdFi ODS 2.0 has AcademicWeek has foreign keys to CalendarDate
+// EdFi ODS 2.x has AcademicWeek has foreign keys to CalendarDate
 const enhancerName: string = 'AddFksFromAcademicWeekToCalendarDateDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const namespace: string = 'edfi';
 
@@ -58,7 +59,7 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const table: ?Table = getTable(pluginEnvironment(metaEd).entity, academicWeek);
   addForeignKeyToCalendarDate(table, beginDate);

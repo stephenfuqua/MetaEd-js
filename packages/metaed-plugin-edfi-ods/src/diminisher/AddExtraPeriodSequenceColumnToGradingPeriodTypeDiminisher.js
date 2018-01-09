@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumn } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
@@ -8,15 +9,15 @@ import type { Column } from '../model/database/Column';
 import type { Table } from '../model/database/Table';
 
 // METAED-251
-// EdFi ODS 2.0 has GradingPeriodType table with extra column
+// EdFi ODS 2.x has GradingPeriodType table with extra column
 const enhancerName: string = 'AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const gradingPeriodType: string = 'GradingPeriodType';
 const periodSequence: string = 'PeriodSequence';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const table: ?Table = getTable(pluginEnvironment(metaEd).entity, gradingPeriodType);
   if (table != null && table.columns.find((x: Column) => x.name === periodSequence) == null) {

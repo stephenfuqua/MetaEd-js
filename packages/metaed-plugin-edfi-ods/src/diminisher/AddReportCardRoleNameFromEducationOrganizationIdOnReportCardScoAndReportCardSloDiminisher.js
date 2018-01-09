@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getTable, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -9,7 +10,7 @@ import type { Table } from '../model/database/Table';
 // METAED-243
 // ReportCardStudentCompetencyObjective and ReportCardStudentLearningObjective have unnecessary context for EducationOrganizationId
 const enhancerName: string = 'AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const reportCardStudentCompetencyObjective: string = 'ReportCardStudentCompetencyObjective';
 const reportCardEducationOrganizationId: string = 'ReportCardEducationOrganizationId';
@@ -54,7 +55,7 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(
     pluginEnvironment(metaEd).entity,

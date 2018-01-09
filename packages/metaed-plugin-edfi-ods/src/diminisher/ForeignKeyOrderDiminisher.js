@@ -1,5 +1,6 @@
 // @flow
 import R from 'ramda';
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
@@ -11,10 +12,10 @@ import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
 // METAED-630
-// Orders foreign key columns to match EdFi DS 2.0
+// Orders foreign key columns to match EdFi DS 2.x
 // Depends on PrimaryKeyOrderDiminisher
 const enhancerName: string = 'ForeignKeyOrderDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const namespace: string = 'edfi';
 
@@ -45,7 +46,7 @@ function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void 
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   modifyForeignKeyColumnOrder(pluginEnvironment(metaEd).entity);
 

@@ -41,7 +41,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -83,7 +83,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -134,7 +134,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -189,7 +189,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -232,7 +232,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -266,7 +266,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -299,7 +299,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances triggers with inse
     });
     pluginEnvironment(metaEd).entity.trigger.set(trigger.name, trigger);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

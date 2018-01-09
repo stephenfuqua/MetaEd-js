@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "MetaEd Project File",
+    "description": "Configuration file for MetaEd projects",
+    "type": "object",
+    "properties": {
+        "title": { "type": "string", "description": "Title of the MetaEd project" },
+        "dataStandardCoreSourceDirectory": { "type": "string", "description": "Full path to source files for the core Ed-Fi Data Standard to build against" },
+        "dataStandardCoreSourceVersion": { "type": "string", "description": "Version number of the core Ed-FI Data Standard to build against" },
+        "dataStandardExtensionSourceDirectory": { "type": "string", "description": "Full path to source files for the extension Ed-Fi Data Standard to build against" },
+        "extensionPrefix": { "type": "string", "description": "The extension prefix to use for the output artifacts" },
+        "version": { "type": "string", "description": "The semantic version identifier for the output artifacts" }
+    },
+    "allOf": [
+        { "required": ["title", "dataStandardCoreSourceDirectory"] },
+        { "oneOf": [
+            { "required": ["dataStandardCoreSourceDirectory"] }
+        ]}
+    ]
+}

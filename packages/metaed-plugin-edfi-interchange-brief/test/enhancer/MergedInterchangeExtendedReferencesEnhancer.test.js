@@ -19,6 +19,7 @@ import {
   newDecimalProperty,
   newDurationProperty,
   newIntegerProperty,
+  newPluginEnvironment,
   newPercentProperty,
   newSharedDecimalProperty,
   newSharedStringProperty,
@@ -92,7 +93,14 @@ let domainEntityInterchangeItem;
 
 function setupRepository() {
   metaEd = Object.assign(newMetaEdEnvironment(), {
-    plugin: new Map().set('edfiXsd', { entity: { mergedInterchange: [] } }),
+    plugin: new Map().set(
+      'edfiXsd',
+      Object.assign(newPluginEnvironment(), {
+        entity: {
+          mergedInterchange: [],
+        },
+      }),
+    ),
   });
   mergedInterchange = Object.assign(newMergedInterchange(), {
     metaEdName: interchangeName,
@@ -125,7 +133,7 @@ function setupRepository() {
   });
   referencedInlineCommonType = Object.assign((newInlineCommon(): any), {
     metaEdName: referencedInlineCommonTypeName,
-    documenation: referencedInlineCommonTypeDocumentation,
+    documentation: referencedInlineCommonTypeDocumentation,
   });
   referencedChoiceCommonType = Object.assign(((newChoiceProperty(): any): Common), newCommon(), {
     metaEdName: referencedChoiceCommonTypeName,

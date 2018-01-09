@@ -19,6 +19,25 @@ export function loadFiles(state: State): void {
     return;
   }
 
+  state.inputDirectories.push({
+    path: state.metaEdConfiguration.dataStandardCoreSourceDirectory,
+    namespace: 'edfi',
+    projectExtension: '',
+    isExtension: false,
+  });
+
+  if (
+    state.metaEdConfiguration.dataStandardExtensionSourceDirectory != null &&
+    state.metaEdConfiguration.dataStandardExtensionSourceDirectory !== ''
+  ) {
+    state.inputDirectories.push({
+      path: state.metaEdConfiguration.dataStandardExtensionSourceDirectory,
+      namespace: 'extension',
+      projectExtension: 'EXTENSION',
+      isExtension: true,
+    });
+  }
+
   const fileSets: FileSet[] = [];
   state.inputDirectories.forEach(inputDirectory => {
     const fileSet: FileSet = {
@@ -30,7 +49,7 @@ export function loadFiles(state: State): void {
 
     const filenames: string[] = ffs.readdirRecursiveSync(inputDirectory.path, true, inputDirectory.path);
     const filenamesToLoad: string[] = filenames.filter(
-      filename => filename.endsWith('.metaed') && !state.filepathsToExclude.has(filename),
+      filename => filename.endsWith('.metaed') && !state.filePathsToExclude.has(filename),
     );
 
     filenamesToLoad.forEach(filename => {
@@ -41,6 +60,10 @@ export function loadFiles(state: State): void {
 
     if (fileSet.files.length === 0) {
       winston.warn(`No MetaEd files found in input directory ${inputDirectory.path}`);
+    } else {
+      winston.info(
+        `  ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
+      );
     }
 
     fileSets.push(fileSet);

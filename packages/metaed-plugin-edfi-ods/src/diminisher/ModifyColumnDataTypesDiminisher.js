@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { ColumnDataTypes } from '../model/database/ColumnDataTypes';
 import { getTable } from './DiminisherHelper';
@@ -10,7 +11,7 @@ import type { Table } from '../model/database/Table';
 // METAED-261
 // Datatype mismatches
 const enhancerName: string = 'ModifyColumnDataTypesDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const modifyColumnDataTypes = (repository: EdFiOdsEntityRepository) => (
   tableName: string,
@@ -40,7 +41,7 @@ const modifyStringColumnLength = (repository: EdFiOdsEntityRepository) => (
 };
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const modifyColumnDataTypesFor = modifyColumnDataTypes(pluginEnvironment(metaEd).entity);
   modifyColumnDataTypesFor('StudentIndicator', 'BeginDate', '[DATETIME]');

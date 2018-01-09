@@ -1,14 +1,14 @@
 // @flow
 import R from 'ramda';
+import { getEntity, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
-import { getEntity } from 'metaed-core';
-import type { ComplexType } from '../model/schema/ComplexType';
 import { NoSimpleType } from '../model/schema/SimpleType';
+import type { ComplexType } from '../model/schema/ComplexType';
 
 // Workaround for METAED-453: Force Data Type to xs:integer in Xsd for DisciplineActionLength and ActualDisciplineActionLength
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-870
 const enhancerName: string = 'ModifyDisciplineActionLengthToUseIntegerDiminisher';
-const targetVersions: string = '2.0.0';
+const targetVersions: string = '2.0.x';
 
 const entityName1: string = 'DisciplineAction';
 const entityType1: ModelType = 'domainEntity';
@@ -18,7 +18,7 @@ const elementName2: string = 'ActualDisciplineActionLength';
 const integerType: string = 'xs:integer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const entity: ?ModelBase = getEntity(metaEd.entity, entityName1, entityType1);
   if (entity != null && !R.isEmpty(entity.data.edfiXsd.xsd_ComplexTypes)) {

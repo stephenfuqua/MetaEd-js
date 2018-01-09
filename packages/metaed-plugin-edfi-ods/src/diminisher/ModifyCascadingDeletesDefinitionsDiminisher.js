@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
@@ -10,7 +11,7 @@ import type { Table } from '../model/database/Table';
 // METAED-250
 // Existing core follows inconsistent pattern on cascading deletes, so this diminisher matches it.
 const enhancerName: string = 'ModifyCascadingDeletesDefinitionsDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) => (
   parentTableName: string,
@@ -26,7 +27,7 @@ const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) => (
 };
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const modifyCascadingDeletesFor = modifyCascadingDeletes(pluginEnvironment(metaEd).entity);
   modifyCascadingDeletesFor('AssessmentCategoryDescriptor', 'Descriptor');

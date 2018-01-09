@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
+import { getEntitiesOfType, ModelBase, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getEntitiesOfType, ModelBase } from 'metaed-core';
 import { getTable } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
 import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
@@ -12,7 +12,7 @@ import type { Table } from '../model/database/Table';
 // Adjusting name for any tables with an IdentificationDocument suffix
 // to remove anything between the domain entity name and the IdentificationDocument fragment
 const enhancerName: string = 'IdentificationDocumentTableDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const identificationDocument: string = 'IdentificationDocument';
 
@@ -57,7 +57,7 @@ function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameIdentificationDocumentTables(metaEd);
 

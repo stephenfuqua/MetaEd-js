@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import {
   gradingPeriod,
@@ -14,7 +15,7 @@ import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-242
-// ODS 2.1 missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
+// ODS 2.1.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
 // This is due to "key unification" in the ODS schema model
 const enhancerName: string = 'RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x';
 const targetVersions: string = '2.1.x';
@@ -81,7 +82,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentS
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
   renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);

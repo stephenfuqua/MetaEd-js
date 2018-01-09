@@ -2,15 +2,49 @@
 import path from 'path';
 import normalize from 'normalize-path';
 import { asDomainEntity } from '../../src/model/DomainEntity';
-import { executePipeline } from '../../src/task/Pipeline';
-import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { createMetaEdFile } from '../../src/task/MetaEdFile';
+import { executePipeline } from '../../src/task/Pipeline';
 import { getEntity } from '../../src/model/EntityRepository';
 import { loadCoreBufferedFiles } from '../../src/task/BufferFileLoader';
+import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
+import { newMetaEdConfiguration } from '../../src/MetaEdConfiguration';
+import { newPipelineOptions } from '../../src/task/PipelineOptions';
 import { newState } from '../../src/State';
 import type { State } from '../../src/State';
 
 jest.unmock('final-fs');
+jest.setTimeout(30000);
+
+const metaEdConfiguration = Object.assign(newMetaEdConfiguration(), {
+  title: 'Pipeline Test v2.0.0',
+  dataStandardCoreSourceDirectory: './packages/metaed-core/test/integration',
+  dataStandardExtensionSourceDirectory: '',
+  artifactDirectory: './MetaEdArtifacts/',
+  dataStandardCoreSourceVersion: '0.0.0',
+  pluginConfig: {
+    edfiUnified: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiOds: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiOdsApi: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiXsd: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiHandbook: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiInterchangeBrief: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiXmlDictionary: {
+      targetTechnologyVersion: '2.0.0',
+    },
+  },
+});
 
 describe('When a single file', () => {
   const metaEdText = MetaEdTextBuilder.build()
@@ -24,7 +58,13 @@ describe('When a single file', () => {
   let state: State;
 
   beforeEach(async () => {
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity.metaed', metaEdText)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity.metaed', metaEdText)]);
     await executePipeline(state);
   });
 
@@ -53,7 +93,13 @@ describe('When files have duplicate entity names', () => {
   let state: State;
 
   beforeEach(async () => {
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdText1),
       createMetaEdFile('/fake/dir', 'DomainEntity1Also.metaed', metaEdText2),
     ]);
@@ -112,7 +158,13 @@ describe('When multiple files', () => {
   let state: State;
 
   beforeEach(async () => {
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdTextDomainEntity1),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),
@@ -156,7 +208,13 @@ describe('When plugins are present', () => {
   let state: State;
 
   beforeEach(async () => {
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaEdTextDomainEntity1),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaEdTextDomainEntity2),
       createMetaEdFile('/fake/dir', 'Association1.metaed', metaEdTextAssociation),
@@ -194,7 +252,13 @@ describe('when building entity property with context', () => {
       .withEndDomainEntity()
       .withEndNamespace()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedText)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedText)]);
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });
@@ -234,7 +298,13 @@ describe('when building a domain entity with a integer property that conflicts w
       .withMinValue('1')
       .withEndSharedInteger()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
       createMetaEdFile('/fake/dir', 'SharedInteger1.metaed', metaedSharedInteger),
     ]);
@@ -272,7 +342,13 @@ describe('when building a valid domain entity with an integer identity', () => {
       .withIntegerIdentity(propertyName, propertyDocumentation, '10', '1', null, '101')
       .withEndDomainEntity()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });
@@ -307,7 +383,13 @@ describe('when building duplicate domain entities', () => {
       .withIntegerIdentity(propertyName, propertyDocumentation, '1', '0', null, '202')
       .withEndDomainEntity()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text),
       createMetaEdFile('/fake/dir', 'DomainEntity2.metaed', metaedDE2Text),
     ]);
@@ -339,7 +421,13 @@ describe('when building a domain entity with an integer property', () => {
       .withIntegerIdentity(propertyName, propertyDocumentation, '10', '1', null, '101')
       .withEndDomainEntity()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDE1Text)]);
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });
@@ -368,7 +456,13 @@ describe('when building a valid domain entity with duplicate metaedIds', () => {
       .withIntegerIdentity(propertyName, propertyDocumentation, '100', null, null, '111')
       .withEndDomainEntity()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });
@@ -400,7 +494,13 @@ describe('when building a DE with a common property but no common declaration', 
       .withCommonProperty('NonExistentCommon', 'This common doesnt have a declaration', true, false, null, '113')
       .withEndDomainEntity()
       .toString();
-    state = loadCoreBufferedFiles(newState(), [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText)]);
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });
@@ -449,7 +549,13 @@ describe('when building a DE with a common property and duplicate common declara
       .withEndCommon()
       .toString();
 
-    state = loadCoreBufferedFiles(newState(), [
+    state = Object.assign(newState(), {
+      metaEdConfiguration,
+      pipelineOptions: Object.assign(newPipelineOptions(), {
+        runValidators: true,
+      }),
+    });
+    state = loadCoreBufferedFiles(state, [
       createMetaEdFile('/fake/dir', 'DomainEntity1.metaed', metaedDEText),
       createMetaEdFile('/fake/dir', 'Common1.metaed', metaedCommon1Text),
       createMetaEdFile('/fake/dir', 'Common2.metaed', metaedCommon2Text),

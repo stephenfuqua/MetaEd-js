@@ -1,6 +1,8 @@
 // @flow
+import { newMetaEdConfiguration } from './MetaEdConfiguration';
 import { newMetaEdEnvironment } from './MetaEdEnvironment';
 import { newPipelineOptions } from './task/PipelineOptions';
+import type { MetaEdConfiguration } from './MetaEdConfiguration';
 import type { ValidationFailure } from './validator/ValidationFailure';
 import type { EnhancerResult } from './enhancer/EnhancerResult';
 import type { GeneratorResult } from './generator/GeneratorResult';
@@ -13,20 +15,24 @@ import type { MetaEdEnvironment } from './MetaEdEnvironment';
 import type { PluginManifest } from './plugin/PluginTypes';
 
 export type State = {
+  // the project level configuration loaded from the metaed.json file either located at the root level of a project
+  // or referenced by the console's --config argument
+  metaEdConfiguration: MetaEdConfiguration,
+
   // the collection of error messages from syntax and semantic validation, and other processes
   validationFailure: Array<ValidationFailure>,
 
-  // TODO: words
+  // the collection of enhancer results returned by each enhancer
   enhancerResults: Array<EnhancerResult>,
 
-  // TODO: words
+  // the collection of generator results returned by each generator
   generatorResults: Array<GeneratorResult>,
 
   // the specified directories to load .metaed files from
-  inputDirectories: ?(InputDirectory[]),
-  // filepaths to exclude from loading, usually used to allow upstream tasks to provide their own versions in a FileSet
+  inputDirectories: InputDirectory[],
+  // file paths to exclude from loading, usually used to allow upstream tasks to provide their own versions in a FileSet
   // e.g. files that are open and unsaved in an editor
-  filepathsToExclude: Set<string>,
+  filePathsToExclude: Set<string>,
 
   // the set of files whose contents have been loaded
   loadedFileSet: Array<FileSet>,
@@ -40,13 +46,13 @@ export type State = {
   // the MetaEd environment
   metaEd: MetaEdEnvironment,
 
-  // TODO: words
+  // the directory where metaed outputs artifacts
   outputDirectory: ?string,
 
   // the directory to scan for plugins
   pluginScanDirectory: ?string,
 
-  // plugins
+  // the plugin manifest information loaded from each plugin's package.json
   pluginManifest: Array<PluginManifest>,
 
   // options for what pipeline steps should run
@@ -54,11 +60,12 @@ export type State = {
 };
 
 export const newState: () => State = () => ({
+  metaEdConfiguration: newMetaEdConfiguration(),
   validationFailure: [],
   enhancerResults: [],
   generatorResults: [],
   inputDirectories: [],
-  filepathsToExclude: new Set(),
+  filePathsToExclude: new Set(),
   loadedFileSet: [],
   fileIndex: null,
   parseTree: null,

@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys, getForeignKeyName } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
@@ -10,7 +11,7 @@ import type { Table } from '../model/database/Table';
 // ODS-1036
 // Forcing some reverse foreign key indexes to generate even though they aren't needed
 const enhancerName: string = 'ModifyReverseForeignKeyIndexesDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const modifyReverseForeignKeyIndex = (repository: EdFiOdsEntityRepository) => (
   parentTableName: string,
@@ -26,7 +27,7 @@ const modifyReverseForeignKeyIndex = (repository: EdFiOdsEntityRepository) => (
 };
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const modifyReverseForeignKeyIndexFor = modifyReverseForeignKeyIndex(pluginEnvironment(metaEd).entity);
   // one to one optional relationships

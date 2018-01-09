@@ -7,7 +7,7 @@ export type PipelineOptions = {
 };
 
 export const newPipelineOptions: () => PipelineOptions = () => ({
-  runValidators: true,
+  runValidators: false,
   runEnhancers: false,
   runGenerators: false,
 });

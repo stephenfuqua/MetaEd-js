@@ -6,25 +6,25 @@ import { exec } from 'child_process';
 import diff2html from 'diff2html';
 import type { GeneratedOutput, State } from 'metaed-core';
 import {
-  newState,
-  loadPlugins,
-  loadFiles,
-  loadFileIndex,
-  buildParseTree,
   buildMetaEd,
-  walkBuilders,
+  buildParseTree,
+  fileMapForFailure,
+  loadFileIndex,
+  loadFiles,
+  loadPlugins,
+  newMetaEdConfiguration,
+  newState,
+  orderByProp,
   runEnhancers,
   runGenerators,
-  fileMapForFailure,
+  validateConfiguration,
+  walkBuilders,
 } from 'metaed-core';
-
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
-
-import { orderByProp } from '../../../metaed-core/src/Utility';
 import { orderRows } from '../../src/generator/OdsGenerator';
 
 jest.unmock('final-fs');
-jest.setTimeout(20000);
+jest.setTimeout(40000);
 
 describe('when generating ods and comparing it to data standard 2.0 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact');
@@ -42,19 +42,37 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
 
   beforeAll(async () => {
     const state: State = Object.assign(newState(), {
-      pluginScanDirectory: `${projectRootPath}/packages`,
-      inputDirectories: [
-        {
-          path: `${nodeModulesPath}/ed-fi-model-2.0`,
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
+      metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
+        title: 'Ods Authoritative Comparison DS v2.0.0',
+        dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-2.0/',
+        artifactDirectory: './MetaEdArtifacts/',
+        dataStandardCoreSourceVersion: '2.0.0',
+        pluginConfig: {
+          edfiUnified: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiOds: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiOdsApi: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiXsd: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiHandbook: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiInterchangeBrief: {
+            targetTechnologyVersion: '2.0.0',
+          },
+          edfiXmlDictionary: {
+            targetTechnologyVersion: '2.0.0',
+          },
         },
-      ],
+      }),
     });
-
-    state.metaEd.dataStandardVersion = '2.0.x';
-
+    validateConfiguration(state);
     loadPlugins(state);
     loadFiles(state);
     loadFileIndex(state);

@@ -84,7 +84,7 @@ describe('When generating interchange brief with no extended references or descr
     interchange2.elements.push(interchangeItem4);
 
     const builderResult = Object.assign(newMetaEdEnvironment(), {
-      dataStandardVersion: '2.1.0',
+      // dataStandardVersion: '2.1.0',
       plugin: new Map(),
     });
     addEdFiXsdEntityRepositoryTo(builderResult);

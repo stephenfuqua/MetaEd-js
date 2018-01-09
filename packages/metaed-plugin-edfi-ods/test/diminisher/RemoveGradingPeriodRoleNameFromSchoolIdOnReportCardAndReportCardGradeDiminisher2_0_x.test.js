@@ -49,7 +49,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -111,7 +111,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

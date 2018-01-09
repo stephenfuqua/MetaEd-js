@@ -85,7 +85,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
     });
     pluginEnvironment(metaEd).entity.table.set(parentTable.name, parentTable);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -160,7 +160,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
     });
     pluginEnvironment(metaEd).entity.table.set(parentTable.name, parentTable);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

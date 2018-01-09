@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { ColumnDataTypes } from '../model/database/ColumnDataTypes';
 import { getTable } from './DiminisherHelper';
@@ -8,13 +9,13 @@ import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-247
-// Ed-Fi ODS 2.0 EducationContentDerivativeSourceLearningResourceMetadataURI and EducationContentDerivativeSourceURI
+// Ed-Fi ODS 2.x EducationContentDerivativeSourceLearningResourceMetadataURI and EducationContentDerivativeSourceURI
 // tables need DerivativeSource context on URI column
 
 // METAED-261
 // Datatype mismatch
 const enhancerName: string = 'AddRoleNameFromEducationContentDSLRMUriDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const derivativeSourceLearningResourceMetadataURI: string = 'DerivativeSourceLearningResourceMetadataURI';
 const derivativeSourceURI: string = 'DerivativeSourceURI';
@@ -53,7 +54,7 @@ function renameAndTruncateEducationContentDerivativeSourceURI(repository: EdFiOd
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(pluginEnvironment(metaEd).entity);
   renameAndTruncateEducationContentDerivativeSourceURI(pluginEnvironment(metaEd).entity);

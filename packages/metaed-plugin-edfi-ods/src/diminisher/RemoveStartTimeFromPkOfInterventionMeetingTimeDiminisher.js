@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getTable } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -7,9 +8,9 @@ import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-249
-// EdFi ODS 2.0 missing StartTime from primary key of InterventionMeetingTime
+// EdFi ODS 2.x missing StartTime from primary key of InterventionMeetingTime
 const enhancerName: string = 'RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const interventionMeetingTime: string = 'InterventionMeetingTime';
 const startTime: string = 'StartTime';
@@ -26,7 +27,7 @@ function modifyStartTimeColumnOnInterventionMeetingTimeTable(repository: EdFiOds
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   modifyStartTimeColumnOnInterventionMeetingTimeTable(pluginEnvironment(metaEd).entity);
 

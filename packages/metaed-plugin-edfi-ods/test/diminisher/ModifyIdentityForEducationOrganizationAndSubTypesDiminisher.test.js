@@ -28,7 +28,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     });
     metaEd.entity.domainEntity.set(entity.metaEdName, entity);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -61,7 +61,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     });
     metaEd.entity.domainEntity.set(entity.metaEdName, entity);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -129,7 +129,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     entitySubclass.data.edfiOds.ods_IdentityProperties.push(property);
     metaEd.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -259,7 +259,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     entitySubclass.data.edfiOds.ods_IdentityProperties.push(property);
     metaEd.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

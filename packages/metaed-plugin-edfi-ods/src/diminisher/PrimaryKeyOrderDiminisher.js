@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { orderByProp } from 'metaed-core';
+import { orderByProp, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getPrimaryKeys } from '../model/database/Table';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -9,9 +9,9 @@ import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-630
-// Orders primary key columns to match EdFi DS 2.0
+// Orders primary key columns to match EdFi DS 2.x
 const enhancerName: string = 'PrimaryKeyOrderDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 function primaryKeyOrderFor(table: Table): Array<string> {
   const primaryKeysFor: { [tableName: string]: Array<string> } = {
@@ -969,7 +969,7 @@ function modifyPrimaryKeyColumnOrder(repository: EdFiOdsEntityRepository): void 
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   modifyPrimaryKeyColumnOrder(pluginEnvironment(metaEd).entity);
 

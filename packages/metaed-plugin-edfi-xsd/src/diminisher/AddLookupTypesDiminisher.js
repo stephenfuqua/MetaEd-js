@@ -1,16 +1,16 @@
 // @flow
+import { getAllTopLevelEntities, prependIndefiniteArticle, versionSatisfies } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
-import { getAllTopLevelEntities, prependIndefiniteArticle } from 'metaed-core';
-import type { ComplexType } from '../model/schema/ComplexType';
-import type { Element } from '../model/schema/Element';
 import { createSchemaComplexTypeItems } from '../enhancer/schema/XsdElementFromPropertyCreator';
 import { newAnnotation } from '../model/schema/Annotation';
 import { newComplexType, NoComplexType } from '../model/schema/ComplexType';
 import { newElement } from '../model/schema/Element';
+import type { ComplexType } from '../model/schema/ComplexType';
+import type { Element } from '../model/schema/Element';
 
-// Force generation of lookup types for specific named top level entities
 // Temporary work around until lookup types fully disappear
 const enhancerName: string = 'AddLookupTypesDiminisher';
+const targetVersions: string = '*';
 
 const typeGroup: string = 'Lookup';
 const documentation: string =
@@ -56,6 +56,8 @@ const createReferenceTypeItem = (entity: TopLevelEntity, lookupType: ComplexType
   });
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+
   getAllTopLevelEntities(metaEd.entity)
     .filter(x => !x.namespaceInfo.isExtension && lookupTypeNames.includes(x.metaEdName))
     .forEach(entity => {

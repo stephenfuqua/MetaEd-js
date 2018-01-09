@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getTable, renameColumn } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -7,9 +8,9 @@ import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-248
-// EdFi ODS 2.0 naming of InnovativeDollarsSpentStrategicPriorities mismatch with XSD
+// EdFi ODS 2.x naming of InnovativeDollarsSpentStrategicPriorities mismatch with XSD
 const enhancerName: string = 'ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const innovativeDollarsSpentOnStrategicPriorities: string = 'InnovativeDollarsSpentOnStrategicPriorities';
 const innovativeDollarsSpentStrategicPriorities: string = 'InnovativeDollarsSpentStrategicPriorities';
@@ -24,7 +25,7 @@ function changeNameOfInnovativeDollarsSpentStrategicPriorities(repository: EdFiO
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   changeNameOfInnovativeDollarsSpentStrategicPriorities(pluginEnvironment(metaEd).entity);
 

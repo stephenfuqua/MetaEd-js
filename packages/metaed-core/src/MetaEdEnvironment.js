@@ -1,17 +1,9 @@
 // @flow
-import type { EntityRepository } from './model/EntityRepository';
-import type { PropertyIndex } from './model/property/PropertyRepository';
 import { newEntityRepository } from './model/EntityRepository';
 import { newPropertyIndex } from './model/property/PropertyRepository';
-
-export type PluginEnvironment = {
-  // the plugin-specific entity repository
-  entity: any,
-};
-
-export const newPluginEnvironment: () => PluginEnvironment = () => ({
-  entity: {},
-});
+import type { EntityRepository } from './model/EntityRepository';
+import type { PluginEnvironment } from './plugin/PluginEnvironment';
+import type { PropertyIndex } from './model/property/PropertyRepository';
 
 export type SemVer = string;
 
@@ -26,8 +18,10 @@ export type MetaEdEnvironment = {
   // plugin environment by plugin name
   plugin: Map<string, PluginEnvironment>,
 
+  // the current MetaEd Version
   metaEdVersion: SemVer,
 
+  // the data standard version to target
   dataStandardVersion: SemVer,
 };
 
@@ -35,6 +29,6 @@ export const newMetaEdEnvironment: () => MetaEdEnvironment = () => ({
   entity: newEntityRepository(),
   propertyIndex: newPropertyIndex(),
   plugin: new Map(),
-  metaEdVersion: '',
-  dataStandardVersion: '',
+  metaEdVersion: '0.0.0',
+  dataStandardVersion: '0.0.0',
 });

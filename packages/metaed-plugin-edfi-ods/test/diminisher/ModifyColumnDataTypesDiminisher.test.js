@@ -32,7 +32,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -63,7 +63,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -94,7 +94,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

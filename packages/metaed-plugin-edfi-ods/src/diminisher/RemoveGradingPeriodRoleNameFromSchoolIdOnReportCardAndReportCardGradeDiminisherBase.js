@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getTable, removeColumn, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -10,6 +11,7 @@ import type { Table } from '../model/database/Table';
 // This is due to "key unification" in the ODS schema model
 // Rename StudentAcademicRecordReportCard.GradingPeriodSchoolId to StudentAcademicRecordReportCard.SchoolId
 const enhancerName: string = 'RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
+const targetVersions: string = '2.x';
 
 export const grade: string = 'Grade';
 export const gradingPeriod: string = 'GradingPeriod';
@@ -76,7 +78,7 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardT
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  // if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(pluginEnvironment(metaEd).entity);
   removeGradingPeriodSchoolIdOnReportCardGradeTable(pluginEnvironment(metaEd).entity);

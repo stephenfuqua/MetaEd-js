@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
 import { getTable } from './DiminisherHelper';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
@@ -8,7 +9,7 @@ import type { Table } from '../model/database/Table';
 // METAED-77
 // Adjusting name to duplicate the word 'Assessment' for GraduationPlanRequiredAssessmentPerformanceLevel
 const enhancerName: string = 'GraduationPlanRequiredAssessmentPerformanceLevelDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const graduationPlanRequiredAssessmentPerformanceLevel: string = 'GraduationPlanRequiredAssessmentPerformanceLevel';
 const graduationPlanRequiredAssessmentAssessmentPerformanceLevel: string =
@@ -29,7 +30,7 @@ function renameGraduationPlanRequiredAssessmentPerformanceLevelTable(plugin: Plu
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameGraduationPlanRequiredAssessmentPerformanceLevelTable(pluginEnvironment(metaEd));
 

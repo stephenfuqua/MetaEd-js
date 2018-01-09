@@ -1,13 +1,13 @@
 // @flow
 import R from 'ramda';
+import { getEntity, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
-import { getEntity } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 
 // Workaround for METAED-456: Force Max Occurs to 2 for AppropriateSex on InterventionStudy
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-818
 const enhancerName: string = 'ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher';
-const targetVersions: string = '2.0.0';
+const targetVersions: string = '2.0.x';
 
 const entityName: string = 'InterventionStudy';
 const entityType: ModelType = 'domainEntity';
@@ -15,7 +15,7 @@ const elementName: string = 'AppropriateSex';
 const elementType: string = 'SexType';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const entity: ?ModelBase = getEntity(metaEd.entity, entityName, entityType);
   if (entity != null && !R.isEmpty(entity.data.edfiXsd.xsd_ComplexTypes)) {

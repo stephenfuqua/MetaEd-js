@@ -1,5 +1,5 @@
 // @flow
-import { newIntegerProperty } from 'metaed-core';
+import { newIntegerProperty, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumn, getForeignKeys } from '../model/database/Table';
 import { getTable, renameColumn } from './DiminisherHelper';
@@ -14,9 +14,8 @@ import type { Table } from '../model/database/Table';
 // METAED-61
 // Assessment.Version collides with AssessmentContentStandard.Version
 // Rename ContentStandard.Version to ContentStandard.AssessmentVersion when ContentStandard hangs off of Assessment
-// Necessary for EdFi ODS 2.x in order to generate valid SQL
 const enhancerName: string = 'AssessmentContentStandardTableDiminisher';
-// const targetVersions: string = '2.x';
+const targetVersions: string = '*';
 
 const assessmentContentStandard: string = 'AssessmentContentStandard';
 const assessmentVersion: string = 'AssessmentVersion';
@@ -81,7 +80,7 @@ function renameVersionColumnOnAssessmentContentStandardAuthorTable(repository: E
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  // if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   renameVersionColumnOnAssessmentContentStandardTable(pluginEnvironment(metaEd).entity);
   renameVersionColumnOnAssessmentContentStandardAuthorTable(pluginEnvironment(metaEd).entity);

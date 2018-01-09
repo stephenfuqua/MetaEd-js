@@ -1,18 +1,18 @@
-logs/*
 !.gitkeep
-node_modules/
-bower_components/
-jspm_packages/
-coverage/
-tmp
 .DS_Store
-npm-debug.log
+bower_components/
+coverage/
+jspm_packages/
 lerna-debug.log
+logs/*
+node_modules/
+npm-debug.log
+tmp
 
-## Webstorm user specific files:
+## Webstorm:
 .idea/
 
-## VSCode user specific files:
+## VSCode:
 .vscode/
 
 ## Babel target directory
@@ -27,3 +27,5 @@ dist/
 /packages/metaed-plugin-edfi-ods/test/integration/artifact/*.diff
 /packages/metaed-plugin-edfi-ods/test/integration/artifact/*.html
 /packages/metaed-plugin-edfi-ods/test/integration/artifact/0004-Tables.sql
+
+MetaEdArtifacts/

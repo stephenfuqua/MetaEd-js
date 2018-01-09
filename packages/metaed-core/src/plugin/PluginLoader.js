@@ -3,8 +3,9 @@ import fs from 'final-fs';
 import path from 'path';
 import Topo from 'topo';
 import winston from 'winston';
-import type { PluginManifest, MetaEdPlugin } from './PluginTypes';
 import { NoMetaEdPlugin } from './PluginTypes';
+import type { PluginConfiguration } from '../MetaEdConfiguration';
+import type { PluginManifest, MetaEdPlugin } from './PluginTypes';
 
 export type PluginOptions = {
   pluginType: string,
@@ -55,6 +56,7 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
 export function scanDirectories(directories: string | Array<string>, options: PluginOptions): Array<PluginManifest> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
+
   const pluginOrdering: Topo = new Topo();
 
   directories.forEach(directory => {
@@ -92,7 +94,12 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
   return pluginOrdering.nodes;
 }
 
-export function materializePlugin(pluginData: any, pluginManifest: PluginManifest) {
+export function materializePlugin(
+  pluginData: any,
+  pluginManifest: PluginManifest,
+  // eslint-disable-next-line
+  pluginConfig: { [shortName: string]: PluginConfiguration },
+) {
   try {
     if (!pluginManifest.mainModule) {
       winston.error(
@@ -116,7 +123,7 @@ export function materializePlugin(pluginData: any, pluginManifest: PluginManifes
       winston.error(
         `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${
           pluginManifest.mainModule
-        }' failed.  initialize() not found.`,
+        }' failed. initialize() not found.`,
       );
     }
   } catch (err) {

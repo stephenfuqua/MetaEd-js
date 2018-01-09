@@ -4,7 +4,7 @@ import type { State } from '../State';
 
 function appendFileSet(state: State, fileSet: FileSet): State {
   const filepaths = fileSet.files.map(file => file.fullName);
-  filepaths.forEach(filePath => state.filepathsToExclude.add(filePath));
+  filepaths.forEach(filePath => state.filePathsToExclude.add(filePath));
   state.loadedFileSet.push(fileSet);
   return state;
 }

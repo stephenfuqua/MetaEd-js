@@ -5,12 +5,14 @@ import { scanDirectories, materializePlugin } from '../plugin/PluginLoader';
 import type { State } from '../State';
 import type { PluginManifest } from '../plugin/PluginTypes';
 import { NoMetaEdPlugin } from '../plugin/PluginTypes';
+import { newPluginEnvironment } from '../plugin/PluginEnvironment';
 
 const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 
-export function scanForPlugins(pluginScanDirectory: ?string): Array<PluginManifest> {
+export function scanForPlugins(state: State): Array<PluginManifest> {
   // default to artifact-specific plugin loading from siblings of metaed-core
-  const directory: string = pluginScanDirectory || path.resolve(__dirname, '../../..');
+  // $FlowIgnore - Property not found in possibly null value
+  const directory: string = state.pluginScanDirectory || path.resolve(__dirname, '../../..');
   const cache = cachedPlugins.get(directory);
   if (cache && cache.length > 0) return cache;
 
@@ -23,11 +25,18 @@ export function scanForPlugins(pluginScanDirectory: ?string): Array<PluginManife
 
   const foundPlugins: Array<PluginManifest> = [];
   pluginManifests.forEach((pluginManifest: PluginManifest) => {
-    materializePlugin(pluginData, pluginManifest);
+    materializePlugin(pluginData, pluginManifest, state.metaEdConfiguration.pluginConfig);
     if (pluginManifest.metaEdPlugin !== NoMetaEdPlugin) {
-      winston.info(`LoadPlugins: Loaded plugin '${pluginManifest.npmName}'`);
+      winston.info(`  ${pluginManifest.shortName} - v${pluginManifest.version}`);
+      state.metaEd.plugin.set(
+        pluginManifest.shortName,
+        Object.assign(newPluginEnvironment(), {
+          entity: {},
+          targetTechnologyVersion: state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion,
+        }),
+      );
     } else {
-      winston.info(`LoadPlugins: Could not load plugin '${pluginManifest.npmName}'`);
+      winston.info(`  Could not load plugin ${pluginManifest.shortName}`);
     }
 
     foundPlugins.push(pluginManifest);
@@ -38,5 +47,5 @@ export function scanForPlugins(pluginScanDirectory: ?string): Array<PluginManife
 }
 
 export function loadPlugins(state: State): void {
-  state.pluginManifest = scanForPlugins(state.pluginScanDirectory);
+  state.pluginManifest = scanForPlugins(state);
 }

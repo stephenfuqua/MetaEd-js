@@ -25,7 +25,7 @@ describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminishe
     });
     pluginEnvironment(metaEd).entity.table.set(stateTable.name, stateTable);
 
-    metaEd.dataStandardVersion = '2.0.x';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

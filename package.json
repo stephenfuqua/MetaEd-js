@@ -24,6 +24,7 @@
     "packages/*"
   ],
   "scripts": {
+    "metaed": "node ./packages/metaed-console/dist/index.js",
     "lint": "eslint .",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build --parallel",

@@ -1,4 +1,5 @@
 // @flow
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
@@ -12,7 +13,7 @@ import type { Table } from '../model/database/Table';
 // MetaEd uses a deterministic graph algorithm to break circular references from cascading declarations
 // Existing core follows no pattern on breaking references, so this diminisher matches it
 const enhancerName: string = 'ModifyCascadingUpdatesDefinitionsDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.x';
 
 const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) => (
   parentTableName: string,
@@ -28,7 +29,7 @@ const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) => (
 };
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (metaEd.dataStandardVersion !== targetVersions) return { enhancerName, success: true };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
   const modifyCascadingUpdatesFor = modifyCascadingUpdates(pluginEnvironment(metaEd).entity);
   modifyCascadingUpdatesFor('CourseOfferingCurriculumUsed', 'CourseOffering');
