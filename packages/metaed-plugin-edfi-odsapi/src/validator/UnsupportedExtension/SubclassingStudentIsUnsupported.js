@@ -1,6 +1,6 @@
 // @flow
 
-// 3.1.X.11 - METAED-701
+// 3.1.X.11 - METAED-701 - ODS-1324 - ODS-1183
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
@@ -13,7 +13,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'SubclassingStudentIsUnsupported',
         category: 'warning',
-        message: `${domainEntitySubclass.typeHumanizedName} ${
+        message: `[ODS-1183] [ODS-1324] ${domainEntitySubclass.typeHumanizedName} ${
           domainEntitySubclass.metaEdName
         } is a Student subclass.  Student subclasses are currently unsupported by the ODS/API.`,
         sourceMap: domainEntitySubclass.sourceMap.type,

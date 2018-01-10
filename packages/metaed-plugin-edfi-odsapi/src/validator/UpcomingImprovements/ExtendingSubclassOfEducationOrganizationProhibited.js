@@ -1,6 +1,6 @@
 // @flow
 
-// 2.1.X.1 - METAED-701
+// 2.1.X.1 - METAED-701 - ODS-827
 import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity } from 'metaed-core';
 
 function isEducationOrganizationSubclass(topLevelEntity: TopLevelEntity): boolean {
@@ -19,7 +19,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'ExtendingSubclassOfEducationOrganizationProhibited',
         category: 'warning',
-        message: `${domainEntityExtension.typeHumanizedName} ${
+        message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${
           domainEntityExtension.metaEdName
         } is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
         sourceMap: domainEntityExtension.sourceMap.type,

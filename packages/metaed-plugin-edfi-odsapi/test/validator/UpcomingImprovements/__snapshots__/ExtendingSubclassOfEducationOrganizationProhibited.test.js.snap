@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when a domain entity extension extends a subclass of a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 1`] = `"Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+exports[`when a domain entity extension extends a subclass of a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 1`] = `"[ODS-827] Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
 exports[`when a domain entity extension extends a subclass of a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 1`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when a domain entity extension extends a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 1`] = `"Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+exports[`when a domain entity extension extends a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> message 1`] = `"[ODS-827] Domain Entity Extension CoreSubclassName is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
 exports[`when a domain entity extension extends a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 1`] = `
 Object {

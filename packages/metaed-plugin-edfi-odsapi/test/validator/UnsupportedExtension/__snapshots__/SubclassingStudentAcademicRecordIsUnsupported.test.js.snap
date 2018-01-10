@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failures: when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName is a StudentAcademicRecord subclass.  StudentAcademicRecord subclasses are currently unsupported by the ODS/API."`;
+exports[`when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failures: when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failure -> message 1`] = `"[ODS-1324] Domain Entity Subclass SubclassName is a StudentAcademicRecord subclass.  StudentAcademicRecord subclasses are currently unsupported by the ODS/API."`;
 
 exports[`when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failures: when a domain entity subclass subclasses the StudentAcademicRecord domain entity should have validation failure -> sourceMap 1`] = `
 Object {

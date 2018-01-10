@@ -1,6 +1,6 @@
 // @flow
 
-// 2.2.X.1 - METAED-701
+// 2.2.X.1 - METAED-701 - ODS-827
 import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity } from 'metaed-core';
 
 function isStudentProgramAssociationOrSubclass(topLevelEntity: TopLevelEntity): boolean {
@@ -19,7 +19,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'ExtendingStudentProgramAssociationOrSubclassProhibited',
         category: 'warning',
-        message: `${associationExtension.typeHumanizedName} ${
+        message: `[ODS-827] ${associationExtension.typeHumanizedName} ${
           associationExtension.metaEdName
         } is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
         sourceMap: associationExtension.sourceMap.type,

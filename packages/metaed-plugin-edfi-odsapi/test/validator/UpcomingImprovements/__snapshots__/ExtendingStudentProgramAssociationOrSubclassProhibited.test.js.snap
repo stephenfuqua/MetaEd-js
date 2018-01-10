@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when an association extension extends a subclass of student program association should have validation failures: when an association extension extends a subclass of student program association should have validation failure -> message 1`] = `"Association Extension CoreSubclassName is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+exports[`when an association extension extends a subclass of student program association should have validation failures: when an association extension extends a subclass of student program association should have validation failure -> message 1`] = `"[ODS-827] Association Extension CoreSubclassName is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
 exports[`when an association extension extends a subclass of student program association should have validation failures: when an association extension extends a subclass of student program association should have validation failure -> sourceMap 1`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when an association extension extends student program association should have validation failures: when an association extension extends student program association should have validation failure -> message 1`] = `"Association Extension StudentProgramAssociation is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
+exports[`when an association extension extends student program association should have validation failures: when an association extension extends student program association should have validation failure -> message 1`] = `"[ODS-827] Association Extension StudentProgramAssociation is an extension of StudentProgramAssociation or its subclass.  The ODS/API does not currently support this pattern and will fail to build."`;
 
 exports[`when an association extension extends student program association should have validation failures: when an association extension extends student program association should have validation failure -> sourceMap 1`] = `
 Object {
