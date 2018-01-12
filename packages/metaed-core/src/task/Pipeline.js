@@ -8,7 +8,7 @@ import { buildParseTree } from './BuildParseTree';
 import { execute as walkBuilders } from './WalkBuilders';
 import { fileMapForFailure } from './FileMapForFailure';
 import { nextMacroTask } from './NextMacroTask';
-import { validateConfiguration } from './ValidateConfiguration';
+// import { validateConfiguration } from './ValidateConfiguration';
 import { execute as runValidators } from './RunValidators';
 import { execute as runEnhancers } from './RunEnhancers';
 import { execute as runGenerators } from './RunGenerators';
@@ -19,9 +19,9 @@ import type { State } from '../State';
 winston.cli();
 
 export async function executePipeline(state: State): Promise<State> {
-  winston.info('Validating configuration...');
-  validateConfiguration(state);
-  await nextMacroTask();
+  // winston.info('Validating configuration...');
+  // validateConfiguration(state);
+  // await nextMacroTask();
 
   winston.info('Loading plugins:');
   loadPlugins(state);

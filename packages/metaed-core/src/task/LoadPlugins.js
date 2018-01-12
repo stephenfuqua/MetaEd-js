@@ -9,6 +9,8 @@ import { newPluginEnvironment } from '../plugin/PluginEnvironment';
 
 const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 
+const defaultTargetTechnologyVersion = '2.0.0';
+
 export function scanForPlugins(state: State): Array<PluginManifest> {
   // default to artifact-specific plugin loading from siblings of metaed-core
   // $FlowIgnore - Property not found in possibly null value
@@ -31,7 +33,9 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
       state.metaEd.plugin.set(
         pluginManifest.shortName,
         Object.assign(newPluginEnvironment(), {
-          targetTechnologyVersion: state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion,
+          targetTechnologyVersion:
+            state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion ||
+            defaultTargetTechnologyVersion,
         }),
       );
     } else {
