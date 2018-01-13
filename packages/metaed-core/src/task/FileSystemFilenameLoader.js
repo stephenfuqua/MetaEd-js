@@ -19,17 +19,16 @@ export function loadFiles(state: State): void {
     return;
   }
 
-  state.inputDirectories.push({
-    path: state.metaEdConfiguration.dataStandardCoreSourceDirectory,
-    namespace: 'edfi',
-    projectExtension: '',
-    isExtension: false,
-  });
+  if (state.metaEdConfiguration.dataStandardCoreSourceDirectory) {
+    state.inputDirectories.push({
+      path: state.metaEdConfiguration.dataStandardCoreSourceDirectory,
+      namespace: 'edfi',
+      projectExtension: '',
+      isExtension: false,
+    });
+  }
 
-  if (
-    state.metaEdConfiguration.dataStandardExtensionSourceDirectory != null &&
-    state.metaEdConfiguration.dataStandardExtensionSourceDirectory !== ''
-  ) {
+  if (state.metaEdConfiguration.dataStandardExtensionSourceDirectory) {
     state.inputDirectories.push({
       path: state.metaEdConfiguration.dataStandardExtensionSourceDirectory,
       namespace: 'extension',

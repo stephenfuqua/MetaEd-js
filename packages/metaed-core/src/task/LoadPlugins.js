@@ -9,8 +9,6 @@ import { newPluginEnvironment } from '../plugin/PluginEnvironment';
 
 const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 
-const defaultTargetTechnologyVersion = '2.0.0';
-
 export function scanForPlugins(state: State): Array<PluginManifest> {
   // default to artifact-specific plugin loading from siblings of metaed-core
   // $FlowIgnore - Property not found in possibly null value
@@ -28,19 +26,30 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
   const foundPlugins: Array<PluginManifest> = [];
   pluginManifests.forEach((pluginManifest: PluginManifest) => {
     materializePlugin(pluginData, pluginManifest, state.metaEdConfiguration.pluginConfig);
-    if (pluginManifest.metaEdPlugin !== NoMetaEdPlugin) {
-      winston.info(`  ${pluginManifest.shortName} - v${pluginManifest.version}`);
-      state.metaEd.plugin.set(
-        pluginManifest.shortName,
-        Object.assign(newPluginEnvironment(), {
-          targetTechnologyVersion:
-            state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion ||
-            defaultTargetTechnologyVersion,
-        }),
-      );
-    } else {
+    if (pluginManifest.metaEdPlugin === NoMetaEdPlugin) {
       winston.info(`  Could not load plugin ${pluginManifest.shortName}`);
+      return;
     }
+
+    winston.info(`  ${pluginManifest.shortName} - v${pluginManifest.version}`);
+
+    if (
+      !state.metaEdConfiguration ||
+      !state.metaEdConfiguration.pluginConfig ||
+      !state.metaEdConfiguration.pluginConfig[pluginManifest.shortName]
+    ) {
+      winston.info(`  No MetaEd project configuration provided for plugin ${pluginManifest.shortName}.  Will not load.`);
+      // TODO: consider impact of skipping a plugin load on probability that dependent plugins will crash
+      return;
+    }
+
+    state.metaEd.plugin.set(
+      pluginManifest.shortName,
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion:
+          state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion || '2.0.0',
+      }),
+    );
 
     foundPlugins.push(pluginManifest);
   });

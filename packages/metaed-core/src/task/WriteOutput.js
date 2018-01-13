@@ -22,7 +22,9 @@ function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {
 
 export function execute(state: State): void {
   let outputDirectory: string = '';
-  if (state.metaEdConfiguration.artifactDirectory) {
+  if (state.outputDirectory) {
+    outputDirectory = state.outputDirectory;
+  } else if (state.metaEdConfiguration.artifactDirectory) {
     outputDirectory = state.metaEdConfiguration.artifactDirectory;
   } else if (state.inputDirectories && state.inputDirectories.length > 0) {
     const [defaultRootDirectory] = state.inputDirectories.slice(-1);
