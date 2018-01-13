@@ -31,7 +31,6 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
       state.metaEd.plugin.set(
         pluginManifest.shortName,
         Object.assign(newPluginEnvironment(), {
-          entity: {},
           targetTechnologyVersion: state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion,
         }),
       );

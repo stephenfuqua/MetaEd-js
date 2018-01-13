@@ -2,6 +2,7 @@
 import type { Validator, MetaEdPlugin } from 'metaed-core';
 import { newMetaEdPlugin } from 'metaed-core';
 
+import { validate as mergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported } from './validator/UnsupportedExtension/MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
 import { validate as subclassingAssessmentFamilyIsUnsupported } from './validator/UnsupportedExtension/SubclassingAssessmentFamilyIsUnsupported';
 import { validate as subclassingAssessmentIsUnsupported } from './validator/UnsupportedExtension/SubclassingAssessmentIsUnsupported';
 import { validate as subclassingLearningObjectiveIsUnsupported } from './validator/UnsupportedExtension/SubclassingLearningObjectiveIsUnsupported';
@@ -20,6 +21,7 @@ import { validate as subclassingStaffIsUnsupported } from './validator/UpcomingI
 
 function validatorList(): Array<Validator> {
   return [
+    mergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported,
     subclassingAssessmentFamilyIsUnsupported,
     subclassingAssessmentIsUnsupported,
     subclassingLearningObjectiveIsUnsupported,

@@ -19,7 +19,8 @@
     }
   },
   "dependencies": {
-    "metaed-core": "1.1.1-dev.28"
+    "metaed-core": "1.1.1-dev.28",
+    "metaed-plugin-edfi-unified": "^1.1.1-dev.28"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

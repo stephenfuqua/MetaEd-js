@@ -23,12 +23,18 @@ export function newEdFiOdsEntityRepository(): EdFiOdsEntityRepository {
 }
 
 export function addEdFiOdsEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  metaEd.plugin.set(
-    'edfiOds',
-    Object.assign(newPluginEnvironment(), {
+  if (metaEd.plugin.has('edfiOds')) {
+    Object.assign((metaEd.plugin.get('edfiOds'): any), {
       entity: newEdFiOdsEntityRepository(),
-    }),
-  );
+    });
+  } else {
+    metaEd.plugin.set(
+      'edfiOds',
+      Object.assign(newPluginEnvironment(), {
+        entity: newEdFiOdsEntityRepository(),
+      }),
+    );
+  }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import { newPluginEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import type { MergedInterchange } from './MergedInterchange';
 
 export type EdFiXsdEntityRepository = {
@@ -16,12 +16,18 @@ export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
 }
 
 export function addEdFiXsdEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  metaEd.plugin.set(
-    'edfiXsd',
-    Object.assign(newPluginEnvironment(), {
+  if (metaEd.plugin.has('edfiXsd')) {
+    Object.assign((metaEd.plugin.get('edfiXsd'): any), {
       entity: newEdFiXsdEntityRepository(),
-    }),
-  );
+    });
+  } else {
+    metaEd.plugin.set(
+      'edfiXsd',
+      Object.assign(newPluginEnvironment(), {
+        entity: newEdFiXsdEntityRepository(),
+      }),
+    );
+  }
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
