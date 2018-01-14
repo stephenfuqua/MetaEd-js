@@ -37,6 +37,10 @@ export function validateOnTheFly(): boolean {
   return atom.config.get('atom-metaed.validateOnTheFly');
 }
 
+export function useTechPreview(): boolean {
+  return atom.config.get('atom-metaed.useTechPreview');
+}
+
 export function telemetryConsent(): string {
   return atom.config.get('atom-metaed.telemetryConsent');
 }
@@ -48,3 +52,4 @@ export function setTelemetryConsent(consent: string) {
 export function allianceMode(): boolean {
   return atom.config.get('atom-metaed.alliance.allianceMode');
 }
+

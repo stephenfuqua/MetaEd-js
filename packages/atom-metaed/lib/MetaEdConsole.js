@@ -11,6 +11,7 @@ import {
   getCoreMetaEdSourceDirectory,
   getCmdFullPath,
   getEdfiOdsApiSourceDirectory,
+  useTechPreview,
   allianceMode,
 } from './Settings';
 import type MetaEdLog from './MetaEdLog';
@@ -27,6 +28,7 @@ type GulpInputs = {
   edfiOdsApiSourceDirectory: ?string,
   edfiOdsRepoDirectory: ?string,
   edfiOdsImplementationRepoDirectory: ?string,
+  deployTargetVersion: string,
   gulpPath: string,
 };
 
@@ -187,6 +189,8 @@ export default class MetaEdConsole {
       }
     }
 
+    const deployTargetVersion = useTechPreview() ? '3.0.0' : '2.0.0';
+
     return {
       taskName,
       isExtensionProject,
@@ -199,6 +203,7 @@ export default class MetaEdConsole {
       edfiOdsApiSourceDirectory,
       edfiOdsRepoDirectory,
       edfiOdsImplementationRepoDirectory,
+      deployTargetVersion,
       gulpPath,
     };
   }

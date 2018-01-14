@@ -8,9 +8,16 @@ import path from 'path';
 import fs from 'fs-extra';
 import { v4 as newUuid } from 'uuid';
 import { install as packageDepsInstall } from 'atom-package-deps';
-import { createMetaEdFile, loadCoreBufferedFiles, loadExtensionBufferedFiles, executePipeline, newState } from 'metaed-core';
+import {
+  createMetaEdFile,
+  loadCoreBufferedFiles,
+  loadExtensionBufferedFiles,
+  executePipeline,
+  newState,
+  newMetaEdConfiguration,
+} from 'metaed-core';
 
-import type { MetaEdFile, State } from 'metaed-core';
+import type { MetaEdFile, State, MetaEdConfiguration } from 'metaed-core';
 
 // eslint-disable-next-line
 import { CompositeDisposable } from 'atom';
@@ -51,6 +58,7 @@ import {
   getMetaEdJsConsoleSourceDirectory,
   setMetaEdJsConsoleSourceDirectory,
   validateOnTheFly,
+  useTechPreview,
   allianceMode,
 } from './Settings';
 
@@ -60,6 +68,64 @@ let metaEdConsole: ?MetaEdConsole;
 let subscriptions: ?CompositeDisposable;
 let contextMenuHider: Hider;
 let mostRecentState: State = newState();
+
+const dataStandard2Config: MetaEdConfiguration = {
+  ...newMetaEdConfiguration(),
+  title: 'Data Standard 2.x',
+  dataStandardCoreSourceVersion: '2.0.0',
+  pluginConfig: {
+    edfiUnified: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiOds: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiOdsApi: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiXsd: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiHandbook: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiInterchangeBrief: {
+      targetTechnologyVersion: '2.0.0',
+    },
+    edfiXmlDictionary: {
+      targetTechnologyVersion: '2.0.0',
+    },
+  },
+};
+
+const dataStandard3Config: MetaEdConfiguration = {
+  ...newMetaEdConfiguration(),
+  title: 'Data Standard 3.x',
+  dataStandardCoreSourceVersion: '3.0.0',
+  pluginConfig: {
+    edfiUnified: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiOds: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiOdsApi: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiXsd: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiHandbook: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiInterchangeBrief: {
+      targetTechnologyVersion: '3.0.0',
+    },
+    edfiXmlDictionary: {
+      targetTechnologyVersion: '3.0.0',
+    },
+  },
+};
 
 function reportError(error) {
   try {
@@ -395,6 +461,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       runEnhancers: true,
       runGenerators: false,
     },
+    metaEdConfiguration: useTechPreview() ? dataStandard3Config : dataStandard2Config,
   });
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 

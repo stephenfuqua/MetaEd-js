@@ -44,8 +44,15 @@
       "type": "boolean",
       "default": true
     },
-    "telemetryConsent": {
+    "useTechPreview": {
       "order": 7,
+      "title": "Enable Technical Preview functionality",
+      "description": "Use Technical Preview enhancements.  Requires the Ed-Fi Data Standard core .metaed directory to point to the core version used in the Technical Preview.  Requires Atom restart after changing.",
+      "type": "boolean",
+      "default": false
+    },
+    "telemetryConsent": {
+      "order": 8,
       "title": "Consent to anonymous usage reporting",
       "description": "Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions.",
       "type": "string",
@@ -66,7 +73,7 @@
       ]
     },
     "alliance": {
-      "order": 8,
+      "order": 9,
       "title": "",
       "type": "object",
       "collapsed": true,
@@ -96,6 +103,7 @@
     "atom-space-pen-views": "2.2.0",
     "babel-polyfill": "^6.26.0",
     "ed-fi-model-2.0": "metaed-1.0",
+    "ed-fi-model-3.0": "metaed-1.0",
     "fs-extra": "^3.0.1",
     "metaed-commands": "1.1.1-dev.28",
     "metaed-console": "1.1.1-dev.28",
