@@ -239,55 +239,62 @@ describe('MetaEdConsole', () => {
         edfiOdsRepoDirectory: 'edfiOdsRepoDirectory',
         edfiOdsImplementationRepoDirectory: 'edfiOdsImplementationRepoDirectory',
         gulpPath: 'gulpPath',
+        version: '2.0.0',
       };
     });
 
     it('returns build params for core project', () => {
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(7);
+      expect(gulpTaskParams.length).toEqual(9);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath build --color');
       expect(gulpTaskParams[3]).toEqual('--artifactPath');
       expect(gulpTaskParams[4]).toEqual(gulpInputs.artifactPath);
-      expect(gulpTaskParams[5]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[6]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[5]).toEqual('--version');
+      expect(gulpTaskParams[6]).toEqual(gulpInputs.version);
+      expect(gulpTaskParams[7]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[8]).toEqual(gulpInputs.projectPath);
     });
 
     it('returns build params for extension project', () => {
       gulpInputs.isExtensionProject = true;
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(10);
+      expect(gulpTaskParams.length).toEqual(12);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath build --color');
       expect(gulpTaskParams[3]).toEqual('--artifactPath');
       expect(gulpTaskParams[4]).toEqual(gulpInputs.artifactPath);
-      expect(gulpTaskParams[5]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[6]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
-      expect(gulpTaskParams[7]).toEqual('--extensionMetaEdPath');
-      expect(gulpTaskParams[8]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[9]).toEqual('--includeExtensions');
+      expect(gulpTaskParams[5]).toEqual('--version');
+      expect(gulpTaskParams[6]).toEqual(gulpInputs.version);
+      expect(gulpTaskParams[7]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[8]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
+      expect(gulpTaskParams[9]).toEqual('--extensionMetaEdPath');
+      expect(gulpTaskParams[10]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[11]).toEqual('--includeExtensions');
     });
 
     it('returns deploy params for core project', () => {
       gulpInputs.taskName = 'deploy';
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(11);
+      expect(gulpTaskParams.length).toEqual(13);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath deploy --color');
       expect(gulpTaskParams[3]).toEqual('--artifactPath');
       expect(gulpTaskParams[4]).toEqual(gulpInputs.artifactPath);
-      expect(gulpTaskParams[5]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[6]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[7]).toEqual('--odsApiRootPath');
-      expect(gulpTaskParams[8]).toEqual(gulpInputs.edfiOdsRepoDirectory);
-      expect(gulpTaskParams[9]).toEqual('--odsApiImplementationRootPath');
-      expect(gulpTaskParams[10]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
+      expect(gulpTaskParams[5]).toEqual('--version');
+      expect(gulpTaskParams[6]).toEqual(gulpInputs.version);
+      expect(gulpTaskParams[7]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[8]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[9]).toEqual('--odsApiRootPath');
+      expect(gulpTaskParams[10]).toEqual(gulpInputs.edfiOdsRepoDirectory);
+      expect(gulpTaskParams[11]).toEqual('--odsApiImplementationRootPath');
+      expect(gulpTaskParams[12]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
     });
 
     it('returns deploy params for extension project', () => {
@@ -295,21 +302,23 @@ describe('MetaEdConsole', () => {
       gulpInputs.isExtensionProject = true;
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(14);
+      expect(gulpTaskParams.length).toEqual(16);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath deploy --color');
       expect(gulpTaskParams[3]).toEqual('--artifactPath');
       expect(gulpTaskParams[4]).toEqual(gulpInputs.artifactPath);
-      expect(gulpTaskParams[5]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[6]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
-      expect(gulpTaskParams[7]).toEqual('--extensionMetaEdPath');
-      expect(gulpTaskParams[8]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[9]).toEqual('--includeExtensions');
-      expect(gulpTaskParams[10]).toEqual('--odsApiRootPath');
-      expect(gulpTaskParams[11]).toEqual(gulpInputs.edfiOdsRepoDirectory);
-      expect(gulpTaskParams[12]).toEqual('--odsApiImplementationRootPath');
-      expect(gulpTaskParams[13]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
+      expect(gulpTaskParams[5]).toEqual('--version');
+      expect(gulpTaskParams[6]).toEqual(gulpInputs.version);
+      expect(gulpTaskParams[7]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[8]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
+      expect(gulpTaskParams[9]).toEqual('--extensionMetaEdPath');
+      expect(gulpTaskParams[10]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[11]).toEqual('--includeExtensions');
+      expect(gulpTaskParams[12]).toEqual('--odsApiRootPath');
+      expect(gulpTaskParams[13]).toEqual(gulpInputs.edfiOdsRepoDirectory);
+      expect(gulpTaskParams[14]).toEqual('--odsApiImplementationRootPath');
+      expect(gulpTaskParams[15]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
     });
   });
 

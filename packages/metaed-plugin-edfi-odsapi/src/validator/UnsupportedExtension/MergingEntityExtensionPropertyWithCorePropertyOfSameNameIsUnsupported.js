@@ -1,7 +1,7 @@
 // @flow
 
 // 2.x - METAED-711 - ODS-1732
-import { asReferentialProperty, asTopLevelEntity, EntityProperty, getEntitiesOfType, versionSatisfies } from 'metaed-core';
+import { asTopLevelEntity, EntityProperty, getEntitiesOfType, versionSatisfies } from 'metaed-core';
 import type {
   MetaEdEnvironment,
   ModelBase,
@@ -10,48 +10,22 @@ import type {
   TopLevelEntity,
   ValidationFailure,
 } from 'metaed-core';
+import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
 const validatorName: string = 'MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
 const targetTechnologyVersion: SemVer = '2.x';
 
-function propertyCollector(entity: TopLevelEntity, isExtensionEntity: boolean): Array<EntityProperty> {
-  if (entity == null) return [];
-  const properties: Array<EntityProperty> = [];
-  const entities: Array<TopLevelEntity> = [entity];
-
-  while (entities.length > 0) {
-    const currentEntity: TopLevelEntity = entities.shift();
-    // eslint-disable-next-line no-loop-func
-    currentEntity.properties.forEach((property: EntityProperty) => {
-      if (
-        (asReferentialProperty(property).referencedEntity != null &&
-          ['choice', 'inlineCommon'].includes(currentEntity.type)) ||
-        ((isExtensionEntity || property.isPartOfIdentity || property.isIdentityRename) &&
-          ['association', 'descriptor', 'domainEntity', 'enumeration'].includes(property.type))
-      ) {
-        entities.push(asReferentialProperty(property).referencedEntity);
-        // if were looking at the extension entity we want to bring in all of its properties, not just identities
-      } else if (isExtensionEntity || property.isPartOfIdentity) {
-        properties.push(property);
-      }
-    });
-    // eslint-disable-next-line no-param-reassign
-    isExtensionEntity = false;
-  }
-
-  return properties;
+function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
+  return versionSatisfies(
+    ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
+    targetTechnologyVersion,
+  );
 }
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
-  if (
-    !versionSatisfies(
-      ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
-      targetTechnologyVersion,
-    )
-  )
-    return [];
-
   const failures: Array<ValidationFailure> = [];
+  if (!isTargetTechnologyVersion(metaEd)) return failures;
+
   getEntitiesOfType(
     metaEd.entity,
     'associationExtension',
@@ -64,26 +38,100 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (!entity.namespaceInfo.isExtension || !entity.baseEntity) return;
       if (entity.baseEntity.namespaceInfo.isExtension) return;
 
-      const baseProperties: Array<EntityProperty> = propertyCollector(entity.baseEntity, false);
-      const extensionProperties: Array<EntityProperty> = propertyCollector(entity, true);
-      const extensionPropertyNames: Array<string> = extensionProperties.map(x => x.metaEdName);
-      const duplicateProperties: Array<EntityProperty> = baseProperties.filter(x =>
-        extensionPropertyNames.includes(x.metaEdName),
+      const baseEntityResult: {
+        referencedEntities: Array<{
+          withContext: string,
+          entity: TopLevelEntity,
+        }>,
+        properties: Array<{
+          withContext: string,
+          property: EntityProperty,
+        }>,
+      } = collectSingleEntity(
+        entity.baseEntity,
+        true,
+        (referencedEntity, property) => ({
+          withContext: property.withContext,
+          entity: asTopLevelEntity(referencedEntity),
+        }),
+        (referencedEntity, property) => ({
+          withContext: property.withContext,
+          property,
+        }),
       );
 
-      duplicateProperties.forEach((property: EntityProperty) => {
+      const extensionEntityResult: {
+        referencedEntities: Array<{
+          withContext: string,
+          entity: TopLevelEntity,
+        }>,
+        properties: Array<{
+          withContext: string,
+          property: EntityProperty,
+        }>,
+      } = collectSingleEntity(
+        entity,
+        true,
+        (referencedEntity, property) => ({
+          withContext: property.withContext,
+          entity: asTopLevelEntity(referencedEntity),
+        }),
+        (referencedEntity, property) => ({
+          withContext: property.withContext,
+          property,
+        }),
+      );
+
+      const baseProperties: Array<{ withContext: string, property: EntityProperty }> = [];
+      const extensionProperties: Array<{ withContext: string, property: EntityProperty }> = [];
+
+      baseEntityResult.properties.forEach(result => {
+        baseProperties.push({ withContext: result.withContext, property: result.property });
+      });
+      baseEntityResult.referencedEntities.forEach(result => {
+        baseProperties.push(
+          ...propertyCollector(result.entity).map(property => ({
+            withContext: result.withContext,
+            property,
+          })),
+        );
+      });
+
+      extensionEntityResult.properties.forEach(result => {
+        baseProperties.push({ withContext: result.withContext, property: result.property });
+      });
+      extensionEntityResult.referencedEntities.forEach(referencedEntity => {
+        extensionProperties.push(
+          ...propertyCollector(referencedEntity.entity).map(property => ({
+            withContext: referencedEntity.withContext,
+            property,
+          })),
+        );
+      });
+      const extensionPropertyNames: Array<string> = extensionProperties.map(
+        x => x.withContext + x.property.withContext + x.property.metaEdName,
+      );
+
+      const duplicateProperties: Array<{
+        withContext: string,
+        property: EntityProperty,
+      }> = baseProperties.filter(x =>
+        extensionPropertyNames.includes(x.withContext + x.property.withContext + x.property.metaEdName),
+      );
+
+      duplicateProperties.forEach((duplicate: { withContext: string, property: EntityProperty }) => {
         if (!entity.baseEntity) return;
         failures.push({
           validatorName,
           category: 'warning',
           message: `[ODS-1732] ${entity.typeHumanizedName} ${
             entity.metaEdName
-          } has a property path that conflicts with property ${property.metaEdName} on core ${
+          } has a property path that conflicts with property ${duplicate.property.metaEdName} on core ${
             entity.baseEntity.typeHumanizedName
           } ${
             entity.baseEntity.metaEdName
           }. Merging properties of an extension entity with a core property of the same name is currently unsupported by the ODS/API.`,
-          sourceMap: property.sourceMap.type,
+          sourceMap: duplicate.property.sourceMap.type,
           fileMap: null,
         });
       });

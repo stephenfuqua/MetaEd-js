@@ -3,13 +3,13 @@ import type { Validator, MetaEdPlugin } from 'metaed-core';
 import { newMetaEdPlugin } from 'metaed-core';
 
 import { validate as mergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported } from './validator/UnsupportedExtension/MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
+import { validate as mergingRequiredWithOptionalPropertyIsUnsupported } from './validator/UnsupportedExtension/MergingRequiredWithOptionalPropertyIsUnsupported';
 import { validate as subclassingAssessmentFamilyIsUnsupported } from './validator/UnsupportedExtension/SubclassingAssessmentFamilyIsUnsupported';
 import { validate as subclassingAssessmentIsUnsupported } from './validator/UnsupportedExtension/SubclassingAssessmentIsUnsupported';
 import { validate as subclassingLearningObjectiveIsUnsupported } from './validator/UnsupportedExtension/SubclassingLearningObjectiveIsUnsupported';
 import { validate as subclassingPostSecondaryEventIsUnsupported } from './validator/UnsupportedExtension/SubclassingPostSecondaryEventIsUnsupported';
 import { validate as subclassingStudentAcademicRecordIsUnsupported } from './validator/UnsupportedExtension/SubclassingStudentAcademicRecordIsUnsupported';
 import { validate as subclassingStudentIsUnsupported } from './validator/UnsupportedExtension/SubclassingStudentIsUnsupported';
-
 import { validate as extendingSubclassOfEducationOrganizationProhibited } from './validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 import { validate as extendingStudentProgramAssociationOrSubclassProhibited } from './validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 import { validate as includingRequiredPropertiesInExtendedAssociationsProhibited } from './validator/UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';
@@ -22,6 +22,7 @@ import { validate as subclassingStaffIsUnsupported } from './validator/UpcomingI
 function validatorList(): Array<Validator> {
   return [
     mergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported,
+    mergingRequiredWithOptionalPropertyIsUnsupported,
     subclassingAssessmentFamilyIsUnsupported,
     subclassingAssessmentIsUnsupported,
     subclassingLearningObjectiveIsUnsupported,
