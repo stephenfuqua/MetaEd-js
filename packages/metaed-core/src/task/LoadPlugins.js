@@ -11,7 +11,6 @@ const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 
 export function scanForPlugins(state: State): Array<PluginManifest> {
   // default to artifact-specific plugin loading from siblings of metaed-core
-  // $FlowIgnore - Property not found in possibly null value
   const directory: string = state.pluginScanDirectory || path.resolve(__dirname, '../../..');
   const cache = cachedPlugins.get(directory);
   if (cache && cache.length > 0) return cache;
