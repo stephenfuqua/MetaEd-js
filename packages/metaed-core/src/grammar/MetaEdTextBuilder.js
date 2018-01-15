@@ -1127,6 +1127,15 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('duration', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  withEnumerationIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ): MetaEdTextBuilder {
+    return this._withIdentityProperty('enumeration', propertyIdentifier, documentation, context, metaEdId);
+  }
+
   withTimeIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1224,15 +1233,6 @@ export class MetaEdTextBuilder {
     this._withIdentityProperty('decimal', propertyIdentifier, documentation, context, metaEdId);
     this.withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue);
     return this;
-  }
-
-  withEnumerationIdentity(
-    propertyIdentifier: string,
-    documentation: string,
-    context: ?string = null,
-    metaEdId: ?string = null,
-  ): MetaEdTextBuilder {
-    return this._withIdentityProperty('enumeration', propertyIdentifier, documentation, context, metaEdId);
   }
 
   withDescriptorIdentity(

@@ -4,7 +4,16 @@ import type { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
 
-const validPropertyTypes: Array<PropertyType> = ['association', 'choice', 'common', 'domainEntity', 'inlineCommon'];
+const validPropertyTypes: Array<PropertyType> = [
+  'association',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'enumeration',
+  'inlineCommon',
+  'schoolYearEnumeration',
+];
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

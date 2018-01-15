@@ -50,7 +50,7 @@ export const matchAll = () => (): boolean => true;
 export const matchAllIdentityReferenceProperties = () => (property: EntityProperty, parentContext: ModelBase): boolean =>
   ['choice', 'inlineCommon'].includes(parentContext.type) ||
   ((property.isPartOfIdentity || property.isIdentityRename) &&
-    ['association', 'descriptor', 'domainEntity', 'enumeration'].includes(property.type));
+    ['association', 'descriptor', 'domainEntity', 'enumeration', 'schoolYearEnumeration'].includes(property.type));
 
 export const matchAllButFirstAsIdentityProperties = () => {
   let firstProperty: EntityProperty;

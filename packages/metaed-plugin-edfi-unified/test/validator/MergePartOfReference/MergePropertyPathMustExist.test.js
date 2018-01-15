@@ -9,6 +9,7 @@ import {
   AssociationExtensionBuilder,
   AssociationSubclassBuilder,
   CommonBuilder,
+  EnumerationBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
@@ -111,7 +112,7 @@ describe('when validating domain entity has merge property and property is wrong
       .withStartDomainEntity('Entity2')
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName2, 'IntegerIdentityDocumentation')
-      .withAssociationProperty(domainEntityName1, 'AssociationPropertyDocumentation', false, false)
+      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
       .withMergePartOfReference(`${domainEntityName1}.UnknownProperty`, propertyName2)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -167,6 +168,47 @@ describe('when validating domain entity has merge property on common type', () =
       .withEndNamespace()
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new CommonBuilder(metaEd, failures));
+
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities', () => {
+    expect(metaEd.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating domain entity has merge property on school year enumeration', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainEntityName = 'DomainEntityName';
+  const schoolYear = 'SchoolYear';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withEnumerationIdentity('SchoolYear', 'Documentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('Entity3')
+      .withDocumentation('Documentation')
+      .withEnumerationIdentity('SchoolYear', 'Documentation')
+      .withDomainEntityProperty(domainEntityName, 'Documentation', true, false)
+      .withMergePartOfReference(`${domainEntityName}.${schoolYear}`, schoolYear)
+      .withEndDomainEntity()
+
+      .withStartEnumeration('SchoolYear')
+      .withDocumentation('Documentation')
+      .withEnumerationItem('1990-1991', '1990-1991')
+
+      .withEndNamespace()
+      .sendToListener(new DomainEntityBuilder(metaEd, failures))
+      .sendToListener(new EnumerationBuilder(metaEd, failures));
 
     failures = validate(metaEd);
   });
