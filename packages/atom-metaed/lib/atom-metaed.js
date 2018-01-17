@@ -388,7 +388,7 @@ export function activate(state: any) {
   );
 
   atom.notifications.addInfo(
-    'MetaEd is ©2017 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.',
+    'MetaEd is ©2018 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.',
     { dismissable: true },
   );
   if (allianceMode()) {

@@ -52,4 +52,3 @@ export function setTelemetryConsent(consent: string) {
 export function allianceMode(): boolean {
   return atom.config.get('atom-metaed.alliance.allianceMode');
 }
-

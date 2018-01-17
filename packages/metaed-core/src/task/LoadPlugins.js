@@ -12,6 +12,7 @@ const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 export function scanForPlugins(state: State): Array<PluginManifest> {
   // default to artifact-specific plugin loading from siblings of metaed-core
   const directory: string = state.pluginScanDirectory || path.resolve(__dirname, '../../..');
+
   const cache = cachedPlugins.get(directory);
   if (cache && cache.length > 0) return cache;
 
@@ -31,25 +32,6 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
     }
 
     winston.info(`  ${pluginManifest.shortName} - v${pluginManifest.version}`);
-
-    if (
-      !state.metaEdConfiguration ||
-      !state.metaEdConfiguration.pluginConfig ||
-      !state.metaEdConfiguration.pluginConfig[pluginManifest.shortName]
-    ) {
-      winston.info(`  No MetaEd project configuration provided for plugin ${pluginManifest.shortName}.  Will not load.`);
-      // TODO: consider impact of skipping a plugin load on probability that dependent plugins will crash
-      return;
-    }
-
-    state.metaEd.plugin.set(
-      pluginManifest.shortName,
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion:
-          state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion || '2.0.0',
-      }),
-    );
-
     foundPlugins.push(pluginManifest);
   });
 
@@ -57,6 +39,27 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
   return foundPlugins;
 }
 
+function pluginConfigExists(state: State, pluginManifest: PluginManifest): boolean {
+  return (
+    state.metaEdConfiguration &&
+    state.metaEdConfiguration.pluginConfig &&
+    !!state.metaEdConfiguration.pluginConfig[pluginManifest.shortName]
+  );
+}
+
 export function loadPlugins(state: State): void {
   state.pluginManifest = scanForPlugins(state);
+
+  state.pluginManifest.forEach((pluginManifest: PluginManifest) => {
+    const targetTechnologyVersion = pluginConfigExists(state, pluginManifest)
+      ? state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion
+      : '2.0.0';
+
+    state.metaEd.plugin.set(
+      pluginManifest.shortName,
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion,
+      }),
+    );
+  });
 }

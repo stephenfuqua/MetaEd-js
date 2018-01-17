@@ -215,6 +215,8 @@ export default class MetaEdConsole {
       `${gulpInputs.gulpPath} ${gulpInputs.taskName} --color`,
       '--artifactPath',
       gulpInputs.artifactPath,
+      '--deployTargetVersion',
+      gulpInputs.deployTargetVersion,
       // TODO: this is actually data standard version, but we are temporarily using tech version since they happen to coincide
       '--version',
       useTechPreview() ? '3.0.0' : '2.0.0',
