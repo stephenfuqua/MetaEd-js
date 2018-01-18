@@ -1,7 +1,7 @@
 {
   "name": "metaed-plugin-edfi-ods",
   "main": "dist/index.js",
-  "version": "1.1.1-dev.32",
+  "version": "1.1.1-dev.33",
   "description": "Ed-Fi Alliance ODS plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -24,7 +24,7 @@
     "eslint-plugin-prettier": "^2.4.0",
     "final-fs": "^1.6.1",
     "handlebars": "^4.0.11",
-    "metaed-core": "1.1.1-dev.32",
+    "metaed-core": "1.1.1-dev.33",
     "prettier": "^1.9.2",
     "ramda": "^0.24.1",
     "sugar": "^2.0.4",
