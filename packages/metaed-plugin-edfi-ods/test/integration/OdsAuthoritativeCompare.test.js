@@ -126,7 +126,9 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
   it('should have core with no differences', async () => {
     const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOds} ${generatedCoreOds}`;
     const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
-    expect(result).toMatchSnapshot();
+    // two different ways to show no difference, depending on platform line endings
+    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
+    expect(expectOneOf).toContain(result);
   });
 
   it('should create diff files', async () => {
