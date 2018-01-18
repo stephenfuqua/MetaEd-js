@@ -45,13 +45,21 @@ describe('when a domain entity has both a required and optional reference to a p
   });
 
   it('should have validation failure', () => {
-    expect(failures).toHaveLength(1);
+    expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
     expect(failures[0].message).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> message',
     );
     expect(failures[0].sourceMap).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> sourceMap',
+    );
+    expect(failures[1].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> sourceMap',
     );
   });
@@ -103,13 +111,21 @@ describe('when a domain entity has both a required and optional reference to dom
   });
 
   it('should have validation failure', () => {
-    expect(failures).toHaveLength(1);
+    expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
     expect(failures[0].message).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> message',
     );
     expect(failures[0].sourceMap).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> sourceMap',
+    );
+    expect(failures[1].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> sourceMap',
     );
   });
@@ -156,13 +172,21 @@ describe('when a domain entity has both a required and optional reference to a p
   });
 
   it('should have no validation failures', () => {
-    expect(failures).toHaveLength(1);
+    expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
     expect(failures[0].category).toBe('warning');
     expect(failures[0].message).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> message',
     );
     expect(failures[0].sourceMap).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> sourceMap',
+    );
+    expect(failures[1].validatorName).toBe('MergingRequiredWithOptionalPropertyIsUnsupported');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot(
+      'when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> message',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
       'when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> sourceMap',
     );
   });

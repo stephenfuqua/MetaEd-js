@@ -1,30 +1,20 @@
 // @flow
 
 // 2.x - METAED-695 - ODS-1177
-import { asTopLevelEntity, EntityProperty, getAllTopLevelEntities, versionSatisfies } from 'metaed-core';
-import type {
-  MetaEdEnvironment,
-  ModelBase,
-  PluginEnvironment,
-  SemVer,
-  TopLevelEntity,
-  ValidationFailure,
-} from 'metaed-core';
+import { asTopLevelEntity, EntityProperty, getAllTopLevelEntities } from 'metaed-core';
+import type { MetaEdEnvironment, ModelBase, TopLevelEntity, ValidationFailure } from 'metaed-core';
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
-const validatorName: string = 'MergingRequiredWithOptionalPropertyIsUnsupported';
-const targetTechnologyVersion: SemVer = '2.x';
+type PropertyCollectorArray = Array<{
+  withContext: string,
+  isOptional: boolean,
+  property: EntityProperty,
+}>;
 
-function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
-  return versionSatisfies(
-    ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
-    targetTechnologyVersion,
-  );
-}
+const validatorName: string = 'MergingRequiredWithOptionalPropertyIsUnsupported';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   getAllTopLevelEntities(metaEd.entity)
     .map((entity: ModelBase) => asTopLevelEntity(entity))
@@ -35,11 +25,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           isOptional: boolean,
           entity: TopLevelEntity,
         }>,
-        properties: Array<{
-          withContext: string,
-          isOptional: boolean,
-          property: EntityProperty,
-        }>,
+        properties: PropertyCollectorArray,
       } = collectSingleEntity(
         entity,
         true,
@@ -55,8 +41,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         }),
       );
 
-      const optionalProperties: Array<{ withContext: string, isOptional: boolean, property: EntityProperty }> = [];
-      const requiredProperties: Array<{ withContext: string, isOptional: boolean, property: EntityProperty }> = [];
+      const optionalProperties: PropertyCollectorArray = [];
+      const requiredProperties: PropertyCollectorArray = [];
 
       requiredProperties.push(...result.properties.filter(property => !property.isOptional));
       optionalProperties.push(...result.properties.filter(property => property.isOptional));
@@ -83,11 +69,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       const requiredPropertiesNames: Array<string> = requiredProperties.map(
         x => x.withContext + x.property.withContext + x.property.metaEdName,
       );
-      const duplicateProperties: Array<{
-        withContext: string,
-        isOptional: boolean,
-        property: EntityProperty,
-      }> = optionalProperties.filter(x =>
+      const duplicateProperties: PropertyCollectorArray = optionalProperties.filter(x =>
         requiredPropertiesNames.includes(x.withContext + x.property.withContext + x.property.metaEdName),
       );
 
@@ -100,7 +82,18 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           } has both a required and optional property path to property ${duplicate.withContext +
             duplicate.property
               .metaEdName}. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API.`,
-          sourceMap: duplicate.property.sourceMap.type,
+          sourceMap: duplicate.property.sourceMap.metaEdName,
+          fileMap: null,
+        });
+        failures.push({
+          validatorName,
+          category: 'warning',
+          message: `[ODS-1177] ${entity.typeHumanizedName} ${
+            entity.metaEdName
+          } has both a required and optional property path to property ${duplicate.withContext +
+            duplicate.property
+              .metaEdName}. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API.`,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });
       });

@@ -2,30 +2,60 @@
 
 exports[`when a domain entity has both a required and optional reference to a property of the same name should have validation failure: when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> message 1`] = `"[ODS-1177] Domain Entity DomainEntityName3 has both a required and optional property path to property IntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
 
+exports[`when a domain entity has both a required and optional reference to a property of the same name should have validation failure: when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> message 2`] = `"[ODS-1177] Domain Entity DomainEntityName3 has both a required and optional property path to property IntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
+
 exports[`when a domain entity has both a required and optional reference to a property of the same name should have validation failure: when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "integer",
+  "tokenText": "IntegerPropertyName1",
+}
+`;
+
+exports[`when a domain entity has both a required and optional reference to a property of the same name should have validation failure: when a domain entity has both a required and optional reference to a property of the same name should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 16,
+  "line": 16,
+  "tokenText": "DomainEntityName3",
 }
 `;
 
 exports[`when a domain entity has both a required and optional reference to a property of the same name with same context name should have no validation failures: when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> message 1`] = `"[ODS-1177] Domain Entity DomainEntityName3 has both a required and optional property path to property ContextNameIntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
 
+exports[`when a domain entity has both a required and optional reference to a property of the same name with same context name should have no validation failures: when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> message 2`] = `"[ODS-1177] Domain Entity DomainEntityName3 has both a required and optional property path to property ContextNameIntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
+
 exports[`when a domain entity has both a required and optional reference to a property of the same name with same context name should have no validation failures: when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "integer",
+  "tokenText": "IntegerPropertyName1",
+}
+`;
+
+exports[`when a domain entity has both a required and optional reference to a property of the same name with same context name should have no validation failures: when a domain entity has both a required and optional reference to a property of the same name with same context name should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 16,
+  "line": 16,
+  "tokenText": "DomainEntityName3",
 }
 `;
 
 exports[`when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure: when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> message 1`] = `"[ODS-1177] Domain Entity DomainEntityName4 has both a required and optional property path to property IntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
 
+exports[`when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure: when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> message 2`] = `"[ODS-1177] Domain Entity DomainEntityName4 has both a required and optional property path to property IntegerPropertyName1. Merging required properties with optional properties of the same name is currently unsupported by the ODS/API."`;
+
 exports[`when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure: when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "integer",
+  "tokenText": "IntegerPropertyName1",
+}
+`;
+
+exports[`when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure: when a domain entity has both a required and optional reference to domain entity with a property of the same name should have validation failure -> sourceMap 2`] = `
+Object {
+  "column": 16,
+  "line": 23,
+  "tokenText": "DomainEntityName4",
 }
 `;
