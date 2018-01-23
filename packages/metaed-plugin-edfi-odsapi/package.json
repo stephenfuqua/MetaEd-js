@@ -14,13 +14,16 @@
       "metaEdVersion": "1.x",
       "technologyVersion": "*",
       "dependencies": [
-        "metaed-plugin-edfi-unified"
+        "metaed-plugin-edfi-unified",
+        "metaed-plugin-edfi-ods"
       ]
     }
   },
   "dependencies": {
     "metaed-core": "1.1.1",
+    "metaed-plugin-edfi-ods": "1.1.1",
     "metaed-plugin-edfi-unified": "1.1.1"
+    "ramda": "0.24.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

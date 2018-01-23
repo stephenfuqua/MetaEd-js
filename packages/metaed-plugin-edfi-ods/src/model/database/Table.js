@@ -2,6 +2,7 @@
 import R from 'ramda';
 import winston from 'winston';
 import { orderByProp } from 'metaed-core';
+import type { TopLevelEntity } from 'metaed-core';
 import { columnConstraintMerge, cloneColumn } from './Column';
 import { addColumnNamePair, newForeignKey } from './ForeignKey';
 import { newColumnNamePair } from './ColumnNamePair';
@@ -33,6 +34,8 @@ export type Table = {
   foreignKeys: Array<ForeignKey>,
   alternateKeys: Array<Column>,
   uniqueIndexes: Array<Column>,
+  // only main tables have a parentEntity
+  parentEntity: ?TopLevelEntity,
 };
 
 export function newTable(): Table {
@@ -55,6 +58,7 @@ export function newTable(): Table {
     foreignKeys: [],
     alternateKeys: [],
     uniqueIndexes: [],
+    parentEntity: null,
   };
 }
 

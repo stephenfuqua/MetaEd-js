@@ -30,6 +30,7 @@ export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean):
     schema: entity.namespaceInfo.namespace,
     name: entity.data.edfiOds.ods_TableName,
     description: entity.documentation,
+    parentEntity: entity,
   });
 
   if (withTimestamps) {
