@@ -39,6 +39,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
       if (!enumeration.data.edfiOds.ods_IsCollection) {
         const enumerationColumn: Column = R.head(columnCreator.createColumns(enumeration, buildStrategy));
         const foreignKey: ForeignKey = createForeignKey(
+          property,
           [enumerationColumn],
           enumeration.referencedEntity.namespaceInfo.namespace,
           enumeration.referencedEntity.data.edfiOds.ods_TableName,
@@ -57,6 +58,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         tables.push(joinTable);
 
         const parentForeignKey: ForeignKey = createForeignKey(
+          property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
           parentTableStrategy.name,
@@ -74,6 +76,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           buildStrategy.columnNamerIgnoresWithContext(),
         );
         const foreignKey: ForeignKey = createForeignKey(
+          property,
           columns,
           enumeration.referencedEntity.namespaceInfo.namespace,
           enumeration.referencedEntity.data.edfiOds.ods_TableName,

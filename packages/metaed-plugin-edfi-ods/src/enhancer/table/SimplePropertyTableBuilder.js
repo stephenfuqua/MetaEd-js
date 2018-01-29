@@ -36,6 +36,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
         });
 
         const foreignKey: ForeignKey = createForeignKey(
+          property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
           parentTableStrategy.name,

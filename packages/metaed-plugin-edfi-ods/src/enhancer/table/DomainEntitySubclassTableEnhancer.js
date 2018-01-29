@@ -7,7 +7,7 @@ import { addTables, buildMainTable, buildTablesFromProperties } from '../table/T
 import { BuildStrategyDefault } from './BuildStrategy';
 import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { newColumnNamePair } from '../../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePairs } from '../../model/database/ForeignKey';
+import { newForeignKey, addColumnNamePairs, newForeignKeySourceReference } from '../../model/database/ForeignKey';
 import type { Column } from '../../model/database/Column';
 import type { ColumnNamePair } from '../../model/database/ColumnNamePair';
 import type { ForeignKey } from '../../model/database/ForeignKey';
@@ -28,6 +28,11 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
       // $FlowIgnore - baseEntity could be null/undefined
       foreignTableName: entity.baseEntity.data.edfiOds.ods_TableName,
       withDeleteCascade: true,
+      sourceReference: {
+        ...newForeignKeySourceReference(),
+        isPartOfIdentity: true,
+        isSubclassRelationship: true,
+      },
     });
 
     const localColumnNames: Array<string> = columnCreatorFactory

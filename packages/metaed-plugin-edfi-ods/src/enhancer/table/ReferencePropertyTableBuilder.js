@@ -77,6 +77,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       tables.push(joinTable);
 
       const foreignKey: ForeignKey = createForeignKey(
+        referenceProperty,
         parentPrimaryKeys,
         parentTableStrategy.schema,
         parentTableStrategy.name,

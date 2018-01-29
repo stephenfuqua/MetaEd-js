@@ -2,13 +2,13 @@
 import R from 'ramda';
 import winston from 'winston';
 import { orderByProp } from 'metaed-core';
-import type { TopLevelEntity } from 'metaed-core';
+import type { TopLevelEntity, EntityProperty } from 'metaed-core';
 import { columnConstraintMerge, cloneColumn } from './Column';
-import { addColumnNamePair, newForeignKey } from './ForeignKey';
+import { addColumnNamePair, newForeignKey, foreignKeySourceReferenceFrom } from './ForeignKey';
 import { newColumnNamePair } from './ColumnNamePair';
 import type { Column } from './Column';
 import type { ColumnTransform } from './ColumnTransform';
-import type { ForeignKey } from './ForeignKey';
+import type { ForeignKey, ForeignKeySourceReference } from './ForeignKey';
 import type { ForeignKeyStrategy } from './ForeignKeyStrategy';
 
 winston.cli();
@@ -154,8 +154,8 @@ export function addForeignKey(table: Table, foreignKey: ForeignKey): void {
   table.foreignKeys.push(foreignKey);
 }
 
-// addForeignKey()
-export function createForeignKey(
+function createForeignKeyInternal(
+  sourceReference: ForeignKeySourceReference,
   foreignKeyColumns: Array<Column>,
   foreignTableSchema: string,
   foreignTableName: string,
@@ -166,6 +166,7 @@ export function createForeignKey(
     foreignTableName,
     withDeleteCascade: strategy.hasDeleteCascade(),
     withUpdateCascade: strategy.hasUpdateCascade(),
+    sourceReference,
   });
   foreignKeyColumns.forEach(column =>
     addColumnNamePair(
@@ -178,4 +179,30 @@ export function createForeignKey(
   );
 
   return foreignKey;
+}
+
+export function createForeignKey(
+  sourceProperty: EntityProperty,
+  foreignKeyColumns: Array<Column>,
+  foreignTableSchema: string,
+  foreignTableName: string,
+  strategy: ForeignKeyStrategy,
+): ForeignKey {
+  return createForeignKeyInternal(
+    foreignKeySourceReferenceFrom(sourceProperty),
+    foreignKeyColumns,
+    foreignTableSchema,
+    foreignTableName,
+    strategy,
+  );
+}
+
+export function createForeignKeyUsingSourceReference(
+  sourceReference: ForeignKeySourceReference,
+  foreignKeyColumns: Array<Column>,
+  foreignTableSchema: string,
+  foreignTableName: string,
+  strategy: ForeignKeyStrategy,
+): ForeignKey {
+  return createForeignKeyInternal(sourceReference, foreignKeyColumns, foreignTableSchema, foreignTableName, strategy);
 }

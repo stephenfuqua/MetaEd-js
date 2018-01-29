@@ -2,7 +2,13 @@
 import R from 'ramda';
 import { getEntitiesOfType } from 'metaed-core';
 import type { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
-import { addColumns, addForeignKey, createForeignKey, getPrimaryKeys, newTable } from '../../model/database/Table';
+import {
+  addColumns,
+  addForeignKey,
+  createForeignKeyUsingSourceReference,
+  getPrimaryKeys,
+  newTable,
+} from '../../model/database/Table';
 import { addTables } from '../table/TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -11,7 +17,7 @@ import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { enumerationTableCreator } from './EnumerationTableCreator';
 import { ForeignKeyStrategyDefault } from '../../model/database/ForeignKeyStrategy';
 import { newColumnNamePair } from '../../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePair } from '../../model/database/ForeignKey';
+import { newForeignKey, addColumnNamePair, newForeignKeySourceReference } from '../../model/database/ForeignKey';
 import { newIntegerColumn } from '../../model/database/Column';
 import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
@@ -47,6 +53,11 @@ function createTables(descriptor: Descriptor): Array<Table> {
     foreignTableSchema: 'edfi',
     foreignTableName: 'Descriptor',
     withDeleteCascade: true,
+    sourceReference: {
+      ...newForeignKeySourceReference(),
+      isPartOfIdentity: true,
+      isSubclassRelationship: true,
+    },
   });
   addColumnNamePair(
     foreignKey,
@@ -78,7 +89,11 @@ function createTables(descriptor: Descriptor): Array<Table> {
       ColumnTransformUnchanged,
     );
 
-    const mapTypeForeignKey: ForeignKey = createForeignKey(
+    const mapTypeForeignKey: ForeignKey = createForeignKeyUsingSourceReference(
+      {
+        ...newForeignKeySourceReference(),
+        isSyntheticRelationship: true,
+      },
       getPrimaryKeys(mapTypeTable),
       mapTypeTable.schema,
       mapTypeTable.name,

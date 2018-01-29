@@ -4,7 +4,7 @@ import { asReferentialProperty } from 'metaed-core';
 import type { EnhancerResult, EntityProperty, MergedProperty, MetaEdEnvironment } from 'metaed-core';
 import { getAllColumns, getPrimaryKeys, addForeignKey } from '../model/database/Table';
 import { newColumnNamePair } from '../model/database/ColumnNamePair';
-import { newForeignKey, addColumnNamePair } from '../model/database/ForeignKey';
+import { newForeignKey, addColumnNamePair, foreignKeySourceReferenceFrom } from '../model/database/ForeignKey';
 import { pluginEnvironment } from './EnhancerHelper';
 import { isOdsReferenceProperty } from '../model/property/ReferenceProperty';
 import type { Column } from '../model/database/Column';
@@ -111,6 +111,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
         foreignTableName: foreignTable.name,
         foreignTableSchema: foreignTable.schema,
+        sourceReference: foreignKeySourceReferenceFrom(parentTablePairs.property),
       });
 
       getPrimaryKeys(foreignTable).forEach((foreignTablePk: Column) => {

@@ -1,7 +1,9 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp } from 'metaed-core';
+import { orderByProp, isReferenceProperty } from 'metaed-core';
+import type { EntityProperty } from 'metaed-core';
+import type { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
 import { NoTable, getPrimaryKeys } from './Table';
 import type { ColumnNamePair } from './ColumnNamePair';
 import type { Table } from './Table';
@@ -9,7 +11,19 @@ import type { Column } from './Column';
 
 winston.cli();
 
+export type ForeignKeySourceReference = {
+  isPartOfIdentity: boolean,
+  isRequired: boolean,
+  isOptional: boolean,
+  isRequiredCollection: boolean,
+  isOptionalCollection: boolean,
+  isSubclassRelationship: boolean,
+  isExtensionRelationship: boolean,
+  isSyntheticRelationship: boolean,
+};
+
 export type ForeignKey = {
+  name: string,
   columnNames: Array<ColumnNamePair>,
   parentTable: Table,
   parentTableName: string,
@@ -22,8 +36,38 @@ export type ForeignKey = {
   withDeleteCascade: boolean,
   withUpdateCascade: boolean,
   withReverseForeignKeyIndex: boolean,
-  name: string,
+  sourceReference: ForeignKeySourceReference,
 };
+
+export function newForeignKeySourceReference(): ForeignKeySourceReference {
+  return {
+    isPartOfIdentity: false,
+    isRequired: false,
+    isOptional: false,
+    isRequiredCollection: false,
+    isOptionalCollection: false,
+    isSubclassRelationship: false,
+    isExtensionRelationship: false,
+    isSyntheticRelationship: false,
+  };
+}
+
+export function foreignKeySourceReferenceFrom(property: EntityProperty): ForeignKeySourceReference {
+  return {
+    isPartOfIdentity: property.isPartOfIdentity,
+    isRequired: property.isPartOfIdentity || property.isRequired,
+    isOptional: property.isOptional,
+    isRequiredCollection: property.isRequiredCollection,
+    isOptionalCollection: property.isOptionalCollection,
+    isSubclassRelationship: isReferenceProperty(property)
+      ? ((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToSuperclass
+      : false,
+    isExtensionRelationship: isReferenceProperty(property)
+      ? ((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToExtensionParent
+      : false,
+    isSyntheticRelationship: false,
+  };
+}
 
 export function newForeignKey(): ForeignKey {
   return {
@@ -40,6 +84,7 @@ export function newForeignKey(): ForeignKey {
     withDeleteCascade: false,
     withUpdateCascade: false,
     withReverseForeignKeyIndex: false,
+    sourceReference: newForeignKeySourceReference(),
   };
 }
 

@@ -58,6 +58,7 @@ function buildJoinTables(
   });
 
   const foreignKey: ForeignKey = createForeignKey(
+    property,
     parentPrimaryKeys,
     parentTableStrategy.schema,
     parentTableStrategy.name,
@@ -91,6 +92,7 @@ function buildExtensionTables(
   tables.push(extensionTable);
 
   const foreignKey: ForeignKey = createForeignKey(
+    property,
     primaryKeys,
     joinTableSchema,
     joinTableName,

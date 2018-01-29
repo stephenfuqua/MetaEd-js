@@ -1,7 +1,7 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { addColumnNamePairs, newForeignKey } from '../model/database/ForeignKey';
+import { addColumnNamePairs, newForeignKey, newForeignKeySourceReference } from '../model/database/ForeignKey';
 import { addForeignKey, getForeignKeys } from '../model/database/Table';
 import { getTable } from './DiminisherHelper';
 import { newColumnNamePair } from '../model/database/ColumnNamePair';
@@ -43,6 +43,10 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
     foreignTableSchema: namespace,
     foreignTableName: calendarDate,
     withDeleteCascade: false,
+    sourceReference: {
+      ...newForeignKeySourceReference(),
+      isSyntheticRelationship: true,
+    },
   });
 
   addColumnNamePairs(foreignKey, [

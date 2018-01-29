@@ -2,9 +2,16 @@
 import type { ApiFullName } from './ApiFullName';
 import type { ApiProperty } from './ApiProperty';
 
+export type AssociationDefinitionCardinality =
+  | 'OneToOne'
+  | 'OneToOneInheritance'
+  | 'OneToOneExtension'
+  | 'OneToOneOrMore'
+  | 'OneToZeroOrMore';
+
 export type AssociationDefinition = {
   fullName: ApiFullName,
-  cardinality: 'OneToOne' | 'OneToOneInheritance' | 'OneToOneExtension' | 'OneToOneOrMore' | 'OneToZeroOrMore',
+  cardinality: AssociationDefinitionCardinality,
   primaryEntityFullName: ApiFullName,
   primaryEntityProperties: Array<ApiProperty>,
   secondaryEntityFullName: ApiFullName,

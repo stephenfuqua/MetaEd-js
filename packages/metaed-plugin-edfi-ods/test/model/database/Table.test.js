@@ -3,7 +3,7 @@ import {
   addColumn,
   addColumns,
   addForeignKey,
-  createForeignKey,
+  createForeignKeyUsingSourceReference,
   hasAlternateKeys,
   isForeignKey,
   getAllColumns,
@@ -31,7 +31,7 @@ import {
 } from '../../../src/model/database/Column';
 import { newColumnNamePair } from '../../../src/model/database/ColumnNamePair';
 import { ColumnTransformUnchanged } from '../../../src/model/database/ColumnTransform';
-import { newForeignKey } from '../../../src/model/database/ForeignKey';
+import { newForeignKey, newForeignKeySourceReference } from '../../../src/model/database/ForeignKey';
 import { ForeignKeyStrategyDefault } from '../../../src/model/database/ForeignKeyStrategy';
 import type { Column } from '../../../src/model/database/Column';
 import type { Table } from '../../../src/model/database/Table';
@@ -469,7 +469,8 @@ describe('when creating foreign key with single column', () => {
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
-    foreignKey = createForeignKey(
+    foreignKey = createForeignKeyUsingSourceReference(
+      newForeignKeySourceReference(),
       [Object.assign(newBooleanColumn(), { name: booleanColumnName })],
       foreignTableSchema,
       foreignTableName,
@@ -510,7 +511,8 @@ describe('when creating foreign key with multiple columns', () => {
   let foreignKey: ForeignKey;
 
   beforeAll(() => {
-    foreignKey = createForeignKey(
+    foreignKey = createForeignKeyUsingSourceReference(
+      newForeignKeySourceReference(),
       [
         Object.assign(newBooleanColumn(), { name: booleanColumnName1 }),
         Object.assign(newBooleanColumn(), { name: booleanColumnName2 }),

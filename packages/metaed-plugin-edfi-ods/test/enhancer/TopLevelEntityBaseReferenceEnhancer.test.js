@@ -66,6 +66,8 @@ describe('when enhancing domain entity subclass base entity reference', () => {
     expect(referentialProperty.data.edfiOds.ods_DeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(domainEntity);
     expect(referentialProperty.referencedEntity).toBe(domainEntity.baseEntity);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToSuperclass).toBe(true);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToExtensionParent).toBe(false);
   });
 });
 
@@ -168,6 +170,8 @@ describe('when enhancing domain entity extension base entity reference', () => {
     expect(referentialProperty.data.edfiOds.ods_DeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(domainEntity);
     expect(referentialProperty.referencedEntity).toBe(domainEntity.baseEntity);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToSuperclass).toBe(false);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToExtensionParent).toBe(true);
   });
 });
 
@@ -216,6 +220,8 @@ describe('when enhancing association subclass base entity reference', () => {
     expect(referentialProperty.data.edfiOds.ods_DeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(association);
     expect(referentialProperty.referencedEntity).toBe(association.baseEntity);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToSuperclass).toBe(true);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToExtensionParent).toBe(false);
   });
 });
 
@@ -264,5 +270,7 @@ describe('when enhancing association extension base entity reference', () => {
     expect(referentialProperty.data.edfiOds.ods_DeleteCascadePrimaryKey).toBe(true);
     expect(referentialProperty.parentEntity).toBe(association);
     expect(referentialProperty.referencedEntity).toBe(association.baseEntity);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToSuperclass).toBe(false);
+    expect(referentialProperty.data.edfiOds.ods_IsReferenceToExtensionParent).toBe(true);
   });
 });

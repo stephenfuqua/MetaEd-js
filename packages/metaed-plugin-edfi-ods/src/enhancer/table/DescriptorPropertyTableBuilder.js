@@ -33,6 +33,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         addColumns(parentTableStrategy.table, [descriptorColumn], buildStrategy.leafColumns(ColumnTransformUnchanged));
 
         const foreignKey: ForeignKey = createForeignKey(
+          property,
           [descriptorColumn],
           descriptor.referencedEntity.namespaceInfo.namespace,
           descriptor.referencedEntity.data.edfiOds.ods_DescriptorName,
@@ -50,6 +51,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         tables.push(joinTable);
 
         const parentForeignKey: ForeignKey = createForeignKey(
+          property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
           parentTableStrategy.name,
@@ -67,6 +69,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           buildStrategy.columnNamerIgnoresWithContext(),
         );
         const foreignKey: ForeignKey = createForeignKey(
+          property,
           columns,
           descriptor.referencedEntity.namespaceInfo.namespace,
           descriptor.referencedEntity.data.edfiOds.ods_DescriptorName,

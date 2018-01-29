@@ -1,6 +1,6 @@
 // @flow
-import type { DomainModelDefinitions } from './DomainModelDefinitions';
+import type { DomainModelDefinition } from './DomainModelDefinition';
 
 export type ApiModel = {
-  domainModelDefinitions: DomainModelDefinitions,
+  domainModelDefinitions: Array<DomainModelDefinition>,
 };

@@ -49,6 +49,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           edfiOds: {
             ods_DeleteCascadePrimaryKey: true,
             ods_CausesCyclicUpdateCascade: false,
+            ods_IsReferenceToSuperclass: entity.type === 'associationSubclass' || entity.type === 'domainEntitySubclass',
+            ods_IsReferenceToExtensionParent:
+              entity.type === 'associationExtension' || entity.type === 'domainEntityExtension',
           },
         },
       });

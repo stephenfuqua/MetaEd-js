@@ -17,6 +17,7 @@ export type { Table } from './model/database/Table';
 export type { Trigger } from './model/database/Trigger';
 export type { EdFiOdsEntityRepository } from './model/EdFiOdsEntityRepository';
 export type { TopLevelEntityEdfiOds } from './model/TopLevelEntity';
+export type { ReferencePropertyEdfiOds } from './model/property/ReferenceProperty';
 
 function validatorList(): Array<Validator> {
   return [];
