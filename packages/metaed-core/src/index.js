@@ -145,6 +145,7 @@ export type { TopLevelEntity, TopLevelEntitySourceMap } from './model/TopLevelEn
 export { NoMapTypeEnumeration } from './model/MapTypeEnumeration';
 export { NoTopLevelEntity } from './model/TopLevelEntity';
 export { NoSharedSimple } from './model/SharedSimple';
+export { NoNamespaceInfo } from './model/NamespaceInfo';
 
 // Factories
 export { newMetaEdEnvironment } from './MetaEdEnvironment';
@@ -213,6 +214,9 @@ export { newSourceMap } from './model/SourceMap';
 export { asStringType, newStringType } from './model/StringType';
 export { asSubdomain, newSubdomain } from './model/Subdomain';
 export { asTopLevelEntity, newTopLevelEntity } from './model/TopLevelEntity';
+
+// utilities
+export { normalizeDescriptorSuffix, normalizeEnumerationSuffix } from './Utility';
 
 // for plugin testing
 export { MetaEdTextBuilder } from './grammar/MetaEdTextBuilder';

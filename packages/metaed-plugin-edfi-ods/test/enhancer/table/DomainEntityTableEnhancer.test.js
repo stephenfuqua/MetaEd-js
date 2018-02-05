@@ -13,6 +13,7 @@ import {
   newIntegerProperty,
   newMetaEdEnvironment,
   newNamespaceInfo,
+  NoTopLevelEntity,
 } from 'metaed-core';
 import type {
   Common,
@@ -25,6 +26,7 @@ import type {
   EnumerationProperty,
   IntegerProperty,
   MetaEdEnvironment,
+  TopLevelEntity,
 } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/DomainEntityTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
@@ -37,9 +39,10 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
   const entityName: string = 'EntityName';
   const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
+  let entity: TopLevelEntity = NoTopLevelEntity;
 
   beforeAll(() => {
-    const entity: DomainEntity = Object.assign(newDomainEntity(), {
+    entity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
       namespaceInfo: Object.assign(newNamespaceInfo(), {
@@ -87,6 +90,11 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
     const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(propertyName);
+  });
+
+  it('should reference the original entity', () => {
+    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    expect(table.parentEntity).toBe(entity);
   });
 });
 

@@ -17,7 +17,25 @@ export type { Table } from './model/database/Table';
 export type { Trigger } from './model/database/Trigger';
 export type { EdFiOdsEntityRepository } from './model/EdFiOdsEntityRepository';
 export type { TopLevelEntityEdfiOds } from './model/TopLevelEntity';
+export type { AssociationExtensionEdfiOds } from './model/AssociationExtension';
+export type { DomainEntityExtensionEdfiOds } from './model/DomainEntityExtension';
 export type { ReferencePropertyEdfiOds } from './model/property/ReferenceProperty';
+
+// Factories
+export {
+  newColumn,
+  newBooleanColumn,
+  newCurrencyColumn,
+  newDateColumn,
+  newDecimalColumn,
+  newDurationColumn,
+  newIntegerColumn,
+  newPercentColumn,
+  newShortColumn,
+  newStringColumn,
+  newTimeColumn,
+} from './model/database/Column';
+export { newTable } from './model/database/Table';
 
 function validatorList(): Array<Validator> {
   return [];

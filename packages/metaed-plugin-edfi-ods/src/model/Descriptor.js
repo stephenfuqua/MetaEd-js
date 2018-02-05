@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
-import { normalizeDescriptorSuffix } from '../shared/Utility';
+import { normalizeDescriptorSuffix } from 'metaed-core';
 
 export type DescriptorEdfiOds = {
   ods_DescriptorName: string,

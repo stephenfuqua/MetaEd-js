@@ -1,6 +1,8 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, DescriptorProperty } from 'metaed-core';
-import { normalizeDescriptorSuffix, prependWithContextToMetaEdName } from '../../shared/Utility';
+import { normalizeDescriptorSuffix } from 'metaed-core';
+import { prependWithContextToMetaEdName } from '../../shared/Utility';
+
 import type { EntityPropertyEdfiOds } from './EntityProperty';
 
 export type DescriptorPropertyEdfiOds = EntityPropertyEdfiOds & {

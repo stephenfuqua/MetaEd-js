@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import Sugar from 'sugar';
+import { String as sugar } from 'sugar';
 import { asTopLevelEntity, getEntitiesOfType, newIntegerProperty, versionSatisfies } from 'metaed-core';
 import type {
   EnhancerResult,
@@ -21,7 +21,7 @@ const coreNamespace: string = 'edfi';
 const educationOrganization: string = 'EducationOrganization';
 const educationOrganizationIdentifier: string = 'EducationOrganizationIdentifier';
 const surrogateKeyNameTemplate: string = '{0}Id';
-const educationOrganizationSurrogateKeyName: string = Sugar.String.format(surrogateKeyNameTemplate, educationOrganization);
+const educationOrganizationSurrogateKeyName: string = sugar.format(surrogateKeyNameTemplate, educationOrganization);
 
 function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepository): void {
   getEntitiesOfType(repository, 'domainEntitySubclass').forEach((entitySubclass: ModelBase) => {
@@ -53,7 +53,7 @@ function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepo
     entitySubclass.data.edfiOds.ods_Properties = removeIdentityRenames(entitySubclass.data.edfiOds.ods_Properties);
 
     const surrogateKeyProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      metaEdName: Sugar.String.format(surrogateKeyNameTemplate, entitySubclass.metaEdName),
+      metaEdName: sugar.format(surrogateKeyNameTemplate, entitySubclass.metaEdName),
       documentation: `The identifier assigned to a ${asTopLevelEntity(entitySubclass).typeHumanizedName}.`,
       isPartOfIdentity: true,
       namespaceInfo: entitySubclass.namespaceInfo,

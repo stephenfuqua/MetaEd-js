@@ -37,6 +37,12 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     expect(foreignKeys).toHaveLength(2);
   });
 
+  it('should have sourceReference on each foreign key', () => {
+    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys;
+    expect(foreignKeys[0].sourceReference.isSyntheticRelationship).toBe(true);
+    expect(foreignKeys[1].sourceReference.isSyntheticRelationship).toBe(true);
+  });
+
   it('should have correct foreign key relationship for first foreign key', () => {
     const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys);
     expect(foreignKey.columnNames).toHaveLength(2);

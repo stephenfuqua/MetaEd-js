@@ -2,9 +2,11 @@
 import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo } from 'metaed-core';
 import type { DomainModelDefinition } from './apiModel/DomainModelDefinition';
 import { newDomainModelDefinition } from './apiModel/DomainModelDefinition';
+import type { Aggregate } from './domainMetadata/Aggregate';
 
-export type NamespaceInfoEdFiOdsApi = {
+export type NamespaceInfoEdfiOdsApi = {
   domainModelDefinition: DomainModelDefinition,
+  aggregates: Array<Aggregate>,
 };
 
 const enhancerName: string = 'NamespaceInfoSetupEnhancer';
@@ -14,6 +16,7 @@ export function addNamespaceInfoEdfiOdsApiTo(namespaceInfo: NamespaceInfo) {
 
   Object.assign(namespaceInfo.data.edfiOdsApi, {
     domainModelDefinition: newDomainModelDefinition(),
+    aggregates: [],
   });
 }
 

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import Sugar from 'sugar';
+import { String as sugar } from 'sugar';
 import { getEntitiesOfType } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
@@ -50,7 +50,7 @@ function fromClauseFor(entity: ModelBase): string {
     '',
   );
 
-  return Sugar.String.format(FROM_CLAUSE, namespace, tableName, onClause);
+  return sugar.format(FROM_CLAUSE, namespace, tableName, onClause);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -71,12 +71,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       namespace: entity.namespaceInfo.namespace,
       isAfter: true,
       onDelete: true,
-      body: Sugar.String.format(
-        TRIGGER,
-        entity.data.edfiOds.ods_TableName,
-        entity.namespaceInfo.namespace,
-        fromClauseFor(entity),
-      ),
+      body: sugar.format(TRIGGER, entity.data.edfiOds.ods_TableName, entity.namespaceInfo.namespace, fromClauseFor(entity)),
     });
 
     pluginEnvironment(metaEd).entity.trigger.set(trigger.name, trigger);

@@ -1,5 +1,4 @@
 // @flow
-import type { NamespaceInfo } from 'metaed-core';
 import type { Table, ForeignKey } from 'metaed-plugin-edfi-ods';
 import type { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
 import type { ApiProperty } from '../../model/apiModel/ApiProperty';
@@ -30,10 +29,7 @@ function cardinalityFrom(foreignKey: ForeignKey): AssociationDefinitionCardinali
 }
 
 // Association definitions are the ODS foreign key definitions for a namespace
-export function buildAssociationDefinitions(
-  namespaceInfo: NamespaceInfo,
-  tables: Map<string, Table>,
-): Array<AssociationDefinition> {
+export function buildAssociationDefinitions(tables: Map<string, Table>): Array<AssociationDefinition> {
   const result: Array<AssociationDefinition> = [];
   tables.values.forEach((table: Table) => {
     table.foreignKeys.forEach((foreignKey: ForeignKey) => {

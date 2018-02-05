@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AggregateExtensions logicalSchema="{{{schema.logicalName}}}" schema="{{{schema.name}}}">
+{{#aggregates}}  <Aggregate root="{{{root}}}"{{#if allowPrimaryKeyUpdates}} allowPrimaryKeyUpdates="true"{{/if}}>
+{{#entityTables}}    {{> entityTable}}{{/entityTables}}  </Aggregate>
+{{/aggregates}}
+{{#aggregateExtensions}}  <AggregateExtension root="{{{root}}}">
+{{#entityTables}}    {{> entityTable}}{{/entityTables}}  </AggregateExtension>
+{{/aggregateExtensions}}</AggregateExtensions>

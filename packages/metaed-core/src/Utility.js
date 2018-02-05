@@ -24,3 +24,18 @@ export function deepFreeze<T>(target: T): T {
 export function deepFreezeAssign<T>(target: T, ...sources: Array<any>): T {
   return deepFreeze(Object.assign(target, ...sources));
 }
+
+export function normalizeSuffix(base: string, suffix: string) {
+  return base.endsWith(suffix) ? base : base + suffix;
+}
+
+const descriptor: string = 'Descriptor';
+const type: string = 'Type';
+
+export function normalizeDescriptorSuffix(base: string) {
+  return normalizeSuffix(base, descriptor);
+}
+
+export function normalizeEnumerationSuffix(base: string) {
+  return normalizeSuffix(base, type);
+}

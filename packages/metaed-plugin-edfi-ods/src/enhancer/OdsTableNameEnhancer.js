@@ -1,7 +1,6 @@
 // @flow
-import { allTopLevelEntityModelTypes, getEntitiesOfType } from 'metaed-core';
+import { allTopLevelEntityModelTypes, getEntitiesOfType, normalizeEnumerationSuffix } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
-import { normalizeEnumerationSuffix } from '../shared/Utility';
 import type { DescriptorEdfiOds } from '../model/Descriptor';
 
 const enhancerName: string = 'OdsTableNameEnhancer';

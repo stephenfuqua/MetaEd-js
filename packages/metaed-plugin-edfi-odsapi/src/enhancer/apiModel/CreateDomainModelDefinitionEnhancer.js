@@ -4,7 +4,7 @@ import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironmen
 import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
-import type { NamespaceInfoEdFiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
 
@@ -54,11 +54,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       schemaDefinition: buildSchemaDefinition(namespaceInfo),
       aggregateDefinitions: buildAggregateDefinitions(namespaceInfo),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespaceInfo),
-      entityDefinitions: buildEntityDefinitions(namespaceInfo, entitiesInNamespace),
-      associationDefinitions: buildAssociationDefinitions(namespaceInfo, edFiOdsEntityRepository.table),
+      entityDefinitions: buildEntityDefinitions(entitiesInNamespace),
+      associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table),
     };
 
-    ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdFiOdsApi).domainModelDefinition = domainModelDefinition;
+    ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).domainModelDefinition = domainModelDefinition;
   });
 
   return {

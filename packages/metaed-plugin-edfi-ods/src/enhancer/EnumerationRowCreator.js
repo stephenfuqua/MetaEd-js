@@ -1,6 +1,7 @@
 // @flow
 import type { EnumerationItem } from 'metaed-core';
-import { escapeSqlSingleQuote, normalizeEnumerationSuffix } from '../shared/Utility';
+import { normalizeEnumerationSuffix } from 'metaed-core';
+import { escapeSqlSingleQuote } from '../shared/Utility';
 import { newEnumerationRow } from '../model/database/EnumerationRow';
 import type { EnumerationRow } from '../model/database/EnumerationRow';
 

@@ -1,9 +1,9 @@
 // @flow
 import R from 'ramda';
+import { normalizeEnumerationSuffix } from 'metaed-core';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newIntegerColumn, newStringColumn } from '../../model/database/Column';
-import { normalizeEnumerationSuffix } from '../../shared/Utility';
 import type { Table } from '../../model/database/Table';
 
 const removeTypeSuffix = R.when(R.endsWith('Type'), R.dropLast(4));

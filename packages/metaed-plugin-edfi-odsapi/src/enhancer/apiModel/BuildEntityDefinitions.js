@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { NamespaceInfo, TopLevelEntity } from 'metaed-core';
+import type { TopLevelEntity } from 'metaed-core';
 import type { Table, Column, ForeignKey, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
 import type { EntityDefinition } from '../../model/apiModel/EntityDefinition';
@@ -107,10 +107,7 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
 }
 
 // Entity definitions are the ODS table definitions for a namespace, including columns and primary keys
-export function buildEntityDefinitions(
-  namespaceInfo: NamespaceInfo,
-  entities: Array<TopLevelEntity>,
-): Array<EntityDefinition> {
+export function buildEntityDefinitions(entities: Array<TopLevelEntity>): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
   entities.forEach((entity: TopLevelEntity) => {
     const odsTablesForEntity: Array<Table> = entity.data.edfiOds.ods_Tables;

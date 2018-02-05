@@ -1,6 +1,7 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, EnumerationProperty } from 'metaed-core';
-import { normalizeEnumerationSuffix, prependWithContextToMetaEdName } from '../../shared/Utility';
+import { normalizeEnumerationSuffix } from 'metaed-core';
+import { prependWithContextToMetaEdName } from '../../shared/Utility';
 import type { EntityPropertyEdfiOds } from './EntityProperty';
 
 export type EnumerationPropertyEdfiOds = EntityPropertyEdfiOds & {
