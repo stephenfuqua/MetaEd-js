@@ -32,7 +32,6 @@ describe('when enhancing schoolYearEnumerations', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const schoolYearEnumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {

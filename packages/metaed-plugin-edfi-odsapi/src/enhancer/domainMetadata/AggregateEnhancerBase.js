@@ -22,7 +22,7 @@ export function nullEnhanceEntityTable(entity: TopLevelEntity, table: Table, ent
 
 export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespaceInfo: NamespaceInfo): Array<Table> {
   const tablesForNamespace = ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_Tables.filter(
-    (t: Table) => t.namespace === namespaceInfo.namespace,
+    (t: Table) => t.schema === namespaceInfo.namespace,
   );
   // TODO: why is unique necessary?
   const uniquedTables = R.uniqBy(R.prop('name'), tablesForNamespace);
@@ -38,6 +38,7 @@ function generateAggregate(
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
+    schema: entity.namespaceInfo.namespace,
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: isAggregateExtension(),
     entityTables: [],

@@ -10,6 +10,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreNamespaceInfo: NamespaceInfo = R.head(metaEd.entity.namespaceInfo.filter(n => !n.isExtension));
   const aggregate: Aggregate = {
     root: 'Descriptor',
+    schema: 'edfi',
     allowPrimaryKeyUpdates: false,
     isExtension: false,
     entityTables: [

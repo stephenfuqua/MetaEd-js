@@ -35,6 +35,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     affectedTables.forEach((affectedTable: string) => {
       const newAggregate: Aggregate = {
         root: affectedTable,
+        schema: 'edfi',
         allowPrimaryKeyUpdates: false,
         isExtension: false,
         entityTables: [

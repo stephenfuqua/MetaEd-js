@@ -1,4 +1,5 @@
 // @flow
+import R from 'ramda';
 import { getAllTopLevelEntities } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironment, TopLevelEntity } from 'metaed-core';
 import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
@@ -10,29 +11,73 @@ import type { AggregateExtensionDefinition } from '../../model/apiModel/Aggregat
 
 import type { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
 import type { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
+import type { Aggregate } from '../../model/domainMetadata/Aggregate';
+import type { EntityTable } from '../../model/domainMetadata/EntityTable';
+import type { ApiFullName } from '../../model/apiModel/ApiFullName';
 
 const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 
 // Schema definition is the database schema and project name for a namespace
 export function buildSchemaDefinition(namespaceInfo: NamespaceInfo): SchemaDefinition {
   return {
-    logicalName: namespaceInfo.projectExtension,
+    logicalName: namespaceInfo.namespace === 'edfi' ? 'Ed-Fi' : namespaceInfo.projectExtension,
     physicalName: namespaceInfo.namespace,
   };
 }
 
-// eslint-disable-next-line no-unused-vars
 export function buildAggregateDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateDefinition> {
-  // is this only for core namespace?????
-  // TODO: maybe we just port DomainMetadata generation over, because that's what this is.
-  return [];
+  const result: Array<AggregateDefinition> = [];
+  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+    .filter((a: Aggregate) => a.schema === namespaceInfo.namespace)
+    .forEach((aggregate: Aggregate) => {
+      const aggregateDefinition: AggregateDefinition = {
+        aggregateRootEntityName: {
+          schema: aggregate.schema,
+          name: aggregate.root,
+        },
+        aggregateEntityNames: [],
+      };
+      const aggregateEntityNames: Array<ApiFullName> = [];
+      aggregate.entityTables.forEach((entityTable: EntityTable) => {
+        aggregateEntityNames.push({
+          schema: entityTable.schema,
+          name: entityTable.table,
+        });
+      });
+      aggregateDefinition.aggregateEntityNames = R.sortBy(R.compose(R.toLower, R.prop('name')), aggregateEntityNames);
+      result.push(aggregateDefinition);
+    });
+
+  return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
 }
 
-// eslint-disable-next-line no-unused-vars
 export function buildAggregateExtensionDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateExtensionDefinition> {
-  // only for extension namespaces, one per extension namespace, right????
-  // TODO: maybe we just port DomainMetadata generation over, because that's what this is.
-  return [];
+  const result: Array<AggregateExtensionDefinition> = [];
+  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+    .filter((a: Aggregate) => a.schema !== namespaceInfo.namespace)
+    .forEach((aggregate: Aggregate) => {
+      const aggregateExtensionDefinition: AggregateExtensionDefinition = {
+        aggregateRootEntityName: {
+          schema: aggregate.schema,
+          name: aggregate.root,
+        },
+        extensionEntityNames: [],
+      };
+      const extensionEntityNames: Array<ApiFullName> = [];
+      aggregate.entityTables.forEach((entityTable: EntityTable) => {
+        extensionEntityNames.push({
+          schema: entityTable.schema,
+          name: entityTable.table,
+        });
+      });
+      aggregateExtensionDefinition.extensionEntityNames = R.sortBy(
+        R.compose(R.toLower, R.prop('name')),
+        extensionEntityNames,
+      );
+      result.push(aggregateExtensionDefinition);
+    });
+
+  return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

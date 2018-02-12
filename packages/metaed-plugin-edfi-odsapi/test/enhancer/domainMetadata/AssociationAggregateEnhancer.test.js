@@ -32,7 +32,6 @@ describe('when enhancing associations', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const association: Association = Object.assign(newAssociation(), {

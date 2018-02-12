@@ -70,7 +70,6 @@ describe('when enhancing association extensions', () => {
       ...newTable(),
       name: tableName,
       schema: extensionNamespace,
-      namespace: extensionNamespace,
     };
 
     const entity: AssociationExtension = Object.assign(newAssociationExtension(), {

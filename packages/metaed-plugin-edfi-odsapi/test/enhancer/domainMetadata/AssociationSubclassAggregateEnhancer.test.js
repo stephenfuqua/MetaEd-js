@@ -53,7 +53,6 @@ describe('when enhancing association extensions', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const entity: AssociationSubclass = Object.assign(newAssociationSubclass(), {

@@ -33,7 +33,6 @@ describe('when enhancing a domain entity', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -107,7 +106,6 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -175,7 +173,6 @@ describe('when enhancing a domain entity that has a required collection table', 
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
       isRequiredCollectionTable: true,
     };
 

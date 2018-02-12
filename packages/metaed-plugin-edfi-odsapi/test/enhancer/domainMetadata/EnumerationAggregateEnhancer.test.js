@@ -32,7 +32,6 @@ describe('when enhancing enumerations', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {

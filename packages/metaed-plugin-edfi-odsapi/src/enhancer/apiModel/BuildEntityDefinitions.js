@@ -44,7 +44,7 @@ function identifiersFrom(table: Table): Array<EntityIdentifier> {
     });
   }
 
-  return result;
+  return R.sortBy(R.compose(R.toLower, R.prop('identifierName')), result);
 }
 
 // locally defined "properties" are the columns on a table minus the columns there to provide a FK reference
@@ -103,7 +103,8 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
       isServerAssigned: false,
     });
   }
-  return result;
+
+  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), result);
 }
 
 // Entity definitions are the ODS table definitions for a namespace, including columns and primary keys
@@ -124,5 +125,5 @@ export function buildEntityDefinitions(entities: Array<TopLevelEntity>): Array<E
     });
   });
 
-  return result;
+  return R.sortBy(R.compose(R.toLower, R.prop('name')), result);
 }

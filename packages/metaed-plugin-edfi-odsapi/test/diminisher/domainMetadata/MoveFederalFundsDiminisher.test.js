@@ -19,6 +19,7 @@ describe('when diminishing with no matching entity tables', () => {
 
     aggregate = {
       root: entityName,
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -70,6 +71,7 @@ describe('when diminishing with matching entity tables', () => {
 
     aggregate1 = {
       root: entityName1,
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -96,6 +98,7 @@ describe('when diminishing with matching entity tables', () => {
 
     aggregate2 = {
       root: entityName2,
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [

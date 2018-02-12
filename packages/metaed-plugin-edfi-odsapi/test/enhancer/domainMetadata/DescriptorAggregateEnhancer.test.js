@@ -36,7 +36,6 @@ describe('when enhancing descriptor with no map type', () => {
       ...newTable(),
       name: tableName,
       schema: namespace,
-      namespace,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
@@ -121,14 +120,12 @@ describe('when enhancing descriptor with map type', () => {
       ...newTable(),
       name: descriptorTableName,
       schema: namespace,
-      namespace,
     };
 
     const typeTable: Table = {
       ...newTable(),
       name: typeTableName,
       schema: namespace,
-      namespace,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {

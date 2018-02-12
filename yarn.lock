@@ -2103,9 +2103,9 @@ ed-fi-model-2.0@metaed-1.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.0.tgz#37b56910a988f413fce420ce51b1feefc3124354"
 
-ed-fi-model-3.0@metaed-1.0:
-  version "1.0.0-dev.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0-dev.0.tgz#6eeff8b8eef9dc313e8e57bd23c7f63ec0dda003"
+ed-fi-model-3.0@^1.0.0-dev.1:
+  version "1.0.0-dev.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0-dev.1.tgz#ce5d0d3d6c86d7a9b0062f11121e4547475be9f5"
 
 editorconfig@^0.13.2:
   version "0.13.3"
@@ -5864,10 +5864,6 @@ prepend-http@^1.0.1:
 preserve@^0.2.0:
   version "0.2.0"
   resolved "https://www.myget.org/F/ed-fi/npm/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
-
-prettier@^1.10.2:
-  version "1.10.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/prettier/-/prettier-1.10.2.tgz#1af8356d1842276a99a5b5529c82dd9e9ad3cc93"
 
 prettier@^1.9.2:
   version "1.9.2"

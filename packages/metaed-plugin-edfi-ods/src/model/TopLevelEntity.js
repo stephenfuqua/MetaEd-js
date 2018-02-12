@@ -29,11 +29,9 @@ export function addTopLevelEntityEdfiOdsTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'enumeration', 'schoolYearEnumeration', ...allTopLevelEntityModelTypes).forEach(
-    entity => {
-      addTopLevelEntityEdfiOdsTo(asTopLevelEntity(entity));
-    },
-  );
+  getEntitiesOfType(metaEd.entity, ...allTopLevelEntityModelTypes).forEach(entity => {
+    addTopLevelEntityEdfiOdsTo(asTopLevelEntity(entity));
+  });
 
   return {
     enhancerName,

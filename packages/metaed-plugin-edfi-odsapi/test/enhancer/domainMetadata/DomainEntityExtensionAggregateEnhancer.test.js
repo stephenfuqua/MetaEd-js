@@ -70,7 +70,6 @@ describe('when enhancing domainEntity extensions', () => {
       ...newTable(),
       name: tableName,
       schema: extensionNamespace,
-      namespace: extensionNamespace,
     };
 
     const entity: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {

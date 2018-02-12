@@ -96,6 +96,8 @@ export const allTopLevelEntityModelTypes: Array<ModelType> = [
   'domainEntity',
   'domainEntityExtension',
   'domainEntitySubclass',
+  'enumeration',
+  'schoolYearEnumeration',
 ];
 
 export const topLevelCoreEntityModelTypes: Array<ModelType> = [

@@ -11,13 +11,14 @@ import { NoAggregate } from '../../model/domainMetadata/Aggregate';
 import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import { defaultOrderedAndUniqueTablesFor } from './AggregateEnhancerBase';
 
-const enhancerName: string = 'DomainEntityAggregateEnhancer';
+const enhancerName: string = 'DescriptorAggregateEnhancer';
 
 function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo): ?Aggregate {
   const tables: Array<Table> = defaultOrderedAndUniqueTablesFor(entity, namespaceInfo);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
+    schema: entity.namespaceInfo.namespace,
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: false,
     entityTables: [],
@@ -27,6 +28,7 @@ function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo)
   if (((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_IsMapType) {
     typeAggregate = {
       root: normalizeEnumerationSuffix(entity.metaEdName),
+      schema: entity.namespaceInfo.namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [],
@@ -41,7 +43,7 @@ function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo)
       isA: table.name === ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName ? 'Descriptor' : null,
       isAbstract: false,
       isRequiredCollection: false,
-      schema: table.namespace,
+      schema: table.schema,
       hasIsA: table.name === ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
       requiresSchema: entity.namespaceInfo.isExtension,
     };

@@ -50,6 +50,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     results.push({
       name: 'Domain Metadata',
+      namespace: namespaceInfo.namespace,
       folderName: 'ApiMetadata',
       fileName: fileName(namespaceInfo.namespace, namespaceInfo.projectExtension),
       resultString: formattedGeneratedResult,

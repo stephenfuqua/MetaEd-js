@@ -1,4 +1,5 @@
 // @flow
+import R from 'ramda';
 import type { Table, ForeignKey } from 'metaed-plugin-edfi-ods';
 import type { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
 import type { ApiProperty } from '../../model/apiModel/ApiProperty';
@@ -9,7 +10,11 @@ function getPrimaryEntityProperties(foreignKey: ForeignKey, tables: Map<string, 
   const table = tables.get(foreignKey.foreignTableName);
   if (table == null) throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableName}'.`);
 
-  return table.columns.filter(c => foreignKey.foreignTableColumnNames.includes(c.name)).map(c => buildApiProperty(c));
+  const properties: Array<ApiProperty> = table.columns
+    .filter(c => foreignKey.foreignTableColumnNames.includes(c.name))
+    .map(c => buildApiProperty(c));
+
+  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), properties);
 }
 
 // "secondary" entity is actually the parent table, "properties" are columns
@@ -17,7 +22,11 @@ function getSecondaryEntityProperties(foreignKey: ForeignKey, tables: Map<string
   const table = tables.get(foreignKey.parentTableName);
   if (table == null) throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
 
-  return table.columns.filter(c => foreignKey.parentTableColumnNames.includes(c.name)).map(c => buildApiProperty(c));
+  const properties: Array<ApiProperty> = table.columns
+    .filter(c => foreignKey.parentTableColumnNames.includes(c.name))
+    .map(c => buildApiProperty(c));
+
+  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), properties);
 }
 
 function cardinalityFrom(foreignKey: ForeignKey): AssociationDefinitionCardinality {
@@ -31,7 +40,7 @@ function cardinalityFrom(foreignKey: ForeignKey): AssociationDefinitionCardinali
 // Association definitions are the ODS foreign key definitions for a namespace
 export function buildAssociationDefinitions(tables: Map<string, Table>): Array<AssociationDefinition> {
   const result: Array<AssociationDefinition> = [];
-  tables.values.forEach((table: Table) => {
+  Array.from(tables.values()).forEach((table: Table) => {
     table.foreignKeys.forEach((foreignKey: ForeignKey) => {
       result.push({
         fullName: {
@@ -55,5 +64,5 @@ export function buildAssociationDefinitions(tables: Map<string, Table>): Array<A
     });
   });
 
-  return result;
+  return R.sortBy(R.compose(R.toLower, R.path(['primaryEntityFullName', 'name'])), result);
 }

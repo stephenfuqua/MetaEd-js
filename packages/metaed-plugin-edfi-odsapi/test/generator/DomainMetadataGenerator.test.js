@@ -13,6 +13,7 @@ describe('when generating aggregate for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -65,6 +66,7 @@ describe('when generating aggregate for extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -109,6 +111,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -153,6 +156,7 @@ describe('when generating aggregate extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: true,
       entityTables: [
@@ -197,6 +201,7 @@ describe('when generating abstract aggregate for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -241,6 +246,7 @@ describe('when generating aggregate with primary key update', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [
@@ -285,6 +291,7 @@ describe('when generating aggregate with required collection table', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
+      schema: namespace,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [

@@ -31,6 +31,9 @@ function precisionFrom(column: Column): number {
   if (column.type === 'currency') return 19;
   if (column.type === 'decimal') return Number.parseInt(((column: any): DecimalColumn).precision, 10);
   if (column.type === 'percent') return 5;
+  if (column.type === 'integer') return 10;
+  if (column.type === 'short') return 5;
+  if (column.type === 'year') return 5;
   return 0;
 }
 
