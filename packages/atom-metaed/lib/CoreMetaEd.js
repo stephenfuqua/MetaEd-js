@@ -4,7 +4,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import MetaEdConfig from './MetaEdConfig';
-import { getCoreMetaEdSourceDirectory } from './Settings';
+import { getCoreMetaEdSourceDirectory, useTechPreview } from './Settings';
 import { metaEdProjectFileTemplate } from './templates/TemplateEngine';
 import type MetaEdLog from './MetaEdLog';
 
@@ -17,7 +17,8 @@ export function createExtensionProjectConfiguration(metaEdLog: MetaEdLog) {
     return;
   }
   const sourceDirectory = getCoreMetaEdSourceDirectory();
-  const projectConfigFileContents = metaEdProjectFileTemplate(sourceDirectory);
+  const deployTargetVersion = useTechPreview() ? '3.0.0' : '2.0.0';
+  const projectConfigFileContents = metaEdProjectFileTemplate(sourceDirectory, deployTargetVersion);
   fs.writeFileSync(projectConfigFile, projectConfigFileContents);
 }
 

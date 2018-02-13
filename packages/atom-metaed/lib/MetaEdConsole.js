@@ -189,6 +189,18 @@ export default class MetaEdConsole {
       }
     }
 
+    let extensionNamespace = 'extension';
+    if (isExtensionProject) {
+      const configFile = atom.project.getDirectories()[1].getFile('metaEd.json');
+      if (configFile.existsSync()) {
+        try {
+          const config = JSON.parse(fs.readFileSync(configFile.getRealPathSync(), 'utf-8'));
+          if (config.namespace != null) extensionNamespace = config.namespace;
+        } catch (error) {
+          // Use default if file doesn't match expected format
+        }
+      }
+    }
     const deployTargetVersion = useTechPreview() ? '3.0.0' : '2.0.0';
 
     return {
@@ -204,6 +216,7 @@ export default class MetaEdConsole {
       edfiOdsRepoDirectory,
       edfiOdsImplementationRepoDirectory,
       deployTargetVersion,
+      extensionNamespace,
       gulpPath,
     };
   }
@@ -226,6 +239,8 @@ export default class MetaEdConsole {
       params.push(gulpInputs.coreMetaEdSourceDirectory);
       params.push('--extensionMetaEdPath');
       params.push(gulpInputs.projectPath);
+      params.push('--extensionNamespace');
+      params.push(gulpInputs.extensionNamespace);
       params.push('--includeExtensions');
     } else {
       params.push('--metaEdPath');

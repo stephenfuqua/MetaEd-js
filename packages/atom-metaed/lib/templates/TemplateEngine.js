@@ -1,16 +1,36 @@
 /** @babel */
 // @flow
 
-export function metaEdProjectFileTemplate(metaEdCoreDirectory: string) {
+export function metaEdProjectFileTemplate(metaEdCoreDirectory: string, targetVersion: string) {
   const cleanMetaEdCoreDirectory = metaEdCoreDirectory.replace(/\\/g, '\\\\');
   return `{
-      "title": "MetaEd Extension Project",
-      "dataStandardCoreSourceDirectory": "${cleanMetaEdCoreDirectory}",
-      "majorVersion": "2",
-      "minorVersion": "0",
-      "revisionVersion": "",
-      "extensionPrefix": "EXTENSION"
-  }`;
+  "title": "MetaEd Extension Project",
+  "namespace": "extension",
+  "dataStandardCoreSourceVersion": "${targetVersion}",
+  "pluginConfig": {
+    "edfiUnified": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiOds": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiOdsApi": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiXsd": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiHandbook": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiInterchangeBrief": {
+      "targetTechnologyVersion": "${targetVersion}"
+    },
+    "edfiXmlDictionary": {
+      "targetTechnologyVersion": "${targetVersion}"
+    }
+  }
+}`;
 }
 
 export function associationTemplate() {

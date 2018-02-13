@@ -1,6 +1,7 @@
 {
   "metaEdConfiguration": {
-    "title": "Development 3.0.0",
+    "title": "Extension",
+    "namespace": "extension",
     "dataStandardCoreSourceVersion": "3.0.0",
     "pluginConfig": {
       "edfiUnified": {

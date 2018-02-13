@@ -6,6 +6,7 @@
     "type": "object",
     "properties": {
         "title": { "type": "string", "description": "Title of the MetaEd project" },
+        "namespace": { "type": "string", "description": "Machine friendly name for the MetaEd project, drives identifiers used by downstream artifacts." },
         "dataStandardCoreSourceDirectory": { "type": "string", "description": "Full path to source files for the core Ed-Fi Data Standard to build against" },
         "dataStandardCoreSourceVersion": { "type": "string", "description": "Version number of the core Ed-FI Data Standard to build against" },
         "majorVersion": { "type": "string", "description": "The major version identifier for the output artifacts" },
