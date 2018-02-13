@@ -80,6 +80,7 @@ describe('when creating columns for primary key enumeration property', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -120,6 +121,7 @@ describe('when creating columns for identity rename enumeration property', () =>
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -159,6 +161,7 @@ describe('when creating columns for nullable enumeration property', () => {
     expect(columns[0].isNullable).toBe(true);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -198,6 +201,7 @@ describe('when creating columns for primary key enumeration property with suppre
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -238,6 +242,7 @@ describe('when creating columns for identity rename enumeration property with su
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });

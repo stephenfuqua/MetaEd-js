@@ -1,6 +1,5 @@
 {{#tables}}
-/****** Table: [{{{schema}}}].[{{{name}}}] ******/
-
+-- Table [{{{schema}}}].[{{{name}}}] --
 CREATE TABLE [{{{schema}}}].[{{{name}}}] (
 {{#columns}}
     {{> column}}
@@ -42,12 +41,5 @@ GO
 ALTER TABLE [{{{schema}}}].[{{{name}}}] ADD CONSTRAINT [{{{name}}}_DF_LastModifiedDate] DEFAULT (getdate()) FOR [LastModifiedDate]
 GO
 {{/if}}
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{{{sqlEscapedDescription}}}', @level0type=N'SCHEMA', @level0name=N'{{{schema}}}', @level1type=N'TABLE', @level1name=N'{{{name}}}'
-GO
-{{#columns}}
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{{{sqlEscapedDescription}}}', @level0type=N'SCHEMA', @level0name=N'{{{../schema}}}', @level1type=N'TABLE',@level1name=N'{{{../name}}}', @level2type=N'COLUMN', @level2name=N'{{{name}}}'
-GO
-{{/columns}}
 
 {{/tables}}

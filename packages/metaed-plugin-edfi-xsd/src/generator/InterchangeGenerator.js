@@ -20,6 +20,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     generatedOutput.push({
       name: outputName,
+      namespace: '',
       folderName: 'Interchange',
       fileName: interchange.namespaceInfo.isExtension
         ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
@@ -37,6 +38,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     generatedOutput.push({
       name: outputName,
+      namespace: '',
       folderName: 'Interchange',
       fileName: interchange.namespaceInfo.isExtension
         ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`

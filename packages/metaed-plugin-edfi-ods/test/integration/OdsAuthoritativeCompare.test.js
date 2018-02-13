@@ -21,7 +21,7 @@ import {
   walkBuilders,
 } from 'metaed-core';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
-import { orderRows } from '../../src/generator/OdsGenerator';
+import { orderRows } from '../../src/enhancer/AddSchemaContainerEnhancer';
 
 jest.unmock('final-fs');
 jest.setTimeout(40000);
@@ -72,6 +72,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
         },
       }),
     });
+    state.metaEd.dataStandardVersion = state.metaEdConfiguration.dataStandardCoreSourceVersion;
     validateConfiguration(state);
     loadPlugins(state);
     loadFiles(state);
@@ -95,35 +96,43 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
       table => table.name,
     );
 
-    rowOrder = orderRows(
-      [...pluginEnvironment(state.metaEd).entity.row.values()].filter(row => row.type === 'enumerationRow'),
-    ).map(x => x.name);
+    rowOrder = orderRows([...pluginEnvironment(state.metaEd).entity.row.values()]).map(
+      x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
+    );
 
-    coreResult = R.head(R.head(state.generatorResults.filter(x => x.generatorName === 'OdsGenerator')).generatedOutput);
+    coreResult = R.head(
+      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOds.OdsGenerator')).generatedOutput,
+    );
     coreFileBaseName = path.basename(coreResult.fileName, '.sql');
     generatedCoreOds = `${outputDirectory}/${coreFileBaseName}.sql`;
     authoritativeCoreOds = `${artifactPath}/${coreFileBaseName}-Authoritative.sql`;
 
+    expect(coreResult).toBeDefined();
     await ffs.writeFile(generatedCoreOds, coreResult.resultString, 'utf-8');
   });
 
   it('should have correct table order', () => {
+    expect(tableOrder).toBeDefined();
     expect(tableOrder).toMatchSnapshot();
   });
 
   it('should have correct foreign key order', () => {
+    expect(fkOrder).toBeDefined();
     expect(fkOrder).toMatchSnapshot();
   });
 
   it('should have correct trigger order', () => {
+    expect(triggerOrder).toBeDefined();
     expect(triggerOrder).toMatchSnapshot();
   });
 
   it('should have correct row order', () => {
+    expect(rowOrder).toBeDefined();
     expect(rowOrder).toMatchSnapshot();
   });
 
   it('should have core with no differences', async () => {
+    expect(coreResult).toBeDefined();
     const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeCoreOds} ${generatedCoreOds}`;
     const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
@@ -132,6 +141,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
   });
 
   it('should create diff files', async () => {
+    expect(coreResult).toBeDefined();
     const cssFile: string = `${nodeModulesPath}/diff2html/dist/diff2html.min.css`;
     const htmlFile: string = `${outputDirectory}/${coreFileBaseName}.html`;
     const diffFile: string = `${outputDirectory}/${coreFileBaseName}.diff`;

@@ -1,9 +1,11 @@
 // @flow
+import R from 'ramda';
 import winston from 'winston';
 import { orderByProp } from 'metaed-core';
-import { NoTable } from './Table';
+import { NoTable, getPrimaryKeys } from './Table';
 import type { ColumnNamePair } from './ColumnNamePair';
 import type { Table } from './Table';
+import type { Column } from './Column';
 
 winston.cli();
 
@@ -41,12 +43,30 @@ export function newForeignKey(): ForeignKey {
   };
 }
 
-export function getParentTableColumnNames(foreignKey: ForeignKey): Array<string> {
-  return orderByProp('parentTableColumnName')(foreignKey.columnNames).map((x: ColumnNamePair) => x.parentTableColumnName);
+export function getOrderedColumnNamePairs(foreignKey: ForeignKey, foreignTable: ?Table = null): Array<ColumnNamePair> {
+  if (foreignTable == null) {
+    return orderByProp('foreignTableColumnName')(foreignKey.columnNames);
+  }
+
+  const primaryKeyOrder: Array<string> = (foreignTable.primaryKeys.length === 0
+    ? getPrimaryKeys(foreignTable)
+    : foreignTable.primaryKeys
+  ).map((pk: Column) => pk.name);
+  const foreignKeyColumnPairLookup: { [foreignKeyName: string]: ColumnNamePair } = R.groupBy(
+    R.prop('foreignTableColumnName'),
+    foreignKey.columnNames,
+  );
+  const foreignKeyColumnPairFor: (foreignKeyName: string) => ColumnNamePair = R.prop(R.__, foreignKeyColumnPairLookup);
+
+  return R.chain((pkName: string) => foreignKeyColumnPairFor(pkName))(primaryKeyOrder);
 }
 
-export function getForeignTableColumnNames(foreignKey: ForeignKey): Array<string> {
-  return orderByProp('foreignTableColumnName')(foreignKey.columnNames).map((x: ColumnNamePair) => x.foreignTableColumnName);
+export function getParentTableColumnNames(foreignKey: ForeignKey, foreignTable: ?Table = null): Array<string> {
+  return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.parentTableColumnName);
+}
+
+export function getForeignTableColumnNames(foreignKey: ForeignKey, foreignTable: ?Table = null): Array<string> {
+  return getOrderedColumnNamePairs(foreignKey, foreignTable).map((x: ColumnNamePair) => x.foreignTableColumnName);
 }
 
 export function addColumnNamePair(foreignKey: ForeignKey, columnNamePair: ColumnNamePair): void {

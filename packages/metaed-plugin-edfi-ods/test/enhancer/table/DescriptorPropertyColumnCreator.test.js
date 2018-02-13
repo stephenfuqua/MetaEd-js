@@ -40,6 +40,7 @@ describe('when creating columns for descriptor property', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -78,6 +79,7 @@ describe('when creating columns for primary key descriptor property', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -116,6 +118,7 @@ describe('when creating columns for nullable descriptor property', () => {
     expect(columns[0].isNullable).toBe(true);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -155,6 +158,7 @@ describe('when creating columns for descriptor property with context', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -195,6 +199,7 @@ describe('when creating columns for descriptor property with context and append 
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -233,6 +238,7 @@ describe('when creating columns for collection descriptor property', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -271,6 +277,7 @@ describe('when creating columns for primary key descriptor property with suppres
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });
@@ -309,6 +316,7 @@ describe('when creating columns for collection descriptor property with suppress
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(false);
     expect(columns[0].referenceContext).toBe(propertyName);
+    expect(columns[0].mergedReferenceContexts).toEqual([propertyName]);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
   });
 });

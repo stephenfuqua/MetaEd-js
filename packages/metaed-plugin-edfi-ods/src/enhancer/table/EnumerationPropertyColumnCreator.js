@@ -23,6 +23,7 @@ export function enumerationPropertyColumnCreator(): ColumnCreator {
         isPartOfPrimaryKey:
           !strategy.suppressPrimaryKeyCreation() && (property.isPartOfIdentity || property.isIdentityRename),
         referenceContext: property.data.edfiOds.ods_Name,
+        mergedReferenceContexts: [property.data.edfiOds.ods_Name],
         sourceEntityProperties: [property],
       });
       return [column];

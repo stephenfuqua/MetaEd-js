@@ -79,8 +79,7 @@ export function initializeColumn(
 }
 
 export function cloneColumn(column: Column): Column {
-  // shallow clone for now because R.clone is about 50x slower
-  return R.merge({}, column);
+  return { ...column };
 }
 
 export function columnConstraintMerge(existing: Column, received: Column): Column {

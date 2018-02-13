@@ -18,8 +18,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     entity.data.edfiOds.ods_Properties = R.reject(uniqueIdStrategy)(entity.data.edfiOds.ods_Properties);
     entity.data.edfiOds.ods_IdentityProperties = R.reject(uniqueIdStrategy)(entity.data.edfiOds.ods_IdentityProperties);
 
-    // shallow clone for now because R.clone is about 50x slower
-    const odsUniqueIdProperty: EntityProperty = R.merge({}, uniqueIdProperty);
+    const odsUniqueIdProperty: EntityProperty = (({ ...uniqueIdProperty }: any): EntityProperty);
     odsUniqueIdProperty.data.edfiOds.ods_IsUniqueIndex = true;
     odsUniqueIdProperty.isPartOfIdentity = false;
     entity.data.edfiOds.ods_Properties.push(odsUniqueIdProperty);

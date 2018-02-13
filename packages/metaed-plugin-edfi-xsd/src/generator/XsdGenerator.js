@@ -16,6 +16,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     const formattedGeneratedResult = formatAndPrependHeader(template().schema(schema));
     results.push({
       name: 'XSD',
+      namespace: namespaceInfo.namespace,
       folderName: 'XSD',
       fileName: namespaceInfo.isExtension ? `${namespaceInfo.projectExtension}-Ed-Fi-Extended-Core.xsd` : 'Ed-Fi-Core.xsd',
       resultString: formattedGeneratedResult,

@@ -1,0 +1,1547 @@
+// @flow
+import {
+  DomainEntityBuilder,
+  ChoiceBuilder,
+  CommonBuilder,
+  EnumerationBuilder,
+  DescriptorBuilder,
+  MetaEdTextBuilder,
+  NamespaceInfoBuilder,
+  newMetaEdEnvironment,
+} from 'metaed-core';
+import type { MetaEdEnvironment } from 'metaed-core';
+import { column, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown, columnDataTypes } from './DatabaseTestBase';
+import { columnExists, columnIsNullable, columnDataType, columnDefaultConstraint } from './DatabaseColumn';
+import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';
+import { tableExists, tablePrimaryKeys } from './DatabaseTable';
+import type { DatabaseColumn } from './DatabaseColumn';
+import type { DatabaseForeignKey } from './DatabaseForeignKey';
+
+describe('when inline common is a required property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const inlineCommonName: string = 'InlineCommonName';
+  const optionalPropertyContext: string = 'OptionalPropertyContext';
+  const inlinePropertyContext: string = 'InlinePropertyContext';
+  const domainEntityName: string = 'DomainEntityName';
+  const optionalPropertyName: string = 'OptionalPropertyName';
+  const requiredPropertyName: string = 'RequiredPropertyName';
+  const collectionPropertyName: string = 'CollectionPropertyName';
+  const inlineCommonIdentityPropertyName: string = 'InlineCommonIdentityPropertyName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false)
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false, null, null, optionalPropertyContext)
+      .withIntegerProperty(requiredPropertyName, 'Documentation', true, false)
+      .withIntegerProperty(collectionPropertyName, 'Documentation', false, true)
+      .withIntegerIdentity(inlineCommonIdentityPropertyName, 'Documentation')
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', true, false)
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', true, false, inlinePropertyContext)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have domain entity identity', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, domainEntityIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have inline common properties', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, inlineCommonIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+
+    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const contextColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName,
+      optionalPropertyContext + optionalPropertyName,
+    );
+    expect(await columnExists(contextColumn)).toBe(true);
+    expect(await columnIsNullable(contextColumn)).toBe(true);
+
+    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, requiredPropertyName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+  });
+
+  it('should have inline common properties with context', async () => {
+    const identityColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+
+    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, inlinePropertyContext + optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const contextColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName,
+      inlinePropertyContext + optionalPropertyContext + optionalPropertyName,
+    );
+    expect(await columnExists(contextColumn)).toBe(true);
+    expect(await columnIsNullable(contextColumn)).toBe(true);
+
+    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, inlinePropertyContext + requiredPropertyName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + collectionPropertyName))).toBe(true);
+  });
+
+  it('should have collection property', async () => {
+    const collectionColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      collectionPropertyName,
+    );
+    expect(await columnExists(collectionColumn)).toBe(true);
+    expect(await columnIsNullable(collectionColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + collectionPropertyName))).toEqual([
+      collectionPropertyName,
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + collectionPropertyName, domainEntityIdentityPropertyName)],
+      [column(namespace, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+
+  it('should have create date resource column', async () => {
+    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName + collectionPropertyName, 'CreateDate');
+    expect(await columnExists(createDateColumn)).toBe(true);
+    expect(await columnIsNullable(createDateColumn)).toBe(false);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+
+  it('should not have id and last modified date resource columns', async () => {
+    const idColumn: DatabaseColumn = column(namespace, domainEntityName + collectionPropertyName, 'Id');
+    expect(await columnExists(idColumn)).toBe(false);
+
+    const lastModifiedDateColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      'LastModifiedDate',
+    );
+    expect(await columnExists(lastModifiedDateColumn)).toBe(false);
+  });
+
+  it('should have collection table with context', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + inlinePropertyContext + collectionPropertyName))).toBe(
+      true,
+    );
+  });
+
+  it('should have collection property', async () => {
+    const collectionColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      collectionPropertyName,
+    );
+    expect(await columnExists(collectionColumn)).toBe(true);
+    expect(await columnIsNullable(collectionColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(
+      await tablePrimaryKeys(table(namespace, domainEntityName + inlinePropertyContext + collectionPropertyName)),
+    ).toEqual([
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + collectionPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [
+        column(
+          namespace,
+          domainEntityName + inlinePropertyContext + collectionPropertyName,
+          domainEntityIdentityPropertyName,
+        ),
+      ],
+      [column(namespace, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+
+  it('should have create date resource column', async () => {
+    const createDateColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'CreateDate',
+    );
+    expect(await columnExists(createDateColumn)).toBe(true);
+    expect(await columnIsNullable(createDateColumn)).toBe(false);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+
+  it('should not have id and last modified date resource columns', async () => {
+    const idColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'Id',
+    );
+    expect(await columnExists(idColumn)).toBe(false);
+
+    const lastModifiedDateColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'LastModifiedDate',
+    );
+    expect(await columnExists(lastModifiedDateColumn)).toBe(false);
+  });
+});
+
+describe('when inline common is an optional property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const optionalPropertyName: string = 'OptionalPropertyName';
+  const requiredPropertyName: string = 'RequiredPropertyName';
+  const collectionPropertyName: string = 'CollectionPropertyName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false)
+      .withIntegerProperty(requiredPropertyName, 'Documentation', true, false)
+      .withIntegerProperty(collectionPropertyName, 'Documentation', false, true)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have domain entity identity', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, domainEntityIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have inline common properties', async () => {
+    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, requiredPropertyName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(true);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([domainEntityIdentityPropertyName]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + collectionPropertyName))).toBe(true);
+  });
+
+  it('should have collection property and domain entity property', async () => {
+    const collectionColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      collectionPropertyName,
+    );
+    expect(await columnExists(collectionColumn)).toBe(true);
+    expect(await columnIsNullable(collectionColumn)).toBe(false);
+
+    const entityColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      domainEntityIdentityPropertyName,
+    );
+    expect(await columnExists(entityColumn)).toBe(true);
+    expect(await columnIsNullable(entityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + collectionPropertyName))).toEqual([
+      collectionPropertyName,
+      domainEntityIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + collectionPropertyName, domainEntityIdentityPropertyName)],
+      [column(namespace, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+
+  it('should have create date resource column', async () => {
+    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName + collectionPropertyName, 'CreateDate');
+    expect(await columnExists(createDateColumn)).toBe(true);
+    expect(await columnIsNullable(createDateColumn)).toBe(false);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+
+  it('should not have id and last modified date resource columns', async () => {
+    const idColumn: DatabaseColumn = column(namespace, domainEntityName + collectionPropertyName, 'Id');
+    expect(await columnExists(idColumn)).toBe(false);
+
+    const lastModifiedDateColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + collectionPropertyName,
+      'LastModifiedDate',
+    );
+    expect(await columnExists(lastModifiedDateColumn)).toBe(false);
+  });
+});
+
+describe('when inline common is an optional property with required enumeration property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const enumerationName: string = 'EnumerationName';
+  const enumerationItemName: string = 'EnumerationItemName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+  const enumerationTableName: string = `${enumerationName}Type`;
+  const enumerationColumnName: string = `${enumerationName}TypeId`;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartEnumeration(enumerationName)
+      .withDocumentation('Documentation')
+      .withEnumerationItem(enumerationItemName)
+      .withEndEnumeration()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withEnumerationProperty(enumerationName, 'Documentation', true, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have type id property', async () => {
+    const typeIdColumn: DatabaseColumn = column(namespace, domainEntityName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(true);
+  });
+
+  it('should have type table', async () => {
+    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+  });
+
+  it('should have type id property', async () => {
+    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationColumnName]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName, enumerationColumnName)],
+      [column(namespace, enumerationTableName, enumerationColumnName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
+  });
+});
+
+describe('when inline common has optional enumeration property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const enumerationName: string = 'EnumerationName';
+  const enumerationItemName: string = 'EnumerationItemName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+  const enumerationTableName: string = `${enumerationName}Type`;
+  const enumerationColumnName: string = `${enumerationName}TypeId`;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartEnumeration(enumerationName)
+      .withDocumentation('Documentation')
+      .withEnumerationItem(enumerationItemName)
+      .withEndEnumeration()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withEnumerationProperty(enumerationName, 'Documentation', false, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have type id property', async () => {
+    const typeIdColumn: DatabaseColumn = column(namespace, domainEntityName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(true);
+  });
+
+  it('should have type table', async () => {
+    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+  });
+
+  it('should have type id property', async () => {
+    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationColumnName]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName, enumerationColumnName)],
+      [column(namespace, enumerationTableName, enumerationColumnName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
+  });
+});
+
+describe('when inline common has collection enumeration property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const enumerationName: string = 'EnumerationName';
+  const enumerationItemName: string = 'EnumerationItemName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+  const enumerationTableName: string = `${enumerationName}Type`;
+  const enumerationColumnName: string = `${enumerationName}TypeId`;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartEnumeration(enumerationName)
+      .withDocumentation('Documentation')
+      .withEnumerationItem(enumerationItemName)
+      .withEndEnumeration()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withEnumerationProperty(enumerationName, 'Documentation', false, true)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, domainEntityIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([domainEntityIdentityPropertyName]);
+  });
+
+  it('should have type table', async () => {
+    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+  });
+
+  it('should have type id property', async () => {
+    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationColumnName]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + enumerationName))).toBe(true);
+  });
+
+  it('should have identity and type id properties', async () => {
+    const identityColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + enumerationName,
+      domainEntityIdentityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+
+    const typeIdColumn: DatabaseColumn = column(namespace, domainEntityName + enumerationName, enumerationColumnName);
+    expect(await columnExists(typeIdColumn)).toBe(true);
+    expect(await columnIsNullable(typeIdColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + enumerationName))).toEqual([
+      domainEntityIdentityPropertyName,
+      enumerationColumnName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + enumerationName, domainEntityIdentityPropertyName)],
+      [column(namespace, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+
+    const foreignKey2: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + enumerationName, enumerationColumnName)],
+      [column(namespace, enumerationTableName, enumerationColumnName)],
+    );
+    expect(await foreignKeyExists(foreignKey2)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
+  });
+});
+
+describe('when inline common has descriptor property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'edfi';
+  const baseDescriptorTableName: string = 'Descriptor';
+  const descriptorName: string = 'DescriptorName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+  const descriptorTableName: string = `${descriptorName}Descriptor`;
+  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDescriptor(descriptorName)
+      .withDocumentation('Documentation')
+      .withEndDescriptor()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withDescriptorProperty(descriptorName, 'Documentation', false, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have descriptor id property', async () => {
+    const descriptorIdColumn: DatabaseColumn = column(namespace, domainEntityName, descriptorColumnName);
+    expect(await columnExists(descriptorIdColumn)).toBe(true);
+    expect(await columnIsNullable(descriptorIdColumn)).toBe(true);
+  });
+
+  it('should have descriptor table', async () => {
+    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+  });
+
+  it('should have descriptor id property', async () => {
+    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorColumnName);
+    expect(await columnExists(descriptorIdColumn)).toBe(true);
+    expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorColumnName]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName, descriptorColumnName)],
+      [column(namespace, descriptorTableName, descriptorColumnName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
+
+    const foreignKey2: DatabaseForeignKey = foreignKey(
+      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+    );
+    expect(await foreignKeyExists(foreignKey2)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(true);
+  });
+});
+
+describe('when inline common has collection descriptor property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'edfi';
+  const baseDescriptorTableName: string = 'Descriptor';
+  const descriptorName: string = 'DescriptorName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+  const descriptorTableName: string = `${descriptorName}Descriptor`;
+  const descriptorColumnName: string = `${descriptorName}DescriptorId`;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDescriptor(descriptorName)
+      .withDocumentation('Documentation')
+      .withEndDescriptor()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withDescriptorProperty(descriptorName, 'Documentation', false, true)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, domainEntityIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([domainEntityIdentityPropertyName]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + descriptorName))).toBe(true);
+  });
+
+  it('should have descriptor id and identity property', async () => {
+    const descriptorIdColumn: DatabaseColumn = column(namespace, domainEntityName + descriptorName, descriptorColumnName);
+    expect(await columnExists(descriptorIdColumn)).toBe(true);
+    expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
+
+    const identityColumn: DatabaseColumn = column(
+      namespace,
+      domainEntityName + descriptorName,
+      domainEntityIdentityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + descriptorName))).toEqual([
+      descriptorColumnName,
+      domainEntityIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + descriptorName, domainEntityIdentityPropertyName)],
+      [column(namespace, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+
+    const foreignKey2: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + descriptorName, descriptorColumnName)],
+      [column(namespace, descriptorTableName, descriptorColumnName)],
+    );
+    expect(await foreignKeyExists(foreignKey2)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
+
+    const foreignKey3: DatabaseForeignKey = foreignKey(
+      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+    );
+    expect(await foreignKeyExists(foreignKey3)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey3)).toBe(true);
+  });
+});
+
+describe('when inline common has domain entity property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const referencedDomainEntityName: string = 'ReferencedDomainEntityName';
+  const referencedIdentityPropertyName1: string = 'ReferencedIdentityPropertyName1';
+  const referencedIdentityPropertyName2: string = 'ReferencedIdentityPropertyName2';
+  const referencedPropertyName: string = 'ReferencedPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(referencedDomainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(referencedIdentityPropertyName1, 'Documentation')
+      .withIntegerIdentity(referencedIdentityPropertyName2, 'Documentation')
+      .withIntegerProperty(referencedPropertyName, 'Documentation', false, false)
+      .withEndDomainEntity()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withDomainEntityProperty(referencedDomainEntityName, 'Documentation', false, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have referenced and identity properties', async () => {
+    const referenceColumn1: DatabaseColumn = column(namespace, domainEntityName, referencedIdentityPropertyName1);
+    expect(await columnExists(referenceColumn1)).toBe(true);
+    expect(await columnIsNullable(referenceColumn1)).toBe(true);
+
+    const referenceColumn2: DatabaseColumn = column(namespace, domainEntityName, referencedIdentityPropertyName2);
+    expect(await columnExists(referenceColumn2)).toBe(true);
+    expect(await columnIsNullable(referenceColumn2)).toBe(true);
+
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([identityPropertyName]);
+  });
+
+  it('should have referenced domain entity table', async () => {
+    expect(await tableExists(table(namespace, referencedDomainEntityName))).toBe(true);
+  });
+
+  it('should have identity properties', async () => {
+    const identityColumn1: DatabaseColumn = column(namespace, referencedDomainEntityName, referencedIdentityPropertyName1);
+    expect(await columnExists(identityColumn1)).toBe(true);
+    expect(await columnIsNullable(identityColumn1)).toBe(false);
+
+    const identityColumn2: DatabaseColumn = column(namespace, referencedDomainEntityName, referencedIdentityPropertyName2);
+    expect(await columnExists(identityColumn2)).toBe(true);
+    expect(await columnIsNullable(identityColumn2)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, referencedDomainEntityName))).toEqual([
+      referencedIdentityPropertyName1,
+      referencedIdentityPropertyName2,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [
+        column(namespace, domainEntityName, referencedIdentityPropertyName1),
+        column(namespace, domainEntityName, referencedIdentityPropertyName2),
+      ],
+      [
+        column(namespace, referencedDomainEntityName, referencedIdentityPropertyName1),
+        column(namespace, referencedDomainEntityName, referencedIdentityPropertyName2),
+      ],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
+  });
+});
+
+describe('when inline common has collection domain entity property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const referencedDomainEntityName: string = 'ReferencedDomainEntityName';
+  const referencedIdentityPropertyName1: string = 'ReferencedIdentityPropertyName1';
+  const referencedIdentityPropertyName2: string = 'ReferencedIdentityPropertyName2';
+  const referencedPropertyName: string = 'ReferencedPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(referencedDomainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(referencedIdentityPropertyName1, 'Documentation')
+      .withIntegerIdentity(referencedIdentityPropertyName2, 'Documentation')
+      .withIntegerProperty(referencedPropertyName, 'Documentation', false, false)
+      .withEndDomainEntity()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withDomainEntityProperty(referencedDomainEntityName, 'Documentation', false, true)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have referenced domain entity table', async () => {
+    expect(await tableExists(table(namespace, referencedDomainEntityName))).toBe(true);
+  });
+
+  it('should have identity properties', async () => {
+    const identityColumn1: DatabaseColumn = column(namespace, referencedDomainEntityName, referencedIdentityPropertyName1);
+    expect(await columnExists(identityColumn1)).toBe(true);
+    expect(await columnIsNullable(identityColumn1)).toBe(false);
+
+    const identityColumn2: DatabaseColumn = column(namespace, referencedDomainEntityName, referencedIdentityPropertyName2);
+    expect(await columnExists(identityColumn2)).toBe(true);
+    expect(await columnIsNullable(identityColumn2)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, referencedDomainEntityName))).toEqual([
+      referencedIdentityPropertyName1,
+      referencedIdentityPropertyName2,
+    ]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + referencedDomainEntityName))).toBe(true);
+  });
+
+  it('should have identity properties', async () => {
+    const identityColumn1: DatabaseColumn = column(
+      namespace,
+      domainEntityName + referencedDomainEntityName,
+      referencedIdentityPropertyName1,
+    );
+    expect(await columnExists(identityColumn1)).toBe(true);
+    expect(await columnIsNullable(identityColumn1)).toBe(false);
+
+    const identityColumn2: DatabaseColumn = column(
+      namespace,
+      domainEntityName + referencedDomainEntityName,
+      referencedIdentityPropertyName2,
+    );
+    expect(await columnExists(identityColumn2)).toBe(true);
+    expect(await columnIsNullable(identityColumn2)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + referencedDomainEntityName))).toEqual([
+      identityPropertyName,
+      referencedIdentityPropertyName1,
+      referencedIdentityPropertyName2,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [
+        column(namespace, domainEntityName + referencedDomainEntityName, referencedIdentityPropertyName1),
+        column(namespace, domainEntityName + referencedDomainEntityName, referencedIdentityPropertyName2),
+      ],
+      [
+        column(namespace, referencedDomainEntityName, referencedIdentityPropertyName1),
+        column(namespace, referencedDomainEntityName, referencedIdentityPropertyName2),
+      ],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
+  });
+});
+
+describe('when inline common has inline common property without naming issues', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const nestedInlineCommonName: string = 'NestedInlineCommonName';
+  const nestedOptionalPropertyName: string = 'NestedOptionalPropertyName';
+  const nestedRequiredPropertyName: string = 'NestedRequiredPropertyName';
+  const optionalPropertyName: string = 'OptionalPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartInlineCommon(nestedInlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(nestedRequiredPropertyName, 'Documentation', true, false)
+      .withIntegerProperty(nestedOptionalPropertyName, 'Documentation', false, false)
+      .withEndInlineCommon()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false)
+      .withInlineCommonProperty(nestedInlineCommonName, 'Documentation', false, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have inline common and nested inline common properties', async () => {
+    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const nestedRequiredColumn: DatabaseColumn = column(namespace, domainEntityName, nestedRequiredPropertyName);
+    expect(await columnExists(nestedRequiredColumn)).toBe(true);
+    expect(await columnIsNullable(nestedRequiredColumn)).toBe(true);
+
+    const nestedOptionalColumn: DatabaseColumn = column(namespace, domainEntityName, nestedOptionalPropertyName);
+    expect(await columnExists(nestedOptionalColumn)).toBe(true);
+    expect(await columnIsNullable(nestedOptionalColumn)).toBe(true);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([identityPropertyName]);
+  });
+});
+
+describe('when inline common has choice property with naming issues', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const choiceName: string = 'ChoiceName';
+  const requiredChoiceProperty1: string = 'RequiredChoiceProperty1';
+  const requiredChoiceProperty2: string = 'RequiredChoiceProperty2';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const inlineCommonPropertyName: string = 'InlineCommonPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartChoice(choiceName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(requiredChoiceProperty1, 'Documentation', true, false)
+      .withIntegerProperty(requiredChoiceProperty2, 'Documentation', true, false)
+      .withEndChoice()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(inlineCommonPropertyName, 'Documentation', true, false)
+      .withChoiceProperty(choiceName, 'Documentation', true, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new ChoiceBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have inline common and choice properties', async () => {
+    const requiredColumn1: DatabaseColumn = column(namespace, domainEntityName, inlineCommonPropertyName);
+    expect(await columnExists(requiredColumn1)).toBe(true);
+    expect(await columnIsNullable(requiredColumn1)).toBe(false);
+
+    const requiredChoiceColumn1: DatabaseColumn = column(namespace, domainEntityName, requiredChoiceProperty1);
+    expect(await columnExists(requiredChoiceColumn1)).toBe(true);
+    expect(await columnIsNullable(requiredChoiceColumn1)).toBe(true);
+
+    const requiredChoiceColumn2: DatabaseColumn = column(namespace, domainEntityName, requiredChoiceProperty2);
+    expect(await columnExists(requiredChoiceColumn2)).toBe(true);
+    expect(await columnIsNullable(requiredChoiceColumn2)).toBe(true);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([identityPropertyName]);
+  });
+});
+
+describe('when inline common has required common property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+  const commonName: string = 'CommonName';
+  const commonOptionalPropertyName: string = 'CommonOptionalPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartCommon(commonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(commonOptionalPropertyName, 'Documentation', false, false)
+      .withEndCommon()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withCommonProperty(commonName, 'Documentation', true, false)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have common join table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+  });
+
+  it('should have common properties', async () => {
+    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, commonOptionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([identityPropertyName]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + commonName, identityPropertyName)],
+      [column(namespace, domainEntityName, identityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+});
+
+describe('when inline common has collection common property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const commonIdentityPropertyName: string = 'CommonIdentityPropertyName';
+  const commonName: string = 'CommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const inlineCommonName: string = 'InlineCommonName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartCommon(commonName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(commonIdentityPropertyName, 'Documentation')
+      .withEndCommon()
+
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withCommonProperty(commonName, 'Documentation', false, true)
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+  });
+
+  it('should have common join table', async () => {
+    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+  });
+
+  it('should have common property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, commonIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have identity property', async () => {
+    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+      commonIdentityPropertyName,
+      identityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespace, domainEntityName + commonName, identityPropertyName)],
+      [column(namespace, domainEntityName, identityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+});
+
+describe('when core inline common is a required property on an extension entity', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'namespace';
+  const extension: string = 'extension';
+  const inlineCommonName: string = 'InlineCommonName';
+  const optionalPropertyContext: string = 'OptionalPropertyContext';
+  const inlinePropertyContext: string = 'InlinePropertyContext';
+  const domainEntityName: string = 'DomainEntityName';
+  const optionalPropertyName: string = 'OptionalPropertyName';
+  const requiredPropertyName: string = 'RequiredPropertyName';
+  const collectionPropertyName: string = 'CollectionPropertyName';
+  const inlineCommonIdentityPropertyName: string = 'InlineCommonIdentityPropertyName';
+  const domainEntityIdentityPropertyName: string = 'DomainEntityIdentityPropertyName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartInlineCommon(inlineCommonName)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false)
+      .withIntegerProperty(optionalPropertyName, 'Documentation', false, false, null, null, optionalPropertyContext)
+      .withIntegerProperty(requiredPropertyName, 'Documentation', true, false)
+      .withIntegerProperty(collectionPropertyName, 'Documentation', false, true)
+      .withIntegerIdentity(inlineCommonIdentityPropertyName, 'Documentation')
+      .withEndInlineCommon()
+      .withEndNamespace()
+
+      .withBeginNamespace(extension)
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(domainEntityIdentityPropertyName, 'Documentation')
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', true, false)
+      .withInlineCommonProperty(inlineCommonName, 'Documentation', true, false, inlinePropertyContext)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have domain entity table', async () => {
+    expect(await tableExists(table(extension, domainEntityName))).toBe(true);
+  });
+
+  it('should have domain entity identity', async () => {
+    const identityColumn: DatabaseColumn = column(extension, domainEntityName, domainEntityIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+  });
+
+  it('should have inline common properties', async () => {
+    const identityColumn: DatabaseColumn = column(extension, domainEntityName, inlineCommonIdentityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+
+    const optionalColumn: DatabaseColumn = column(extension, domainEntityName, optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const contextColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName,
+      optionalPropertyContext + optionalPropertyName,
+    );
+    expect(await columnExists(contextColumn)).toBe(true);
+    expect(await columnIsNullable(contextColumn)).toBe(true);
+
+    const requiredColumn: DatabaseColumn = column(extension, domainEntityName, requiredPropertyName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+  });
+
+  it('should have inline common properties with context', async () => {
+    const identityColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+
+    const optionalColumn: DatabaseColumn = column(extension, domainEntityName, inlinePropertyContext + optionalPropertyName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+
+    const contextColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName,
+      inlinePropertyContext + optionalPropertyContext + optionalPropertyName,
+    );
+    expect(await columnExists(contextColumn)).toBe(true);
+    expect(await columnIsNullable(contextColumn)).toBe(true);
+
+    const requiredColumn: DatabaseColumn = column(extension, domainEntityName, inlinePropertyContext + requiredPropertyName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(extension, domainEntityName))).toEqual([
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have collection table', async () => {
+    expect(await tableExists(table(extension, domainEntityName + collectionPropertyName))).toBe(true);
+  });
+
+  it('should have collection property', async () => {
+    const collectionColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + collectionPropertyName,
+      collectionPropertyName,
+    );
+    expect(await columnExists(collectionColumn)).toBe(true);
+    expect(await columnIsNullable(collectionColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(extension, domainEntityName + collectionPropertyName))).toEqual([
+      collectionPropertyName,
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(extension, domainEntityName + collectionPropertyName, domainEntityIdentityPropertyName)],
+      [column(extension, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+
+  it('should have create date resource column', async () => {
+    const createDateColumn: DatabaseColumn = column(extension, domainEntityName + collectionPropertyName, 'CreateDate');
+    expect(await columnExists(createDateColumn)).toBe(true);
+    expect(await columnIsNullable(createDateColumn)).toBe(false);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+
+  it('should not have id and last modified date resource columns', async () => {
+    const idColumn: DatabaseColumn = column(extension, domainEntityName + collectionPropertyName, 'Id');
+    expect(await columnExists(idColumn)).toBe(false);
+
+    const lastModifiedDateColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + collectionPropertyName,
+      'LastModifiedDate',
+    );
+    expect(await columnExists(lastModifiedDateColumn)).toBe(false);
+  });
+
+  it('should have collection table with context', async () => {
+    expect(await tableExists(table(extension, domainEntityName + inlinePropertyContext + collectionPropertyName))).toBe(
+      true,
+    );
+  });
+
+  it('should have collection property', async () => {
+    const collectionColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + collectionPropertyName,
+      collectionPropertyName,
+    );
+    expect(await columnExists(collectionColumn)).toBe(true);
+    expect(await columnIsNullable(collectionColumn)).toBe(false);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(
+      await tablePrimaryKeys(table(extension, domainEntityName + inlinePropertyContext + collectionPropertyName)),
+    ).toEqual([
+      domainEntityIdentityPropertyName,
+      inlineCommonIdentityPropertyName,
+      inlinePropertyContext + collectionPropertyName,
+      inlinePropertyContext + inlineCommonIdentityPropertyName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [
+        column(
+          extension,
+          domainEntityName + inlinePropertyContext + collectionPropertyName,
+          domainEntityIdentityPropertyName,
+        ),
+      ],
+      [column(extension, domainEntityName, domainEntityIdentityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+  });
+
+  it('should have create date resource column', async () => {
+    const createDateColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'CreateDate',
+    );
+    expect(await columnExists(createDateColumn)).toBe(true);
+    expect(await columnIsNullable(createDateColumn)).toBe(false);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
+  });
+
+  it('should not have id and last modified date resource columns', async () => {
+    const idColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'Id',
+    );
+    expect(await columnExists(idColumn)).toBe(false);
+
+    const lastModifiedDateColumn: DatabaseColumn = column(
+      extension,
+      domainEntityName + inlinePropertyContext + collectionPropertyName,
+      'LastModifiedDate',
+    );
+    expect(await columnExists(lastModifiedDateColumn)).toBe(false);
+  });
+});

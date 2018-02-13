@@ -23,6 +23,7 @@ export function descriptorPropertyColumnCreator(): ColumnCreator {
         isPartOfPrimaryKey:
           !strategy.suppressPrimaryKeyCreation() && (property.isPartOfIdentity || property.data.edfiOds.ods_IsCollection),
         referenceContext: property.data.edfiOds.ods_Name,
+        mergedReferenceContexts: [property.data.edfiOds.ods_Name],
         sourceEntityProperties: [property],
       });
       return [column];

@@ -55,6 +55,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         .then(imageBase64 => {
           generatedOutput.push({
             name: `${interchange.name}-InterchangeBrief`,
+            namespace: '',
             fileName: `${interchange.name}-InterchangeBrief.png`,
             folderName: 'InterchangeBrief/img',
             resultString: '',

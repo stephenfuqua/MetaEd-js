@@ -22,9 +22,6 @@ const referenceColumnBuilder = (
   buildStrategy: BuildStrategy,
   factory: ColumnCreatorFactory,
 ) => (columnStrategy: ColumnTransform): void => {
-  //
-  //
-  //
   const primaryKeys: Array<Column> = collectPrimaryKeys(referenceProperty.referencedEntity, buildStrategy, factory);
 
   primaryKeys.forEach((pk: Column) => {

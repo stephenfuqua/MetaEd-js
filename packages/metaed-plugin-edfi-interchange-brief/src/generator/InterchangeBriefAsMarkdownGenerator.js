@@ -42,6 +42,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const markdown: string = template().interchangeBrief(interchange);
       generatedOutput.push({
         name: 'Interchange Brief Html',
+        namespace: '',
         fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
         folderName: 'InterchangeBrief',
         resultString: `${header}${marked(markdown)}`,
@@ -53,6 +54,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   generatedOutput.push({
     name: 'confluence-like.css',
     fileName: 'confluence-like.css',
+    namespace: '',
     folderName: 'InterchangeBrief',
     resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
     resultStream: null,

@@ -21,6 +21,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const results: Array<GeneratedOutput> = [];
   results.push({
     name: 'MetaEd Ed-Fi Handbook',
+    namespace: '',
     folderName: 'Ed-Fi-Handbook',
     fileName: 'MetaEd-Handbook-Index.html',
     resultString: index,

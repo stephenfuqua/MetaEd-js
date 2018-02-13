@@ -12,6 +12,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const formattedGeneratedResult = formatAndPrependHeader(template().schemaAnnotation({ descriptors }));
   results.push({
     name: 'Core XSD Schema Annotation',
+    namespace: '',
     folderName: 'XSD',
     fileName: 'SchemaAnnotation.xsd',
     resultString: formattedGeneratedResult,

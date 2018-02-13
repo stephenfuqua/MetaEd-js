@@ -28,23 +28,24 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         sqlEscapedDescription: escapeSqlSingleQuote(column.description),
       }),
     );
-
-    table.foreignKeys.forEach((foreignKey: ForeignKey) =>
-      Object.assign(foreignKey, {
-        name: getForeignKeyName(foreignKey),
-        parentTableColumnNames: getParentTableColumnNames(foreignKey),
-        foreignTableColumnNames: getForeignTableColumnNames(foreignKey),
-      }),
-    );
-
     Object.assign(table, {
       sqlEscapedDescription: escapeSqlSingleQuote(table.description),
       hasAlternateKeys: hasAlternateKeys(table),
       alternateKeys: getAlternateKeys(table),
       columns: getAllColumns(table),
-      foreignKeys: getForeignKeys(table),
-      primaryKeys: getPrimaryKeys(table),
+      primaryKeys: table.primaryKeys.length === 0 ? getPrimaryKeys(table) : table.primaryKeys,
       uniqueIndexes: getUniqueIndexes(table),
+      isTypeTable: table.name.endsWith('Type'),
+    });
+
+    table.foreignKeys.forEach((foreignKey: ForeignKey) => {
+      const foreignTable: Table = pluginEnvironment(metaEd).entity.table.get(foreignKey.foreignTableName);
+      Object.assign(foreignKey, {
+        name: getForeignKeyName(foreignKey),
+        parentTableColumnNames: getParentTableColumnNames(foreignKey, foreignTable),
+        foreignTableColumnNames: getForeignTableColumnNames(foreignKey, foreignTable),
+      });
+      table.foreignKeys = getForeignKeys(table);
     });
   });
 

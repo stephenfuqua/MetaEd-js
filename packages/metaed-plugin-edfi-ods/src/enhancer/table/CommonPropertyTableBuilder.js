@@ -43,10 +43,12 @@ function buildJoinTables(
   tables.push(joinTable);
 
   let strategy: ?BuildStrategy = buildStrategy.undoLeafColumnsNullable();
-  if (property.isOptional) {
-    strategy = buildStrategy.suppressPrimaryKeyCreationFromPropertiesStrategy();
-  } else {
-    strategy = buildStrategy.undoSuppressPrimaryKeyCreationFromProperties();
+  if (strategy != null) {
+    if (property.isOptional) {
+      strategy = strategy.suppressPrimaryKeyCreationFromPropertiesStrategy();
+    } else if (property.data.edfiOds.ods_IsCollection) {
+      strategy = strategy.undoSuppressPrimaryKeyCreationFromProperties();
+    }
   }
 
   property.referencedEntity.data.edfiOds.ods_Properties.forEach((referenceProperty: EntityProperty) => {
@@ -120,7 +122,7 @@ export function commonPropertyTableBuilder(
       let strategy: BuildStrategy = buildStrategy;
 
       if (commonProperty.mergedProperties.length > 0) {
-        strategy = buildStrategy.skipPath(
+        strategy = strategy.skipPath(
           commonProperty.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
         );
       }

@@ -34,6 +34,7 @@ export async function metaEdConsole() {
       runGenerators: true,
     },
   });
+  state.metaEd.dataStandardVersion = state.metaEdConfiguration.dataStandardCoreSourceVersion;
 
   await executePipeline(state);
 

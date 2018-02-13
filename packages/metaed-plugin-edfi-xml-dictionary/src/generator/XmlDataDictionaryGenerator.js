@@ -150,6 +150,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const generatedOutput: Array<GeneratedOutput> = [
     {
       name: 'XmlDataDictionary',
+      namespace: '',
       fileName: 'XmlDataDictionary.xlsx',
       folderName: 'Documentation',
       resultString: '',

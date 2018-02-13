@@ -24,7 +24,7 @@ export function choicePropertyTableBuilder(factory: TableBuilderFactory): TableB
       let strategy: BuildStrategy = buildStrategy;
 
       if (choice.mergedProperties.length > 0) {
-        strategy = buildStrategy.skipPath(choice.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)));
+        strategy = strategy.skipPath(choice.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)));
       }
 
       choice.referencedEntity.data.edfiOds.ods_Properties.forEach((odsProperty: EntityProperty) => {

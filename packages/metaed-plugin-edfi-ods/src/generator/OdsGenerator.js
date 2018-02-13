@@ -1,61 +1,198 @@
 // @flow
-import R from 'ramda';
+import { versionSatisfies } from 'metaed-core';
 import type { GeneratedOutput, GeneratorResult, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
-import { orderByProp } from 'metaed-core';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import { registerPartials, template } from './OdsGeneratorBase';
-import type { EnumerationRow } from '../model/database/EnumerationRow';
-import type { ForeignKey } from '../model/database/ForeignKey';
-import type { SchoolYearEnumerationRow } from '../model/database/SchoolYearEnumerationRow';
-import type { Table } from '../model/database/Table';
-import type { Trigger } from '../model/database/Trigger';
+import { dataPath, fileNameFor, registerPartials, structurePath, template } from './OdsGeneratorBase';
 
-function fileNameFor(namespaceInfo: NamespaceInfo): string {
-  if (namespaceInfo.namespace === 'edfi') return '0004-Tables.sql';
-
-  const prefix: string = `0004${namespaceInfo.projectExtension !== '' ? `${namespaceInfo.projectExtension}-` : ''}`;
-  return `${prefix + namespaceInfo.namespace}.sql`;
-}
-
-export const orderRows = R.sortBy(R.compose(R.toLower, R.join(''), R.props(['name', 'description'])));
-
-export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  registerPartials();
+export async function generateTables(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
   const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
 
   namespaces.forEach(namespaceInfo => {
-    const tables: Array<Table> = orderByProp('name')([...pluginEnvironment(metaEd).entity.table.values()]);
-    const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
-    const triggers: Array<Trigger> = orderByProp('name')([...pluginEnvironment(metaEd).entity.trigger.values()]);
-    const rows: Array<EnumerationRow | SchoolYearEnumerationRow> = [...pluginEnvironment(metaEd).entity.row.values()];
-    const enumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(
-      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'enumerationRow'),
-    );
-    const schoolYearEnumerationRows: Array<EnumerationRow | SchoolYearEnumerationRow> = orderRows(
-      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'schoolYearEnumerationRow'),
-    );
-
-    const generatedResult: string = [
-      template().table({ tables }),
-      template().foreignKey({ foreignKeys }),
-      template().deleteEventTable(),
-      template().trigger({ triggers }),
-      template().enumerationRow({ enumerationRows }),
-      template().schoolYearEnumerationRow({ schoolYearEnumerationRows }),
-    ].join('');
+    const generatedResult: string = template().table({ tables: namespaceInfo.data.edfiOds.ods_Schema.tables });
 
     results.push({
-      name: 'Core SQL',
-      folderName: 'ODS-SQLServer',
-      fileName: fileNameFor(namespaceInfo),
+      name: 'ODS Tables',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + structurePath,
+      fileName: fileNameFor('0020', namespaceInfo, 'Tables'),
       resultString: generatedResult,
       resultStream: null,
     });
   });
 
   return {
-    generatorName: 'OdsGenerator',
+    generatorName: 'edfiOds.TablesGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const results: Array<GeneratedOutput> = [];
+  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+  namespaces.forEach(namespaceInfo => {
+    const generatedResult: string = template().foreignKey({
+      foreignKeys: namespaceInfo.data.edfiOds.ods_Schema.foreignKeys,
+    });
+
+    results.push({
+      name: 'ODS Foreign Keys',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + structurePath,
+      fileName: fileNameFor('0030', namespaceInfo, 'ForeignKeys'),
+      resultString: generatedResult,
+      resultStream: null,
+    });
+  });
+
+  return {
+    generatorName: 'edfiOds.ForeignKeyGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const results: Array<GeneratedOutput> = [];
+  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+  namespaces.forEach(namespaceInfo => {
+    const generatedResult: string = template().extendedProperties({ tables: namespaceInfo.data.edfiOds.ods_Schema.tables });
+
+    results.push({
+      name: 'ODS Extended Properties',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + structurePath,
+      fileName: fileNameFor('0050', namespaceInfo, 'ExtendedProperties'),
+      resultString: generatedResult,
+      resultStream: null,
+    });
+  });
+
+  return {
+    generatorName: 'edfiOds.ExtendedPropertiesGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generateTriggers(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const results: Array<GeneratedOutput> = [];
+  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+  namespaces.forEach(namespaceInfo => {
+    const generatedResult: string = template().trigger({ triggers: namespaceInfo.data.edfiOds.ods_Schema.triggers });
+
+    results.push({
+      name: 'ODS Triggers',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + structurePath,
+      fileName: fileNameFor('0060', namespaceInfo, 'Triggers'),
+      resultString: generatedResult,
+      resultStream: null,
+    });
+  });
+
+  return {
+    generatorName: 'edfiOds.TriggersGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const results: Array<GeneratedOutput> = [];
+  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+  namespaces.forEach(namespaceInfo => {
+    const generatedResult: string = template().enumerationRow({
+      enumerationRows: namespaceInfo.data.edfiOds.ods_Schema.enumerationRows,
+    });
+
+    results.push({
+      name: 'ODS Enumerations',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + dataPath,
+      fileName: fileNameFor('0010', namespaceInfo, 'Enumerations'),
+      resultString: generatedResult,
+      resultStream: null,
+    });
+  });
+
+  return {
+    generatorName: 'edfiOds.EnumerationsGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const results: Array<GeneratedOutput> = [];
+  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+  namespaces.forEach(namespaceInfo => {
+    const generatedResult: string = template().schoolYearEnumerationRow({
+      schoolYearEnumerationRows: namespaceInfo.data.edfiOds.ods_Schema.schoolYearEnumerationRows,
+    });
+
+    results.push({
+      name: 'ODS School Years',
+      namespace: namespaceInfo.namespace,
+      folderName: namespaceInfo.namespace + dataPath,
+      fileName: fileNameFor('0020', namespaceInfo, 'SchoolYears'),
+      resultString: generatedResult,
+      resultStream: null,
+    });
+  });
+
+  return {
+    generatorName: 'edfiOds.SchoolYearsGenerator',
+    generatedOutput: results,
+  };
+}
+
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  registerPartials();
+  const results: Array<GeneratedOutput> = [];
+
+  const tablesResult: GeneratorResult = await generateTables(metaEd);
+  const foreignKeysResult: GeneratorResult = await generateForeignKeys(metaEd);
+  const extendedPropertiesResult: GeneratorResult = await generateExtendedProperties(metaEd);
+  const triggersResult: GeneratorResult = await generateTriggers(metaEd);
+  const enumerationsResult: GeneratorResult = await generateEnumerations(metaEd);
+  const schoolYearsResult: GeneratorResult = await generateSchoolYears(metaEd);
+
+  const generatorResults: Array<GeneratorResult> = [
+    tablesResult,
+    foreignKeysResult,
+    extendedPropertiesResult,
+    triggersResult,
+    enumerationsResult,
+    schoolYearsResult,
+  ];
+
+  if (versionSatisfies(metaEd.dataStandardVersion, '2.x')) {
+    const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
+
+    namespaces.forEach(namespaceInfo => {
+      let resultString: string = '';
+      generatorResults.forEach((result: GeneratorResult) => {
+        resultString += result.generatedOutput
+          .filter((output: GeneratedOutput) => namespaceInfo.namespace === output.namespace)
+          .reduce((string: string, output: GeneratedOutput) => string + output.resultString, '');
+      });
+
+      results.push({
+        name: 'ODS Tables',
+        namespace: namespaceInfo.namespace,
+        folderName: namespaceInfo.namespace + structurePath,
+        fileName: fileNameFor('0004', namespaceInfo, 'Tables'),
+        resultString,
+        resultStream: null,
+      });
+    });
+  } else {
+    generatorResults.forEach((result: GeneratorResult) => results.push(...result.generatedOutput));
+  }
+
+  return {
+    generatorName: 'edfiOds.OdsGenerator',
     generatedOutput: results,
   };
 }
