@@ -64,9 +64,13 @@ export async function disconnect(databaseName: string = 'master'): Promise<void>
   if (pools.has(databaseName)) {
     const pool: ?Pool = pools.get(databaseName);
     try {
-      if (pool != null && pool.connection != null) await pool.connection.close();
-      pools.delete(databaseName);
-      winston.verbose(`[${databaseName}] pool disconnected.`);
+      if (pool != null) {
+        if (pool.transaction != null) await pool.transaction.rollback();
+        winston.verbose(`[${databaseName}] rolling back transaction`);
+        if (pool.connection != null) await pool.connection.close();
+        pools.delete(databaseName);
+        winston.verbose(`[${databaseName}] pool disconnected.`);
+      }
     } catch (error) {
       winston.verbose(`[${databaseName}] ${error.message} ${error.stack}`);
     }

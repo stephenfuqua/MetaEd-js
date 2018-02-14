@@ -9,6 +9,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "colony": "^0.0.7",
     "eslint": "3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-flowtype": "^2.34.0",
@@ -18,7 +19,8 @@
     "flow-typed": "^2.1.5",
     "jest": "22.0.4",
     "lerna": "^2.5.1",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "serve": "^6.4.9"
   },
   "workspaces": [
     "packages/*"
@@ -34,7 +36,7 @@
     "test:lint": "yarn lint",
     "test:flow": "yarn flow check",
     "test:unit": "yarn build:clean && yarn test:unit:workaround-memory-leak",
-    "test:unit:workaround-memory-leak": "jest packages/metaed-core && jest packages/metaed-plugin-edfi-interchange-brief && jest packages/metaed-plugin-edfi-odsapi && jest packages/metaed-plugin-edfi-unified && jest packages/metaed-plugin-edfi-xml-dictionary && jest packages/metaed-plugin-edfi-xsd && jest packages/metaed-plugin-edfi-ods",
+    "test:unit:workaround-memory-leak": "jest packages/metaed-core && jest packages/metaed-plugin-edfi-interchange-brief && jest packages/metaed-plugin-edfi-odsapi && jest packages/metaed-plugin-edfi-unified && jest packages/metaed-plugin-edfi-xml-dictionary && jest packages/metaed-plugin-edfi-xsd && jest packages/metaed-plugin-edfi-ods -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
     "publish-dev": "yarn build:clean && yarn test && yarn build && lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"
