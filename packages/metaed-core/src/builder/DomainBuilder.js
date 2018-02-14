@@ -176,6 +176,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
     this.currentDomainItem = Object.assign(newDomainItem(), { metaEdName: context.ID().getText() });
     ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).metaEdName = sourceMapFrom(context);
     ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).referencedType = sourceMapFrom(context);
+    ((this.currentDomainItem.sourceMap: any): DomainItemSourceMap).type = sourceMapFrom(context);
 
     // mutually exclusive in language
     if (context.ASSOCIATION_KEYWORD()) this.currentDomainItem.referencedType = 'association';

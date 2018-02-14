@@ -2,4 +2,10 @@
 
 exports[`when validating common domain item does not match top level entity should have one validation failure(): when common domain item has no matching top level entity should have validation failure -> message 1`] = `"Common Domain Item property 'CommonDomainItemName' does not match any declared Common."`;
 
-exports[`when validating common domain item does not match top level entity should have one validation failure(): when common domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `undefined`;
+exports[`when validating common domain item does not match top level entity should have one validation failure(): when common domain item has no matching top level entity should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "common",
+}
+`;
