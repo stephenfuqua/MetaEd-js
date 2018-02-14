@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.1-dev.35"></a>
+## [1.1.1-dev.35](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.1.1-dev.34...v1.1.1-dev.35) (2018-02-14)
+
+
+
+
+**Note:** Version bump only for package metaed-plugin-edfi-xml-dictionary
+
 <a name="1.1.1-dev.34"></a>
 ## [1.1.1-dev.34](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.1.1-dev.32...v1.1.1-dev.34) (2018-01-18)
 
