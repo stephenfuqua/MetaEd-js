@@ -9,7 +9,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
-    "colony": "^0.0.7",
     "eslint": "3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-flowtype": "^2.34.0",

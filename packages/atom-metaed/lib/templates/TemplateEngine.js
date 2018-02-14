@@ -2,7 +2,6 @@
 // @flow
 
 export function metaEdProjectFileTemplate(metaEdCoreDirectory: string, targetVersion: string) {
-  const cleanMetaEdCoreDirectory = metaEdCoreDirectory.replace(/\\/g, '\\\\');
   return `{
   "title": "MetaEd Extension Project",
   "namespace": "extension",
