@@ -44,6 +44,88 @@ AssociationSourceMap {
 }
 `;
 
+exports[`when building association source map should have two identity properties with sourceMaps: Property 0 1`] = `
+DomainEntityPropertySourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 7,
+    "tokenText": "documentation",
+  },
+  "isPartOfIdentity": Object {
+    "column": 4,
+    "line": 6,
+    "tokenText": "domain entity",
+  },
+  "mergedProperties": Array [],
+  "metaEdId": Object {
+    "column": 40,
+    "line": 6,
+    "tokenText": "[2]",
+  },
+  "metaEdName": Object {
+    "column": 18,
+    "line": 6,
+    "tokenText": "FirstDomainEntityName",
+  },
+  "parentEntity": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Association",
+  },
+  "parentEntityName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 6,
+    "tokenText": "domain entity",
+  },
+}
+`;
+
+exports[`when building association source map should have two identity properties with sourceMaps: Property 1 1`] = `
+DomainEntityPropertySourceMap {
+  "documentation": Object {
+    "column": 6,
+    "line": 10,
+    "tokenText": "documentation",
+  },
+  "isPartOfIdentity": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "domain entity",
+  },
+  "mergedProperties": Array [],
+  "metaEdId": Object {
+    "column": 41,
+    "line": 9,
+    "tokenText": "[3]",
+  },
+  "metaEdName": Object {
+    "column": 18,
+    "line": 9,
+    "tokenText": "SecondDomainEntityName",
+  },
+  "parentEntity": Object {
+    "column": 2,
+    "line": 2,
+    "tokenText": "Association",
+  },
+  "parentEntityName": Object {
+    "column": 14,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
+  "type": Object {
+    "column": 4,
+    "line": 9,
+    "tokenText": "domain entity",
+  },
+}
+`;
+
 exports[`when building association with invalid trailing text should have extraneous input error 1`] = `
 Array [
   "extraneous input 'TrailingText' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'with context'}, column: 0, line: 11, token: TrailingText",

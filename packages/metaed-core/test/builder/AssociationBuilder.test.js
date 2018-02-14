@@ -5,6 +5,7 @@ import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getAssociation } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import type { ValidationFailure } from '../../src/validator/ValidationFailure';
+import type { EntityProperty } from '../../src/model/property/EntityProperty';
 
 describe('when building association in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -1026,5 +1027,11 @@ describe('when building association source map', () => {
 
   it('should have source map data', () => {
     expect(getAssociation(metaEd.entity, entityName).sourceMap).toMatchSnapshot();
+  });
+
+  it('should have two identity properties with sourceMaps', () => {
+    const properties: Array<EntityProperty> = getAssociation(metaEd.entity, entityName).identityProperties;
+    expect(properties[0].sourceMap).toMatchSnapshot('Property 0');
+    expect(properties[1].sourceMap).toMatchSnapshot('Property 1');
   });
 });

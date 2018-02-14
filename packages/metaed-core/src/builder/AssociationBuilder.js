@@ -43,12 +43,14 @@ export class AssociationBuilder extends TopLevelEntityBuilder {
   enterFirstDomainEntity(context: MetaEdGrammar.FirstDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = newDomainEntityProperty();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
     this.enteringIdentity(context);
   }
 
   enterSecondDomainEntity(context: MetaEdGrammar.SecondDomainEntityContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = newDomainEntityProperty();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
     this.enteringIdentity(context);
   }
 
