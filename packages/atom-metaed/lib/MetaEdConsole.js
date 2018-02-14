@@ -19,6 +19,7 @@ import type MetaEdLog from './MetaEdLog';
 type GulpInputs = {
   taskName: string,
   isExtensionProject: boolean,
+  extensionNamespace: string,
   projectPath: string,
   metaEdConsoleSourceDirectory: string,
   coreMetaEdSourceDirectory: string,

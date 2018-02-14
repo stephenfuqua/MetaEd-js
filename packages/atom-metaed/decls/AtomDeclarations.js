@@ -54,6 +54,11 @@ declare class AtomProject {
   addPath(projectPath: string): void;
   getPaths(): string[];
   setPaths(projectPaths: string[]): void;
+  getDirectories(): AtomDirectory[];
+}
+
+declare class AtomDirectory {
+  getFile(filename: string): any;
 }
 
 declare class AtomTextEditor {
