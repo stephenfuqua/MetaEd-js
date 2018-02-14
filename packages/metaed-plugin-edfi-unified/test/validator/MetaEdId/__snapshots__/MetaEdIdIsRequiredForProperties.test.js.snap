@@ -102,7 +102,13 @@ Object {
 
 exports[`when validating first domain entity property is missing metaEdId should have validation failures: when validating first domain entity property is missing metaEdId should have validation failures -> message 1`] = `"Domain Entity Property FirstAssociationDomainEntityProperty on Association AssociationName is missing a MetaEdId value."`;
 
-exports[`when validating first domain entity property is missing metaEdId should have validation failures: when validating first domain entity property is missing metaEdId should have validation failures -> sourceMap 1`] = `undefined`;
+exports[`when validating first domain entity property is missing metaEdId should have validation failures: when validating first domain entity property is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "domain entity",
+}
+`;
 
 exports[`when validating inline common property is missing metaEdId should have validation failures: when validating inline common property is missing metaEdId should have validation failures -> message 1`] = `"Inline Common Property InlineCommonName on Domain Entity DomainEntityName is missing a MetaEdId value."`;
 
@@ -146,7 +152,13 @@ Object {
 
 exports[`when validating second domain entity property is missing metaEdId should have validation failures: when validating second domain entity property is missing metaEdId should have validation failures -> message 1`] = `"Domain Entity Property SecondAssociationDomainEntityProperty on Association AssociationName is missing a MetaEdId value."`;
 
-exports[`when validating second domain entity property is missing metaEdId should have validation failures: when validating second domain entity property is missing metaEdId should have validation failures -> sourceMap 1`] = `undefined`;
+exports[`when validating second domain entity property is missing metaEdId should have validation failures: when validating second domain entity property is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 8,
+  "tokenText": "domain entity",
+}
+`;
 
 exports[`when validating shared decimal property is missing metaEdId should have validation failures: when validating shared decimal property is missing metaEdId should have validation failures -> message 1`] = `"Shared Decimal Property SharedDecimalName on Domain Entity DomainEntityName is missing a MetaEdId value."`;
 

@@ -138,5 +138,4 @@ describe('when domain entity property on association has invalid identifier', ()
     expect(failures[1].message).toMatchSnapshot('message 0');
     expect(failures[1].sourceMap).toMatchSnapshot('sourceMap 0');
   });
-  
 });
