@@ -1,4 +1,5 @@
-'use babel';
+/** @babel */
+// @flow
 
 import fs from 'fs-extra';
 import * as Settings from '../lib/Settings';

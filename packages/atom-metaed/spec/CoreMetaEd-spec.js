@@ -1,19 +1,24 @@
-'use babel';
+/** @babel */
+// @flow
 
 import fs from 'fs-extra';
 import path from 'path';
 import * as Settings from '../lib/Settings';
 import * as coreMetaEd from '../lib/CoreMetaEd';
 import { metaEdProjectFileTemplate } from '../lib/templates/TemplateEngine';
+import type MetaEdLog from '../lib//MetaEdLog';
+import type MetaEdConfig from '../lib/MetaEdConfig';
 
 const coreMetaEdSourceDirectory = 'coreMetaEdSourceDirectory';
 
 describe('CoreMetaEd', () => {
-  let testMetaEdLog;
-  let testMetaEdConfig;
+  let testMetaEdLog: MetaEdLog;
+  let testMetaEdConfig: MetaEdConfig;
 
   beforeEach(() => {
+    // $FlowIgnore - jasmine spy
     testMetaEdLog = jasmine.createSpyObj('MetaEdLog', ['addMessage', 'clear']);
+    // $FlowIgnore - jasmine spy
     testMetaEdConfig = jasmine.createSpyObj('MetaEdConfig', ['updateCoreMetaEdSourceDirectory']);
     spyOn(Settings, 'getCoreMetaEdSourceDirectory').andReturn(coreMetaEdSourceDirectory);
     spyOn(atom.project, 'getPaths');
@@ -39,9 +44,11 @@ describe('CoreMetaEd', () => {
       let callbackCalled = false;
       atom.project.getPaths.andReturn(['corePath']);
       // eslint-disable-next-line
-      atom.pickFolder.andCallFake(callback => callbackCalled = true);
+      atom.pickFolder.andCallFake(callback => (callbackCalled = true));
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
+      // $FlowIgnore - jasmine global
       waitsFor(() => callbackCalled);
+      // $FlowIgnore - jasmine golbal
       runs(() => {
         expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
         expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
@@ -96,7 +103,10 @@ describe('CoreMetaEd', () => {
       expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
       const expectedPath = path.join('extensionPath/metaEd.json');
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(expectedPath, metaEdProjectFileTemplate(coreMetaEdSourceDirectory));
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        expectedPath,
+        metaEdProjectFileTemplate(coreMetaEdSourceDirectory, '2.0.0'),
+      );
     });
   });
 
