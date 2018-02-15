@@ -348,6 +348,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     // Shared simple properties have propertyName as optional. If omitted, name is same as type being referenced
     if (!this.currentProperty.metaEdName && isSharedProperty(this.currentProperty)) {
       this.currentProperty.metaEdName = this.currentProperty.referencedType;
+      this.currentProperty.sourceMap.metaEdName = this.currentProperty.sourceMap.referencedType;
     }
 
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {

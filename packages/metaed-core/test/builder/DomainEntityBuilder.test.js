@@ -639,6 +639,10 @@ describe('when building domain entity with shared integer reference', () => {
   it('should have correct referenced type', () => {
     expect(getDomainEntity(metaEd.entity, entityName).properties[0].referencedType).toBe(sharedPropertyType);
   });
+
+  it('should have correct sourcemap', () => {
+    expect(getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
+  });
 });
 
 describe('when building domain entity with shared integer reference without name', () => {
@@ -669,6 +673,10 @@ describe('when building domain entity with shared integer reference without name
 
   it('should have correct referenced type', () => {
     expect(getDomainEntity(metaEd.entity, entityName).properties[0].referencedType).toBe(sharedPropertyType);
+  });
+
+  it('should have correct sourcemap', () => {
+    expect(getDomainEntity(metaEd.entity, entityName).properties[0].sourceMap).toMatchSnapshot();
   });
 });
 
