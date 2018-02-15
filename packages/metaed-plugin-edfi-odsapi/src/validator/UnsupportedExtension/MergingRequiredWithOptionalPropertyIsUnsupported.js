@@ -74,6 +74,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       );
 
       duplicateProperties.forEach((duplicate: { withContext: string, isOptional: boolean, property: EntityProperty }) => {
+        // skip failure message for now if this is a core only issue - in future maybe report if in a core-only mode (like IDE Alliance mode)
+        if (!entity.namespaceInfo.isExtension) return;
+
         failures.push({
           validatorName,
           category: 'warning',

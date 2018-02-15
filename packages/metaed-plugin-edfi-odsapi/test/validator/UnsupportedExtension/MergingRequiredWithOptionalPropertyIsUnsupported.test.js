@@ -4,7 +4,7 @@ import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/UnsupportedExtension/MergingRequiredWithOptionalPropertyIsUnsupported';
 
-describe('when a domain entity has both a required and optional reference to a property of the same name', () => {
+describe('when a domain entity has both a required and optional reference to a property of the same name but is in core', () => {
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
@@ -25,6 +25,53 @@ describe('when a domain entity has both a required and optional reference to a p
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withEndDomainEntity()
 
+      .withStartDomainEntity(domainEntityName3)
+      .withDocumentation('Documentation')
+      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
+      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when a domain entity has both a required and optional reference to a property of the same name in an extension', () => {
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    const domainEntityName1: string = 'DomainEntityName1';
+    const domainEntityName2: string = 'DomainEntityName2';
+    const domainEntityName3: string = 'DomainEntityName3';
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(domainEntityName1)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(domainEntityName2)
+      .withDocumentation('Documentation')
+      .withDomainEntityIdentity(domainEntityName1, 'Documentation')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
@@ -90,7 +137,9 @@ describe('when a domain entity has both a required and optional reference to dom
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withEndDomainEntity()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'Extension')
       .withStartDomainEntity(domainEntityName4)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
@@ -151,7 +200,9 @@ describe('when a domain entity has both a required and optional reference to a p
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withEndDomainEntity()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation', contextName)
@@ -211,7 +262,9 @@ describe('when a domain entity has both a required and optional reference to a p
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withEndDomainEntity()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
@@ -251,7 +304,9 @@ describe('when a domain entity has both a required and optional reference to a p
       .withDocumentation('Documentation')
       .withIntegerIdentity(IntegerPropertyName1, 'Documentation', '100', '0', 'ContextName')
       .withEndDomainEntity()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'Extension')
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
