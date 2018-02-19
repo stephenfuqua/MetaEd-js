@@ -5,7 +5,7 @@ import { initialize as initializeOdsPlugin } from '../../../index';
 import { generate as odsGenerate } from '../../../src/generator/OdsGenerator';
 import { generate as schemaGenerate } from '../../../src/generator/SchemaGenerator';
 import { createDatabaseIfNotExists, dropDatabaseIfExists } from './DatabaseUtility';
-import { disconnectAll, executeGeneratedSql, rollbackAndBeginTransaction } from './DatabaseConnection';
+import { disconnectAll, executeGeneratedSql, rollbackAndBeginTransaction, disconnect } from './DatabaseConnection';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 import type { DatabaseIndex } from './DatabaseIndex';
@@ -19,6 +19,7 @@ export const projectExtension: string = 'EXTENSION';
 beforeAll(async () => {
   await dropDatabaseIfExists(testDatabaseName);
   await createDatabaseIfNotExists(testDatabaseName);
+  await disconnect('master');
 });
 
 afterAll(async () => {

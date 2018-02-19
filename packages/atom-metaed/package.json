@@ -89,18 +89,22 @@
     }
   },
   "scripts": {
-    "postinstall": "apm link",
-    "postuninstall": "apm unlink atom-metaed",
+    "build:clean": "rimraf ./build/dist",
+    "build:dist": "mkdir .\\build\\dist && babel ./build/build.js -o ./build/dist/build.js --source-maps",
+    "build": "yarn build:clean && yarn build:dist",
+    "ci": "node ./build/dist/build.js",
     "test": "apm test"
   },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "adm-zip": "^0.4.7",
     "ansi-html": "^0.0.7",
     "atom-message-panel": "^1.3.0",
     "atom-package-deps": "^4.6.0",
     "atom-space-pen-views": "2.2.0",
+    "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "ed-fi-model-2.0": "metaed-1.0",
     "ed-fi-model-3.0": "metaed-1.0",
@@ -124,6 +128,7 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "eslint": "3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
@@ -137,6 +142,7 @@
     "mock-fs": "^4.3.0",
     "prettier": "^1.9.2",
     "proxyquire": "^1.8.0",
+    "rimraf": "^2.6.2",
     "standard-version": "^4.0.0"
   },
   "package-deps": [

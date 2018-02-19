@@ -11,54 +11,24 @@ if (process.env.TEAMCITY_VERSION != null) {
 }
 const highlightSql = (sql: string) => highlight(sql, { language: 'sql', ignoreIllegals: true });
 
-export type Pool = { transaction: Transaction, connection: ConnectionPool };
+export type Pool = {
+  transaction: Transaction,
+  connection: ConnectionPool,
+};
 export const pools: Map<string, Pool> = new Map();
-export const defaultServer: string = 'localhost';
 export const retryCount: number = 5;
 
 export const newConfig = () => ({
   database: '',
-  server: defaultServer,
+  appName: 'MetaEd',
+  server: 'localhost',
   connectionTimeout: 15000,
   requestTimeout: 15000,
   options: {
     trustedConnection: true,
+    abortTransactionOnError: true,
   },
 });
-
-export async function connect(databaseName: string = 'master'): Promise<ConnectionPool> {
-  if (pools.has(databaseName)) {
-    return pools.get(databaseName);
-  }
-
-  winston.verbose(`[${databaseName}] created connection pool`);
-  const pool = {};
-  pool.connection = await new ConnectionPool(
-    Object.assign({}, newConfig(), {
-      database: databaseName,
-    }),
-  );
-  if (!pool.connection.connected && !pool.connection.connecting) {
-    await pool.connection.connect();
-  }
-  pool.transaction = await new Transaction(pool.connection);
-  winston.verbose(`[${databaseName}] ---------- begin transaction ----------`);
-  await pool.transaction.begin();
-  pools.set(databaseName, pool);
-  return pool;
-}
-
-export async function rollbackAndBeginTransaction(databaseName: string = 'master'): Promise<void> {
-  if (pools.has(databaseName)) {
-    const pool = pools.get(databaseName);
-    if (pool != null && (pool.connection.connected || pool.connection.connecting)) {
-      winston.verbose(`[${databaseName}] rolling back transaction`);
-      await pool.transaction.rollback();
-      winston.verbose(`[${databaseName}] ---------- begin transaction ----------`);
-      await pool.transaction.begin();
-    }
-  }
-}
 
 export async function disconnect(databaseName: string = 'master'): Promise<void> {
   if (pools.has(databaseName)) {
@@ -85,30 +55,61 @@ export async function disconnectAll() {
   pools.clear();
 }
 
-export async function database(
-  databaseName: string,
-  fn: Function,
-  transaction: boolean = true,
-  rollback: boolean = false,
-  retry: number = retryCount,
-): Promise<void> {
-  let pool = null;
+export async function connect(databaseName: string = 'master', retry: number = retryCount): Promise<ConnectionPool> {
+  if (pools.has(databaseName)) {
+    return pools.get(databaseName);
+  }
+
+  let pool = {};
   try {
-    pool = await connect(databaseName);
-    await fn(transaction ? pool.transaction : pool.connection);
+    pool.connection = await new ConnectionPool({ ...newConfig(), database: databaseName });
+    winston.verbose(`[${databaseName}] created connection pool`);
+    if (!pool.connection.connected && !pool.connection.connecting) {
+      await pool.connection.connect();
+    }
+
+    pool.transaction = await new Transaction(pool.connection);
+    await pool.transaction.begin();
+    winston.verbose(`[${databaseName}] ---------- begin transaction ----------`);
   } catch (error) {
-    // TODO: This is a work around for the following error. This seems to occur most often when a fresh database has been
+    pool.connection.close();
+
+    // NOTE: This is a work around for the following error. This seems to occur most often when a fresh database has been
     // created and a connection attempt is made while it is in transition.
     // Error: [Microsoft][SQL Server Native Client 11.0]TCP Provider: An existing connection was forcibly closed by the remote host.
     if (
       retry > 0 &&
       RegExp('TCP Provider: An existing connection was forcibly closed by the remote host.').test(error.message)
     ) {
-      await new Promise(resolve => setTimeout(resolve, 100));
-      if (transaction && rollback) await rollbackAndBeginTransaction(databaseName);
-      await database(databaseName, fn, transaction, rollback, retry - 1);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      pool = await connect(databaseName, retry - 1);
     } else {
-      winston.error(`[${databaseName}] ${error.message} ${error.stack}`);
+      throw error;
+    }
+  }
+
+  pools.set(databaseName, pool);
+  return pool;
+}
+
+export async function database(databaseName: string, fn: Function, transaction: boolean = true): Promise<void> {
+  let pool = null;
+  try {
+    pool = await connect(databaseName);
+    await fn(transaction ? pool.transaction : pool.connection);
+  } catch (error) {
+    winston.error(`[${databaseName}] ${error.message} ${error.stack}`);
+  }
+}
+
+export async function rollbackAndBeginTransaction(databaseName: string = 'master'): Promise<void> {
+  if (pools.has(databaseName)) {
+    const pool = pools.get(databaseName);
+    if (pool != null && pool.transaction != null) {
+      winston.verbose(`[${databaseName}] rolling back transaction`);
+      await pool.transaction.rollback();
+      await pool.transaction.begin();
+      winston.verbose(`[${databaseName}] ---------- begin transaction ----------`);
     }
   }
 }
@@ -152,7 +153,6 @@ export async function executeGeneratedSql(generatedSql: string, databaseName: st
         if (sql != null || sql !== '') await new Request(db).query(sql);
       }
     },
-    true,
     true,
   );
 }

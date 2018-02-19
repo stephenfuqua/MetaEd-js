@@ -19,13 +19,10 @@ tmp
 dist/
 
 ## Test artifacts
-/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*.diff
-/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*.html
-/packages/metaed-plugin-edfi-xsd/test/integration/artifact/Ed-Fi-Core.xsd
-/packages/metaed-plugin-edfi-xsd/test/integration/artifact/SchemaAnnotation.xsd
+/packages/metaed-plugin-edfi-xsd/test/integration/artifact/
+!/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*-Authoritative.xsd
 
-/packages/metaed-plugin-edfi-ods/test/integration/artifact/*.diff
-/packages/metaed-plugin-edfi-ods/test/integration/artifact/*.html
-/packages/metaed-plugin-edfi-ods/test/integration/artifact/0004-Tables.sql
+/packages/metaed-plugin-edfi-ods/test/integration/artifact/
+!/packages/metaed-plugin-edfi-ods/test/integration/artifact/*-Authoritative.sql
 
 MetaEdArtifacts/

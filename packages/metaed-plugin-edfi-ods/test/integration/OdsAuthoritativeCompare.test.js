@@ -75,6 +75,8 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     state.metaEd.dataStandardVersion = state.metaEdConfiguration.dataStandardCoreSourceVersion;
     validateConfiguration(state);
     loadPlugins(state);
+    // NOTE: filtering interchange brief because of TeamCity issues with phatonmjs(?)
+    state.pluginManifest = state.pluginManifest.filter(manifest => manifest.shortName !== 'edfiInterchangeBrief');
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);

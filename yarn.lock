@@ -79,6 +79,10 @@ adler-32@~1.1.0:
     exit-on-epipe "~1.0.1"
     printj "~1.1.0"
 
+adm-zip@^0.4.7:
+  version "0.4.7"
+  resolved "https://www.myget.org/F/ed-fi/npm/adm-zip/-/adm-zip-0.4.7.tgz#8606c2cbf1c426ce8c8ec00174447fd49b6eafc1"
+
 ajv-keywords@^1.0.0:
   version "1.5.1"
   resolved "https://www.myget.org/F/ed-fi/npm/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
@@ -398,6 +402,13 @@ aws-sign2@~0.7.0:
 aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://www.myget.org/F/ed-fi/npm/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
+
+axios@^0.17.1:
+  version "0.17.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
+  dependencies:
+    follow-redirects "^1.2.5"
+    is-buffer "^1.1.5"
 
 babel-cli@^6.26.0:
   version "6.26.0"
@@ -2206,8 +2217,8 @@ es6-map@^0.1.3:
     event-emitter "~0.3.5"
 
 es6-promise@^4.0.3:
-  version "4.2.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/es6-promise/-/es6-promise-4.2.2.tgz#f722d7769af88bd33bc13ec6605e1f92966b82d9"
+  version "4.2.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
 
 es6-set@~0.1.5:
   version "0.1.5"
@@ -2809,6 +2820,12 @@ flow-typed@^2.1.5:
     unzip "^0.1.11"
     which "^1.2.14"
     yargs "^4.2.0"
+
+follow-redirects@^1.2.5:
+  version "1.4.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
+  dependencies:
+    debug "^3.1.0"
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -6374,7 +6391,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.2"
   resolved "https://www.myget.org/F/ed-fi/npm/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:

@@ -66,7 +66,6 @@ NOUNLOAD, REPLACE, STATS = 5
       await query(db, 'DatabaseTestUtility.restoreDatabaseFromBackup', sql);
     },
     false,
-    false,
   );
 }
 
@@ -81,7 +80,6 @@ SET COMPATIBILITY_LEVEL = ${level}
     async db => {
       await query(db, 'DatabaseTestUtility.setCompatibilityLevel', sql);
     },
-    false,
     false,
   );
 }
