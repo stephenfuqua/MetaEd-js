@@ -5038,9 +5038,9 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://www.myget.org/F/ed-fi/npm/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-metaed-csharp@1.1.2-dev.3:
-  version "1.1.2-dev.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/metaed-csharp/-/metaed-csharp-1.1.2-dev.3.tgz#e9586d084f484af97f80856b5666cb636f145cdf"
+metaed-csharp@1.1.2-dev.4:
+  version "1.1.2-dev.4"
+  resolved "https://www.myget.org/F/ed-fi/npm/metaed-csharp/-/metaed-csharp-1.1.2-dev.4.tgz#a8933e8e7abff1eb9c7d9c14d56839c1dbbd0b80"
   dependencies:
     chalk "1.1.3"
     del "2.2.0"
