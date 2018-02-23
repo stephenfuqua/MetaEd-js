@@ -9,6 +9,7 @@ import os from 'os';
 import { spawn as nodeSpawn } from 'child_process';
 import streamSplitter from 'stream-splitter';
 import ansihtml from 'ansi-html';
+import { createExtensionProjectConfiguration } from './CoreMetaEd';
 import {
   getCoreMetaEdSourceDirectory,
   getMetaEdJsConsoleSourceDirectory,
@@ -31,6 +32,7 @@ type TaskInputs = {
   edfiOdsRepoDirectory: ?string,
   edfiOdsImplementationRepoDirectory: ?string,
   consolePath: string,
+  extensionConfigPath: string,
 };
 
 export default class MetaEdConsoleJs {
@@ -44,7 +46,7 @@ export default class MetaEdConsoleJs {
   }
 
   build(isExtensionProject: boolean = false) {
-    this._task('generate-artifacts', isExtensionProject);
+    this._task('metaed', isExtensionProject);
   }
 
   deploy(isExtensionProject: boolean = false) {
@@ -126,6 +128,16 @@ export default class MetaEdConsoleJs {
       projectPath = atom.project.getPaths()[0];
     }
 
+    // TODO: for now use atom config to overwrite metaed.json config
+    createExtensionProjectConfiguration(this._metaEdLog);
+    const extensionConfigPath = path.resolve(projectPath, 'metaed.json');
+    // if (!fs.existsSync(extensionConfigPath)) {
+    //   this._metaEdLog.addMessage(
+    //     `No Extension Project Configuration found in ${projectPath}. Please add an extension configuration`,
+    //   );
+    //   return null;
+    // }
+
     // TODO: change to getMetaEdConsoleSourceDirectory once it becomes default setting
     const metaEdJsConsoleSourceDirectory = getMetaEdJsConsoleSourceDirectory();
     const coreMetaEdSourceDirectory = getCoreMetaEdSourceDirectory();
@@ -158,7 +170,7 @@ export default class MetaEdConsoleJs {
       );
       return null;
     }
-    const artifactPath = path.join(projectPath, 'MetaEdOutput/');
+    const artifactPath = path.join(projectPath, 'MetaEdJsOutput/');
 
     let consolePath = path.resolve(metaEdJsConsoleSourceDirectory, '../metaed-console/dist/index.js');
     if (!fs.existsSync(consolePath)) {
@@ -203,69 +215,65 @@ export default class MetaEdConsoleJs {
       edfiOdsRepoDirectory,
       edfiOdsImplementationRepoDirectory,
       consolePath,
+      extensionConfigPath,
     };
   }
 
   _createTaskParams(inputs: TaskInputs) {
     const params = ['/s', '/c', `node ${inputs.consolePath}`];
-    if (inputs.isExtensionProject) {
-      params.push(...['-e', inputs.coreMetaEdSourceDirectory]);
-      params.push(...['-x', inputs.projectPath]);
-    } else {
-      params.push(...['-e', inputs.coreMetaEdSourceDirectory]);
-    }
-    if (inputs.taskName.startsWith('deploy')) {
-      // deploy
-    }
+    params.push(...['--config', inputs.extensionConfigPath]);
     return params;
   }
 
-  _executeTask(inputs: TaskInputs) {
-    const startNotification = new Notification('info', 'Building MetaEd...', { dismissable: true });
-    const failNotification = new Notification('error', 'MetaEd Build Failed!', { dismissable: true });
-    const buildErrorsNotification = new Notification('warning', 'MetaEd Build Errors Detected!', { dismissable: true });
-    let resultNotification = new Notification('success', 'MetaEd Build Complete!', { dismissable: true });
+  _executeTask(inputs: TaskInputs): Promise<boolean> {
+    return new Promise(resolve => {
+      const startNotification = new Notification('info', 'Building MetaEd...', { dismissable: true });
+      const failNotification = new Notification('error', 'MetaEd Build Failed!', { dismissable: true });
+      const buildErrorsNotification = new Notification('warning', 'MetaEd Build Errors Detected!', { dismissable: true });
+      let resultNotification = new Notification('success', 'MetaEd Build Complete!', { dismissable: true });
 
-    startNotification.onDidDisplay(() => setTimeout(() => startNotification.dismiss(), 10000));
+      startNotification.onDidDisplay(() => setTimeout(() => startNotification.dismiss(), 10000));
 
-    [resultNotification, failNotification, buildErrorsNotification].forEach(notification =>
-      notification.onDidDisplay(() => {
-        startNotification.dismiss();
-        setTimeout(() => notification.dismiss(), 3000);
-      }),
-    );
+      [resultNotification, failNotification, buildErrorsNotification].forEach(notification =>
+        notification.onDidDisplay(() => {
+          startNotification.dismiss();
+          setTimeout(() => notification.dismiss(), 3000);
+        }),
+      );
 
-    setImmediate(() => atom.notifications.addNotification(startNotification));
+      setImmediate(() => atom.notifications.addNotification(startNotification));
 
-    const taskParams = this._createTaskParams(inputs);
-    if (!taskParams) {
-      return;
-    }
-
-    console.log(`Executing cmd.exe with parameters ${JSON.stringify(taskParams)}.`);
-
-    const childProcess = this._spawn(inputs.cmdFullPath, taskParams, { cwd: inputs.metaEdJsConsoleSourceDirectory });
-
-    const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
-    outputSplitter.encoding = 'utf8';
-    outputSplitter.on('token', token => {
-      this._metaEdLog.addMessage(ansihtml(token), true);
-    });
-
-    childProcess.stderr.on('data', data => {
-      this._metaEdLog.addMessage(ansihtml(data.toString()).replace(/(?:\r\n|\r|\n)/g, '<br />'), true);
-      resultNotification = buildErrorsNotification;
-    });
-
-    childProcess.on('close', code => {
-      console.log(`child process exited with code ${code}`);
-      if (code === 0) {
-        this._metaEdLog.addMessage(`Successfully executed MetaEd task ${inputs.taskName}.`);
-      } else {
-        this._metaEdLog.addMessage(`Error on call to MetaEd task ${inputs.taskName}.`);
-        resultNotification = failNotification;
+      const taskParams = this._createTaskParams(inputs);
+      if (!taskParams) {
+        return;
       }
-      atom.notifications.addNotification(resultNotification);
+
+      console.log(`Executing cmd.exe with parameters ${JSON.stringify(taskParams)}.`);
+
+      const childProcess = this._spawn(inputs.cmdFullPath, taskParams, { cwd: inputs.metaEdJsConsoleSourceDirectory });
+
+      const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
+      outputSplitter.encoding = 'utf8';
+      outputSplitter.on('token', token => {
+        this._metaEdLog.addMessage(ansihtml(token), true);
+      });
+
+      childProcess.stderr.on('data', data => {
+        this._metaEdLog.addMessage(ansihtml(data.toString()).replace(/(?:\r\n|\r|\n)/g, '<br />'), true);
+        resultNotification = buildErrorsNotification;
+      });
+
+      childProcess.on('close', code => {
+        console.log(`child process exited with code ${code}`);
+        if (code === 0) {
+          this._metaEdLog.addMessage(`Successfully executed MetaEd task ${inputs.taskName}.`);
+        } else {
+          this._metaEdLog.addMessage(`Error on call to MetaEd task ${inputs.taskName}.`);
+          resultNotification = failNotification;
+        }
+        atom.notifications.addNotification(resultNotification);
+        return resolve(code === 0);
+      });
     });
   }
 

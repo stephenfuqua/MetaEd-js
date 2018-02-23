@@ -8,17 +8,20 @@ import { getCoreMetaEdSourceDirectory, useTechPreview } from './Settings';
 import { metaEdProjectFileTemplate } from './templates/TemplateEngine';
 import type MetaEdLog from './MetaEdLog';
 
-export function createExtensionProjectConfiguration(metaEdLog: MetaEdLog) {
+// eslint-disable-next-line no-unused-vars
+export function createExtensionProjectConfiguration(metaEdLog: MetaEdLog): void {
   const extensionProjectPath = atom.project.getPaths()[1];
   const projectConfigFile = path.join(extensionProjectPath, 'metaEd.json');
-  if (fs.existsSync(projectConfigFile)) {
-    // Extension project exists with a metaEd.json, we're done
-    metaEdLog.addMessage('Extension project already exists');
-    return;
-  }
-  const sourceDirectory = getCoreMetaEdSourceDirectory();
+  // TODO: For now take atom metaed config information and use it to overwrite json config
+  // if (fs.existsSync(projectConfigFile)) {
+  // Extension project exists with a metaEd.json, we're done
+  // metaEdLog.addMessage('Extension project already exists');
+  // return;
+  // }
+
   const deployTargetVersion = useTechPreview() ? '3.0.0' : '2.0.0';
-  const projectConfigFileContents = metaEdProjectFileTemplate(sourceDirectory, deployTargetVersion);
+  const sourceDirectory = getCoreMetaEdSourceDirectory();
+  const projectConfigFileContents = metaEdProjectFileTemplate(deployTargetVersion, sourceDirectory, extensionProjectPath);
   fs.writeFileSync(projectConfigFile, projectConfigFileContents);
 }
 
