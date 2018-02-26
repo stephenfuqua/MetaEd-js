@@ -294,7 +294,12 @@ export function activate(state: any) {
   subscriptions.add(
     atom.commands.add('atom-workspace', {
       'atom-metaed:build': () => {
-        if (metaEdConsole != null) metaEdConsole.build(!allianceMode());
+        if (metaEdConsole != null)
+          if (metaEdLog != null) {
+            const metaEdConsoleJs = new MetaEdConsoleJs(metaEdLog);
+            metaEdConsoleJs.build(!allianceMode());
+            metaEdConsole.build(!allianceMode());
+          }
       },
     }),
   );

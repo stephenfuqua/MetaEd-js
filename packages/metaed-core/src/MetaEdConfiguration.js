@@ -7,6 +7,7 @@ export type PluginConfiguration = {
 
 export type MetaEdConfiguration = {
   title: string,
+  namespace: string,
   dataStandardCoreSourceDirectory: string,
   dataStandardExtensionSourceDirectory: string,
   artifactDirectory: string,
@@ -22,6 +23,7 @@ export const newPluginConfiguration: () => PluginConfiguration = () => ({
 
 export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   title: '',
+  namespace: '',
   dataStandardCoreSourceDirectory: '',
   dataStandardExtensionSourceDirectory: '',
   artifactDirectory: '',

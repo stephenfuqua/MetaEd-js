@@ -1,38 +1,51 @@
 /** @babel */
 // @flow
 
-export function metaEdProjectFileTemplate(metaEdCoreDirectory: string, targetVersion: string) {
+export function metaEdProjectFileTemplate(
+  targetVersion: string,
+  dataStandardCoreSourceDirectory: string,
+  dataStandardExtensionSourceDirectory: string,
+): string {
   return `{
-  "title": "MetaEd Extension Project",
-  "namespace": "extension",
-  "dataStandardCoreSourceVersion": "${targetVersion}",
-  "pluginConfig": {
-    "edfiUnified": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiOds": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiOdsApi": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiXsd": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiHandbook": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiInterchangeBrief": {
-      "targetTechnologyVersion": "${targetVersion}"
-    },
-    "edfiXmlDictionary": {
-      "targetTechnologyVersion": "${targetVersion}"
+  "metaEdConfiguration": {
+    "title": "MetaEd Extension Project",
+    "namespace": "extension",
+    "dataStandardCoreSourceVersion": "${targetVersion}",
+    "dataStandardCoreSourceDirectory": "${dataStandardCoreSourceDirectory.replace(/\\/g, '/')}",
+    ${
+      dataStandardExtensionSourceDirectory != null
+        ? `"dataStandardExtensionSourceDirectory": "${dataStandardExtensionSourceDirectory.replace(/\\/g, '/')}",`
+        : ''
+    }
+    "artifactDirectory": "./MetaEdArtifacts/",
+    "pluginConfig": {
+      "edfiUnified": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiOds": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiOdsApi": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiXsd": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiHandbook": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiInterchangeBrief": {
+        "targetTechnologyVersion": "${targetVersion}"
+      },
+      "edfiXmlDictionary": {
+        "targetTechnologyVersion": "${targetVersion}"
+      }
     }
   }
 }`;
 }
 
-export function associationTemplate() {
+export function associationTemplate(): string {
   return `Association ExampleName
     documentation "This is documentation."
     domain entity FirstEntityName
@@ -45,7 +58,7 @@ export function associationTemplate() {
 `;
 }
 
-export function choiceTemplate() {
+export function choiceTemplate(): string {
   return `Choice ExampleName
     documentation "This is documentation."
     bool FirstPropertyName
@@ -57,7 +70,7 @@ export function choiceTemplate() {
 `;
 }
 
-export function commonTemplate() {
+export function commonTemplate(): string {
   return `Common ExampleName
     documentation "This is documentation."
     bool PropertyName
@@ -66,7 +79,7 @@ export function commonTemplate() {
 `;
 }
 
-export function descriptorTemplate() {
+export function descriptorTemplate(): string {
   return `Descriptor ExampleName
     documentation "This is documentation."
     with map type
@@ -75,7 +88,7 @@ export function descriptorTemplate() {
 `;
 }
 
-export function domainEntityTemplate() {
+export function domainEntityTemplate(): string {
   return `Domain Entity ExampleName
     documentation "This is documentation."
     bool PropertyName
@@ -84,7 +97,7 @@ export function domainEntityTemplate() {
 `;
 }
 
-export function domainTemplate() {
+export function domainTemplate(): string {
   return `Domain ExampleName
     documentation "This is documentation."
     domain entity ItemName
@@ -92,7 +105,7 @@ export function domainTemplate() {
 `;
 }
 
-export function enumerationTemplate() {
+export function enumerationTemplate(): string {
   return `Enumeration ExampleName
     documentation "This is documentation."
     item "ItemName"
@@ -100,7 +113,7 @@ export function enumerationTemplate() {
 `;
 }
 
-export function interchangeTemplate() {
+export function interchangeTemplate(): string {
   return `Interchange ExampleName
     documentation "This is documentation."
     extended documentation "This is documentation."
@@ -109,7 +122,7 @@ export function interchangeTemplate() {
 `;
 }
 
-export function sharedDecimalTemplate() {
+export function sharedDecimalTemplate(): string {
   return `Shared Decimal ExampleName
     documentation "This is documentation."
     total digits 9
@@ -119,7 +132,7 @@ export function sharedDecimalTemplate() {
 `;
 }
 
-export function sharedIntegerTemplate() {
+export function sharedIntegerTemplate(): string {
   return `Shared Integer ExampleName
     documentation "This is documentation."
     min value 0
@@ -127,7 +140,7 @@ export function sharedIntegerTemplate() {
 `;
 }
 
-export function sharedStringTemplate() {
+export function sharedStringTemplate(): string {
   return `Shared String ExampleName
     documentation "This is documentation."
     min length 1
