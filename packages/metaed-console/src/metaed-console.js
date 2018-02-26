@@ -15,7 +15,6 @@ export async function metaEdConsole() {
     .config('config', configPath => JSON.parse(fs.readFileSync(path.resolve(__dirname, configPath), 'utf-8')))
     .option('config', {
       alias: 'c',
-      default: path.resolve(__dirname, './metaed.json'),
     })
     .help()
     .alias('help', 'h')
