@@ -1,0 +1,10 @@
+Domain Entity Staff additions
+    date ProbationCompleteDate
+        documentation "The date the probation period ended or is scheduled to end."
+        is optional
+    bool Tenured
+        documentation "Indicator of whether the staff member is tenured."
+        is optional
+    integer MyCollection
+        documentation "Hi"
+        is required collection

@@ -66,16 +66,15 @@ export default class MetaEdConsoleJs {
     }
   }
 
-  _task(taskName: string, isExtensionProject: boolean = false): Promise<void> {
+  async _task(taskName: string, isExtensionProject: boolean = false): Promise<void> {
     this._metaEdLog.clear();
 
     const inputs = this._verifyInputs(taskName, isExtensionProject);
-    if (!inputs) {
-      return Promise.reject();
-    }
+    if (!inputs) return;
     this._metaEdLog.addMessage(`Beginning execution of MetaEd task ${taskName}...`);
 
-    return this._cleanUpMetaEdArtifacts(inputs.artifactPath).then(() => this._executeTask(inputs));
+    await this._cleanUpMetaEdArtifacts(inputs.artifactPath);
+    await this._executeTask(inputs);
   }
 
   _cleanUpMetaEdArtifacts(artifactPath: string): Promise<void> {

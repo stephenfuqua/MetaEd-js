@@ -86,15 +86,6 @@ describe('CoreMetaEd', () => {
       atom.project.getPaths.andReturn(['corePath', 'extensionPath']);
     });
 
-    it('informs user if extension config already exists', () => {
-      spyOn(fs, 'existsSync').andReturn(true);
-      spyOn(fs, 'writeFileSync').andReturn(true);
-      coreMetaEd.createExtensionProjectConfiguration(testMetaEdLog);
-
-      expect(testMetaEdLog.addMessage).toHaveBeenCalled();
-      expect(fs.writeFileSync).not.toHaveBeenCalled();
-    });
-
     it('creates project config and writes to path if it does not exist', () => {
       spyOn(fs, 'existsSync').andReturn(false);
       spyOn(fs, 'writeFileSync').andReturn(true);
@@ -105,7 +96,7 @@ describe('CoreMetaEd', () => {
 
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         expectedPath,
-        metaEdProjectFileTemplate(coreMetaEdSourceDirectory, '2.0.0'),
+        metaEdProjectFileTemplate('2.0.0', coreMetaEdSourceDirectory, 'extensionPath'),
       );
     });
   });

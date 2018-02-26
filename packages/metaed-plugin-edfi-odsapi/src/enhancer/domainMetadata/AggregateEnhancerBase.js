@@ -32,9 +32,9 @@ export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespa
 function generateAggregate(
   entity: TopLevelEntity,
   namespaceInfo: NamespaceInfo,
-  { enhanceEntityTable, isAggregateExtension }: EnhanceSingleEntityOptions,
+  { enhanceEntityTable, isAggregateExtension, orderedAndUniqueTablesFor }: EnhanceSingleEntityOptions,
 ): ?Aggregate {
-  const tables: Array<Table> = defaultOrderedAndUniqueTablesFor(entity, namespaceInfo);
+  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespaceInfo);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,

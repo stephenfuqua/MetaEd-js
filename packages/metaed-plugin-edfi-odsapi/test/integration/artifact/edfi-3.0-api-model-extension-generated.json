@@ -1,0 +1,1114 @@
+{
+  "odsApiVersion": "3.0.0",
+  "schemaDefinition": {
+    "logicalName": "EXTENSION",
+    "physicalName": "extension"
+  },
+  "aggregateDefinitions": [],
+  "aggregateExtensionDefinitions": [
+    {
+      "aggregateRootEntityName": {
+        "schema": "extension",
+        "name": "Staff"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "extension",
+          "name": "StaffMyCollection"
+        }
+      ]
+    },
+    {
+      "aggregateRootEntityName": {
+        "schema": "extension",
+        "name": "StaffEvaluation"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "extension",
+          "name": "StaffEvaluation"
+        },
+        {
+          "schema": "extension",
+          "name": "StaffEvaluationStaffRatingLevel"
+        }
+      ]
+    },
+    {
+      "aggregateRootEntityName": {
+        "schema": "extension",
+        "name": "StaffEvaluationComponent"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "extension",
+          "name": "StaffEvaluationComponent"
+        },
+        {
+          "schema": "extension",
+          "name": "StaffEvaluationComponentStaffRatingLevel"
+        }
+      ]
+    },
+    {
+      "aggregateRootEntityName": {
+        "schema": "extension",
+        "name": "StaffEvaluationRating"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "extension",
+          "name": "StaffEvaluationRating"
+        }
+      ]
+    }
+  ],
+  "entityDefinitions": [
+    {
+      "schema": "extension",
+      "name": "StaffEvaluation",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Id",
+          "propertyType": {
+            "dbType": "Guid",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LastModifiedDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MaxRating",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The maximum summary numerical rating or score for the staff evaluation.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MinRating",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": true
+          },
+          "description": "The minimum summary numerical rating or score for the staff evaluation. If omitted, assumed to be 0.0.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffEvaluation_PK",
+          "identifyingPropertyNames": [
+            "SchoolYear",
+            "StaffEvaluationTitle"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        },
+        {
+          "identifierName": "UX_StaffEvaluation_Id",
+          "identifyingPropertyNames": [
+            "Id"
+          ],
+          "isPrimary": false,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "TBD"
+    },
+    {
+      "schema": "extension",
+      "name": "StaffEvaluationComponent",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EvaluationComponent",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Id",
+          "propertyType": {
+            "dbType": "Guid",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LastModifiedDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MaxRating",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": false
+          },
+          "description": "The max rating for the scale used for the Evaluation Component, if different from the overall staff evaluation.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MinRating",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": true
+          },
+          "description": "The minimum rating for the scale used for the Evaluation Component, if different from the overall staff evaluation.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffEvaluationComponent_PK",
+          "identifyingPropertyNames": [
+            "EvaluationComponent",
+            "SchoolYear",
+            "StaffEvaluationTitle"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        },
+        {
+          "identifierName": "UX_StaffEvaluationComponent_Id",
+          "identifyingPropertyNames": [
+            "Id"
+          ],
+          "isPrimary": false,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The components of the evaluation."
+    },
+    {
+      "schema": "extension",
+      "name": "StaffEvaluationComponentStaffRatingLevel",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MaxLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": false
+          },
+          "description": "The maximum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MinLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": true
+          },
+          "description": "The minimum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationLevel",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffEvaluationComponentStaffRatingLevel_PK",
+          "identifyingPropertyNames": [
+            "EvaluationComponent",
+            "SchoolYear",
+            "StaffEvaluationTitle"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
+    },
+    {
+      "schema": "extension",
+      "name": "StaffEvaluationRating",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Id",
+          "propertyType": {
+            "dbType": "Guid",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LastModifiedDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Rating",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": false
+          },
+          "description": "The numerical summary rating or score for the evaluation.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The date for the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffEvaluationRating_PK",
+          "identifyingPropertyNames": [
+            "SchoolYear",
+            "StaffEvaluationDate",
+            "StaffEvaluationTitle",
+            "StaffUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        },
+        {
+          "identifierName": "UX_StaffEvaluationRating_Id",
+          "identifyingPropertyNames": [
+            "Id"
+          ],
+          "isPrimary": false,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The summary rating for a staff evaluation applied to an individual educator."
+    },
+    {
+      "schema": "extension",
+      "name": "StaffEvaluationStaffRatingLevel",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MaxLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": false
+          },
+          "description": "The maximum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MinLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": true
+          },
+          "description": "The minimum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationLevel",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffEvaluationStaffRatingLevel_PK",
+          "identifyingPropertyNames": [
+            "SchoolYear",
+            "StaffEvaluationLevel",
+            "StaffEvaluationTitle"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
+    },
+    {
+      "schema": "extension",
+      "name": "StaffExtension",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "ProbationCompleteDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The date the probation period ended or is scheduled to end.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Tenured",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "Indicator of whether the staff member is tenured.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffExtension_PK",
+          "identifyingPropertyNames": [
+            "StaffUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": ""
+    },
+    {
+      "schema": "extension",
+      "name": "StaffMyCollection",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MyCollection",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "Hi",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffMyCollection_PK",
+          "identifyingPropertyNames": [
+            "MyCollection",
+            "StaffUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "Hi"
+    }
+  ],
+  "associationDefinitions": [
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluation_SchoolYearType"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "SchoolYearType"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "Key for School Year",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluationComponent_StaffEvaluation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationComponent"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluationComponentStaffRatingLevel_StaffEvaluationComponent"
+      },
+      "cardinality": "OneToOne",
+      "primaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationComponent"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EvaluationComponent",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationComponentStaffRatingLevel"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EvaluationComponent",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The Evaluation Component (e.g., Preparation, classroom control, delivery of instruction, etc.).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluationRating_Staff"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "Staff"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationRating"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluationRating_StaffEvaluation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationRating"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffEvaluationStaffRatingLevel_StaffEvaluation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffEvaluationStaffRatingLevel"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The school year the Staff evaluation is applied.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationTitle",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name or title of the staff evaluation.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffExtension_Staff"
+      },
+      "cardinality": "OneToOneExtension",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "Staff"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffExtension"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffMyCollection_Staff"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "Staff"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffMyCollection"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    }
+  ]
+}

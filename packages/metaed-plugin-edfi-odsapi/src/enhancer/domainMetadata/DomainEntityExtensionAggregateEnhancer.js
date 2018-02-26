@@ -10,7 +10,7 @@ const enhancerName: string = 'DomainEntityExtensionAggregateEnhancer';
 function orderedAndUniqueTablesFor(entity: TopLevelEntity, namespaceInfo: NamespaceInfo): Array<Table> {
   const tablesForNamespace = ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_Tables.filter(
     (t: Table) =>
-      t.namespace === namespaceInfo.namespace &&
+      t.schema === namespaceInfo.namespace &&
       t.name !== ((entity.data.edfiOds: any): DomainEntityExtensionEdfiOds).ods_ExtensionName,
   );
   // TODO: why is unique necessary?

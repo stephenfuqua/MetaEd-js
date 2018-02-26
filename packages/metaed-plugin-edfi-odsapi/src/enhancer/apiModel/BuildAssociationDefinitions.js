@@ -1,10 +1,12 @@
 // @flow
 import R from 'ramda';
+import { NamespaceInfo } from 'metaed-core';
 import type { Table, Column, ForeignKey, ColumnNamePair } from 'metaed-plugin-edfi-ods';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 import type { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
 import type { ApiProperty } from '../../model/apiModel/ApiProperty';
+import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import { buildApiProperty } from './BuildApiProperty';
 
 function findAggregateWithEntity(
@@ -70,11 +72,11 @@ function getPrimaryEntityProperties(
   const table = tables.get(foreignKey.foreignTableName);
   if (table == null) throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.foreignTableName}'.`);
 
-  const properties: Array<ApiProperty> = table.columns
-    .filter(c => foreignKey.foreignTableColumnNames.includes(c.name))
-    .map(c => ({ ...buildApiProperty(c), isIdentifying }));
-
-  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), properties);
+  // maintain foreign key column order
+  return foreignKey.foreignTableColumnNames
+    .map((columnName: string) => table.columns.filter(c => c.name === columnName))
+    .map((columnArray: Array<Column>) => columnArray[0])
+    .map((c: Column) => ({ ...buildApiProperty(c), isIdentifying }));
 }
 
 // Override the typical isServerAssigned - it's true iff it's from a 1-1 or 1-1 inheritance relation and the matching
@@ -122,13 +124,13 @@ function getSecondaryEntityProperties(
   const table = tables.get(foreignKey.parentTableName);
   if (table == null) throw new Error(`BuildAssociationDefinitions: could not find table '${foreignKey.parentTableName}'.`);
 
-  const properties: Array<ApiProperty> = table.columns
-    .filter((c: Column) => foreignKey.parentTableColumnNames.includes(c.name))
+  // maintain foreign key column order
+  return foreignKey.parentTableColumnNames
+    .map((columnName: string) => table.columns.filter(c => c.name === columnName))
+    .map((columnArray: Array<Column>) => columnArray[0])
     .map((c: Column) =>
       buildApiPropertyWithServerAssignedOverride(c, foreignKey, tables, isIdentifying, domainMetadataAggregatesForNamespace),
     );
-
-  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), properties);
 }
 
 // For some reason, this is where all of the source columns in the foreign key are part of the PK
@@ -163,45 +165,50 @@ function isRequiredFrom(
 // Association definitions are the ODS foreign key definitions for a namespace
 export function buildAssociationDefinitions(
   tables: Map<string, Table>,
-  domainMetadataAggregatesForNamespace: Array<Aggregate>,
+  namespaceInfo: NamespaceInfo,
 ): Array<AssociationDefinition> {
   const result: Array<AssociationDefinition> = [];
-  Array.from(tables.values()).forEach((table: Table) => {
-    table.foreignKeys.forEach((foreignKey: ForeignKey) => {
-      const isIdentifying: boolean = isIdentifyingForeignKey(foreignKey, tables);
-      const cardinality: AssociationDefinitionCardinality = cardinalityFrom(
-        isIdentifying,
-        foreignKey,
-        tables,
-        domainMetadataAggregatesForNamespace,
-      );
-      const isRequired: boolean = isRequiredFrom(cardinality, foreignKey, tables);
-      result.push({
-        fullName: {
-          schema: table.schema,
-          name: foreignKey.name,
-        },
-        cardinality,
-        primaryEntityFullName: {
-          schema: foreignKey.foreignTableSchema,
-          name: foreignKey.foreignTableName,
-        },
-        primaryEntityProperties: getPrimaryEntityProperties(foreignKey, tables, isIdentifying),
-        secondaryEntityFullName: {
-          schema: foreignKey.parentTableSchema,
-          name: foreignKey.parentTableName,
-        },
-        secondaryEntityProperties: getSecondaryEntityProperties(
+  const domainMetadataAggregatesForNamespace: Array<Aggregate> = ((namespaceInfo.data
+    .edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates;
+
+  Array.from(tables.values())
+    .filter((table: Table) => table.schema === namespaceInfo.namespace)
+    .forEach((table: Table) => {
+      table.foreignKeys.forEach((foreignKey: ForeignKey) => {
+        const isIdentifying: boolean = isIdentifyingForeignKey(foreignKey, tables);
+        const cardinality: AssociationDefinitionCardinality = cardinalityFrom(
+          isIdentifying,
           foreignKey,
           tables,
-          isIdentifying,
           domainMetadataAggregatesForNamespace,
-        ),
-        isIdentifying,
-        isRequired,
+        );
+        const isRequired: boolean = isRequiredFrom(cardinality, foreignKey, tables);
+        result.push({
+          fullName: {
+            schema: table.schema,
+            name: foreignKey.name,
+          },
+          cardinality,
+          primaryEntityFullName: {
+            schema: foreignKey.foreignTableSchema,
+            name: foreignKey.foreignTableName,
+          },
+          primaryEntityProperties: getPrimaryEntityProperties(foreignKey, tables, isIdentifying),
+          secondaryEntityFullName: {
+            schema: foreignKey.parentTableSchema,
+            name: foreignKey.parentTableName,
+          },
+          secondaryEntityProperties: getSecondaryEntityProperties(
+            foreignKey,
+            tables,
+            isIdentifying,
+            domainMetadataAggregatesForNamespace,
+          ),
+          isIdentifying,
+          isRequired,
+        });
       });
     });
-  });
 
   return R.sortBy(R.compose(R.toLower, R.path(['fullName', 'name'])), result);
 }

@@ -68,6 +68,7 @@ describe('when diminishing with matching entity tables', () => {
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.dataStandardVersion = '2.0.0';
 
     aggregate1 = {
       root: entityName1,

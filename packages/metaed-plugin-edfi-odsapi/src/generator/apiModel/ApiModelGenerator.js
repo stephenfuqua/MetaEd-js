@@ -15,7 +15,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     const structuredOutput = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).domainModelDefinition;
 
     results.push({
-      name: 'Domain Metadata',
+      name: 'API Model',
       namespace: namespaceInfo.namespace,
       folderName: 'ApiMetadata',
       fileName: fileName(namespaceInfo.namespace, namespaceInfo.projectExtension),

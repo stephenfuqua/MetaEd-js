@@ -4,7 +4,7 @@
 export function metaEdProjectFileTemplate(
   targetVersion: string,
   dataStandardCoreSourceDirectory: string,
-  dataStandardExtensionSourceDirectory: string,
+  dataStandardExtensionSourceDirectory: ?string = null,
 ): string {
   return `{
   "metaEdConfiguration": {

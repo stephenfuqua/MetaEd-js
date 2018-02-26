@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdPlugin } from 'metaed-core';
+/*
 import { enhance as interchangeItemSetupEnhancer } from './model/InterchangeItem';
 import { enhance as mergedInterchangeSetupEnhancer } from './model/MergedInterchange';
 import { enhance as mergedInterchangeDescriptorDependenciesEnhancer } from './enhancer/MergedInterchangeDescriptorDependenciesEnhancer';
@@ -21,5 +22,14 @@ export function initialize(): MetaEdPlugin {
       mergedInterchangeExtendedReferencesEnhancer,
     ],
     generator: [interchangeBriefSvgGenerator, interchangeBriefAsMarkdownGenerator],
+  };
+}
+*/
+
+export function initialize(): MetaEdPlugin {
+  return {
+    validator: [],
+    enhancer: [],
+    generator: [],
   };
 }
