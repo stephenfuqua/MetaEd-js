@@ -17,7 +17,7 @@
     "flow-copy-source": "^1.2.1",
     "flow-typed": "^2.1.5",
     "jest": "22.0.4",
-    "lerna": "^2.5.1",
+    "lerna": "^2.9.0",
     "rimraf": "^2.6.1",
     "serve": "^6.4.9"
   },
