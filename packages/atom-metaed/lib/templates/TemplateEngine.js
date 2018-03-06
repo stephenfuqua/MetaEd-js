@@ -17,7 +17,7 @@ export function metaEdProjectFileTemplate(
         ? `"dataStandardExtensionSourceDirectory": "${dataStandardExtensionSourceDirectory.replace(/\\/g, '/')}",`
         : ''
     }
-    "artifactDirectory": "./MetaEdArtifacts/",
+    "artifactDirectory": "./MetaEdOutput-Experimental/",
     "pluginConfig": {
       "edfiUnified": {
         "targetTechnologyVersion": "${targetVersion}"

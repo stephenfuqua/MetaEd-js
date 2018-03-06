@@ -19,7 +19,7 @@ const metaEdConfiguration = Object.assign(newMetaEdConfiguration(), {
   title: 'Pipeline Test v2.0.0',
   dataStandardCoreSourceDirectory: './packages/metaed-core/test/integration',
   dataStandardExtensionSourceDirectory: '',
-  artifactDirectory: './MetaEdArtifacts/',
+  artifactDirectory: './MetaEdOutput-Experimental/',
   dataStandardCoreSourceVersion: '0.0.0',
   pluginConfig: {
     edfiUnified: {

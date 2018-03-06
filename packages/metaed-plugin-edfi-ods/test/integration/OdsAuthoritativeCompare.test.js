@@ -45,7 +45,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
       metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
         title: 'Ods Authoritative Comparison DS v2.0.0',
         dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-2.0/',
-        artifactDirectory: './MetaEdArtifacts/',
+        artifactDirectory: './MetaEdOutput-Experimental/',
         dataStandardCoreSourceVersion: '2.0.0',
         pluginConfig: {
           edfiUnified: {

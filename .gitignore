@@ -27,4 +27,4 @@ dist/
 
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/edfi-3.0-api-model-generated.json
 
-MetaEdArtifacts/
+MetaEdOutput-Experimental/

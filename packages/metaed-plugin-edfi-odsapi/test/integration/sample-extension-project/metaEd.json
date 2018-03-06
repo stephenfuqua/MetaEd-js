@@ -5,7 +5,7 @@
     "dataStandardCoreSourceVersion": "3.0.0",
     "dataStandardCoreSourceDirectory": "C:/work/metaed/Ed-Fi-Model",
     "dataStandardExtensionSourceDirectory": "C:/work/metaed/MetaEd-Summit-2017/Projects/Answers/Lab0",
-    "artifactDirectory": "./MetaEdArtifacts/",
+    "artifactDirectory": "./MetaEdOutput-Experimental/",
     "pluginConfig": {
       "edfiUnified": {
         "targetTechnologyVersion": "3.0.0"

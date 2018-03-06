@@ -33,7 +33,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
       metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
         title: 'Api Model Authoritative Comparison DS v3.0.0',
         dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-3.0/',
-        artifactDirectory: './MetaEdArtifacts/',
+        artifactDirectory: './MetaEdOutput-Experimental/',
         dataStandardCoreSourceVersion: '3.0.0',
         pluginConfig: {
           edfiUnified: {
@@ -108,7 +108,7 @@ describe('when generating api model with extensions and comparing it to data sta
         title: 'Api Model Extension Comparison DS v3.0.0',
         dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-3.0/',
         dataStandardExtensionSourceDirectory: sampleExtensionPath,
-        artifactDirectory: './MetaEdArtifacts/',
+        artifactDirectory: './MetaEdOutput-Experimental/',
         dataStandardCoreSourceVersion: '3.0.0',
         pluginConfig: {
           edfiUnified: {
