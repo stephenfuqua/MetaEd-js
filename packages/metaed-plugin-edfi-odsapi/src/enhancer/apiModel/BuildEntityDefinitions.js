@@ -11,7 +11,7 @@ import type { ApiProperty } from '../../model/apiModel/ApiProperty';
 type BuildSingleEntityDefinitionOptions = { includeAlternateKeys: boolean, isAbstract: boolean };
 
 function isUpdatable(table: Table): boolean {
-  return table.parentEntity !== NoTopLevelEntity && table.parentEntity.allowPrimaryKeyUpdates;
+  return table.parentEntity != null && table.parentEntity !== NoTopLevelEntity && table.parentEntity.allowPrimaryKeyUpdates;
 }
 
 // "identifiers" are the primary key columns of the table
