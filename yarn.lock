@@ -2103,9 +2103,9 @@ ed-fi-model-2.0@metaed-1.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.0.tgz#37b56910a988f413fce420ce51b1feefc3124354"
 
-ed-fi-model-3.0@^1.0.0-dev.1:
-  version "1.0.0-dev.1"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0-dev.1.tgz#ce5d0d3d6c86d7a9b0062f11121e4547475be9f5"
+ed-fi-model-3.0@1.0.0-dev.2:
+  version "1.0.0-dev.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0-dev.2.tgz#4c7c398d9acf7cf34aed91a3595b94546cf56b60"
 
 editorconfig@^0.13.2:
   version "0.13.3"
@@ -5038,9 +5038,9 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://www.myget.org/F/ed-fi/npm/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
-metaed-csharp@1.1.2-dev.4:
-  version "1.1.2-dev.4"
-  resolved "https://www.myget.org/F/ed-fi/npm/metaed-csharp/-/metaed-csharp-1.1.2-dev.4.tgz#a8933e8e7abff1eb9c7d9c14d56839c1dbbd0b80"
+metaed-csharp@1.1.2-dev.5:
+  version "1.1.2-dev.5"
+  resolved "https://www.myget.org/F/ed-fi/npm/metaed-csharp/-/metaed-csharp-1.1.2-dev.5.tgz#b04058f9ef7f7eb76a81af7d5a8eddf093d17815"
   dependencies:
     chalk "1.1.3"
     del "2.2.0"
