@@ -40,37 +40,48 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
   let generatedSchemaXsd: string;
 
   beforeAll(async () => {
-    const state: State = Object.assign(newState(), {
-      metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
-        title: 'Xsd Authoritative Comparison DS v2.0.0',
-        dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-2.0/',
-        artifactDirectory: './MetaEdOutput-Experimental/',
-        dataStandardCoreSourceVersion: '2.0.0',
-        pluginConfig: {
-          edfiUnified: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiOds: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiOdsApi: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiXsd: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiHandbook: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiInterchangeBrief: {
-            targetTechnologyVersion: '2.0.0',
-          },
-          edfiXmlDictionary: {
-            targetTechnologyVersion: '2.0.0',
-          },
+    const metaEdConfiguration = {
+      ...newMetaEdConfiguration(),
+      artifactDirectory: './MetaEdOutput-Experimental/',
+      pluginConfig: {
+        edfiUnified: {
+          targetTechnologyVersion: '2.0.0',
         },
-      }),
-    });
+        edfiOds: {
+          targetTechnologyVersion: '2.0.0',
+        },
+        edfiOdsApi: {
+          targetTechnologyVersion: '2.0.0',
+        },
+        edfiXsd: {
+          targetTechnologyVersion: '2.0.0',
+        },
+        edfiHandbook: {
+          targetTechnologyVersion: '2.0.0',
+        },
+        edfiInterchangeBrief: {
+          targetTechnologyVersion: '2.0.0',
+        },
+        edfiXmlDictionary: {
+          targetTechnologyVersion: '2.0.0',
+        },
+      },
+      projectPaths: ['./node_modules/ed-fi-model-2.0/'],
+      projectMetadataArray: [
+        {
+          friendlyName: 'Ed-Fi',
+          namespace: 'edfi',
+          projectExtension: '',
+          projectVersion: '2.0.0',
+        },
+      ],
+    };
+
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration,
+    };
+    state.metaEd.dataStandardVersion = '2.0.0';
 
     validateConfiguration(state);
     loadPlugins(state);

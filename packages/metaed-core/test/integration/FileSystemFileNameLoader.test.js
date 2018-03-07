@@ -1,8 +1,10 @@
 // @flow
 import ffs from 'final-fs';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
+import type { State } from '../../src/State';
 import { newState } from '../../src/State';
 import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
+import { newMetaEdConfiguration } from '../../src/MetaEdConfiguration';
 
 describe('When a single file', () => {
   beforeAll(() => {
@@ -17,21 +19,32 @@ describe('When a single file', () => {
       path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
       content: metaEdText,
     };
+    ffs.clearMockFiles();
     ffs.addMockFile(domainEntity1);
   });
 
   it('Should load the file contents', () => {
-    const state = Object.assign(newState(), {
-      inputDirectories: [
-        {
-          path: '/fake/dir',
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
-        },
-      ],
-    });
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration: {
+        ...newMetaEdConfiguration(),
+        projectPaths: ['/fake/dir'],
+        projectMetadataArray: [
+          {
+            friendlyName: 'Ed-Fi',
+            namespace: 'edfi',
+            projectExtension: '',
+            projectVersion: '2.0.0',
+          },
+        ],
+      },
+    };
+
     loadFiles(state);
+
+    expect(state.loadedFileSet).toHaveLength(1);
+    expect(state.loadedFileSet[0].files).toHaveLength(1);
+
     const contents = state.loadedFileSet[0].files[0].contents;
     expect(contents).toMatch(new RegExp('Domain Entity'));
     expect(contents).toMatch(new RegExp('DomainEntity1'));
@@ -66,22 +79,32 @@ describe('When multiple files', () => {
       path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
       content: metaEdTextDomainEntity,
     };
+    ffs.clearMockFiles();
     ffs.addMockFile(association1);
     ffs.addMockFile(domainEntity1);
   });
 
   it('Should load the file contents', () => {
-    const state = Object.assign(newState(), {
-      inputDirectories: [
-        {
-          path: '/fake',
-          namespace: 'edfi',
-          projectExtension: '',
-          isExtension: false,
-        },
-      ],
-    });
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration: {
+        ...newMetaEdConfiguration(),
+        projectPaths: ['/fake'],
+        projectMetadataArray: [
+          {
+            friendlyName: 'Ed-Fi',
+            namespace: 'edfi',
+            projectExtension: '',
+            projectVersion: '2.0.0',
+          },
+        ],
+      },
+    };
+
     loadFiles(state);
+
+    expect(state.loadedFileSet).toHaveLength(1);
+    expect(state.loadedFileSet[0].files).toHaveLength(2);
 
     const associationContents = state.loadedFileSet[0].files[0].contents;
     expect(associationContents).toMatch(new RegExp('Association'));

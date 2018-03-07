@@ -1,76 +1,71 @@
 {
   "odsApiVersion": "3.0.0",
   "schemaDefinition": {
-    "logicalName": "EXTENSION",
-    "physicalName": "extension"
+    "logicalName": "Sample",
+    "physicalName": "sample"
   },
-  "aggregateDefinitions": [
+  "aggregateDefinitions": [],
+  "aggregateExtensionDefinitions": [
     {
       "aggregateRootEntityName": {
-        "schema": "extension",
+        "schema": "sample",
+        "name": "Staff"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "sample",
+          "name": "StaffMyCollection"
+        }
+      ]
+    },
+    {
+      "aggregateRootEntityName": {
+        "schema": "sample",
         "name": "StaffEvaluation"
       },
-      "aggregateEntityNames": [
+      "extensionEntityNames": [
         {
-          "schema": "extension",
+          "schema": "sample",
           "name": "StaffEvaluation"
         },
         {
-          "schema": "extension",
+          "schema": "sample",
           "name": "StaffEvaluationStaffRatingLevel"
         }
       ]
     },
     {
       "aggregateRootEntityName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationComponent"
       },
-      "aggregateEntityNames": [
+      "extensionEntityNames": [
         {
-          "schema": "extension",
+          "schema": "sample",
           "name": "StaffEvaluationComponent"
         },
         {
-          "schema": "extension",
+          "schema": "sample",
           "name": "StaffEvaluationComponentStaffRatingLevel"
         }
       ]
     },
     {
       "aggregateRootEntityName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationRating"
-      },
-      "aggregateEntityNames": [
-        {
-          "schema": "extension",
-          "name": "StaffEvaluationRating"
-        }
-      ]
-    }
-  ],
-  "aggregateExtensionDefinitions": [
-    {
-      "aggregateRootEntityName": {
-        "schema": "edfi",
-        "name": "Staff"
       },
       "extensionEntityNames": [
         {
-          "schema": "extension",
-          "name": "StaffMyCollection"
-        },
-        {
-          "schema": "extension",
-          "name": "StaffRatingLevel"
+          "schema": "sample",
+          "name": "StaffEvaluationRating"
         }
       ]
     }
   ],
   "entityDefinitions": [
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffEvaluation",
       "locallyDefinedProperties": [
         {
@@ -175,7 +170,7 @@
       "description": "TBD"
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffEvaluationComponent",
       "locallyDefinedProperties": [
         {
@@ -281,7 +276,7 @@
       "description": "The components of the evaluation."
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffEvaluationComponentStaffRatingLevel",
       "locallyDefinedProperties": [
         {
@@ -353,7 +348,7 @@
       "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffEvaluationRating",
       "locallyDefinedProperties": [
         {
@@ -447,7 +442,7 @@
       "description": "The summary rating for a staff evaluation applied to an individual educator."
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffEvaluationStaffRatingLevel",
       "locallyDefinedProperties": [
         {
@@ -519,22 +514,9 @@
       "description": "The descriptive level(s) of ratings (cut scores) for staff evaluation."
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffExtension",
       "locallyDefinedProperties": [
-        {
-          "propertyName": "Brad",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "yo",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
         {
           "propertyName": "CreateDate",
           "propertyType": {
@@ -545,6 +527,32 @@
             "isNullable": false
           },
           "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProbationCompleteDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The date the probation period ended or is scheduled to end.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Tenured",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "Indicator of whether the staff member is tenured.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -563,7 +571,7 @@
       "description": ""
     },
     {
-      "schema": "extension",
+      "schema": "sample",
       "name": "StaffMyCollection",
       "locallyDefinedProperties": [
         {
@@ -606,82 +614,12 @@
       ],
       "isAbstract": false,
       "description": "Hi"
-    },
-    {
-      "schema": "extension",
-      "name": "StaffRatingLevel",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "MaxLevel",
-          "propertyType": {
-            "dbType": "Decimal",
-            "maxLength": 0,
-            "precision": 6,
-            "scale": 3,
-            "isNullable": false
-          },
-          "description": "The maximum rating to achieve the level.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "MinLevel",
-          "propertyType": {
-            "dbType": "Decimal",
-            "maxLength": 0,
-            "precision": 6,
-            "scale": 3,
-            "isNullable": true
-          },
-          "description": "The minimum rating to achieve the level.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StaffEvaluationLevel",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 50,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StaffRatingLevel_PK",
-          "identifyingPropertyNames": [
-            "StaffUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "There"
     }
   ],
   "associationDefinitions": [
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluation_SchoolYearType"
       },
       "cardinality": "OneToZeroOrMore",
@@ -705,7 +643,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluation"
       },
       "secondaryEntityProperties": [
@@ -728,12 +666,12 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluationComponent_StaffEvaluation"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluation"
       },
       "primaryEntityProperties": [
@@ -765,7 +703,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationComponent"
       },
       "secondaryEntityProperties": [
@@ -801,12 +739,12 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluationComponentStaffRatingLevel_StaffEvaluationComponent"
       },
       "cardinality": "OneToOne",
       "primaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationComponent"
       },
       "primaryEntityProperties": [
@@ -851,7 +789,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationComponentStaffRatingLevel"
       },
       "secondaryEntityProperties": [
@@ -900,7 +838,7 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluationRating_Staff"
       },
       "cardinality": "OneToZeroOrMore",
@@ -924,7 +862,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationRating"
       },
       "secondaryEntityProperties": [
@@ -947,12 +885,12 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluationRating_StaffEvaluation"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluation"
       },
       "primaryEntityProperties": [
@@ -984,7 +922,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationRating"
       },
       "secondaryEntityProperties": [
@@ -1020,12 +958,12 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffEvaluationStaffRatingLevel_StaffEvaluation"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluation"
       },
       "primaryEntityProperties": [
@@ -1057,7 +995,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffEvaluationStaffRatingLevel"
       },
       "secondaryEntityProperties": [
@@ -1093,7 +1031,7 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffExtension_Staff"
       },
       "cardinality": "OneToOneExtension",
@@ -1117,7 +1055,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffExtension"
       },
       "secondaryEntityProperties": [
@@ -1140,7 +1078,7 @@
     },
     {
       "fullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "FK_StaffMyCollection_Staff"
       },
       "cardinality": "OneToZeroOrMore",
@@ -1164,7 +1102,7 @@
         }
       ],
       "secondaryEntityFullName": {
-        "schema": "extension",
+        "schema": "sample",
         "name": "StaffMyCollection"
       },
       "secondaryEntityProperties": [
@@ -1180,53 +1118,6 @@
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
           "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "extension",
-        "name": "FK_StaffRatingLevel_Staff"
-      },
-      "cardinality": "OneToOne",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Staff"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StaffUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a staff.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "extension",
-        "name": "StaffRatingLevel"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StaffUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a staff.",
-          "isIdentifying": true,
-          "isServerAssigned": true
         }
       ],
       "isIdentifying": true,

@@ -6,12 +6,13 @@ export type MetaEdFile = {
   lineCount: number,
   directoryName: string,
   filename: string,
-  fullName: string,
+  fullPath: string,
 };
 
 export type FileSet = {
   namespace: string,
   projectExtension: string,
+  friendlyName: string,
   isExtension: boolean,
   files: MetaEdFile[],
 };
@@ -31,6 +32,6 @@ export function createMetaEdFile(directoryName: string, filename: string, origin
     lineCount,
     directoryName,
     filename,
-    fullName: directoryName ? path.join(directoryName, filename) : filename,
+    fullPath: directoryName ? path.join(directoryName, filename) : filename,
   };
 }

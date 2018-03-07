@@ -4,8 +4,8 @@ import * as Chalk from 'chalk';
 import path from 'path';
 import winston from 'winston';
 import Yargs from 'yargs';
-import { executePipeline, newState, newMetaEdConfiguration } from 'metaed-core';
-import type { State } from 'metaed-core';
+import { executePipeline, newState, newMetaEdConfiguration, findDataStandardVersions } from 'metaed-core';
+import type { State, SemVer } from 'metaed-core';
 
 winston.cli();
 const chalk = new Chalk.constructor({ level: 2 });
@@ -33,10 +33,15 @@ export async function metaEdConsole() {
       runGenerators: true,
     },
   });
-  state.metaEd.dataStandardVersion = state.metaEdConfiguration.dataStandardCoreSourceVersion;
-
-  await executePipeline(state);
-
+  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projectMetadataArray);
+  if (dataStandardVersions.length === 0) {
+    winston.error('No data standard project found.  Aborting.');
+  } else if (dataStandardVersions.length > 1) {
+    winston.error('Multiple data standard projects found.  Aborting.');
+  } else {
+    state.metaEd.dataStandardVersion = dataStandardVersions[0];
+    await executePipeline(state);
+  }
   const endTime = Date.now() - startTime;
   winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);
 }

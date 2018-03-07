@@ -17,7 +17,7 @@ import {
   newMetaEdConfiguration,
 } from 'metaed-core';
 
-import type { MetaEdFile, State, MetaEdConfiguration } from 'metaed-core';
+import type { MetaEdFile, State, MetaEdConfiguration, ValidationFailure } from 'metaed-core';
 
 // eslint-disable-next-line
 import { CompositeDisposable } from 'atom';
@@ -430,6 +430,7 @@ function filesFrom(textEditors: AtomTextEditor[]): MetaEdFile[] {
   return textEditors.map(te => createMetaEdFile(path.dirname(te.getPath()), path.basename(te.getPath()), te.getText()));
 }
 
+// support multiple extension projects
 function loadFromModifiedEditors(state: State): State {
   const editors = atom.workspace
     .getTextEditors()
@@ -454,15 +455,18 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       path: getCoreMetaEdSourceDirectory(),
       namespace: 'edfi',
       projectExtension: '',
+      friendlyName: 'Ed-Fi',
       isExtension: false,
     },
   ];
 
+  // TODO: support multiple extension projects
   if (atom.project.getPaths().length > 1) {
     inputDirectories.push({
       path: atom.project.getPaths()[1],
       namespace: 'extension',
       projectExtension: 'EXTENSION',
+      friendlyName: 'Extension',
       isExtension: true,
     });
   }
@@ -481,7 +485,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
   const linterMessagesP: Promise<?(any[])> = executePipeline(mostRecentState)
     .then((endState: State) => {
       mostRecentState = endState;
-      return mostRecentState.validationFailure.map(errorMessage => {
+      return mostRecentState.validationFailure.map((errorMessage: ValidationFailure) => {
         const tokenLength: number =
           errorMessage.sourceMap && errorMessage.sourceMap.tokenText ? errorMessage.sourceMap.tokenText.length : 0;
         const adjustedLine: number =
@@ -492,7 +496,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
           severity: errorMessage.category,
           excerpt: errorMessage.message,
           location: {
-            file: errorMessage.fileMap ? errorMessage.fileMap.filename : '',
+            file: errorMessage.fileMap ? errorMessage.fileMap.fullPath : '',
             position: [[adjustedLine, characterPosition], [adjustedLine, characterPosition + tokenLength]],
           },
         };

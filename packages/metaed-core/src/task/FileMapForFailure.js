@@ -1,24 +1,25 @@
 // @flow
 import chalk from 'chalk';
-import path from 'path';
 import winston from 'winston';
 import { getFilenameAndLineNumber } from './FileIndex';
 import type { State } from '../State';
 
-export function fileMapForFailure(state: State): void {
-  const validationFailures = state.validationFailure;
-  if (validationFailures.length === 0) {
+function logValidationFailures(state: State): void {
+  if (state.validationFailure.length === 0) {
     winston.info('    No errors found.');
-  } else {
-    validationFailures.forEach(message => {
-      const filename = message.fileMap
-        ? path.relative(`${state.metaEdConfiguration.dataStandardCoreSourceDirectory}\\..`, message.fileMap.filename)
-        : '';
-      const lineNumber = message.fileMap ? message.fileMap.lineNumber : '';
-      const column = message.sourceMap ? message.sourceMap.column : '';
-      winston.error(`  ${message.message} ${chalk.gray(`${filename} (${lineNumber},${column})`)}`);
-    });
+    return;
   }
+
+  state.validationFailure.forEach(message => {
+    const fullPath = message.fileMap ? message.fileMap.fullPath : '';
+    const lineNumber = message.fileMap ? message.fileMap.lineNumber : '';
+    const column = message.sourceMap ? message.sourceMap.column : '';
+    winston.error(`  ${message.message} ${chalk.gray(`${fullPath} (${lineNumber},${column})`)}`);
+  });
+}
+
+export function fileMapForFailure(state: State): void {
+  logValidationFailures(state);
 
   state.validationFailure.forEach(failure => {
     if (!failure.fileMap && failure.sourceMap && state.fileIndex) {

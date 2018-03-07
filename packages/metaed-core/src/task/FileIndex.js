@@ -8,7 +8,7 @@ export type FileAndLineNumber = {
 };
 
 export type FileMap = {
-  filename: string,
+  fullPath: string,
   lineNumber: number,
 };
 
@@ -29,11 +29,11 @@ export function getFilenameAndLineNumber(fileIndex: FileIndex, concatenatedLineN
   );
 
   if (matchingFileAndLineNumber == null) {
-    return { filename: 'Error/matchingFileAndLineNumber/null', lineNumber: -1 };
+    return { fullPath: 'Error/matchingFileAndLineNumber/null', lineNumber: -1 };
   }
 
   const lineNumber = concatenatedLineNumber - matchingFileAndLineNumber.lineNumber + 1;
-  return { filename: matchingFileAndLineNumber.file.fullName, lineNumber };
+  return { fullPath: matchingFileAndLineNumber.file.fullPath, lineNumber };
 }
 
 export function createFileIndex(metaEdFiles: MetaEdFile[]): FileIndex {

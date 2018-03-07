@@ -1,0 +1,8 @@
+Domain Entity EntityName
+    documentation "doc"
+    integer PropertyName
+        documentation "doc"
+        is part of identity
+    common NonExistentCommon
+        documentation "This common doesnt have a declaration"
+        is required

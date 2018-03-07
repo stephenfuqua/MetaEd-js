@@ -5,35 +5,42 @@ import winston from 'winston';
 import { createMetaEdFile } from './MetaEdFile';
 import type { FileSet } from './MetaEdFile';
 import type { State } from '../State';
+import type { MetaEdConfiguration } from '../MetaEdConfiguration';
 
 export type InputDirectory = {
   path: string,
   namespace: string,
   projectExtension: string,
+  friendlyName: string,
   isExtension: boolean,
 };
 
 export function loadFiles(state: State): void {
-  if (state.inputDirectories == null) {
-    winston.warn('FileSystemFilenameLoader: no input directories');
+  const metaEdConfiguration: MetaEdConfiguration = state.metaEdConfiguration;
+  if (!Array.isArray(metaEdConfiguration.projectMetadataArray) || metaEdConfiguration.projectMetadataArray.length === 0) {
+    winston.error('FileSystemFilenameLoader: no project metadata');
     return;
   }
 
-  if (state.metaEdConfiguration.dataStandardCoreSourceDirectory) {
-    state.inputDirectories.push({
-      path: state.metaEdConfiguration.dataStandardCoreSourceDirectory,
-      namespace: 'edfi',
-      projectExtension: '',
-      isExtension: false,
-    });
+  if (!Array.isArray(metaEdConfiguration.projectPaths) || metaEdConfiguration.projectPaths.length === 0) {
+    winston.error('FileSystemFilenameLoader: no project paths');
+    return;
   }
 
-  if (state.metaEdConfiguration.dataStandardExtensionSourceDirectory) {
+  if (metaEdConfiguration.projectMetadataArray.length !== metaEdConfiguration.projectPaths.length) {
+    winston.error('FileSystemFilenameLoader: project metadata must be same length as project paths');
+    return;
+  }
+
+  if (!Array.isArray(state.inputDirectories)) state.inputDirectories = [];
+
+  for (let i = 0; i < metaEdConfiguration.projectMetadataArray.length; i += 1) {
     state.inputDirectories.push({
-      path: state.metaEdConfiguration.dataStandardExtensionSourceDirectory,
-      namespace: 'extension',
-      projectExtension: 'EXTENSION',
-      isExtension: true,
+      path: metaEdConfiguration.projectPaths[i],
+      namespace: metaEdConfiguration.projectMetadataArray[i].namespace,
+      projectExtension: metaEdConfiguration.projectMetadataArray[i].projectExtension,
+      friendlyName: metaEdConfiguration.projectMetadataArray[i].friendlyName,
+      isExtension: metaEdConfiguration.projectMetadataArray[i].namespace !== 'edfi',
     });
   }
 
@@ -42,6 +49,7 @@ export function loadFiles(state: State): void {
     const fileSet: FileSet = {
       namespace: inputDirectory.namespace,
       projectExtension: inputDirectory.projectExtension,
+      friendlyName: inputDirectory.friendlyName,
       isExtension: inputDirectory.isExtension,
       files: [],
     };

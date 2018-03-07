@@ -159,7 +159,7 @@ export { NoNamespaceInfo } from './model/NamespaceInfo';
 export { newMetaEdEnvironment } from './MetaEdEnvironment';
 export { newMetaEdPlugin } from './plugin/PluginTypes';
 export { newPluginEnvironment } from './plugin/PluginEnvironment';
-export { newMetaEdConfiguration } from './MetaEdConfiguration';
+export { newMetaEdConfiguration, newPluginConfiguration, findDataStandardVersions } from './MetaEdConfiguration';
 
 export { asAssociationProperty, newAssociationProperty } from './model/property/AssociationProperty';
 export { asBooleanProperty, newBooleanProperty } from './model/property/BooleanProperty';

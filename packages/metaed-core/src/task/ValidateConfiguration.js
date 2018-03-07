@@ -1,6 +1,5 @@
 // @flow
 import Ajv from 'ajv';
-import chalk from 'chalk';
 import fs from 'fs';
 import jsonSchemaDraft06 from 'ajv/lib/refs/json-schema-draft-06.json';
 import path from 'path';
@@ -30,28 +29,15 @@ export const validateSchema = (metaEdConfiguration: MetaEdConfiguration) => {
   return isValid;
 };
 
+// eslint-disable-next-line
+function dummyValidateSchema(ignore: any) {
+  winston.info('MetaEd configuration file validation off');
+}
+
 export function validateConfiguration(state: State): void {
-  if (validateSchema(state.metaEdConfiguration)) {
-    state.metaEd.dataStandardVersion = state.metaEdConfiguration.dataStandardCoreSourceVersion || '2.0.0';
-
+  /* Maybe switch from ajv (uses eval/Function) to https://github.com/danwang/json-schema-validator-generator, double-check it doesn't use eval or Function */
+  // if (validateSchema(state.metaEdConfiguration)) {
+  if (dummyValidateSchema(state.metaEdConfiguration)) {
     winston.info('Configuration valid!');
-
-    winston.info(`Using Configuration:`);
-    winston.info(`  Description: ${chalk.green(state.metaEdConfiguration.title)}`);
-    winston.info(
-      `  Data Standard Core Directory: ${chalk.green(state.metaEdConfiguration.dataStandardCoreSourceDirectory)}`,
-    );
-
-    if (
-      state.metaEdConfiguration.dataStandardExtensionSourceDirectory != null &&
-      state.metaEdConfiguration.dataStandardExtensionSourceDirectory !== ''
-    ) {
-      winston.info(
-        `  Data Standard Extension Directory: ${chalk.green(
-          state.metaEdConfiguration.dataStandardExtensionSourceDirectory,
-        )}`,
-      );
-    }
-    winston.info(`  Target Data Standard Version: ${chalk.green(state.metaEdConfiguration.dataStandardCoreSourceVersion)}`);
   }
 }

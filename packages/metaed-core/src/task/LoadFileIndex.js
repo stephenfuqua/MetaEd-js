@@ -2,7 +2,7 @@
 import winston from 'winston';
 import type { State } from '../State';
 import { createMetaEdFile } from './MetaEdFile';
-import type { MetaEdFile } from './MetaEdFile';
+import type { MetaEdFile, FileSet } from './MetaEdFile';
 import { createFileIndex } from './FileIndex';
 
 function startNamespace(namespace: string, projectExtension: string, isExtension: boolean) {
@@ -21,9 +21,9 @@ export function loadFileIndex(state: State): void {
   }
 
   const metaEdFiles: MetaEdFile[] = [];
-  state.loadedFileSet.forEach(loading => {
-    metaEdFiles.push(startNamespace(loading.namespace, loading.projectExtension, loading.isExtension));
-    metaEdFiles.push(...loading.files);
+  state.loadedFileSet.forEach((fileSet: FileSet) => {
+    metaEdFiles.push(startNamespace(fileSet.namespace, fileSet.projectExtension, fileSet.isExtension));
+    metaEdFiles.push(...fileSet.files);
     metaEdFiles.push(endNamespace());
   });
 

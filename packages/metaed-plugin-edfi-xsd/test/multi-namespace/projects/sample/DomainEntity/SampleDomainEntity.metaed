@@ -1,0 +1,12 @@
+Domain Entity SampleDomainEntity
+    documentation "doc"
+    integer SamplePrimaryIdentity
+        documentation "doc"
+        is part of identity
+    string SampleDescription
+        documentation "doc"
+        is required
+        max length 100
+    domain entity EdfiDomainEntity
+        documentation "doc"
+        is required

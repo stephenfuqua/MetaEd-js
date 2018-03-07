@@ -29,37 +29,48 @@ describe('when generating api model and comparing it to data standard 3.0 author
   let generatedOutput: GeneratedOutput;
 
   beforeAll(async () => {
-    const state: State = Object.assign(newState(), {
-      metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
-        title: 'Api Model Authoritative Comparison DS v3.0.0',
-        dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-3.0/',
-        artifactDirectory: './MetaEdOutput-Experimental/',
-        dataStandardCoreSourceVersion: '3.0.0',
-        pluginConfig: {
-          edfiUnified: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiOds: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiOdsApi: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiXsd: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiHandbook: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiInterchangeBrief: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiXmlDictionary: {
-            targetTechnologyVersion: '3.0.0',
-          },
+    const metaEdConfiguration = {
+      ...newMetaEdConfiguration(),
+      artifactDirectory: './MetaEdOutput-Experimental/',
+      pluginConfig: {
+        edfiUnified: {
+          targetTechnologyVersion: '3.0.0',
         },
-      }),
-    });
+        edfiOds: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiOdsApi: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiXsd: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiHandbook: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiInterchangeBrief: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiXmlDictionary: {
+          targetTechnologyVersion: '3.0.0',
+        },
+      },
+      projectPaths: ['./node_modules/ed-fi-model-3.0/'],
+      projectMetadataArray: [
+        {
+          friendlyName: 'Ed-Fi',
+          namespace: 'edfi',
+          projectExtension: '',
+          projectVersion: '2.0.0',
+        },
+      ],
+    };
+
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration,
+    };
+
     validateConfiguration(state);
     loadPlugins(state);
     loadFiles(state);
@@ -103,38 +114,55 @@ describe('when generating api model with extensions and comparing it to data sta
   let generatedExtensionOutput: GeneratedOutput;
 
   beforeAll(async () => {
-    const state: State = Object.assign(newState(), {
-      metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
-        title: 'Api Model Extension Comparison DS v3.0.0',
-        dataStandardCoreSourceDirectory: './node_modules/ed-fi-model-3.0/',
-        dataStandardExtensionSourceDirectory: sampleExtensionPath,
-        artifactDirectory: './MetaEdOutput-Experimental/',
-        dataStandardCoreSourceVersion: '3.0.0',
-        pluginConfig: {
-          edfiUnified: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiOds: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiOdsApi: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiXsd: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiHandbook: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiInterchangeBrief: {
-            targetTechnologyVersion: '3.0.0',
-          },
-          edfiXmlDictionary: {
-            targetTechnologyVersion: '3.0.0',
-          },
+    const metaEdConfiguration = {
+      ...newMetaEdConfiguration(),
+      artifactDirectory: './MetaEdOutput-Experimental/',
+      pluginConfig: {
+        edfiUnified: {
+          targetTechnologyVersion: '3.0.0',
         },
-      }),
-    });
+        edfiOds: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiOdsApi: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiXsd: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiHandbook: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiInterchangeBrief: {
+          targetTechnologyVersion: '3.0.0',
+        },
+        edfiXmlDictionary: {
+          targetTechnologyVersion: '3.0.0',
+        },
+      },
+      projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
+      projectMetadataArray: [
+        {
+          friendlyName: 'Ed-Fi',
+          namespace: 'edfi',
+          projectExtension: '',
+          projectVersion: '3.0.0',
+        },
+        {
+          friendlyName: 'Sample Project',
+          namespace: 'sample',
+          projectExtension: 'Sample',
+          projectVersion: '3.0.0',
+        },
+      ],
+    };
+
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration,
+    };
+    state.metaEd.dataStandardVersion = '3.0.0';
+
     validateConfiguration(state);
     loadPlugins(state);
     loadFiles(state);

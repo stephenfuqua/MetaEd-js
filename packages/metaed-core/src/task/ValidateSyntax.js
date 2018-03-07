@@ -19,7 +19,7 @@ export const validateSyntax = R.curry((parseTreeBuilder: ParseTreeBuilder, state
 
       const parseTree = parseTreeBuilder(errorListener, file.contents);
       if (parseTree == null) {
-        winston.error(`ValidateSyntax: parse tree builder returned null for file ${file.fullName}`);
+        winston.error(`ValidateSyntax: parse tree builder returned null for file ${file.fullPath}`);
       }
 
       const fileIndex = createFileIndex([file]);

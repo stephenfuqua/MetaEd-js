@@ -6068,10 +6068,6 @@ prettier@^1.9.2:
   version "1.9.2"
   resolved "https://www.myget.org/F/ed-fi/npm/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
 
-prettify-xml@^1.2.0:
-  version "1.2.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/prettify-xml/-/prettify-xml-1.2.0.tgz#46dcf1ee8a8d8b73db30b7e06ef26dc9cf3f6f18"
-
 pretty-format@^22.0.3:
   version "22.0.3"
   resolved "https://www.myget.org/F/ed-fi/npm/pretty-format/-/pretty-format-22.0.3.tgz#a2bfa59fc33ad24aa4429981bb52524b41ba5dd7"
@@ -7015,7 +7011,7 @@ stack-utils@^1.0.1:
   version "1.0.1"
   resolved "https://www.myget.org/F/ed-fi/npm/stack-utils/-/stack-utils-1.0.1.tgz#d4f33ab54e8e38778b0ca5cfd3b3afb12db68620"
 
-standard-version@^4.0.0, standard-version@^4.2.0:
+standard-version@^4.0.0:
   version "4.3.0"
   resolved "https://www.myget.org/F/ed-fi/npm/standard-version/-/standard-version-4.3.0.tgz#41006cfee4eeab7c0ff3a47eecaa4c7506ed2e3f"
   dependencies:

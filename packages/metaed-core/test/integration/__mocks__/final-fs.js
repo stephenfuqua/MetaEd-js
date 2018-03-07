@@ -18,6 +18,10 @@ ffs.addMockFile = mockFile => {
   mockFiles.push(mockFile);
 };
 
+ffs.clearMockFiles = () => {
+  mockFiles.length = 0;
+};
+
 ffs.readdirRecursiveSync = () => mockFiles.sort(sortFiles).map(file => file.path);
 
 ffs.readFileSync = fileToReadPath => {

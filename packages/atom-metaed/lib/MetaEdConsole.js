@@ -114,6 +114,7 @@ export default class MetaEdConsole {
       });
   }
 
+  // TODO: support multiple extension projects??? This is C#
   _verifyGulpInputs(taskName: string, isExtensionProject: boolean = false): ?GulpInputs {
     let projectPath = atom.project.getPaths()[1];
     if (!projectPath && !allianceMode()) {

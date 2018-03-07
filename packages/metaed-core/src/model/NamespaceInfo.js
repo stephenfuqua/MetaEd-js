@@ -7,6 +7,7 @@ export class NamespaceInfoSourceMap {
   namespace: ?SourceMap;
   isExtension: ?SourceMap;
   projectExtension: ?SourceMap;
+  friendlyName: ?SourceMap;
   extensionEntitySuffix: ?SourceMap;
 }
 
@@ -15,6 +16,7 @@ export class NamespaceInfo {
   namespace: string;
   isExtension: boolean;
   projectExtension: string;
+  friendlyName: string;
   extensionEntitySuffix: string;
   sourceMap: NamespaceInfoSourceMap;
   data: any;
@@ -29,6 +31,7 @@ export function defaultNamespaceInfoFields() {
     namespace: '',
     isExtension: false,
     projectExtension: '',
+    friendlyName: '',
     extensionEntitySuffix: DefaultExtensionEntitySuffix,
     sourceMap: new NamespaceInfoSourceMap(),
     data: {},

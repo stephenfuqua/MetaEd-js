@@ -111,6 +111,7 @@ export default class MetaEdConsoleJs {
   }
 
   _verifyInputs(taskName: string, isExtensionProject: boolean = false): ?TaskInputs {
+    // TODO: support multiple extension projects
     let projectPath = atom.project.getPaths()[1];
     if (projectPath == null && !allianceMode()) {
       this._metaEdLog.addMessage('No Extension Project found in editor. Please add an extension project folder.');

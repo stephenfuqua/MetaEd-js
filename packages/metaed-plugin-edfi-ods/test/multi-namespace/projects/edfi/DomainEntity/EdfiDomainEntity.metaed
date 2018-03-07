@@ -1,0 +1,9 @@
+Domain Entity EdfiDomainEntity
+    documentation "doc"
+    integer EdfiPrimaryIdentity
+        documentation "doc"
+        is part of identity
+    string EdfiDescription
+        documentation "doc"
+        is required
+        max length 100
