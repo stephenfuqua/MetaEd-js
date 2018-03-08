@@ -75,9 +75,10 @@ export async function executePipeline(state: State): Promise<State> {
           await nextMacroTask();
         }
       } catch (err) {
-        winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}', and will be disabled.`);
+        // winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}', and will be disabled.`);
+        winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}'`);
         winston.error(err.stack);
-        pluginManifest.enabled = false;
+        // pluginManifest.enabled = false;
       }
     }
   }
