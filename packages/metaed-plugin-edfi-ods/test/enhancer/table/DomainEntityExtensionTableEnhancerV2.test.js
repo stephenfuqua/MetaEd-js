@@ -22,11 +22,11 @@ import type {
   MetaEdEnvironment,
   NamespaceInfo,
 } from 'metaed-core';
-import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableEnhancer';
+import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension', () => {
+describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const documentation: string = 'Documentation';
@@ -100,7 +100,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionProperty);
     addEntity(metaEd.entity, domainEntityExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -118,7 +118,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).description).toBe(documentation);
   });
 
-  it('should have two columns', () => {
+  it('should have one column', () => {
     const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPropertyName);
@@ -126,7 +126,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with primary key', () => {
+describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with primary key', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
   const domainEntityExtensionPkPropertyName: string = 'DomainEntityExtensionPkPropertyName';
@@ -196,7 +196,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionPkProperty);
     addEntity(metaEd.entity, domainEntityExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -212,15 +212,9 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     expect(table.columns[0].name).toBe(domainEntityExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
-
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
-  });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common extension override', () => {
+describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with common extension override', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const commonExtensionName: string = 'CommonExtensionName';
@@ -383,7 +377,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonExtensionOverrideProperty);
     addEntity(metaEd.entity, domainEntityExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -396,18 +390,12 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
-  });
-
   it('should not create common extension override join table', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonExtensionName)).toBeUndefined();
   });
 });
 
-describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common', () => {
+describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -539,7 +527,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
     addEntity(metaEd.entity, domainEntityExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -550,12 +538,6 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
 
   it('should create a table for domain entity extension', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
-  });
-
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
   });
 
   it('should create join table from domain entity and common', () => {

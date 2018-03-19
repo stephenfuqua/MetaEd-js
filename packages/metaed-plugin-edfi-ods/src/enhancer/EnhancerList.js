@@ -14,12 +14,14 @@ import { enhance as entityProperty } from '../model/property/EntityProperty';
 import { enhance as enumerationProperty } from '../model/property/EnumerationProperty';
 import { enhance as referenceProperty } from '../model/property/ReferenceProperty';
 
-import { enhance as associationExtensionTableEnhancer } from '../enhancer/table/AssociationExtensionTableEnhancer';
+import { enhance as AssociationExtensionTableEnhancerV2 } from '../enhancer/table/AssociationExtensionTableEnhancerV2';
+import { enhance as AssociationExtensionTableEnhancer } from '../enhancer/table/AssociationExtensionTableEnhancer';
 import { enhance as associationSubclassTableEnhancer } from '../enhancer/table/AssociationSubclassTableEnhancer';
 import { enhance as associationTableEnhancer } from '../enhancer/table/AssociationTableEnhancer';
 import { enhance as baseDescriptorTableCreatingEnhancer } from '../enhancer/table/BaseDescriptorTableCreatingEnhancer';
 import { enhance as descriptorTableEnhancer } from '../enhancer/table/DescriptorTableEnhancer';
-import { enhance as domainEntityExtensionTableEnhancer } from '../enhancer/table/DomainEntityExtensionTableEnhancer';
+import { enhance as DomainEntityExtensionTableEnhancerV2 } from '../enhancer/table/DomainEntityExtensionTableEnhancerV2';
+import { enhance as DomainEntityExtensionTableEnhancer } from '../enhancer/table/DomainEntityExtensionTableEnhancer';
 import { enhance as domainEntitySubclassTableEnhancer } from '../enhancer/table/DomainEntitySubclassTableEnhancer';
 import { enhance as domainEntityTableEnhancer } from '../enhancer/table/DomainEntityTableEnhancer';
 import { enhance as enumerationTableEnhancer } from '../enhancer/table/EnumerationTableEnhancer';
@@ -90,11 +92,13 @@ export function enhancerList(): Array<Enhancer> {
     // Table Creation Phase
     updateCascadeTopLevelEntityEnhancer,
 
-    associationExtensionTableEnhancer,
+    AssociationExtensionTableEnhancerV2,
+    AssociationExtensionTableEnhancer,
     associationSubclassTableEnhancer,
     associationTableEnhancer,
     descriptorTableEnhancer,
-    domainEntityExtensionTableEnhancer,
+    DomainEntityExtensionTableEnhancerV2,
+    DomainEntityExtensionTableEnhancer,
     domainEntitySubclassTableEnhancer,
     domainEntityTableEnhancer,
     enumerationTableEnhancer,

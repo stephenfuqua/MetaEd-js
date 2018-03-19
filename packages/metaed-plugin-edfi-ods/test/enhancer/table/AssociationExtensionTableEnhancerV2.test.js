@@ -22,11 +22,11 @@ import type {
   MetaEdEnvironment,
   NamespaceInfo,
 } from 'metaed-core';
-import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancer';
+import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
-describe('when AssociationExtensionTableEnhancer enhances association extension', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: string = 'namespace';
   const documentation: string = 'Documentation';
@@ -100,7 +100,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionProperty);
     addEntity(metaEd.entity, associationExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -124,15 +124,9 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
     expect(table.columns[0].name).toBe(associationExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
-
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
-  });
 });
 
-describe('when AssociationExtensionTableEnhancer enhances association extension with primary key', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with primary key', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationExtensionName: string = 'AssociationExtensionName';
   const associationExtensionPkPropertyName: string = 'AssociationExtensionPkPropertyName';
@@ -202,7 +196,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionPkProperty);
     addEntity(metaEd.entity, associationExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -218,15 +212,9 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
-
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
-  });
 });
 
-describe('when AssociationExtensionTableEnhancer enhances association extension with common extension override', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common extension override', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const commonExtensionName: string = 'CommonExtensionName';
@@ -389,7 +377,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonExtensionOverrideProperty);
     addEntity(metaEd.entity, associationExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -402,18 +390,12 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
   });
 
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
-  });
-
   it('should not create common extension override join table', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonExtensionName)).toBeUndefined();
   });
 });
 
-describe('when AssociationExtensionTableEnhancer enhances association extension with common', () => {
+describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   const associationName: string = 'AssociationName';
@@ -545,7 +527,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty);
     addEntity(metaEd.entity, associationExtension);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
     enhance(metaEd);
   });
@@ -556,12 +538,6 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
 
   it('should create a table for association extension', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
-  });
-
-  it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
   });
 
   it('should create join table from association and common', () => {

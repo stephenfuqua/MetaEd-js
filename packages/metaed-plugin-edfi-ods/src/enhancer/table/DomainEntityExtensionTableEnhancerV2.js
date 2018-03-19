@@ -20,13 +20,13 @@ import type { Column } from '../../model/database/Column';
 import type { Table } from '../../model/database/Table';
 import type { TableBuilder } from './TableBuilder';
 
-const enhancerName: string = 'AssociationExtensionTableEnhancer';
-const targetVersions: string = '>=3.x';
+const enhancerName: string = 'DomainEntityExtensionTableEnhancerV2';
+const targetVersions: string = '2.x';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  getEntitiesOfType(metaEd.entity, 'associationExtension')
+  getEntitiesOfType(metaEd.entity, 'domainEntityExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -34,8 +34,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         schema: entity.namespaceInfo.namespace,
         name: entity.data.edfiOds.ods_ExtensionName,
         description: entity.documentation,
-        // METAED-763: API requires extension tables to have CreateDate column
-        includeCreateDateColumn: true,
       });
 
       // don't add table unless the extension table will have columns that are not just the fk to the base table
