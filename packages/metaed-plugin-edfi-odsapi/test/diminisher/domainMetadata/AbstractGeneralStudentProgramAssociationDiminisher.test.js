@@ -4,6 +4,7 @@ import type { MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
 import { enhance } from '../../../src/diminisher/domainMetadata/AbstractGeneralStudentProgramAssociationDiminisher';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
+import type { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 import type { NamespaceInfoEdfiOdsApi } from '../../../src/model/NamespaceInfo';
 
 describe('when diminishing with no matching entity tables', () => {
