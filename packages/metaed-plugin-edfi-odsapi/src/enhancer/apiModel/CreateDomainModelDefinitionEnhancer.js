@@ -26,53 +26,56 @@ export function buildSchemaDefinition(namespaceInfo: NamespaceInfo): SchemaDefin
 }
 
 export function buildAggregateDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateDefinition> {
-  if (namespaceInfo.isExtension) return [];
-
   const result: Array<AggregateDefinition> = [];
-  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.forEach((aggregate: Aggregate) => {
-    const aggregateDefinition: AggregateDefinition = {
-      aggregateRootEntityName: {
-        schema: aggregate.schema,
-        name: aggregate.root,
-      },
-      aggregateEntityNames: [],
-    };
-    const aggregateEntityNames: Array<ApiFullName> = [];
-    aggregate.entityTables.forEach((entityTable: EntityTable) => {
-      aggregateEntityNames.push({
-        schema: entityTable.schema,
-        name: entityTable.table,
+  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+    .filter((a: Aggregate) => !a.isExtension)
+    .forEach((aggregate: Aggregate) => {
+      const aggregateDefinition: AggregateDefinition = {
+        aggregateRootEntityName: {
+          schema: aggregate.schema,
+          name: aggregate.root,
+        },
+        aggregateEntityNames: [],
+      };
+      const aggregateEntityNames: Array<ApiFullName> = [];
+      aggregate.entityTables.forEach((entityTable: EntityTable) => {
+        aggregateEntityNames.push({
+          schema: entityTable.schema,
+          name: entityTable.table,
+        });
       });
+      aggregateDefinition.aggregateEntityNames = R.sortBy(R.compose(R.toLower, R.prop('name')), aggregateEntityNames);
+      result.push(aggregateDefinition);
     });
-    aggregateDefinition.aggregateEntityNames = R.sortBy(R.compose(R.toLower, R.prop('name')), aggregateEntityNames);
-    result.push(aggregateDefinition);
-  });
 
   return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
 }
 
 export function buildAggregateExtensionDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateExtensionDefinition> {
-  if (!namespaceInfo.isExtension) return [];
-
   const result: Array<AggregateExtensionDefinition> = [];
-  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.forEach((aggregate: Aggregate) => {
-    const aggregateExtensionDefinition: AggregateExtensionDefinition = {
-      aggregateRootEntityName: {
-        schema: aggregate.schema,
-        name: aggregate.root,
-      },
-      extensionEntityNames: [],
-    };
-    const extensionEntityNames: Array<ApiFullName> = [];
-    aggregate.entityTables.forEach((entityTable: EntityTable) => {
-      extensionEntityNames.push({
-        schema: entityTable.schema,
-        name: entityTable.table,
+  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+    .filter((a: Aggregate) => a.isExtension)
+    .forEach((aggregate: Aggregate) => {
+      const aggregateExtensionDefinition: AggregateExtensionDefinition = {
+        aggregateRootEntityName: {
+          schema: 'edfi', // assuming here that extensions are always extending from core
+          name: aggregate.root,
+        },
+        extensionEntityNames: [],
+      };
+      const extensionEntityNames: Array<ApiFullName> = [];
+      aggregate.entityTables.forEach((entityTable: EntityTable) => {
+        extensionEntityNames.push({
+          schema: entityTable.schema,
+          name: entityTable.table,
+        });
       });
+      aggregateExtensionDefinition.extensionEntityNames = R.sortBy(
+        R.compose(R.toLower, R.prop('name')),
+        extensionEntityNames,
+      );
+      result.push(aggregateExtensionDefinition);
     });
-    aggregateExtensionDefinition.extensionEntityNames = R.sortBy(R.compose(R.toLower, R.prop('name')), extensionEntityNames);
-    result.push(aggregateExtensionDefinition);
-  });
 
   return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
 }

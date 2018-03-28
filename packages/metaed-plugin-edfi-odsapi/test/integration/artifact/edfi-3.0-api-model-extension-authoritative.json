@@ -4,26 +4,13 @@
     "logicalName": "EXTENSION",
     "physicalName": "extension"
   },
-  "aggregateDefinitions": [],
-  "aggregateExtensionDefinitions": [
-    {
-      "aggregateRootEntityName": {
-        "schema": "extension",
-        "name": "Staff"
-      },
-      "extensionEntityNames": [
-        {
-          "schema": "extension",
-          "name": "StaffMyCollection"
-        }
-      ]
-    },
+  "aggregateDefinitions": [
     {
       "aggregateRootEntityName": {
         "schema": "extension",
         "name": "StaffEvaluation"
       },
-      "extensionEntityNames": [
+      "aggregateEntityNames": [
         {
           "schema": "extension",
           "name": "StaffEvaluation"
@@ -39,7 +26,7 @@
         "schema": "extension",
         "name": "StaffEvaluationComponent"
       },
-      "extensionEntityNames": [
+      "aggregateEntityNames": [
         {
           "schema": "extension",
           "name": "StaffEvaluationComponent"
@@ -55,10 +42,28 @@
         "schema": "extension",
         "name": "StaffEvaluationRating"
       },
-      "extensionEntityNames": [
+      "aggregateEntityNames": [
         {
           "schema": "extension",
           "name": "StaffEvaluationRating"
+        }
+      ]
+    }
+  ],
+  "aggregateExtensionDefinitions": [
+    {
+      "aggregateRootEntityName": {
+        "schema": "edfi",
+        "name": "Staff"
+      },
+      "extensionEntityNames": [
+        {
+          "schema": "extension",
+          "name": "StaffMyCollection"
+        },
+        {
+          "schema": "extension",
+          "name": "StaffRatingLevel"
         }
       ]
     }
@@ -518,6 +523,19 @@
       "name": "StaffExtension",
       "locallyDefinedProperties": [
         {
+          "propertyName": "Brad",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "yo",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
           "propertyName": "CreateDate",
           "propertyType": {
             "dbType": "DateTime",
@@ -527,32 +545,6 @@
             "isNullable": false
           },
           "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProbationCompleteDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The date the probation period ended or is scheduled to end.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "Tenured",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "Indicator of whether the staff member is tenured.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -614,6 +606,76 @@
       ],
       "isAbstract": false,
       "description": "Hi"
+    },
+    {
+      "schema": "extension",
+      "name": "StaffRatingLevel",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MaxLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": false
+          },
+          "description": "The maximum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "MinLevel",
+          "propertyType": {
+            "dbType": "Decimal",
+            "maxLength": 0,
+            "precision": 6,
+            "scale": 3,
+            "isNullable": true
+          },
+          "description": "The minimum rating to achieve the level.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StaffEvaluationLevel",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The title for a level of rating or evaluation band (e.g., Excellent, Acceptable, Needs Improvement, Unacceptable).",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StaffRatingLevel_PK",
+          "identifyingPropertyNames": [
+            "StaffUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "There"
     }
   ],
   "associationDefinitions": [
@@ -1118,6 +1180,53 @@
           "description": "A unique alphanumeric code assigned to a staff.",
           "isIdentifying": true,
           "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "extension",
+        "name": "FK_StaffRatingLevel_Staff"
+      },
+      "cardinality": "OneToOne",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "Staff"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "extension",
+        "name": "StaffRatingLevel"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StaffUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a staff.",
+          "isIdentifying": true,
+          "isServerAssigned": true
         }
       ],
       "isIdentifying": true,
