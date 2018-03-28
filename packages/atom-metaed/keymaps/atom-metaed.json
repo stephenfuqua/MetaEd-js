@@ -1,5 +1,6 @@
 {
   "atom-workspace": {
-    "ctrl-alt-b": "atom-metaed:build"
+    "F5": "atom-metaed:build",
+    "F6": "atom-metaed:deploy"
   }
 }

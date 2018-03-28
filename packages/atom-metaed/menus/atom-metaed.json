@@ -8,19 +8,23 @@
           "command": "atom-metaed:createNewExtensionProject"
         },
         {
+          "type": "separator"
+        },
+        {
           "label": "Build",
           "command": "atom-metaed:build"
         },
         {
           "label": "Deploy",
           "command": "atom-metaed:deploy"
-        }
-        ,
+        },
+        {
+          "type": "separator"
+        },
         {
           "label": "Settings...",
           "command": "atom-metaed:settings"
-        }
-        ,
+        },
         {
           "label": "About",
           "command": "atom-metaed:about"

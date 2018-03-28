@@ -54,6 +54,7 @@ export default class MetaEdConsole {
         'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
       buttons: ['OK', 'Cancel'],
     });
+
     if (result !== 0) {
       return;
     }
@@ -196,7 +197,7 @@ export default class MetaEdConsole {
       if (configFile.existsSync()) {
         try {
           const config = JSON.parse(fs.readFileSync(configFile.getRealPathSync(), 'utf-8'));
-          if (config.namespace != null) extensionNamespace = config.namespace;
+          if (config.metaEdConfiguration.namespace != null) extensionNamespace = config.metaEdConfiguration.namespace;
         } catch (error) {
           // Use default if file doesn't match expected format
         }

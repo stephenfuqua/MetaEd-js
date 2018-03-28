@@ -1,15 +1,15 @@
 /** @babel */
 // @flow
 
-export function metaEdProjectFileTemplate(
+export function metaEdConfigTemplate(
   targetVersion: string,
   dataStandardCoreSourceDirectory: string,
   dataStandardExtensionSourceDirectory: ?string = null,
 ): string {
   return `{
   "metaEdConfiguration": {
-    "title": "MetaEd Extension Project",
-    "namespace": "extension",
+    "title": ${dataStandardExtensionSourceDirectory != null ? '"MetaEd Extension Project"' : '"MetaEd Core Project"'},
+    "namespace": ${dataStandardExtensionSourceDirectory != null ? '"extension"' : '"edfi"'},
     "dataStandardCoreSourceVersion": "${targetVersion}",
     "dataStandardCoreSourceDirectory": "${dataStandardCoreSourceDirectory.replace(/\\/g, '/')}",
     ${

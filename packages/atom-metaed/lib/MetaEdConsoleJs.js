@@ -9,7 +9,7 @@ import os from 'os';
 import { spawn as nodeSpawn } from 'child_process';
 import streamSplitter from 'stream-splitter';
 import ansihtml from 'ansi-html';
-import { createExtensionProjectConfiguration } from './CoreMetaEd';
+import { getMetaEdConfig } from './CoreMetaEd';
 import {
   getCoreMetaEdSourceDirectory,
   getMetaEdJsConsoleSourceDirectory,
@@ -112,12 +112,12 @@ export default class MetaEdConsoleJs {
 
   _verifyInputs(taskName: string, isExtensionProject: boolean = false): ?TaskInputs {
     let projectPath = atom.project.getPaths()[1];
-    if (!projectPath && !allianceMode()) {
+    if (projectPath == null && !allianceMode()) {
       this._metaEdLog.addMessage('No Extension Project found in editor. Please add an extension project folder.');
       return null;
     }
 
-    if (!projectPath && allianceMode()) {
+    if (projectPath == null && allianceMode()) {
       if (atom.project.getPaths().length < 1) {
         this._metaEdLog.addMessage(
           'Please set up a core MetaEd directory under File -> Settings -> Packages -> atom-metaed.',
@@ -127,15 +127,13 @@ export default class MetaEdConsoleJs {
       projectPath = atom.project.getPaths()[0];
     }
 
-    // TODO: for now use atom config to overwrite metaed.json config
-    createExtensionProjectConfiguration(this._metaEdLog);
-    const extensionConfigPath = path.resolve(projectPath, 'metaed.json');
-    // if (!fs.existsSync(extensionConfigPath)) {
-    //   this._metaEdLog.addMessage(
-    //     `No Extension Project Configuration found in ${projectPath}. Please add an extension configuration`,
-    //   );
-    //   return null;
-    // }
+    const extensionConfigPath: string = getMetaEdConfig(projectPath, this._metaEdLog);
+    if (!fs.existsSync(extensionConfigPath)) {
+      this._metaEdLog.addMessage(
+        `No Extension Project Configuration found in ${projectPath}. Please add an extension configuration`,
+      );
+      return null;
+    }
 
     // TODO: change to getMetaEdConsoleSourceDirectory once it becomes default setting
     const metaEdJsConsoleSourceDirectory = getMetaEdJsConsoleSourceDirectory();
@@ -219,8 +217,8 @@ export default class MetaEdConsoleJs {
   }
 
   _createTaskParams(inputs: TaskInputs) {
-    const params = ['/s', '/c', `node ${inputs.consolePath}`];
-    params.push(...['--config', inputs.extensionConfigPath]);
+    const params = ['/s', '/c', `node "${inputs.consolePath}"`];
+    params.push(...['--config', `"${inputs.extensionConfigPath}"`]);
     return params;
   }
 
@@ -247,9 +245,12 @@ export default class MetaEdConsoleJs {
         return;
       }
 
-      console.log(`Executing cmd.exe with parameters ${JSON.stringify(taskParams)}.`);
+      console.log(`[MetaEdConsoleJS] Executing '${inputs.cmdFullPath}' with parameters ${taskParams.toString()}.`);
 
-      const childProcess = this._spawn(inputs.cmdFullPath, taskParams, { cwd: inputs.metaEdJsConsoleSourceDirectory });
+      const childProcess = this._spawn(inputs.cmdFullPath, taskParams, {
+        cwd: inputs.metaEdJsConsoleSourceDirectory,
+        shell: true,
+      });
 
       const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
       outputSplitter.encoding = 'utf8';

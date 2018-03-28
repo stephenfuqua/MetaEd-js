@@ -5,40 +5,46 @@ import fs from 'fs-extra';
 import path from 'path';
 import MetaEdConfig from './MetaEdConfig';
 import { getCoreMetaEdSourceDirectory, useTechPreview } from './Settings';
-import { metaEdProjectFileTemplate } from './templates/TemplateEngine';
+import { metaEdConfigTemplate } from './templates/TemplateEngine';
 import type MetaEdLog from './MetaEdLog';
 
-// eslint-disable-next-line no-unused-vars
-export function createExtensionProjectConfiguration(metaEdLog: MetaEdLog): void {
-  const extensionProjectPath = atom.project.getPaths()[1];
-  const projectConfigFile = path.join(extensionProjectPath, 'metaEd.json');
-  // TODO: For now take atom metaed config information and use it to overwrite json config
-  // if (fs.existsSync(projectConfigFile)) {
-  // Extension project exists with a metaEd.json, we're done
-  // metaEdLog.addMessage('Extension project already exists');
-  // return;
-  // }
+export const CONFIG_NAME: string = 'metaEd.json';
 
-  const deployTargetVersion = useTechPreview() ? '3.0.0' : '2.0.0';
-  const sourceDirectory = getCoreMetaEdSourceDirectory();
-  const projectConfigFileContents = metaEdProjectFileTemplate(deployTargetVersion, sourceDirectory, extensionProjectPath);
-  fs.writeFileSync(projectConfigFile, projectConfigFileContents);
+export function newMetaEdConfig(projectPath: string): void {
+  const targetVersion: string = useTechPreview() ? '3.0.0' : '2.0.0';
+  const corePath: string = getCoreMetaEdSourceDirectory();
+  const extensionPath: ?string = projectPath === corePath ? null : projectPath;
+  const configTemplate: string = metaEdConfigTemplate(targetVersion, corePath, extensionPath);
+  fs.writeFileSync(path.join(projectPath, CONFIG_NAME), configTemplate);
 }
 
-export function createNewExtensionProject(metaEdLog: MetaEdLog, metaEdConfig: MetaEdConfig) {
+export function getMetaEdConfig(projectPath: string, metaEdLog: MetaEdLog): string {
+  const configPath: string = path.join(projectPath, CONFIG_NAME);
+
+  if (!fs.existsSync(configPath)) {
+    metaEdLog.addMessage(`Creating extension config: ${projectPath}`);
+    newMetaEdConfig(projectPath);
+  } else {
+    metaEdLog.addMessage(`Using existing extension config: ${configPath}`);
+  }
+
+  return configPath;
+}
+
+export function createNewExtensionProject(metaEdLog: MetaEdLog, metaEdConfig: MetaEdConfig): void {
   // Ensure core is set up correctly
   metaEdConfig.updateCoreMetaEdSourceDirectory();
   const projectCount = atom.project.getPaths().length;
   if (projectCount === 0) {
     metaEdLog.addMessage(`Unable to set up MetaEd Core Source File Directory '${getCoreMetaEdSourceDirectory()}'.`);
-  } else if (projectCount === 1) {
+  } else if (projectCount > 0) {
     atom.pickFolder((selectedPaths: string[]) => {
-      if (!selectedPaths) return;
-      selectedPaths.forEach(selectedPath => atom.project.addPath(selectedPath));
-      createExtensionProjectConfiguration(metaEdLog);
+      if (selectedPaths == null || selectedPaths.length === 0) return;
+      selectedPaths.forEach(selectedPath => {
+        atom.project.addPath(selectedPath);
+        getMetaEdConfig(selectedPath, metaEdLog);
+      });
     });
-  } else {
-    createExtensionProjectConfiguration(metaEdLog);
   }
 }
 

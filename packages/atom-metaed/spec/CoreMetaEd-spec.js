@@ -5,20 +5,18 @@ import fs from 'fs-extra';
 import path from 'path';
 import * as Settings from '../lib/Settings';
 import * as coreMetaEd from '../lib/CoreMetaEd';
-import { metaEdProjectFileTemplate } from '../lib/templates/TemplateEngine';
+import { metaEdConfigTemplate } from '../lib/templates/TemplateEngine';
 import type MetaEdLog from '../lib//MetaEdLog';
 import type MetaEdConfig from '../lib/MetaEdConfig';
 
 const coreMetaEdSourceDirectory = 'coreMetaEdSourceDirectory';
 
 describe('CoreMetaEd', () => {
-  let testMetaEdLog: MetaEdLog;
-  let testMetaEdConfig: MetaEdConfig;
+  let testMetaEdLog: MetaEdLog | any;
+  let testMetaEdConfig: MetaEdConfig | any;
 
   beforeEach(() => {
-    // $FlowIgnore - jasmine spy
     testMetaEdLog = jasmine.createSpyObj('MetaEdLog', ['addMessage', 'clear']);
-    // $FlowIgnore - jasmine spy
     testMetaEdConfig = jasmine.createSpyObj('MetaEdConfig', ['updateCoreMetaEdSourceDirectory']);
     spyOn(Settings, 'getCoreMetaEdSourceDirectory').andReturn(coreMetaEdSourceDirectory);
     spyOn(atom.project, 'getPaths');
@@ -26,10 +24,6 @@ describe('CoreMetaEd', () => {
   });
 
   describe('when creating new extension project', () => {
-    beforeEach(() => {
-      spyOn(coreMetaEd, 'createExtensionProjectConfiguration');
-    });
-
     it('returns if no valid core MetaEd directory', () => {
       atom.project.getPaths.andReturn([]);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
@@ -37,66 +31,70 @@ describe('CoreMetaEd', () => {
       expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
       expect(testMetaEdLog.addMessage).toHaveBeenCalled();
       expect(atom.pickFolder).not.toHaveBeenCalled();
-      expect(coreMetaEd.createExtensionProjectConfiguration).not.toHaveBeenCalled();
     });
 
-    it('prompts user to select directory if no extension project exists, returns if user cancels', () => {
-      let callbackCalled = false;
-      atom.project.getPaths.andReturn(['corePath']);
-      // eslint-disable-next-line
-      atom.pickFolder.andCallFake(callback => (callbackCalled = true));
-      coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
-      // $FlowIgnore - jasmine global
-      waitsFor(() => callbackCalled);
-      // $FlowIgnore - jasmine golbal
-      runs(() => {
-        expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
-        expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
-        expect(atom.pickFolder).toHaveBeenCalled();
-        expect(coreMetaEd.createExtensionProjectConfiguration).not.toHaveBeenCalled();
-      });
-    });
-
-    it('creates extension project configuration if extension project already exists', () => {
-      spyOn(fs, 'writeFileSync').andReturn(true);
-      atom.project.getPaths.andReturn(['corePath', 'extension']);
+    it('prompts user to select directory if no extension project exists and returns when user cancels', () => {
+      atom.project.getPaths.andReturn(['core']);
+      atom.pickFolder.andCallFake(() => null);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
 
       expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
       expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
-      expect(atom.pickFolder).not.toHaveBeenCalled();
-      expect(fs.writeFileSync).toHaveBeenCalled();
+      expect(atom.pickFolder).toHaveBeenCalled();
     });
 
-    it('creates extension project configuration if more than two projects', () => {
-      spyOn(fs, 'writeFileSync').andReturn(true);
-      atom.project.getPaths.andReturn(['corePath', 'extension', 'anotherProject']);
+    it('prompts user to select directory if no extension project exists', () => {
+      atom.project.getPaths.andReturn(['core']);
+      atom.pickFolder.andCallFake(() => ['extension']);
       coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
 
       expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
       expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
-      expect(atom.pickFolder).not.toHaveBeenCalled();
+      expect(atom.pickFolder).toHaveBeenCalled();
+    });
 
-      expect(fs.writeFileSync).toHaveBeenCalled();
+    it('prompts user to select directory if extension project already exists', () => {
+      atom.project.getPaths.andReturn(['core', 'extension']);
+      coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
+
+      expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
+      expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
+      expect(atom.pickFolder).toHaveBeenCalled();
+    });
+
+    it('prompts user to select directory if multiple extension projects already exists', () => {
+      atom.project.getPaths.andReturn(['core', 'extensionOne', 'extensionTwo']);
+      coreMetaEd.createNewExtensionProject(testMetaEdLog, testMetaEdConfig);
+
+      expect(testMetaEdConfig.updateCoreMetaEdSourceDirectory).toHaveBeenCalled();
+      expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
+      expect(atom.pickFolder).toHaveBeenCalled();
     });
   });
 
-  describe('when creating extension project configuration', () => {
+  describe('when getting a metaed config', () => {
     beforeEach(() => {
-      atom.project.getPaths.andReturn(['corePath', 'extensionPath']);
+      atom.project.getPaths.andReturn(['core', 'extension']);
     });
 
-    it('creates project config and writes to path if it does not exist', () => {
+    it('uses an existing config if one exists', () => {
+      spyOn(fs, 'existsSync').andReturn(true);
+      spyOn(fs, 'writeFileSync').andReturn(false);
+      coreMetaEd.getMetaEdConfig('extension', testMetaEdLog);
+
+      expect(testMetaEdLog.addMessage).toHaveBeenCalled();
+      expect(fs.writeFileSync).not.toHaveBeenCalled();
+    });
+
+    it('creates config if none exist', () => {
       spyOn(fs, 'existsSync').andReturn(false);
       spyOn(fs, 'writeFileSync').andReturn(true);
-      coreMetaEd.createExtensionProjectConfiguration(testMetaEdLog);
+      coreMetaEd.getMetaEdConfig('extension', testMetaEdLog);
 
-      expect(testMetaEdLog.addMessage).not.toHaveBeenCalled();
-      const expectedPath = path.join('extensionPath/metaEd.json');
-
+      expect(testMetaEdLog.addMessage).toHaveBeenCalled();
       expect(fs.writeFileSync).toHaveBeenCalledWith(
-        expectedPath,
-        metaEdProjectFileTemplate('2.0.0', coreMetaEdSourceDirectory, 'extensionPath'),
+        path.join('extension/metaEd.json'),
+        metaEdConfigTemplate('2.0.0', coreMetaEdSourceDirectory, 'extension'),
       );
     });
   });
