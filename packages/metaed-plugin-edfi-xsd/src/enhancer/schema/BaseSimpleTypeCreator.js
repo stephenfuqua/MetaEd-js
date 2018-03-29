@@ -2,6 +2,7 @@
 import { newStringSimpleType } from '../../model/schema/StringSimpleType';
 import { newDecimalSimpleType } from '../../model/schema/DecimalSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
+import { baseTypeDescriptorReference } from './AddComplexTypesBaseEnhancer';
 
 const codeValueName: string = 'CodeValue';
 const codeValueDocumentation: string = 'A code or abbreviation for an element.';
@@ -62,4 +63,19 @@ export const createCurrencySimpleType = () =>
       typeGroup: 'Simple',
     }),
     baseType: 'xs:decimal',
+  });
+
+const descriptorReferenceName: string = baseTypeDescriptorReference;
+const descriptorReferenceDocumentation: string = 'Provides references for descriptors represented by the full URI format.';
+
+export const createDescriptorReferenceSimpleType = () =>
+  Object.assign(newStringSimpleType(), {
+    name: descriptorReferenceName,
+    annotation: Object.assign(newAnnotation(), {
+      documentation: descriptorReferenceDocumentation,
+      typeGroup: 'Simple',
+    }),
+    baseType: 'xs:string',
+    minLength: '1',
+    maxLength: '255',
   });

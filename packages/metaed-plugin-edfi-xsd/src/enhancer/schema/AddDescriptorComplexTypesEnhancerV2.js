@@ -1,15 +1,21 @@
 // @flow
+import { String as sugar } from 'sugar';
 import type { MetaEdEnvironment, EnhancerResult, Descriptor, SemVer } from 'metaed-core';
-import { NoMapTypeEnumeration, versionSatisfies, V3OrGreater } from 'metaed-core';
+import { NoMapTypeEnumeration, versionSatisfies, V2Only } from 'metaed-core';
 import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
 import { createSchemaComplexTypeItems } from '../../enhancer/schema/XsdElementFromPropertyCreator';
-import { typeGroupDescriptor, baseTypeDescriptor } from './AddComplexTypesBaseEnhancer';
+import {
+  typeGroupDescriptorExtendedReference,
+  baseTypeDescriptorReference,
+  typeGroupDescriptor,
+  baseTypeDescriptor,
+} from './AddComplexTypesBaseEnhancer';
 
-const enhancerName: string = 'AddDescriptorComplexTypesEnhancer';
-const targetVersions: SemVer = V3OrGreater;
+const enhancerName: string = 'AddDescriptorComplexTypesEnhancerV2';
+const targetVersions: SemVer = V2Only;
 
 function createComplexType(descriptor: Descriptor): Array<ComplexType> {
   const complexType = Object.assign(newComplexType(), {
@@ -37,11 +43,24 @@ function createComplexType(descriptor: Descriptor): Array<ComplexType> {
   return [complexType];
 }
 
+function createReferenceType(descriptor: Descriptor): ComplexType {
+  return Object.assign(newComplexType(), {
+    annotation: Object.assign(newAnnotation(), {
+      documentation: `Provides references for ${sugar.spacify(
+        descriptor.data.edfiXsd.xsd_DescriptorName,
+      )} and its details during interchange. Use XML IDREF to reference a record that is included in the interchange.`,
+      typeGroup: typeGroupDescriptorExtendedReference,
+    }),
+    baseType: baseTypeDescriptorReference,
+    name: `${descriptor.data.edfiXsd.xsd_DescriptorNameWithExtension}ReferenceType`,
+  });
+}
+
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
-
   metaEd.entity.descriptor.forEach(descriptor => {
     descriptor.data.edfiXsd.xsd_ComplexTypes = createComplexType(descriptor);
+    descriptor.data.edfiXsd.xsd_ReferenceType = createReferenceType(descriptor);
   });
 
   return {

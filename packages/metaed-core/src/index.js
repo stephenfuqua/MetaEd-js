@@ -1,7 +1,15 @@
 // @flow
 
 // Functions
-export { deepFreeze, deepFreezeAssign, prependIndefiniteArticle, orderByProp, versionSatisfies } from './Utility';
+export {
+  deepFreeze,
+  deepFreezeAssign,
+  prependIndefiniteArticle,
+  orderByProp,
+  versionSatisfies,
+  V2Only,
+  V3OrGreater,
+} from './Utility';
 export { executePipeline } from './task/Pipeline';
 export { createMetaEdFile } from './task/MetaEdFile';
 export { validateConfiguration } from './task/ValidateConfiguration';

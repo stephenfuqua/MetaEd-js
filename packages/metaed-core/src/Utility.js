@@ -13,7 +13,10 @@ export function prependIndefiniteArticle(phrase: string): string {
 }
 
 export const orderByProp = (prop: string) => R.sortBy(R.compose(R.toLower, R.prop(prop)));
+export const V2Only: SemVer = '^2.x';
+export const V3OrGreater: SemVer = '>=3.x';
 
+// https://github.com/npm/node-semver
 export const versionSatisfies = (version: SemVer, range: SemVer): boolean => semver.satisfies(version, range);
 
 export function deepFreeze<T>(target: T): T {

@@ -18,6 +18,7 @@ export const xpathSelect = xpath.useNamespaces({
 });
 
 export async function enhanceAndGenerate(metaEd: MetaEdEnvironment) {
+  metaEd.dataStandardVersion = '2.0.0';
   initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
   initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 

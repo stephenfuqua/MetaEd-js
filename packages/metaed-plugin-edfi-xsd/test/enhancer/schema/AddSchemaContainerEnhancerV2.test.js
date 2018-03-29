@@ -26,11 +26,10 @@ import { newStringSimpleType } from '../../../src/model/schema/StringSimpleType'
 import type { SchemaSection } from '../../../src/model/schema/SchemaSection';
 import type { SchemaContainer } from '../../../src/model/schema/SchemaContainer';
 import type { NamespaceInfoEdfiXsd } from '../../../src/model/NamespaceInfo';
-import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancer';
-import { baseTypeDescriptorReference } from '../../../src/enhancer/schema/AddComplexTypesBaseEnhancer';
+import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancerV2';
 
 describe('when enhancing namespace info for core', () => {
-  const dataStandardVersion: SemVer = '3.0.0';
+  const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
   let createdSchema: SchemaContainer;
@@ -71,7 +70,7 @@ describe('when enhancing namespace info for core', () => {
 });
 
 describe('when enhancing namespace info for extension', () => {
-  const dataStandardVersion: SemVer = '3.0.0';
+  const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
   const extensionNamespaceName: string = 'extensionNamespace';
@@ -119,7 +118,7 @@ describe('when enhancing namespace info for extension', () => {
 });
 
 describe('when enhancing namespace info for core with children', () => {
-  const dataStandardVersion: SemVer = '3.0.0';
+  const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
   const extensionNamespaceName: string = 'extensionNamespace';
@@ -315,7 +314,7 @@ describe('when enhancing namespace info for core with children', () => {
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor1ComplexTypeName })],
-          xsd_DescriptorExtendedReferenceType: Object.assign(newStringSimpleType(), { name: descriptor1ReferenceTypeName }),
+          xsd_ReferenceType: Object.assign(newComplexType(), { name: descriptor1ReferenceTypeName }),
         },
       },
     });
@@ -490,7 +489,7 @@ describe('when enhancing namespace info for core with children', () => {
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor2ComplexTypeName })],
-          xsd_DescriptorExtendedReferenceType: Object.assign(newStringSimpleType(), { name: descriptor2ReferenceTypeName }),
+          xsd_ReferenceType: Object.assign(newComplexType(), { name: descriptor2ReferenceTypeName }),
         },
       },
     });
@@ -714,8 +713,8 @@ describe('when enhancing namespace info for core with children', () => {
 
   it('should generate descriptor references section', () => {
     const section: SchemaSection = coreSchema.sections[5];
-    expect(section.simpleTypes.length).toBe(1);
-    expect(section.simpleTypes[0].name).toBe(descriptor1ReferenceTypeName);
+    expect(section.complexTypes.length).toBe(1);
+    expect(section.complexTypes[0].name).toBe(descriptor1ReferenceTypeName);
   });
 
   it('should generate common types section', () => {
@@ -749,11 +748,10 @@ describe('when enhancing namespace info for core with children', () => {
 
   it('should generate string simple types section in core', () => {
     const section: SchemaSection = coreSchema.sections[8];
-    expect(section.simpleTypes.length).toBe(4);
+    expect(section.simpleTypes.length).toBe(3);
     expect(section.simpleTypes[0].name).toBe('CodeValue');
-    expect(section.simpleTypes[1].name).toBe(baseTypeDescriptorReference);
-    expect(section.simpleTypes[2].name).toBe(stringType1SimpleTypeName);
-    expect(section.simpleTypes[3].name).toBe('TimeInterval');
+    expect(section.simpleTypes[1].name).toBe(stringType1SimpleTypeName);
+    expect(section.simpleTypes[2].name).toBe('TimeInterval');
   });
 
   it('should generate numeric simple types section in extension without base types', () => {

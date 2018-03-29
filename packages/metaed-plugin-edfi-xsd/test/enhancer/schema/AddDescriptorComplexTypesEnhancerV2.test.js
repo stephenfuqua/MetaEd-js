@@ -13,7 +13,7 @@ import { NoComplexType } from '../../../src/model/schema/ComplexType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { addDescriptorPropertyEdfiXsdTo } from '../../../src/model/property/DescriptorProperty';
 import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLevelEntity';
-import { enhance } from '../../../src/enhancer/schema/AddDescriptorComplexTypesEnhancer';
+import { enhance } from '../../../src/enhancer/schema/AddDescriptorComplexTypesEnhancerV2';
 
 describe('when enhancing descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -42,7 +42,7 @@ describe('when enhancing descriptor', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -78,8 +78,25 @@ describe('when enhancing descriptor', () => {
     expect(createdComplexType.items.length).toBe(0);
   });
 
-  it('should not create reference type', () => {
-    expect(createdReferenceType).toBe(NoComplexType);
+  it('should create reference type', () => {
+    expect(createdReferenceType).toBeDefined();
+  });
+
+  it('should have reference type annotation documentation assigned', () => {
+    expect(createdReferenceType.annotation).toBeDefined();
+    expect(createdReferenceType.annotation.documentation).toMatchSnapshot();
+  });
+
+  it('should have reference type group assigned', () => {
+    expect(createdReferenceType.annotation.typeGroup).toBe('Extended Descriptor Reference');
+  });
+
+  it('should have reference type base type assigned', () => {
+    expect(createdReferenceType.baseType).toBe('DescriptorReferenceType');
+  });
+
+  it('should have reference type name assigned', () => {
+    expect(createdReferenceType.name).toBe(`${complexTypeDescriptorNameWithExtension}ReferenceType`);
   });
 
   it('should not have reference type items', () => {
@@ -142,7 +159,7 @@ describe('when enhancing descriptor with required map type', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -182,11 +199,12 @@ describe('when enhancing descriptor with required map type', () => {
     expect(mapTypeItem.name).toBe(mapTypeName);
     expect(mapTypeItem.type).toBe(enumerationNameWithExtension);
     expect(mapTypeItem.annotation).toBeDefined();
+    expect(createdReferenceType.annotation.documentation).toMatchSnapshot();
     expect(mapTypeItem.minOccurs).toBe('');
   });
 
-  it('should not create reference type', () => {
-    expect(createdReferenceType).toBe(NoComplexType);
+  it('should create reference type', () => {
+    expect(createdReferenceType).toBeDefined();
   });
 
   it('should not create identity type', () => {
@@ -245,7 +263,7 @@ describe('when enhancing descriptor with optional map type', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -285,11 +303,12 @@ describe('when enhancing descriptor with optional map type', () => {
     expect(mapTypeItem.name).toBe(mapTypeName);
     expect(mapTypeItem.type).toBe(enumerationNameWithExtension);
     expect(mapTypeItem.annotation).toBeDefined();
+    expect(createdReferenceType.annotation.documentation).toMatchSnapshot();
     expect(mapTypeItem.minOccurs).toBe('0');
   });
 
-  it('should not create reference type', () => {
-    expect(createdReferenceType).toBe(NoComplexType);
+  it('should create reference type', () => {
+    expect(createdReferenceType).toBeDefined();
   });
 
   it('should not create identity type', () => {
@@ -340,7 +359,7 @@ describe('when enhancing descriptor with property', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -419,7 +438,7 @@ describe('when enhancing descriptor with property and map type', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -506,7 +525,7 @@ describe('when enhancing descriptor with descriptor property', () => {
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -588,7 +607,7 @@ describe('when enhancing descriptor with both queryable and identity property', 
     addModelBaseEdfiXsdTo(enhancedItem);
     metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
 
@@ -603,8 +622,8 @@ describe('when enhancing descriptor with both queryable and identity property', 
     expect(createdComplexType).toBeDefined();
   });
 
-  it('should not create reference type', () => {
-    expect(createdReferenceType).toBe(NoComplexType);
+  it('should create reference type', () => {
+    expect(createdReferenceType).toBeDefined();
   });
 
   it('should not have reference type items', () => {

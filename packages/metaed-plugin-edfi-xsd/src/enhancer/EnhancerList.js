@@ -41,6 +41,8 @@ import { enhance as addCommonComplexTypesEnhancer } from '../enhancer/schema/Add
 import { enhance as addCommonExtensionComplexTypesEnhancer } from '../enhancer/schema/AddCommonExtensionComplexTypesEnhancer';
 import { enhance as addDecimalSimpleTypesEnhancer } from '../enhancer/schema/AddDecimalSimpleTypesEnhancer';
 import { enhance as addDescriptorComplexTypesEnhancer } from '../enhancer/schema/AddDescriptorComplexTypesEnhancer';
+import { enhance as AddDescriptorComplexTypesEnhancerV2 } from '../enhancer/schema/AddDescriptorComplexTypesEnhancerV2';
+import { enhance as AddDescriptorExtendedReferenceTypesEnhancer } from '../enhancer/schema/AddDescriptorExtendedReferenceTypesEnhancer';
 import { enhance as addDomainEntityComplexTypesEnhancer } from '../enhancer/schema/AddDomainEntityComplexTypesEnhancer';
 import { enhance as addDomainEntityExtensionComplexTypesEnhancer } from '../enhancer/schema/AddDomainEntityExtensionComplexTypesEnhancer';
 import { enhance as addDomainEntitySubclassComplexTypesEnhancer } from '../enhancer/schema/AddDomainEntitySubclassComplexTypesEnhancer';
@@ -48,6 +50,7 @@ import { enhance as addEnumerationSimpleTypesEnhancer } from '../enhancer/schema
 import { enhance as addIntegerSimpleTypesEnhancer } from '../enhancer/schema/AddIntegerSimpleTypesEnhancer';
 import { enhance as addStringSimpleTypesEnhancer } from '../enhancer/schema/AddStringSimpleTypesEnhancer';
 import { enhance as addSchemaContainerEnhancer } from '../enhancer/schema/AddSchemaContainerEnhancer';
+import { enhance as addSchemaContainerEnhancerV2 } from '../enhancer/schema/AddSchemaContainerEnhancerV2';
 
 import { enhance as addLookupTypesDiminisher } from '../diminisher/AddLookupTypesDiminisher';
 import { enhance as modifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher } from '../diminisher/ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher';
@@ -123,6 +126,8 @@ export function enhancerList(): Array<Enhancer> {
     addCommonComplexTypesEnhancer,
     addCommonExtensionComplexTypesEnhancer,
     addDescriptorComplexTypesEnhancer,
+    AddDescriptorComplexTypesEnhancerV2,
+    AddDescriptorExtendedReferenceTypesEnhancer,
     addDomainEntityComplexTypesEnhancer,
     addDomainEntityExtensionComplexTypesEnhancer,
     addDomainEntitySubclassComplexTypesEnhancer,
@@ -143,6 +148,7 @@ export function enhancerList(): Array<Enhancer> {
 
     // SchemaCreationPhase
     addSchemaContainerEnhancer,
+    addSchemaContainerEnhancerV2,
 
     // MergeInterchangeElementOrderPhase
     mergedInterchangeElementOrderEnhancer,

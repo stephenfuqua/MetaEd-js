@@ -18,3 +18,7 @@ export function newStringSimpleType(): StringSimpleType {
     },
   });
 }
+
+export const NoStringSimpleType: StringSimpleType = Object.assign(newStringSimpleType(), {
+  name: 'NoStringSimpleType',
+});

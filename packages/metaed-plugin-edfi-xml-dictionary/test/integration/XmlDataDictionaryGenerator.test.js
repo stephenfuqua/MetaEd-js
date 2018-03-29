@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, GeneratorResult } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratorResult, SemVer } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
@@ -19,7 +19,8 @@ function rowToString(obj, value, i) {
 }
 
 describe('when generating xsd for domain entity', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const dataStandardVersion: SemVer = '2.0.0';
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
 
   let generatorResults: GeneratorResult;
   let workbook: Workbook;

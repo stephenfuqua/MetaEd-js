@@ -1,11 +1,14 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
+import type { StringSimpleType } from './schema/StringSimpleType';
+import { NoStringSimpleType } from './schema/StringSimpleType';
 
 export type DescriptorEdfiXsd = {
   xsd_DescriptorName: string,
   xsd_DescriptorNameWithExtension: string,
   xsd_IsMapType: boolean,
   xsd_HasPropertiesOrMapType: boolean,
+  xsd_DescriptorExtendedReferenceType: StringSimpleType,
 };
 
 const enhancerName: string = 'DescriptorSetupEnhancer';
@@ -18,6 +21,7 @@ export function addDescriptorEdfiXsdTo(descriptor: Descriptor) {
     xsd_DescriptorNameWithExtension: '',
     xsd_IsMapType: false,
     xsd_HasPropertiesOrMapType: false,
+    xsd_DescriptorExtendedReferenceType: NoStringSimpleType,
   });
 }
 

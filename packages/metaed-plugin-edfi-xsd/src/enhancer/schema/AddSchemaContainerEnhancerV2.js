@@ -1,12 +1,11 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, SemVer } from 'metaed-core';
-import { getEntitiesOfType, orderByProp, V3OrGreater, versionSatisfies } from 'metaed-core';
+import { getEntitiesOfType, orderByProp, V2Only, versionSatisfies } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import type { NamespaceInfoEdfiXsd } from '../../model/NamespaceInfo';
 import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
 import type { SimpleTypeBase, SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
-import type { DescriptorEdfiXsd } from '../../model/Descriptor';
 import type { SchemaContainer } from '../../model/schema/SchemaContainer';
 import { newSchemaContainer } from '../../model/schema/SchemaContainer';
 import type { SchemaSection } from '../../model/schema/SchemaSection';
@@ -17,23 +16,18 @@ import { newElement } from '../../model/schema/Element';
 import { NoComplexType, newComplexType } from '../../model/schema/ComplexType';
 import { NoSimpleType } from '../../model/schema/SimpleType';
 import { NoEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';
-import { NoStringSimpleType } from '../../model/schema/StringSimpleType';
 import {
   createCodeValueSimpleType,
   createTimeIntervalSimpleType,
   createCurrencySimpleType,
   createPercentSimpleType,
-  createDescriptorReferenceSimpleType,
 } from './BaseSimpleTypeCreator';
-import { baseTypeDescriptorReference } from './AddComplexTypesBaseEnhancer';
 
-const enhancerName: string = 'AddSchemaContainerEnhancer';
-const targetVersions: SemVer = V3OrGreater;
+const enhancerName: string = 'AddSchemaContainerEnhancerV2';
+const targetVersions: SemVer = V2Only;
 
 const complexTypesFrom = R.chain((x: TopLevelEntity) => ((x.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_ComplexTypes);
-const extendedReferenceTypesFrom = R.map(
-  (x: TopLevelEntity) => ((x.data.edfiXsd: any): DescriptorEdfiXsd).xsd_DescriptorExtendedReferenceType,
-);
+const referenceTypesFrom = R.map((x: TopLevelEntity) => ((x.data.edfiXsd: any): TopLevelEntityEdfiXsd).xsd_ReferenceType);
 const simpleTypesFrom = R.map((x: SimpleTypeBase) => ((x.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType);
 const enumerationSimpleTypesFrom = R.map(
   (x: EnumerationBase) => ((x.data.edfiXsd: any): EnumerationBaseEdfiXsd).xsd_EnumerationSimpleType,
@@ -46,7 +40,6 @@ const manyReferenceTypesFrom = R.chain((x: TopLevelEntity) => {
 const removeNoComplexType = R.filter(x => x !== NoComplexType);
 const removeNoSimpleType = R.filter(x => x !== NoSimpleType);
 const removeNoEnumerationSimpleType = R.filter(x => x !== NoEnumerationSimpleType);
-const removeNoStringSimpleType = R.filter(x => x !== NoStringSimpleType);
 
 const inNamespace = namespaceInfo => R.filter(x => x.namespaceInfo.namespace === namespaceInfo.namespace);
 
@@ -75,6 +68,35 @@ function baseSchemaSection() {
     ],
   });
   schemaSection.complexTypes.push(complexObjectType);
+
+  const descriptorReferenceType = Object.assign(newComplexType(), {
+    name: 'DescriptorReferenceType',
+    baseType: 'ReferenceType',
+    annotation: Object.assign(newAnnotation(), {
+      documentation:
+        'Provides references for descriptors during interchange. Use XML IDREF to reference a descriptor record that is included in the interchange. To lookup when already loaded, specify the full URI or the final segment of the URI.',
+      typeGroup: 'Base',
+    }),
+    items: [
+      Object.assign(newElement(), {
+        name: 'CodeValue',
+        type: 'CodeValue',
+        annotation: Object.assign(newAnnotation(), {
+          documentation: 'A globally unique identifier within this descriptor type.',
+        }),
+      }),
+      Object.assign(newElement(), {
+        name: 'Namespace',
+        type: 'URI',
+        minOccurs: '0',
+        annotation: Object.assign(newAnnotation(), {
+          documentation:
+            'An optional globally unique namespace that identifies this descriptor set. If supplied, the author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary. Actual usage of this element for matching descriptors will be system-specific.',
+        }),
+      }),
+    ],
+  });
+  schemaSection.complexTypes.push(descriptorReferenceType);
 
   const descriptorType = Object.assign(newComplexType(), {
     name: 'DescriptorType',
@@ -126,7 +148,7 @@ function baseSchemaSection() {
       }),
       Object.assign(newElement(), {
         name: 'PriorDescriptor',
-        type: baseTypeDescriptorReference,
+        type: 'DescriptorReferenceType',
         minOccurs: '0',
         annotation: Object.assign(newAnnotation(), {
           documentation: 'Immediately prior to the date in Effective Date, the reference to the equivalent descriptor.',
@@ -262,8 +284,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const referenceTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
       inNamespace(namespaceInfo),
-      extendedReferenceTypesFrom,
-      removeNoStringSimpleType,
+      referenceTypesFrom,
+      removeNoComplexType,
       orderByProp('name'),
     );
 
@@ -271,7 +293,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Extended Descriptor Reference Types =====',
       }),
-      simpleTypes: referenceTypesForEntitiesOfType(metaEd.entity, 'descriptor'),
+      complexTypes: referenceTypesForEntitiesOfType(metaEd.entity, 'descriptor'),
     });
     schemaContainer.sections.push(descriptorExtendedReferencesSection);
 
@@ -316,11 +338,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     const stringSimpleTypes = simpleTypesForEntitiesOfType(metaEd.entity, 'stringType');
     if (!namespaceInfo.isExtension) {
-      stringSimpleTypes.push(
-        createCodeValueSimpleType(),
-        createDescriptorReferenceSimpleType(),
-        createTimeIntervalSimpleType(),
-      );
+      stringSimpleTypes.push(createCodeValueSimpleType(), createTimeIntervalSimpleType());
     }
 
     const stringSimpleTypesSection: SchemaSection = Object.assign(newSchemaSection(), {
