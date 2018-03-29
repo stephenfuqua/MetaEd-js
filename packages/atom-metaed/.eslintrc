@@ -8,12 +8,13 @@
   "plugins": [
     "flowtype",
     "json",
-    // "import",
     "prettier"
   ],
   "rules": {
     "arrow-parens": "off",
     "max-len": "off",
+    "no-duplicate-imports": "off",
+    "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",

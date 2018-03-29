@@ -1,12 +1,11 @@
 // @flow
-import R from 'ramda';
 import type { SemVer } from './MetaEdEnvironment';
 
-export type ProjectMetadata = {
-  friendlyName: string,
+export type MetaEdProject = {
   namespace: string,
-  projectExtension: string,
+  projectName: string,
   projectVersion: SemVer,
+  projectExtension?: string,
 };
 
 export type PluginConfiguration = {
@@ -18,8 +17,8 @@ export type MetaEdConfiguration = {
   pluginConfig: {
     [shortName: string]: PluginConfiguration,
   },
-  // projectPaths is meant to parallel projectMetadataArray
-  projectMetadataArray: Array<ProjectMetadata>,
+  projects: Array<MetaEdProject>,
+  // projectPaths is meant to parallel projects
   projectPaths: Array<string>,
 };
 
@@ -30,14 +29,10 @@ export const newPluginConfiguration: () => PluginConfiguration = () => ({
 export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   artifactDirectory: '',
   pluginConfig: {},
-  projectMetadataArray: [],
+  projects: [],
   projectPaths: [],
 });
 
-export function findDataStandardVersions(projectMetadataArray: Array<ProjectMetadata>): Array<SemVer> {
-  return R.uniq(
-    projectMetadataArray
-      .filter(projectMetadata => projectMetadata.namespace === 'edfi')
-      .map(projectMetadata => projectMetadata.projectVersion),
-  );
+export function findDataStandardVersions(projects: Array<MetaEdProject>): Array<SemVer> {
+  return projects.filter((project: MetaEdProject) => project.namespace === 'edfi').map(project => project.projectVersion);
 }

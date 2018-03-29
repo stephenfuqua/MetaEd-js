@@ -33,11 +33,13 @@ export async function metaEdConsole() {
       runGenerators: true,
     },
   });
-  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projectMetadataArray);
+  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projects);
   if (dataStandardVersions.length === 0) {
     winston.error('No data standard project found.  Aborting.');
+    process.exitCode = 1;
   } else if (dataStandardVersions.length > 1) {
     winston.error('Multiple data standard projects found.  Aborting.');
+    process.exitCode = 1;
   } else {
     state.metaEd.dataStandardVersion = dataStandardVersions[0];
     await executePipeline(state);

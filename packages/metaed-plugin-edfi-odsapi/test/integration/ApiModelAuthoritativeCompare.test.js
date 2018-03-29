@@ -56,9 +56,9 @@ describe('when generating api model and comparing it to data standard 3.0 author
         },
       },
       projectPaths: ['./node_modules/ed-fi-model-3.0/'],
-      projectMetadataArray: [
+      projects: [
         {
-          friendlyName: 'Ed-Fi',
+          projectName: 'Ed-Fi',
           namespace: 'edfi',
           projectExtension: '',
           projectVersion: '2.0.0',
@@ -141,15 +141,15 @@ describe('when generating api model with extensions and comparing it to data sta
         },
       },
       projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
-      projectMetadataArray: [
+      projects: [
         {
-          friendlyName: 'Ed-Fi',
+          projectName: 'Ed-Fi',
           namespace: 'edfi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
-          friendlyName: 'Sample Project',
+          projectName: 'Sample Project',
           namespace: 'sample',
           projectExtension: 'Sample',
           projectVersion: '3.0.0',

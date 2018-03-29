@@ -11,36 +11,31 @@ export type InputDirectory = {
   path: string,
   namespace: string,
   projectExtension: string,
-  friendlyName: string,
+  projectName: string,
   isExtension: boolean,
 };
 
 export function loadFiles(state: State): void {
   const metaEdConfiguration: MetaEdConfiguration = state.metaEdConfiguration;
-  if (!Array.isArray(metaEdConfiguration.projectMetadataArray) || metaEdConfiguration.projectMetadataArray.length === 0) {
-    winston.error('FileSystemFilenameLoader: no project metadata');
-    return;
-  }
 
-  if (!Array.isArray(metaEdConfiguration.projectPaths) || metaEdConfiguration.projectPaths.length === 0) {
-    winston.error('FileSystemFilenameLoader: no project paths');
-    return;
-  }
-
-  if (metaEdConfiguration.projectMetadataArray.length !== metaEdConfiguration.projectPaths.length) {
+  if (metaEdConfiguration.projects.length !== metaEdConfiguration.projectPaths.length) {
     winston.error('FileSystemFilenameLoader: project metadata must be same length as project paths');
     return;
   }
 
   if (!Array.isArray(state.inputDirectories)) state.inputDirectories = [];
 
-  for (let i = 0; i < metaEdConfiguration.projectMetadataArray.length; i += 1) {
+  for (let i = 0; i < metaEdConfiguration.projects.length; i += 1) {
+    const projectExtension =
+      metaEdConfiguration.projects[i].projectExtension ||
+      (metaEdConfiguration.projects[i].namespace === 'edfi' ? '' : 'EXTENSION');
+
     state.inputDirectories.push({
       path: metaEdConfiguration.projectPaths[i],
-      namespace: metaEdConfiguration.projectMetadataArray[i].namespace,
-      projectExtension: metaEdConfiguration.projectMetadataArray[i].projectExtension,
-      friendlyName: metaEdConfiguration.projectMetadataArray[i].friendlyName,
-      isExtension: metaEdConfiguration.projectMetadataArray[i].namespace !== 'edfi',
+      namespace: metaEdConfiguration.projects[i].namespace,
+      projectExtension,
+      projectName: metaEdConfiguration.projects[i].projectName,
+      isExtension: metaEdConfiguration.projects[i].namespace !== 'edfi',
     });
   }
 
@@ -49,7 +44,7 @@ export function loadFiles(state: State): void {
     const fileSet: FileSet = {
       namespace: inputDirectory.namespace,
       projectExtension: inputDirectory.projectExtension,
-      friendlyName: inputDirectory.friendlyName,
+      projectName: inputDirectory.projectName,
       isExtension: inputDirectory.isExtension,
       files: [],
     };

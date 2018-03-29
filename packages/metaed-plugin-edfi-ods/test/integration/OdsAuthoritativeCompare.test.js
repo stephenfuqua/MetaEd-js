@@ -68,9 +68,9 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
         },
       },
       projectPaths: ['./node_modules/ed-fi-model-2.0/'],
-      projectMetadataArray: [
+      projects: [
         {
-          friendlyName: 'Ed-Fi',
+          projectName: 'Ed-Fi',
           namespace: 'edfi',
           projectExtension: '',
           projectVersion: '2.0.0',

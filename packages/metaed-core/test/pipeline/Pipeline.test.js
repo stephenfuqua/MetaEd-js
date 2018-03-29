@@ -37,11 +37,10 @@ const metaEdConfiguration = {
     },
   },
   projectPaths: [path.resolve(__dirname, 'projects', 'de-with-common-property')],
-  projectMetadataArray: [
+  projects: [
     {
-      friendlyName: 'Ed-Fi',
+      projectName: 'Ed-Fi',
       namespace: 'edfi',
-      projectExtension: '',
       projectVersion: '2.0.0',
     },
   ],

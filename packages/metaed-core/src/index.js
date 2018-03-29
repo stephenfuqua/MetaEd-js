@@ -13,7 +13,6 @@ export {
 export { executePipeline } from './task/Pipeline';
 export { createMetaEdFile } from './task/MetaEdFile';
 export { validateConfiguration } from './task/ValidateConfiguration';
-export { loadCoreBufferedFiles, loadExtensionBufferedFiles } from './task/BufferFileLoader';
 export { loadFiles } from './task/FileSystemFilenameLoader';
 export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
 export { newState } from './State';

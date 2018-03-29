@@ -8,21 +8,13 @@ import path from 'path';
 import fs from 'fs-extra';
 import { v4 as newUuid } from 'uuid';
 import { install as packageDepsInstall } from 'atom-package-deps';
-import {
-  createMetaEdFile,
-  loadCoreBufferedFiles,
-  loadExtensionBufferedFiles,
-  executePipeline,
-  newState,
-  newMetaEdConfiguration,
-} from 'metaed-core';
+import { executePipeline, newState, newMetaEdConfiguration } from 'metaed-core';
 
-import type { MetaEdFile, State, MetaEdConfiguration, ValidationFailure } from 'metaed-core';
+import type { State, MetaEdConfiguration, ValidationFailure } from 'metaed-core';
 
 // eslint-disable-next-line
 import { CompositeDisposable } from 'atom';
 import { $ } from 'atom-space-pen-views';
-
 import Hider from './context-menu-hider';
 import reportException from './ExceptionReporter';
 import MetaEdLog from './MetaEdLog';
@@ -36,7 +28,7 @@ import {
   isCoreMetaEdFile,
 } from './CoreMetaEd';
 import MetaEdConsole from './MetaEdConsole';
-import MetaEdConsoleJs from './MetaEdConsoleJs';
+import { build } from './MetaEdConsoleJs';
 import {
   associationTemplate,
   choiceTemplate,
@@ -61,6 +53,7 @@ import {
   useTechPreview,
   allianceMode,
 } from './Settings';
+import { loadFromModifiedEditors } from './BufferFileLoader';
 
 let metaEdLog: ?MetaEdLog;
 let metaEdConfig: ?MetaEdConfig;
@@ -71,8 +64,6 @@ let mostRecentState: State = newState();
 
 const dataStandard2Config: MetaEdConfiguration = {
   ...newMetaEdConfiguration(),
-  title: 'Data Standard 2.x',
-  dataStandardCoreSourceVersion: '2.0.0',
   pluginConfig: {
     edfiUnified: {
       targetTechnologyVersion: '2.0.0',
@@ -100,8 +91,6 @@ const dataStandard2Config: MetaEdConfiguration = {
 
 const dataStandard3Config: MetaEdConfiguration = {
   ...newMetaEdConfiguration(),
-  title: 'Data Standard 3.x',
-  dataStandardCoreSourceVersion: '3.0.0',
   pluginConfig: {
     edfiUnified: {
       targetTechnologyVersion: '3.0.0',
@@ -126,6 +115,23 @@ const dataStandard3Config: MetaEdConfiguration = {
     },
   },
 };
+
+// This is temporary until full multi-project support
+function metaEdConfigurationFromTechPreviewFlag(): MetaEdConfiguration {
+  const result: MetaEdConfiguration = useTechPreview() ? dataStandard3Config : dataStandard2Config;
+  Object.assign(result, {
+    projects: [
+      {
+        namespace: 'edfi',
+        projectName: 'Ed-Fi',
+        projectVersion: useTechPreview() ? '3.0.0' : '2.0.0',
+        projectExtension: '',
+      },
+    ],
+    projectPaths: [getCoreMetaEdSourceDirectory()],
+  });
+  return result;
+}
 
 function reportError(error) {
   try {
@@ -293,11 +299,10 @@ export function activate(state: any) {
 
   subscriptions.add(
     atom.commands.add('atom-workspace', {
-      'atom-metaed:build': () => {
+      'atom-metaed:build': async () => {
         if (metaEdConsole != null)
           if (metaEdLog != null) {
-            const metaEdConsoleJs = new MetaEdConsoleJs(metaEdLog);
-            metaEdConsoleJs.build(!allianceMode());
+            await build(metaEdConfigurationFromTechPreviewFlag(), metaEdLog); // MetaEdJsConsole
             metaEdConsole.build(!allianceMode());
           }
       },
@@ -312,10 +317,9 @@ export function activate(state: any) {
   );
   subscriptions.add(
     atom.commands.add('atom-workspace', {
-      'atom-metaed:build-js': () => {
+      'atom-metaed:build-js': async () => {
         if (metaEdLog != null) {
-          const metaEdConsoleJs = new MetaEdConsoleJs(metaEdLog);
-          metaEdConsoleJs.build(!allianceMode());
+          await build(metaEdConfigurationFromTechPreviewFlag(), metaEdLog); // MetaEdJsConsole
         }
       },
     }),
@@ -426,21 +430,6 @@ export function deactivate() {
 
 export function serialize() {}
 
-function filesFrom(textEditors: AtomTextEditor[]): MetaEdFile[] {
-  return textEditors.map(te => createMetaEdFile(path.dirname(te.getPath()), path.basename(te.getPath()), te.getText()));
-}
-
-// support multiple extension projects
-function loadFromModifiedEditors(state: State): State {
-  const editors = atom.workspace
-    .getTextEditors()
-    .filter(editor => editor.isModified() && editor.getPath() && editor.getPath().endsWith('.metaed'));
-  const coreFiles = filesFrom(editors.filter(editor => editor.getPath().startsWith(getCoreMetaEdSourceDirectory())));
-  const extensionFiles = filesFrom(editors.filter(editor => editor.getPath().startsWith(atom.project.getPaths()[1])));
-
-  return loadCoreBufferedFiles(loadExtensionBufferedFiles(state, extensionFiles), coreFiles);
-}
-
 // eslint-disable-next-line no-unused-vars
 function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
   if (!fs.existsSync(path.resolve(getCoreMetaEdSourceDirectory()))) {
@@ -455,7 +444,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       path: getCoreMetaEdSourceDirectory(),
       namespace: 'edfi',
       projectExtension: '',
-      friendlyName: 'Ed-Fi',
+      projectName: 'Ed-Fi',
       isExtension: false,
     },
   ];
@@ -466,7 +455,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       path: atom.project.getPaths()[1],
       namespace: 'extension',
       projectExtension: 'EXTENSION',
-      friendlyName: 'Extension',
+      projectName: 'Extension',
       isExtension: true,
     });
   }
@@ -480,6 +469,8 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
     },
     metaEdConfiguration: useTechPreview() ? dataStandard3Config : dataStandard2Config,
   });
+  // temporary set of data standard version until lookup from project package.json is ready
+  mostRecentState.metaEd.dataStandardVersion = useTechPreview() ? '3.0.0' : '2.0.0';
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
   const linterMessagesP: Promise<?(any[])> = executePipeline(mostRecentState)

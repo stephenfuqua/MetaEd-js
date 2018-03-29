@@ -35,7 +35,7 @@ export function enteringNamespaceType(
   if (namespaceInfo === NoNamespaceInfo) return namespaceInfo;
   if (context.exception) return namespaceInfo;
   if (context.CORE() != null) {
-    Object.assign(namespaceInfo, { projectExtension: '', friendlyName: 'Ed-Fi', isExtension: false });
+    Object.assign(namespaceInfo, { projectExtension: '', projectName: 'Ed-Fi', isExtension: false });
     return namespaceInfo;
   }
   if (context.ID() == null || context.ID().exception != null || isErrorText(context.ID().getText())) return namespaceInfo;
@@ -43,7 +43,7 @@ export function enteringNamespaceType(
   Object.assign(namespaceInfo, {
     projectExtension: context.ID().getText(),
     // note: currently using namespace type as friendly name also
-    friendlyName: context.ID().getText(),
+    projectName: context.ID().getText(),
     isExtension: true,
   });
   Object.assign(namespaceInfo.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });

@@ -37,21 +37,21 @@ const metaEdConfiguration = {
     path.resolve(__dirname, 'projects', 'gb'),
     path.resolve(__dirname, 'projects', 'sample'),
   ],
-  projectMetadataArray: [
+  projects: [
     {
-      friendlyName: 'Ed-Fi',
+      projectName: 'Ed-Fi',
       namespace: 'edfi',
       projectExtension: '',
       projectVersion: '3.0.0',
     },
     {
-      friendlyName: 'Grand Bend',
+      projectName: 'Grand Bend',
       namespace: 'gb',
       projectExtension: 'GrandBend',
       projectVersion: '1.0.0',
     },
     {
-      friendlyName: 'Sample',
+      projectName: 'Sample',
       namespace: 'sample',
       projectExtension: 'Sample',
       projectVersion: '1.0.0',

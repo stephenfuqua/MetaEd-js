@@ -5,6 +5,3 @@ Domain Entity Staff additions
     common StaffRatingLevel
         documentation "There"
         is optional
-    bool Brad
-        documentation "yo"
-        is optional

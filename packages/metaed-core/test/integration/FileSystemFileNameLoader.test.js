@@ -29,11 +29,10 @@ describe('When a single file', () => {
       metaEdConfiguration: {
         ...newMetaEdConfiguration(),
         projectPaths: ['/fake/dir'],
-        projectMetadataArray: [
+        projects: [
           {
-            friendlyName: 'Ed-Fi',
+            projectName: 'Ed-Fi',
             namespace: 'edfi',
-            projectExtension: '',
             projectVersion: '2.0.0',
           },
         ],
@@ -90,11 +89,10 @@ describe('When multiple files', () => {
       metaEdConfiguration: {
         ...newMetaEdConfiguration(),
         projectPaths: ['/fake'],
-        projectMetadataArray: [
+        projects: [
           {
-            friendlyName: 'Ed-Fi',
+            projectName: 'Ed-Fi',
             namespace: 'edfi',
-            projectExtension: '',
             projectVersion: '2.0.0',
           },
         ],

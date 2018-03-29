@@ -12,7 +12,7 @@ export type MetaEdFile = {
 export type FileSet = {
   namespace: string,
   projectExtension: string,
-  friendlyName: string,
+  projectName: string,
   isExtension: boolean,
   files: MetaEdFile[],
 };
