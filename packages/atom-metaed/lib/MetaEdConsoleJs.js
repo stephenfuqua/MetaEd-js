@@ -173,7 +173,7 @@ function executeBuild(
       shell: true,
     });
 
-    const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
+    const outputSplitter: any = childProcess.stdout.pipe(streamSplitter('\n'));
     outputSplitter.encoding = 'utf8';
     outputSplitter.on('token', token => {
       metaEdLog.addMessage(ansihtml(token), true);

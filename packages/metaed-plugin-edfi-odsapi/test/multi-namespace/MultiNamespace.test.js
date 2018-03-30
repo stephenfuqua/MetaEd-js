@@ -71,6 +71,7 @@ describe('when building a simple core and two simple extension projects', () => 
       }),
     });
 
+    state.metaEd.dataStandardVersion = '3.0.0';
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
   });

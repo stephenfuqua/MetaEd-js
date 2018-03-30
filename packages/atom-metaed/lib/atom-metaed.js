@@ -118,8 +118,9 @@ const dataStandard3Config: MetaEdConfiguration = {
 
 // This is temporary until full multi-project support
 function metaEdConfigurationFromTechPreviewFlag(): MetaEdConfiguration {
-  const result: MetaEdConfiguration = useTechPreview() ? dataStandard3Config : dataStandard2Config;
-  Object.assign(result, {
+  const baseConfiguration: MetaEdConfiguration = useTechPreview() ? dataStandard3Config : dataStandard2Config;
+  return {
+    ...baseConfiguration,
     projects: [
       {
         namespace: 'edfi',
@@ -129,8 +130,7 @@ function metaEdConfigurationFromTechPreviewFlag(): MetaEdConfiguration {
       },
     ],
     projectPaths: [getCoreMetaEdSourceDirectory()],
-  });
-  return result;
+  };
 }
 
 function reportError(error) {
@@ -467,8 +467,9 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       runEnhancers: true,
       runGenerators: false,
     },
-    metaEdConfiguration: useTechPreview() ? dataStandard3Config : dataStandard2Config,
+    metaEdConfiguration: useTechPreview() ? { ...dataStandard3Config } : { ...dataStandard2Config },
   });
+
   // temporary set of data standard version until lookup from project package.json is ready
   mostRecentState.metaEd.dataStandardVersion = useTechPreview() ? '3.0.0' : '2.0.0';
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
