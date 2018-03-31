@@ -1,5 +1,10 @@
 // @flow
 
+export type HandbookMergeProperty = {
+  propertyPath: Array<string>,
+  targetPath: Array<string>,
+};
+
 export type HandbookEntityReferenceProperty = {
   edFiId: string,
   targetPropertyId: string,
@@ -9,6 +14,7 @@ export type HandbookEntityReferenceProperty = {
   isIdentity: boolean,
   cardinality: string,
   definition: string,
+  mergedProperties?: Array<HandbookMergeProperty>,
 };
 
 export type HandbookEntry = {
@@ -19,6 +25,7 @@ export type HandbookEntry = {
   modelReferencesContains: Array<string>,
   modelReferencesContainsProperties: Array<HandbookEntityReferenceProperty>,
   modelReferencesUsedBy: Array<string>,
+  modelReferencesUsedByProperties: Array<HandbookEntityReferenceProperty>,
   name: string,
   odsFragment: Array<string>,
   optionList: Array<string>,
@@ -37,7 +44,9 @@ export function newHandbookEntry(): HandbookEntry {
     entityType: '',
     modelReferencesContains: [],
     modelReferencesContainsProperties: [],
+    F: [],
     modelReferencesUsedBy: [],
+    modelReferencesUsedByProperties: [],
     name: '',
     odsFragment: [],
     optionList: [],

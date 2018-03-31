@@ -1,5 +1,6 @@
 // @flow
 import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
 import { createPercentSimpleType } from 'metaed-plugin-edfi-xsd';
 import { createDefaultHandbookEntry } from './BaseSimpleTypeMetaEdHandbookEnhancer';
 import type { HandbookEntry } from '../model/HandbookEntry';
@@ -16,6 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     percentEdfiId,
     percentName,
     percentyDocumentation,
+    ColumnDataTypes.percent,
   );
   (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
     result,

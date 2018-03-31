@@ -3,15 +3,28 @@ import fs from 'fs';
 import path from 'path';
 import ramda from 'ramda';
 import handlbars from 'handlebars';
+import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
 import type { ModelBase, MetaEdEnvironment, EntityProperty } from 'metaed-core';
 import type { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
 
-// TODO: finish once ods is up and running.
+function getColumnString(property: any): string {
+  switch (property.type) {
+    case 'stringType':
+      return ColumnDataTypes.string(property.maxLength);
+    case 'decimalType':
+      return ColumnDataTypes.decimal(property.totalDigits, property.decimalPlaces);
+    case 'integerType':
+      return property.isShort ? ColumnDataTypes.short : ColumnDataTypes.integer;
+    default:
+      return '';
+  }
+}
+
 // eslint-disable-next-line
-function generatedTableSqlFor(property: ModelBase): Array<string> {
-  return [];
+function generatedTableSqlFor(property: any): Array<string> {
+  return [`${property.metaEdName} ${getColumnString(property)}`];
 }
 
 function getTemplateString(templateName: string): string {

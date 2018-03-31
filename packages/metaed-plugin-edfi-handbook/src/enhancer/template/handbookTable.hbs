@@ -1,0 +1,11 @@
+{{#table}}{{{schema}}}.{{{name}}}
+
+{{#each columns}}{{{name}}} {{{dataType}}} {{#if isIdentityDatabaseType}}IDENTITY(1,1) {{/if}}{{#unless isNullable}}NOT {{/unless}}NULL
+{{/each}}{{#if includeCreateDateColumn}}CreateDate [DATETIME] NOT NULL
+{{/if}}{{#if includeLastModifiedDateAndIdColumn}}LastModifiedDate [DATETIME] NOT NULL
+Id [UNIQUEIDENTIFIER] NOT NULL
+{{/if}}
+
+Primary Keys:
+{{#each primaryKeys}}{{{name}}}
+{{/each}}{{/table}}

@@ -36,8 +36,8 @@ function getPropertyName(property: EntityProperty): string {
 
 // TODO: finish once ods is up and running.
 // eslint-disable-next-line
-function generatedTableSqlFor(property: EntityProperty): Array<string> {
-  return [];
+function generatedTableSqlFor(property: EntityProperty, columnDatatype: string): Array<string> {
+  return [`${property.metaEdName} ${columnDatatype}`];
 }
 
 function getTemplateString(templateName: string): string {
@@ -87,7 +87,11 @@ function generatedXsdFor(property: EntityProperty): string {
   return template(element);
 }
 
-export function createDefaultHandbookEntry(property: EntityProperty, entityTypeName: string): HandbookEntry {
+export function createDefaultHandbookEntry(
+  property: EntityProperty,
+  entityTypeName: string,
+  columnDatatype: string,
+): HandbookEntry {
   return Object.assign(newHandbookEntry(), {
     definition: property.documentation,
     edFiId: property.metaEdId,
@@ -96,7 +100,7 @@ export function createDefaultHandbookEntry(property: EntityProperty, entityTypeN
     entityType: entityTypeName,
     modelReferencesUsedBy: [parentNameAndPropertyCardinality(property)],
     name: getPropertyName(property),
-    odsFragment: generatedTableSqlFor(property),
+    odsFragment: generatedTableSqlFor(property, columnDatatype),
     optionList: [],
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(property),

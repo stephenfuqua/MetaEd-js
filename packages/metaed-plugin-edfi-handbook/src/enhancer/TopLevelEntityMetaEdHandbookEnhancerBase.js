@@ -15,7 +15,7 @@ import type {
   ModelBase,
 } from 'metaed-core';
 import { getAllEntities } from 'metaed-core';
-import type { HandbookEntry, HandbookEntityReferenceProperty } from '../model/HandbookEntry';
+import type { HandbookEntry, HandbookEntityReferenceProperty, HandbookMergeProperty } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
 
@@ -44,14 +44,6 @@ function getPropertyNames(entity: TopLevelEntity): Array<string> {
     .sort();
 }
 
-// sql is not implemented yet
-// eslint-disable-next-line
-function generatedTableSqlFor(entity: TopLevelEntity): Array<string> {
-  // TODO when ods is finished.
-  // $FlowIgnore
-  return null;
-}
-
 function getEnumerationItemsFor(enumeration: Enumeration): Array<string> {
   return enumeration.enumerationItems.map(e => e.shortDescription).sort();
 }
@@ -72,6 +64,28 @@ const registerPartials: () => void = ramda.once(() => {
     annotation: getTemplateString('annotation'),
   });
 });
+
+const getHandbookTableTemplate: () => any => string = ramda.once(() =>
+  handlebars.compile(getTemplateString('handbookTable')),
+);
+
+// sql is not implemented yet
+// eslint-disable-next-line
+function generatedTableSqlFor(entity: TopLevelEntity): Array<string> {
+  // TODO when ods is finished.
+  // $FlowIgnore
+  if (!entity.data.edfiOds || !entity.data.edfiOds.ods_Tables) return null;
+
+  const tables = entity.data.edfiOds.ods_Tables;
+  const results: Array<string> = [];
+
+  tables.forEach(x => {
+    const handbookTableTemplate: any => string = getHandbookTableTemplate();
+    results.push(handbookTableTemplate({ table: x }));
+  });
+
+  return results.sort();
+}
 
 const getComplexTypeTemplate: () => any => string = ramda.once(() => handlebars.compile(getTemplateString('complexType')));
 
@@ -127,6 +141,15 @@ function getDataTypeName(property: EntityProperty): string {
   return `${titleName}Property`;
 }
 
+function getMergedProperties(property: ReferentialProperty): Array<HandbookMergeProperty> {
+  if (!property.mergedProperties) return [];
+
+  return property.mergedProperties.map(x => ({
+    propertyPath: x.mergePropertyPath,
+    targetPath: x.targetPropertyPath,
+  }));
+}
+
 function entityPropertyToHandbookEntityReferenceProperty(
   allEntities: Array<ModelBase>,
   property: EntityProperty,
@@ -141,6 +164,7 @@ function entityPropertyToHandbookEntityReferenceProperty(
     definition: property.documentation,
     isIdentity: property.isPartOfIdentity || property.isIdentityRename,
     cardinality: getCardinalityStringFor(property, true),
+    mergedProperties: getMergedProperties(referentialProperty),
   };
 }
 

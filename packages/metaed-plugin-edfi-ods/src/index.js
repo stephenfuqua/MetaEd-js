@@ -5,6 +5,8 @@ import { generate as OdsGenerator } from './generator/OdsGenerator';
 import { generate as SchemaGenerator } from './generator/SchemaGenerator';
 import { generate as IdIndexesGenerator } from './generator/IdIndexesGenerator';
 
+export { ColumnDataTypes } from './model/database/ColumnDataTypes';
+
 // Entities
 export type { Column, DecimalColumn, StringColumn } from './model/database/Column';
 export type { ColumnData } from './model/database/ColumnDataTypes';

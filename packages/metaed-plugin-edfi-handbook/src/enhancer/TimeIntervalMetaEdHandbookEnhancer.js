@@ -1,5 +1,6 @@
 // @flow
 import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
 import { createTimeIntervalSimpleType } from 'metaed-plugin-edfi-xsd';
 import { createDefaultHandbookEntry } from './BaseSimpleTypeMetaEdHandbookEnhancer';
 import type { HandbookEntry } from '../model/HandbookEntry';
@@ -16,6 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     timeIntervalEdfiId,
     timeIntervalName,
     timeIntervalDocumentation,
+    ColumnDataTypes.duration,
   );
   (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
     result,

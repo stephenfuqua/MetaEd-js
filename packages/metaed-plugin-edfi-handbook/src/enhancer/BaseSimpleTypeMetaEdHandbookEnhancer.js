@@ -9,8 +9,8 @@ import { newHandbookEntry } from '../model/HandbookEntry';
 
 // TODO: finish once ods is up and running.
 // eslint-disable-next-line
-function generatedTableSqlFor(property: SimpleType): Array<string> {
-  return [];
+function generatedTableSqlFor(name: string, columnDefinition: string): Array<string> {
+  return [`${name} ${columnDefinition}`];
 }
 
 function getTemplateString(templateName: string): string {
@@ -29,6 +29,7 @@ export function createDefaultHandbookEntry(
   edfiId: string,
   name: string,
   documentation: string,
+  columnDefinition: string,
 ): HandbookEntry {
   return Object.assign(newHandbookEntry(), {
     definition: documentation,
@@ -38,7 +39,7 @@ export function createDefaultHandbookEntry(
     entityType: `${name} Base Type`,
     modelReferencesUsedBy: [],
     name,
-    odsFragment: generatedTableSqlFor(property),
+    odsFragment: generatedTableSqlFor(name, columnDefinition),
     optionList: [],
     typeCharacteristics: [],
     xsdFragment: generatedXsdFor(property),
