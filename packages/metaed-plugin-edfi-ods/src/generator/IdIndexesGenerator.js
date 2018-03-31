@@ -23,7 +23,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       results.push({
         name: 'ODS Id Indexes',
         namespace: namespaceInfo.namespace,
-        folderName: namespaceInfo.namespace + structurePath,
+        folderName: structurePath,
         fileName: fileNameFor(prefix, namespaceInfo, 'IdColumnUniqueIndexes'),
         resultString: generatedResult,
         resultStream: null,

@@ -3,6 +3,7 @@ import type { MetaEdPlugin } from 'metaed-core';
 import { enhancerList } from './enhancer/EnhancerList';
 import { generate as generateXsd } from './generator/XsdGenerator';
 import { generate as generateSchemaAnnotation } from './generator/SchemaAnnotationGenerator';
+import { generate as generateInterchange } from './generator/InterchangeGenerator';
 
 // Entities
 export type { Annotation } from './model/schema/Annotation';
@@ -24,7 +25,9 @@ export type { MergedInterchange } from './model/MergedInterchange';
 export type { EdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 
 export { newMergedInterchange } from './model/MergedInterchange';
+export { newEdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 export { addEdFiXsdEntityRepositoryTo } from './model/EdFiXsdEntityRepository';
+export { addMergedInterchangeToRepository } from './model/MergedInterchange';
 // Factories
 export { newComplexType } from './model/schema/ComplexType';
 export { newAnnotation } from './model/schema/Annotation';
@@ -40,6 +43,6 @@ export function initialize(): MetaEdPlugin {
   return {
     validator: [],
     enhancer: enhancerList(),
-    generator: [generateXsd, generateSchemaAnnotation],
+    generator: [generateXsd, generateSchemaAnnotation, generateInterchange],
   };
 }

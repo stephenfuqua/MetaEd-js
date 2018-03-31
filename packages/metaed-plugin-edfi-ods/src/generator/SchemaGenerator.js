@@ -17,7 +17,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     results.push({
       name: 'ODS Schema',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + structurePath,
+      folderName: structurePath,
       fileName: fileNameFor(prefix, namespaceInfo, 'Schemas'),
       resultString: generatedResult,
       resultStream: null,

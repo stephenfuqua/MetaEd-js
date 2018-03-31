@@ -11,7 +11,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     (metaEd.plugin.get('edfiXsd'): any).entity.mergedInterchange.values(),
   );
 
-  orderedInterchange.filter(i => !i.namespaceInfo.isExtension).forEach(interchange => {
+  orderedInterchange.filter((interchange: Interchange) => !interchange.namespaceInfo.isExtension).forEach(interchange => {
     const templateData = {
       schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
       interchange,
@@ -20,7 +20,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     generatedOutput.push({
       name: outputName,
-      namespace: '',
+      namespace: interchange.namespaceInfo.namespace,
       folderName: 'Interchange',
       fileName: interchange.namespaceInfo.isExtension
         ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
@@ -29,24 +29,26 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       resultStream: null,
     });
   });
-  orderedInterchange.filter(i => i.namespaceInfo.isExtension).forEach(interchange => {
-    const templateData = {
-      schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
-      interchange,
-    };
-    const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));
+  orderedInterchange
+    .filter((interchange: Interchange) => interchange.namespaceInfo.isExtension)
+    .forEach((interchange: Interchange) => {
+      const templateData = {
+        schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
+        interchange,
+      };
+      const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));
 
-    generatedOutput.push({
-      name: outputName,
-      namespace: '',
-      folderName: 'Interchange',
-      fileName: interchange.namespaceInfo.isExtension
-        ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
-        : `Interchange-${interchange.metaEdName}.xsd`,
-      resultString: formattedGeneratedResult,
-      resultStream: null,
+      generatedOutput.push({
+        name: outputName,
+        namespace: interchange.namespaceInfo.namespace,
+        folderName: 'Interchange',
+        fileName: interchange.namespaceInfo.isExtension
+          ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
+          : `Interchange-${interchange.metaEdName}.xsd`,
+        resultString: formattedGeneratedResult,
+        resultStream: null,
+      });
     });
-  });
 
   return {
     generatorName,

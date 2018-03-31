@@ -10,6 +10,7 @@ import { enhance as descriptorAggregateEnhancer } from '../enhancer/domainMetada
 import { enhance as domainEntityAggregateEnhancer } from '../enhancer/domainMetadata/DomainEntityAggregateEnhancer';
 import { enhance as domainEntityExtensionAggregateEnhancer } from '../enhancer/domainMetadata/DomainEntityExtensionAggregateEnhancer';
 import { enhance as domainEntitySubclassAggregateEnhancer } from '../enhancer/domainMetadata/DomainEntitySubclassAggregateEnhancer';
+import { enhance as educationOrganizationReferenceEnhancer } from '../enhancer/educationOrganizationReferenceMetadata/EducationOrganizationReferenceEnhancer';
 import { enhance as enumerationAggregateEnhancer } from '../enhancer/domainMetadata/EnumerationAggregateEnhancer';
 import { enhance as schoolYearEnumerationAggregateEnhancer } from '../enhancer/domainMetadata/SchoolYearEnumerationAggregateEnhancer';
 
@@ -41,8 +42,10 @@ export function enhancerList(): Array<Enhancer> {
     enumerationAggregateEnhancer,
     schoolYearEnumerationAggregateEnhancer,
 
+    educationOrganizationReferenceEnhancer,
     // API Model
     createDomainModelDefinitionEnhancer,
+
     // **************************
     // API Metadata Diminish Phase
     moveFederalFundsDiminisher,

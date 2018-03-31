@@ -30,7 +30,8 @@ describe('when generating output for namespace', () => {
   it('should generate empty output', () => {
     expect(result.generatorName).toEqual('edfiOds.OdsGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe(`0020-${namespace}-Tables.sql`);
-    expect(R.head(result.generatedOutput).folderName).toBe('namespaceName/Database/SQLServer/ODS/Structure/');
+    expect(R.head(result.generatedOutput).namespace).toBe(namespace);
+    expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Tables');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
     expect(R.head(result.generatedOutput).resultString).toBe('');

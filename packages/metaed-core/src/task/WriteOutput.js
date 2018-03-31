@@ -10,12 +10,13 @@ winston.cli();
 
 function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {
   result.generatedOutput.forEach(output => {
-    if (!ffs.existsSync(`${outputDirectory}/${output.folderName}`))
-      ffs.mkdirRecursiveSync(`${outputDirectory}/${output.folderName}`);
+    const folderName: string =
+      output.namespace != null && output.namespace !== '' ? `${output.namespace}/${output.folderName}` : output.folderName;
+    if (!ffs.existsSync(`${outputDirectory}/${folderName}`)) ffs.mkdirRecursiveSync(`${outputDirectory}/${folderName}`);
     if (output.resultString)
-      ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultString, 'utf-8');
+      ffs.writeFileSync(`${outputDirectory}/${folderName}/${output.fileName}`, output.resultString, 'utf-8');
     else if (output.resultStream)
-      ffs.writeFileSync(`${outputDirectory}/${output.folderName}/${output.fileName}`, output.resultStream);
+      ffs.writeFileSync(`${outputDirectory}/${folderName}/${output.fileName}`, output.resultStream);
     else winston.info(`No output stream or string for ${result.generatorName}`);
   });
 }

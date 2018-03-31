@@ -15,16 +15,18 @@
       "technologyVersion": "*",
       "dependencies": [
         "metaed-plugin-edfi-unified",
-        "metaed-plugin-edfi-ods"
+        "metaed-plugin-edfi-ods",
+        "metaed-plugin-edfi-xsd"
       ]
     }
   },
   "dependencies": {
-    "handlebars": "^4.0.11",
     "metaed-core": "1.1.3-dev.0",
     "metaed-plugin-edfi-ods": "1.1.3-dev.0",
     "metaed-plugin-edfi-unified": "1.1.3-dev.0",
-    "ramda": "0.24.1",
+    "metaed-plugin-edfi-xsd": "1.1.3-dev.0",
+    "handlebars": "^4.0.11",
+    "ramda": "^0.25.0",
     "sugar": "^2.0.4"
   },
   "devDependencies": {
@@ -45,7 +47,8 @@
     "flow-typed": "^2.1.5",
     "jest": "^22.0.0",
     "prettier": "^1.9.2",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "xml-js": "^1.4.2"
   },
   "scripts": {
     "build": "yarn build:clean && yarn build:dist && yarn build:flow",

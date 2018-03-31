@@ -13,7 +13,7 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
     results.push({
       name: 'ODS Tables',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + structurePath,
+      folderName: structurePath,
       fileName: fileNameFor('0020', namespaceInfo, 'Tables'),
       resultString: generatedResult,
       resultStream: null,
@@ -38,7 +38,7 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
     results.push({
       name: 'ODS Foreign Keys',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + structurePath,
+      folderName: structurePath,
       fileName: fileNameFor('0030', namespaceInfo, 'ForeignKeys'),
       resultString: generatedResult,
       resultStream: null,
@@ -61,7 +61,7 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
     results.push({
       name: 'ODS Extended Properties',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + structurePath,
+      folderName: structurePath,
       fileName: fileNameFor('0050', namespaceInfo, 'ExtendedProperties'),
       resultString: generatedResult,
       resultStream: null,
@@ -84,7 +84,7 @@ export async function generateTriggers(metaEd: MetaEdEnvironment): Promise<Gener
     results.push({
       name: 'ODS Triggers',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + structurePath,
+      folderName: structurePath,
       fileName: fileNameFor('0060', namespaceInfo, 'Triggers'),
       resultString: generatedResult,
       resultStream: null,
@@ -109,7 +109,7 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
     results.push({
       name: 'ODS Enumerations',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + dataPath,
+      folderName: dataPath,
       fileName: fileNameFor('0010', namespaceInfo, 'Enumerations'),
       resultString: generatedResult,
       resultStream: null,
@@ -134,7 +134,7 @@ export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<Ge
     results.push({
       name: 'ODS School Years',
       namespace: namespaceInfo.namespace,
-      folderName: namespaceInfo.namespace + dataPath,
+      folderName: dataPath,
       fileName: fileNameFor('0020', namespaceInfo, 'SchoolYears'),
       resultString: generatedResult,
       resultStream: null,
@@ -181,7 +181,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       results.push({
         name: 'ODS Tables',
         namespace: namespaceInfo.namespace,
-        folderName: namespaceInfo.namespace + structurePath,
+        folderName: structurePath,
         fileName: fileNameFor('0004', namespaceInfo, 'Tables'),
         resultString,
         resultStream: null,

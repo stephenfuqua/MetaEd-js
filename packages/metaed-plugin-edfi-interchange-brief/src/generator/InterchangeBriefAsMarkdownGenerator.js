@@ -42,9 +42,9 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const markdown: string = template().interchangeBrief(interchange);
       generatedOutput.push({
         name: 'Interchange Brief Html',
-        namespace: '',
-        fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
+        namespace: 'Documentation',
         folderName: 'InterchangeBrief',
+        fileName: `${interchange.metaEdName}-InterchangeBrief.html`,
         resultString: `${header}${marked(markdown)}`,
         resultStream: null,
       });
@@ -53,9 +53,9 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   generatedOutput.push({
     name: 'confluence-like.css',
-    fileName: 'confluence-like.css',
-    namespace: '',
+    namespace: 'Documentation',
     folderName: 'InterchangeBrief',
+    fileName: 'confluence-like.css',
     resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
     resultStream: null,
   });

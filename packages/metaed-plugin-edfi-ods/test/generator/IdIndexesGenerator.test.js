@@ -64,7 +64,8 @@ describe('when generating id indexes for core namespace table with no type', () 
   it('should generate correct id index', () => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-IdColumnUniqueIndexes.sql');
-    expect(R.head(result.generatedOutput).folderName).toBe('edfi/Database/SQLServer/ODS/Structure/');
+    expect(R.head(result.generatedOutput).namespace).toBe('edfi');
+    expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Id Indexes');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
     expect(R.head(result.generatedOutput).resultString).toEqual(expect.stringMatching('FILLFACTOR = 75'));
@@ -99,7 +100,8 @@ describe('when generating id indexes for core namespace table with type', () => 
   it('should generate correct id index', () => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-IdColumnUniqueIndexes.sql');
-    expect(R.head(result.generatedOutput).folderName).toBe('edfi/Database/SQLServer/ODS/Structure/');
+    expect(R.head(result.generatedOutput).namespace).toBe('edfi');
+    expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Id Indexes');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
     expect(R.head(result.generatedOutput).resultString).toEqual(expect.stringMatching('FILLFACTOR = 100'));
@@ -135,7 +137,8 @@ describe('when generating id indexes for extension namespace table with no type'
   it('should generate correct id index', () => {
     expect(result.generatorName).toEqual('edfiOds.IdIndexesGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0040-EXTENSION-extension-IdColumnUniqueIndexes.sql');
-    expect(R.head(result.generatedOutput).folderName).toBe('extension/Database/SQLServer/ODS/Structure/');
+    expect(R.head(result.generatedOutput).namespace).toBe('extension');
+    expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Id Indexes');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
     expect(R.head(result.generatedOutput).resultString).toEqual(expect.stringMatching('FILLFACTOR = 75'));
