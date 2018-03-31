@@ -246,7 +246,7 @@ describe('MetaEdConsole', () => {
     it('returns build params for core project', () => {
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(11);
+      expect(gulpTaskParams.length).toEqual(13);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath build --color');
@@ -256,8 +256,10 @@ describe('MetaEdConsole', () => {
       expect(gulpTaskParams[6]).toEqual(gulpInputs.deployTargetVersion);
       expect(gulpTaskParams[7]).toEqual('--version');
       expect(gulpTaskParams[8]).toEqual(gulpInputs.version);
-      expect(gulpTaskParams[9]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[10]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[9]).toEqual('--artifactGeneration');
+      expect(gulpTaskParams[10]).toEqual('Non_JS');
+      expect(gulpTaskParams[11]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[12]).toEqual(gulpInputs.projectPath);
     });
 
     it('returns build params for extension project', () => {
@@ -265,7 +267,7 @@ describe('MetaEdConsole', () => {
       gulpInputs.extensionNamespace = 'extensionnamespace';
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(16);
+      expect(gulpTaskParams.length).toEqual(18);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath build --color');
@@ -275,20 +277,22 @@ describe('MetaEdConsole', () => {
       expect(gulpTaskParams[6]).toEqual(gulpInputs.deployTargetVersion);
       expect(gulpTaskParams[7]).toEqual('--version');
       expect(gulpTaskParams[8]).toEqual(gulpInputs.version);
-      expect(gulpTaskParams[9]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[10]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
-      expect(gulpTaskParams[11]).toEqual('--extensionMetaEdPath');
-      expect(gulpTaskParams[12]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[13]).toEqual('--extensionNamespace');
-      expect(gulpTaskParams[14]).toEqual(gulpInputs.extensionNamespace);
-      expect(gulpTaskParams[15]).toEqual('--includeExtensions');
+      expect(gulpTaskParams[9]).toEqual('--artifactGeneration');
+      expect(gulpTaskParams[10]).toEqual('Non_JS');
+      expect(gulpTaskParams[11]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[12]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
+      expect(gulpTaskParams[13]).toEqual('--extensionMetaEdPath');
+      expect(gulpTaskParams[14]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[15]).toEqual('--extensionNamespace');
+      expect(gulpTaskParams[16]).toEqual(gulpInputs.extensionNamespace);
+      expect(gulpTaskParams[17]).toEqual('--includeExtensions');
     });
 
     it('returns deploy params for core project', () => {
       gulpInputs.taskName = 'deploy';
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(15);
+      expect(gulpTaskParams.length).toEqual(17);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath deploy --color');
@@ -298,12 +302,14 @@ describe('MetaEdConsole', () => {
       expect(gulpTaskParams[6]).toEqual(gulpInputs.deployTargetVersion);
       expect(gulpTaskParams[7]).toEqual('--version');
       expect(gulpTaskParams[8]).toEqual(gulpInputs.version);
-      expect(gulpTaskParams[9]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[10]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[11]).toEqual('--odsApiRootPath');
-      expect(gulpTaskParams[12]).toEqual(gulpInputs.edfiOdsRepoDirectory);
-      expect(gulpTaskParams[13]).toEqual('--odsApiImplementationRootPath');
-      expect(gulpTaskParams[14]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
+      expect(gulpTaskParams[9]).toEqual('--artifactGeneration');
+      expect(gulpTaskParams[10]).toEqual('Non_JS');
+      expect(gulpTaskParams[11]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[12]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[13]).toEqual('--odsApiRootPath');
+      expect(gulpTaskParams[14]).toEqual(gulpInputs.edfiOdsRepoDirectory);
+      expect(gulpTaskParams[15]).toEqual('--odsApiImplementationRootPath');
+      expect(gulpTaskParams[16]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
     });
 
     it('returns deploy params for extension project', () => {
@@ -312,7 +318,7 @@ describe('MetaEdConsole', () => {
       gulpInputs.extensionNamespace = 'extensionnamespace';
       const gulpTaskParams = metaEdConsole._createGulpTaskParams(gulpInputs);
 
-      expect(gulpTaskParams.length).toEqual(20);
+      expect(gulpTaskParams.length).toEqual(22);
       expect(gulpTaskParams[0]).toEqual('/s');
       expect(gulpTaskParams[1]).toEqual('/c');
       expect(gulpTaskParams[2]).toEqual('gulpPath deploy --color');
@@ -322,17 +328,19 @@ describe('MetaEdConsole', () => {
       expect(gulpTaskParams[6]).toEqual(gulpInputs.deployTargetVersion);
       expect(gulpTaskParams[7]).toEqual('--version');
       expect(gulpTaskParams[8]).toEqual(gulpInputs.version);
-      expect(gulpTaskParams[9]).toEqual('--metaEdPath');
-      expect(gulpTaskParams[10]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
-      expect(gulpTaskParams[11]).toEqual('--extensionMetaEdPath');
-      expect(gulpTaskParams[12]).toEqual(gulpInputs.projectPath);
-      expect(gulpTaskParams[13]).toEqual('--extensionNamespace');
-      expect(gulpTaskParams[14]).toEqual(gulpInputs.extensionNamespace);
-      expect(gulpTaskParams[15]).toEqual('--includeExtensions');
-      expect(gulpTaskParams[16]).toEqual('--odsApiRootPath');
-      expect(gulpTaskParams[17]).toEqual(gulpInputs.edfiOdsRepoDirectory);
-      expect(gulpTaskParams[18]).toEqual('--odsApiImplementationRootPath');
-      expect(gulpTaskParams[19]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
+      expect(gulpTaskParams[9]).toEqual('--artifactGeneration');
+      expect(gulpTaskParams[10]).toEqual('Non_JS');
+      expect(gulpTaskParams[11]).toEqual('--metaEdPath');
+      expect(gulpTaskParams[12]).toEqual(gulpInputs.coreMetaEdSourceDirectory);
+      expect(gulpTaskParams[13]).toEqual('--extensionMetaEdPath');
+      expect(gulpTaskParams[14]).toEqual(gulpInputs.projectPath);
+      expect(gulpTaskParams[15]).toEqual('--extensionNamespace');
+      expect(gulpTaskParams[16]).toEqual(gulpInputs.extensionNamespace);
+      expect(gulpTaskParams[17]).toEqual('--includeExtensions');
+      expect(gulpTaskParams[18]).toEqual('--odsApiRootPath');
+      expect(gulpTaskParams[19]).toEqual(gulpInputs.edfiOdsRepoDirectory);
+      expect(gulpTaskParams[20]).toEqual('--odsApiImplementationRootPath');
+      expect(gulpTaskParams[21]).toEqual(gulpInputs.edfiOdsImplementationRepoDirectory);
     });
   });
 
