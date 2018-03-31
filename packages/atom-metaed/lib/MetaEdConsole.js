@@ -236,6 +236,9 @@ export default class MetaEdConsole {
       // TODO: this is actually data standard version, but we are temporarily using tech version since they happen to coincide
       '--version',
       useTechPreview() ? '3.0.0' : '2.0.0',
+      // tell C# to only to generate non-JS items
+      '--artifactGeneration',
+      'Non_JS',
     ];
     if (gulpInputs.isExtensionProject) {
       params.push('--metaEdPath');
