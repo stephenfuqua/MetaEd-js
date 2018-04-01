@@ -1,7 +1,10 @@
 /** @babel */
 // @flow
 
+// eslint-disable-next-line
+import { Notification } from 'atom';
 import fs from 'fs-extra';
+import tmp from 'tmp-promise';
 import path from 'path';
 import { spawn as nodeSpawn } from 'child_process';
 import streamSplitter from 'stream-splitter';
@@ -43,8 +46,8 @@ export default class MetaEdConsole {
     this._metaEdLog = metaEdLog;
   }
 
-  build(isExtensionProject: boolean = false) {
-    return this._gulpTask('generate-artifacts', isExtensionProject);
+  async build(isExtensionProject: boolean = false) {
+    await this._gulpTask('generate-artifacts', isExtensionProject);
   }
 
   deploy(isExtensionProject: boolean = false) {
@@ -65,53 +68,14 @@ export default class MetaEdConsole {
     }
   }
 
-  _gulpTask(taskName: string, isExtensionProject: boolean = false) {
-    this._metaEdLog.clear();
-
+  async _gulpTask(taskName: string, isExtensionProject: boolean = false) {
     const gulpInputs = this._verifyGulpInputs(taskName, isExtensionProject);
     if (!gulpInputs) {
       return;
     }
-    this._metaEdLog.addMessage(`Beginning execution of MetaEd task ${taskName}...`);
+    this._metaEdLog.addMessage(`Continuing with execution of MetaEd C# task ${taskName}...`);
 
-    this._cleanUpMetaEdArtifacts(gulpInputs.artifactPath).then(() => {
-      setImmediate(() => {
-        this._executeGulpTask(gulpInputs);
-      });
-    });
-  }
-
-  _cleanUpMetaEdArtifacts(artifactPath: string): Promise<void> {
-    // close all MetaEdOutput tabs
-    const panes = atom.workspace.getPanes();
-    panes.forEach(pane => {
-      pane.getItems().forEach(editor => {
-        if (typeof editor.getPath === 'function') {
-          const editorPath = editor.getPath();
-          if (editorPath && editorPath.startsWith(artifactPath)) {
-            pane.destroyItem(editor);
-          }
-        }
-      });
-    });
-
-    // collapse MetaEdOutputDirectory in tree-view if exists
-    // (workaround for Atom GitHub issue #3365)
-    return this._collapseTreeViewDirectory(artifactPath)
-      .then(() => {
-        // remove MetaEdOutput directory
-        fs.removeSync(artifactPath);
-      })
-      .catch(exception => {
-        console.error(exception);
-        if (fs.existsSync(artifactPath)) {
-          this._metaEdLog.addMessage(`Unable to delete output directory at path "${artifactPath}".`);
-        }
-        if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
-          this._metaEdLog.addMessage('Please close any files or folders that may be open in other applications.');
-        }
-        return Promise.reject(exception);
-      });
+    await this._executeGulpTask(gulpInputs);
   }
 
   // TODO: support multiple extension projects??? This is C#
@@ -261,47 +225,70 @@ export default class MetaEdConsole {
     return params;
   }
 
-  _executeGulpTask(gulpInputs: GulpInputs) {
-    const gulpTaskParams = this._createGulpTaskParams(gulpInputs);
-    if (!gulpTaskParams) {
-      return;
-    }
+  async _executeGulpTask(gulpInputs: GulpInputs): Promise<boolean> {
+    return new Promise(async resolve => {
+      const startNotification = new Notification('info', 'Building MetaEd C#...', { dismissable: true });
+      const failNotification = new Notification('error', 'MetaEd C# Build Failed!', { dismissable: true });
+      const buildErrorsNotification = new Notification('warning', 'MetaEd C# Build Errors Detected!', { dismissable: true });
+      let resultNotification = new Notification('success', 'MetaEd C# Build Complete!', { dismissable: true });
 
-    console.log(`Executing cmd.exe with parameters ${JSON.stringify(gulpTaskParams)}.`);
+      startNotification.onDidDisplay(() => setTimeout(() => startNotification.dismiss(), 10000));
 
-    const childProcess = this._spawn(gulpInputs.cmdFullPath, gulpTaskParams, {
-      cwd: gulpInputs.metaEdConsoleSourceDirectory,
-    });
+      [resultNotification, failNotification, buildErrorsNotification].forEach(notification =>
+        notification.onDidDisplay(() => {
+          startNotification.dismiss();
+          setTimeout(() => notification.dismiss(), 3000);
+        }),
+      );
 
-    const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
-    outputSplitter.encoding = 'utf8';
-    outputSplitter.on('token', token => {
-      this._metaEdLog.addMessage(ansihtml(token), true);
-    });
+      setImmediate(() => atom.notifications.addNotification(startNotification));
 
-    childProcess.stderr.on('data', data => {
-      this._metaEdLog.addMessage(ansihtml(`Error: ${String(data)}`), true);
-    });
+      // Set up for temp output directory
+      const realArtifactDirectory: string = gulpInputs.artifactPath;
+      tmp.setGracefulCleanup();
+      const tempArtifactDirectoryObject = await tmp.dir({ prefix: 'MetaEdOutput-' });
+      // eslint-disable-next-line
+      gulpInputs.artifactPath = tempArtifactDirectoryObject.path;
 
-    childProcess.on('close', code => {
-      console.log(`child process exited with code ${code}`);
-      if (code === 0) {
-        this._metaEdLog.addMessage(`Successfully executed MetaEd task ${gulpInputs.taskName}.`);
-      } else {
-        this._metaEdLog.addMessage(`Error on call to MetaEd task ${gulpInputs.taskName}.`);
+      const gulpTaskParams = this._createGulpTaskParams(gulpInputs);
+      if (!gulpTaskParams) {
+        return;
       }
-    });
-  }
 
-  // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
-  _collapseTreeViewDirectory(pathString: string): Promise<void> {
-    return atom.packages.activatePackage('tree-view').then(treeViewPackage => {
-      const treeView = treeViewPackage.mainModule.treeView;
-      const directoryEntry = treeView.selectEntryForPath(pathString);
-      if (directoryEntry) {
-        treeView.collapseDirectory(directoryEntry);
-      }
-      return Promise.resolve();
+      console.log(`Executing MetaEd C# with parameters ${JSON.stringify(gulpTaskParams)}.`);
+
+      const childProcess = this._spawn(gulpInputs.cmdFullPath, gulpTaskParams, {
+        cwd: gulpInputs.metaEdConsoleSourceDirectory,
+      });
+
+      const outputSplitter = childProcess.stdout.pipe(streamSplitter('\n'));
+      outputSplitter.encoding = 'utf8';
+      outputSplitter.on('token', token => {
+        this._metaEdLog.addMessage(ansihtml(token), true);
+      });
+
+      childProcess.stderr.on('data', data => {
+        this._metaEdLog.addMessage(ansihtml(`Error: ${String(data)}`), true);
+        resultNotification = buildErrorsNotification;
+      });
+
+      childProcess.on('close', async code => {
+        console.log(`child process exited with code ${code}`);
+        if (code === 0) {
+          this._metaEdLog.addMessage(`Successfully executed MetaEd C# task ${gulpInputs.taskName}.`);
+
+          // copy from temp directory to artifact directory
+          // at this point, it's only documentation files C# is generating
+          await fs.copy(tempArtifactDirectoryObject.path, path.join(realArtifactDirectory, 'Documentation'));
+          // tempArtifactDirectoryObject.cleanup();
+          await fs.remove(tempArtifactDirectoryObject.path);
+        } else {
+          this._metaEdLog.addMessage(`Error on call to MetaEd C# task ${gulpInputs.taskName}.`);
+          resultNotification = failNotification;
+        }
+        atom.notifications.addNotification(resultNotification);
+        return resolve(code === 0);
+      });
     });
   }
 }

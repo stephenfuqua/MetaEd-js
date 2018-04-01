@@ -39,7 +39,7 @@ function collapseTreeViewDirectory(pathString: string): Promise<void> {
   });
 }
 
-function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: MetaEdLog): Promise<void> {
+async function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: MetaEdLog): Promise<void> {
   // close all MetaEdOutput tabs
   const panes = atom.workspace.getPanes();
   panes.forEach(pane => {
@@ -58,7 +58,9 @@ function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: MetaEdLog)
   return collapseTreeViewDirectory(artifactDirectory)
     .then(() => {
       // remove MetaEdOutput directory
-      fs.removeSync(artifactDirectory);
+      if (artifactDirectory.startsWith('MetaEdOutput')) {
+        fs.removeSync(artifactDirectory);
+      }
     })
     .catch(exception => {
       console.error(exception);
@@ -118,7 +120,7 @@ function verifyBuildPaths(metaEdLog: MetaEdLog): ?BuildPaths {
     );
     return null;
   }
-  const artifactDirectory = path.join(projectDirectory, 'MetaEdJsOutput/');
+  const artifactDirectory = path.join(projectDirectory, 'MetaEdOutput/');
 
   let metaEdConsolePath = path.resolve(metaEdConsoleDirectory, '../metaed-console/dist/index.js');
   if (!fs.existsSync(metaEdConsolePath)) {
@@ -142,7 +144,7 @@ function verifyBuildPaths(metaEdLog: MetaEdLog): ?BuildPaths {
   };
 }
 
-function executeBuild(
+async function executeBuild(
   { cmdExePath, metaEdConsolePath, metaEdConsoleDirectory },
   metaEdConfigurationPath,
   metaEdLog: MetaEdLog,
@@ -228,12 +230,12 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog);
 
     tmp.setGracefulCleanup();
-    const tempConfigurationPath = tmp.tmpNameSync({ prefix: 'MetaEdConfig-', postfix: '.json' });
-    fs.outputJsonSync(tempConfigurationPath, { metaEdConfiguration }, { spaces: 2 });
+    const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });
+    await fs.outputJson(tempConfigurationPath, { metaEdConfiguration }, { spaces: 2 });
 
     const buildResult = await executeBuild(buildPaths, tempConfigurationPath, metaEdLog);
 
-    fs.removeSync(tempConfigurationPath);
+    await fs.remove(tempConfigurationPath);
     return buildResult;
   } catch (e) {
     metaEdLog.addMessage(e);

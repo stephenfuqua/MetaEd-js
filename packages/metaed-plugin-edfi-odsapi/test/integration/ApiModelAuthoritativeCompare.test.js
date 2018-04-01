@@ -31,7 +31,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
   beforeAll(async () => {
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
-      artifactDirectory: './MetaEdOutput-Experimental/',
+      artifactDirectory: './MetaEdOutput/',
       pluginConfig: {
         edfiUnified: {
           targetTechnologyVersion: '3.0.0',
@@ -116,7 +116,7 @@ describe('when generating api model with extensions and comparing it to data sta
   beforeAll(async () => {
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
-      artifactDirectory: './MetaEdOutput-Experimental/',
+      artifactDirectory: './MetaEdOutput/',
       pluginConfig: {
         edfiUnified: {
           targetTechnologyVersion: '3.0.0',

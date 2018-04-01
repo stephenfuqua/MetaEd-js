@@ -303,7 +303,7 @@ export function activate(state: any) {
         if (metaEdConsole != null)
           if (metaEdLog != null) {
             await build(metaEdConfigurationFromTechPreviewFlag(), metaEdLog); // MetaEdJsConsole
-            metaEdConsole.build(!allianceMode());
+            await metaEdConsole.build(!allianceMode());
           }
       },
     }),
