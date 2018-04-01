@@ -43,6 +43,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         entity.data.edfiOds.ods_Properties.some(
           (property: EntityProperty) =>
             !property.data.edfiOds.ods_IsCollection &&
+            property.type !== 'common' &&
             (!isOdsReferenceProperty(property) || asReferentialProperty(property).referencedEntity !== entity.baseEntity),
         )
       ) {

@@ -562,3 +562,262 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName)).toBeDefined();
   });
 });
+
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only common', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const commonName: string = 'CommonName';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityExtensionName: string = 'DomainEntityExtensionName';
+
+  beforeAll(() => {
+    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'namespace',
+      extensionEntitySuffix: '',
+    });
+
+    const common: Common = Object.assign(newCommon(), {
+      namespaceInfo,
+      metaEdName: commonName,
+      data: {
+        edfiOds: {
+          ods_TableName: commonName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const commonPkPropertyName: string = 'CommonPkPropertyName';
+    const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: commonPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: common,
+      data: {
+        edfiOds: {
+          ods_Name: commonPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    common.data.edfiOds.ods_Properties.push(commonPkProperty);
+    common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
+    addEntity(metaEd.entity, common);
+
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      namespaceInfo,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOds: {
+          ods_TableName: domainEntityName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityPkPropertyName: string = 'DomainEntityPkPropertyName';
+    const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOds: {
+          ods_Name: domainEntityPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
+    addEntity(metaEd.entity, domainEntity);
+
+    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'extension',
+      isExtension: true,
+    });
+
+    const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
+      namespaceInfo,
+      metaEdName: domainEntityExtensionName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOds: {
+          ods_TableName: domainEntityExtensionName,
+          ods_ExtensionName: domainEntityExtensionName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName,
+      isOptional: true,
+      parentEntity: domainEntityExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
+    addEntity(metaEd.entity, domainEntityExtension);
+
+    metaEd.dataStandardVersion = '3.0.0';
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create one tables', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+  });
+
+  it('should not create a table for domain entity extension', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeUndefined();
+  });
+
+  it('should create join table from domain entity and common', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName)).toBeDefined();
+  });
+});
+
+describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only commons', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const commonName1: string = 'CommonName1';
+  const commonName2: string = 'CommonName2';
+  const domainEntityName: string = 'DomainEntityName';
+  const domainEntityExtensionName: string = 'DomainEntityExtensionName';
+
+  beforeAll(() => {
+    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'namespace',
+      extensionEntitySuffix: '',
+    });
+
+    const common: Common = Object.assign(newCommon(), {
+      namespaceInfo,
+      metaEdName: commonName1,
+      data: {
+        edfiOds: {
+          ods_TableName: commonName1,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const commonPkPropertyName: string = 'CommonPkPropertyName';
+    const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: commonPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: common,
+      data: {
+        edfiOds: {
+          ods_Name: commonPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    common.data.edfiOds.ods_Properties.push(commonPkProperty);
+    common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
+    addEntity(metaEd.entity, common);
+
+    const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      namespaceInfo,
+      metaEdName: domainEntityName,
+      data: {
+        edfiOds: {
+          ods_TableName: domainEntityName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityPkPropertyName: string = 'DomainEntityPkPropertyName';
+    const domainEntityPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: domainEntity,
+      data: {
+        edfiOds: {
+          ods_Name: domainEntityPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
+    addEntity(metaEd.entity, domainEntity);
+
+    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'extension',
+      isExtension: true,
+    });
+
+    const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
+      namespaceInfo,
+      metaEdName: domainEntityExtensionName,
+      baseEntityName: domainEntityName,
+      baseEntity: domainEntity,
+      data: {
+        edfiOds: {
+          ods_TableName: domainEntityExtensionName,
+          ods_ExtensionName: domainEntityExtensionName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const domainEntityExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName1,
+      isOptional: true,
+      parentEntity: domainEntityExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName1,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
+    const domainEntityExtensionCommonProperty2: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName2,
+      isOptional: true,
+      parentEntity: domainEntityExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName2,
+          ods_ContextPrefix: '',
+          ods_IsCollection: true,
+        },
+      },
+    });
+    domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty2);
+    addEntity(metaEd.entity, domainEntityExtension);
+
+    metaEd.dataStandardVersion = '3.0.0';
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create two tables', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+  });
+
+  it('should not create a table for domain entity extension', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeUndefined();
+  });
+
+  it('should create join table from domain entity and common', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName1)).toBeDefined();
+  });
+
+  it('should create join table from domain entity and common collection', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName2)).toBeDefined();
+  });
+});

@@ -520,37 +520,6 @@
     },
     {
       "schema": "sample",
-      "name": "StaffExtension",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StaffExtension_PK",
-          "identifyingPropertyNames": [
-            "StaffUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": ""
-    },
-    {
-      "schema": "sample",
       "name": "StaffMyCollection",
       "locallyDefinedProperties": [
         {
@@ -1073,53 +1042,6 @@
           "description": "The name or title of the staff evaluation.",
           "isIdentifying": true,
           "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "sample",
-        "name": "FK_StaffExtension_Staff"
-      },
-      "cardinality": "OneToOneExtension",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Staff"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StaffUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a staff.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "sample",
-        "name": "StaffExtension"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StaffUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a staff.",
-          "isIdentifying": true,
-          "isServerAssigned": true
         }
       ],
       "isIdentifying": true,

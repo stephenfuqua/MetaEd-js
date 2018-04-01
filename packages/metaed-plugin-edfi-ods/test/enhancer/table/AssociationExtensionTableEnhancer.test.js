@@ -568,3 +568,261 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonName)).toBeDefined();
   });
 });
+
+describe('when AssociationExtensionTableEnhancer enhances association extension with only common', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const commonName: string = 'CommonName';
+  const associationName: string = 'AssociationName';
+  const associationExtensionName: string = 'AssociationExtensionName';
+
+  beforeAll(() => {
+    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'namespace',
+      extensionEntitySuffix: '',
+    });
+
+    const common: Common = Object.assign(newCommon(), {
+      namespaceInfo,
+      metaEdName: commonName,
+      data: {
+        edfiOds: {
+          ods_TableName: commonName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const commonPkPropertyName: string = 'CommonPkPropertyName';
+    const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: commonPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: common,
+      data: {
+        edfiOds: {
+          ods_Name: commonPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    common.data.edfiOds.ods_Properties.push(commonPkProperty);
+    common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
+    addEntity(metaEd.entity, common);
+
+    const association: Association = Object.assign(newAssociation(), {
+      namespaceInfo,
+      metaEdName: associationName,
+      data: {
+        edfiOds: {
+          ods_TableName: associationName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const associationPkPropertyName: string = 'AssociationPkPropertyName';
+    const associationPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: associationPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: association,
+      data: {
+        edfiOds: {
+          ods_Name: associationPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    association.data.edfiOds.ods_Properties.push(associationPkProperty);
+    addEntity(metaEd.entity, association);
+
+    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'extension',
+      isExtension: true,
+    });
+
+    const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
+      namespaceInfo,
+      metaEdName: associationExtensionName,
+      baseEntityName: associationName,
+      baseEntity: association,
+      data: {
+        edfiOds: {
+          ods_TableName: associationExtensionName,
+          ods_ExtensionName: associationExtensionName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName,
+      isRequired: true,
+      parentEntity: associationExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty);
+    addEntity(metaEd.entity, associationExtension);
+
+    metaEd.dataStandardVersion = '3.0.0';
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create two tables', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+  });
+
+  it('should not create a table for association extension', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeUndefined();
+  });
+
+  it('should create join table from association and common', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonName)).toBeDefined();
+  });
+});
+
+describe('when AssociationExtensionTableEnhancer enhances association extension with only commons', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const commonName1: string = 'CommonName1';
+  const commonName2: string = 'CommonName2';
+  const associationName: string = 'AssociationName';
+  const associationExtensionName: string = 'AssociationExtensionName';
+
+  beforeAll(() => {
+    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'namespace',
+      extensionEntitySuffix: '',
+    });
+
+    const common: Common = Object.assign(newCommon(), {
+      namespaceInfo,
+      metaEdName: commonName1,
+      data: {
+        edfiOds: {
+          ods_TableName: commonName1,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const commonPkPropertyName: string = 'CommonPkPropertyName';
+    const commonPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: commonPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: common,
+      data: {
+        edfiOds: {
+          ods_Name: commonPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    common.data.edfiOds.ods_Properties.push(commonPkProperty);
+    common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
+    addEntity(metaEd.entity, common);
+
+    const association: Association = Object.assign(newAssociation(), {
+      namespaceInfo,
+      metaEdName: associationName,
+      data: {
+        edfiOds: {
+          ods_TableName: associationName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const associationPkPropertyName: string = 'AssociationPkPropertyName';
+    const associationPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: associationPkPropertyName,
+      isPartOfIdentity: true,
+      parentEntity: association,
+      data: {
+        edfiOds: {
+          ods_Name: associationPkPropertyName,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    association.data.edfiOds.ods_Properties.push(associationPkProperty);
+    addEntity(metaEd.entity, association);
+
+    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
+      namespace: 'extension',
+      isExtension: true,
+    });
+
+    const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
+      namespaceInfo,
+      metaEdName: associationExtensionName,
+      baseEntityName: associationName,
+      baseEntity: association,
+      data: {
+        edfiOds: {
+          ods_TableName: associationExtensionName,
+          ods_ExtensionName: associationExtensionName,
+          ods_Properties: [],
+          ods_IdentityProperties: [],
+        },
+      },
+    });
+    const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName1,
+      isRequired: true,
+      parentEntity: associationExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName1,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty);
+    const associationExtensionCommonProperty2: CommonProperty = Object.assign(newCommonProperty(), {
+      namespaceInfo: extensionNamespaceInfo,
+      metaEdName: commonName2,
+      isRequired: true,
+      parentEntity: associationExtension,
+      referencedEntity: common,
+      isExtensionOverride: false,
+      data: {
+        edfiOds: {
+          ods_Name: commonName2,
+          ods_ContextPrefix: '',
+        },
+      },
+    });
+    associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty2);
+    addEntity(metaEd.entity, associationExtension);
+
+    metaEd.dataStandardVersion = '3.0.0';
+    initializeEdFiOdsEntityRepository(metaEd);
+    enhance(metaEd);
+  });
+
+  it('should create two tables', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+  });
+
+  it('should not create a table for association extension', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeUndefined();
+  });
+
+  it('should create join table from association and common', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonName1)).toBeDefined();
+  });
+
+  it('should create join table from association and common collection', () => {
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonName2)).toBeDefined();
+  });
+});
