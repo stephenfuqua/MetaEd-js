@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import ramda from 'ramda';
-import handlbars from 'handlebars';
+import handlebars from 'handlebars';
 import type { SimpleType } from 'metaed-plugin-edfi-xsd';
 import type { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
@@ -17,9 +17,17 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const getSimpleTypeTemplate: () => any => string = ramda.once(() => handlbars.compile(getTemplateString('simpleType')));
+const getSimpleTypeTemplate: () => any => string = ramda.once(() => handlebars.compile(getTemplateString('simpleType')));
+
+const registerPartials: () => void = ramda.once(() => {
+  handlebars.registerPartial({
+    annotation: getTemplateString('annotation'),
+    attribute: getTemplateString('attribute'),
+  });
+});
 
 function generatedXsdFor(entity: SimpleType): string {
+  registerPartials();
   const template: any => string = getSimpleTypeTemplate();
   return template(entity);
 }

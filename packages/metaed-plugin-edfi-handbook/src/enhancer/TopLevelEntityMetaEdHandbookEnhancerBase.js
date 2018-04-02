@@ -62,6 +62,7 @@ const registerPartials: () => void = ramda.once(() => {
   handlebars.registerPartial({
     complexTypeItem: getTemplateString('complexTypeItem'),
     annotation: getTemplateString('annotation'),
+    attribute: getTemplateString('attribute'),
   });
 });
 

@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import ramda from 'ramda';
-import handlbars from 'handlebars';
+import handlebars from 'handlebars';
 import { ColumnDataTypes } from 'metaed-plugin-edfi-ods';
 import type { ModelBase, MetaEdEnvironment, EntityProperty } from 'metaed-core';
 import type { HandbookEntry } from '../model/HandbookEntry';
@@ -31,7 +31,7 @@ function getTemplateString(templateName: string): string {
   return fs.readFileSync(path.join(__dirname, './template/', `${templateName}.hbs`), 'utf8');
 }
 
-const getSimpleTypeTemplate: () => any => string = ramda.memoize(() => handlbars.compile(getTemplateString('simpleType')));
+const getSimpleTypeTemplate: () => any => string = ramda.memoize(() => handlebars.compile(getTemplateString('simpleType')));
 
 function generatedXsdFor(entity: ModelBase): string {
   if (!entity.data.edfiXsd.xsd_SimpleType) return '';
