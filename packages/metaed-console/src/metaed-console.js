@@ -31,9 +31,11 @@ export async function metaEdConsole() {
       runValidators: true,
       runEnhancers: true,
       runGenerators: true,
+      stopOnValidationFailure: true,
     },
   });
   const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projects);
+
   if (dataStandardVersions.length === 0) {
     winston.error('No data standard project found.  Aborting.');
     process.exitCode = 1;
@@ -42,7 +44,13 @@ export async function metaEdConsole() {
     process.exitCode = 1;
   } else {
     state.metaEd.dataStandardVersion = dataStandardVersions[0];
-    await executePipeline(state);
+    try {
+      const { failure } = await executePipeline(state);
+      process.exitCode = state.validationFailure.length === 0 && !failure ? 0 : 1;
+    } catch (e) {
+      winston.error(e);
+      process.exitCode = 1;
+    }
   }
   const endTime = Date.now() - startTime;
   winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);

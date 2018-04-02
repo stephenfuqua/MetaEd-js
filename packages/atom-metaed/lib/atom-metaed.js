@@ -466,6 +466,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
       runValidators: true,
       runEnhancers: true,
       runGenerators: false,
+      stopOnValidationFailure: false,
     },
     metaEdConfiguration: useTechPreview() ? { ...dataStandard3Config } : { ...dataStandard2Config },
   });
@@ -475,8 +476,8 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
   if (validateOnTheFly()) mostRecentState = loadFromModifiedEditors(mostRecentState);
 
   const linterMessagesP: Promise<?(any[])> = executePipeline(mostRecentState)
-    .then((endState: State) => {
-      mostRecentState = endState;
+    .then((stateAndFailure: { state: State, failure: boolean }) => {
+      mostRecentState = stateAndFailure.state;
       return mostRecentState.validationFailure.map((errorMessage: ValidationFailure) => {
         const tokenLength: number =
           errorMessage.sourceMap && errorMessage.sourceMap.tokenText ? errorMessage.sourceMap.tokenText.length : 0;

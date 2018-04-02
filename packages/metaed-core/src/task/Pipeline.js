@@ -18,10 +18,12 @@ import type { State } from '../State';
 
 winston.cli();
 
-export async function executePipeline(state: State): Promise<State> {
+export async function executePipeline(state: State): Promise<{ state: State, failure: boolean }> {
   // winston.info('Validating configuration...');
   // validateConfiguration(state);
   // await nextMacroTask();
+
+  let failure: boolean = false;
 
   winston.info('Loading plugins:');
   loadPlugins(state);
@@ -57,6 +59,10 @@ export async function executePipeline(state: State): Promise<State> {
           }
           runValidators(pluginManifest, state);
           await nextMacroTask();
+          if (state.validationFailure.length > 0 && state.pipelineOptions.stopOnValidationFailure) {
+            failure = true;
+            break;
+          }
         }
 
         if (state.pipelineOptions.runEnhancers) {
@@ -75,15 +81,15 @@ export async function executePipeline(state: State): Promise<State> {
           await nextMacroTask();
         }
       } catch (err) {
-        // winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}', and will be disabled.`);
         winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}'`);
         winston.error(err.stack);
-        // pluginManifest.enabled = false;
+        failure = true;
+        break;
       }
     }
   }
 
-  if (state.pipelineOptions.runGenerators) {
+  if (state.pipelineOptions.runGenerators && !failure) {
     winston.info('Writing output:');
     writeOutput(state);
     await nextMacroTask();
@@ -93,5 +99,5 @@ export async function executePipeline(state: State): Promise<State> {
   fileMapForFailure(state);
   await nextMacroTask();
 
-  return state;
+  return { state, failure };
 }

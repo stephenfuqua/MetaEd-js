@@ -8,6 +8,8 @@ const enhancerName: string = 'BaseDescriptorAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreNamespaceInfo: NamespaceInfo = R.head(metaEd.entity.namespaceInfo.filter(n => !n.isExtension));
+  if (!coreNamespaceInfo) return { enhancerName, success: false };
+
   const aggregate: Aggregate = {
     root: 'Descriptor',
     schema: 'edfi',

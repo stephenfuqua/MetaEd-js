@@ -10,6 +10,8 @@ export function collectPrimaryKeys(
   strategy: BuildStrategy,
   factory: ColumnCreatorFactory,
 ): Array<Column> {
+  if (!entity.data.edfiOds) return [];
+
   const columns: Array<Column> = [];
 
   entity.data.edfiOds.ods_IdentityProperties.forEach((property: ReferentialProperty) => {
