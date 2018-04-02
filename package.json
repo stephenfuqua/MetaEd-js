@@ -38,6 +38,7 @@
     "test:unit:workaround-memory-leak": "jest packages/metaed-core/ && jest packages/metaed-plugin-edfi-interchange-brief/ && jest packages/metaed-plugin-edfi-odsapi/ && jest packages/metaed-plugin-edfi-unified/ && jest packages/metaed-plugin-edfi-xml-dictionary/ && jest packages/metaed-plugin-edfi-xsd/ && jest packages/metaed-plugin-edfi-odsapi/ && jest packages/metaed-plugin-edfi-ods/ -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
-    "publish-dev": "yarn build:clean && yarn test && yarn build && lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"
+    "publish-dev": "yarn build:clean && yarn test && yarn build && lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*",
+    "publish-dev-workaround": "lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=* --skip-npm"
   }
 }
