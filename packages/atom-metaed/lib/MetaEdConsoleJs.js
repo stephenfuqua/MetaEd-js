@@ -77,6 +77,13 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: Meta
 function verifyBuildPaths(metaEdLog: MetaEdLog): ?BuildPaths {
   // TODO: support multiple extension projects
   let projectDirectory = atom.project.getPaths()[1];
+  if (projectDirectory != null && allianceMode()) {
+    metaEdLog.addMessage(
+      'Extension generation is not available in Alliance mode.  Please either switch modes or remove the extension project folder.',
+    );
+    return null;
+  }
+
   if (projectDirectory == null && !allianceMode()) {
     metaEdLog.addMessage('No Extension Project found in editor. Please add an extension project folder.');
     return null;

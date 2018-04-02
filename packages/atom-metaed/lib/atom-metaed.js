@@ -302,8 +302,8 @@ export function activate(state: any) {
       'atom-metaed:build': async () => {
         if (metaEdConsole != null)
           if (metaEdLog != null) {
-            await build(metaEdConfigurationFromTechPreviewFlag(), metaEdLog); // MetaEdJsConsole
-            await metaEdConsole.build(!allianceMode());
+            const success: boolean = await build(metaEdConfigurationFromTechPreviewFlag(), metaEdLog); // MetaEdJsConsole
+            if (success) await metaEdConsole.build(!allianceMode());
           }
       },
     }),
