@@ -74,13 +74,19 @@ describe('when building simple domain entity in extension namespace', () => {
   });
 
   it('should have integer property', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).properties[0].metaEdName).toBe(propertyName);
-    expect(getDomainEntity(metaEd.entity, entityName).properties[0].type).toBe('integer');
+    const property = getDomainEntity(metaEd.entity, entityName).properties[0];
+    expect(property.metaEdName).toBe(propertyName);
+    expect(property.type).toBe('integer');
+    expect(property.namespaceInfo.namespace).toBe(namespace);
+    expect(property.namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should have string property', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).properties[1].metaEdName).toBe(stringPropertyName);
-    expect(getDomainEntity(metaEd.entity, entityName).properties[1].type).toBe('string');
+    const property = getDomainEntity(metaEd.entity, entityName).properties[1];
+    expect(property.metaEdName).toBe(stringPropertyName);
+    expect(property.type).toBe('string');
+    expect(property.namespaceInfo.namespace).toBe(namespace);
+    expect(property.namespaceInfo.projectExtension).toBe(projectExtension);
   });
 
   it('should not have queryable fields', () => {

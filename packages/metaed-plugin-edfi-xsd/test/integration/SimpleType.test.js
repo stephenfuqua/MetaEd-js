@@ -13,15 +13,15 @@ import {
 } from 'metaed-core';
 import { enhanceAndGenerate, xpathSelect } from './IntegrationTestHelper';
 
-describe('when generating xsd for domain entity in both namespaces sharing a simple type', () => {
+describe('when generating xsd for domain entity in extension namespace with a simple type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
   const coreEntity: string = 'CoreEntity';
   const coreEntityPk: string = 'CoreEntityPk';
-  const sharedNameString: string = 'SharedNameString';
 
   const extensionEntity: string = 'ExtensionEntity';
   const extensionEntityPk: string = 'ExtensionEntityPk';
+  const extensionEntityString: string = 'ExtensionEntityString';
 
   let coreResult;
   let extensionResult;
@@ -33,23 +33,18 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('edfi')
-
       .withStartDomainEntity(coreEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(coreEntityPk, 'doc')
-      .withStringProperty(sharedNameString, 'doc', true, false, '10')
       .withEndDomainEntity()
-
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
-
+      .withBeginNamespace('extension', 'EXTENSION')
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(extensionEntityPk, 'doc')
-      .withStringProperty(sharedNameString, 'doc', true, false, '10')
+      .withStringProperty(extensionEntityString, 'doc', true, false, '10')
       .withEndDomainEntity()
-
       .withEndNamespace()
 
       .sendToListener(namespaceInfoBuilder)
@@ -64,35 +59,22 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate core domain entity string property', () => {
-    const elements = xpathSelect(
-      "/xs:schema/xs:complexType[@name='CoreEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']",
-      coreResult,
-    );
-    expect(elements).toHaveLength(1);
-  });
-
-  it('should generate core string type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='SharedNameString']", coreResult);
-    expect(elements).toHaveLength(1);
-  });
-
   it('should generate extension domain entity', () => {
     const elements = xpathSelect("/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']", extensionResult);
     expect(elements).toHaveLength(1);
   });
 
-  it('should generate extension domain entity string property reference core', () => {
+  it('should generate extension domain entity string property', () => {
     const elements = xpathSelect(
-      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='SharedNameString'][@type='SharedNameString']",
+      "/xs:schema/xs:complexType[@name='EXTENSION-ExtensionEntity']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ExtensionEntityString'][@type='EXTENSION-ExtensionEntityString']",
       extensionResult,
     );
     expect(elements).toHaveLength(1);
   });
 
-  it('should not generate extension string type', () => {
-    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-SharedNameString']", extensionResult);
-    expect(elements).toHaveLength(0);
+  it('should generate extension string type', () => {
+    const elements = xpathSelect("/xs:schema/xs:simpleType[@name='EXTENSION-ExtensionEntityString']", extensionResult);
+    expect(elements).toHaveLength(1);
   });
 });
 
@@ -430,9 +412,10 @@ describe('when generating xsd for shared simpel property in extension namespace 
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
-    const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
+    const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
+
     MetaEdTextBuilder.build()
 
       .withBeginNamespace('edfi')
@@ -444,7 +427,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
@@ -455,8 +438,8 @@ describe('when generating xsd for shared simpel property in extension namespace 
 
       .sendToListener(namespaceInfoBuilder)
       .sendToListener(stringTypeBuilder)
-      .sendToListener(domainEntityBuilder)
-      .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(sharedStringBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -493,9 +476,9 @@ describe('when generating xsd for renamed shared simple property in extension na
 
   beforeAll(async () => {
     const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
-    const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
+    const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
 
     MetaEdTextBuilder.build()
 
@@ -508,7 +491,7 @@ describe('when generating xsd for renamed shared simple property in extension na
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
@@ -519,8 +502,8 @@ describe('when generating xsd for renamed shared simple property in extension na
 
       .sendToListener(namespaceInfoBuilder)
       .sendToListener(stringTypeBuilder)
-      .sendToListener(domainEntityBuilder)
-      .sendToListener(domainEntityExtensionBuilder);
+      .sendToListener(sharedStringBuilder)
+      .sendToListener(domainEntityBuilder);
 
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
@@ -572,7 +555,7 @@ describe('when generating xsd for shared simple property in extension namespace 
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')

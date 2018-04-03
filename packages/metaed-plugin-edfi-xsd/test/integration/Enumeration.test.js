@@ -60,8 +60,8 @@ describe('when generating xsd for domain entity in extension namespace with refe
   const extensionEntity: string = 'ExtensionEntity';
   const extensionEntityPk: string = 'ExtensionEntityPk';
 
-  const extensionNamespace: string = 'EXTENSION';
-  const extension: string = 'Extension';
+  const extensionNamespace: string = 'extension';
+  const extension: string = 'EXTENSION';
   let coreResult;
   let extensionResult;
 
@@ -127,8 +127,8 @@ describe('when generating xsd for enumeration in extension namespace with refere
   const enumerationItem: string = 'EnumerationItem';
   const extensionEntity: string = 'ExtensionEntity';
 
-  const extensionNamespace: string = 'EXTENSION';
-  const extension: string = 'Extension';
+  const extensionNamespace: string = 'extension';
+  const extension: string = 'EXTENSION';
   let coreResult;
   let extensionResult;
 

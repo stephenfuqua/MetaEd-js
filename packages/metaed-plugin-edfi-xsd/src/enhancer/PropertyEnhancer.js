@@ -23,7 +23,7 @@ import type {
   AssociationProperty,
   DomainEntityProperty,
 } from 'metaed-core';
-import { NoTopLevelEntity, getAllProperties, getAllTopLevelEntities } from 'metaed-core';
+import { NoTopLevelEntity, NoSharedSimple, getAllProperties, getAllTopLevelEntities } from 'metaed-core';
 import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';
@@ -40,9 +40,9 @@ const adjustEnumerationSuffix = (metaEdName: string): string =>
 
 function noParentOrReferencedEntityProjectExtension(property: ReferentialProperty | SimpleProperty): boolean {
   return (
-    !property.parentEntityName ||
+    property.parentEntityName === '' ||
     property.referencedEntity === NoTopLevelEntity ||
-    property.referencedEntity.namespaceInfo.projectExtension == null
+    property.referencedEntity === NoSharedSimple
   );
 }
 

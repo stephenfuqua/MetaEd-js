@@ -15,8 +15,8 @@ describe('when generating xsd for descriptor', () => {
   const coreEntity: string = 'CoreEntity';
   const coreEntityPk: string = 'CoreEntityPk';
   const extensionProperty: string = 'ExtensionProperty';
-  const extensionNamespace: string = 'EXTENSION';
-  const extension: string = 'Extension';
+  const extensionNamespace: string = 'extension';
+  const extension: string = 'EXTENSION';
 
   let coreResult;
   let extensionResult;

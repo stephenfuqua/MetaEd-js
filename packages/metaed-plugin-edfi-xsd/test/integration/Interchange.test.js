@@ -109,7 +109,7 @@ describe('when generating xsd for extension interchange with a new domain entity
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
@@ -219,7 +219,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDomainEntityExtension(coreEntity1)
       .withIntegerProperty(extensionProperty, 'doc', true, false)
@@ -336,7 +336,7 @@ describe('when generating xsd for extension interchange with an association exte
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartAssociationExtension(coreAssociation)
       .withIntegerProperty(extensionProperty, 'doc', true, false)
@@ -430,7 +430,7 @@ describe('when generating xsd for extension interchange with extension descripto
 
       .withEndNamespace()
 
-      .withBeginNamespace('EXTENSION', 'Extension')
+      .withBeginNamespace('extension', 'EXTENSION')
 
       .withStartDescriptor(extension)
       .withDocumentation('doc')
