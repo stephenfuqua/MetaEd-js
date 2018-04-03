@@ -15,12 +15,13 @@ export type InputDirectory = {
   isExtension: boolean,
 };
 
-export function loadFiles(state: State): void {
+export function loadFiles(state: State): boolean {
+  let success: boolean = true;
   const metaEdConfiguration: MetaEdConfiguration = state.metaEdConfiguration;
 
   if (metaEdConfiguration.projects.length !== metaEdConfiguration.projectPaths.length) {
     winston.error('FileSystemFilenameLoader: project metadata must be same length as project paths');
-    return;
+    return false;
   }
 
   if (!Array.isArray(state.inputDirectories)) state.inputDirectories = [];
@@ -61,7 +62,8 @@ export function loadFiles(state: State): void {
     });
 
     if (fileSet.files.length === 0) {
-      winston.warn(`No MetaEd files found in input directory ${inputDirectory.path}`);
+      winston.error(`No MetaEd files found in input directory ${inputDirectory.path}.`);
+      success = false;
     } else {
       winston.info(
         `  ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
@@ -72,4 +74,5 @@ export function loadFiles(state: State): void {
   });
 
   state.loadedFileSet.push(...fileSets);
+  return success;
 }

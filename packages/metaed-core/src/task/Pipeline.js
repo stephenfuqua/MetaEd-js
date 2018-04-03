@@ -30,7 +30,7 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
   await nextMacroTask();
 
   winston.info('Loading source files:');
-  loadFiles(state);
+  if (!loadFiles(state)) return { state, failure: true };
   await nextMacroTask();
 
   winston.info('Validating syntax...');
