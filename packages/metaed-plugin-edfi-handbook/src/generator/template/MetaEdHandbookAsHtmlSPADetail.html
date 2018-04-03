@@ -4,7 +4,7 @@
     <p ng-if="ctrl.selected.edFiId">Ed-Fi ID: {{ctrl.selected.edFiId}}</p>
     <h3>Definition</h3>
     <p ng-bind-html="ctrl.selected.definition | highlight:$parent.ctrl.search"></p>
-    <div ng-if="ctrl.selected.typeCharacteristics.length>0">
+    <div ng-if="ctrl.selected.typeCharacteristics.length">
         <h3>Type Characteristics:</h3>
         <div>
             <ul>
@@ -12,7 +12,7 @@
             </ul>
         </div>
     </div>
-    <div ng-if="ctrl.selected.optionList.length>0">
+    <div ng-if="ctrl.selected.optionList.length">
         <h3>Option List</h3>
         <div>
             <ul>
@@ -59,7 +59,7 @@
             </tbody>
         </table>
     </div>
-    <div ng-if="ctrl.selected.modelReferencesUsedByProperties.length>0">
+    <div ng-if="ctrl.selected.modelReferencesUsedByProperties.length">
         <h4>Used By</h4>
         <ul>
             <li ng-repeat="rub in ctrl.selected.modelReferencesUsedByProperties">
@@ -67,11 +67,11 @@
             </li>
         </ul>
     </div>
-    <div ng-if="ctrl.selected.xsdFragment">
+    <div ng-if="ctrl.selected.xsdFragment.length">
         <h3>XSD</h3>
         <div hljs hljs-source="ctrl.selected.xsdFragment" hljs-language="xml"></div>
     </div>
-    <div ng-if="ctrl.selected.odsFragment">
+    <div ng-if="ctrl.selected.odsFragment.length">
         <h3>SQL Snippet</h3>
         <div ng-repeat="x in ctrl.selected.odsFragment track by $index" hljs hljs-source="x" hljs-language="edfisqlsnippet"></div>
     </div>
