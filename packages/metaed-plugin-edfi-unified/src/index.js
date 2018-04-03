@@ -35,8 +35,10 @@ import { validate as decimalPropertyMustNotMatchACommonInteger } from './validat
 import { validate as decimalPropertyMustNotMatchACommonString } from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonString';
 
 import { validate as descriptorMapTypeItemsMustBeUnique } from './validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
+import { validate as descriptorNameCannotEndInDescriptor } from './validator/Descriptor/DescriptorNameCannotEndInDescriptor';
 
 import { validate as descriptorPropertyMustMatchADescriptor } from './validator/DescriptorProperty/DescriptorPropertyMustMatchADescriptor';
+import { validate as descriptorPropertyNameCannotEndInDescriptor } from './validator/DescriptorProperty/DescriptorPropertyNameCannotEndInDescriptor';
 
 import { validate as associationDomainItemMustMatchTopLevelEntity } from './validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
 import { validate as commonDomainItemMustMatchTopLevelEntity } from './validator/Domain/CommonDomainItemMustMatchTopLevelEntity';
@@ -195,8 +197,10 @@ function validatorList(): Array<Validator> {
     decimalPropertyMustNotMatchACommonString,
 
     descriptorMapTypeItemsMustBeUnique,
+    descriptorNameCannotEndInDescriptor,
 
     descriptorPropertyMustMatchADescriptor,
+    descriptorPropertyNameCannotEndInDescriptor,
 
     associationDomainItemMustMatchTopLevelEntity,
     commonDomainItemMustMatchTopLevelEntity,
