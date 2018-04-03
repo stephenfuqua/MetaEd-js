@@ -26,6 +26,7 @@ dist/
 !/packages/metaed-plugin-edfi-ods/test/integration/artifact/*-Authoritative.sql
 
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/edfi-3.0-api-model-generated.json
+/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/edfi-3.0-api-model-core-with-extension-generated.json
 
 MetaEdOutput-Experimental/
 MetaEdOutput/
