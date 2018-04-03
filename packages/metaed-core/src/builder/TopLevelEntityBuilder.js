@@ -317,6 +317,10 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   // side effect - pushes ValidationFailures if there is a name collision
   propertyNameCollision(): boolean {
     const fullPropertyName = `${this.currentProperty.withContext}${this.currentProperty.metaEdName}`;
+
+    // if this is empty there's a parse error - go ahead and declare collision, but don't bother with error messages
+    if (!fullPropertyName) return true;
+
     if (!this.currentTopLevelEntityPropertyLookup.has(fullPropertyName)) {
       this.currentTopLevelEntityPropertyLookup.set(fullPropertyName, this.currentProperty);
       return false;

@@ -3,7 +3,7 @@
 
 // Get regeneratorRuntime async/await polyfill
 import 'babel-polyfill';
-
+import R from 'ramda';
 import path from 'path';
 import fs from 'fs-extra';
 import { v4 as newUuid } from 'uuid';
@@ -61,6 +61,8 @@ let metaEdConsole: ?MetaEdConsole;
 let subscriptions: ?CompositeDisposable;
 let contextMenuHider: Hider;
 let mostRecentState: State = newState();
+
+const limitThirty = R.take(30);
 
 const dataStandard2Config: MetaEdConfiguration = {
   ...newMetaEdConfiguration(),
@@ -478,7 +480,7 @@ function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
   const linterMessagesP: Promise<?(any[])> = executePipeline(mostRecentState)
     .then((stateAndFailure: { state: State, failure: boolean }) => {
       mostRecentState = stateAndFailure.state;
-      return mostRecentState.validationFailure.map((errorMessage: ValidationFailure) => {
+      return limitThirty(mostRecentState.validationFailure).map((errorMessage: ValidationFailure) => {
         const tokenLength: number =
           errorMessage.sourceMap && errorMessage.sourceMap.tokenText ? errorMessage.sourceMap.tokenText.length : 0;
         const adjustedLine: number =

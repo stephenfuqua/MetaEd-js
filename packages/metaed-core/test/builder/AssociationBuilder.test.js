@@ -592,8 +592,8 @@ describe('when building association with no domain entity property', () => {
     expect(getAssociation(metaEd.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have two properties', () => {
-    expect(getAssociation(metaEd.entity, entityName).properties).toHaveLength(2);
+  it('should have one property', () => {
+    expect(getAssociation(metaEd.entity, entityName).properties).toHaveLength(1);
   });
 
   it('should have first domain entity property', () => {
@@ -614,26 +614,6 @@ describe('when building association with no domain entity property', () => {
     expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
     expect(domainEntityProperty.isPartOfIdentity).toBe(true);
     expect(domainEntityProperty.documentation).toBe(documentation2);
-  });
-
-  it('should have second domain entity property with no metaEdName, metaEdId, or documentation', () => {
-    const domainEntityProperty = getAssociation(metaEd.entity, entityName).properties[1];
-
-    expect(domainEntityProperty.metaEdName).toBe('');
-    expect(domainEntityProperty.type).toBe('domainEntity');
-    expect(domainEntityProperty.metaEdId).toBe('');
-    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
-    expect(domainEntityProperty.documentation).toBe('');
-  });
-
-  it('should have second domain entity property as identity property with no metaEdName, metaEdId, or documentation', () => {
-    const domainEntityProperty = getAssociation(metaEd.entity, entityName).identityProperties[1];
-
-    expect(domainEntityProperty.metaEdName).toBe('');
-    expect(domainEntityProperty.type).toBe('domainEntity');
-    expect(domainEntityProperty.metaEdId).toBe('');
-    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
-    expect(domainEntityProperty.documentation).toBe('');
   });
 
   it('should have mismatched input error', () => {
