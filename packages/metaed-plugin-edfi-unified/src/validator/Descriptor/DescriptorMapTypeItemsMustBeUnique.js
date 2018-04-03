@@ -2,7 +2,6 @@
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { failEnumerationItemRedeclarations } from '../ValidatorShared/FailEnumerationItemRedeclarations';
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when descriptor has name ending in Descriptor should have validation failure 1`] = `"Descriptor NameInvalidDescriptor name is invalid.  Descriptor names cannot be suffixed with 'Descriptor'."`;
+
+exports[`when descriptor has name ending in Descriptor should have validation failure 2`] = `
+Object {
+  "column": 13,
+  "line": 2,
+  "tokenText": "NameInvalidDescriptor",
+}
+`;
