@@ -91,11 +91,10 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
 
   if (state.pipelineOptions.runGenerators && !failure) {
     winston.info('Writing output:');
-    writeOutput(state);
+    if (!writeOutput(state)) return { state, failure: true };
     await nextMacroTask();
   }
 
-  winston.info('Mapping failures:');
   fileMapForFailure(state);
   await nextMacroTask();
 

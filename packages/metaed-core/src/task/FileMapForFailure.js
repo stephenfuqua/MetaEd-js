@@ -6,7 +6,6 @@ import type { State } from '../State';
 
 function logValidationFailures(state: State): void {
   if (state.validationFailure.length === 0) {
-    winston.info('    No errors found.');
     return;
   }
 

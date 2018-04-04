@@ -7,6 +7,7 @@
 // eslint-disable-next-line
 import { Notification } from 'atom';
 import fs from 'fs-extra';
+import klawSync from 'klaw-sync';
 import path from 'path';
 import os from 'os';
 import tmp from 'tmp-promise';
@@ -29,18 +30,16 @@ type BuildPaths = {
 };
 
 // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
-function collapseTreeViewDirectory(pathString: string): Promise<void> {
-  return atom.packages.activatePackage('tree-view').then(treeViewPackage => {
-    const treeView = treeViewPackage.mainModule.treeView;
-    const directoryEntry = treeView.selectEntryForPath(pathString);
-    if (directoryEntry) {
-      treeView.collapseDirectory(directoryEntry);
-    }
-    return Promise.resolve();
-  });
+async function collapseTreeViewDirectory(pathString: string): Promise<void> {
+  const treeViewPackage = await atom.packages.activatePackage('tree-view');
+  const treeView = treeViewPackage.mainModule.treeView;
+  const directoryEntry = treeView.selectEntryForPath(pathString);
+  if (directoryEntry) {
+    treeView.collapseDirectory(directoryEntry);
+  }
 }
 
-async function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: MetaEdLog): Promise<void> {
+async function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: MetaEdLog): Promise<boolean> {
   // close all MetaEdOutput tabs
   const panes = atom.workspace.getPanes();
   panes.forEach(pane => {
@@ -56,23 +55,39 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, metaEdLog: Meta
 
   // collapse MetaEdOutputDirectory in tree-view if exists
   // (workaround for Atom GitHub issue #3365)
-  return collapseTreeViewDirectory(artifactDirectory)
-    .then(() => {
-      // remove MetaEdOutput directory
-      if (artifactDirectory.startsWith('MetaEdOutput')) {
-        fs.removeSync(artifactDirectory);
+  await collapseTreeViewDirectory(artifactDirectory);
+
+  if (!artifactDirectory.includes('MetaEdOutput')) {
+    metaEdLog.addMessage(
+      `Unable to delete output directory at path "${artifactDirectory}".  Output directory name must contain 'MetaEdOutput'.`,
+    );
+    return false;
+  }
+
+  try {
+    if (await fs.exists(artifactDirectory)) {
+      const metaEdFilePaths: Array<string> = klawSync(artifactDirectory, {
+        filter: item => ['.metaed', '.metaEd', '.MetaEd', '.METAED'].includes(path.extname(item.path)),
+      });
+      if (metaEdFilePaths.length > 0) {
+        metaEdLog.addMessage(
+          `Unable to delete output directory at path "${artifactDirectory}".  MetaEd files found in this location.`,
+        );
+        return false;
       }
-    })
-    .catch(exception => {
-      console.error(exception);
-      if (fs.existsSync(artifactDirectory)) {
-        metaEdLog.addMessage(`Unable to delete output directory at path "${artifactDirectory}".`);
-      }
-      if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
-        metaEdLog.addMessage('Please close any files or folders that may be open in other applications.');
-      }
-      return Promise.reject(exception);
-    });
+    }
+    // remove MetaEdOutput directory
+    await fs.remove(artifactDirectory);
+    return true;
+  } catch (exception) {
+    console.error(exception);
+    metaEdLog.addMessage(`Unable to peform operation on output directory at path "${artifactDirectory}".`);
+    metaEdLog.addMessage(exception.message);
+    if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
+      metaEdLog.addMessage('Please close any files or folders that may be open in other applications.');
+    }
+    return false;
+  }
 }
 
 function verifyBuildPaths(metaEdLog: MetaEdLog): ?BuildPaths {
@@ -249,7 +264,7 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
 
     console.log(`[MetaEdConsoleJS] Using config: ${buildPaths.extensionConfigPath}.`, metaEdConfiguration);
 
-    await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog);
+    if (!await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog)) return false;
 
     tmp.setGracefulCleanup();
     const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });
@@ -367,7 +382,7 @@ export async function deploy(
 
     console.log(`[MetaEdConsoleJS] Using config: ${buildPaths.extensionConfigPath}.`, metaEdConfiguration);
 
-    await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog);
+    if (!await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog)) return false;
 
     tmp.setGracefulCleanup();
     const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });
