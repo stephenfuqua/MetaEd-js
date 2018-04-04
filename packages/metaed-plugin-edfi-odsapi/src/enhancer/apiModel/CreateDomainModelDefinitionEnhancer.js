@@ -8,8 +8,8 @@ import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
-
 import type { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
+import { logicalNameFor } from '../../model/apiModel/SchemaDefinition';
 import type { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
@@ -20,7 +20,7 @@ const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 // Schema definition is the database schema and project name for a namespace
 export function buildSchemaDefinition(namespaceInfo: NamespaceInfo): SchemaDefinition {
   return {
-    logicalName: namespaceInfo.namespace === 'edfi' ? 'Ed-Fi' : namespaceInfo.projectExtension,
+    logicalName: logicalNameFor(namespaceInfo.namespace),
     physicalName: namespaceInfo.namespace,
   };
 }
