@@ -13,7 +13,15 @@ function logValidationFailures(state: State): void {
     const fullPath = message.fileMap ? message.fileMap.fullPath : '';
     const lineNumber = message.fileMap ? message.fileMap.lineNumber : '';
     const column = message.sourceMap ? message.sourceMap.column : '';
-    winston.error(`  ${message.message} ${chalk.gray(`${fullPath} (${lineNumber},${column})`)}`);
+    const logMessage = `  ${message.message} ${chalk.gray(`${fullPath} (${lineNumber},${column})`)}`;
+
+    if (message.category === 'error') {
+      winston.error(logMessage);
+    } else if (message.category === 'warning') {
+      winston.warn(logMessage);
+    } else {
+      winston.info(logMessage);
+    }
   });
 }
 

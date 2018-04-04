@@ -46,7 +46,7 @@ export async function metaEdConsole() {
     state.metaEd.dataStandardVersion = dataStandardVersions[0];
     try {
       const { failure } = await executePipeline(state);
-      process.exitCode = state.validationFailure.length === 0 && !failure ? 0 : 1;
+      process.exitCode = !state.validationFailure.some(vf => vf.category === 'error') && !failure ? 0 : 1;
     } catch (e) {
       winston.error(e);
       process.exitCode = 1;

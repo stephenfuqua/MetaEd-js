@@ -127,7 +127,7 @@ export function addColumnNamePair(foreignKey: ForeignKey, columnNamePair: Column
   if (existingPair == null) {
     foreignKey.columnNames.push(columnNamePair);
   } else {
-    winston.warn(
+    winston.info(
       `  Attempt to add duplicate column name pair: [${columnNamePair.parentTableColumnName}, ${
         columnNamePair.foreignTableColumnName
       }] on foreign key referencing ${foreignKey.foreignTableSchema}.${foreignKey.foreignTableName} failed.`,

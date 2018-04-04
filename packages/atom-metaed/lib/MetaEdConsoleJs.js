@@ -225,7 +225,7 @@ async function executeBuild(
     childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
-        metaEdLog.addMessage(`Successfully executed MetaEd build.`);
+        metaEdLog.addMessage(`MetaEd JS build complete.`);
       } else {
         metaEdLog.addMessage(`Error on MetaEd build.`);
         resultNotification = failNotification;
@@ -327,7 +327,7 @@ async function executeDeploy(
     childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
-        metaEdLog.addMessage(`Successfully executed MetaEd build.`);
+        metaEdLog.addMessage(`MetaEd JS build complete.`);
       } else {
         metaEdLog.addMessage(`Error on MetaEd build.`);
         resultNotification = failNotification;
