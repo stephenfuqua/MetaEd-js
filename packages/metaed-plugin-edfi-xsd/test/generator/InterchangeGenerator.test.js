@@ -44,7 +44,7 @@ describe('when generating single interchange', () => {
   const identityTemplateTypeName: string = 'IdentityTemplateNameReferenceType';
   const interchangeName: string = 'InterchangeName';
   const interchangeDocumentation: string = 'InterchangeDocumentation';
-  const schemaDocumentation: string = '=====  Interchange Model =====';
+  const schemaDocumentation: string = `===== Interchange Name Interchange Model =====`;
   const schemaLocationName: string = 'SchemaLocation.xsd';
   let result;
 
@@ -83,6 +83,7 @@ describe('when generating single interchange', () => {
     metaEd.entity.interchange.set(interchange.metaEdName, interchange);
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+      metaEdName: interchangeName,
       namespaceInfo,
       interchangeName,
       documentation: interchangeDocumentation,

@@ -1,11 +1,9 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, Descriptor } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, Descriptor, InterchangeItem } from 'metaed-core';
 import { newInterchangeItem } from 'metaed-core';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
-import { newMergedInterchange } from '../model/MergedInterchange';
+import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import type { MergedInterchange } from '../model/MergedInterchange';
-import { pluginEnvironment } from './EnhancerHelper';
-import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 const enhancerName: string = 'AddDescriptorInterchangeEnhancer';
 
@@ -18,28 +16,24 @@ const descriptorUseCaseDocumentation: string = `1. Exchange state, district, or 
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const allDescriptors: Array<Descriptor> = Array.from(metaEd.entity.descriptor.values());
-  metaEd.entity.namespaceInfo.forEach(n => {
-    const namespaceInfo: NamespaceInfo = ((n: any): NamespaceInfo);
+  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
     // Skip this namespace if no new descriptors defined
-    if (allDescriptors.every(d => d.namespaceInfo.namespace !== namespaceInfo.namespace)) return;
+    if (allDescriptors.every((descriptor: Descriptor) => descriptor.namespaceInfo.namespace !== namespaceInfo.namespace))
+      return;
 
-    const descriptorNamespaceRepositoryId: string = namespaceInfo.isExtension
-      ? `${namespaceInfo.projectExtension}-${descriptorInterchangeName}`
-      : descriptorInterchangeName;
-
-    const descriptorInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      metaEdName: descriptorInterchangeName,
-      repositoryId: descriptorNamespaceRepositoryId,
+    const descriptorInterchange: MergedInterchange = {
+      ...newMergedInterchange(),
       namespaceInfo,
+      metaEdName: descriptorInterchangeName,
       documentation: descriptorInterchangeDocumentation,
       useCaseDocumentation: descriptorUseCaseDocumentation,
-    });
+    };
 
     // Include all core descriptors and all descriptors for the current namespace
     allDescriptors
       .filter(ad => !ad.namespaceInfo.isExtension || ad.namespaceInfo.namespace === namespaceInfo.namespace)
-      .forEach(descriptor => {
-        const element = Object.assign(newInterchangeItem(), {
+      .forEach((descriptor: Descriptor) => {
+        const element: InterchangeItem = Object.assign(newInterchangeItem(), {
           metaEdName: descriptor.data.edfiXsd.xsd_DescriptorName,
           namespaceInfo,
           referencedEntity: descriptor,
@@ -48,12 +42,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         descriptorInterchange.elements.push(element);
       });
 
-    if (descriptorInterchange.elements.length > 0) {
-      ((pluginEnvironment(metaEd).entity: any): EdFiXsdEntityRepository).mergedInterchange.set(
-        descriptorInterchange.repositoryId,
-        descriptorInterchange,
-      );
-    }
+    if (descriptorInterchange.elements.length > 0) addMergedInterchangeToRepository(metaEd, descriptorInterchange);
   });
 
   return {
