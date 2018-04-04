@@ -102,11 +102,11 @@ const coreTargetV2 = (namespace: string): DeployTargets => ({
 
 const extensionTargetV2 = (namespace: string): DeployTargets => ({
   namespace,
-  apiMetadata: path.join(odsApiPaths.implementation, 'Extension/Metadata/'),
+  apiMetadata: path.join(odsApiPaths.implementation, 'Extensions/Metadata/'),
   databaseData: path.join(odsApiPaths.implementation, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.implementation, 'Database/Structure/EdFi/'),
-  interchange: path.join(odsApiPaths.implementation, 'Extension/Schemas/'),
-  xsd: path.join(odsApiPaths.implementation, 'Extension/Schemas/'),
+  interchange: path.join(odsApiPaths.implementation, 'Extensions/Schemas/'),
+  xsd: path.join(odsApiPaths.implementation, 'Extensions/Schemas/'),
 });
 
 export function getDeployTargetsFor(dataStandardVersion: SemVer, projects: Array<MetaEdProject>): Array<DeployTargets> {
@@ -155,6 +155,7 @@ function removeSupportingArtifacts(directory: DeployTargets): void {
     winston.error(`deploy :: Attempted removal of ${chalk.red(target)} failed due to issue: ${err.message}`);
   }
 }
+
 export async function executeDeploy(
   state: State,
   shouldDeployCore: boolean,

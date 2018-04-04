@@ -92,10 +92,10 @@ describe('when deploying 2.0 artifacts', () => {
   it('should have correct extension directory paths', () => {
     const extension = result[1];
     expect(extension.namespace).toBe('sample');
-    expect(extension.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extension/Metadata/');
+    expect(extension.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extensions/Metadata/');
     expect(extension.databaseData.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Database/Data/EdFi/');
     expect(extension.databaseStructure.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Database/Structure/EdFi/');
-    expect(extension.interchange.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extension/Schemas/');
-    expect(extension.xsd.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extension/Schemas/');
+    expect(extension.interchange.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extensions/Schemas/');
+    expect(extension.xsd.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extensions/Schemas/');
   });
 });
