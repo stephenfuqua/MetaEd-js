@@ -28,7 +28,7 @@ import {
   isCoreMetaEdFile,
 } from './CoreMetaEd';
 import MetaEdConsole from './MetaEdConsole';
-import { build } from './MetaEdConsoleJs';
+import { build, deploy } from './MetaEdConsoleJs';
 import {
   associationTemplate,
   choiceTemplate,
@@ -312,8 +312,12 @@ export function activate(state: any) {
   );
   subscriptions.add(
     atom.commands.add('atom-workspace', {
-      'atom-metaed:deploy': () => {
-        if (metaEdConsole != null) metaEdConsole.deploy(!allianceMode());
+      'atom-metaed:deploy': async () => {
+        if (metaEdLog == null) return;
+        if (metaEdConsole == null) return;
+
+        const success: boolean = await deploy(metaEdConfigurationFromTechPreviewFlag(), metaEdLog, allianceMode()); // MetaEdJsConsole
+        if (success) await metaEdConsole.build(!allianceMode());
       },
     }),
   );

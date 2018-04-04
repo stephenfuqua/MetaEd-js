@@ -1,12 +1,6 @@
 // @flow
+import type { MetaEdProject } from './project/ProjectTypes';
 import type { SemVer } from './MetaEdEnvironment';
-
-export type MetaEdProject = {
-  namespace: string,
-  projectName: string,
-  projectVersion: SemVer,
-  projectExtension?: string,
-};
 
 export type PluginConfiguration = {
   targetTechnologyVersion: SemVer,
@@ -14,6 +8,7 @@ export type PluginConfiguration = {
 
 export type MetaEdConfiguration = {
   artifactDirectory: string,
+  deployDirectory: string,
   pluginConfig: {
     [shortName: string]: PluginConfiguration,
   },
@@ -28,11 +23,8 @@ export const newPluginConfiguration: () => PluginConfiguration = () => ({
 
 export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   artifactDirectory: '',
+  deployDirectory: '',
   pluginConfig: {},
   projects: [],
   projectPaths: [],
 });
-
-export function findDataStandardVersions(projects: Array<MetaEdProject>): Array<SemVer> {
-  return projects.filter((project: MetaEdProject) => project.namespace === 'edfi').map(project => project.projectVersion);
-}

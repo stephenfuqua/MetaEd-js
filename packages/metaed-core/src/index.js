@@ -77,6 +77,7 @@ export type { MetaEdEnvironment, SemVer } from './MetaEdEnvironment';
 export type { PluginEnvironment } from './plugin/PluginEnvironment';
 export type { MetaEdConfiguration } from './MetaEdConfiguration';
 export type { MetaEdPlugin, PluginManifest } from './plugin/PluginTypes';
+export type { MetaEdProject } from './project/ProjectTypes';
 
 // Properties
 export type { AssociationProperty, AssociationPropertySourceMap } from './model/property/AssociationProperty';
@@ -158,7 +159,8 @@ export { NoNamespaceInfo } from './model/NamespaceInfo';
 export { newMetaEdEnvironment } from './MetaEdEnvironment';
 export { newMetaEdPlugin } from './plugin/PluginTypes';
 export { newPluginEnvironment } from './plugin/PluginEnvironment';
-export { newMetaEdConfiguration, newPluginConfiguration, findDataStandardVersions } from './MetaEdConfiguration';
+export { newMetaEdConfiguration, newPluginConfiguration } from './MetaEdConfiguration';
+export { newMetaEdProject } from './project/ProjectTypes';
 
 export { asAssociationProperty, newAssociationProperty } from './model/property/AssociationProperty';
 export { asBooleanProperty, newBooleanProperty } from './model/property/BooleanProperty';
@@ -224,6 +226,8 @@ export { asTopLevelEntity, newTopLevelEntity } from './model/TopLevelEntity';
 
 // utilities
 export { normalizeDescriptorSuffix, normalizeEnumerationSuffix } from './Utility';
+export { isDataStandard, findDataStandardVersions } from './project/ProjectTypes';
+export { scanForProjects } from './project/ProjectLoader';
 
 // for plugin testing
 export { MetaEdTextBuilder } from './grammar/MetaEdTextBuilder';

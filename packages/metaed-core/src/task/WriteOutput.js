@@ -8,6 +8,8 @@ import type { GeneratorResult } from '../generator/GeneratorResult';
 
 winston.cli();
 
+export const METAED_OUTPUT: string = 'MetaEdOutput';
+
 function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {
   result.generatedOutput.forEach(output => {
     const folderName: string =
@@ -25,19 +27,25 @@ export function execute(state: State): void {
   let outputDirectory: string = '';
   const [defaultRootDirectory] = state.inputDirectories.slice(-1);
   if (state.outputDirectory) {
-    outputDirectory = state.outputDirectory;
+    // TODO: not used?
+    outputDirectory = path.resolve(state.outputDirectory, METAED_OUTPUT);
   } else if (state.metaEdConfiguration.artifactDirectory) {
     outputDirectory = path.resolve(defaultRootDirectory.path, state.metaEdConfiguration.artifactDirectory);
   } else if (state.inputDirectories && state.inputDirectories.length > 0) {
-    outputDirectory = path.resolve(defaultRootDirectory.path, './MetaEdOutput');
+    outputDirectory = path.resolve(defaultRootDirectory.path, METAED_OUTPUT);
   }
+
+  state.metaEdConfiguration.artifactDirectory = outputDirectory;
 
   if (!ffs.exists(outputDirectory)) {
     winston.error(`WriteOutput: Artifact Directory '${outputDirectory}' does not exist. Not writing files.`);
     return;
   }
   winston.info(chalk.green('  Artifact Directory: ') + outputDirectory);
-  ffs.rmdirRecursiveSync(outputDirectory);
+  // defend against accidental removal of other directories
+  if (outputDirectory.endsWith(METAED_OUTPUT)) {
+    ffs.rmdirRecursiveSync(outputDirectory);
+  }
   ffs.mkdirRecursiveSync(outputDirectory);
   if (ffs.existsSync(outputDirectory)) {
     state.generatorResults.forEach(result => {

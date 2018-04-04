@@ -25,7 +25,8 @@
     "packages/*"
   ],
   "scripts": {
-    "metaed": "node ./packages/metaed-console/dist/index.js",
+    "metaed:build": "node ./packages/metaed-console/dist/index.js",
+    "metaed:deploy": "node ./packages/metaed-odsapi-deploy/dist/index.js",
     "lint": "eslint .",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build --parallel",

@@ -15,7 +15,7 @@ import streamSplitter from 'stream-splitter';
 import ansihtml from 'ansi-html';
 import type { MetaEdConfiguration } from 'metaed-core';
 import { getMetaEdConfig } from './CoreMetaEd';
-import { getMetaEdJsConsoleSourceDirectory, getCmdFullPath, allianceMode } from './Settings';
+import { getMetaEdJsConsoleSourceDirectory, getEdfiOdsApiSourceDirectory, getCmdFullPath, allianceMode } from './Settings';
 import type MetaEdLog from './MetaEdLog';
 
 type BuildPaths = {
@@ -23,6 +23,7 @@ type BuildPaths = {
   metaEdConsoleDirectory: string,
   cmdExePath: string,
   metaEdConsolePath: string,
+  metaEdDeployPath: string,
   extensionConfigPath: string,
   projectDirectory: string,
 };
@@ -141,11 +142,24 @@ function verifyBuildPaths(metaEdLog: MetaEdLog): ?BuildPaths {
     }
   }
 
+  let metaEdDeployPath = path.resolve(metaEdConsoleDirectory, '../metaed-odsapi-deploy/dist/index.js');
+  if (!fs.existsSync(metaEdDeployPath)) {
+    metaEdDeployPath = path.resolve(__dirname, '../node_modules/metaed-odsapi-deploy/dist/index.js');
+    if (!fs.existsSync(metaEdDeployPath)) {
+      metaEdLog.addMessage(metaEdDeployPath);
+      metaEdLog.addMessage(
+        `Unable to find the index.js executable for metaed-odsapi-deploy in the Core MetaEd Source Directory at configured path "${metaEdDeployPath}" or its parent.`,
+      );
+      return null;
+    }
+  }
+
   return {
     metaEdConsoleDirectory,
     cmdExePath,
     artifactDirectory,
     metaEdConsolePath,
+    metaEdDeployPath,
     extensionConfigPath,
     projectDirectory,
   };
@@ -175,7 +189,7 @@ async function executeBuild(
 
     const taskParams = ['/s', '/c', `node "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
-    console.log(`[MetaEdConsoleJS] Executing '${cmdExePath}' with parameters ${taskParams.toString()}.`);
+    console.log(`[MetaEdConsoleJS] Executing '${cmdExePath}' with parameters:`, taskParams);
 
     const childProcess = spawn(cmdExePath, taskParams, {
       cwd: metaEdConsoleDirectory,
@@ -222,8 +236,7 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     };
 
     // add extension project if there
-    // $FlowIgnore
-    const oldMetaEdJson = require(buildPaths.extensionConfigPath).metaEdConfiguration;
+    const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
     if (oldMetaEdJson.namespace !== 'edfi') {
       metaEdConfiguration.projects.push({
         namespace: oldMetaEdJson.namespace,
@@ -233,6 +246,8 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
       });
       metaEdConfiguration.projectPaths.push(buildPaths.projectDirectory);
     }
+
+    console.log(`[MetaEdConsoleJS] Using config: ${buildPaths.extensionConfigPath}.`, metaEdConfiguration);
 
     await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog);
 
@@ -246,6 +261,124 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     return buildResult;
   } catch (e) {
     metaEdLog.addMessage(e);
+    return false;
+  }
+}
+
+async function executeDeploy(
+  { cmdExePath, metaEdDeployPath, metaEdConsoleDirectory },
+  metaEdConfigurationPath,
+  metaEdLog: MetaEdLog,
+  shouldDeployCore: boolean = false,
+): Promise<boolean> {
+  return new Promise(resolve => {
+    const startNotification = new Notification('info', 'Deploying MetaEd...', { dismissable: true });
+    const failNotification = new Notification('error', 'MetaEd Deploy Failed!', { dismissable: true });
+    const buildErrorsNotification = new Notification('warning', 'MetaEd Deploy Errors Detected!', { dismissable: true });
+    let resultNotification = new Notification('success', 'MetaEd Deploy Complete!', { dismissable: true });
+
+    startNotification.onDidDisplay(() => setTimeout(() => startNotification.dismiss(), 10000));
+
+    [resultNotification, failNotification, buildErrorsNotification].forEach(notification =>
+      notification.onDidDisplay(() => {
+        startNotification.dismiss();
+        setTimeout(() => notification.dismiss(), 3000);
+      }),
+    );
+
+    setImmediate(() => atom.notifications.addNotification(startNotification));
+
+    const taskParams = ['/s', '/c', `node "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
+    if (shouldDeployCore) taskParams.push('--core');
+
+    console.log(`[MetaEdConsoleJS] Executing '${cmdExePath}' with parameters:`, taskParams);
+
+    const childProcess = spawn(cmdExePath, taskParams, {
+      cwd: metaEdConsoleDirectory,
+      shell: true,
+    });
+
+    const outputSplitter: any = childProcess.stdout.pipe(streamSplitter('\n'));
+    outputSplitter.encoding = 'utf8';
+    outputSplitter.on('token', token => {
+      metaEdLog.addMessage(ansihtml(token), true);
+    });
+
+    childProcess.stderr.on('data', data => {
+      metaEdLog.addMessage(ansihtml(data.toString()).replace(/(?:\r\n|\r|\n)/g, '<br />'), true);
+      resultNotification = buildErrorsNotification;
+    });
+
+    childProcess.on('close', code => {
+      console.log(`child process exited with code ${code}`);
+      if (code === 0) {
+        metaEdLog.addMessage(`Successfully executed MetaEd build.`);
+      } else {
+        metaEdLog.addMessage(`Error on MetaEd build.`);
+        resultNotification = failNotification;
+      }
+      atom.notifications.addNotification(resultNotification);
+      return resolve(code === 0);
+    });
+  });
+}
+
+// initialConfiguration is temporary until full multi-project support
+export async function deploy(
+  initialConfiguration: MetaEdConfiguration,
+  metaEdLog: MetaEdLog,
+  shouldDeployCore: boolean = false,
+): Promise<boolean> {
+  const result = atom.confirm({
+    message: 'Are you sure you want to deploy MetaEd artifacts?',
+    detailedMessage:
+      'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
+    buttons: ['OK', 'Cancel'],
+  });
+
+  if (result !== 0) {
+    return false;
+  }
+
+  try {
+    metaEdLog.clear();
+
+    const buildPaths: ?BuildPaths = verifyBuildPaths(metaEdLog);
+    if (!buildPaths) return false;
+    metaEdLog.addMessage(`Beginning MetaEd JS build...`);
+
+    const metaEdConfiguration = {
+      ...initialConfiguration,
+      artifactDirectory: buildPaths.artifactDirectory,
+    };
+
+    // add extension project if there
+    const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
+    if (oldMetaEdJson.namespace !== 'edfi') {
+      metaEdConfiguration.projects.push({
+        namespace: oldMetaEdJson.namespace,
+        projectName: oldMetaEdJson.namespace,
+        projectVersion: '1.0.0',
+        projectExtension: 'EXTENSION',
+      });
+      metaEdConfiguration.projectPaths.push(buildPaths.projectDirectory);
+    }
+    metaEdConfiguration.deployDirectory = getEdfiOdsApiSourceDirectory();
+
+    console.log(`[MetaEdConsoleJS] Using config: ${buildPaths.extensionConfigPath}.`, metaEdConfiguration);
+
+    await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog);
+
+    tmp.setGracefulCleanup();
+    const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });
+    await fs.outputJson(tempConfigurationPath, { metaEdConfiguration }, { spaces: 2 });
+
+    const deployResult = await executeDeploy(buildPaths, tempConfigurationPath, metaEdLog, shouldDeployCore);
+
+    await fs.remove(tempConfigurationPath);
+    return deployResult;
+  } catch (e) {
+    metaEdLog.addMessage(e.stack);
     return false;
   }
 }

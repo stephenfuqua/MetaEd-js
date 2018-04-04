@@ -255,7 +255,7 @@ export default class MetaEdConsole {
         return;
       }
 
-      console.log(`Executing MetaEd C# with parameters ${JSON.stringify(gulpTaskParams)}.`);
+      console.log('Executing MetaEd C# with parameters:', gulpTaskParams);
 
       const childProcess = this._spawn(gulpInputs.cmdFullPath, gulpTaskParams, {
         cwd: gulpInputs.metaEdConsoleSourceDirectory,
