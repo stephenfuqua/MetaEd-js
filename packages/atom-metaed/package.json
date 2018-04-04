@@ -114,6 +114,7 @@
     "metaed-console": "1.1.3-dev.5",
     "metaed-core": "1.1.3-dev.5",
     "metaed-csharp": "1.1.3-dev.2",
+    "metaed-odsapi-deploy": "^1.1.3-dev.5",
     "metaed-plugin-edfi-handbook": "1.1.3-dev.5",
     "metaed-plugin-edfi-interchange-brief": "1.1.3-dev.5",
     "metaed-plugin-edfi-ods": "1.1.3-dev.5",
