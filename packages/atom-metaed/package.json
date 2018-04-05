@@ -114,7 +114,7 @@
     "klaw-sync": "^3.0.2",
     "metaed-console": "1.1.3-dev.7",
     "metaed-core": "1.1.3-dev.7",
-    "metaed-csharp": "1.1.3-dev.2",
+    "metaed-csharp": "1.1.3",
     "metaed-odsapi-deploy": "1.1.3-dev.7",
     "metaed-plugin-edfi-handbook": "1.1.3-dev.7",
     "metaed-plugin-edfi-interchange-brief": "1.1.3-dev.7",
