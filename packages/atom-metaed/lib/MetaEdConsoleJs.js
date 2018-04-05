@@ -16,7 +16,13 @@ import streamSplitter from 'stream-splitter';
 import ansihtml from 'ansi-html';
 import type { MetaEdConfiguration } from 'metaed-core';
 import { getMetaEdConfig } from './CoreMetaEd';
-import { getMetaEdJsConsoleSourceDirectory, getEdfiOdsApiSourceDirectory, getCmdFullPath, allianceMode } from './Settings';
+import {
+  getMetaEdJsConsoleSourceDirectory,
+  getEdfiOdsApiSourceDirectory,
+  getCmdFullPath,
+  allianceMode,
+  useTechPreview,
+} from './Settings';
 import type MetaEdLog from './MetaEdLog';
 
 type BuildPaths = {
@@ -253,6 +259,12 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     // add extension project if there
     const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
     if (oldMetaEdJson.namespace !== 'edfi') {
+      if (oldMetaEdJson.namespace !== 'extension' && !useTechPreview()) {
+        metaEdLog.addMessage(
+          `Namespace defined as ${oldMetaEdJson.namespace}. ODS/API version 2.x only supports the namespace "extension".`,
+        );
+        return false;
+      }
       metaEdConfiguration.projects.push({
         namespace: oldMetaEdJson.namespace,
         projectName: oldMetaEdJson.namespace,

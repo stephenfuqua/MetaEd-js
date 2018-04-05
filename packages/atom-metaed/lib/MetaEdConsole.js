@@ -302,14 +302,28 @@ export default class MetaEdConsole {
 
           // HACK: Move InterchangeOrderMetadata from documentation to new output structure
           if (!useTechPreview()) {
-            await fs.copy(
-              path.join(tempArtifactDirectoryObject.path, 'ApiMetadata', 'InterchangeOrderMetadata.xml'),
-              path.join(realArtifactDirectory, 'edfi', 'ApiMetadata', 'InterchangeOrderMetadata.xml'),
+            const interchangeOrderMetadataPath = path.join(
+              tempArtifactDirectoryObject.path,
+              'ApiMetadata',
+              'InterchangeOrderMetadata.xml',
             );
-            await fs.copy(
-              path.join(tempArtifactDirectoryObject.path, 'ApiMetadata', 'InterchangeOrderMetadata-EXTENSION.xml'),
-              path.join(realArtifactDirectory, 'extension', 'ApiMetadata', 'InterchangeOrderMetadata-EXTENSION.xml'),
+            if (fs.existsSync(interchangeOrderMetadataPath)) {
+              await fs.copy(
+                interchangeOrderMetadataPath,
+                path.join(realArtifactDirectory, 'edfi', 'ApiMetadata', 'InterchangeOrderMetadata.xml'),
+              );
+            }
+            const interchangeOrderMetadataExtensionPath = path.join(
+              tempArtifactDirectoryObject.path,
+              'ApiMetadata',
+              'InterchangeOrderMetadata-EXTENSION.xml',
             );
+            if (fs.existsSync(interchangeOrderMetadataExtensionPath)) {
+              await fs.copy(
+                interchangeOrderMetadataExtensionPath,
+                path.join(realArtifactDirectory, 'extension', 'ApiMetadata', 'InterchangeOrderMetadata-EXTENSION.xml'),
+              );
+            }
           }
 
           // tempArtifactDirectoryObject.cleanup();
