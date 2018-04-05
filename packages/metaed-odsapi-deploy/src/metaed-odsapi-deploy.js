@@ -2,8 +2,8 @@
 import * as Chalk from 'chalk';
 import winston from 'winston';
 import Yargs from 'yargs';
-import { executePipeline, newState, findDataStandardVersions, scanForProjects } from 'metaed-core';
-import type { State, SemVer, MetaEdProject } from 'metaed-core';
+import { findDataStandardVersions, scanForProjects, newMetaEdConfiguration } from 'metaed-core';
+import type { SemVer, MetaEdProject, MetaEdConfiguration } from 'metaed-core';
 import { executeDeploy } from './deploy';
 
 winston.cli();
@@ -29,6 +29,7 @@ function getDataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
 
 export async function metaEdConsole() {
   const startTime = Date.now();
+
   const yargs = Yargs.usage('Usage: $0 [options]')
     .group(['source', 'target'], 'Command line:')
     .option('source', {
@@ -46,29 +47,22 @@ export async function metaEdConsole() {
       default: false,
       type: 'boolean',
     })
-
     .group(['config'], 'Config file:')
     .config('config')
     .option('config', {
       alias: 'c',
     })
-
     .help()
     .alias('help', 'h')
     .version()
     .alias('version', 'v');
 
-  const state: State = {
-    ...newState(),
-    pipelineOptions: {
-      runValidators: true,
-      runEnhancers: true,
-      runGenerators: true,
-      stopOnValidationFailure: true,
-    },
-  };
+  let metaEdConfiguration: MetaEdConfiguration;
 
-  if (yargs.argv.metaEdConfiguration == null) {
+  if (yargs.argv.metaEdConfiguration != null) {
+    // Using config
+    metaEdConfiguration = { ...yargs.argv.metaEdConfiguration };
+  } else {
     const missingArguments: Array<string> = [];
     if (yargs.argv.source == null) {
       missingArguments.push('source');
@@ -84,29 +78,18 @@ export async function metaEdConsole() {
 
     // Using command line
     const resolvedProjects: [Array<string>, Array<MetaEdProject>] = scanForProjects(yargs.argv.source);
-    state.metaEdConfiguration = {
-      ...state.metaEdConfiguration,
-      projectPaths: resolvedProjects[0],
-      projects: resolvedProjects[1],
+    metaEdConfiguration = {
+      ...newMetaEdConfiguration(),
       artifactDirectory: yargs.argv.source,
       deployDirectory: yargs.argv.target,
+      projectPaths: resolvedProjects[0],
+      projects: resolvedProjects[1],
     };
-    state.metaEd.dataStandardVersion = getDataStandardVersionFor(state.metaEdConfiguration.projects);
-
-    const buildResult: { state: State, failure: boolean } = await executePipeline(state);
-    await executeDeploy(buildResult.state, yargs.argv.core);
-
-    const endTime = Date.now() - startTime;
-    winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);
-  } else {
-    // Using config
-    state.metaEdConfiguration = { ...state.metaEdConfiguration, ...yargs.argv.metaEdConfiguration };
-    state.metaEd.dataStandardVersion = getDataStandardVersionFor(state.metaEdConfiguration.projects);
-
-    const buildResult: { state: State, failure: boolean } = await executePipeline(state);
-    await executeDeploy(buildResult.state, yargs.argv.core);
-
-    const endTime = Date.now() - startTime;
-    winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);
   }
+
+  const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
+  await executeDeploy(metaEdConfiguration, dataStandardVersion, yargs.argv.core);
+
+  const endTime = Date.now() - startTime;
+  winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);
 }

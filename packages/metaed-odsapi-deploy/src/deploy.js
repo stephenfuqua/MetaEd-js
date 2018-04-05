@@ -5,7 +5,7 @@ import winston from 'winston';
 import * as Chalk from 'chalk';
 import R from 'ramda';
 import { isDataStandard, versionSatisfies, V2Only, V3OrGreater } from 'metaed-core';
-import type { State, MetaEdProject, SemVer } from 'metaed-core';
+import type { MetaEdProject, SemVer, MetaEdConfiguration } from 'metaed-core';
 
 winston.cli();
 const chalk = new Chalk.constructor({ level: 2 });
@@ -157,21 +157,22 @@ function removeSupportingArtifacts(directory: DeployTargets): void {
 }
 
 export async function executeDeploy(
-  state: State,
+  metaEdConfiguration: MetaEdConfiguration,
+  dataStandardVersion: SemVer,
   shouldDeployCore: boolean,
 ): Promise<Array<{ artifactSource: string, deployTarget: string }>> {
-  let projects: Array<MetaEdProject> = state.metaEdConfiguration.projects;
+  let projects: Array<MetaEdProject> = metaEdConfiguration.projects;
   if (!shouldDeployCore) {
     projects = projects.filter(project => !isDataStandard(project));
   }
-  const targets: Array<DeployTargets> = getDeployTargetsFor(state.metaEd.dataStandardVersion, projects);
+  const targets: Array<DeployTargets> = getDeployTargetsFor(dataStandardVersion, projects);
 
   if (targets.length === 0) return [];
 
   const tasks: Array<Promise<*>> = [];
   const source: ArtifactPaths = sources();
-  const artifactDirectory: string = state.metaEdConfiguration.artifactDirectory;
-  const deployDirectory: string = state.metaEdConfiguration.deployDirectory;
+  const artifactDirectory: string = metaEdConfiguration.artifactDirectory;
+  const deployDirectory: string = metaEdConfiguration.deployDirectory;
 
   targets.forEach(target => {
     removeSupportingArtifacts(target);

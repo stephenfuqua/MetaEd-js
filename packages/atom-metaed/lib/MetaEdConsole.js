@@ -46,8 +46,8 @@ export default class MetaEdConsole {
     this._metaEdLog = metaEdLog;
   }
 
-  async build(isExtensionProject: boolean = false) {
-    await this._gulpTask('generate-artifacts', isExtensionProject);
+  async build(isExtensionProject: boolean = false): Promise<boolean> {
+    return this._gulpTask('generate-artifacts', isExtensionProject);
   }
 
   deploy(isExtensionProject: boolean = false) {
@@ -68,14 +68,14 @@ export default class MetaEdConsole {
     }
   }
 
-  async _gulpTask(taskName: string, isExtensionProject: boolean = false) {
+  async _gulpTask(taskName: string, isExtensionProject: boolean = false): Promise<boolean> {
     const gulpInputs = this._verifyGulpInputs(taskName, isExtensionProject);
     if (!gulpInputs) {
-      return;
+      return new Promise(resolve => resolve(false));
     }
     this._metaEdLog.addMessage(`Continuing with execution of MetaEd C# task ${taskName}...`);
 
-    await this._executeGulpTask(gulpInputs);
+    return this._executeGulpTask(gulpInputs);
   }
 
   // TODO: support multiple extension projects??? This is C#
@@ -279,7 +279,39 @@ export default class MetaEdConsole {
 
           // copy from temp directory to artifact directory
           // at this point, it's only documentation files C# is generating
-          await fs.copy(tempArtifactDirectoryObject.path, path.join(realArtifactDirectory, 'Documentation'));
+          await fs.copy(
+            path.join(tempArtifactDirectoryObject.path, 'DataDictionary'),
+            path.join(realArtifactDirectory, 'Documentation', 'DataDictionary'),
+          );
+          await fs.copy(
+            path.join(tempArtifactDirectoryObject.path, 'Ed-Fi-Handbook'),
+            path.join(realArtifactDirectory, 'Documentation', 'Ed-Fi-Handbook'),
+          );
+          await fs.copy(
+            path.join(tempArtifactDirectoryObject.path, 'InterchangeBrief'),
+            path.join(realArtifactDirectory, 'Documentation', 'InterchangeBrief'),
+          );
+          await fs.copy(
+            path.join(tempArtifactDirectoryObject.path, 'JSON'),
+            path.join(realArtifactDirectory, 'Documentation', 'JSON'),
+          );
+          await fs.copy(
+            path.join(tempArtifactDirectoryObject.path, 'UDM'),
+            path.join(realArtifactDirectory, 'Documentation', 'UDM'),
+          );
+
+          // HACK: Move InterchangeOrderMetadata from documentation to new output structure
+          if (!useTechPreview()) {
+            await fs.copy(
+              path.join(tempArtifactDirectoryObject.path, 'ApiMetadata', 'InterchangeOrderMetadata.xml'),
+              path.join(realArtifactDirectory, 'edfi', 'ApiMetadata', 'InterchangeOrderMetadata.xml'),
+            );
+            await fs.copy(
+              path.join(tempArtifactDirectoryObject.path, 'ApiMetadata', 'InterchangeOrderMetadata-EXTENSION.xml'),
+              path.join(realArtifactDirectory, 'extension', 'ApiMetadata', 'InterchangeOrderMetadata-EXTENSION.xml'),
+            );
+          }
+
           // tempArtifactDirectoryObject.cleanup();
           await fs.remove(tempArtifactDirectoryObject.path);
         } else {

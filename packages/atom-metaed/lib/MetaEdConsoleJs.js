@@ -204,7 +204,7 @@ async function executeBuild(
 
     const taskParams = ['/s', '/c', `node "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
-    console.log(`[MetaEdConsoleJS] Executing '${cmdExePath}' with parameters:`, taskParams);
+    console.log(`[MetaEdConsoleJS] Executing Build '${cmdExePath}' with parameters:`, taskParams);
 
     const childProcess = spawn(cmdExePath, taskParams, {
       cwd: metaEdConsoleDirectory,
@@ -306,7 +306,7 @@ async function executeDeploy(
     const taskParams = ['/s', '/c', `node "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
     if (shouldDeployCore) taskParams.push('--core');
 
-    console.log(`[MetaEdConsoleJS] Executing '${cmdExePath}' with parameters:`, taskParams);
+    console.log(`[MetaEdConsoleJS] Executing Deploy '${cmdExePath}' with parameters:`, taskParams);
 
     const childProcess = spawn(cmdExePath, taskParams, {
       cwd: metaEdConsoleDirectory,
@@ -327,9 +327,9 @@ async function executeDeploy(
     childProcess.on('close', code => {
       console.log(`child process exited with code ${code}`);
       if (code === 0) {
-        metaEdLog.addMessage(`MetaEd JS build complete.`);
+        metaEdLog.addMessage(`MetaEd JS Deploy complete.`);
       } else {
-        metaEdLog.addMessage(`Error on MetaEd build.`);
+        metaEdLog.addMessage(`Error on MetaEd JS Deploy.`);
         resultNotification = failNotification;
       }
       atom.notifications.addNotification(resultNotification);
@@ -344,23 +344,10 @@ export async function deploy(
   metaEdLog: MetaEdLog,
   shouldDeployCore: boolean = false,
 ): Promise<boolean> {
-  const result = atom.confirm({
-    message: 'Are you sure you want to deploy MetaEd artifacts?',
-    detailedMessage:
-      'This will overwrite core and extension files in the Ed-Fi ODS / API with MetaEd generated versions.  You will need to run initdev afterwards to reinitialize the Ed-Fi ODS / API.',
-    buttons: ['OK', 'Cancel'],
-  });
-
-  if (result !== 0) {
-    return false;
-  }
-
   try {
-    metaEdLog.clear();
-
     const buildPaths: ?BuildPaths = verifyBuildPaths(metaEdLog);
     if (!buildPaths) return false;
-    metaEdLog.addMessage(`Beginning MetaEd JS build...`);
+    metaEdLog.addMessage(`Beginning MetaEd JS Deploy...`);
 
     const metaEdConfiguration = {
       ...initialConfiguration,
@@ -381,8 +368,6 @@ export async function deploy(
     metaEdConfiguration.deployDirectory = getEdfiOdsApiSourceDirectory();
 
     console.log(`[MetaEdConsoleJS] Using config: ${buildPaths.extensionConfigPath}.`, metaEdConfiguration);
-
-    if (!await cleanUpMetaEdArtifacts(buildPaths.artifactDirectory, metaEdLog)) return false;
 
     tmp.setGracefulCleanup();
     const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });
