@@ -3,43 +3,48 @@ import deepFreeze from 'deep-freeze';
 import type { EntityProperty } from './EntityProperty';
 import { NoEntityProperty } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
+import { NoSourceMap } from './../SourceMap';
 
-export class MergedPropertySourceMap {
-  type: ?SourceMap;
-  mergePropertyPath: Array<SourceMap>;
-  targetPropertyPath: Array<SourceMap>;
-  mergeProperty: ?SourceMap;
-  targetProperty: ?SourceMap;
+export type MergedPropertySourceMap = {
+  type: SourceMap,
+  mergePropertyPath: Array<SourceMap>,
+  targetPropertyPath: Array<SourceMap>,
+  mergeProperty: SourceMap,
+  targetProperty: SourceMap,
+};
 
-  constructor() {
-    this.mergePropertyPath = [];
-    this.targetPropertyPath = [];
-  }
+export function newMergedPropertySourceMap() {
+  return {
+    type: NoSourceMap,
+    mergePropertyPath: [],
+    targetPropertyPath: [],
+    mergeProperty: NoSourceMap,
+    targetProperty: NoSourceMap,
+  };
 }
 
-export class MergedProperty {
-  mergePropertyPath: Array<string>;
-  targetPropertyPath: Array<string>;
-  mergeProperty: ?EntityProperty;
-  targetProperty: ?EntityProperty;
-  sourceMap: MergedPropertySourceMap;
-}
+export type MergedProperty = {
+  mergePropertyPath: Array<string>,
+  targetPropertyPath: Array<string>,
+  mergeProperty: ?EntityProperty,
+  targetProperty: ?EntityProperty,
+  sourceMap: MergedPropertySourceMap,
+};
 
 export function newMergedProperty(): MergedProperty {
-  return Object.assign(new MergedProperty(), {
+  return {
     mergePropertyPath: [],
     targetPropertyPath: [],
     mergeProperty: null,
     targetProperty: null,
-    sourceMap: new MergedPropertySourceMap(),
-  });
+    sourceMap: newMergedPropertySourceMap(),
+  };
 }
 
-export const NoMergedProperty: MergedProperty = deepFreeze(
-  Object.assign(newMergedProperty(), {
-    mergeProperty: NoEntityProperty,
-    targetProperty: NoEntityProperty,
-  }),
-);
+export const NoMergedProperty: MergedProperty = deepFreeze({
+  ...newMergedProperty(),
+  mergeProperty: NoEntityProperty,
+  targetProperty: NoEntityProperty,
+});
 
 export const asMergedProperty = (x: EntityProperty): MergedProperty => ((x: any): MergedProperty);

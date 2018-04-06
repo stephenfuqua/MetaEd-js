@@ -1,21 +1,34 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
+import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
+import { newModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
+import { NoSourceMap } from './SourceMap';
 
-export class EnumerationItemSourceMap extends ModelBaseSourceMap {
-  shortDescription: ?SourceMap;
+export type EnumerationItemSourceMap = {
+  ...$Exact<ModelBaseSourceMap>,
+  shortDescription: SourceMap,
+  typeHumanizedName: SourceMap,
+};
+
+export function newEnumerationItemSourceMap(): EnumerationItemSourceMap {
+  return {
+    ...newModelBaseSourceMap(),
+    shortDescription: NoSourceMap,
+    typeHumanizedName: NoSourceMap,
+  };
 }
 
-export class EnumerationItem extends ModelBase {
-  typeHumanizedName: string;
-  shortDescription: string;
-  sourceMap: ModelBaseSourceMap & EnumerationItemSourceMap;
-}
+export type EnumerationItem = {
+  sourceMap: EnumerationItemSourceMap,
+  ...$Exact<ModelBase>,
+  shortDescription: string,
+  typeHumanizedName: string,
+};
 
 export function newEnumerationItem(): EnumerationItem {
-  return Object.assign(new EnumerationItem(), {
+  return {
     type: 'enumerationItem',
     typeHumanizedName: 'Enumeration Item',
     documentation: '',
@@ -23,16 +36,16 @@ export function newEnumerationItem(): EnumerationItem {
     metaEdId: '',
     namespaceInfo: newNamespaceInfo(),
     shortDescription: '',
-    sourceMap: new EnumerationItemSourceMap(),
+    sourceMap: newEnumerationItemSourceMap(),
     data: {},
-  });
+    config: {},
+  };
 }
 
-export const NoEnumerationItem: EnumerationItem = deepFreeze(
-  Object.assign(newEnumerationItem(), {
-    metaEdName: 'NoEnumerationItem',
-    shortDescription: 'NoEnumerationItem',
-  }),
-);
+export const NoEnumerationItem: EnumerationItem = deepFreeze({
+  ...newEnumerationItem(),
+  metaEdName: 'NoEnumerationItem',
+  shortDescription: 'NoEnumerationItem',
+});
 
 export const asEnumerationItem = (x: ModelBase): EnumerationItem => ((x: any): EnumerationItem);

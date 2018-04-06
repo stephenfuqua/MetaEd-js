@@ -1,36 +1,44 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { InterchangeItem } from './InterchangeItem';
-import { ModelBase, ModelBaseSourceMap } from './ModelBase';
-import { newNamespaceInfo } from './NamespaceInfo';
+import type { InterchangeItem } from './InterchangeItem';
 import type { SourceMap } from './SourceMap';
+import { NoSourceMap } from './SourceMap';
+import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
+import { newModelBaseSourceMap } from './ModelBase';
+import { newNamespaceInfo } from './NamespaceInfo';
 
-export class InterchangeSourceMap extends ModelBaseSourceMap {
-  elements: Array<SourceMap>;
-  identityTemplates: Array<SourceMap>;
-  extendedDocumentation: ?SourceMap;
-  useCaseDocumentation: ?SourceMap;
+export type InterchangeSourceMap = {
+  ...$Exact<ModelBaseSourceMap>,
+  elements: Array<SourceMap>,
+  identityTemplates: Array<SourceMap>,
+  extendedDocumentation: SourceMap,
+  useCaseDocumentation: SourceMap,
+};
 
-  constructor() {
-    super();
-    this.elements = [];
-    this.identityTemplates = [];
-  }
+export function newInterchangeSourceMap(): InterchangeSourceMap {
+  return {
+    ...newModelBaseSourceMap(),
+    elements: [],
+    identityTemplates: [],
+    extendedDocumentation: NoSourceMap,
+    useCaseDocumentation: NoSourceMap,
+  };
 }
 
-export class Interchange extends ModelBase {
-  typeHumanizedName: string;
-  elements: Array<InterchangeItem>;
-  identityTemplates: Array<InterchangeItem>;
-  extendedDocumentation: string;
-  useCaseDocumentation: string;
-  baseEntityName: string;
-  baseEntity: ?Interchange;
-  sourceMap: ModelBaseSourceMap | InterchangeSourceMap;
-}
+export type Interchange = {
+  ...$Exact<ModelBase>,
+  typeHumanizedName: string,
+  elements: Array<InterchangeItem>,
+  identityTemplates: Array<InterchangeItem>,
+  extendedDocumentation: string,
+  useCaseDocumentation: string,
+  baseEntityName: string,
+  baseEntity: ?Interchange,
+  sourceMap: ModelBaseSourceMap | InterchangeSourceMap,
+};
 
 export function newInterchange(): Interchange {
-  return Object.assign(new Interchange(), {
+  return {
     type: 'interchange',
     typeHumanizedName: 'Interchange',
     documentation: '',
@@ -45,15 +53,15 @@ export function newInterchange(): Interchange {
     baseEntityName: '',
     baseEntity: null,
 
-    sourceMap: new InterchangeSourceMap(),
+    sourceMap: newInterchangeSourceMap(),
     data: {},
-  });
+    config: {},
+  };
 }
 
-export const NoInterchange: Interchange = deepFreeze(
-  Object.assign(newInterchange(), {
-    metaEdName: 'NoInterchange',
-  }),
-);
+export const NoInterchange: Interchange = deepFreeze({
+  ...newInterchange(),
+  metaEdName: 'NoInterchange',
+});
 
 export const asInterchange = (x: ModelBase): Interchange => ((x: any): Interchange);

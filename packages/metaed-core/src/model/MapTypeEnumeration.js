@@ -1,24 +1,22 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { newTopLevelEntity } from './TopLevelEntity';
+import { newEnumeration } from './Enumeration';
 import type { ModelBase } from './ModelBase';
-import { Enumeration, EnumerationSourceMap } from './Enumeration';
+import type { Enumeration } from './Enumeration';
 
-export class MapTypeEnumeration extends Enumeration {}
+export type MapTypeEnumeration = Enumeration;
 
 export function newMapTypeEnumeration(): MapTypeEnumeration {
-  return Object.assign(new MapTypeEnumeration(), newTopLevelEntity(), {
+  return {
+    ...newEnumeration(),
     type: 'mapTypeEnumeration',
     typeHumanizedName: 'Map Type Enumeration',
-    enumerationItems: [],
-    sourceMap: new EnumerationSourceMap(),
-  });
+  };
 }
 
-export const NoMapTypeEnumeration: MapTypeEnumeration = deepFreeze(
-  Object.assign(newMapTypeEnumeration(), {
-    metaEdName: 'NoMapTypeEnumeration',
-  }),
-);
+export const NoMapTypeEnumeration: MapTypeEnumeration = deepFreeze({
+  ...newMapTypeEnumeration(),
+  metaEdName: 'NoMapTypeEnumeration',
+});
 
 export const asMapTypeEnumeration = (x: ModelBase): MapTypeEnumeration => ((x: any): MapTypeEnumeration);
