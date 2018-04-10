@@ -259,6 +259,12 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     // add extension project if there
     const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
     if (oldMetaEdJson.namespace !== 'edfi') {
+      if (allianceMode() && atom.project.getPaths().length === 1) {
+        metaEdLog.addMessage(
+          `Namespace defined as ${oldMetaEdJson.namespace}. Alliance mode only supports the namespace "edfi".`,
+        );
+        return false;
+      }
       if (oldMetaEdJson.namespace !== 'extension' && !useTechPreview()) {
         metaEdLog.addMessage(
           `Namespace defined as ${oldMetaEdJson.namespace}. ODS/API version 2.x only supports the namespace "extension".`,
