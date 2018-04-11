@@ -242,6 +242,14 @@ async function executeBuild(
   });
 }
 
+export function namespaceFromOldMetaEdJson(verifiedPathToOldMetaEdJson: string): ?string {
+  const oldMetaEdJson = fs.readJsonSync(verifiedPathToOldMetaEdJson);
+  if (oldMetaEdJson.metaEdConfiguration && oldMetaEdJson.metaEdConfiguration.namespace)
+    return oldMetaEdJson.metaEdConfiguration.namespace;
+  if (oldMetaEdJson.namespace) return oldMetaEdJson.namespace;
+  return null;
+}
+
 // initialConfiguration is temporary until full multi-project support
 export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog: MetaEdLog): Promise<boolean> {
   try {
@@ -257,23 +265,29 @@ export async function build(initialConfiguration: MetaEdConfiguration, metaEdLog
     };
 
     // add extension project if there
-    const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
-    if (oldMetaEdJson.namespace !== 'edfi') {
+    const namespaceFromConfigFile = namespaceFromOldMetaEdJson(buildPaths.extensionConfigPath);
+    if (namespaceFromConfigFile == null) {
+      metaEdLog.addMessage(
+        `No namespace definition found in metaEd.json configuration file at ${buildPaths.extensionConfigPath}.`,
+      );
+      return false;
+    }
+    if (namespaceFromConfigFile !== 'edfi') {
       if (allianceMode() && atom.project.getPaths().length === 1) {
         metaEdLog.addMessage(
-          `Namespace defined as ${oldMetaEdJson.namespace}. Alliance mode only supports the namespace "edfi".`,
+          `Namespace defined as ${namespaceFromConfigFile} in metaEd.json configuration file. Alliance mode only supports the namespace "edfi".`,
         );
         return false;
       }
-      if (oldMetaEdJson.namespace !== 'extension' && !useTechPreview()) {
+      if (namespaceFromConfigFile !== 'extension' && !useTechPreview()) {
         metaEdLog.addMessage(
-          `Namespace defined as ${oldMetaEdJson.namespace}. ODS/API version 2.x only supports the namespace "extension".`,
+          `Namespace defined as ${namespaceFromConfigFile} in metaEd.json configuration file. ODS/API version 2.x only supports the namespace "extension".`,
         );
         return false;
       }
       metaEdConfiguration.projects.push({
-        namespace: oldMetaEdJson.namespace,
-        projectName: oldMetaEdJson.namespace,
+        namespace: namespaceFromConfigFile,
+        projectName: namespaceFromConfigFile,
         projectVersion: '1.0.0',
         projectExtension: 'EXTENSION',
       });
@@ -373,11 +387,17 @@ export async function deploy(
     };
 
     // add extension project if there
-    const oldMetaEdJson = fs.readJsonSync(buildPaths.extensionConfigPath).metaEdConfiguration;
-    if (oldMetaEdJson.namespace !== 'edfi') {
+    const namespaceFromConfigFile = namespaceFromOldMetaEdJson(buildPaths.extensionConfigPath);
+    if (namespaceFromConfigFile == null) {
+      metaEdLog.addMessage(
+        `No namespace definition found in metaEd.json configuration file at ${buildPaths.extensionConfigPath}.`,
+      );
+      return false;
+    }
+    if (namespaceFromConfigFile !== 'edfi') {
       metaEdConfiguration.projects.push({
-        namespace: oldMetaEdJson.namespace,
-        projectName: oldMetaEdJson.namespace,
+        namespace: namespaceFromConfigFile,
+        projectName: namespaceFromConfigFile,
         projectVersion: '1.0.0',
         projectExtension: 'EXTENSION',
       });

@@ -18,6 +18,7 @@ import {
   allianceMode,
 } from './Settings';
 import type MetaEdLog from './MetaEdLog';
+import { namespaceFromOldMetaEdJson } from './MetaEdConsoleJs';
 
 type GulpInputs = {
   taskName: string,
@@ -161,8 +162,8 @@ export default class MetaEdConsole {
       const configFile = atom.project.getDirectories()[1].getFile('metaEd.json');
       if (configFile.existsSync()) {
         try {
-          const config = JSON.parse(fs.readFileSync(configFile.getRealPathSync(), 'utf-8'));
-          if (config.metaEdConfiguration.namespace != null) extensionNamespace = config.metaEdConfiguration.namespace;
+          const namespaceFromConfigFile = namespaceFromOldMetaEdJson(configFile.getRealPathSync());
+          if (namespaceFromConfigFile != null) extensionNamespace = namespaceFromConfigFile;
         } catch (error) {
           // Use default if file doesn't match expected format
         }
