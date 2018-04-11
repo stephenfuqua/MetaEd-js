@@ -36,8 +36,6 @@ export const template = R.memoize(() => ({
   foreignKey: templateNamed('foreignKey'),
   idIndexes: templateNamed('idIndexes'),
   extendedProperties: templateNamed('extendedProperties'),
-  deleteEventTable: templateNamed('deleteEventTable'),
-  trigger: templateNamed('trigger'),
   enumerationRow: templateNamed('enumerationRow'),
   schoolYearEnumerationRow: templateNamed('schoolYearEnumerationRow'),
   extensionSchema: templateNamed('extensionSchema'),

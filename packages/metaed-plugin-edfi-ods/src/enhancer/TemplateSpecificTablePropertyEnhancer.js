@@ -11,12 +11,10 @@ import {
 } from '../model/database/Table';
 import { escapeSqlSingleQuote } from '../shared/Utility';
 import { getForeignTableColumnNames, getParentTableColumnNames } from '../model/database/ForeignKey';
-import { insertUpdateDelete } from '../model/database/Trigger';
 import { pluginEnvironment } from './EnhancerHelper';
 import type { Column } from '../model/database/Column';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
-import type { Trigger } from '../model/database/Trigger';
 
 // Sets sorted table properties for use by the generator template
 const enhancerName: string = 'TemplateSpecificTablePropertyEnhancer';
@@ -47,10 +45,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
       table.foreignKeys = getForeignKeys(table);
     });
-  });
-
-  pluginEnvironment(metaEd).entity.trigger.forEach((trigger: Trigger) => {
-    trigger.insertUpdateDelete = insertUpdateDelete(trigger);
   });
 
   return {

@@ -15,9 +15,6 @@ describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
     expect((metaEd.plugin.get('edfiOds'): any).entity.table).toBeDefined();
     expect((metaEd.plugin.get('edfiOds'): any).entity.table).toBeInstanceOf(Map);
     expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(0);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.trigger).toBeDefined();
-    expect((metaEd.plugin.get('edfiOds'): any).entity.trigger).toBeInstanceOf(Map);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.trigger.size).toBe(0);
     expect((metaEd.plugin.get('edfiOds'): any).entity.row).toBeDefined();
     expect((metaEd.plugin.get('edfiOds'): any).entity.row).toBeInstanceOf(Map);
     expect((metaEd.plugin.get('edfiOds'): any).entity.row.size).toBe(0);

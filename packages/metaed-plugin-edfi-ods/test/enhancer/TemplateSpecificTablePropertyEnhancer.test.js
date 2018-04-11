@@ -8,11 +8,9 @@ import { newColumn } from '../../src/model/database/Column';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { newTrigger } from '../../src/model/database/Trigger';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { Table } from '../../src/model/database/Table';
-import type { Trigger } from '../../src/model/database/Trigger';
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with alternate keys', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -280,32 +278,5 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
     const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).columns;
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.sqlEscapedDescription)).toEqual([expectedDescription, expectedDescription]);
-  });
-});
-
-describe('when TemplateSpecificTablePropertyEnhancer enhances triggers with insert, update, and/or delete', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const triggerName: string = 'TriggerName';
-  const expectedInsertUpdateDelete: Array<string> = ['INSERT', 'UPDATE', 'DELETE'];
-
-  beforeAll(() => {
-    initializeEdFiOdsEntityRepository(metaEd);
-
-    const trigger: Trigger = Object.assign(newTrigger(), {
-      name: triggerName,
-      onInsert: true,
-      onUpdate: true,
-      onDelete: true,
-    });
-    pluginEnvironment(metaEd).entity.trigger.set(trigger.name, trigger);
-
-    metaEd.dataStandardVersion = '2.0.0';
-    enhance(metaEd);
-  });
-
-  it('should have correct insert update delete', () => {
-    const trigger: Trigger = (metaEd.plugin.get('edfiOds'): any).entity.trigger.get(triggerName);
-    expect(trigger).toBeDefined();
-    expect(trigger.insertUpdateDelete).toEqual(expectedInsertUpdateDelete);
   });
 });

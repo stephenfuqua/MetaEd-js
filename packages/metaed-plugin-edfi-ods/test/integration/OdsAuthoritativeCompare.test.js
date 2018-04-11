@@ -37,7 +37,6 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
   let generatedCoreOds: string;
   let tableOrder: Array<string>;
   let fkOrder: Array<string>;
-  let triggerOrder: Array<string>;
   let rowOrder: Array<string>;
 
   beforeAll(async () => {
@@ -104,10 +103,6 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     tableOrder = tables.map(table => table.name);
     fkOrder = tables.reduce((acc, table) => acc.concat([...table.foreignKeys.map(fk => fk.name)]), []);
 
-    triggerOrder = orderByProp('name')([...pluginEnvironment(state.metaEd).entity.trigger.values()]).map(
-      table => table.name,
-    );
-
     rowOrder = orderRows([...pluginEnvironment(state.metaEd).entity.row.values()]).map(
       x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
     );
@@ -131,11 +126,6 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
   it('should have correct foreign key order', () => {
     expect(fkOrder).toBeDefined();
     expect(fkOrder).toMatchSnapshot();
-  });
-
-  it('should have correct trigger order', () => {
-    expect(triggerOrder).toBeDefined();
-    expect(triggerOrder).toMatchSnapshot();
   });
 
   it('should have correct row order', () => {

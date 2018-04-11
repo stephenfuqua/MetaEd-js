@@ -8,7 +8,6 @@ import type { EnumerationRow } from '../model/database/EnumerationRow';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { SchoolYearEnumerationRow } from '../model/database/SchoolYearEnumerationRow';
 import type { Table } from '../model/database/Table';
-import type { Trigger } from '../model/database/Trigger';
 
 const enhancerName: string = 'AddSchemaContainerEnhancer';
 
@@ -24,10 +23,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       [...repository.table.values()].filter((table: Table) => table.schema === namespaceInfo.namespace),
     );
     const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
-    const triggers: Array<Trigger> =
-      namespaceInfo.namespace === 'edfi'
-        ? orderByProp('name')(inNamespace(namespaceInfo)([...repository.trigger.values()]))
-        : [];
     const enumerationRows: Array<EnumerationRow> = orderRows(
       rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'enumerationRow'),
     );
@@ -38,7 +33,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     Object.assign(namespaceInfo.data.edfiOds.ods_Schema, {
       tables,
       foreignKeys,
-      triggers,
       enumerationRows,
       schoolYearEnumerationRows,
     });

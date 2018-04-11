@@ -74,29 +74,6 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
   };
 }
 
-export async function generateTriggers(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const results: Array<GeneratedOutput> = [];
-  const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
-
-  namespaces.forEach(namespaceInfo => {
-    const generatedResult: string = template().trigger({ triggers: namespaceInfo.data.edfiOds.ods_Schema.triggers });
-
-    results.push({
-      name: 'ODS Triggers',
-      namespace: namespaceInfo.namespace,
-      folderName: structurePath,
-      fileName: fileNameFor('0060', namespaceInfo, 'Triggers'),
-      resultString: generatedResult,
-      resultStream: null,
-    });
-  });
-
-  return {
-    generatorName: 'edfiOds.TriggersGenerator',
-    generatedOutput: results,
-  };
-}
-
 export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
   const namespaces: Array<NamespaceInfo> = metaEd.entity.namespaceInfo;
@@ -154,7 +131,6 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const tablesResult: GeneratorResult = await generateTables(metaEd);
   const foreignKeysResult: GeneratorResult = await generateForeignKeys(metaEd);
   const extendedPropertiesResult: GeneratorResult = await generateExtendedProperties(metaEd);
-  const triggersResult: GeneratorResult = await generateTriggers(metaEd);
   const enumerationsResult: GeneratorResult = await generateEnumerations(metaEd);
   const schoolYearsResult: GeneratorResult = await generateSchoolYears(metaEd);
 
@@ -162,7 +138,6 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     tablesResult,
     foreignKeysResult,
     extendedPropertiesResult,
-    triggersResult,
     enumerationsResult,
     schoolYearsResult,
   ];

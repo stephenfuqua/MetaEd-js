@@ -29,7 +29,6 @@ import { enhance as schoolYearEnumerationTableEnhancer } from '../enhancer/table
 
 import { enhance as addSchemaContainerEnhancer } from '../enhancer/AddSchemaContainerEnhancer';
 import { enhance as createUsisFromUniqueIdsEnhancer } from '../enhancer/CreateUsisFromUniqueIdsEnhancer';
-import { enhance as deleteTriggerEnhancer } from '../enhancer/DeleteTriggerEnhancer';
 import { enhance as descriptorMapTypeRowEnhancer } from '../enhancer/DescriptorMapTypeRowEnhancer';
 import { enhance as enumerationRowEnhancer } from '../enhancer/EnumerationRowEnhancer';
 import { enhance as foreignKeyCreatingTableEnhancer } from '../enhancer/ForeignKeyCreatingTableEnhancer';
@@ -126,9 +125,6 @@ export function enhancerList(): Array<Enhancer> {
     removeGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_1_x,
     removeGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase,
     removeStartTimeFromPkOfInterventionMeetingTimeDiminisher,
-
-    // Trigger Creation Phase
-    deleteTriggerEnhancer,
 
     // Row Population Phase
     enumerationRowEnhancer,
