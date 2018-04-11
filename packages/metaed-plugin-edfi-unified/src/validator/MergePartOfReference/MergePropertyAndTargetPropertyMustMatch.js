@@ -3,7 +3,7 @@ import type { EntityProperty, MetaEdEnvironment, PropertyType, ValidationFailure
 import { asReferentialProperty, asModelType, getPropertiesOfType } from 'metaed-core';
 import {
   findReferencedProperty,
-  getReferencedEntity,
+  getReferencedEntities,
   referenceTypes,
   matchAllButFirstAsIdentityProperties,
   matchAllIdentityReferenceProperties,
@@ -41,8 +41,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             referenceTypes.includes(asModelType(mergeProperty.type)) &&
             referenceTypes.includes(asModelType(targetProperty.type))
           ) {
-            const mergeBaseEntity = getReferencedEntity(metaEd.entity, mergeProperty.metaEdName, mergeProperty.type);
-            const targetBaseEntity = getReferencedEntity(metaEd.entity, targetProperty.metaEdName, targetProperty.type);
+            const [mergeBaseEntity] = getReferencedEntities(metaEd.entity, mergeProperty.metaEdName, mergeProperty.type);
+            const [targetBaseEntity] = getReferencedEntities(metaEd.entity, targetProperty.metaEdName, targetProperty.type);
 
             if (mergeBaseEntity && mergeBaseEntity.baseEntityName === targetProperty.metaEdName) return;
             if (targetBaseEntity && targetBaseEntity.baseEntityName === mergeProperty.metaEdName) return;

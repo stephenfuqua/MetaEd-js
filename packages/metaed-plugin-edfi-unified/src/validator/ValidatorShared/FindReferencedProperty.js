@@ -29,12 +29,19 @@ function possibleModelTypesReferencedByProperty(propertyType: ModelType | Proper
   return result.map(x => asModelType(x));
 }
 
-export function getReferencedEntity(
+export function getReferencedEntities(
   repository: EntityRepository,
   name: string,
   propertyType: ModelType | PropertyType,
-): ?ModelBase {
-  return getEntity(repository, name, ...possibleModelTypesReferencedByProperty(propertyType));
+): Array<ModelBase> {
+  return possibleModelTypesReferencedByProperty(propertyType).reduce(
+    (result: Array<ModelBase>, type: ModelType | PropertyType) => {
+      const entity = getEntity(repository, name, asModelType(type));
+      if (entity != null) return result.concat(entity);
+      return result;
+    },
+    [],
+  );
 }
 
 export function getBaseEntity(repository: EntityRepository, entity: ?ModelBase): ?ModelBase {
@@ -55,7 +62,7 @@ export const matchAllIdentityReferenceProperties = () => (property: EntityProper
 export const matchAllButFirstAsIdentityProperties = () => {
   let firstProperty: EntityProperty;
   return (property: EntityProperty, parentContext: ModelBase): boolean => {
-    if (!firstProperty) {
+    if (firstProperty == null) {
       firstProperty = property;
       return true;
     }
@@ -73,31 +80,40 @@ export function withContext(property: EntityProperty): string {
 
 export function findReferencedProperty(
   repository: EntityRepository,
-  entity: ModelBase,
+  initialEntity: ModelBase,
   propertyPath: Array<string>,
   filter: (property: EntityProperty, parentContext: ModelBase) => boolean = matchAll(),
 ): ?EntityProperty {
-  let entityContext: ?ModelBase = entity;
-  let propertyContext: ?EntityProperty;
+  const entities: Array<ModelBase> = [initialEntity];
+  let currentEntity: ?ModelBase;
+  let currentProperty: ?EntityProperty;
+
   propertyPath.some(pathSegment => {
-    propertyContext = undefined;
+    currentProperty = undefined;
     let currentFilter = filter;
-    while (entityContext && !propertyContext) {
-      propertyContext = asTopLevelEntity(entityContext).properties.find(
+
+    while (entities.length > 0 && currentProperty == null) {
+      currentEntity = entities.pop();
+      currentProperty = asTopLevelEntity(currentEntity).properties.find(
         // eslint-disable-next-line no-loop-func
-        x =>
-          (x.metaEdName === pathSegment || withContext(x) === pathSegment) &&
+        (property: EntityProperty) =>
+          (property.metaEdName === pathSegment || withContext(property) === pathSegment) &&
           // $FlowIgnore entityContext could be null
-          currentFilter(x, entityContext),
+          currentFilter(property, currentEntity),
       );
-      if (propertyContext) break;
-      entityContext = getBaseEntity(repository, entityContext);
-      currentFilter = matchAllIdentityReferenceProperties();
+
+      if (currentProperty != null) {
+        if (!referenceTypes.includes(asModelType(currentProperty.type))) return true;
+        entities.push(...getReferencedEntities(repository, currentProperty.metaEdName, asModelType(currentProperty.type)));
+      } else {
+        const baseEntity = getBaseEntity(repository, currentEntity);
+        if (baseEntity != null) entities.push(baseEntity);
+        currentFilter = matchAllIdentityReferenceProperties();
+      }
     }
-    if (!propertyContext || !referenceTypes.includes(asModelType(propertyContext.type))) return true;
-    entityContext = getReferencedEntity(repository, propertyContext.metaEdName, asModelType(propertyContext.type));
-    if (propertyContext && commonTypes.includes(propertyContext.type)) propertyContext = undefined;
+    if (currentProperty != null && commonTypes.includes(currentProperty.type)) currentProperty = undefined;
     return false;
   });
-  return propertyContext;
+
+  return currentProperty;
 }

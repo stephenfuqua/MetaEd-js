@@ -2,14 +2,16 @@
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  DomainEntityBuilder,
-  DomainEntityExtensionBuilder,
-  DomainEntitySubclassBuilder,
   AssociationBuilder,
   AssociationExtensionBuilder,
   AssociationSubclassBuilder,
+  ChoiceBuilder,
   CommonBuilder,
+  DomainEntityBuilder,
+  DomainEntityExtensionBuilder,
+  DomainEntitySubclassBuilder,
   EnumerationBuilder,
+  NamespaceInfoBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
@@ -480,6 +482,101 @@ describe('when validating abstract entity has merge property', () => {
 
   it('should build two domain entities', () => {
     expect(metaEd.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+// METAED-797 - StudentProgramAssociation extension cause incorrect merge validation errors
+describe('when validating association subclass extension', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: string = 'edfi';
+  const extension: string = 'extension';
+  const associationName1: string = 'AssociationName1';
+  const associationName2: string = 'AssociationName2';
+  const associationSubclassName: string = 'AssociationSubclassName';
+  const choiceName: string = 'ChoiceName';
+  const domainEntityName1: string = 'DomainEntityName1';
+  const domainEntityName2: string = 'DomainEntityName2';
+  const domainEntityName3: string = 'DomainEntityName3';
+  const domainEntityName4: string = 'DomainEntityName4';
+  const integerPropertyName1: string = 'IntegerPropertyName1';
+  const integerPropertyName2: string = 'IntegerPropertyName2';
+  const integerPropertyName3: string = 'IntegerPropertyName3';
+  const integerPropertyName4: string = 'IntegerPropertyName4';
+  const integerPropertyName5: string = 'IntegerPropertyName5';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespace)
+      .withStartDomainEntity(domainEntityName1)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(integerPropertyName1, 'Documentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(domainEntityName2)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(integerPropertyName2, 'Documentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(domainEntityName3)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(integerPropertyName3, 'Documentation')
+      .withEndDomainEntity()
+
+      .withStartAssociation(associationName1)
+      .withDocumentation('Documentation')
+      .withAssociationDomainEntityProperty(domainEntityName1, 'Documentation')
+      .withAssociationDomainEntityProperty(domainEntityName2, 'Documentation')
+      .withEndAssociation()
+
+      .withStartAssociation(associationName2)
+      .withDocumentation('Documentation')
+      .withAssociationDomainEntityProperty(domainEntityName1, 'Documentation')
+      .withAssociationDomainEntityProperty(domainEntityName3, 'Documentation')
+      .withEndAssociation()
+
+      .withStartAssociationSubclass(associationSubclassName, associationName2)
+      .withDocumentation('Documentation')
+      .withIntegerProperty(integerPropertyName4, 'Documentation', false, false)
+      .withEndAssociationSubclass()
+
+      .withStartChoice(choiceName)
+      .withDocumentation('Documentation')
+      .withAssociationProperty(associationName1, 'Documentation', false, true)
+      .withAssociationProperty(associationSubclassName, 'Documentation', false, true)
+      .withEndChoice()
+
+      .withStartDomainEntity(domainEntityName4)
+      .withDocumentation('Documentation')
+      .withDomainEntityIdentity(domainEntityName1, 'Documentation')
+      .withChoiceProperty(choiceName, 'Documentation', false, false)
+      .withMergePartOfReference(`${choiceName}.${associationName1}.${domainEntityName1}`, domainEntityName1)
+      .withMergePartOfReference(`${choiceName}.${associationSubclassName}.${domainEntityName1}`, domainEntityName1)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace(extension, 'Extension')
+      .withStartAssociationExtension(associationSubclassName)
+      .withIntegerProperty(integerPropertyName5, 'Documentation', false, false)
+      .withEndAssociationExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new ChoiceBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should build correct entities', () => {
+    expect(metaEd.entity.domainEntity.size).toBe(4);
   });
 
   it('should have no validation failures', () => {
