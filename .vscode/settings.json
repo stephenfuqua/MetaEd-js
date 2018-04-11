@@ -1,0 +1,27 @@
+// MetaEd Recommended Settings
+{
+  // ESlint
+  "eslint.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.packageManager": "yarn",
+
+  // Prettier
+  "prettier.eslintIntegration": true,
+  "files.autoSave": "onFocusChange",
+  "eslint.autoFixOnSave": true,
+  "editor.rulers": [125],
+
+  // Flow
+  "flow.useNPMPackagedFlow": true,
+  "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
+  "javascript.validate.enable": false,
+
+  // File Explorer
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/flow-typed": true,
+    "**/build": true,
+    "**/dist": true,
+  },
+}
