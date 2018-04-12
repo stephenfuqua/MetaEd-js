@@ -33,6 +33,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
           description: property.documentation,
           isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,
+          parentEntity: property.parentEntity,
         });
 
         const foreignKey: ForeignKey = createForeignKey(

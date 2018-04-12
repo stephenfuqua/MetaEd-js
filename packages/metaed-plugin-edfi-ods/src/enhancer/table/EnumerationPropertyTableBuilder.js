@@ -54,6 +54,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           description: enumeration.documentation,
           isRequiredCollectionTable: enumeration.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,
+          parentEntity: enumeration.parentEntity,
         });
         tables.push(joinTable);
 

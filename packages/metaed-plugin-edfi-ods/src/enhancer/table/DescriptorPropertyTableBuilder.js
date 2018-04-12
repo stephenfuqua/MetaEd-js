@@ -47,6 +47,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           description: descriptor.documentation,
           isRequiredCollectionTable: descriptor.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,
+          parentEntity: descriptor.parentEntity,
         });
         tables.push(joinTable);
 

@@ -33,8 +33,9 @@ export type Table = {
   foreignKeys: Array<ForeignKey>,
   alternateKeys: Array<Column>,
   uniqueIndexes: Array<Column>,
-  // only main tables have a parentEntity
+  // not all tables have a parentEntity
   parentEntity: TopLevelEntity,
+  isEntityMainTable: boolean,
 };
 
 export function newTable(): Table {
@@ -57,6 +58,7 @@ export function newTable(): Table {
     alternateKeys: [],
     uniqueIndexes: [],
     parentEntity: NoTopLevelEntity,
+    isEntityMainTable: false,
   };
 }
 

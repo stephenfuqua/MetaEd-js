@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, isReferenceProperty } from 'metaed-core';
+import { orderByProp, isReferenceProperty, asCommonProperty } from 'metaed-core';
 import type { EntityProperty, PropertyType } from 'metaed-core';
 import type { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
 import { NoTable, getPrimaryKeys } from './Table';
@@ -54,6 +54,21 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
   };
 }
 
+function isSubclassRelationship(property: EntityProperty): boolean {
+  if (isReferenceProperty(property)) {
+    return !!((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToSuperclass;
+  }
+  return false;
+}
+
+function isExtensionRelationship(property: EntityProperty): boolean {
+  if (property.type === 'common' && asCommonProperty(property).isExtensionOverride) return true;
+  if (isReferenceProperty(property)) {
+    return !!((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToExtensionParent;
+  }
+  return false;
+}
+
 export function foreignKeySourceReferenceFrom(property: EntityProperty): ForeignKeySourceReference {
   return {
     isPartOfIdentity: property.isPartOfIdentity,
@@ -61,12 +76,8 @@ export function foreignKeySourceReferenceFrom(property: EntityProperty): Foreign
     isOptional: property.isOptional,
     isRequiredCollection: property.isRequiredCollection,
     isOptionalCollection: property.isOptionalCollection,
-    isSubclassRelationship: isReferenceProperty(property)
-      ? ((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToSuperclass
-      : false,
-    isExtensionRelationship: isReferenceProperty(property)
-      ? ((property.data.edfiOds: any): ReferencePropertyEdfiOds).ods_IsReferenceToExtensionParent
-      : false,
+    isSubclassRelationship: isSubclassRelationship(property),
+    isExtensionRelationship: isExtensionRelationship(property),
     isSyntheticRelationship: false,
     propertyType: property.type,
   };

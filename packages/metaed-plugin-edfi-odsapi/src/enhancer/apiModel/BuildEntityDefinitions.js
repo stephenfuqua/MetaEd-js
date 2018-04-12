@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { NoTopLevelEntity } from 'metaed-core';
-import type { TopLevelEntity, DomainEntity } from 'metaed-core';
+import { asDomainEntity } from 'metaed-core';
+import type { NamespaceInfo } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
 import type { EntityDefinition } from '../../model/apiModel/EntityDefinition';
@@ -11,7 +11,7 @@ import type { ApiProperty } from '../../model/apiModel/ApiProperty';
 type BuildSingleEntityDefinitionOptions = { includeAlternateKeys: boolean, isAbstract: boolean };
 
 function isUpdatable(table: Table): boolean {
-  return table.parentEntity != null && table.parentEntity !== NoTopLevelEntity && table.parentEntity.allowPrimaryKeyUpdates;
+  return table.isEntityMainTable && table.parentEntity.allowPrimaryKeyUpdates;
 }
 
 // "identifiers" are the primary key columns of the table
@@ -117,10 +117,7 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
   return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), result);
 }
 
-export function buildSingleEntityDefinitionFrom(
-  table: Table,
-  options: BuildSingleEntityDefinitionOptions,
-): EntityDefinition {
+function buildSingleEntityDefinitionFrom(table: Table, options: BuildSingleEntityDefinitionOptions): EntityDefinition {
   return {
     schema: table.schema,
     name: table.name,
@@ -131,27 +128,32 @@ export function buildSingleEntityDefinitionFrom(
   };
 }
 
+function isAbstract(table: Table): boolean {
+  // true for the hardcoded Descriptor table
+  if (table.name === 'Descriptor' && table.schema === 'edfi') return true;
+  // true for the main table of an Abstract Entity
+  return (
+    table.parentEntity.type === 'domainEntity' && asDomainEntity(table.parentEntity).isAbstract && table.isEntityMainTable
+  );
+}
+
 // Entity definitions are the ODS table definitions for a namespace, including columns and primary keys
 export function buildEntityDefinitions(
-  entities: Array<TopLevelEntity>,
+  tables: Map<string, Table>,
+  namespaceInfo: NamespaceInfo,
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
-  entities.forEach((entity: TopLevelEntity) => {
-    const odsTablesForEntity: Array<Table> = entity.data.edfiOds.ods_Tables;
-    odsTablesForEntity.forEach((table: Table) => {
+  Array.from(tables.values())
+    .filter((table: Table) => table.schema === namespaceInfo.namespace)
+    .forEach((table: Table) => {
       result.push(
         buildSingleEntityDefinitionFrom(table, {
-          // this is true only for the root table of an Abstract Entity
-          isAbstract:
-            entity.data.edfiOds.ods_EntityTable.name === table.name &&
-            entity.type === 'domainEntity' &&
-            ((entity: any): DomainEntity).isAbstract,
+          isAbstract: isAbstract(table),
           includeAlternateKeys: false,
         }),
       );
     });
-  });
 
   result.push(...additionalEntityDefinitions);
   return R.sortBy(R.compose(R.toLower, R.prop('name')), result);

@@ -2,7 +2,13 @@
 import R from 'ramda';
 import { asReferentialProperty } from 'metaed-core';
 import type { CommonExtension, EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
-import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
+import {
+  addColumns,
+  addForeignKey,
+  createForeignKey,
+  newTable,
+  createForeignKeyUsingSourceReference,
+} from '../../model/database/Table';
 import { appendOverlapping } from '../../shared/Utility';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -12,6 +18,7 @@ import { TableStrategy } from '../../model/database/TableStrategy';
 import type { BuildStrategy } from './BuildStrategy';
 import type { Column } from '../../model/database/Column';
 import type { ColumnCreatorFactory } from './ColumnCreatorFactory';
+import { foreignKeySourceReferenceFrom } from '../../model/database/ForeignKey';
 import type { ForeignKey } from '../../model/database/ForeignKey';
 import type { Table } from '../../model/database/Table';
 import type { TableBuilder } from './TableBuilder';
@@ -39,6 +46,7 @@ function buildJoinTables(
     description: property.documentation,
     isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
     includeCreateDateColumn: true,
+    parentEntity: property.parentEntity,
   });
   tables.push(joinTable);
 
@@ -88,16 +96,21 @@ function buildExtensionTables(
       property.data.edfiOds.ods_Name + commonExtension.namespaceInfo.extensionEntitySuffix,
     ),
     description: property.documentation,
+    parentEntity: property.parentEntity,
   });
   tables.push(extensionTable);
 
-  const foreignKey: ForeignKey = createForeignKey(
-    property,
+  const foreignKey: ForeignKey = createForeignKeyUsingSourceReference(
+    {
+      ...foreignKeySourceReferenceFrom(property),
+      isExtensionRelationship: true,
+    },
     primaryKeys,
     joinTableSchema,
     joinTableName,
     ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.ods_CascadePrimaryKeyUpdates),
   );
+
   addForeignKey(extensionTable, foreignKey);
   addColumns(extensionTable, primaryKeys, ColumnTransform.primaryKeyWithNewReferenceContext(joinTableName));
 

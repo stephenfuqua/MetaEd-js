@@ -231,7 +231,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   enterCommonExtensionOverride(context: MetaEdGrammar.CommonExtensionOverrideContext) {
-    if (this.currentProperty == null) return;
+    if (this.currentProperty === NoEntityProperty) return;
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
     ((this.currentProperty: any): CommonProperty).isExtensionOverride = true;
     ((this.currentProperty.sourceMap: any): CommonPropertySourceMap).isExtensionOverride = sourceMapFrom(context);

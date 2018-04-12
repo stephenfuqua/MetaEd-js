@@ -1,9 +1,8 @@
 // @flow
 import R from 'ramda';
-import { getAllTopLevelEntities } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironment, TopLevelEntity } from 'metaed-core';
-import type { EdFiOdsEntityRepository, Table } from 'metaed-plugin-edfi-ods';
-import { buildEntityDefinitions, buildSingleEntityDefinitionFrom } from './BuildEntityDefinitions';
+import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironment } from 'metaed-core';
+import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
+import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
@@ -89,33 +88,16 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     };
 
   const edFiOdsEntityRepository: EdFiOdsEntityRepository = ((odsPlugin.entity: any): EdFiOdsEntityRepository);
-  const topLevelEntities: Array<TopLevelEntity> = getAllTopLevelEntities(metaEd.entity);
 
   metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
-    const entitiesInNamespace: Array<TopLevelEntity> = topLevelEntities.filter(
-      x => x.namespaceInfo.namespace === namespaceInfo.namespace,
-    );
-
     const additionalEntityDefinitions = [];
-    if (!namespaceInfo.isExtension) {
-      // the descriptor base table is a hardcoded table not associated with an entity in the core model
-      const descriptorBaseTable: ?Table = edFiOdsEntityRepository.table.get('Descriptor');
-      if (descriptorBaseTable) {
-        additionalEntityDefinitions.push(
-          buildSingleEntityDefinitionFrom(descriptorBaseTable, {
-            isAbstract: true,
-            includeAlternateKeys: true,
-          }),
-        );
-      }
-    }
 
     const domainModelDefinition: DomainModelDefinition = {
       odsApiVersion: '3.0.0',
       schemaDefinition: buildSchemaDefinition(namespaceInfo),
       aggregateDefinitions: buildAggregateDefinitions(namespaceInfo),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespaceInfo),
-      entityDefinitions: buildEntityDefinitions(entitiesInNamespace, additionalEntityDefinitions),
+      entityDefinitions: buildEntityDefinitions(edFiOdsEntityRepository.table, namespaceInfo, additionalEntityDefinitions),
       associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table, namespaceInfo),
     };
 

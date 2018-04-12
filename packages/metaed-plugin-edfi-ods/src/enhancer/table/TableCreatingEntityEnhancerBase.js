@@ -31,6 +31,7 @@ export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean):
     name: entity.data.edfiOds.ods_TableName,
     description: entity.documentation,
     parentEntity: entity,
+    isEntityMainTable: true,
   });
 
   if (withTimestamps) {

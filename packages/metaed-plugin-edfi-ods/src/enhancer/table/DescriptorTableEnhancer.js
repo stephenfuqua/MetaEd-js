@@ -38,6 +38,7 @@ function createTables(descriptor: Descriptor): Array<Table> {
     schema: descriptor.namespaceInfo.namespace,
     name: descriptor.data.edfiOds.ods_TableName,
     description: descriptor.documentation,
+    parentEntity: descriptor,
   });
   tables.push(mainTable);
 

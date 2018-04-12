@@ -34,6 +34,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         schema: entity.namespaceInfo.namespace,
         name: entity.data.edfiOds.ods_ExtensionName,
         description: entity.documentation,
+        parentEntity: entity,
         // METAED-763: API requires extension tables to have CreateDate column
         includeCreateDateColumn: true,
       });

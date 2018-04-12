@@ -73,6 +73,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
         description: referenceProperty.documentation,
         isRequiredCollectionTable: referenceProperty.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
         includeCreateDateColumn: true,
+        parentEntity: referenceProperty.parentEntity,
       });
       tables.push(joinTable);
 
