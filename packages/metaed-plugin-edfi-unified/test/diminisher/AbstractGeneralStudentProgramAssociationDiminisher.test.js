@@ -13,7 +13,7 @@ describe('when diminishing with no matching entity', () => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     association = Object.assign(newAssociation(), { namespaceInfo, metaEdName: entityName });
     metaEd.entity.association.set(association.metaEdName, association);
@@ -40,7 +40,7 @@ describe('when diminishing with matching entity', () => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     association1 = Object.assign(newAssociation(), { namespaceInfo, metaEdName: generalStudentProgramAssociationName });
     metaEd.entity.association.set(association1.metaEdName, association1);
