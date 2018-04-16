@@ -1,8 +1,10 @@
 // @flow
-import chalk from 'chalk';
+import * as Chalk from 'chalk';
 import winston from 'winston';
 import { getFilenameAndLineNumber } from './FileIndex';
 import type { State } from '../State';
+
+const chalk = new Chalk.constructor({ level: 3 });
 
 function logValidationFailures(state: State): void {
   if (state.validationFailure.length === 0) {

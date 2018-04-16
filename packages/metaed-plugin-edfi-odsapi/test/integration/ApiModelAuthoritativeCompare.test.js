@@ -61,7 +61,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
           projectName: 'Ed-Fi',
           namespace: 'edfi',
           projectExtension: '',
-          projectVersion: '2.0.0',
+          projectVersion: '3.0.0',
         },
       ],
     };
@@ -70,6 +70,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
       ...newState(),
       metaEdConfiguration,
     };
+    state.metaEd.dataStandardVersion = '3.0.0';
 
     validateConfiguration(state);
     loadPlugins(state);

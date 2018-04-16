@@ -1,5 +1,5 @@
 // @flow
-import chalk from 'chalk';
+import * as Chalk from 'chalk';
 import ffs from 'final-fs';
 import klawSync from 'klaw-sync';
 import path from 'path';
@@ -8,7 +8,7 @@ import type { State } from '../State';
 import type { GeneratorResult } from '../generator/GeneratorResult';
 
 winston.cli();
-
+const chalk = new Chalk.constructor({ level: 3 });
 export const METAED_OUTPUT: string = 'MetaEdOutput';
 
 function writeOutputFiles(result: GeneratorResult, outputDirectory: string) {

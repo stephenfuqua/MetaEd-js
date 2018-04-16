@@ -8,7 +8,7 @@ import { executePipeline, newState, newMetaEdConfiguration, findDataStandardVers
 import type { State, SemVer } from 'metaed-core';
 
 winston.cli();
-const chalk = new Chalk.constructor({ level: 2 });
+const chalk = new Chalk.constructor({ level: 3 });
 
 export async function metaEdConsole() {
   const argv = Yargs.usage('Usage: $0 [options]')

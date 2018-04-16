@@ -2,7 +2,7 @@
 import R from 'ramda';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { newMetaEdEnvironment } from 'metaed-core';
-import { enhance } from '../../src/enhancer/TemplateSpecificTablePropertyEnhancer';
+import { enhance } from '../../src/enhancer/TemplateSpecificTablePropertyEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
@@ -39,7 +39,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -81,7 +81,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -132,7 +132,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -187,7 +187,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -235,7 +235,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
@@ -269,7 +269,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
     });
     pluginEnvironment(metaEd).entity.table.set(table.name, table);
 
-    metaEd.dataStandardVersion = '3.0.0';
+    metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 

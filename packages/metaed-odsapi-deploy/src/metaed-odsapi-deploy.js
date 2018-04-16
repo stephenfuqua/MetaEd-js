@@ -1,13 +1,30 @@
 // @flow
 import * as Chalk from 'chalk';
+import path from 'path';
 import winston from 'winston';
 import Yargs from 'yargs';
-import { findDataStandardVersions, scanForProjects, newMetaEdConfiguration } from 'metaed-core';
-import type { SemVer, MetaEdProject, MetaEdConfiguration } from 'metaed-core';
+import {
+  findDataStandardVersions,
+  scanForProjects,
+  newMetaEdConfiguration,
+  newState,
+  executePipeline,
+  newPipelineOptions,
+  newMetaEdEnvironment,
+} from 'metaed-core';
+import type {
+  SemVer,
+  MetaEdProject,
+  MetaEdConfiguration,
+  State,
+  PipelineOptions,
+  MetaEdEnvironment,
+  MetaEdProjectPathPairs,
+} from 'metaed-core';
 import { executeDeploy } from './deploy';
 
 winston.cli();
-const chalk = new Chalk.constructor({ level: 2 });
+const chalk = new Chalk.constructor({ level: 3 });
 
 function getDataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
   const dataStandardVersions: Array<SemVer> = findDataStandardVersions(projects);
@@ -27,7 +44,7 @@ function getDataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
   return '0.0.0';
 }
 
-export async function metaEdConsole() {
+export async function metaEdDeploy() {
   const startTime = Date.now();
 
   const yargs = Yargs.usage('Usage: $0 [options]')
@@ -36,6 +53,7 @@ export async function metaEdConsole() {
       alias: 's',
       describe: 'The artifact source directory to scan',
       type: 'string',
+      array: true,
     })
     .option('target', {
       alias: 't',
@@ -64,7 +82,8 @@ export async function metaEdConsole() {
     metaEdConfiguration = { ...yargs.argv.metaEdConfiguration };
   } else {
     const missingArguments: Array<string> = [];
-    if (yargs.argv.source == null) {
+
+    if (yargs.argv.source == null || yargs.argv.source.length === 0) {
       missingArguments.push('source');
     }
     if (yargs.argv.target == null) {
@@ -77,18 +96,42 @@ export async function metaEdConsole() {
     }
 
     // Using command line
-    const resolvedProjects: [Array<string>, Array<MetaEdProject>] = scanForProjects(yargs.argv.source);
+    const resolvedProjects: Array<MetaEdProjectPathPairs> = scanForProjects(yargs.argv.source);
     metaEdConfiguration = {
       ...newMetaEdConfiguration(),
-      artifactDirectory: yargs.argv.source,
+      artifactDirectory: path.join(resolvedProjects.slice(-1)[0].path, 'MetaEdOutput'),
       deployDirectory: yargs.argv.target,
-      projectPaths: resolvedProjects[0],
-      projects: resolvedProjects[1],
+      projectPaths: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.path),
+      projects: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.project),
     };
+    const pipelineOptions: PipelineOptions = {
+      ...newPipelineOptions(),
+      runValidators: true,
+      runEnhancers: true,
+      runGenerators: true,
+      stopOnValidationFailure: true,
+    };
+    const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
+    const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
+    const state: State = { ...newState(), metaEdConfiguration, pipelineOptions, metaEd };
+
+    try {
+      const { failure } = await executePipeline(state);
+      process.exitCode = !state.validationFailure.some(vf => vf.category === 'error') && !failure ? 0 : 1;
+    } catch (error) {
+      winston.error(error);
+      process.exitCode = 1;
+    }
   }
 
   const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
-  await executeDeploy(metaEdConfiguration, dataStandardVersion, yargs.argv.core);
+
+  try {
+    await executeDeploy(metaEdConfiguration, dataStandardVersion, yargs.argv.core);
+  } catch (error) {
+    winston.error(error);
+    process.exitCode = 1;
+  }
 
   const endTime = Date.now() - startTime;
   winston.info(`Done in ${chalk.green(endTime > 1000 ? `${endTime / 1000}s` : `${endTime}ms`)}.`);

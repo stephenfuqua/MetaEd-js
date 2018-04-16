@@ -1,9 +1,8 @@
 // @flow
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { versionSatisfies, V3OrGreater } from 'metaed-core';
+import { versionSatisfies, V2Only } from 'metaed-core';
 import {
   hasAlternateKeys,
-  getAllColumns,
   getPrimaryKeys,
   getAlternateKeys,
   getUniqueIndexes,
@@ -18,8 +17,8 @@ import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
 // Sets sorted table properties for use by the generator template
-const enhancerName: string = 'TemplateSpecificTablePropertyEnhancer';
-const targetVersions: string = V3OrGreater;
+const enhancerName: string = 'TemplateSpecificTablePropertyEnhancerV2';
+const targetVersions: string = V2Only;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
@@ -34,11 +33,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sqlEscapedDescription: escapeSqlSingleQuote(table.description),
       hasAlternateKeys: hasAlternateKeys(table),
       alternateKeys: getAlternateKeys(table),
-      columns: getAllColumns(table),
       primaryKeys: table.primaryKeys.length === 0 ? getPrimaryKeys(table) : table.primaryKeys,
       uniqueIndexes: getUniqueIndexes(table),
       isTypeTable: table.name.endsWith('Type'),
     });
+
+    // METAED-798 - Preserve primary key ordering in table column order for 2.0 artifacts
+    table.columns = [...table.primaryKeys, ...table.columns.filter((column: Column) => !column.isPartOfPrimaryKey)];
 
     table.foreignKeys.forEach((foreignKey: ForeignKey) => {
       const foreignTable: Table = pluginEnvironment(metaEd).entity.table.get(foreignKey.foreignTableName);

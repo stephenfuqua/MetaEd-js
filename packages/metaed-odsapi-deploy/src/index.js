@@ -1,5 +1,5 @@
 // @flow
 import 'babel-polyfill';
-import { metaEdConsole } from './metaed-odsapi-deploy';
+import { metaEdDeploy } from './metaed-odsapi-deploy';
 
-metaEdConsole();
+metaEdDeploy();

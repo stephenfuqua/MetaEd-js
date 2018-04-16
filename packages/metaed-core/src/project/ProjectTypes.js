@@ -8,6 +8,11 @@ export type MetaEdProject = {
   projectExtension?: string,
 };
 
+export type MetaEdProjectPathPairs = {
+  path: string,
+  project: MetaEdProject,
+};
+
 export const newMetaEdProject: () => MetaEdProject = () => ({
   namespace: '',
   projectName: '',

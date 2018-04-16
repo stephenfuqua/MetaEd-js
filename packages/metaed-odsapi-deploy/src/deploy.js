@@ -1,5 +1,6 @@
 // @flow
 import fs from 'fs-extra';
+import touch from 'touch';
 import path from 'path';
 import winston from 'winston';
 import * as Chalk from 'chalk';
@@ -8,7 +9,7 @@ import { isDataStandard, versionSatisfies, V2Only, V3OrGreater } from 'metaed-co
 import type { MetaEdProject, SemVer, MetaEdConfiguration } from 'metaed-core';
 
 winston.cli();
-const chalk = new Chalk.constructor({ level: 2 });
+const chalk = new Chalk.constructor({ level: 3 });
 
 type ArtifactPaths = {
   apiMetadata: string,
@@ -26,6 +27,7 @@ export type DeployTargets = {
 type OdsApiPaths = {
   root: string,
   implementation: string,
+  application: string,
   extension: string,
   supportingArtifacts: string,
 };
@@ -33,7 +35,8 @@ type OdsApiPaths = {
 const odsApiPaths: OdsApiPaths = {
   root: 'Ed-Fi-ODS/',
   implementation: 'Ed-Fi-ODS-Implementation/',
-  extension: 'Application/EdFi.Ods.Standard.Extensions.',
+  application: 'Application/',
+  extension: 'EdFi.Ods.Standard.Extensions.',
   supportingArtifacts: 'SupportingArtifacts/',
 };
 
@@ -60,30 +63,35 @@ const extensionTarget = (namespace: string, projectName: string): DeployTargets 
   namespace,
   apiMetadata: path.join(
     odsApiPaths.implementation,
+    odsApiPaths.application,
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
     'Metadata/',
   ),
   databaseData: path.join(
     odsApiPaths.implementation,
+    odsApiPaths.application,
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
     'Database/Data/EdFi/',
   ),
   databaseStructure: path.join(
     odsApiPaths.implementation,
+    odsApiPaths.application,
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
     'Database/Structure/EdFi/',
   ),
   interchange: path.join(
     odsApiPaths.implementation,
+    odsApiPaths.application,
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
     'Schemas/',
   ),
   xsd: path.join(
     odsApiPaths.implementation,
+    odsApiPaths.application,
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
     'Schemas/',
@@ -140,19 +148,43 @@ export function getDeployTargetsFor(dataStandardVersion: SemVer, projects: Array
   return R.sortWith([R.descend(isDataStandard), R.ascend(R.prop('namespace'))])(targets);
 }
 
-function removeSupportingArtifacts(directory: DeployTargets): void {
-  if (directory == null) return;
-  if (directory.apiMetadata == null) return;
-
-  // Assumes api metadata parent directory is SupportingArtifacts
-  const target = path.dirname(directory.apiMetadata);
+function removeSupportingArtifacts(deployDirectory: string, projectName: string): void {
+  if (deployDirectory === '') return;
+  const target: string = path.resolve(
+    deployDirectory,
+    odsApiPaths.implementation,
+    odsApiPaths.application,
+    odsApiPaths.extension + projectName,
+    odsApiPaths.supportingArtifacts,
+  );
   try {
-    if (target.endsWith(odsApiPaths.supportingArtifacts.replace(/\//g, ''))) {
-      fs.removeSync(target);
-      winston.info(`deploy :: Removed directory: ${chalk.gray(target.replace(/\\/g, '/'))}`);
-    }
+    if (!fs.existsSync(target)) return;
+
+    fs.removeSync(target);
+    winston.info(`deploy :: ${chalk.gray('Removed directory')} ${chalk.red('x')} ${target.replace(/\\/g, '/')}`);
   } catch (err) {
     winston.error(`deploy :: Attempted removal of ${chalk.red(target)} failed due to issue: ${err.message}`);
+  }
+}
+
+function touchCSProjFile(deployDirectory: string, projectName: string): void {
+  if (deployDirectory === '' || projectName === 'edfi') return;
+
+  const csproj: string = '.csproj';
+  const target: string = path.resolve(
+    deployDirectory,
+    odsApiPaths.implementation,
+    odsApiPaths.application,
+    odsApiPaths.extension + projectName,
+    odsApiPaths.extension + projectName + csproj,
+  );
+  try {
+    if (!fs.existsSync(target)) return;
+
+    touch.sync(target, { nocreate: true });
+    winston.info(`deploy :: ${chalk.gray('Touched project file')} ${chalk.green('*')} ${target.replace(/\\/g, '/')}`);
+  } catch (err) {
+    winston.error(`deploy :: Attempted modification of ${chalk.red(target)} failed due to issue: ${err.message}`);
   }
 }
 
@@ -175,7 +207,7 @@ export async function executeDeploy(
   const deployDirectory: string = metaEdConfiguration.deployDirectory;
 
   targets.forEach(target => {
-    removeSupportingArtifacts(target);
+    removeSupportingArtifacts(deployDirectory, target.namespace);
 
     Object.keys(source).forEach((artifactName: string) => {
       const artifactSource: string = path.resolve(artifactDirectory, target.namespace, source[artifactName]);
@@ -188,10 +220,9 @@ export async function executeDeploy(
       try {
         fs.readdirSync(artifactSource).forEach(file => {
           tasks.push(
-            fs.copy(path.join(artifactSource, file), path.join(deployTarget, file)).then(() => ({
-              artifactSource,
-              deployTarget,
-            })),
+            fs
+              .copy(path.join(artifactSource, file), path.join(deployTarget, file))
+              .then(() => ({ artifactSource, deployTarget })),
           );
         });
       } catch (err) {
@@ -211,6 +242,7 @@ export async function executeDeploy(
         result.deployTarget.replace(/\\/g, '/'),
       );
     });
+    targets.forEach(target => touchCSProjFile(deployDirectory, target.namespace));
   } catch (err) {
     winston.error(`deploy :: Attempted deploy failed due to issue: ${err.message}`);
   }

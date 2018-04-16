@@ -35,6 +35,7 @@ import { enhance as foreignKeyCreatingTableEnhancer } from '../enhancer/ForeignK
 import { enhance as foreignKeyReverseIndexEnhancer } from '../enhancer/ForeignKeyReverseIndexEnhancer';
 import { enhance as odsTableNameEnhancer } from '../enhancer/OdsTableNameEnhancer';
 import { enhance as schoolYearEnumerationRowEnhancer } from '../enhancer/SchoolYearEnumerationRowEnhancer';
+import { enhance as templateSpecificTablePropertyEnhancerV2 } from '../enhancer/TemplateSpecificTablePropertyEnhancerV2';
 import { enhance as templateSpecificTablePropertyEnhancer } from '../enhancer/TemplateSpecificTablePropertyEnhancer';
 import { enhance as topLevelEntityBaseReferenceEnhancer } from '../enhancer/TopLevelEntityBaseReferenceEnhancer';
 import { enhance as updateCascadeTopLevelEntityEnhancer } from '../enhancer/UpdateCascadeTopLevelEntityEnhancer';
@@ -135,6 +136,7 @@ export function enhancerList(): Array<Enhancer> {
     foreignKeyReverseIndexEnhancer,
     modifyReverseForeignKeyIndexesDiminisher,
     primaryKeyOrderDiminisher,
+    templateSpecificTablePropertyEnhancerV2,
     templateSpecificTablePropertyEnhancer,
 
     namespaceInfo,

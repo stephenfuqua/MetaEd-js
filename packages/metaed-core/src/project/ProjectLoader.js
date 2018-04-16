@@ -1,39 +1,35 @@
 // @flow
+import R from 'ramda';
 import fs from 'fs-extra';
 import path from 'path';
 import winston from 'winston';
-import type { MetaEdProject } from './ProjectTypes';
+import klawSync from 'klaw-sync';
+import type { MetaEdProjectPathPairs } from './ProjectTypes';
 
 function findDirectories(directory: string): Array<string> {
   try {
-    return fs.readdirSync(directory).reduce((directories, source) => {
-      const directoryToTry: string = path.join(directory, source);
-
-      if (fs.lstatSync(directoryToTry).isDirectory()) return directories.concat(directoryToTry);
-      return directories;
-    }, []);
+    return klawSync(directory, { nofile: true }).map(x => x.path);
   } catch (err) {
     winston.error(`ProjectLoader: Attempted to find directories in ${directory} failed due to issue: ${err.message}`);
   }
   return [];
 }
 
-function findProjects(directories: string | Array<string>): [Array<string>, Array<MetaEdProject>] {
+function findProjects(directories: string | Array<string>): Array<MetaEdProjectPathPairs> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
-  const projects = [[], []];
-  directories.forEach(directory => {
+  const projects: Array<MetaEdProjectPathPairs> = [];
+  directories.forEach((directory: string) => {
     const packageToTry: string = path.join(directory, 'package.json');
+
     try {
-      const directoryExists = fs.pathExistsSync(packageToTry);
-      if (!directoryExists) return;
+      if (!fs.pathExistsSync(packageToTry)) return;
 
       const json = fs.readJsonSync(packageToTry);
-      if (json != null && json.metaEdProject != null) {
-        projects[0].push(directory);
-        projects[1].push(json.metaEdProject);
-      }
+      if (json == null || json.metaEdProject == null) return;
+
+      projects.push({ path: directory, project: json.metaEdProject });
     } catch (err) {
       winston.error(`ProjectLoader: Attempted load of ${packageToTry} failed due to issue: ${err.message}`);
     }
@@ -42,11 +38,27 @@ function findProjects(directories: string | Array<string>): [Array<string>, Arra
   return projects;
 }
 
-// Scans the immediate subdirectories for package.json with metaEdProject property
-export function scanForProjects(directory: string): [Array<string>, Array<MetaEdProject>] {
-  const subdirectories: Array<string> = findDirectories(directory);
-  if (!subdirectories) return [[], []];
+// Scans the immediate directory then subdirectories for package.json with metaEdProject property
+export function scanForProjects(directories: string | Array<string>): Array<MetaEdProjectPathPairs> {
+  // eslint-disable-next-line no-param-reassign
+  if (!Array.isArray(directories)) directories = [directories];
 
-  const projects: [Array<string>, Array<MetaEdProject>] = findProjects(subdirectories);
-  return projects;
+  const projects: Array<MetaEdProjectPathPairs> = [];
+  directories.forEach((directory: string) => {
+    projects.push(...findProjects(directory));
+
+    if (projects.length === 0) {
+      const subdirectories: Array<string> = findDirectories(directory);
+      if (subdirectories) projects.push(...findProjects(subdirectories));
+    }
+  });
+
+  // core first, then extensions in alphabetical order
+  const sortedProjects = R.sortWith([
+    R.descend(R.pathEq(['project', 'namespace'], 'edfi')),
+    R.ascend(R.path(['project', 'namespace'])),
+  ])(projects);
+
+  // only projects with unique namespace values
+  return R.uniqBy(R.path(['project', 'namespace']))(sortedProjects);
 }

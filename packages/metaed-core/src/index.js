@@ -77,7 +77,7 @@ export type { MetaEdEnvironment, SemVer } from './MetaEdEnvironment';
 export type { PluginEnvironment } from './plugin/PluginEnvironment';
 export type { MetaEdConfiguration } from './MetaEdConfiguration';
 export type { MetaEdPlugin, PluginManifest } from './plugin/PluginTypes';
-export type { MetaEdProject } from './project/ProjectTypes';
+export type { MetaEdProject, MetaEdProjectPathPairs } from './project/ProjectTypes';
 
 // Properties
 export type { AssociationProperty, AssociationPropertySourceMap } from './model/property/AssociationProperty';

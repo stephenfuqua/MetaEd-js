@@ -5610,7 +5610,7 @@ node-version@1.1.0:
   version "1.1.0"
   resolved "https://www.myget.org/F/ed-fi/npm/node-version/-/node-version-1.1.0.tgz#f437d7ba407e65e2c4eaef8887b1718ba523d4f0"
 
-nopt@1.0.10:
+nopt@1.0.10, nopt@~1.0.10:
   version "1.0.10"
   resolved "https://www.myget.org/F/ed-fi/npm/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
   dependencies:
@@ -7521,6 +7521,12 @@ topo@2.0.2:
   resolved "https://www.myget.org/F/ed-fi/npm/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
   dependencies:
     hoek "4.x.x"
+
+touch@^3.1.0:
+  version "3.1.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/touch/-/touch-3.1.0.tgz#fe365f5f75ec9ed4e56825e0bb76d24ab74af83b"
+  dependencies:
+    nopt "~1.0.10"
 
 tough-cookie@>=2.3.3, tough-cookie@^2.3.3, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"
