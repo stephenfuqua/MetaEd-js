@@ -40,6 +40,6 @@
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
     "prep-for-publish": "yarn build:clean && yarn test && yarn build",
-    "publish-dev": "yarn lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=*"
+    "publish-dev": "yarn lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=* --npm-client=npm"
   }
 }
