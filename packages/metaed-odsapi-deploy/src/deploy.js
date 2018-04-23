@@ -148,8 +148,25 @@ export function getDeployTargetsFor(dataStandardVersion: SemVer, projects: Array
   return R.sortWith([R.descend(isDataStandard), R.ascend(R.prop('namespace'))])(targets);
 }
 
+function extensionProjectExists(deployDirectory: string, projectName: string): void {
+  if (projectName === 'edfi') return;
+
+  const target: string = path.resolve(
+    deployDirectory,
+    odsApiPaths.implementation,
+    odsApiPaths.application,
+    odsApiPaths.extension + projectName,
+  );
+
+  if (fs.existsSync(target)) return;
+
+  winston.error(`deploy :: Extension project not found at path: ${chalk.red(target.replace(/\\/g, '/'))}`);
+  process.exit(1);
+}
+
 function removeSupportingArtifacts(deployDirectory: string, projectName: string): void {
-  if (deployDirectory === '') return;
+  if (projectName === 'edfi') return;
+
   const target: string = path.resolve(
     deployDirectory,
     odsApiPaths.implementation,
@@ -157,6 +174,7 @@ function removeSupportingArtifacts(deployDirectory: string, projectName: string)
     odsApiPaths.extension + projectName,
     odsApiPaths.supportingArtifacts,
   );
+
   try {
     if (!fs.existsSync(target)) return;
 
@@ -168,7 +186,7 @@ function removeSupportingArtifacts(deployDirectory: string, projectName: string)
 }
 
 function touchCSProjFile(deployDirectory: string, projectName: string): void {
-  if (deployDirectory === '' || projectName === 'edfi') return;
+  if (projectName === 'edfi') return;
 
   const csproj: string = '.csproj';
   const target: string = path.resolve(
@@ -178,6 +196,7 @@ function touchCSProjFile(deployDirectory: string, projectName: string): void {
     odsApiPaths.extension + projectName,
     odsApiPaths.extension + projectName + csproj,
   );
+
   try {
     if (!fs.existsSync(target)) return;
 
@@ -207,6 +226,7 @@ export async function executeDeploy(
   const deployDirectory: string = metaEdConfiguration.deployDirectory;
 
   targets.forEach(target => {
+    extensionProjectExists(deployDirectory, target.namespace);
     removeSupportingArtifacts(deployDirectory, target.namespace);
 
     Object.keys(source).forEach((artifactName: string) => {
