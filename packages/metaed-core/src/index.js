@@ -146,6 +146,7 @@ export { NoMapTypeEnumeration } from './model/MapTypeEnumeration';
 export { NoTopLevelEntity } from './model/TopLevelEntity';
 export { NoSharedSimple } from './model/SharedSimple';
 export { NoNamespaceInfo } from './model/NamespaceInfo';
+export { NoInterchangeItem } from './model/InterchangeItem';
 
 // Factories
 export { newMetaEdEnvironment } from './MetaEdEnvironment';

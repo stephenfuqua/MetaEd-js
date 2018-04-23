@@ -12,9 +12,12 @@ import { enhance as domainEntityExtensionAggregateEnhancer } from '../enhancer/d
 import { enhance as domainEntitySubclassAggregateEnhancer } from '../enhancer/domainMetadata/DomainEntitySubclassAggregateEnhancer';
 import { enhance as educationOrganizationReferenceEnhancer } from '../enhancer/educationOrganizationReferenceMetadata/EducationOrganizationReferenceEnhancer';
 import { enhance as enumerationAggregateEnhancer } from '../enhancer/domainMetadata/EnumerationAggregateEnhancer';
+import { enhance as interchangeOrderMetadataEnhancerV2 } from '../enhancer/interchangeOrderMetadata/InterchangeOrderMetadataEnhancerV2';
 import { enhance as schoolYearEnumerationAggregateEnhancer } from '../enhancer/domainMetadata/SchoolYearEnumerationAggregateEnhancer';
 
 import { enhance as descriptorSetupEnhancer } from '../model/Descriptor';
+import { enhance as interchangeItemSetupEnhancer } from '../model/InterchangeItem';
+import { enhance as mergedInterchangeSetupEnhancer } from '../model/MergedInterchange';
 import { enhance as namespaceInfoSetupEnhancer } from '../model/NamespaceInfo';
 import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity';
 
@@ -27,6 +30,8 @@ export function enhancerList(): Array<Enhancer> {
 
     // Models
     descriptorSetupEnhancer,
+    interchangeItemSetupEnhancer,
+    mergedInterchangeSetupEnhancer,
     namespaceInfoSetupEnhancer,
     topLevelEntitySetupEnhancer,
 
@@ -40,6 +45,7 @@ export function enhancerList(): Array<Enhancer> {
     domainEntityExtensionAggregateEnhancer,
     domainEntitySubclassAggregateEnhancer,
     enumerationAggregateEnhancer,
+    interchangeOrderMetadataEnhancerV2,
     schoolYearEnumerationAggregateEnhancer,
 
     educationOrganizationReferenceEnhancer,

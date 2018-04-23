@@ -6,20 +6,21 @@ import { newPluginEnvironment, newMetaEdEnvironment, newNamespaceInfo, newInterc
 import type { MetaEdEnvironment, NamespaceInfo, InterchangeItem, GeneratedOutput } from 'metaed-core';
 import { newEdFiXsdEntityRepository, newMergedInterchange, addMergedInterchangeToRepository } from 'metaed-plugin-edfi-xsd';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
-import { nextHead, nextSecond, nextThird, nextLength, xsdAttributeName } from './TemplateTestHelper';
-import { generate } from '../../src/generator/interchangeOrderMetadata/InterchangeOrderMetadataGenerator';
+import { nextHead, nextSecond, nextThird, nextLength, xsdAttributeName, xsdAttributeOrder } from './TemplateTestHelper';
+import { generate } from '../../src/generator/interchangeOrderMetadata/InterchangeOrderMetadataGeneratorV2';
 
 describe('when generating core interchange', () => {
   const plugin = Object.assign(newPluginEnvironment(), {
     entity: newEdFiXsdEntityRepository(),
   });
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
-    dataStandardVersion: '3.0.0',
+    dataStandardVersion: '2.0.0',
   });
   metaEd.plugin.set('edfiXsd', plugin);
   const elementName1: string = 'ElementName1';
   const elementName2: string = 'ElementName2';
   const interchangeName: string = 'InterchangeName';
+  const interchangeOrder: number = 10;
   let result: GeneratedOutput;
 
   beforeAll(async () => {
@@ -39,7 +40,7 @@ describe('when generating core interchange', () => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       namespaceInfo,
       metaEdName: interchangeName,
-      orderedElements: [element1, element2],
+      data: { edfiOdsApi: { apiOrderedElements: [element1, element2], apiOrder: interchangeOrder } },
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
@@ -55,6 +56,7 @@ describe('when generating core interchange', () => {
 
     const interchange = R.view(nextHead, interchanges);
     expect(R.view(xsdAttributeName, interchange)).toBe(interchangeName);
+    expect(R.view(xsdAttributeOrder, interchange)).toBe(`${interchangeOrder}`);
 
     const element1 = R.view(nextHead, interchange);
     expect(R.view(xsdAttributeName, element1)).toBe(elementName1);
@@ -69,12 +71,13 @@ describe('when generating extension interchange', () => {
     entity: newEdFiXsdEntityRepository(),
   });
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
-    dataStandardVersion: '3.0.0',
+    dataStandardVersion: '2.0.0',
   });
   metaEd.plugin.set('edfiXsd', plugin);
   const elementName1: string = 'ElementName1';
   const elementName2: string = 'ElementName2';
   const interchangeName: string = 'InterchangeName';
+  const interchangeOrder: number = 10;
   let result: GeneratedOutput;
 
   beforeAll(async () => {
@@ -96,7 +99,7 @@ describe('when generating extension interchange', () => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       namespaceInfo,
       metaEdName: interchangeName,
-      orderedElements: [element1, element2],
+      data: { edfiOdsApi: { apiOrderedElements: [element1, element2], apiOrder: interchangeOrder } },
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
@@ -109,10 +112,11 @@ describe('when generating extension interchange', () => {
 
   it('should generate valid xsd', () => {
     const interchanges = R.view(nextSecond, xmlParser.xml2js(result.resultString));
-
     const interchange = R.view(nextHead, interchanges);
+
     expect(R.view(nextLength, interchange)).toBe(2);
     expect(R.view(xsdAttributeName, interchange)).toBe(interchangeName);
+    expect(R.view(xsdAttributeOrder, interchange)).toBe(`${interchangeOrder}`);
 
     const element1 = R.view(nextHead, interchange);
     expect(R.view(xsdAttributeName, element1)).toBe(elementName1);
@@ -127,7 +131,7 @@ describe('when generating core and extension interchange', () => {
     entity: newEdFiXsdEntityRepository(),
   });
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
-    dataStandardVersion: '3.0.0',
+    dataStandardVersion: '2.0.0',
   });
   metaEd.plugin.set('edfiXsd', plugin);
   const elementName1: string = 'ElementName1';
@@ -135,6 +139,7 @@ describe('when generating core and extension interchange', () => {
   const elementName3: string = 'ElementName3';
   const coreInterchangeName: string = 'CoreInterchangeName';
   const extensionInterchangeName: string = 'ExtensionInterchangeName';
+  const interchangeOrder: number = 10;
   let result: Array<GeneratedOutput>;
 
   beforeAll(async () => {
@@ -165,14 +170,14 @@ describe('when generating core and extension interchange', () => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       namespaceInfo: coreNamespaceInfo,
       metaEdName: coreInterchangeName,
-      orderedElements: [element1, element2],
+      data: { edfiOdsApi: { apiOrderedElements: [element1, element2], apiOrder: interchangeOrder } },
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
     const mergedExtensionInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       namespaceInfo: extensionNamespaceInfo,
       metaEdName: extensionInterchangeName,
-      orderedElements: [element1, element3, element2],
+      data: { edfiOdsApi: { apiOrderedElements: [element1, element2, element3], apiOrder: interchangeOrder } },
     });
     addMergedInterchangeToRepository(metaEd, mergedExtensionInterchange);
 
@@ -190,6 +195,7 @@ describe('when generating core and extension interchange', () => {
     const interchange = R.view(nextHead, interchanges);
     expect(R.view(nextLength, interchange)).toBe(2);
     expect(R.view(xsdAttributeName, interchange)).toBe(coreInterchangeName);
+    expect(R.view(xsdAttributeOrder, interchange)).toBe(`${interchangeOrder}`);
 
     const element1 = R.view(nextHead, interchange);
     expect(R.view(xsdAttributeName, element1)).toBe(elementName1);
@@ -204,6 +210,7 @@ describe('when generating core and extension interchange', () => {
     const coreInterchange = R.view(nextHead, interchanges);
     expect(R.view(nextLength, coreInterchange)).toBe(2);
     expect(R.view(xsdAttributeName, coreInterchange)).toBe(coreInterchangeName);
+    expect(R.view(xsdAttributeOrder, coreInterchange)).toBe(`${interchangeOrder}`);
 
     const coreElement1 = R.view(nextHead, coreInterchange);
     expect(R.view(xsdAttributeName, coreElement1)).toBe(elementName1);
@@ -214,14 +221,15 @@ describe('when generating core and extension interchange', () => {
     const extensionInterchange = R.view(nextSecond, interchanges);
     expect(R.view(nextLength, extensionInterchange)).toBe(3);
     expect(R.view(xsdAttributeName, extensionInterchange)).toBe(extensionInterchangeName);
+    expect(R.view(xsdAttributeOrder, extensionInterchange)).toBe(`${interchangeOrder}`);
 
     const extensionElement1 = R.view(nextHead, extensionInterchange);
     expect(R.view(xsdAttributeName, extensionElement1)).toBe(elementName1);
 
     const extensionElement2 = R.view(nextSecond, extensionInterchange);
-    expect(R.view(xsdAttributeName, extensionElement2)).toBe(elementName3);
+    expect(R.view(xsdAttributeName, extensionElement2)).toBe(elementName2);
 
     const extensionElement3 = R.view(nextThird, extensionInterchange);
-    expect(R.view(xsdAttributeName, extensionElement3)).toBe(elementName2);
+    expect(R.view(xsdAttributeName, extensionElement3)).toBe(elementName3);
   });
 });

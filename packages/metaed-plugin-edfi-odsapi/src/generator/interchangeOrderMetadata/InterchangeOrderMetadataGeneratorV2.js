@@ -3,12 +3,12 @@ import fs from 'fs';
 import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
-import { orderByProp, V3OrGreater, versionSatisfies } from 'metaed-core';
+import { V2Only, versionSatisfies } from 'metaed-core';
 import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, NamespaceInfo, InterchangeItem } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 
 const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
-const targetVersions: string = V3OrGreater;
+const targetVersions: string = V2Only;
 const outputName: string = 'Interchange Order Metadata';
 
 export const interchangeOrderMetadataHandlebars = handlebars.create();
@@ -36,10 +36,12 @@ function generateFile(input: any, namespaceInfo: NamespaceInfo): GeneratedOutput
 
 type ElementMetadata = {
   name: string,
+  order: number,
 };
 
 type InterchangeMetadata = {
   name: string,
+  order: number,
   elements: Array<ElementMetadata>,
 };
 
@@ -61,15 +63,17 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       edFiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
         if (interchange.namespaceInfo.namespace !== namespaceInfo.namespace) return;
 
-        const elements: Array<ElementMetadata> = interchange.orderedElements.map((element: InterchangeItem) => ({
-          name: element.metaEdName,
-        }));
+        const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
+          (element: InterchangeItem) => ({
+            name: element.metaEdName,
+          }),
+        );
 
-        interchanges.push({ name: interchange.metaEdName, elements });
+        interchanges.push({ name: interchange.metaEdName, order: interchange.data.edfiOdsApi.apiOrder, elements });
       });
       if (interchanges.length === 0) return;
 
-      interchanges = orderByProp('name')(interchanges);
+      interchanges = R.sortBy(R.prop('order'))(interchanges);
       // Extension interchanges must also include their core interchanges
       if (!namespaceInfo.isExtension) {
         coreInterchanges = interchanges;

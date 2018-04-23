@@ -16,6 +16,7 @@ export const nextThirdName = R.compose(nextThird, nameOf);
 export const nextFourthName = R.compose(nextFourth, nameOf);
 export const nextFifthName = R.compose(nextFifth, nameOf);
 export const xsdAttributeName = R.lensPath(['attributes', 'name']);
+export const xsdAttributeOrder = R.lensPath(['attributes', 'order']);
 export const xsdAttributeType = R.lensPath(['attributes', 'type']);
 export const xsdAttributeUse = R.lensPath(['attributes', 'use']);
 export const xsdAttributeBase = R.lensPath(['attributes', 'base']);
