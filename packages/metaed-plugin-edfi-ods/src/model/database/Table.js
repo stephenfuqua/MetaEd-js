@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import winston from 'winston';
 import { orderByProp, NoTopLevelEntity } from 'metaed-core';
@@ -62,9 +63,11 @@ export function newTable(): Table {
   };
 }
 
-export const NoTable: Table = Object.assign(newTable(), {
-  name: 'NoTable',
-});
+export const NoTable: Table = deepFreeze(
+  Object.assign(newTable(), {
+    name: 'NoTable',
+  }),
+);
 
 export function getColumnWithStrongestConstraint(
   table: Table,

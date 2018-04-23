@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
@@ -43,8 +44,10 @@ export function newDecimalType(): DecimalType {
   });
 }
 
-export const NoDecimalType: DecimalType = Object.assign(newDecimalType(), {
-  metaEdName: 'NoDecimalType',
-});
+export const NoDecimalType: DecimalType = deepFreeze(
+  Object.assign(newDecimalType(), {
+    metaEdName: 'NoDecimalType',
+  }),
+);
 
 export const asDecimalType = (x: ModelBase): DecimalType => ((x: any): DecimalType);

@@ -19,6 +19,7 @@
     }
   },
   "dependencies": {
+    "deep-freeze": "^0.0.1",
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.4",
     "metaed-core": "1.1.6-dev.0",

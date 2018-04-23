@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { Validator } from '../validator/Validator';
 import type { Enhancer } from '../enhancer/Enhancer';
 import type { Generator } from '../generator/Generator';
@@ -17,7 +18,7 @@ export function newMetaEdPlugin(): MetaEdPlugin {
   };
 }
 
-export const NoMetaEdPlugin = newMetaEdPlugin();
+export const NoMetaEdPlugin = deepFreeze(newMetaEdPlugin());
 
 export type PluginManifest = {
   npmName: string,

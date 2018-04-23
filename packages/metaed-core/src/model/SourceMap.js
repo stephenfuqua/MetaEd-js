@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import type { ParserRuleContext } from 'antlr4/ParserRuleContext';
 
@@ -16,9 +17,11 @@ export function newSourceMap(): SourceMap {
   };
 }
 
-export const NoSourceMap: SourceMap = Object.assign(newSourceMap(), {
-  tokenText: 'NoSourceMap',
-});
+export const NoSourceMap: SourceMap = deepFreeze(
+  Object.assign(newSourceMap(), {
+    tokenText: 'NoSourceMap',
+  }),
+);
 
 const memoizedSourceMapFactory = R.memoize((line: number, column: number, tokenText: string): SourceMap => ({
   line,

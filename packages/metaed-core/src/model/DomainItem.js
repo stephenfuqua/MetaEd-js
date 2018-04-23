@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
 import type { ModelType } from './ModelType';
@@ -28,8 +29,10 @@ export function newDomainItem(): DomainItem {
   });
 }
 
-export const NoDomainItem: DomainItem = Object.assign(newDomainItem(), {
-  metaEdName: 'NoDomainItem',
-});
+export const NoDomainItem: DomainItem = deepFreeze(
+  Object.assign(newDomainItem(), {
+    metaEdName: 'NoDomainItem',
+  }),
+);
 
 export const asDomainItem = (x: ModelBase): DomainItem => ((x: any): DomainItem);

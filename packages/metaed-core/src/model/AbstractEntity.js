@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
@@ -21,8 +22,10 @@ export function newAbstractEntity(): AbstractEntity {
   });
 }
 
-export const NoAbstractEntity: AbstractEntity = Object.assign(newAbstractEntity(), {
-  metaEdName: 'NoAbstractEntity',
-});
+export const NoAbstractEntity: AbstractEntity = deepFreeze(
+  Object.assign(newAbstractEntity(), {
+    metaEdName: 'NoAbstractEntity',
+  }),
+);
 
 export const asAbstractEntity = (x: ModelBase): AbstractEntity => ((x: any): AbstractEntity);

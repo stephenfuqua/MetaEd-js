@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import winston from 'winston';
 import { EntityProperty } from 'metaed-core';
@@ -55,9 +56,11 @@ export function newColumn(): Column {
   };
 }
 
-export const NoColumn: Column = Object.assign(newColumn(), {
-  name: 'NoColumn',
-});
+export const NoColumn: Column = deepFreeze(
+  Object.assign(newColumn(), {
+    name: 'NoColumn',
+  }),
+);
 
 export function initializeColumn(
   column: Column,

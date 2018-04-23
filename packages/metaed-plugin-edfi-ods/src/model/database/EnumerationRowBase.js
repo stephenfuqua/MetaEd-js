@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 
 export type EnumerationRowBase = {
   name: string,
@@ -20,6 +21,8 @@ export function newEnumerationRowBase(): EnumerationRowBase {
   };
 }
 
-export const NoEnumerationRowBase: EnumerationRowBase = Object.assign(newEnumerationRowBase(), {
-  name: 'NoEnumerationRowBase',
-});
+export const NoEnumerationRowBase: EnumerationRowBase = deepFreeze(
+  Object.assign(newEnumerationRowBase(), {
+    name: 'NoEnumerationRowBase',
+  }),
+);

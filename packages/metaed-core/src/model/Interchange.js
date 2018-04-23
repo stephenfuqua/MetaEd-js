@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { InterchangeItem } from './InterchangeItem';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
@@ -49,8 +50,10 @@ export function newInterchange(): Interchange {
   });
 }
 
-export const NoInterchange: Interchange = Object.assign(newInterchange(), {
-  metaEdName: 'NoInterchange',
-});
+export const NoInterchange: Interchange = deepFreeze(
+  Object.assign(newInterchange(), {
+    metaEdName: 'NoInterchange',
+  }),
+);
 
 export const asInterchange = (x: ModelBase): Interchange => ((x: any): Interchange);

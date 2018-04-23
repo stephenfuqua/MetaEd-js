@@ -1,5 +1,5 @@
 // @flow
-import { deepFreezeAssign } from 'metaed-core';
+import deepFreeze from 'deep-freeze';
 import type { Annotation } from './Annotation';
 import type { Attribute } from './Attribute';
 import type { ComplexTypeItem } from './ComplexTypeItem';
@@ -32,6 +32,8 @@ export function newComplexType(): ComplexType {
   };
 }
 
-export const NoComplexType: ComplexType = deepFreezeAssign(newComplexType(), {
-  name: 'NoComplexType',
-});
+export const NoComplexType: ComplexType = deepFreeze(
+  Object.assign(newComplexType(), {
+    name: 'NoComplexType',
+  }),
+);

@@ -31,6 +31,7 @@ export class SharedStringBuilder extends SharedSimpleBuilder {
   }
 
   enterMaxLength(context: MetaEdGrammar.MaxLengthContext) {
+    if (this.currentSharedSimple === NoSharedSimple) return;
     if (
       context.exception ||
       context.UNSIGNED_INT() == null ||

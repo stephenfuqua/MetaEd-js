@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
@@ -53,8 +54,10 @@ export function newShortType(): IntegerType {
   });
 }
 
-export const NoIntegerType: IntegerType = Object.assign(newIntegerType(), {
-  metaEdName: 'NoIntegerType',
-});
+export const NoIntegerType: IntegerType = deepFreeze(
+  Object.assign(newIntegerType(), {
+    metaEdName: 'NoIntegerType',
+  }),
+);
 
 export const asIntegerType = (x: ModelBase): IntegerType => ((x: any): IntegerType);

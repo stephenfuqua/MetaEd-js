@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { EntityProperty } from './EntityProperty';
 import { NoEntityProperty } from './EntityProperty';
 import type { SourceMap } from './../SourceMap';
@@ -34,9 +35,11 @@ export function newMergedProperty(): MergedProperty {
   });
 }
 
-export const NoMergedProperty: MergedProperty = Object.assign(newMergedProperty(), {
-  mergeProperty: NoEntityProperty,
-  targetProperty: NoEntityProperty,
-});
+export const NoMergedProperty: MergedProperty = deepFreeze(
+  Object.assign(newMergedProperty(), {
+    mergeProperty: NoEntityProperty,
+    targetProperty: NoEntityProperty,
+  }),
+);
 
 export const asMergedProperty = (x: EntityProperty): MergedProperty => ((x: any): MergedProperty);

@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { newEnumerationRowBase } from './EnumerationRowBase';
 import type { EnumerationRowBase } from './EnumerationRowBase';
 
@@ -16,6 +17,8 @@ export function newSchoolYearEnumerationRow(): SchoolYearEnumerationRow {
   });
 }
 
-export const NoSchoolYearEnumerationRow: SchoolYearEnumerationRow = Object.assign(newSchoolYearEnumerationRow(), {
-  name: 'NoSchoolYearEnumerationRow',
-});
+export const NoSchoolYearEnumerationRow: SchoolYearEnumerationRow = deepFreeze(
+  Object.assign(newSchoolYearEnumerationRow(), {
+    name: 'NoSchoolYearEnumerationRow',
+  }),
+);

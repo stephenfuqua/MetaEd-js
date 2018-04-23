@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { String as sugar } from 'sugar';
 
 export type SchemaDefinition = {
@@ -6,10 +7,10 @@ export type SchemaDefinition = {
   physicalName: string,
 };
 
-export const NoSchemaDefinition: SchemaDefinition = {
+export const NoSchemaDefinition: SchemaDefinition = deepFreeze({
   logicalName: '',
   physicalName: '',
-};
+});
 
 export function logicalNameFor(namespace: string): string {
   if (namespace === 'edfi') return 'Ed-Fi';

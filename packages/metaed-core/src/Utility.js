@@ -13,20 +13,11 @@ export function prependIndefiniteArticle(phrase: string): string {
 }
 
 export const orderByProp = (prop: string) => R.sortBy(R.compose(R.toLower, R.prop(prop)));
+
 export const V2Only: SemVer = '^2.x';
 export const V3OrGreater: SemVer = '>=3.x';
-
 // https://github.com/npm/node-semver
 export const versionSatisfies = (version: SemVer, range: SemVer): boolean => semver.satisfies(version, range);
-
-export function deepFreeze<T>(target: T): T {
-  R.map(R.when(R.or(R.is(Object), R.is(Array)), deepFreeze))(target);
-  return Object.freeze(target);
-}
-
-export function deepFreezeAssign<T>(target: T, ...sources: Array<any>): T {
-  return deepFreeze(Object.assign(target, ...sources));
-}
 
 export function normalizeSuffix(base: string, suffix: string) {
   return base.endsWith(suffix) ? base : base + suffix;

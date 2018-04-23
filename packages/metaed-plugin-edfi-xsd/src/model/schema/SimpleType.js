@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { Annotation } from './Annotation';
 import { newAnnotation } from './Annotation';
 
@@ -16,6 +17,8 @@ export function newSimpleType(): SimpleType {
   };
 }
 
-export const NoSimpleType: SimpleType = Object.assign(newSimpleType(), {
-  name: 'NoSimpleType',
-});
+export const NoSimpleType: SimpleType = deepFreeze(
+  Object.assign(newSimpleType(), {
+    name: 'NoSimpleType',
+  }),
+);

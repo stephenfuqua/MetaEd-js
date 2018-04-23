@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { newNamespaceInfo } from './NamespaceInfo';
 import { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
@@ -29,6 +30,8 @@ export function defaultSharedSimple(): SharedSimple {
   });
 }
 
-export const NoSharedSimple: SharedSimple = Object.assign(defaultSharedSimple(), {
-  metaEdName: 'NoSharedSimple',
-});
+export const NoSharedSimple: SharedSimple = deepFreeze(
+  Object.assign(defaultSharedSimple(), {
+    metaEdName: 'NoSharedSimple',
+  }),
+);

@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
 import type { SourceMap } from './SourceMap';
@@ -27,9 +28,11 @@ export function newEnumerationItem(): EnumerationItem {
   });
 }
 
-export const NoEnumerationItem: EnumerationItem = Object.assign(newEnumerationItem(), {
-  metaEdName: 'NoEnumerationItem',
-  shortDescription: 'NoEnumerationItem',
-});
+export const NoEnumerationItem: EnumerationItem = deepFreeze(
+  Object.assign(newEnumerationItem(), {
+    metaEdName: 'NoEnumerationItem',
+    shortDescription: 'NoEnumerationItem',
+  }),
+);
 
 export const asEnumerationItem = (x: ModelBase): EnumerationItem => ((x: any): EnumerationItem);

@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { EntityTable } from './EntityTable';
 
 export type Aggregate = {
@@ -9,10 +10,10 @@ export type Aggregate = {
   entityTables: Array<EntityTable>,
 };
 
-export const NoAggregate: Aggregate = {
+export const NoAggregate: Aggregate = deepFreeze({
   root: '',
   schema: '',
   allowPrimaryKeyUpdates: false,
   isExtension: false,
   entityTables: [],
-};
+});

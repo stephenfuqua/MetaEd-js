@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SimpleType } from './SimpleType';
 import type { EnumerationToken } from './EnumerationToken';
 import { newSimpleType } from './SimpleType';
@@ -18,6 +19,8 @@ export function newEnumerationSimpleType(): EnumerationSimpleType {
   });
 }
 
-export const NoEnumerationSimpleType: SimpleType = Object.assign(newSimpleType(), {
-  name: 'NoEnumerationSimpleType',
-});
+export const NoEnumerationSimpleType: SimpleType = deepFreeze(
+  Object.assign(newSimpleType(), {
+    name: 'NoEnumerationSimpleType',
+  }),
+);

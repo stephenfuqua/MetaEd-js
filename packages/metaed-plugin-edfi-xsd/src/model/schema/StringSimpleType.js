@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SimpleType } from './SimpleType';
 import { newSimpleType } from './SimpleType';
 
@@ -19,6 +20,8 @@ export function newStringSimpleType(): StringSimpleType {
   });
 }
 
-export const NoStringSimpleType: StringSimpleType = Object.assign(newStringSimpleType(), {
-  name: 'NoStringSimpleType',
-});
+export const NoStringSimpleType: StringSimpleType = deepFreeze(
+  Object.assign(newStringSimpleType(), {
+    name: 'NoStringSimpleType',
+  }),
+);

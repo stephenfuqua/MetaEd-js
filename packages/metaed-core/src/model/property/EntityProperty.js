@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { NamespaceInfo, newNamespaceInfo } from '../NamespaceInfo';
 import { TopLevelEntity, newTopLevelEntity } from '../TopLevelEntity';
 import type { SourceMap } from '../SourceMap';
@@ -92,6 +93,8 @@ export function newEntityProperty(): EntityProperty {
   return Object.assign(new EntityProperty(), newEntityPropertyFields());
 }
 
-export const NoEntityProperty: EntityProperty = Object.assign(newEntityProperty(), {
-  metaEdName: 'NoEntityProperty',
-});
+export const NoEntityProperty: EntityProperty = deepFreeze(
+  Object.assign(newEntityProperty(), {
+    metaEdName: 'NoEntityProperty',
+  }),
+);

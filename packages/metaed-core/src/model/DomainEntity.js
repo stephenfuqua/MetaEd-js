@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import { TopLevelEntity, TopLevelEntitySourceMap, newTopLevelEntity } from './TopLevelEntity';
 import type { SourceMap } from './SourceMap';
 import type { ModelBase } from './ModelBase';
@@ -21,8 +22,10 @@ export function newDomainEntity(): DomainEntity {
   });
 }
 
-export const NoDomainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-  metaEdName: 'NoDomainEntity',
-});
+export const NoDomainEntity: DomainEntity = deepFreeze(
+  Object.assign(newDomainEntity(), {
+    metaEdName: 'NoDomainEntity',
+  }),
+);
 
 export const asDomainEntity = (x: ModelBase): DomainEntity => ((x: any): DomainEntity);

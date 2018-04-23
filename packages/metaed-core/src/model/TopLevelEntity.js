@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { EntityProperty } from './property/EntityProperty';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newNamespaceInfo } from './NamespaceInfo';
@@ -52,8 +53,10 @@ export function newTopLevelEntity(): TopLevelEntity {
   });
 }
 
-export const NoTopLevelEntity: TopLevelEntity = Object.assign(newTopLevelEntity(), {
-  metaEdName: 'NoTopLevelEntity',
-});
+export const NoTopLevelEntity: TopLevelEntity = deepFreeze(
+  Object.assign(newTopLevelEntity(), {
+    metaEdName: 'NoTopLevelEntity',
+  }),
+);
 
 export const asTopLevelEntity = (x: ModelBase): TopLevelEntity => ((x: any): TopLevelEntity);

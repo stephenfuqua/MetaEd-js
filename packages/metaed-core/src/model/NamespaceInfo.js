@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SourceMap } from './SourceMap';
 import type { ModelType } from './ModelType';
 
@@ -42,7 +43,9 @@ export function newNamespaceInfo(): NamespaceInfo {
   return Object.assign(new NamespaceInfo(), defaultNamespaceInfoFields());
 }
 
-export const NoNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-  namespace: 'nonamespaceinfo',
-  projectExtension: 'NoNamespaceInfo',
-});
+export const NoNamespaceInfo: NamespaceInfo = deepFreeze(
+  Object.assign(newNamespaceInfo(), {
+    namespace: 'nonamespaceinfo',
+    projectExtension: 'NoNamespaceInfo',
+  }),
+);

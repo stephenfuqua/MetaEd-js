@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { SourceMap } from './SourceMap';
 import { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
@@ -36,8 +37,10 @@ export function newStringType(): StringType {
   });
 }
 
-export const NoStringType: StringType = Object.assign(newStringType(), {
-  metaEdName: 'NoStringType',
-});
+export const NoStringType: StringType = deepFreeze(
+  Object.assign(newStringType(), {
+    metaEdName: 'NoStringType',
+  }),
+);
 
 export const asStringType = (x: ModelBase): StringType => ((x: any): StringType);
