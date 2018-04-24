@@ -4,6 +4,7 @@ import touch from 'touch';
 import path from 'path';
 import winston from 'winston';
 import * as Chalk from 'chalk';
+import { String as sugar } from 'sugar';
 import R from 'ramda';
 import { isDataStandard, versionSatisfies, V2Only, V3OrGreater } from 'metaed-core';
 import type { MetaEdProject, SemVer, MetaEdConfiguration } from 'metaed-core';
@@ -21,6 +22,7 @@ type ArtifactPaths = {
 
 export type DeployTargets = {
   namespace: string,
+  projectName: string,
   ...$Exact<ArtifactPaths>,
 };
 
@@ -52,6 +54,7 @@ const sources = (): ArtifactPaths => ({
 // >=3.0 target directories
 const coreTarget = (namespace: string): DeployTargets => ({
   namespace,
+  projectName: namespace,
   apiMetadata: path.join(odsApiPaths.root, 'Standard/Metadata/'),
   databaseData: path.join(odsApiPaths.root, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.root, 'Database/Structure/EdFi/'),
@@ -61,6 +64,7 @@ const coreTarget = (namespace: string): DeployTargets => ({
 
 const extensionTarget = (namespace: string, projectName: string): DeployTargets => ({
   namespace,
+  projectName,
   apiMetadata: path.join(
     odsApiPaths.implementation,
     odsApiPaths.application,
@@ -101,6 +105,7 @@ const extensionTarget = (namespace: string, projectName: string): DeployTargets 
 // 2.x target directories
 const coreTargetV2 = (namespace: string): DeployTargets => ({
   namespace,
+  projectName: namespace,
   apiMetadata: path.join(odsApiPaths.root, 'Standard/Metadata/'),
   databaseData: path.join(odsApiPaths.root, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.root, 'Database/Structure/EdFi/'),
@@ -110,6 +115,7 @@ const coreTargetV2 = (namespace: string): DeployTargets => ({
 
 const extensionTargetV2 = (namespace: string): DeployTargets => ({
   namespace,
+  projectName: sugar.capitalize(namespace),
   apiMetadata: path.join(odsApiPaths.implementation, 'Extensions/Metadata/'),
   databaseData: path.join(odsApiPaths.implementation, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.implementation, 'Database/Structure/EdFi/'),
@@ -128,8 +134,7 @@ export function getDeployTargetsFor(dataStandardVersion: SemVer, projects: Array
       } else if (project.namespace === 'gb') {
         targets.push(extensionTarget(project.namespace, 'GrandBend'));
       } else {
-        // TODO: update with projectName
-        targets.push(extensionTarget(project.namespace, project.namespace));
+        targets.push(extensionTarget(project.namespace, sugar.capitalize(project.namespace)));
       }
     });
   }
@@ -148,8 +153,10 @@ export function getDeployTargetsFor(dataStandardVersion: SemVer, projects: Array
   return R.sortWith([R.descend(isDataStandard), R.ascend(R.prop('namespace'))])(targets);
 }
 
-function extensionProjectExists(deployDirectory: string, projectName: string): void {
-  if (projectName === 'edfi') return;
+async function projectExists(deployDirectory: string, projectName: string, dataStandardVersion: SemVer): Promise<boolean> {
+  if (deployDirectory === '') return true;
+  if (projectName === 'edfi') return true;
+  if (versionSatisfies(dataStandardVersion, V2Only)) return true;
 
   const target: string = path.resolve(
     deployDirectory,
@@ -157,15 +164,15 @@ function extensionProjectExists(deployDirectory: string, projectName: string): v
     odsApiPaths.application,
     odsApiPaths.extension + projectName,
   );
+  if (await fs.pathExists(target)) return true;
 
-  if (fs.existsSync(target)) return;
-
-  winston.error(`deploy :: Extension project not found at path: ${chalk.red(target.replace(/\\/g, '/'))}`);
-  process.exit(1);
+  winston.error(`deploy: Extension project not found at path: ${chalk.red(target)}`);
+  return false;
 }
 
-function removeSupportingArtifacts(deployDirectory: string, projectName: string): void {
-  if (projectName === 'edfi') return;
+async function removeSupportingArtifacts(deployDirectory: string, projectName: string): Promise<boolean> {
+  if (deployDirectory === '') return true;
+  if (projectName === 'edfi') return true;
 
   const target: string = path.resolve(
     deployDirectory,
@@ -176,17 +183,20 @@ function removeSupportingArtifacts(deployDirectory: string, projectName: string)
   );
 
   try {
-    if (!fs.existsSync(target)) return;
+    if (!await fs.pathExists(target)) return true;
 
-    fs.removeSync(target);
-    winston.info(`deploy :: ${chalk.gray('Removed directory')} ${chalk.red('x')} ${target.replace(/\\/g, '/')}`);
+    await fs.remove(target);
+    winston.info(`deploy: ${chalk.gray(`Remove ${projectName} artifacts`)} ${chalk.red('x')} ${target}`);
+    return true;
   } catch (err) {
-    winston.error(`deploy :: Attempted removal of ${chalk.red(target)} failed due to issue: ${err.message}`);
+    winston.error(`deploy: Attempted removal of ${chalk.red(target)} failed due to issue: ${err.message}`);
+    return false;
   }
 }
 
-function touchCSProjFile(deployDirectory: string, projectName: string): void {
-  if (projectName === 'edfi') return;
+async function refreshProjectFile(deployDirectory: string, projectName: string): Promise<boolean> {
+  if (deployDirectory === '') return true;
+  if (projectName === 'edfi') return true;
 
   const csproj: string = '.csproj';
   const target: string = path.resolve(
@@ -198,74 +208,76 @@ function touchCSProjFile(deployDirectory: string, projectName: string): void {
   );
 
   try {
-    if (!fs.existsSync(target)) return;
+    if (!await fs.pathExists(target)) return true;
 
-    touch.sync(target, { nocreate: true });
-    winston.info(`deploy :: ${chalk.gray('Touched project file')} ${chalk.green('*')} ${target.replace(/\\/g, '/')}`);
+    await touch(target, { nocreate: true });
+    winston.info(
+      `deploy: ${chalk.gray(`Refresh ${odsApiPaths.extension + projectName + csproj}`)} ${chalk.cyan('*')} ${target}`,
+    );
+    return true;
   } catch (err) {
-    winston.error(`deploy :: Attempted modification of ${chalk.red(target)} failed due to issue: ${err.message}`);
+    winston.error(`deploy: Attempted modification of ${chalk.red(target)} failed due to issue: ${err.message}`);
+    return false;
   }
+}
+
+async function deployArtifactSources(
+  artifactDirectory: string,
+  deployDirectory: string,
+  source: ArtifactPaths,
+  target: DeployTargets,
+) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const artifactName of Object.keys(source)) {
+    const artifactSource: string = path.resolve(artifactDirectory, target.namespace, source[artifactName]);
+    const deployTarget: string = path.resolve(deployDirectory, target[artifactName]);
+
+    if (artifactSource !== '' && deployTarget !== '') {
+      try {
+        if (await fs.pathExists(artifactSource)) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const file of await fs.readdir(artifactSource)) {
+            const artifactPath = path.resolve(artifactSource, file);
+            const deployPath = path.resolve(deployTarget, file);
+            await fs.copy(artifactPath, deployPath);
+            winston.info(
+              `deploy: ${chalk.gray(`Copy ${path.relative(artifactDirectory, artifactPath)}`)} ${chalk.green(
+                '->',
+              )} ${deployPath}`,
+            );
+          }
+        }
+      } catch (err) {
+        winston.error(`deploy: Attempted deploy of ${artifactSource} failed due to issue: ${err.message}`);
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 export async function executeDeploy(
   metaEdConfiguration: MetaEdConfiguration,
   dataStandardVersion: SemVer,
-  shouldDeployCore: boolean,
-): Promise<Array<{ artifactSource: string, deployTarget: string }>> {
+  deployCore: boolean,
+): Promise<boolean> {
   let projects: Array<MetaEdProject> = metaEdConfiguration.projects;
-  if (!shouldDeployCore) {
-    projects = projects.filter(project => !isDataStandard(project));
-  }
-  const targets: Array<DeployTargets> = getDeployTargetsFor(dataStandardVersion, projects);
+  if (!deployCore) projects = projects.filter(project => !isDataStandard(project));
 
-  if (targets.length === 0) return [];
-
-  const tasks: Array<Promise<*>> = [];
   const source: ArtifactPaths = sources();
   const artifactDirectory: string = metaEdConfiguration.artifactDirectory;
   const deployDirectory: string = metaEdConfiguration.deployDirectory;
 
-  targets.forEach(target => {
-    extensionProjectExists(deployDirectory, target.namespace);
-    removeSupportingArtifacts(deployDirectory, target.namespace);
+  const targets: Array<DeployTargets> = getDeployTargetsFor(dataStandardVersion, projects);
+  if (targets.length === 0) return true;
 
-    Object.keys(source).forEach((artifactName: string) => {
-      const artifactSource: string = path.resolve(artifactDirectory, target.namespace, source[artifactName]);
-      const deployTarget: string = path.resolve(deployDirectory, target[artifactName]);
-
-      if (artifactSource == null && artifactSource === '') return;
-      if (deployTarget == null && deployTarget === '') return;
-      if (!fs.existsSync(artifactSource)) return;
-
-      try {
-        fs.readdirSync(artifactSource).forEach(file => {
-          tasks.push(
-            fs
-              .copy(path.join(artifactSource, file), path.join(deployTarget, file))
-              .then(() => ({ artifactSource, deployTarget })),
-          );
-        });
-      } catch (err) {
-        winston.error(`deploy :: Attempted deploy of ${artifactSource} failed due to issue: ${err.message}`);
-      }
-    });
-  });
-
-  let results: Array<{ artifactSource: string, deployTarget: string }> = [];
-
-  try {
-    results = await Promise.all(tasks);
-    R.uniq(results).forEach((result: { artifactSource: string, deployTarget: string }) => {
-      winston.info(
-        `deploy :: ${chalk.gray('%s')} ${chalk.green('->')} %s`,
-        path.relative(artifactDirectory, result.artifactSource).replace(/\\/g, '/'),
-        result.deployTarget.replace(/\\/g, '/'),
-      );
-    });
-    targets.forEach(target => touchCSProjFile(deployDirectory, target.namespace));
-  } catch (err) {
-    winston.error(`deploy :: Attempted deploy failed due to issue: ${err.message}`);
+  let result: boolean = false;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const target of targets) {
+    if (!await projectExists(deployDirectory, target.projectName, dataStandardVersion)) return false;
+    if (!await removeSupportingArtifacts(deployDirectory, target.projectName)) return false;
+    result = await deployArtifactSources(artifactDirectory, deployDirectory, source, target);
+    await refreshProjectFile(deployDirectory, target.projectName);
   }
-
-  return results;
+  return result;
 }

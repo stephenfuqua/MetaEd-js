@@ -48,27 +48,38 @@ export async function metaEdDeploy() {
   const startTime = Date.now();
 
   const yargs = Yargs.usage('Usage: $0 [options]')
+    .group(['config'], 'Config file:')
+    .config('config')
+    .option('config', {
+      alias: 'c',
+    })
     .group(['source', 'target'], 'Command line:')
     .option('source', {
       alias: 's',
-      describe: 'The artifact source directory to scan',
+      describe: 'The artifact source directories to scan',
       type: 'string',
       array: true,
+      conflicts: 'config',
+      requiresArg: 'target',
     })
     .option('target', {
       alias: 't',
       describe: 'The deploy target directory',
       type: 'string',
+      conflicts: 'config',
+      requiresArg: 'source',
+    })
+    .option('namespace', {
+      alias: 'p',
+      describe: 'The artifact source namespaces to override',
+      type: 'string',
+      array: true,
+      requiresArg: ['source', 'target'],
     })
     .option('core', {
       describe: 'Deploy core in addition to any extensions',
-      default: false,
       type: 'boolean',
-    })
-    .group(['config'], 'Config file:')
-    .config('config')
-    .option('config', {
-      alias: 'c',
+      default: false,
     })
     .help()
     .alias('help', 'h')
@@ -77,26 +88,9 @@ export async function metaEdDeploy() {
 
   let metaEdConfiguration: MetaEdConfiguration;
 
-  if (yargs.argv.metaEdConfiguration != null) {
-    // Using config
-    metaEdConfiguration = { ...yargs.argv.metaEdConfiguration };
-  } else {
-    const missingArguments: Array<string> = [];
+  if (yargs.argv.metaEdConfiguration == null) {
+    const resolvedProjects: Array<MetaEdProjectPathPairs> = await scanForProjects(yargs.argv.source, yargs.argv.namespace);
 
-    if (yargs.argv.source == null || yargs.argv.source.length === 0) {
-      missingArguments.push('source');
-    }
-    if (yargs.argv.target == null) {
-      missingArguments.push('target');
-    }
-    if (missingArguments.length > 0) {
-      yargs.showHelp();
-      winston.error(`Missing required arguments: ${missingArguments.join(', ')}`);
-      process.exit(1);
-    }
-
-    // Using command line
-    const resolvedProjects: Array<MetaEdProjectPathPairs> = scanForProjects(yargs.argv.source);
     metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: path.join(resolvedProjects.slice(-1)[0].path, 'MetaEdOutput'),
@@ -122,6 +116,8 @@ export async function metaEdDeploy() {
       winston.error(error);
       process.exitCode = 1;
     }
+  } else {
+    metaEdConfiguration = { ...yargs.argv.metaEdConfiguration };
   }
 
   const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
