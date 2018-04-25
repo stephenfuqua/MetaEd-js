@@ -18,6 +18,7 @@
     "klaw-sync": "^3.0.2",
     "ramda": "^0.24.1",
     "semver": "^5.4.1",
+    "sugar": "^2.0.4",
     "topo": "2.0.2",
     "winston": "^2.4.0"
   },
@@ -44,7 +45,7 @@
     "build": "yarn build:clean && yarn build:dist && yarn build:flow",
     "build:clean": "rimraf dist",
     "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files",
+    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files",
     "test:single": "jest"
   }
 }
