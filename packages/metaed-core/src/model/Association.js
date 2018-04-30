@@ -3,19 +3,24 @@ import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
+import { NoSourceMap } from './SourceMap';
 
 export type AssociationSourceMap = {
   isAbstract: SourceMap,
   ...$Exact<TopLevelEntitySourceMap>,
-}
+};
 
 export function newAssociationSourceMap(): AssociationSourceMap {
-  return newTopLevelEntitySourceMap();
+  return {
+    ...newTopLevelEntitySourceMap(),
+    isAbstract: NoSourceMap,
+  };
 }
 
 export type Association = {
   sourceMap: AssociationSourceMap,
   ...$Exact<TopLevelEntity>,
+  isAbstract: boolean,
 };
 
 export function newAssociation(): Association {

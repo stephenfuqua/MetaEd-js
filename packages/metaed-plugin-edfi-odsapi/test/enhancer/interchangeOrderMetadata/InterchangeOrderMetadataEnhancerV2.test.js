@@ -155,7 +155,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo,
@@ -198,7 +198,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo,
@@ -242,7 +242,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo,
@@ -309,7 +309,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo,
@@ -391,12 +391,12 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
     const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
       namespace: extension,
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.push(extensionNamespaceInfo);
+    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo: extensionNamespaceInfo,
@@ -493,13 +493,13 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     metaEd.plugin.set('edfiXsd', plugin);
 
     const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.push(namespaceInfo);
+    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
 
     const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
       namespace: extension,
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.push(extensionNamespaceInfo);
+    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespaceInfo,

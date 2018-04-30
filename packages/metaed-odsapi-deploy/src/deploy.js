@@ -227,7 +227,6 @@ async function deployArtifactSources(
   source: ArtifactPaths,
   target: DeployTargets,
 ) {
-  targets.forEach((target: DeployTargets) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const artifactName of Object.keys(source)) {
     const artifactSource: string = path.resolve(artifactDirectory, target.namespace, source[artifactName]);
