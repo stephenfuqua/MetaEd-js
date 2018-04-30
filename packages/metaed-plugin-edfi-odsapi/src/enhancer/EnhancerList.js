@@ -1,7 +1,6 @@
 // @flow
 import type { Enhancer } from 'metaed-core';
 
-import { enhance as moveFederalFundsDiminisher } from '../diminisher/domainMetadata/MoveFederalFundsDiminisher';
 import { enhance as associationAggregateEnhancer } from '../enhancer/domainMetadata/AssociationAggregateEnhancer';
 import { enhance as associationExtensionAggregateEnhancer } from '../enhancer/domainMetadata/AssociationExtensionAggregateEnhancer';
 import { enhance as associationSubclassAggregateEnhancer } from '../enhancer/domainMetadata/AssociationSubclassAggregateEnhancer';
@@ -22,6 +21,8 @@ import { enhance as namespaceInfoSetupEnhancer } from '../model/NamespaceInfo';
 import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity';
 
 import { enhance as createDomainModelDefinitionEnhancer } from '../enhancer/apiModel/CreateDomainModelDefinitionEnhancer';
+
+import { enhance as moveFederalFundsDiminisher } from '../diminisher/domainMetadata/MoveFederalFundsDiminisher';
 
 export function enhancerList(): Array<Enhancer> {
   return [

@@ -123,6 +123,8 @@ import { validate as stringPropertyMustNotMatchACommonString } from './validator
 import { validate as subdomainMustNotDuplicateDomainItems } from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 import { validate as subdomainParentDomainNameMustMatchADomain } from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
 
+import { enhance as abstractGeneralStudentProgramAssociationDiminisher } from './diminisher/AbstractGeneralStudentProgramAssociationDiminisher';
+
 import { enhance as deleteExtraneousImplicitExtensionSimpleTypesEnhancer } from './enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
 import { enhance as domainBaseEntityEnhancer } from './enhancer/DomainBaseEntityEnhancer';
@@ -289,6 +291,9 @@ function validatorList(): Array<Validator> {
 
 function enhancerList(): Array<Enhancer> {
   return [
+    // diminish :: () => isAbstract
+    abstractGeneralStudentProgramAssociationDiminisher,
+
     // enhance :: () => simpleTypes without extension duplicates
     deleteExtraneousImplicitExtensionSimpleTypesEnhancer,
 

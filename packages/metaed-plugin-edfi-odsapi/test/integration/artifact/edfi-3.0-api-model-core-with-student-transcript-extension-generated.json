@@ -8628,6 +8628,15 @@
       ],
       "identifiers": [
         {
+          "identifierName": "Descriptor_AK",
+          "identifyingPropertyNames": [
+            "CodeValue",
+            "Namespace"
+          ],
+          "isPrimary": false,
+          "isUpdatable": false
+        },
+        {
           "identifierName": "Descriptor_PK",
           "identifyingPropertyNames": [
             "DescriptorId"
@@ -11040,7 +11049,7 @@
           "isUpdatable": false
         }
       ],
-      "isAbstract": false,
+      "isAbstract": true,
       "description": "This association base class represents the basic relationship between students and programs."
     },
     {

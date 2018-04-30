@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { asDomainEntity } from 'metaed-core';
+import { asDomainEntity, asAssociation } from 'metaed-core';
 import type { NamespaceInfo } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
@@ -133,8 +133,16 @@ function isAbstract(table: Table): boolean {
   if (table.name === 'Descriptor' && table.schema === 'edfi') return true;
   // true for the main table of an Abstract Entity
   return (
-    table.parentEntity.type === 'domainEntity' && asDomainEntity(table.parentEntity).isAbstract && table.isEntityMainTable
+    (table.parentEntity.type === 'domainEntity' &&
+      asDomainEntity(table.parentEntity).isAbstract &&
+      table.isEntityMainTable) ||
+    (table.parentEntity.type === 'association' && asAssociation(table.parentEntity).isAbstract && table.isEntityMainTable)
   );
+}
+
+function shouldIncludeAlternateKeys(table: Table): boolean {
+  // true for the hardcoded Descriptor table
+  return table.name === 'Descriptor' && table.schema === 'edfi';
 }
 
 // Entity definitions are the ODS table definitions for a namespace, including columns and primary keys
@@ -150,7 +158,7 @@ export function buildEntityDefinitions(
       result.push(
         buildSingleEntityDefinitionFrom(table, {
           isAbstract: isAbstract(table),
-          includeAlternateKeys: false,
+          includeAlternateKeys: shouldIncludeAlternateKeys(table),
         }),
       );
     });
