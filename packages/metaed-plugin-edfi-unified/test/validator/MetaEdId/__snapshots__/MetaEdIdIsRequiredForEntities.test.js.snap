@@ -54,9 +54,9 @@ exports[`when validating common extension is missing metaEdId for entity should 
 
 exports[`when validating common extension is missing metaEdId for entity should have validation failures: when validating common extension is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
 Object {
-  "column": 0,
-  "line": 0,
-  "tokenText": "NoSourceMap",
+  "column": 2,
+  "line": 2,
+  "tokenText": "Common",
 }
 `;
 
@@ -84,9 +84,9 @@ exports[`when validating domain entity extension is missing metaEdId for entity 
 
 exports[`when validating domain entity extension is missing metaEdId for entity should have validation failures: when validating domain entity extension is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
 Object {
-  "column": 0,
-  "line": 0,
-  "tokenText": "NoSourceMap",
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain Entity",
 }
 `;
 
@@ -144,9 +144,9 @@ exports[`when validating interchange extension is missing metaEdId for entity sh
 
 exports[`when validating interchange extension is missing metaEdId for entity should have validation failures: when validating interchange extension is missing metaEdId for entity should have validation failures -> sourceMap 1`] = `
 Object {
-  "column": 0,
-  "line": 0,
-  "tokenText": "NoSourceMap",
+  "column": 2,
+  "line": 2,
+  "tokenText": "Interchange",
 }
 `;
 

@@ -3,6 +3,7 @@ import * as Chalk from 'chalk';
 import winston from 'winston';
 import { getFilenameAndLineNumber } from './FileIndex';
 import type { State } from '../State';
+import type { ValidationFailure } from '../validator/ValidationFailure';
 
 const chalk = new Chalk.constructor({ level: 3 });
 
@@ -11,15 +12,16 @@ function logValidationFailures(state: State): void {
     return;
   }
 
-  state.validationFailure.forEach(message => {
-    const fullPath = message.fileMap ? message.fileMap.fullPath : '';
-    const lineNumber = message.fileMap ? message.fileMap.lineNumber : '';
-    const column = message.sourceMap ? message.sourceMap.column : '';
-    const logMessage = `  ${message.message} ${chalk.gray(`${fullPath} (${lineNumber},${column})`)}`;
+  state.validationFailure.forEach((validationFailure: ValidationFailure) => {
+    const fullPath = validationFailure.fileMap ? validationFailure.fileMap.fullPath : '';
+    const adjustedLine: number =
+      !validationFailure.fileMap || validationFailure.fileMap.lineNumber === 0 ? 1 : validationFailure.fileMap.lineNumber;
+    const characterPosition: number = validationFailure.sourceMap ? validationFailure.sourceMap.column + 1 : 1;
+    const logMessage = `  ${validationFailure.message} ${chalk.gray(`${fullPath} (${adjustedLine},${characterPosition})`)}`;
 
-    if (message.category === 'error') {
+    if (validationFailure.category === 'error') {
       winston.error(logMessage);
-    } else if (message.category === 'warning') {
+    } else if (validationFailure.category === 'warning') {
       winston.warn(logMessage);
     } else {
       winston.info(logMessage);
