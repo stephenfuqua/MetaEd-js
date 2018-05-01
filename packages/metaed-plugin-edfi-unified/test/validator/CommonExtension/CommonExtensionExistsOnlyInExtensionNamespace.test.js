@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, CommonExtensionBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, CommonExtensionBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionExistsOnlyInExtensionNamespace';
 
@@ -23,7 +23,7 @@ describe('when common extension is in correct namespace', () => {
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -56,7 +56,7 @@ describe('when common extension is in core namespace', () => {
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
     failures = validate(metaEd);

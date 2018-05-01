@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, SharedStringBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, SharedStringBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
@@ -17,7 +17,7 @@ describe('when validating shared string with max length greater than min length'
       .withEndSharedString()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -46,7 +46,7 @@ describe('when validating shared string with min length greater than max length'
       .withEndSharedString()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
     failures = validate(metaEd);

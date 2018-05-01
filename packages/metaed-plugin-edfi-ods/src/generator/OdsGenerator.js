@@ -6,14 +6,14 @@ import { dataPath, fileNameFor, registerPartials, structurePath, template } from
 export async function generateTables(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
-    const generatedResult: string = template().table({ tables: namespaceInfo.data.edfiOds.ods_Schema.tables });
+  metaEd.entity.namespace.forEach(namespace => {
+    const generatedResult: string = template().table({ tables: namespace.data.edfiOds.ods_Schema.tables });
 
     results.push({
       name: 'ODS Tables',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: structurePath,
-      fileName: fileNameFor('0020', namespaceInfo, 'Tables'),
+      fileName: fileNameFor('0020', namespace, 'Tables'),
       resultString: generatedResult,
       resultStream: null,
     });
@@ -28,16 +28,16 @@ export async function generateTables(metaEd: MetaEdEnvironment): Promise<Generat
 export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+  metaEd.entity.namespace.forEach(namespace => {
     const generatedResult: string = template().foreignKey({
-      foreignKeys: namespaceInfo.data.edfiOds.ods_Schema.foreignKeys,
+      foreignKeys: namespace.data.edfiOds.ods_Schema.foreignKeys,
     });
 
     results.push({
       name: 'ODS Foreign Keys',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: structurePath,
-      fileName: fileNameFor('0030', namespaceInfo, 'ForeignKeys'),
+      fileName: fileNameFor('0030', namespace, 'ForeignKeys'),
       resultString: generatedResult,
       resultStream: null,
     });
@@ -52,14 +52,14 @@ export async function generateForeignKeys(metaEd: MetaEdEnvironment): Promise<Ge
 export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
-    const generatedResult: string = template().extendedProperties({ tables: namespaceInfo.data.edfiOds.ods_Schema.tables });
+  metaEd.entity.namespace.forEach(namespace => {
+    const generatedResult: string = template().extendedProperties({ tables: namespace.data.edfiOds.ods_Schema.tables });
 
     results.push({
       name: 'ODS Extended Properties',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: structurePath,
-      fileName: fileNameFor('0050', namespaceInfo, 'ExtendedProperties'),
+      fileName: fileNameFor('0050', namespace, 'ExtendedProperties'),
       resultString: generatedResult,
       resultStream: null,
     });
@@ -74,16 +74,16 @@ export async function generateExtendedProperties(metaEd: MetaEdEnvironment): Pro
 export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+  metaEd.entity.namespace.forEach(namespace => {
     const generatedResult: string = template().enumerationRow({
-      enumerationRows: namespaceInfo.data.edfiOds.ods_Schema.enumerationRows,
+      enumerationRows: namespace.data.edfiOds.ods_Schema.enumerationRows,
     });
 
     results.push({
       name: 'ODS Enumerations',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: dataPath,
-      fileName: fileNameFor('0010', namespaceInfo, 'Enumerations'),
+      fileName: fileNameFor('0010', namespace, 'Enumerations'),
       resultString: generatedResult,
       resultStream: null,
     });
@@ -98,16 +98,16 @@ export async function generateEnumerations(metaEd: MetaEdEnvironment): Promise<G
 export async function generateSchoolYears(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+  metaEd.entity.namespace.forEach(namespace => {
     const generatedResult: string = template().schoolYearEnumerationRow({
-      schoolYearEnumerationRows: namespaceInfo.data.edfiOds.ods_Schema.schoolYearEnumerationRows,
+      schoolYearEnumerationRows: namespace.data.edfiOds.ods_Schema.schoolYearEnumerationRows,
     });
 
     results.push({
       name: 'ODS School Years',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: dataPath,
-      fileName: fileNameFor('0020', namespaceInfo, 'SchoolYears'),
+      fileName: fileNameFor('0020', namespace, 'SchoolYears'),
       resultString: generatedResult,
       resultStream: null,
     });
@@ -138,19 +138,19 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   ];
 
   if (versionSatisfies(metaEd.dataStandardVersion, '2.x')) {
-    metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+    metaEd.entity.namespace.forEach(namespace => {
       let resultString: string = '';
       generatorResults.forEach((result: GeneratorResult) => {
         resultString += result.generatedOutput
-          .filter((output: GeneratedOutput) => namespaceInfo.namespace === output.namespace)
+          .filter((output: GeneratedOutput) => namespace.namespaceName === output.namespace)
           .reduce((string: string, output: GeneratedOutput) => string + output.resultString, '');
       });
 
       results.push({
         name: 'ODS Tables',
-        namespace: namespaceInfo.namespace,
+        namespace: namespace.namespaceName,
         folderName: structurePath,
-        fileName: fileNameFor('0004', namespaceInfo, 'Tables'),
+        fileName: fileNameFor('0004', namespace, 'Tables'),
         resultString,
         resultStream: null,
       });

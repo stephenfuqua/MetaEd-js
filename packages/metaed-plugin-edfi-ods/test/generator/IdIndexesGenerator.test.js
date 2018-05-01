@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
-import type { GeneratorResult, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import type { GeneratorResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/IdIndexesGenerator';
 import { newTable } from '../../src/model/database/Table';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
@@ -14,11 +14,11 @@ describe('when generating id indexes for core namespace table with no id', () =>
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const coreNamespace: string = 'edfi';
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: coreNamespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: coreNamespace,
       isExtension: false,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespace, namespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
@@ -43,11 +43,11 @@ describe('when generating id indexes for core namespace table with no type', () 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const coreNamespace: string = 'edfi';
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: coreNamespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: coreNamespace,
       isExtension: false,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespace, namespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
@@ -79,11 +79,11 @@ describe('when generating id indexes for core namespace table with type', () => 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const coreNamespace: string = 'edfi';
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: coreNamespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: coreNamespace,
       isExtension: false,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespace, namespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
@@ -115,12 +115,12 @@ describe('when generating id indexes for extension namespace table with no type'
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const extensionNamespace: string = 'extension';
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespace,
       projectExtension: 'EXTENSION',
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespace, namespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {

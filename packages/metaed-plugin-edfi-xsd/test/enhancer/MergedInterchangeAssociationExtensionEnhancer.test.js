@@ -2,12 +2,12 @@
 import {
   newMetaEdEnvironment,
   newInterchangeItem,
-  newNamespaceInfo,
+  newNamespace,
   newPluginEnvironment,
   newAssociation,
   newAssociationExtension,
 } from 'metaed-core';
-import type { MetaEdEnvironment, Association } from 'metaed-core';
+import type { MetaEdEnvironment, Association, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeExtensionEnhancer';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../../src/model/MergedInterchange';
@@ -37,24 +37,24 @@ describe('when enhances MergedInterchange with association extension', () => {
   let associationExtension;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: association1Name,
       documentation: association1Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -63,7 +63,7 @@ describe('when enhances MergedInterchange with association extension', () => {
 
     associationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: association1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -76,7 +76,7 @@ describe('when enhances MergedInterchange with association extension', () => {
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: association1Name,
@@ -101,7 +101,7 @@ describe('when enhances MergedInterchange with association extension', () => {
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(expectedExtensionInterchangeName);
 
     expect(mergedInterchange).toBeDefined();
-    expect(mergedInterchange.namespaceInfo.isExtension).toBe(true);
+    expect(mergedInterchange.namespace.isExtension).toBe(true);
     expect(mergedInterchange.metaEdName).toBe(interchangeName);
     expect(mergedInterchange.documentation).toBe(interchangeDocumentation);
     expect(mergedInterchange.extendedDocumentation).toBe(interchangeExtendedDocumentation);
@@ -111,6 +111,6 @@ describe('when enhances MergedInterchange with association extension', () => {
     expect(mergedInterchange.elements[0].metaEdName).toBe(association1Name);
     expect(mergedInterchange.elements[0].documentation).toBe(interchangeItemAssociation1Documentation);
     expect(mergedInterchange.elements[0].referencedEntity).toBe(associationExtension);
-    expect(mergedInterchange.elements[0].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe(extensionNamespaceName);
   });
 });

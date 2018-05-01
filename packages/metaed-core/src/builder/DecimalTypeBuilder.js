@@ -1,10 +1,10 @@
 // @flow
 import type { DecimalType } from '../model/DecimalType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { newDecimalType, NoDecimalType } from '../model/DecimalType';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
@@ -26,7 +26,7 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
@@ -41,11 +41,11 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext,
     generatedSimpleType: boolean = false,
   ) {
-    const namespaceInfo: ?NamespaceInfo = this.metaEd.entity.namespaceInfo.get(this.currentNamespace);
-    if (namespaceInfo == null) return;
-    this.currentDecimalType = { ...newDecimalType(), namespaceInfo, generatedSimpleType };
+    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
+    if (namespace == null) return;
+    this.currentDecimalType = { ...newDecimalType(), namespace, generatedSimpleType };
     this.currentDecimalType.sourceMap.type = sourceMapFrom(context);
-    this.currentDecimalType.sourceMap.namespaceInfo = namespaceInfo.sourceMap.type;
+    this.currentDecimalType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -160,7 +160,7 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   exitingDecimalType() {
     if (this.currentDecimalType === NoDecimalType) return;
 
-    const projectExtension = this.currentDecimalType.namespaceInfo.projectExtension;
+    const projectExtension = this.currentDecimalType.namespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentDecimalType.metaEdName}`
       : this.currentDecimalType.metaEdName;

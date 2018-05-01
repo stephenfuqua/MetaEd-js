@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/StringProperty/StringPropertyMinLengthMustNotBeGreaterThanMaxLength';
 
@@ -21,7 +21,7 @@ describe('when validating string property with correct minimum length and maximu
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -58,7 +58,7 @@ describe('when validating string property with same minimum length and maximum l
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -95,7 +95,7 @@ describe('when validating string property with minimum length greater than maxim
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);

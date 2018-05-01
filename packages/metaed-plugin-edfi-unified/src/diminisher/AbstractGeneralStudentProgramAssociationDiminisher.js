@@ -19,7 +19,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       .map((entity: ModelBase) => asAssociation(entity))
       .filter(
         (association: Association) =>
-          !association.namespaceInfo.isExtension && association.metaEdName === generalStudentProgramAssociationName,
+          !association.namespace.isExtension && association.metaEdName === generalStudentProgramAssociationName,
       ),
   );
 

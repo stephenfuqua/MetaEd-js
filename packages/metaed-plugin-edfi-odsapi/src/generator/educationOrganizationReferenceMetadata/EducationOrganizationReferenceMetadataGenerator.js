@@ -4,7 +4,7 @@ import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
 import { orderByProp } from 'metaed-core';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, NamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import type { EducationOrganizationReference } from '../../model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 
 const generatorName: string = 'edfiOdsApi.EducationOrganizationReferenceMetadataGenerator';
@@ -22,12 +22,12 @@ export function templateNamed(templateName: string) {
 
 export const template = R.memoize(() => templateNamed('educationOrganizationReferenceMetadata'))();
 
-function generateFile(input: any, namespaceInfo: NamespaceInfo): GeneratedOutput {
+function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   return {
     name: outputName,
-    namespace: namespaceInfo.namespace,
+    namespace: namespace.namespaceName,
     folderName: 'ApiMetadata',
-    fileName: `EdOrgReferenceMetadata${namespaceInfo.projectExtension ? `-${namespaceInfo.projectExtension}` : ''}.xml`,
+    fileName: `EdOrgReferenceMetadata${namespace.projectExtension ? `-${namespace.projectExtension}` : ''}.xml`,
     resultString: template(input),
     resultStream: null,
   };
@@ -36,13 +36,13 @@ function generateFile(input: any, namespaceInfo: NamespaceInfo): GeneratedOutput
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  if (metaEd.entity.namespaceInfo.size > 0) {
-    metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  if (metaEd.entity.namespace.size > 0) {
+    metaEd.entity.namespace.forEach((namespace: Namespace) => {
       const educationOrganizationReferences: Array<EducationOrganizationReference> = orderByProp('name')(
-        namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences,
+        namespace.data.edfiOdsApi.api_EducationOrganizationReferences,
       );
       if (educationOrganizationReferences.length > 0) {
-        results.push(generateFile({ educationOrganizationReferences }, namespaceInfo));
+        results.push(generateFile({ educationOrganizationReferences }, namespace));
       }
     });
   }

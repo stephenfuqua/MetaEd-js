@@ -1,11 +1,5 @@
 // @flow
-import {
-  newMetaEdEnvironment,
-  MetaEdTextBuilder,
-  ChoiceBuilder,
-  DomainEntityBuilder,
-  NamespaceInfoBuilder,
-} from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, ChoiceBuilder, DomainEntityBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/ChoiceProperty/ChoicePropertyMustMatchAChoice';
 
@@ -29,7 +23,7 @@ describe('when choice property has identifier of choice', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -61,7 +55,7 @@ describe('when choice property has invalid identifier', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 

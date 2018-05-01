@@ -4,7 +4,7 @@ import {
   MetaEdTextBuilder,
   DomainEntityBuilder,
   DomainEntitySubclassBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DomainEntitySubclass/DomainEntitySubclassMustNotRedeclareProperties';
@@ -28,7 +28,7 @@ describe('when domain entity subclass has different property name', () => {
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -68,7 +68,7 @@ describe('when domain entity subclass has duplicate property name', () => {
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -116,7 +116,7 @@ describe('when domain entity subclass has duplicate property name but different 
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -152,7 +152,7 @@ describe('when domain entity subclass has multiple duplicate property name', () 
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 

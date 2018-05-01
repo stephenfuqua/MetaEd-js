@@ -8,8 +8,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   Array.from(edFiXsdEntityRepository.mergedInterchange.values()).forEach(mergedInterchange => {
     mergedInterchange.interchangeName = `Interchange${mergedInterchange.metaEdName}`;
-    mergedInterchange.schemaLocation = mergedInterchange.namespaceInfo.isExtension
-      ? `${mergedInterchange.namespaceInfo.projectExtension}-Ed-Fi-Extended-Core.xsd`
+    mergedInterchange.schemaLocation = mergedInterchange.namespace.isExtension
+      ? `${mergedInterchange.namespace.projectExtension}-Ed-Fi-Extended-Core.xsd`
       : 'Ed-Fi-Core.xsd';
   });
 

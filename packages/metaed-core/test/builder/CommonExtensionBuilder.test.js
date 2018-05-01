@@ -1,6 +1,6 @@
 // @flow
 import { CommonExtensionBuilder } from '../../src/builder/CommonExtensionBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getCommonExtension } from '../TestHelper';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building common extension in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -20,13 +20,13 @@ describe('when building common extension in extension namespace', () => {
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -48,11 +48,11 @@ describe('when building common extension in extension namespace', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(getCommonExtension(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommonExtension(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have correct project extension', () => {
-    expect(getCommonExtension(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommonExtension(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have one property', () => {
@@ -71,7 +71,7 @@ describe('when building common extension in extension namespace', () => {
 describe('when building multiple common extensions', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -81,7 +81,7 @@ describe('when building multiple common extensions', () => {
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
@@ -90,7 +90,7 @@ describe('when building multiple common extensions', () => {
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -132,7 +132,7 @@ describe('when building common extension with missing common extension name', ()
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -142,12 +142,12 @@ describe('when building common extension with missing common extension name', ()
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -160,7 +160,7 @@ describe('when building common extension with lowercase common extension name', 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -170,12 +170,12 @@ describe('when building common extension with lowercase common extension name', 
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -188,7 +188,7 @@ describe('when building common extension with missing property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -197,11 +197,11 @@ describe('when building common extension with missing property', () => {
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -214,7 +214,7 @@ describe('when building common extension with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -225,13 +225,13 @@ describe('when building common extension with invalid trailing text', () => {
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withTrailingText(trailingText)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -243,7 +243,7 @@ describe('when building common extension with invalid trailing text', () => {
 describe('when building common extension source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -253,12 +253,12 @@ describe('when building common extension source map', () => {
     const builder = new CommonExtensionBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommonExtension(entityName, '1')
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 

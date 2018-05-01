@@ -27,7 +27,7 @@ export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Tab
 
 export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean): Table {
   const mainTable: Table = Object.assign(newTable(), {
-    schema: entity.namespaceInfo.namespace,
+    schema: entity.namespace.namespaceName,
     name: entity.data.edfiOds.ods_TableName,
     description: entity.documentation,
     parentEntity: entity,

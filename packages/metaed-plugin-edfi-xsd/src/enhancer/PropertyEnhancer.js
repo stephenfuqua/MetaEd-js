@@ -52,16 +52,16 @@ function prependedWithProjectExtension(projectExtension: string, typeName: strin
 
 function prependReferencedProjectExtension(property: ReferentialProperty, typeName: string) {
   if (noParentOrReferencedEntityProjectExtension(property)) {
-    return prependedWithProjectExtension(property.namespaceInfo.projectExtension, typeName);
+    return prependedWithProjectExtension(property.namespace.projectExtension, typeName);
   }
-  return prependedWithProjectExtension(property.referencedEntity.namespaceInfo.projectExtension, typeName);
+  return prependedWithProjectExtension(property.referencedEntity.namespace.projectExtension, typeName);
 }
 
 function prependReferencedProjectExtensionForCommonProperty(property: CommonProperty, typeName: string) {
   if (property.isExtensionOverride) {
     return prependedWithProjectExtension(
-      property.namespaceInfo.projectExtension,
-      `${typeName}${property.namespaceInfo.extensionEntitySuffix}`,
+      property.namespace.projectExtension,
+      `${typeName}${property.namespace.extensionEntitySuffix}`,
     );
   }
 
@@ -70,9 +70,9 @@ function prependReferencedProjectExtensionForCommonProperty(property: CommonProp
 
 function reconcileSimpleTypeExtension(property: SimpleProperty, typeName: string) {
   if (noParentOrReferencedEntityProjectExtension(property)) {
-    return prependedWithProjectExtension(property.namespaceInfo.projectExtension, typeName);
+    return prependedWithProjectExtension(property.namespace.projectExtension, typeName);
   }
-  return prependedWithProjectExtension(property.referencedEntity.namespaceInfo.projectExtension, typeName);
+  return prependedWithProjectExtension(property.referencedEntity.namespace.projectExtension, typeName);
 }
 
 function xsdTypeFor(property: EntityProperty): string {

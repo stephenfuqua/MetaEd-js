@@ -294,7 +294,7 @@ export async function build(outputWindow: OutputWindow): Promise<boolean> {
 
     metaEdProjectMetadata.forEach(pm => {
       metaEdConfiguration.projects.push({
-        namespace: pm.projectNamespace,
+        namespaceName: pm.projectNamespace,
         projectName: pm.projectName,
         projectVersion: pm.projectVersion,
         projectExtension: pm.projectExtension,
@@ -403,7 +403,7 @@ export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boole
 
     metaEdProjectMetadata.forEach(pm => {
       metaEdConfiguration.projects.push({
-        namespace: pm.projectNamespace,
+        namespaceName: pm.projectNamespace,
         projectName: pm.projectName,
         projectVersion: pm.projectVersion,
         projectExtension: pm.projectExtension,

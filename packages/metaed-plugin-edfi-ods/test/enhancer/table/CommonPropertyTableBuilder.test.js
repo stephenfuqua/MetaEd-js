@@ -6,7 +6,7 @@ import {
   newDomainEntity,
   newDomainEntityExtension,
   newIntegerProperty,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
 import type {
   Common,
@@ -447,7 +447,7 @@ describe('when building common property extension table', () => {
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       baseEntityName: common.metaEdName,
       baseEntity: common,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { namespace: extensionNamespace }),
+      namespace: Object.assign(newNamespace(), { namespaceName: extensionNamespace }),
       data: {
         edfiOds: {
           ods_Properties: [],
@@ -582,7 +582,7 @@ describe('when building common property extension table with domain entity exten
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       baseEntityName: common.metaEdName,
       baseEntity: common,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { namespace: extensionNamespace }),
+      namespace: Object.assign(newNamespace(), { namespaceName: extensionNamespace }),
       data: {
         edfiOds: {
           ods_Properties: [],

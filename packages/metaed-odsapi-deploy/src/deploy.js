@@ -21,7 +21,7 @@ type ArtifactPaths = {
 };
 
 export type DeployTargets = {
-  namespace: string,
+  namespaceName: string,
   projectName: string,
   ...$Exact<ArtifactPaths>,
 };
@@ -54,9 +54,9 @@ const sources = (): ArtifactPaths => ({
 });
 
 // >=3.0 target directories
-const coreTarget = (namespace: string): DeployTargets => ({
-  namespace,
-  projectName: namespace,
+const coreTarget = (namespaceName: string): DeployTargets => ({
+  namespaceName,
+  projectName: namespaceName,
   apiMetadata: path.join(odsApiPaths.root, 'Standard/Metadata/'),
   databaseData: path.join(odsApiPaths.root, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.root, 'Database/Structure/EdFi/'),
@@ -64,8 +64,8 @@ const coreTarget = (namespace: string): DeployTargets => ({
   xsd: path.join(odsApiPaths.root, 'Standard/Schemas/'),
 });
 
-const extensionTarget = (namespace: string, projectName: string): DeployTargets => ({
-  namespace,
+const extensionTarget = (namespaceName: string, projectName: string): DeployTargets => ({
+  namespaceName,
   projectName,
   apiMetadata: path.join(
     odsApiPaths.implementation,
@@ -105,9 +105,9 @@ const extensionTarget = (namespace: string, projectName: string): DeployTargets 
 });
 
 // 2.x target directories
-const coreTargetV2 = (namespace: string): DeployTargets => ({
-  namespace,
-  projectName: namespace,
+const coreTargetV2 = (namespaceName: string): DeployTargets => ({
+  namespaceName,
+  projectName: namespaceName,
   apiMetadata: path.join(odsApiPaths.root, 'Standard/Metadata/'),
   databaseData: path.join(odsApiPaths.root, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.root, 'Database/Structure/EdFi/'),
@@ -115,9 +115,9 @@ const coreTargetV2 = (namespace: string): DeployTargets => ({
   xsd: path.join(odsApiPaths.root, 'Standard/Schemas/'),
 });
 
-const extensionTargetV2 = (namespace: string): DeployTargets => ({
-  namespace,
-  projectName: sugar.capitalize(namespace),
+const extensionTargetV2 = (namespaceName: string): DeployTargets => ({
+  namespaceName,
+  projectName: sugar.capitalize(namespaceName),
   apiMetadata: path.join(odsApiPaths.implementation, 'Extensions/Metadata/'),
   databaseData: path.join(odsApiPaths.implementation, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.implementation, 'Database/Structure/EdFi/'),
@@ -152,12 +152,12 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
   if (versionSatisfies(dataStandardVersion, V3OrGreater)) {
     projects.forEach((project: MetaEdProject) => {
       if (isDataStandard(project)) {
-        if (deployCore) targets.push(coreTarget(project.namespace));
+        if (deployCore) targets.push(coreTarget(project.namespaceName));
         // FIXME: MetaEdProject.projectName is not currently being read from package.json
-      } else if (project.namespace === 'gb') {
-        targets.push(extensionTarget(project.namespace, 'GrandBend'));
+      } else if (project.namespaceName === 'gb') {
+        targets.push(extensionTarget(project.namespaceName, 'GrandBend'));
       } else {
-        targets.push(extensionTarget(project.namespace, sugar.capitalize(project.namespace)));
+        targets.push(extensionTarget(project.namespaceName, sugar.capitalize(project.namespaceName)));
       }
     });
   }
@@ -165,20 +165,20 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
   if (versionSatisfies(dataStandardVersion, V2Only)) {
     projects.forEach((project: MetaEdProject) => {
       if (isDataStandard(project)) {
-        if (deployCore) targets.push(coreTargetV2(project.namespace));
+        if (deployCore) targets.push(coreTargetV2(project.namespaceName));
       } else {
-        targets.push(extensionTargetV2(project.namespace));
+        targets.push(extensionTargetV2(project.namespaceName));
       }
     });
   }
 
   // core first, then extensions in alphabetical order
-  return R.sortWith([R.descend(isDataStandard), R.ascend(R.prop('namespace'))])(targets);
+  return R.sortWith([R.descend(isDataStandard), R.ascend(R.prop('namespaceName'))])(targets);
 }
 
 async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
   const projectName: string = target.projectName;
-  if (target.namespace === 'edfi') return true;
+  if (target.namespaceName === 'edfi') return true;
   if (versionSatisfies(dataStandardVersionFor(metaEdConfiguration.projects), V2Only)) return true;
 
   const targetPath: string = path.resolve(
@@ -195,7 +195,7 @@ async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: D
 
 async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
   const projectName: string = target.projectName;
-  if (target.namespace === 'edfi') return true;
+  if (target.namespaceName === 'edfi') return true;
 
   const targetPath: string = path.resolve(
     metaEdConfiguration.deployDirectory,
@@ -219,7 +219,7 @@ async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguratio
 
 async function refreshProjectFile(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
   const projectName: string = target.projectName;
-  if (target.namespace === 'edfi') return true;
+  if (target.namespaceName === 'edfi') return true;
 
   const csproj: string = '.csproj';
   const targetPath: string = path.resolve(
@@ -263,7 +263,7 @@ async function deployArtifactSources(metaEdConfiguration: MetaEdConfiguration, t
 
   // eslint-disable-next-line no-restricted-syntax
   for (const artifactName of Object.keys(source)) {
-    const artifactSource: string = path.resolve(artifactDirectory, target.namespace, source[artifactName]);
+    const artifactSource: string = path.resolve(artifactDirectory, target.namespaceName, source[artifactName]);
     const deployTarget: string = path.resolve(deployDirectory, target[artifactName]);
 
     if (artifactSource !== '' && deployTarget !== '') {
@@ -275,7 +275,7 @@ async function deployArtifactSources(metaEdConfiguration: MetaEdConfiguration, t
             let deployPath: string = path.resolve(deployTarget, file);
 
             // FIXME: METAED-821 - Core ApiModel is currently deploying to a different location than the other metadata artifacts
-            if (file.toLowerCase() === 'apimodel.json' && target.namespace === 'edfi') {
+            if (file.toLowerCase() === 'apimodel.json' && target.namespaceName === 'edfi') {
               deployPath = coreApiModelDeployPathFor(metaEdConfiguration);
             }
 

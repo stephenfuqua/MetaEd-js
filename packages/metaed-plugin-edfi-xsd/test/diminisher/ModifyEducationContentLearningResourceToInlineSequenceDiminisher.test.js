@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { DomainEntity, Common, MetaEdEnvironment } from 'metaed-core';
-import { addEntity, getEntity, newDomainEntity, newCommon, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { addEntity, getEntity, newDomainEntity, newCommon, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import type { ElementGroup } from '../../src/model/schema/ElementGroup';
 import { enhance } from '../../src/diminisher/ModifyEducationContentLearningResourceToInlineSequenceDiminisher';
@@ -16,11 +16,11 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
   let elementGroup: Array<ComplexType>;
 
   beforeAll(() => {
-    const namespace: string = 'edfi';
+    const namespaceName: string = 'edfi';
 
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: educationContentName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { namespace }),
+      namespace: Object.assign(newNamespace(), { namespaceName }),
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -56,7 +56,7 @@ describe('when ModifyEducationContentLearningResourceToInlineSequenceDiminisher 
     ];
     const inlineCommon1: Common = Object.assign(newCommon(), {
       metaEdName: learningResourceName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { namespace }),
+      namespace: Object.assign(newNamespace(), { namespaceName }),
       data: {
         edfiXsd: {
           xsd_ComplexTypes: elementGroup,

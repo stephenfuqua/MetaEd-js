@@ -6,28 +6,28 @@ import {
   newDomainEntitySubclass,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
-import type { DomainEntity, DomainEntitySubclass, IntegerProperty, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import type { DomainEntity, DomainEntitySubclass, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/DomainEntitySubclassTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   const domainEntitySubclassPropertyName: string = 'DomainEntitySubclassPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntityName,
       data: {
@@ -53,12 +53,12 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntitySubclassName,
       baseEntityName: domainEntityName,
@@ -73,7 +73,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
       },
     });
     const domainEntitySubclassProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntitySubclassPropertyName,
       isPartOfIdentity: false,
       parentEntity: domainEntitySubclass,
@@ -97,7 +97,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntitySubclassName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntitySubclassName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -114,19 +114,19 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
 
 describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with primary key', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   const domainEntitySubclassPkPropertyName: string = 'DomainEntitySubclassPkPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntityName,
       data: {
@@ -152,12 +152,12 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntitySubclassName,
       baseEntityName: domainEntityName,
@@ -172,7 +172,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
       },
     });
     const domainEntitySubclassPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntitySubclassPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: domainEntitySubclass,
@@ -205,7 +205,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
 
 describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass with identity rename property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
@@ -213,12 +213,12 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
 
   const domainEntityPkPropertyName: string = 'DomainEntityPkPropertyName';
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntityName,
       data: {
@@ -243,12 +243,12 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntitySubclassName,
       baseEntityName: domainEntityName,
@@ -263,7 +263,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
       },
     });
     const domainEntitySubclassRenameProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntitySubclassRenamePropertyName,
       isIdentityRename: true,
       baseKeyName: domainEntityPkPropertyName,

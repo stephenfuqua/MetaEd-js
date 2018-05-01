@@ -6,7 +6,7 @@ import {
   newIntegerProperty,
   newMapTypeEnumeration,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor, IntegerProperty, MapTypeEnumeration } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/DescriptorTableEnhancer';
@@ -24,8 +24,8 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -109,8 +109,8 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
       isMapTypeRequired: true,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -263,8 +263,8 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
       isMapTypeOptional: true,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -417,8 +417,8 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
       metaEdName: descriptorNameType,
       documentation: descriptorDocumentation,
       isMapTypeOptional: true,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {

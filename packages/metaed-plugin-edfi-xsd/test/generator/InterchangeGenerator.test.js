@@ -4,14 +4,14 @@ import xmlParser from 'xml-js';
 import {
   newPluginEnvironment,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
   newInterchange,
   newInterchangeExtension,
   newInterchangeItem,
 } from 'metaed-core';
 import type {
   MetaEdEnvironment,
-  NamespaceInfo,
+  Namespace,
   Interchange,
   InterchangeItem,
   InterchangeExtension,
@@ -49,10 +49,10 @@ describe('when generating single interchange', () => {
   let result;
 
   beforeAll(async () => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementBaseName,
@@ -84,7 +84,7 @@ describe('when generating single interchange', () => {
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
-      namespaceInfo,
+      namespace,
       interchangeName,
       documentation: interchangeDocumentation,
       schemaLocation: schemaLocationName,
@@ -153,10 +153,10 @@ describe('when generating single interchange with extension', () => {
   let result: Array<GeneratedOutput>;
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementBaseName,
@@ -205,7 +205,7 @@ describe('when generating single interchange with extension', () => {
     metaEd.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       interchangeName,
       documentation: interchangeDocumentation,
       schemaLocation: schemaLocationName,

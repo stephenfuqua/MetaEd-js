@@ -1,6 +1,6 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 import type { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
@@ -10,7 +10,7 @@ export type SharedSimpleSourceMap = {
   documentation: SourceMap,
   metaEdName: SourceMap,
   metaEdId: SourceMap,
-  namespaceInfo: SourceMap,
+  namespace: SourceMap,
 };
 
 export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
@@ -19,7 +19,7 @@ export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
     documentation: NoSourceMap,
     metaEdName: NoSourceMap,
     metaEdId: NoSourceMap,
-    namespaceInfo: NoSourceMap,
+    namespace: NoSourceMap,
   };
 }
 
@@ -36,7 +36,7 @@ export function newSharedSimple(): SharedSimple {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     sourceMap: newSharedSimpleSourceMap(),
     data: {},
     config: {},

@@ -7,7 +7,7 @@ const enhancerName: string = 'SchoolYearEnumerationAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'schoolYearEnumeration').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.entity.namespaceInfo);
+    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.entity.namespace);
   });
 
   return {

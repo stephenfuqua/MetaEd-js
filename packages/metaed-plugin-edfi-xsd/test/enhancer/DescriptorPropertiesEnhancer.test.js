@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newDescriptor, newNamespaceInfo, newStringProperty } from 'metaed-core';
+import { newMetaEdEnvironment, newDescriptor, newNamespace, newStringProperty } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/DescriptorPropertiesEnhancer';
@@ -45,7 +45,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor', () => {
 
 describe('when DescriptorPropertiesEnhancer enhances descriptor with extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'EXTENSION';
 
   const descriptorBaseName: string = 'DescriptorName';
@@ -54,8 +54,8 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with extension',
   beforeAll(() => {
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorBaseName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         projectExtension,
       }),
       data: {

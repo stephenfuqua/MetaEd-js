@@ -40,19 +40,19 @@ const metaEdConfiguration = {
   projects: [
     {
       projectName: 'Ed-Fi',
-      namespace: 'edfi',
+      namespaceName: 'edfi',
       projectExtension: '',
       projectVersion: '2.0.0',
     },
     {
       projectName: 'Grand Bend',
-      namespace: 'gb',
+      namespaceName: 'gb',
       projectExtension: 'GrandBend',
       projectVersion: '1.0.0',
     },
     {
       projectName: 'Sample',
-      namespace: 'sample',
+      namespaceName: 'sample',
       projectExtension: 'Sample',
       projectVersion: '1.0.0',
     },

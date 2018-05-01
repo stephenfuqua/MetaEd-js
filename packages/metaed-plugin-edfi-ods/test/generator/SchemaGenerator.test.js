@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
-import type { GeneratorResult, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import type { GeneratorResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/SchemaGenerator';
 
 describe('when generating schemas for core namespace', () => {
@@ -9,11 +9,11 @@ describe('when generating schemas for core namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       isExtension: false,
     });
-    metaEd.entity.namespaceInfo.set('edfi', namespaceInfo);
+    metaEd.entity.namespace.set('edfi', namespace);
 
     result = await generate(metaEd);
   });
@@ -34,12 +34,12 @@ describe('when generating schemas for extension namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set('extension', namespaceInfo);
+    metaEd.entity.namespace.set('extension', namespace);
 
     result = await generate(metaEd);
   });

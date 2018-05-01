@@ -1,5 +1,5 @@
 // @flow
-import { newCommonExtension, newNamespaceInfo, newMetaEdEnvironment } from 'metaed-core';
+import { newCommonExtension, newNamespace, newMetaEdEnvironment } from 'metaed-core';
 import type { CommonExtension, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/CommonExtension';
 
@@ -12,7 +12,7 @@ describe('when CommonExtension enhances common extension entity', () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     commonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonExtensionName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
+      namespace: Object.assign(newNamespace(), {
         extensionEntitySuffix,
       }),
     });

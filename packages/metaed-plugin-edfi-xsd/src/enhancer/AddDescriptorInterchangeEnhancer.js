@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, Descriptor, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace, Descriptor, InterchangeItem } from 'metaed-core';
 import { newInterchangeItem } from 'metaed-core';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
@@ -16,14 +16,14 @@ const descriptorUseCaseDocumentation: string = `1. Exchange state, district, or 
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const allDescriptors: Array<Descriptor> = Array.from(metaEd.entity.descriptor.values());
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     // Skip this namespace if no new descriptors defined
-    if (allDescriptors.every((descriptor: Descriptor) => descriptor.namespaceInfo.namespace !== namespaceInfo.namespace))
+    if (allDescriptors.every((descriptor: Descriptor) => descriptor.namespace.namespaceName !== namespace.namespaceName))
       return;
 
     const descriptorInterchange: MergedInterchange = {
       ...newMergedInterchange(),
-      namespaceInfo,
+      namespace,
       metaEdName: descriptorInterchangeName,
       documentation: descriptorInterchangeDocumentation,
       useCaseDocumentation: descriptorUseCaseDocumentation,
@@ -31,11 +31,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     // Include all core descriptors and all descriptors for the current namespace
     allDescriptors
-      .filter(ad => !ad.namespaceInfo.isExtension || ad.namespaceInfo.namespace === namespaceInfo.namespace)
+      .filter(ad => !ad.namespace.isExtension || ad.namespace.namespaceName === namespace.namespaceName)
       .forEach((descriptor: Descriptor) => {
         const element: InterchangeItem = Object.assign(newInterchangeItem(), {
           metaEdName: descriptor.data.edfiXsd.xsd_DescriptorName,
-          namespaceInfo,
+          namespace,
           referencedEntity: descriptor,
         });
         addInterchangeItemEdfiXsdTo(element);

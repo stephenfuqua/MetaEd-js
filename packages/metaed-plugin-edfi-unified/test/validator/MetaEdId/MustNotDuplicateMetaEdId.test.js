@@ -5,7 +5,7 @@ import {
   DomainEntityBuilder,
   EnumerationBuilder,
   InterchangeBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
 } from 'metaed-core';
@@ -30,7 +30,7 @@ describe('when validating two entities have different metaEdId', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -64,7 +64,7 @@ describe('when validating two entities have duplicate metaEdId', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -115,7 +115,7 @@ describe('when validating two domain items have duplicate metaEdId', () => {
       .withEndSubdomain()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -169,7 +169,7 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -229,7 +229,7 @@ describe('when validating two map type enumeration items have duplicate metaEdId
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -278,7 +278,7 @@ describe('when validating interchange items have duplicate metaEdId', () => {
       .withEndInterchangeExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -351,7 +351,7 @@ describe('when validating multiple entities, properties, and items have duplicat
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))

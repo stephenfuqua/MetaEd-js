@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newPluginEnvironment, newNamespaceInfo, newDescriptor } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo, Descriptor } from 'metaed-core';
+import { newMetaEdEnvironment, newPluginEnvironment, newNamespace, newDescriptor } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, Descriptor } from 'metaed-core';
 import { enhance, descriptorInterchangeName } from '../../src/enhancer/AddDescriptorInterchangeEnhancer';
 import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
@@ -14,19 +14,19 @@ describe('when running with one descriptor', () => {
       entity: newEdFiXsdEntityRepository(),
     }),
   );
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const descriptorBaseName: string = 'DescriptorBaseName';
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_MetaEdNameWithExtension: descriptorBaseName,
@@ -61,30 +61,30 @@ describe('when running with one extension descriptor', () => {
       entity: newEdFiXsdEntityRepository(),
     }),
   );
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const descriptorBaseName: string = 'DescriptorBaseName';
   const descriptorName: string = 'DescriptorName';
   const extensionDescriptorBaseName: string = 'ExtensionDescriptorBaseName';
   const extensionDescriptorName: string = 'ExtensionDescriptorName';
-  const extensionNamespace: string = 'namespace';
+  const extensionNamespaceName: string = 'namespace';
   const projectExtension: string = 'EXTENSION';
 
   beforeAll(() => {
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespace,
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorBaseName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_MetaEdNameWithExtension: descriptorBaseName,
@@ -99,7 +99,7 @@ describe('when running with one extension descriptor', () => {
 
     const extensionDescriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: extensionDescriptorBaseName,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_MetaEdNameWithExtension: `${projectExtension}-${descriptorBaseName}`,
@@ -129,7 +129,7 @@ describe('when running with one extension descriptor', () => {
     const entity: MergedInterchange = pluginEnvironment(metaEd).entity.mergedInterchange.get(
       `${projectExtension}-${descriptorInterchangeName}`,
     );
-    expect(entity.namespaceInfo.isExtension).toBe(true);
+    expect(entity.namespace.isExtension).toBe(true);
     expect(entity.elements.length).toBe(2);
     expect(entity.elements[0].metaEdName).toBe(descriptorName);
     expect(entity.elements[1].metaEdName).toBe(extensionDescriptorName);
@@ -144,13 +144,13 @@ describe('when running with no descriptors', () => {
       entity: newEdFiXsdEntityRepository(),
     }),
   );
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
 
   beforeAll(() => {
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     enhance(metaEd);
   });

@@ -46,7 +46,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const coreInterchanges: Array<MergedInterchange> = [];
   const extensionInterchanges: Array<MergedInterchange> = [];
   Array.from(edFiXsdEntityRepository.mergedInterchange.values()).forEach(mergedInterchange => {
-    if (mergedInterchange.namespaceInfo.isExtension) {
+    if (mergedInterchange.namespace.isExtension) {
       extensionInterchanges.push(mergedInterchange);
     } else {
       coreInterchanges.push(mergedInterchange);

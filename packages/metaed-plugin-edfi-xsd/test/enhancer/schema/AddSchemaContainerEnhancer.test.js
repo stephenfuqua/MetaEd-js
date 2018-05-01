@@ -1,7 +1,7 @@
 // @flow
 import {
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
   newDomainEntity,
   newDomainEntitySubclass,
   newDomainEntityExtension,
@@ -25,7 +25,7 @@ import { newDecimalSimpleType } from '../../../src/model/schema/DecimalSimpleTyp
 import { newStringSimpleType } from '../../../src/model/schema/StringSimpleType';
 import type { SchemaSection } from '../../../src/model/schema/SchemaSection';
 import type { SchemaContainer } from '../../../src/model/schema/SchemaContainer';
-import type { NamespaceInfoEdfiXsd } from '../../../src/model/NamespaceInfo';
+import type { NamespaceEdfiXsd } from '../../../src/model/Namespace';
 import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancer';
 import { baseTypeDescriptorReference } from '../../../src/enhancer/schema/AddComplexTypesBaseEnhancer';
 
@@ -36,14 +36,14 @@ describe('when enhancing namespace info for core', () => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     enhance(metaEd);
-    createdSchema = ((coreNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
+    createdSchema = ((coreNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
   });
 
   it('should have is extension assigned', () => {
@@ -79,21 +79,21 @@ describe('when enhancing namespace info for extension', () => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiXsd: {} },
     });
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     enhance(metaEd);
-    createdSchema = ((extensionNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
+    createdSchema = ((extensionNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
   });
 
   it('should have is extension assigned', () => {
@@ -252,23 +252,23 @@ describe('when enhancing namespace info for core with children', () => {
   let extensionSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiXsd: {} },
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntity1ComplexTypeName }), NoComplexType],
@@ -282,7 +282,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntityExtension1 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtension1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -299,7 +299,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclass1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass1ComplexTypeName })],
@@ -313,7 +313,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const descriptor1 = Object.assign(newDescriptor(), {
       metaEdName: descriptor1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor1ComplexTypeName })],
@@ -325,7 +325,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const association1 = Object.assign(newAssociation(), {
       metaEdName: association1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: association1ComplexTypeName })],
@@ -339,7 +339,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const associationSubclass1 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclass1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass1ComplexTypeName })],
@@ -353,7 +353,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const common1 = Object.assign(newCommon(), {
       metaEdName: common1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: common1ComplexTypeName })],
@@ -364,7 +364,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const inlineCommon1 = Object.assign(newCommon(), {
       metaEdName: inlineCommon1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       inlineInOds: true,
       data: {
         edfiXsd: {
@@ -376,7 +376,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const enumeration1 = Object.assign(newEnumeration(), {
       metaEdName: enumeration1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: enumeration1SimpleTypeName }),
@@ -387,7 +387,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const schoolYearEnumeration1 = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYearEnumeration1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
@@ -400,7 +400,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const xsdMapTypeEnumeration1 = Object.assign(newMapTypeEnumeration(), {
       metaEdName: xsdMapTypeEnumeration1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
@@ -413,7 +413,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const stringType1 = Object.assign(newStringType(), {
       metaEdName: stringType1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newStringSimpleType(), { name: stringType1SimpleTypeName }),
@@ -424,7 +424,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const integerType1 = Object.assign(newIntegerType(), {
       metaEdName: integerType1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerType1SimpleTypeName }),
@@ -435,7 +435,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const decimalType1 = Object.assign(newDecimalType(), {
       metaEdName: decimalType1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newDecimalSimpleType(), { name: decimalType1SimpleTypeName }),
@@ -446,7 +446,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntity2 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntity2ComplexTypeName })],
@@ -460,7 +460,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntityExtension2 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtension2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntityExtension2ComplexTypeName })],
@@ -474,7 +474,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntitySubclass2 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclass2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: domainEntitySubclass2ComplexTypeName })],
@@ -488,7 +488,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const descriptor2 = Object.assign(newDescriptor(), {
       metaEdName: descriptor2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: descriptor2ComplexTypeName })],
@@ -500,7 +500,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const association2 = Object.assign(newAssociation(), {
       metaEdName: association2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: association2ComplexTypeName })],
@@ -514,7 +514,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const associationSubclass2 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclass2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: associationSubclass2ComplexTypeName })],
@@ -528,7 +528,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const common2 = Object.assign(newCommon(), {
       metaEdName: common2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: common2ComplexTypeName })],
@@ -539,7 +539,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const commonExtension1 = Object.assign(newCommon(), {
       metaEdName: commonExtension1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [Object.assign(newComplexType(), { name: commonExtension1ComplexTypeName })],
@@ -550,7 +550,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const inlineCommon2 = Object.assign(newCommon(), {
       metaEdName: inlineCommon2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       inlineInOds: true,
       data: {
         edfiXsd: {
@@ -562,7 +562,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const enumeration2 = Object.assign(newEnumeration(), {
       metaEdName: enumeration2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), { name: enumeration2SimpleTypeName }),
@@ -573,7 +573,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const schoolYearEnumeration2 = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYearEnumeration2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
@@ -586,7 +586,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const xsdMapTypeEnumeration2 = Object.assign(newMapTypeEnumeration(), {
       metaEdName: xsdMapTypeEnumeration2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: Object.assign(newEnumerationSimpleType(), {
@@ -599,7 +599,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const stringType2 = Object.assign(newStringType(), {
       metaEdName: stringType2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newStringSimpleType(), { name: stringType2SimpleTypeName }),
@@ -610,7 +610,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const integerType2 = Object.assign(newIntegerType(), {
       metaEdName: integerType2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerType2SimpleTypeName }),
@@ -621,7 +621,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const decimalType2 = Object.assign(newDecimalType(), {
       metaEdName: decimalType2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newDecimalSimpleType(), { name: decimalType2SimpleTypeName }),
@@ -632,7 +632,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const domainEntityWithNoComplexTypes = Object.assign(newDomainEntity(), {
       metaEdName: 'DomainEntityWithNoComplexTypes',
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [NoComplexType],
@@ -646,7 +646,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const enumerationWithNoEnumerationSimpleType = Object.assign(newEnumeration(), {
       metaEdName: 'EnumerationWithNoEnumerationSimpleType',
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_EnumerationSimpleType: NoEnumerationSimpleType,
@@ -657,7 +657,7 @@ describe('when enhancing namespace info for core with children', () => {
 
     const stringTypeWithNoSimpleType = Object.assign(newStringType(), {
       metaEdName: 'StringTypeWithNoSimpleType',
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: NoSimpleType,
@@ -668,8 +668,8 @@ describe('when enhancing namespace info for core with children', () => {
 
     enhance(metaEd);
 
-    coreSchema = ((coreNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
-    extensionSchema = ((extensionNamespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
+    coreSchema = ((coreNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
+    extensionSchema = ((extensionNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
   });
 
   it('should generate domain entities section', () => {

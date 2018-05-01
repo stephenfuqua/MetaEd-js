@@ -95,7 +95,7 @@ async function warnOnExperimentalFolderExistence(projectPath: string) {
 async function warnOnMetaEdJsonExistence(projectPath: string) {
   if (await fs.exists(path.join(projectPath, 'metaEd.json'))) {
     atom.notifications.addWarning(
-      `A metaEd.json file is in your project. These files are obsolete, and a package.json project file will be created for you on build.`,
+      `A metaEd.json file is in your project. These files are obsolete, and have been replaced by package.json project files.`,
       {
         dismissable: true,
       },

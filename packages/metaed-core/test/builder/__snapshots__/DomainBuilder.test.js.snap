@@ -46,7 +46,7 @@ Object {
     "line": 2,
     "tokenText": "DomainName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",
@@ -165,7 +165,7 @@ Object {
     "line": 2,
     "tokenText": "SubdomainName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

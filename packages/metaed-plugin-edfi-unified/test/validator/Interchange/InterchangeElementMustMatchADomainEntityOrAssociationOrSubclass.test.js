@@ -8,7 +8,7 @@ import {
   DomainEntityBuilder,
   DomainEntitySubclassBuilder,
   InterchangeBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Interchange/InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass';
@@ -32,7 +32,7 @@ describe('when validating interchange element is an abstract entity', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
@@ -71,7 +71,7 @@ describe('when validating interchange element is a domain entity', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
@@ -116,7 +116,7 @@ describe('when validating interchange element is a domain entity subclass', () =
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
@@ -162,7 +162,7 @@ describe('when validating interchange element is an association', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
@@ -209,7 +209,7 @@ describe('when validating interchange element is an association subclass', () =>
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
@@ -256,7 +256,7 @@ describe('when validating interchange element is a descriptor', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
@@ -289,7 +289,7 @@ describe('when validating interchange element has invalid name', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
     failures = validate(metaEd);

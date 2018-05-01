@@ -11,7 +11,7 @@ export function addDomainEntityExtensionEdfiOdsTo(domainEntityExtension: DomainE
   if (domainEntityExtension.data.edfiOds == null) domainEntityExtension.data.edfiOds = {};
 
   Object.assign(domainEntityExtension.data.edfiOds, {
-    ods_ExtensionName: domainEntityExtension.metaEdName + domainEntityExtension.namespaceInfo.extensionEntitySuffix,
+    ods_ExtensionName: domainEntityExtension.metaEdName + domainEntityExtension.namespace.extensionEntitySuffix,
   });
 }
 

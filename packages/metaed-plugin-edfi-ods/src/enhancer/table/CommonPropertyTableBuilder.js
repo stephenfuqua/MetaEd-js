@@ -90,10 +90,10 @@ function buildExtensionTables(
   if (commonExtension == null) return;
 
   const extensionTable: Table = Object.assign(newTable(), {
-    schema: commonExtension.namespaceInfo.namespace,
+    schema: commonExtension.namespace.namespaceName,
     name: overlapCollapsingJoinTableName(
       parentTableStrategy.name,
-      property.data.edfiOds.ods_Name + commonExtension.namespaceInfo.extensionEntitySuffix,
+      property.data.edfiOds.ods_Name + commonExtension.namespace.extensionEntitySuffix,
     ),
     description: property.documentation,
     parentEntity: property.parentEntity,
@@ -157,7 +157,7 @@ export function commonPropertyTableBuilder(
       let joinTableSchema: string;
 
       if (commonProperty.isExtensionOverride) {
-        joinTableSchema = commonProperty.referencedEntity.namespaceInfo.namespace;
+        joinTableSchema = commonProperty.referencedEntity.namespace.namespaceName;
       } else {
         joinTableSchema = parentTableStrategy.table.schema;
         buildJoinTables(

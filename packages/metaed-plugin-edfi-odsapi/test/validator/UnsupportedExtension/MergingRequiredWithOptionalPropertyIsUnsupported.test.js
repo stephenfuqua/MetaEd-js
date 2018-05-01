@@ -4,7 +4,7 @@ import {
   newPluginEnvironment,
   MetaEdTextBuilder,
   DomainEntityBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
@@ -38,7 +38,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
@@ -86,7 +86,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
@@ -155,7 +155,7 @@ describe('when a domain entity has both a required and optional reference to dom
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
@@ -219,7 +219,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
@@ -282,7 +282,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
@@ -325,7 +325,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));

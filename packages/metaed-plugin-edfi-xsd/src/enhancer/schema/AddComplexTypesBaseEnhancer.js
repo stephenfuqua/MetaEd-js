@@ -44,9 +44,9 @@ function parentPropertiesWithOverriddenPropertiesFilteredOut(topLevelEntity: Top
 export function restrictionName(topLevelEntity: TopLevelEntity): string {
   const parentEntity = topLevelEntity.baseEntity;
   if (parentEntity == null) return '';
-  return topLevelEntity.namespaceInfo.projectExtension === ''
+  return topLevelEntity.namespace.projectExtension === ''
     ? parentEntity.metaEdName
-    : `${topLevelEntity.namespaceInfo.projectExtension}-${parentEntity.metaEdName}${restrictionSuffix}`;
+    : `${topLevelEntity.namespace.projectExtension}-${parentEntity.metaEdName}${restrictionSuffix}`;
 }
 
 export function createDefaultComplexType(

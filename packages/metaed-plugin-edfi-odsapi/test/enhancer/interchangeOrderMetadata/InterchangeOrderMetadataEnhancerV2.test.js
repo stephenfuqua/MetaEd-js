@@ -3,14 +3,14 @@ import graphlib, { Graph } from '@dagrejs/graphlib';
 import {
   newMetaEdEnvironment,
   newPluginEnvironment,
-  newNamespaceInfo,
+  newNamespace,
   newDomainEntity,
   newInterchangeItem,
   newDomainEntityProperty,
   newIntegerProperty,
   newDomainEntityExtension,
 } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo, DomainEntity, InterchangeItem, DomainEntityExtension } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, DomainEntity, InterchangeItem, DomainEntityExtension } from 'metaed-core';
 import { newEdFiXsdEntityRepository, newMergedInterchange, addMergedInterchangeToRepository } from 'metaed-plugin-edfi-xsd';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { addMergedInterchangeEdfiOdsApiTo } from '../../../src/model/MergedInterchange';
@@ -144,7 +144,7 @@ describe('when sorting graph with optional cycle', () => {
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
   let mergedInterchange: MergedInterchange;
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const domainEntityName: string = 'DomainEntityName';
 
   beforeAll(() => {
@@ -154,20 +154,20 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
     });
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       referencedEntity: referencedEntity1,
     });
     mergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       elements: [interchangeItem1],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
@@ -187,7 +187,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with different interchange item name', () => {
   let mergedInterchange: MergedInterchange;
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const interchangeItemName: string = 'InterchangeItemName';
 
   beforeAll(() => {
@@ -197,20 +197,20 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: 'DomainEntityName',
     });
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: interchangeItemName,
       referencedEntity: referencedEntity1,
     });
     mergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       elements: [interchangeItem1],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
@@ -230,7 +230,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with internal dependency', () => {
   let mergedInterchange: MergedInterchange;
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
 
@@ -241,16 +241,16 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       properties: [],
     });
     const referencedEntity2: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName2,
     });
     referencedEntity1.properties.push(
@@ -264,17 +264,17 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
       ],
     );
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       referencedEntity: referencedEntity1,
     });
     const interchangeItem2: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName2,
       referencedEntity: referencedEntity2,
     });
     mergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       elements: [interchangeItem1, interchangeItem2],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
@@ -297,7 +297,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency', () => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
 
@@ -308,16 +308,16 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       properties: [newIntegerProperty()],
     });
     const referencedEntity2: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName2,
     });
     referencedEntity1.properties.push(
@@ -331,19 +331,19 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
       ],
     );
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       referencedEntity: referencedEntity1,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem1);
     const interchangeItem2: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName2,
       referencedEntity: referencedEntity2,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem2);
     mergedInterchange1 = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       metaEdName: 'MergedInterchangeName1',
       elements: [interchangeItem1],
     });
@@ -351,7 +351,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     addMergedInterchangeEdfiOdsApiTo(mergedInterchange1);
 
     mergedInterchange2 = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       metaEdName: 'MergedInterchangeName2',
       elements: [interchangeItem2],
     });
@@ -378,8 +378,8 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
   let mergedInterchange2Extension: MergedInterchange;
-  const namespace: string = 'edfi';
-  const extension: string = 'extension';
+  const namespaceName: string = 'edfi';
+  const extensionNamespaceName: string = 'extension';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
 
@@ -390,27 +390,27 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extension,
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityName1,
       properties: [newIntegerProperty()],
     });
     const referencedEntity1Extension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityName1,
       baseEntity: referencedEntity1,
       properties: [newIntegerProperty()],
     });
     const referencedEntity2: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName2,
     });
     referencedEntity1.properties.push(
@@ -419,37 +419,37 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
       }),
     );
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       referencedEntity: referencedEntity1,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem1);
     const interchangeItem2: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityName2,
       referencedEntity: referencedEntity2,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem2);
     mergedInterchange1 = Object.assign(newMergedInterchange(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: 'MergedInterchangeName1',
       elements: [interchangeItem2],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange1);
     addMergedInterchangeEdfiOdsApiTo(mergedInterchange1);
     mergedInterchange2 = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       metaEdName: 'MergedInterchangeName2',
       elements: [interchangeItem1],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange2);
     addMergedInterchangeEdfiOdsApiTo(mergedInterchange2);
     mergedInterchange2Extension = Object.assign(newMergedInterchange(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: 'MergedInterchangeName2',
       elements: [
         Object.assign(interchangeItem1, {
-          namespaceInfo: extensionNamespaceInfo,
+          namespace: extensionNamespace,
           referencedEntity: referencedEntity1Extension,
         }),
       ],
@@ -481,8 +481,8 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension with duplicate name', () => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
-  const namespace: string = 'edfi';
-  const extension: string = 'extension';
+  const namespaceName: string = 'edfi';
+  const extensionNamespaceName: string = 'extension';
   const domainEntityName1: string = 'DomainEntityName1';
 
   beforeAll(() => {
@@ -492,47 +492,47 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
     });
     metaEd.plugin.set('edfiXsd', plugin);
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), { namespace });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extension,
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       properties: [newIntegerProperty()],
     });
     const referencedEntity1Extension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityName1,
       baseEntity: referencedEntity1,
       properties: [newIntegerProperty()],
     });
     const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       referencedEntity: referencedEntity1,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem1);
     const interchangeItem2: InterchangeItem = Object.assign(newInterchangeItem(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName1,
       referencedEntity: referencedEntity1Extension,
     });
     addInterchangeItemEdfiOdsApiTo(interchangeItem2);
     mergedInterchange1 = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       elements: [interchangeItem1],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange1);
     addMergedInterchangeEdfiOdsApiTo(mergedInterchange1);
 
     mergedInterchange2 = Object.assign(newMergedInterchange(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       elements: [interchangeItem2],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange2);

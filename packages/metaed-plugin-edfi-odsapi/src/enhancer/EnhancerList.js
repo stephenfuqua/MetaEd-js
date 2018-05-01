@@ -17,7 +17,7 @@ import { enhance as schoolYearEnumerationAggregateEnhancer } from '../enhancer/d
 import { enhance as descriptorSetupEnhancer } from '../model/Descriptor';
 import { enhance as interchangeItemSetupEnhancer } from '../model/InterchangeItem';
 import { enhance as mergedInterchangeSetupEnhancer } from '../model/MergedInterchange';
-import { enhance as namespaceInfoSetupEnhancer } from '../model/NamespaceInfo';
+import { enhance as namespaceSetupEnhancer } from '../model/Namespace';
 import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity';
 
 import { enhance as createDomainModelDefinitionEnhancer } from '../enhancer/apiModel/CreateDomainModelDefinitionEnhancer';
@@ -33,7 +33,7 @@ export function enhancerList(): Array<Enhancer> {
     descriptorSetupEnhancer,
     interchangeItemSetupEnhancer,
     mergedInterchangeSetupEnhancer,
-    namespaceInfoSetupEnhancer,
+    namespaceSetupEnhancer,
     topLevelEntitySetupEnhancer,
 
     // Domain Metadata

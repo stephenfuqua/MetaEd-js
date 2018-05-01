@@ -1,10 +1,10 @@
 // @flow
-import { newMetaEdEnvironment, newDescriptor, newNamespaceInfo, normalizeEnumerationSuffix } from 'metaed-core';
-import type { MetaEdEnvironment, Descriptor, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newDescriptor, newNamespace, normalizeEnumerationSuffix } from 'metaed-core';
+import type { MetaEdEnvironment, Descriptor, Namespace } from 'metaed-core';
 import { newTable } from 'metaed-plugin-edfi-ods';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { enhance } from '../../../src/enhancer/domainMetadata/DescriptorAggregateEnhancer';
-import type { NamespaceInfoEdfiOdsApi } from '../../../src/model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
@@ -12,11 +12,11 @@ import type { EntityTable } from '../../../src/model/domainMetadata/EntityTable'
 describe('when enhancing descriptor with no map type', () => {
   const metaEdName: string = 'MetaEdName';
   const tableName: string = 'TableName';
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-    namespace,
+  const namespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
@@ -28,22 +28,22 @@ describe('when enhancing descriptor with no map type', () => {
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespace,
+      schema: namespaceName,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName,
       isMapTypeRequired: false,
       isMapTypeOptional: false,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         data: {
           edfiOdsApi: {
             aggregates: [],
@@ -69,10 +69,9 @@ describe('when enhancing descriptor with no map type', () => {
   });
 
   it('should add aggregate to namespace', () => {
-    const namespaceInfoAggregates: Array<Aggregate> = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi)
-      .aggregates;
-    expect(namespaceInfoAggregates).toHaveLength(1);
-    expect(namespaceInfoAggregates[0]).toBe(aggregate);
+    const namespaceAggregates: Array<Aggregate> = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
+    expect(namespaceAggregates).toHaveLength(1);
+    expect(namespaceAggregates[0]).toBe(aggregate);
   });
 
   it('should create aggregate', () => {
@@ -87,7 +86,7 @@ describe('when enhancing descriptor with no map type', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespace);
+    expect(entityTable.schema).toBe(namespaceName);
     expect(entityTable.table).toBe(tableName);
   });
 });
@@ -96,11 +95,11 @@ describe('when enhancing descriptor with map type', () => {
   const entityName: string = 'EntityName';
   const descriptorTableName: string = `${entityName}Descriptor`;
   const typeTableName: string = normalizeEnumerationSuffix(entityName);
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-    namespace,
+  const namespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
@@ -112,28 +111,28 @@ describe('when enhancing descriptor with map type', () => {
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
     const descriptorTable: Table = {
       ...newTable(),
       name: descriptorTableName,
-      schema: namespace,
+      schema: namespaceName,
     };
 
     const typeTable: Table = {
       ...newTable(),
       name: typeTableName,
-      schema: namespace,
+      schema: namespaceName,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: entityName,
       isMapTypeRequired: true,
       isMapTypeOptional: false,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         data: {
           edfiOdsApi: {
             aggregates: [],
@@ -160,11 +159,10 @@ describe('when enhancing descriptor with map type', () => {
   });
 
   it('should add aggregate to namespace', () => {
-    const namespaceInfoAggregates: Array<Aggregate> = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi)
-      .aggregates;
-    expect(namespaceInfoAggregates).toHaveLength(2);
-    expect(namespaceInfoAggregates).toContain(aggregate);
-    expect(namespaceInfoAggregates).toContain(typeAggregate);
+    const namespaceAggregates: Array<Aggregate> = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
+    expect(namespaceAggregates).toHaveLength(2);
+    expect(namespaceAggregates).toContain(aggregate);
+    expect(namespaceAggregates).toContain(typeAggregate);
   });
 
   it('should create aggregate', () => {
@@ -185,13 +183,13 @@ describe('when enhancing descriptor with map type', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const descriptorEntityTable: EntityTable = aggregate.entityTables[0];
     expect(descriptorEntityTable).not.toBeNull();
-    expect(descriptorEntityTable.schema).toBe(namespace);
+    expect(descriptorEntityTable.schema).toBe(namespaceName);
     expect(descriptorEntityTable.table).toBe(descriptorTableName);
 
     expect(typeAggregate.entityTables).toHaveLength(1);
     const typeEntityTable: EntityTable = typeAggregate.entityTables[0];
     expect(typeEntityTable).not.toBeNull();
-    expect(typeEntityTable.schema).toBe(namespace);
+    expect(typeEntityTable.schema).toBe(namespaceName);
     expect(typeEntityTable.table).toBe(typeTableName);
   });
 });

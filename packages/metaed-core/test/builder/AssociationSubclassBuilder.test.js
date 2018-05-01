@@ -1,7 +1,7 @@
 // @flow
 import { AssociationSubclassBuilder } from '../../src/builder/AssociationSubclassBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getAssociationSubclass } from '../TestHelper';
 import type { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building association subclass in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -22,13 +22,13 @@ describe('when building association subclass in extension namespace', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -46,11 +46,11 @@ describe('when building association subclass in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name', () => {
@@ -77,7 +77,7 @@ describe('when building association subclass in extension namespace', () => {
 describe('when building duplicate association subclasses', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -88,7 +88,7 @@ describe('when building duplicate association subclasses', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation('doc')
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -99,7 +99,7 @@ describe('when building duplicate association subclasses', () => {
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -141,7 +141,7 @@ describe('when building association subclass with no association subclass name',
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -153,13 +153,13 @@ describe('when building association subclass with no association subclass name',
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -176,7 +176,7 @@ describe('when building association subclass with lowercase association subclass
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -188,13 +188,13 @@ describe('when building association subclass with lowercase association subclass
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -211,7 +211,7 @@ describe('when building association subclass with no based on name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -223,13 +223,13 @@ describe('when building association subclass with no based on name', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -247,11 +247,11 @@ describe('when building association subclass with no based on name', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name', () => {
@@ -283,7 +283,7 @@ describe('when building association subclass with lowercase based on name', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -295,13 +295,13 @@ describe('when building association subclass with lowercase based on name', () =
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -319,11 +319,11 @@ describe('when building association subclass with lowercase based on name', () =
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name but with lowercase prefix ignored', () => {
@@ -355,7 +355,7 @@ describe('when building association subclass with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -366,12 +366,12 @@ describe('when building association subclass with no documentation', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -389,11 +389,11 @@ describe('when building association subclass with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name but with lowercase prefix ignored', () => {
@@ -417,7 +417,7 @@ describe('when building association subclass with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -428,12 +428,12 @@ describe('when building association subclass with no property', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -451,11 +451,11 @@ describe('when building association subclass with no property', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name but with lowercase prefix ignored', () => {
@@ -479,7 +479,7 @@ describe('when building association subclass with invalid trailing text', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -492,14 +492,14 @@ describe('when building association subclass with invalid trailing text', () => 
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withTrailingText(trailingText)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -517,11 +517,11 @@ describe('when building association subclass with invalid trailing text', () => 
   });
 
   it('should have namespace', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getAssociationSubclass(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociationSubclass(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have base name', () => {
@@ -552,7 +552,7 @@ describe('when building association subclass with invalid trailing text', () => 
 describe('when building association subclass source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -564,13 +564,13 @@ describe('when building association subclass source map', () => {
     const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociationSubclass(entityName, baseEntityName, '1')
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndAssociationSubclass()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 

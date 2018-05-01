@@ -35,7 +35,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         const foreignKey: ForeignKey = createForeignKey(
           property,
           [descriptorColumn],
-          descriptor.referencedEntity.namespaceInfo.namespace,
+          descriptor.referencedEntity.namespace.namespaceName,
           descriptor.referencedEntity.data.edfiOds.ods_DescriptorName,
           ForeignKeyStrategy.foreignColumnRename(`${descriptor.data.edfiOds.ods_DescriptorifiedBaseName}Id`),
         );
@@ -72,7 +72,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,
-          descriptor.referencedEntity.namespaceInfo.namespace,
+          descriptor.referencedEntity.namespace.namespaceName,
           descriptor.referencedEntity.data.edfiOds.ods_DescriptorName,
           ForeignKeyStrategy.foreignColumnRename(`${descriptor.data.edfiOds.ods_DescriptorifiedBaseName}Id`),
         );

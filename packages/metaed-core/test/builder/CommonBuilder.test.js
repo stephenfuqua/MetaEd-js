@@ -1,6 +1,6 @@
 // @flow
 import { CommonBuilder } from '../../src/builder/CommonBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getCommon } from '../TestHelper';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building common in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -24,13 +24,13 @@ describe('when building common in extension namespace', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -48,7 +48,7 @@ describe('when building common in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -56,7 +56,7 @@ describe('when building common in extension namespace', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not be inlined in ODS', () => {
@@ -85,7 +85,7 @@ describe('when building common in extension namespace', () => {
 describe('when building duplicate commons', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -99,7 +99,7 @@ describe('when building duplicate commons', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
@@ -110,7 +110,7 @@ describe('when building duplicate commons', () => {
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -151,7 +151,7 @@ describe('when building duplicate commons', () => {
 describe('when building inline common in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -165,13 +165,13 @@ describe('when building inline common in extension namespace', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -185,7 +185,7 @@ describe('when building inline common in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -193,7 +193,7 @@ describe('when building inline common in extension namespace', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -223,7 +223,7 @@ describe('when building common with no common name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -237,13 +237,13 @@ describe('when building common with no common name', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -260,7 +260,7 @@ describe('when building common with lowercase common name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -274,13 +274,13 @@ describe('when building common with lowercase common name', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -297,7 +297,7 @@ describe('when building common with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -310,12 +310,12 @@ describe('when building common with no documentation', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -329,7 +329,7 @@ describe('when building common with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -337,7 +337,7 @@ describe('when building common with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -371,7 +371,7 @@ describe('when building common with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -382,12 +382,12 @@ describe('when building common with no property', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -401,7 +401,7 @@ describe('when building common with no property', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -409,7 +409,7 @@ describe('when building common with no property', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -433,7 +433,7 @@ describe('when building common with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -448,14 +448,14 @@ describe('when building common with invalid trailing text', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withTrailingText(trailingText)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -469,7 +469,7 @@ describe('when building common with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -477,7 +477,7 @@ describe('when building common with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -511,7 +511,7 @@ describe('when building inline common with no inline common name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -525,13 +525,13 @@ describe('when building inline common with no inline common name', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -548,7 +548,7 @@ describe('when building inline common with lowercase inline common name', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -563,13 +563,13 @@ describe('when building inline common with lowercase inline common name', () => 
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -583,7 +583,7 @@ describe('when building inline common with lowercase inline common name', () => 
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -591,7 +591,7 @@ describe('when building inline common with lowercase inline common name', () => 
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -625,7 +625,7 @@ describe('when building inline common with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -638,12 +638,12 @@ describe('when building inline common with no documentation', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -657,7 +657,7 @@ describe('when building inline common with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -665,7 +665,7 @@ describe('when building inline common with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -699,7 +699,7 @@ describe('when building inline common with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -710,12 +710,12 @@ describe('when building inline common with no property', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -729,7 +729,7 @@ describe('when building inline common with no property', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -737,7 +737,7 @@ describe('when building inline common with no property', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -761,7 +761,7 @@ describe('when building inline common with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -776,14 +776,14 @@ describe('when building inline common with invalid trailing text', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withTrailingText(trailingText)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -797,7 +797,7 @@ describe('when building inline common with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getCommon(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -805,7 +805,7 @@ describe('when building inline common with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getCommon(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getCommon(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be inlined in ODS', () => {
@@ -838,7 +838,7 @@ describe('when building inline common with invalid trailing text', () => {
 describe('when building common source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -852,13 +852,13 @@ describe('when building common source map', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -886,7 +886,7 @@ describe('when building common source map', () => {
 describe('when building inline common source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -900,13 +900,13 @@ describe('when building inline common source map', () => {
     const builder = new CommonBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartInlineCommon(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndInlineCommon()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 

@@ -4,7 +4,7 @@ import {
   ChoiceBuilder,
   CommonBuilder,
   DomainEntityBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   MetaEdTextBuilder,
   newMetaEdEnvironment,
   newSourceMap,
@@ -27,7 +27,7 @@ describe('when validating merge property path', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -65,7 +65,7 @@ describe('when validating path with no matching merge property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -114,7 +114,7 @@ describe('when validating path with merge property collection targeting non iden
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -164,7 +164,7 @@ describe('when validating path with merge property collection targeting identity
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -212,7 +212,7 @@ describe('when validating path with merge property targeting non identity on cur
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -267,7 +267,7 @@ describe('when validating path with merge property targeting identity on referen
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -321,7 +321,7 @@ describe('when validating path with merge property targeting non identity on ref
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failReferencedPropertyDoesNotExist(
@@ -377,7 +377,7 @@ describe('when validating path with merge property targeting optional on common 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -436,7 +436,7 @@ describe('when validating path with merge property targeting non identity inline
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -497,7 +497,7 @@ describe('when validating path with merge property targeting non identity choice
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -556,7 +556,7 @@ describe('when validating path with merge property collection targeting non iden
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -617,7 +617,7 @@ describe('when validating path with merge property collection targeting identity
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 

@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, NamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Namespace } from 'metaed-core';
 import { getEntitiesOfType, orderByProp } from 'metaed-core';
 import { formatAndPrependHeader, template } from './XsdGeneratorBase';
 
@@ -11,12 +11,12 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   );
   const formattedGeneratedResult = formatAndPrependHeader(template().schemaAnnotation({ descriptors }));
 
-  const coreNamespace: ?NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values()).find(
-    (namespaceInfo: NamespaceInfo) => !namespaceInfo.isExtension,
+  const coreNamespace: ?Namespace = Array.from(metaEd.entity.namespace.values()).find(
+    (namespace: Namespace) => !namespace.isExtension,
   );
   results.push({
     name: 'Core XSD Schema Annotation',
-    namespace: coreNamespace ? coreNamespace.namespace : '',
+    namespace: coreNamespace ? coreNamespace.namespaceName : '',
     folderName: 'XSD',
     fileName: 'SchemaAnnotation.xsd',
     resultString: formattedGeneratedResult,

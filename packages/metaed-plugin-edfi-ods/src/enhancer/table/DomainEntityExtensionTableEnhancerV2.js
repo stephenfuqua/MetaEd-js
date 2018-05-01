@@ -31,7 +31,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
       const mainTable: Table = Object.assign(newTable(), {
-        schema: entity.namespaceInfo.namespace,
+        schema: entity.namespace.namespaceName,
         name: entity.data.edfiOds.ods_ExtensionName,
         description: entity.documentation,
         parentEntity: entity,
@@ -56,7 +56,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
         const tableStrategy: TableStrategy = TableStrategy.extension(
           mainTable,
-          entity.baseEntity != null ? entity.baseEntity.namespaceInfo.namespace : '',
+          entity.baseEntity != null ? entity.baseEntity.namespace.namespaceName : '',
           entity.baseEntity != null ? entity.baseEntity.data.edfiOds.ods_TableName : '',
         );
         const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);

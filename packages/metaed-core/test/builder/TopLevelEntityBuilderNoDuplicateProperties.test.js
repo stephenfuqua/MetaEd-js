@@ -1,6 +1,6 @@
 // @flow
 import { DomainEntityBuilder } from '../../src/builder/DomainEntityBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building domain entity with duplicate decimal properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -23,7 +23,7 @@ describe('when building domain entity with duplicate decimal properties in exten
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withDecimalProperty(
@@ -52,7 +52,7 @@ describe('when building domain entity with duplicate decimal properties in exten
       )
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -75,7 +75,7 @@ describe('when building domain entity with duplicate decimal properties in exten
 describe('when building domain entity with duplicate integer properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -86,14 +86,14 @@ describe('when building domain entity with duplicate integer properties in exten
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -117,7 +117,7 @@ describe('when building domain entity with duplicate integer properties in exten
 describe('when building domain entity with duplicate string properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -128,14 +128,14 @@ describe('when building domain entity with duplicate string properties in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withStringProperty(entityName, documentation, true, false, maxLength, minLength, null, metaEdId)
       .withStringProperty(entityName, documentation, true, false, maxLength, minLength, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -158,7 +158,7 @@ describe('when building domain entity with duplicate string properties in extens
 describe('when building entities with duplicate boolean properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -166,14 +166,14 @@ describe('when building entities with duplicate boolean properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withBooleanProperty(propertyName, documentation, true, false)
       .withBooleanProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -197,7 +197,7 @@ describe('when building entities with duplicate boolean properties', () => {
 describe('when building entities with duplicate currency properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -205,14 +205,14 @@ describe('when building entities with duplicate currency properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCurrencyProperty(propertyName, documentation, true, false)
       .withCurrencyProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -236,7 +236,7 @@ describe('when building entities with duplicate currency properties', () => {
 describe('when building entities with duplicate date properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -244,14 +244,14 @@ describe('when building entities with duplicate date properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withDateProperty(propertyName, documentation, true, false)
       .withDateProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -275,7 +275,7 @@ describe('when building entities with duplicate date properties', () => {
 describe('when building entities with duplicate duration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -283,14 +283,14 @@ describe('when building entities with duplicate duration properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withDurationProperty(propertyName, documentation, true, false)
       .withDurationProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -314,7 +314,7 @@ describe('when building entities with duplicate duration properties', () => {
 describe('when building entities with duplicate enumeration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -322,14 +322,14 @@ describe('when building entities with duplicate enumeration properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withEnumerationProperty(propertyName, documentation, true, false)
       .withEnumerationProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -352,7 +352,7 @@ describe('when building entities with duplicate enumeration properties', () => {
 describe('when building entities with duplicate common properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -360,14 +360,14 @@ describe('when building entities with duplicate common properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withCommonProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -390,7 +390,7 @@ describe('when building entities with duplicate common properties', () => {
 describe('when building entities with an association property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -398,14 +398,14 @@ describe('when building entities with an association property that duplicates na
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withAssociationProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -430,7 +430,7 @@ describe('when building entities with an association property that duplicates na
 describe('when building entities with a short property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -438,14 +438,14 @@ describe('when building entities with a short property that duplicates name of a
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withShortProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -469,7 +469,7 @@ describe('when building entities with a short property that duplicates name of a
 describe('when building entities with an shared decimal property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -477,14 +477,14 @@ describe('when building entities with an shared decimal property that duplicates
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withSharedDecimalProperty(propertyName, '', documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -508,7 +508,7 @@ describe('when building entities with an shared decimal property that duplicates
 describe('when building entities with a time property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -516,14 +516,14 @@ describe('when building entities with a time property that duplicates name of an
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withTimeProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -547,7 +547,7 @@ describe('when building entities with a time property that duplicates name of an
 describe('when building entities with a year property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -555,14 +555,14 @@ describe('when building entities with a year property that duplicates name of an
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withCommonProperty(propertyName, documentation, true, false)
       .withYearProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -586,7 +586,7 @@ describe('when building entities with a year property that duplicates name of an
 describe('when building entities with two association properties duplicate property name but different contexts', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -594,14 +594,14 @@ describe('when building entities with two association properties duplicate prope
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
       .withAssociationProperty(propertyName, documentation, true, false, false, 'Context2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -616,7 +616,7 @@ describe('when building entities with two association properties duplicate prope
 describe('when building entities with two association properties with duplicate property name and duplicate contexts', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -624,14 +624,14 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
       .withAssociationProperty(propertyName, documentation, true, false, false, 'Context1')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -654,7 +654,7 @@ describe('when building entities with two association properties with duplicate 
 describe('when building entities with two association properties with duplicate property name and duplicate contexts, different shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -662,7 +662,7 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withAssociationProperty(propertyName, documentation, true, false, false)
@@ -671,7 +671,7 @@ describe('when building entities with two association properties with duplicate 
       .withContext('context1', 'Short2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 
@@ -695,7 +695,7 @@ describe('when building entities with two association properties with duplicate 
 describe('when building entities with two association properties with duplicate property name and duplicate contexts, duplicate shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
@@ -703,7 +703,7 @@ describe('when building entities with two association properties with duplicate 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation(documentation)
       .withAssociationProperty(propertyName, documentation, true, false, false)
@@ -712,7 +712,7 @@ describe('when building entities with two association properties with duplicate 
       .withContext('context1', 'ShortOne')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
   });
 

@@ -1,7 +1,7 @@
 // @flow
 import { String as sugar } from 'sugar';
-import { newNamespaceInfo } from 'metaed-core';
-import type { NamespaceInfo, Interchange, InterchangeItem, MetaEdEnvironment } from 'metaed-core';
+import { newNamespace } from 'metaed-core';
+import type { Namespace, Interchange, InterchangeItem, MetaEdEnvironment } from 'metaed-core';
 import { unionOfInterchangeItems } from '../model/InterchangeItem';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
@@ -11,7 +11,7 @@ type MergedInterchangeBase = {
   documentation: string,
   metaEdName: string,
   metaEdId: string,
-  namespaceInfo: NamespaceInfo,
+  namespace: Namespace,
 
   elements: Array<InterchangeItem>,
   identityTemplates: Array<InterchangeItem>,
@@ -38,8 +38,8 @@ export const combinedElementsAndIdentityTemplatesFor = (mergedInterchange: Merge
 
 export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, mergedInterchange: MergedInterchange) => {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  mergedInterchange.repositoryId = mergedInterchange.namespaceInfo.isExtension
-    ? `${mergedInterchange.namespaceInfo.projectExtension}-${mergedInterchange.metaEdName}`
+  mergedInterchange.repositoryId = mergedInterchange.namespace.isExtension
+    ? `${mergedInterchange.namespace.projectExtension}-${mergedInterchange.metaEdName}`
     : mergedInterchange.metaEdName;
   mergedInterchange.humanizedName = addHumanizedNameFor(mergedInterchange);
 
@@ -54,7 +54,7 @@ export function newMergedInterchange(): MergedInterchange {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
 
     elements: [],
     identityTemplates: [],

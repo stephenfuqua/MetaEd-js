@@ -1,6 +1,6 @@
 // @flow
 import { SharedIntegerBuilder } from '../../src/builder/SharedIntegerBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getSharedInteger } from '../TestHelper';
@@ -11,7 +11,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building shared integer in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -23,13 +23,13 @@ describe('when building shared integer in extension namespace', () => {
   beforeAll(() => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -47,11 +47,11 @@ describe('when building shared integer in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -78,7 +78,7 @@ describe('when building shared integer in extension namespace', () => {
 describe('when building duplicate shared integers', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -90,7 +90,7 @@ describe('when building duplicate shared integers', () => {
   beforeAll(() => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
@@ -101,7 +101,7 @@ describe('when building duplicate shared integers', () => {
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -142,7 +142,7 @@ describe('when building duplicate shared integers', () => {
 describe('when building shared short in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -154,13 +154,13 @@ describe('when building shared short in extension namespace', () => {
   beforeAll(() => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -174,11 +174,11 @@ describe('when building shared short in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -206,7 +206,7 @@ describe('when building shared integer with no shared integer name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -219,13 +219,13 @@ describe('when building shared integer with no shared integer name', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -242,7 +242,7 @@ describe('when building shared integer with lowercase shared integer name', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -256,13 +256,13 @@ describe('when building shared integer with lowercase shared integer name', () =
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -276,11 +276,11 @@ describe('when building shared integer with lowercase shared integer name', () =
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -312,7 +312,7 @@ describe('when building shared integer with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -324,21 +324,21 @@ describe('when building shared integer with no documentation', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -370,7 +370,7 @@ describe('when building shared integer with no min value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -383,22 +383,22 @@ describe('when building shared integer with no min value', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -430,7 +430,7 @@ describe('when building shared integer with no max value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -443,22 +443,22 @@ describe('when building shared integer with no max value', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -490,7 +490,7 @@ describe('when building shared integer with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -504,23 +504,23 @@ describe('when building shared integer with invalid trailing text', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withTrailingText(trailingText)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -552,7 +552,7 @@ describe('when building shared short with no shared short name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -565,13 +565,13 @@ describe('when building shared short with no shared short name', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -588,7 +588,7 @@ describe('when building shared short with lowercase shared short name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -602,13 +602,13 @@ describe('when building shared short with lowercase shared short name', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -622,11 +622,11 @@ describe('when building shared short with lowercase shared short name', () => {
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -658,7 +658,7 @@ describe('when building shared short with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -670,21 +670,21 @@ describe('when building shared short with no documentation', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -716,7 +716,7 @@ describe('when building shared short with no min value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -729,22 +729,22 @@ describe('when building shared short with no min value', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -776,7 +776,7 @@ describe('when building shared short with no max value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -789,22 +789,22 @@ describe('when building shared short with no max value', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -836,7 +836,7 @@ describe('when building shared short with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -850,23 +850,23 @@ describe('when building shared short with invalid trailing text', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withTrailingText(trailingText)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getSharedInteger(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
@@ -897,7 +897,7 @@ describe('when building shared short with invalid trailing text', () => {
 describe('when building shared integer source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -910,13 +910,13 @@ describe('when building shared integer source map', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -940,8 +940,8 @@ describe('when building shared integer source map', () => {
     expect(getSharedInteger(metaEd.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getSharedInteger(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   // SharedIntegerSourceMap
@@ -965,7 +965,7 @@ describe('when building shared integer source map', () => {
 describe('when building shared short source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -978,13 +978,13 @@ describe('when building shared short source map', () => {
     const builder = new SharedIntegerBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1007,8 +1007,8 @@ describe('when building shared short source map', () => {
     expect(getSharedInteger(metaEd.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getSharedInteger(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getSharedInteger(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   // SharedIntegerSourceMap

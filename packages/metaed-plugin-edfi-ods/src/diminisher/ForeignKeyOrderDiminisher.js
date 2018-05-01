@@ -17,11 +17,11 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ForeignKeyOrderDiminisher';
 const targetVersions: string = '2.x';
 
-const namespace: string = 'edfi';
+const namespaceName: string = 'edfi';
 
 function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void {
   const foreignKeys: Array<ForeignKey> = R.chain((table: Table) =>
-    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespace),
+    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespaceName),
   )([...repository.table.values()]);
   if (foreignKeys.length === 0) return;
 

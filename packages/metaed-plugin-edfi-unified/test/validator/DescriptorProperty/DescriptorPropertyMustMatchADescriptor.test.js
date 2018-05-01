@@ -4,7 +4,7 @@ import {
   MetaEdTextBuilder,
   DomainEntityBuilder,
   DescriptorBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/DescriptorProperty/DescriptorPropertyMustMatchADescriptor';
@@ -28,7 +28,7 @@ describe('when descriptor property has valid identifier', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -62,7 +62,7 @@ describe('when descriptor property has invalid identifier', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     failures = validate(metaEd);

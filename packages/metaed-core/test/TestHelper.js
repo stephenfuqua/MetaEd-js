@@ -15,7 +15,7 @@ import type { IntegerType } from '../src/model/IntegerType';
 import type { Interchange } from '../src/model/Interchange';
 import type { InterchangeExtension } from '../src/model/InterchangeExtension';
 import type { MapTypeEnumeration } from '../src/model/MapTypeEnumeration';
-import type { NamespaceInfo } from '../src/model/NamespaceInfo';
+import type { Namespace } from '../src/model/Namespace';
 import type { SchoolYearEnumeration } from '../src/model/SchoolYearEnumeration';
 import type { SharedDecimal } from '../src/model/SharedDecimal';
 import type { SharedInteger } from '../src/model/SharedInteger';
@@ -94,8 +94,8 @@ export function getMapTypeEnumeration(repository: EntityRepository, metaEdId: st
   return ((getEntity(repository, metaEdId, 'mapTypeEnumeration'): any): MapTypeEnumeration);
 }
 
-export function getNamespaceInfo(repository: EntityRepository, metaEdId: string): NamespaceInfo {
-  return ((getEntity(repository, metaEdId, 'namespaceInfo'): any): NamespaceInfo);
+export function getNamespace(repository: EntityRepository, metaEdId: string): Namespace {
+  return ((getEntity(repository, metaEdId, 'namespace'): any): Namespace);
 }
 
 export function getSchoolYearEnumeration(repository: EntityRepository, metaEdId: string): SchoolYearEnumeration {

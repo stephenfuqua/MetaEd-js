@@ -23,7 +23,7 @@ export type ModelType =
   | 'interchangeItem'
   | 'inlineCommon'
   | 'mapTypeEnumeration'
-  | 'namespaceInfo'
+  | 'namespace'
   | 'schoolYearEnumeration'
   | 'sharedDecimal'
   | 'sharedInteger'

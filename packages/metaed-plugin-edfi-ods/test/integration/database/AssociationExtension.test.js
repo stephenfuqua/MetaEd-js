@@ -5,7 +5,7 @@ import {
   CommonBuilder,
   DomainEntityBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -18,7 +18,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when association extension has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
@@ -30,7 +30,7 @@ describe('when association extension has a single property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -54,7 +54,7 @@ describe('when association extension has a single property', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
@@ -65,7 +65,7 @@ describe('when association extension has a single property', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have association extension table', async () => {
@@ -89,26 +89,29 @@ describe('when association extension has a single property', () => {
         column(extension, associationExtensionName, integerPropertyName1),
         column(extension, associationExtensionName, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have standard resource columns on association', async () => {
-    const idColumn: DatabaseColumn = column(namespace, associationName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, associationName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, associationName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, associationName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -116,15 +119,15 @@ describe('when association extension has a single property', () => {
   });
 
   it('should not have standard resource columns on association extension', async () => {
-    expect(await columnExists(column(namespace, associationExtensionName, 'Id'))).toBe(false);
-    expect(await columnExists(column(namespace, associationExtensionName, 'LastModifiedDate'))).toBe(false);
-    expect(await columnExists(column(namespace, associationExtensionName, 'CreateDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationExtensionName, 'Id'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationExtensionName, 'LastModifiedDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationExtensionName, 'CreateDate'))).toBe(false);
   });
 });
 
 describe('when association extension has a required property and a collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
@@ -137,7 +140,7 @@ describe('when association extension has a required property and a collection', 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -162,7 +165,7 @@ describe('when association extension has a required property and a collection', 
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
@@ -173,7 +176,7 @@ describe('when association extension has a required property and a collection', 
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have association extension table', async () => {
@@ -197,7 +200,10 @@ describe('when association extension has a required property and a collection', 
         column(extension, associationExtensionName, integerPropertyName1),
         column(extension, associationExtensionName, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -221,7 +227,10 @@ describe('when association extension has a required property and a collection', 
         column(extension, associationName + integerPropertyName4, integerPropertyName1),
         column(extension, associationName + integerPropertyName4, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -235,7 +244,7 @@ describe('when association extension has a required property and a collection', 
 
 describe('when association extension only has a collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
@@ -247,7 +256,7 @@ describe('when association extension only has a collection', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -271,7 +280,7 @@ describe('when association extension only has a collection', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
@@ -282,7 +291,7 @@ describe('when association extension only has a collection', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should not have association extension table', async () => {
@@ -311,7 +320,10 @@ describe('when association extension only has a collection', () => {
         column(extension, associationName + integerPropertyName3, integerPropertyName1),
         column(extension, associationName + integerPropertyName3, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -320,7 +332,7 @@ describe('when association extension only has a collection', () => {
 
 describe('when association extension has a reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
@@ -333,7 +345,7 @@ describe('when association extension has a reference property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -362,7 +374,7 @@ describe('when association extension has a reference property', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
@@ -373,7 +385,7 @@ describe('when association extension has a reference property', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have association extension table', async () => {
@@ -397,7 +409,10 @@ describe('when association extension has a reference property', () => {
         column(extension, associationExtensionName, integerPropertyName1),
         column(extension, associationExtensionName, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -406,7 +421,7 @@ describe('when association extension has a reference property', () => {
 
 describe('when association extension has multiple common properties', () => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -421,7 +436,7 @@ describe('when association extension has multiple common properties', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -456,7 +471,7 @@ describe('when association extension has multiple common properties', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
@@ -468,23 +483,23 @@ describe('when association extension has multiple common properties', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, associationName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, associationName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, associationName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, associationName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -521,7 +536,7 @@ describe('when association extension has multiple common properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, associationName + commonName1, integerPropertyName1)],
-      [column(namespace, associationName, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -563,7 +578,7 @@ describe('when association extension has multiple common properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, associationName + commonName2, integerPropertyName1)],
-      [column(namespace, associationName, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);

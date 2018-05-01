@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { DomainEntity, MetaEdEnvironment } from 'metaed-core';
-import { newBooleanProperty, newDomainEntity, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { newBooleanProperty, newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType, NoComplexType } from '../../src/model/schema/ComplexType';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
@@ -153,7 +153,7 @@ describe('when AddLookupTypesDiminisher diminishes entity not included in lookup
 
   beforeAll(() => {
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
+      namespace: Object.assign(newNamespace(), {
         isExtension: true,
         projectExtension: 'Extension',
       }),

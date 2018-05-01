@@ -1,16 +1,10 @@
 // @flow
-import {
-  newMetaEdEnvironment,
-  newAssociation,
-  newAssociationExtension,
-  newNamespaceInfo,
-  NoNamespaceInfo,
-} from 'metaed-core';
-import type { MetaEdEnvironment, Association, AssociationExtension, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newAssociation, newAssociationExtension, newNamespace, NoNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Association, AssociationExtension, Namespace } from 'metaed-core';
 import { newTable } from 'metaed-plugin-edfi-ods';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { enhance } from '../../../src/enhancer/domainMetadata/AssociationExtensionAggregateEnhancer';
-import type { NamespaceInfoEdfiOdsApi } from '../../../src/model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
@@ -20,24 +14,24 @@ describe('when enhancing association extensions', () => {
   const baseTableName: string = 'BaseTableName';
   const entityName: string = 'EntityName';
   const tableName: string = 'TableName';
-  const namespace: string = 'namespace';
-  const extensionNamespace: string = 'extension';
+  const namespaceName: string = 'namespace';
+  const extensionNamespaceName: string = 'extension';
 
   let aggregate: Aggregate = NoAggregate;
-  let extensionNamespaceInfo: NamespaceInfo = NoNamespaceInfo;
+  let extensionNamespace: Namespace = NoNamespace;
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [],
         },
       },
     });
-    extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespace,
+    extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       isExtension: true,
       data: {
         edfiOdsApi: {
@@ -45,12 +39,12 @@ describe('when enhancing association extensions', () => {
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const baseEntity: Association = Object.assign(newAssociation(), {
       metaEdName: baseEntityName,
-      namespaceInfo,
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: baseTableName,
@@ -63,13 +57,13 @@ describe('when enhancing association extensions', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: extensionNamespace,
+      schema: extensionNamespaceName,
     };
 
     const entity: AssociationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: entityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: extensionNamespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName: extensionNamespaceName,
         isExtension: true,
         data: {
           edfiOdsApi: {
@@ -92,10 +86,10 @@ describe('when enhancing association extensions', () => {
   });
 
   it('should add aggregate to namespace', () => {
-    const extensionNamespaceInfoAggregates: Array<Aggregate> = ((extensionNamespaceInfo.data
-      .edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates;
-    expect(extensionNamespaceInfoAggregates).toHaveLength(1);
-    expect(extensionNamespaceInfoAggregates[0]).toBe(aggregate);
+    const extensionNamespaceAggregates: Array<Aggregate> = ((extensionNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi)
+      .aggregates;
+    expect(extensionNamespaceAggregates).toHaveLength(1);
+    expect(extensionNamespaceAggregates[0]).toBe(aggregate);
   });
 
   it('should create aggregate', () => {
@@ -109,7 +103,7 @@ describe('when enhancing association extensions', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(extensionNamespace);
+    expect(entityTable.schema).toBe(extensionNamespaceName);
     expect(entityTable.table).toBe(tableName);
   });
 });

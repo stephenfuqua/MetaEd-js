@@ -1,12 +1,12 @@
 // @flow
 import R from 'ramda';
-import type { NamespaceInfo } from 'metaed-core';
+import type { Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey, ColumnNamePair } from 'metaed-plugin-edfi-ods';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 import type { AssociationDefinition, AssociationDefinitionCardinality } from '../../model/apiModel/AssociationDefinition';
 import type { ApiProperty } from '../../model/apiModel/ApiProperty';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { buildApiProperty } from './BuildApiProperty';
 
 function findAggregateWithEntity(
@@ -163,16 +163,13 @@ function isRequiredFrom(
 }
 
 // Association definitions are the ODS foreign key definitions for a namespace
-export function buildAssociationDefinitions(
-  tables: Map<string, Table>,
-  namespaceInfo: NamespaceInfo,
-): Array<AssociationDefinition> {
+export function buildAssociationDefinitions(tables: Map<string, Table>, namespace: Namespace): Array<AssociationDefinition> {
   const result: Array<AssociationDefinition> = [];
-  const domainMetadataAggregatesForNamespace: Array<Aggregate> = ((namespaceInfo.data
-    .edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates;
+  const domainMetadataAggregatesForNamespace: Array<Aggregate> = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi)
+    .aggregates;
 
   Array.from(tables.values())
-    .filter((table: Table) => table.schema === namespaceInfo.namespace)
+    .filter((table: Table) => table.schema === namespace.namespaceName)
     .forEach((table: Table) => {
       table.foreignKeys.forEach((foreignKey: ForeignKey) => {
         const isIdentifying: boolean = isIdentifyingForeignKey(foreignKey, tables);

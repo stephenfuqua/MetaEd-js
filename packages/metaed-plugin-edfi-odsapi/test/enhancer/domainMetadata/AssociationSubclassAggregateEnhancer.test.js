@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newAssociationSubclass, newNamespaceInfo } from 'metaed-core';
-import type { MetaEdEnvironment, Association, AssociationSubclass, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newAssociation, newAssociationSubclass, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Association, AssociationSubclass, Namespace } from 'metaed-core';
 import { newTable } from 'metaed-plugin-edfi-ods';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { enhance } from '../../../src/enhancer/domainMetadata/AssociationSubclassAggregateEnhancer';
@@ -13,14 +13,14 @@ describe('when enhancing association extensions', () => {
   const baseTableName: string = 'BaseTableName';
   const entityName: string = 'EntityName';
   const tableName: string = 'TableName';
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [],
@@ -28,12 +28,12 @@ describe('when enhancing association extensions', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const baseEntity: Association = Object.assign(newAssociation(), {
       metaEdName: baseEntityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         data: {
           edfiOdsApi: {
             aggregates: [],
@@ -52,14 +52,14 @@ describe('when enhancing association extensions', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespace,
+      schema: namespaceName,
     };
 
     const entity: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: entityName,
       baseEntity,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         isExtension: true,
         data: {
           edfiOdsApi: {
@@ -92,7 +92,7 @@ describe('when enhancing association extensions', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespace);
+    expect(entityTable.schema).toBe(namespaceName);
     expect(entityTable.table).toBe(tableName);
     expect(entityTable.isA).toBe(baseTableName);
   });

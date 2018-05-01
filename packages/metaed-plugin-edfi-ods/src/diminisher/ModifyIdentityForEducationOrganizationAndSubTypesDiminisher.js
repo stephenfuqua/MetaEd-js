@@ -27,7 +27,7 @@ const educationOrganizationSurrogateKeyName: string = sugar.format(surrogateKeyN
 function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepository): void {
   getEntitiesOfType(repository, 'domainEntitySubclass').forEach(entity => {
     const entitySubclass: DomainEntitySubclass = ((entity: any): DomainEntitySubclass);
-    if (entitySubclass.baseEntityName !== educationOrganization && entitySubclass.namespaceInfo.namespace !== coreNamespace)
+    if (entitySubclass.baseEntityName !== educationOrganization && entitySubclass.namespace.namespaceName !== coreNamespace)
       return;
 
     const identifierProperty: ?EntityProperty = entitySubclass.data.edfiOds.ods_IdentityProperties.find(
@@ -58,7 +58,7 @@ function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepo
       metaEdName: sugar.format(surrogateKeyNameTemplate, entitySubclass.metaEdName),
       documentation: `The identifier assigned to a ${asTopLevelEntity(entitySubclass).typeHumanizedName}.`,
       isPartOfIdentity: true,
-      namespaceInfo: entitySubclass.namespaceInfo,
+      namespace: entitySubclass.namespace,
       parentEntity: asTopLevelEntity(entitySubclass),
       parentEntityName: entitySubclass.metaEdName,
       isIdentityRename: true,
@@ -72,7 +72,7 @@ function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepo
 
 function modifyIdentityForEducationOrganization(repository: EntityRepository): void {
   const entity: ?ModelBase = getEntitiesOfType(repository, 'domainEntity').find(
-    (x: ModelBase) => x.metaEdName === educationOrganization && x.namespaceInfo.namespace === coreNamespace,
+    (x: ModelBase) => x.metaEdName === educationOrganization && x.namespace.namespaceName === coreNamespace,
   );
   if (entity == null || entity.data.edfiOds.ods_IdentityProperties.length === 0) return;
 
@@ -91,7 +91,7 @@ function modifyIdentityForEducationOrganization(repository: EntityRepository): v
     metaEdName: educationOrganizationSurrogateKeyName,
     documentation: identifierProperty.documentation,
     isPartOfIdentity: true,
-    namespaceInfo: identifierProperty.namespaceInfo,
+    namespace: identifierProperty.namespace,
     parentEntity: identifierProperty.parentEntity,
     parentEntityName: identifierProperty.parentEntityName,
     data: {

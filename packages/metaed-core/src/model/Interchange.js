@@ -5,7 +5,7 @@ import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 
 export type InterchangeSourceMap = {
   ...$Exact<ModelBaseSourceMap>,
@@ -44,7 +44,7 @@ export function newInterchange(): Interchange {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
 
     elements: [],
     identityTemplates: [],

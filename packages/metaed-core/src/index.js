@@ -7,7 +7,7 @@ export { createMetaEdFile } from './task/MetaEdFile';
 export { validateConfiguration } from './task/ValidateConfiguration';
 export { loadFiles } from './task/FileSystemFilenameLoader';
 export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
-export { addProjectNameToNamespaceInfo } from './task/AddProjectNameToNamespaceInfo';
+export { addProjectNameToNamespace } from './task/AddProjectNameToNamespace';
 export { newState } from './State';
 export { newPipelineOptions } from './task/PipelineOptions';
 export { loadFileIndex } from './task/LoadFileIndex';
@@ -47,7 +47,7 @@ export { DomainEntitySubclassBuilder } from './builder/DomainEntitySubclassBuild
 export { EnumerationBuilder } from './builder/EnumerationBuilder';
 export { IntegerTypeBuilder } from './builder/IntegerTypeBuilder';
 export { InterchangeBuilder } from './builder/InterchangeBuilder';
-export { NamespaceInfoBuilder } from './builder/NamespaceInfoBuilder';
+export { NamespaceBuilder } from './builder/NamespaceBuilder';
 export { SharedDecimalBuilder } from './builder/SharedDecimalBuilder';
 export { SharedIntegerBuilder } from './builder/SharedIntegerBuilder';
 export { SharedStringBuilder } from './builder/SharedStringBuilder';
@@ -131,7 +131,7 @@ export type { InterchangeItem, InterchangeItemSourceMap } from './model/Intercha
 export type { MapTypeEnumeration } from './model/MapTypeEnumeration';
 export type { ModelBase, ModelBaseSourceMap } from './model/ModelBase';
 export type { ModelType } from './model/ModelType';
-export type { NamespaceInfo, NamespaceInfoSourceMap } from './model/NamespaceInfo';
+export type { Namespace, NamespaceSourceMap } from './model/Namespace';
 export type { SchoolYearEnumeration } from './model/SchoolYearEnumeration';
 export type { SharedDecimal, SharedDecimalSourceMap } from './model/SharedDecimal';
 export type { SharedInteger, SharedIntegerSourceMap } from './model/SharedInteger';
@@ -145,7 +145,7 @@ export type { TopLevelEntity, TopLevelEntitySourceMap } from './model/TopLevelEn
 export { NoMapTypeEnumeration } from './model/MapTypeEnumeration';
 export { NoTopLevelEntity } from './model/TopLevelEntity';
 export { NoSharedSimple } from './model/SharedSimple';
-export { NoNamespaceInfo } from './model/NamespaceInfo';
+export { NoNamespace } from './model/Namespace';
 export { NoInterchangeItem } from './model/InterchangeItem';
 
 // Factories
@@ -206,7 +206,7 @@ export { asInterchangeExtension, newInterchangeExtension } from './model/Interch
 export { asInterchangeItem, newInterchangeItem } from './model/InterchangeItem';
 export { asMapTypeEnumeration, newMapTypeEnumeration } from './model/MapTypeEnumeration';
 export { asModelType } from './model/ModelType';
-export { newNamespaceInfo } from './model/NamespaceInfo';
+export { newNamespace } from './model/Namespace';
 export { asSchoolYearEnumeration, newSchoolYearEnumeration } from './model/SchoolYearEnumeration';
 export { asSharedDecimal, newSharedDecimal } from './model/SharedDecimal';
 export { asSharedInteger, newSharedInteger } from './model/SharedInteger';

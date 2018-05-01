@@ -12,7 +12,7 @@ import {
   newEnumerationProperty,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
   NoTopLevelEntity,
 } from 'metaed-core';
 import type {
@@ -35,7 +35,7 @@ import type { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntityTableEnhancer enhances entity with simple property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
@@ -45,8 +45,8 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
     entity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -79,7 +79,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -100,7 +100,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
 
 describe('when DomainEntityTableEnhancer enhances entity with required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const domainEntityName: string = 'DomainEntityName';
   const documentation: string = 'Documentation';
@@ -111,8 +111,8 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -151,8 +151,8 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -228,7 +228,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
 
 describe('when DomainEntityTableEnhancer enhances entity with required collection common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const commonName: string = 'CommonName';
   const documentation: string = 'Documentation';
@@ -239,8 +239,8 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -280,8 +280,8 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -356,13 +356,13 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -401,8 +401,8 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -442,8 +442,8 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     const subReferencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -514,13 +514,13 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -559,8 +559,8 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -601,8 +601,8 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
     const subReferencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -672,13 +672,13 @@ describe("when DomainEntityTableEnhancer enhances entity with collection propert
   const referencedEntityName: string = 'EntityNameOfReference';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -703,8 +703,8 @@ describe("when DomainEntityTableEnhancer enhances entity with collection propert
     const referencedEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -735,13 +735,13 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
   const commonPkPropertyName: string = 'CommonPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -781,8 +781,8 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName1,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -810,8 +810,8 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
     const referencedEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName2,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -863,13 +863,13 @@ describe('when DomainEntityTableEnhancer enhances entity with optional collectio
   const optionalCollectionPropertyName: string = 'OptionalCollectionPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -927,13 +927,13 @@ describe('when DomainEntityTableEnhancer enhances entity with collection enumera
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -999,13 +999,13 @@ describe('when DomainEntityTableEnhancer enhances entity with enumeration proper
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1062,13 +1062,13 @@ describe("when DomainEntityTableEnhancer enhances entity with enumeration proper
   const enumerationName: string = 'EntityNameForEnumeration';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1126,13 +1126,13 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor collect
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1199,13 +1199,13 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor propert
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1263,13 +1263,13 @@ describe("when DomainEntityTableEnhancer enhances entity with descriptor collect
   const descriptorName: string = 'EntityNameForDescriptor';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1332,13 +1332,13 @@ describe("when DomainEntityTableEnhancer enhances entity with common collection 
   const commonNonPkPropertyName: string = 'CommonNonPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {

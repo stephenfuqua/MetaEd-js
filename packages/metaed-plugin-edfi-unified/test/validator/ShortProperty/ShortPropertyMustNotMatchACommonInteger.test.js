@@ -4,7 +4,7 @@ import {
   MetaEdTextBuilder,
   DomainEntityBuilder,
   SharedIntegerBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/ShortProperty/ShortPropertyMustNotMatchACommonInteger';
@@ -31,7 +31,7 @@ describe('when validating short property does not match common integer', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
@@ -69,7 +69,7 @@ describe('when validating string identity matches common integer', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
@@ -111,7 +111,7 @@ describe('when validating short property matches common integer', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 

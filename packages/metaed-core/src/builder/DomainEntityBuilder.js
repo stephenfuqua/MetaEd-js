@@ -15,7 +15,7 @@ export class DomainEntityBuilder extends TopLevelEntityBuilder {
       Object.assign(((this.currentTopLevelEntity.sourceMap: any): DomainEntitySourceMap), {
         type: sourceMapFrom(context),
         isAbstract: sourceMapFrom(context),
-        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+        namespace: this.currentTopLevelEntity.namespace.sourceMap.type,
       });
     }
   }
@@ -25,7 +25,7 @@ export class DomainEntityBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+        namespace: this.currentTopLevelEntity.namespace.sourceMap.type,
       });
     }
   }

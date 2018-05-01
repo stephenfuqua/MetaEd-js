@@ -13,7 +13,7 @@ export class SharedIntegerBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple !== NoSharedSimple) {
       Object.assign(((this.currentSharedSimple.sourceMap: any): SharedIntegerSourceMap), {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentSharedSimple.namespaceInfo.sourceMap.type,
+        namespace: this.currentSharedSimple.namespace.sourceMap.type,
       });
     }
   }
@@ -25,7 +25,7 @@ export class SharedIntegerBuilder extends SharedSimpleBuilder {
       Object.assign(((this.currentSharedSimple.sourceMap: any): SharedIntegerSourceMap), {
         type: sourceMapFrom(context),
         isShort: sourceMapFrom(context),
-        namespaceInfo: this.currentSharedSimple.namespaceInfo.sourceMap.type,
+        namespace: this.currentSharedSimple.namespace.sourceMap.type,
       });
     }
   }

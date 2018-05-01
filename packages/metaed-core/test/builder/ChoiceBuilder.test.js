@@ -1,6 +1,6 @@
 // @flow
 import { ChoiceBuilder } from '../../src/builder/ChoiceBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getChoice } from '../TestHelper';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building choice in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -24,13 +24,13 @@ describe('when building choice in extension namespace', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -48,7 +48,7 @@ describe('when building choice in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getChoice(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -56,7 +56,7 @@ describe('when building choice in extension namespace', () => {
   });
 
   it('should have project extension', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getChoice(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -81,7 +81,7 @@ describe('when building choice in extension namespace', () => {
 describe('when building duplicate choices', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -95,7 +95,7 @@ describe('when building duplicate choices', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
@@ -106,7 +106,7 @@ describe('when building duplicate choices', () => {
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -148,7 +148,7 @@ describe('when building choice with no choice name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -162,13 +162,13 @@ describe('when building choice with no choice name', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -185,7 +185,7 @@ describe('when building choice with lowercase choice name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -200,13 +200,13 @@ describe('when building choice with lowercase choice name', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -224,7 +224,7 @@ describe('when building choice with lowercase choice name', () => {
   });
 
   it('should have namespace', () => {
-    expect(getChoice(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getChoice(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -232,7 +232,7 @@ describe('when building choice with lowercase choice name', () => {
   });
 
   it('should have project extension', () => {
-    expect(getChoice(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getChoice(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -262,7 +262,7 @@ describe('when building choice with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -275,12 +275,12 @@ describe('when building choice with no documentation', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -294,7 +294,7 @@ describe('when building choice with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getChoice(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -302,7 +302,7 @@ describe('when building choice with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getChoice(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
@@ -332,7 +332,7 @@ describe('when building choice with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -343,12 +343,12 @@ describe('when building choice with no property', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -362,7 +362,7 @@ describe('when building choice with no property', () => {
   });
 
   it('should have namespace', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getChoice(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -370,7 +370,7 @@ describe('when building choice with no property', () => {
   });
 
   it('should have project extension', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getChoice(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -390,7 +390,7 @@ describe('when building choice with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -405,14 +405,14 @@ describe('when building choice with invalid trailing text', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withTrailingText(trailingText)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -426,7 +426,7 @@ describe('when building choice with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getChoice(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -434,7 +434,7 @@ describe('when building choice with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getChoice(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getChoice(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
@@ -463,7 +463,7 @@ describe('when building choice with invalid trailing text', () => {
 describe('when building choice source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -477,13 +477,13 @@ describe('when building choice source map', () => {
     const builder = new ChoiceBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartChoice(entityName, entityMetaEdId)
       .withDocumentation(entityDocumentation)
       .withIntegerProperty(propertyName, propertyDocumentation, true, false, null, null, null, propertyMetaEdId)
       .withEndChoice()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 

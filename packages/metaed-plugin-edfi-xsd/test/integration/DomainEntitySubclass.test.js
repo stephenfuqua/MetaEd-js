@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   DomainEntityBuilder,
   DomainEntitySubclassBuilder,
 } from 'metaed-core';
@@ -23,7 +23,7 @@ describe('when generating xsd for descriptor', () => {
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntitySubclassBuilder = new DomainEntitySubclassBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -45,7 +45,7 @@ describe('when generating xsd for descriptor', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntitySubclassBuilder);
 

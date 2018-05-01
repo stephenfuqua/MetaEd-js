@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   DescriptorBuilder,
   EnumerationBuilder,
   DomainEntityBuilder,
@@ -19,7 +19,7 @@ describe('when generating xsd for enumeration', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -32,7 +32,7 @@ describe('when generating xsd for enumeration', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(enumerationBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -66,7 +66,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
@@ -92,7 +92,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(enumerationBuilder)
       .sendToListener(descriptorBuilder);
@@ -133,7 +133,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
 
@@ -157,7 +157,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(enumerationBuilder);
 

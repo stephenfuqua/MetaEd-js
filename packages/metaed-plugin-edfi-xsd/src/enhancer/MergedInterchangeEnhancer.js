@@ -16,7 +16,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       documentation: interchange.documentation,
       extendedDocumentation: interchange.extendedDocumentation,
       useCaseDocumentation: interchange.useCaseDocumentation,
-      namespaceInfo: interchange.namespaceInfo,
+      namespace: interchange.namespace,
       elements: interchange.elements,
       identityTemplates: interchange.identityTemplates,
     });
@@ -34,7 +34,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       documentation: interchange.documentation,
       extendedDocumentation: interchange.extendedDocumentation,
       useCaseDocumentation: interchange.useCaseDocumentation,
-      namespaceInfo: interchangeExtension.namespaceInfo,
+      namespace: interchangeExtension.namespace,
     });
     Object.assign(mergedInterchange, {
       elements: R.union(

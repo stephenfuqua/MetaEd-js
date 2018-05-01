@@ -7,17 +7,17 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const results: Array<GeneratedOutput> = [];
   const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0001' : '0010';
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
-    const schemaName: string = namespaceInfo.namespace;
-    const generatedResult: string = namespaceInfo.isExtension
+  metaEd.entity.namespace.forEach(namespace => {
+    const schemaName: string = namespace.namespaceName;
+    const generatedResult: string = namespace.isExtension
       ? template().extensionSchema({ schemaName })
       : template().coreSchema({ schemaName });
 
     results.push({
       name: 'ODS Schema',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: structurePath,
-      fileName: fileNameFor(prefix, namespaceInfo, 'Schemas'),
+      fileName: fileNameFor(prefix, namespace, 'Schemas'),
       resultString: generatedResult,
       resultStream: null,
     });

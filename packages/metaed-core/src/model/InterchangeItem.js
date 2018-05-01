@@ -3,7 +3,7 @@ import deepFreeze from 'deep-freeze';
 import type { ModelType } from './ModelType';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 import { NoTopLevelEntity } from './TopLevelEntity';
@@ -40,7 +40,7 @@ export function newInterchangeItem(): InterchangeItem {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     referencedType: [],
     referencedEntity: NoTopLevelEntity,
     sourceMap: newInterchangeItemSourceMap(),

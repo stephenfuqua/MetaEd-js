@@ -1,16 +1,14 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, NamespaceInfo, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, EnhancerResult } from 'metaed-core';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 
 const enhancerName: string = 'BaseDescriptorAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const coreNamespaceInfo: NamespaceInfo = R.head(
-    Array.from(metaEd.entity.namespaceInfo.values()).filter(n => !n.isExtension),
-  );
-  if (!coreNamespaceInfo) return { enhancerName, success: false };
+  const coreNamespace: Namespace = R.head(Array.from(metaEd.entity.namespace.values()).filter(n => !n.isExtension));
+  if (!coreNamespace) return { enhancerName, success: false };
 
   const aggregate: Aggregate = {
     root: 'Descriptor',
@@ -23,14 +21,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         isA: null,
         isAbstract: true,
         isRequiredCollection: false,
-        schema: coreNamespaceInfo.namespace,
+        schema: coreNamespace.namespaceName,
         hasIsA: false,
         requiresSchema: false,
       },
     ],
   };
 
-  ((coreNamespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.push(aggregate);
+  ((coreNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(aggregate);
   return {
     enhancerName,
     success: true,

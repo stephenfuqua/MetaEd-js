@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { IntegerTypeBuilder } from '../../src/builder/IntegerTypeBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { getIntegerType } from '../TestHelper';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building shared integer in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -23,13 +23,13 @@ describe('when building shared integer in extension namespace', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 
@@ -46,11 +46,11 @@ describe('when building shared integer in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -93,7 +93,7 @@ describe('when building shared integer in extension namespace', () => {
 describe('when building domain entity with integer property in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -106,13 +106,13 @@ describe('when building domain entity with integer property in extension namespa
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 
@@ -129,11 +129,11 @@ describe('when building domain entity with integer property in extension namespa
   });
 
   it('should have namespace', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -176,7 +176,7 @@ describe('when building domain entity with integer property in extension namespa
 describe('when building shared short in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -189,13 +189,13 @@ describe('when building shared short in extension namespace', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedShort(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedShort()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 
@@ -212,11 +212,11 @@ describe('when building shared short in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -259,7 +259,7 @@ describe('when building shared short in extension namespace', () => {
 describe('when building domain entity with short property in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -272,13 +272,13 @@ describe('when building domain entity with short property in extension namespace
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withShortProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 
@@ -295,11 +295,11 @@ describe('when building domain entity with short property in extension namespace
   });
 
   it('should have namespace', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getIntegerType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -342,7 +342,7 @@ describe('when building domain entity with short property in extension namespace
 describe('when building multiple shared integers in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -358,7 +358,7 @@ describe('when building multiple shared integers in extension namespace', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedInteger(entityName, metaEdId)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
@@ -369,7 +369,7 @@ describe('when building multiple shared integers in extension namespace', () => 
       .withNumericRestrictions(minValue, maxValue)
       .withEndSharedInteger()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 
@@ -390,7 +390,7 @@ describe('when building multiple shared integers in extension namespace', () => 
 describe('when building domain entity with multiple integer properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -406,14 +406,14 @@ describe('when building domain entity with multiple integer properties in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
       .withIntegerProperty(entityName2, documentation, true, false, maxValue, minValue, null, metaEdId2)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new IntegerTypeBuilder(metaEd, validationFailures));
   });
 

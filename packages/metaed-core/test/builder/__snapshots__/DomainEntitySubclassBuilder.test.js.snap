@@ -33,7 +33,7 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

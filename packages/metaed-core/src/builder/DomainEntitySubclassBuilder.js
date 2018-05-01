@@ -12,7 +12,7 @@ export class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+        namespace: this.currentTopLevelEntity.namespace.sourceMap.type,
       });
     }
   }

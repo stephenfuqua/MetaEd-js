@@ -5,7 +5,7 @@ import {
   DomainBuilder,
   AssociationBuilder,
   AssociationSubclassBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Domain/AssociationDomainItemMustMatchTopLevelEntity';
@@ -32,7 +32,7 @@ describe('when validating association domain item matches top level entity', () 
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -76,7 +76,7 @@ describe('when validating association domain item matches top level entity subcl
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
@@ -121,7 +121,7 @@ describe('when validating association domain item does not match top level entit
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 

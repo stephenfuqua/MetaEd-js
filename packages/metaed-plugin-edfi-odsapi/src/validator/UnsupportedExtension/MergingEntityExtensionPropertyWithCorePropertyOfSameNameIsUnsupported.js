@@ -36,8 +36,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   )
     .map((entity: ModelBase) => asTopLevelEntity(entity))
     .forEach((entity: TopLevelEntity) => {
-      if (!entity.namespaceInfo.isExtension || !entity.baseEntity) return;
-      if (entity.baseEntity.namespaceInfo.isExtension) return;
+      if (!entity.namespace.isExtension || !entity.baseEntity) return;
+      if (entity.baseEntity.namespace.isExtension) return;
 
       const baseEntityResult: {
         referencedEntities: Array<{

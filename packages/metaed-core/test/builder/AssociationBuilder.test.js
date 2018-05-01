@@ -1,6 +1,6 @@
 // @flow
 import { AssociationBuilder } from '../../src/builder/AssociationBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getAssociation } from '../TestHelper';
@@ -11,7 +11,7 @@ import type { EntityProperty } from '../../src/model/property/EntityProperty';
 describe('when building association in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -28,14 +28,14 @@ describe('when building association in extension namespace', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -52,7 +52,7 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -60,7 +60,7 @@ describe('when building association in extension namespace', () => {
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have association documentation', () => {
@@ -111,7 +111,7 @@ describe('when building association in extension namespace', () => {
 describe('when building association without extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const entityMetaEdId: string = '1';
@@ -127,14 +127,14 @@ describe('when building association without extension', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -148,7 +148,7 @@ describe('when building association without extension', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -156,7 +156,7 @@ describe('when building association without extension', () => {
   });
 
   it('should have no project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe('');
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe('');
   });
 
   it('should have association documentation', () => {
@@ -207,7 +207,7 @@ describe('when building association without extension', () => {
 describe('when building duplicate associations', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -224,7 +224,7 @@ describe('when building duplicate associations', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
@@ -237,7 +237,7 @@ describe('when building duplicate associations', () => {
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -277,7 +277,7 @@ describe('when building duplicate associations', () => {
 describe('when building association with additional identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const entityName: string = 'EntityName';
   const firstDomainEntityName: string = 'FirstDomainEntityName';
@@ -288,7 +288,7 @@ describe('when building association with additional identity property', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAssociation(entityName, '1')
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty(firstDomainEntityName, 'doc', null, '2')
@@ -296,7 +296,7 @@ describe('when building association with additional identity property', () => {
       .withDomainEntityIdentity(identityProperty, 'doc')
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -357,7 +357,7 @@ describe('when building association with no association name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -374,14 +374,14 @@ describe('when building association with no association name', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -398,7 +398,7 @@ describe('when building association with lowercase association name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -415,7 +415,7 @@ describe('when building association with lowercase association name', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
@@ -438,7 +438,7 @@ describe('when building association with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -454,13 +454,13 @@ describe('when building association with no documentation', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -477,7 +477,7 @@ describe('when building association with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -485,7 +485,7 @@ describe('when building association with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -545,7 +545,7 @@ describe('when building association with no domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -559,7 +559,7 @@ describe('when building association with no domain entity property', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
@@ -568,7 +568,7 @@ describe('when building association with no domain entity property', () => {
       .withEndProperty()
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -585,7 +585,7 @@ describe('when building association with no domain entity property', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -593,7 +593,7 @@ describe('when building association with no domain entity property', () => {
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -633,7 +633,7 @@ describe('when building association with no documentation in the first domain en
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -649,7 +649,7 @@ describe('when building association with no documentation in the first domain en
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withStartProperty('domain entity', firstDomainEntityName, firstDomainEntityMetaEdId)
@@ -658,7 +658,7 @@ describe('when building association with no documentation in the first domain en
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -675,7 +675,7 @@ describe('when building association with no documentation in the first domain en
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -683,7 +683,7 @@ describe('when building association with no documentation in the first domain en
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -743,7 +743,7 @@ describe('when building association with no documentation in the second domain e
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -759,7 +759,7 @@ describe('when building association with no documentation in the second domain e
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
@@ -768,7 +768,7 @@ describe('when building association with no documentation in the second domain e
       .withEndProperty()
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -785,7 +785,7 @@ describe('when building association with no documentation in the second domain e
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -793,7 +793,7 @@ describe('when building association with no documentation in the second domain e
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -853,7 +853,7 @@ describe('when building association with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -871,7 +871,7 @@ describe('when building association with invalid trailing text', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withAssociationDomainEntityProperty(firstDomainEntityName, documentation2, null, firstDomainEntityMetaEdId)
@@ -879,7 +879,7 @@ describe('when building association with invalid trailing text', () => {
       .withTrailingText(trailingText)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -896,7 +896,7 @@ describe('when building association with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getAssociation(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -904,7 +904,7 @@ describe('when building association with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getAssociation(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getAssociation(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -963,7 +963,7 @@ describe('when building association with invalid trailing text', () => {
 describe('when building association source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -980,7 +980,7 @@ describe('when building association source map', () => {
     const builder = new AssociationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(entityName, entityMetaEdId)
       .withDocumentation(documentation1)
       .withCascadeUpdate()
@@ -988,7 +988,7 @@ describe('when building association source map', () => {
       .withAssociationDomainEntityProperty(secondDomainEntityName, documentation3, null, secondDomainEntityMetaEdId)
       .withEndAssociation()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 

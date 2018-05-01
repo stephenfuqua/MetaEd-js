@@ -1,7 +1,7 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { newNamespaceInfo } from '../NamespaceInfo';
-import type { NamespaceInfo } from '../NamespaceInfo';
+import { newNamespace } from '../Namespace';
+import type { Namespace } from '../Namespace';
 import { newTopLevelEntity } from '../TopLevelEntity';
 import type { TopLevelEntity } from '../TopLevelEntity';
 import type { SourceMap } from '../SourceMap';
@@ -18,7 +18,7 @@ export type EntityPropertySourceMap = {
   documentationInherited: SourceMap,
   metaEdName: SourceMap,
   metaEdId: SourceMap,
-  namespaceInfo: SourceMap,
+  namespace: SourceMap,
   baseKeyName: SourceMap,
   shortenTo: SourceMap,
   propertyPathName: SourceMap,
@@ -43,7 +43,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
     documentationInherited: NoSourceMap,
     metaEdName: NoSourceMap,
     metaEdId: NoSourceMap,
-    namespaceInfo: NoSourceMap,
+    namespace: NoSourceMap,
     baseKeyName: NoSourceMap,
     shortenTo: NoSourceMap,
     propertyPathName: NoSourceMap,
@@ -69,7 +69,7 @@ export type EntityProperty = {
   documentationInherited: boolean,
   metaEdName: string,
   metaEdId: string,
-  namespaceInfo: NamespaceInfo,
+  namespace: Namespace,
   baseKeyName: string,
   shortenTo: string,
   propertyPathName: string,
@@ -97,7 +97,7 @@ export function newEntityProperty(): EntityProperty {
     documentationInherited: false,
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     baseKeyName: '',
     shortenTo: '',
     propertyPathName: '',

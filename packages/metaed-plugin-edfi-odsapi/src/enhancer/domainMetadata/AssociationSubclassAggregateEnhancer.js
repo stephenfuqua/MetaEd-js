@@ -17,7 +17,7 @@ export function enhanceEntityTable(entity: TopLevelEntity, table: Table, entityT
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'associationSubclass').forEach((modelBase: ModelBase) => {
     // $FlowIgnore - Flow issue #183 - Add support for destructuring parameters + default values
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.entity.namespaceInfo, {
+    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.entity.namespace, {
       enhanceEntityTable,
     });
   });

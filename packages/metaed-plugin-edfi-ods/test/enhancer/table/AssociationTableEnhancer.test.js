@@ -12,7 +12,7 @@ import {
   newEnumerationProperty,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
 import type {
   Association,
@@ -33,7 +33,7 @@ import type { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationTableEnhancer enhances entity with simple property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
@@ -42,8 +42,8 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -76,7 +76,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -92,7 +92,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
 
 describe('when AssociationTableEnhancer enhances entity with required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const associationName: string = 'AssociationName';
   const documentation: string = 'Documentation';
@@ -103,8 +103,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -143,8 +143,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: associationName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -220,7 +220,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
 
 describe('when AssociationTableEnhancer enhances entity with required collection common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const commonName: string = 'CommonName';
   const documentation: string = 'Documentation';
@@ -231,8 +231,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -272,8 +272,8 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -348,13 +348,13 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -393,8 +393,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -434,8 +434,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -506,13 +506,13 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -551,8 +551,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -593,8 +593,8 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -664,13 +664,13 @@ describe("when AssociationTableEnhancer enhances entity with collection property
   const referencedEntityName: string = 'EntityNameOfReference';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -695,8 +695,8 @@ describe("when AssociationTableEnhancer enhances entity with collection property
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -727,13 +727,13 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
   const commonPkPropertyName: string = 'CommonPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -773,8 +773,8 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     const referencedEntity1: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName1,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -802,8 +802,8 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     const referencedEntity2: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName2,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -855,13 +855,13 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
   const optionalCollectionPropertyName: string = 'OptionalCollectionPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -919,13 +919,13 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -991,13 +991,13 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1054,13 +1054,13 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
   const enumerationName: string = 'EntityNameForEnumeration';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1118,13 +1118,13 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1191,13 +1191,13 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1255,13 +1255,13 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
   const descriptorName: string = 'EntityNameForDescriptor';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -1324,13 +1324,13 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
   const commonNonPkPropertyName: string = 'CommonNonPkPropertyName';
 
   beforeAll(() => {
-    const namespace: string = 'namespace';
+    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {

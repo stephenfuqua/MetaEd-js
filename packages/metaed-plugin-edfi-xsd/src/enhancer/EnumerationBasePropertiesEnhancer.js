@@ -13,8 +13,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     const enumerationBaseXsdData = ((enumerationBase.data.edfiXsd: any): EnumerationBaseEdfiXsd);
     enumerationBaseXsdData.xsd_EnumerationName = enumerationName;
-    enumerationBaseXsdData.xsd_EnumerationNameWithExtension = enumerationBase.namespaceInfo.projectExtension
-      ? `${enumerationBase.namespaceInfo.projectExtension}-${enumerationBaseXsdData.xsd_EnumerationName}`
+    enumerationBaseXsdData.xsd_EnumerationNameWithExtension = enumerationBase.namespace.projectExtension
+      ? `${enumerationBase.namespace.projectExtension}-${enumerationBaseXsdData.xsd_EnumerationName}`
       : enumerationBaseXsdData.xsd_EnumerationName;
   });
 

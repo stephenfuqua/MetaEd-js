@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   DescriptorBuilder,
   DomainEntityBuilder,
 } from 'metaed-core';
@@ -18,7 +18,7 @@ describe('when generating xsd for descriptor', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -31,7 +31,7 @@ describe('when generating xsd for descriptor', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(descriptorBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -62,7 +62,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -85,7 +85,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(descriptorBuilder);
 
@@ -130,7 +130,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -158,7 +158,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(descriptorBuilder);
 
@@ -202,7 +202,7 @@ describe('when generating xsd for descriptor in extension namespace with referen
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -228,7 +228,7 @@ describe('when generating xsd for descriptor in extension namespace with referen
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(descriptorBuilder);
 

@@ -6,14 +6,14 @@ import {
   DomainEntityBuilder,
   AssociationBuilder,
   AssociationSubclassBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
 
 describe('when generating xsd for association extension in extension namespace based on core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
-  const namespace: string = 'extension';
+  const namespaceName: string = 'extension';
   const projectExtension: string = 'EXTENSION';
   const coreEntity1: string = 'CoreEntity1';
   const coreEntity1Pk: string = 'CoreEntity1Pk';
@@ -30,7 +30,7 @@ describe('when generating xsd for association extension in extension namespace b
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const associationBuilder = new AssociationBuilder(metaEd, []);
     const associationSubclassBuilder = new AssociationSubclassBuilder(metaEd, []);
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
 
@@ -51,7 +51,7 @@ describe('when generating xsd for association extension in extension namespace b
       .withEndAssociation()
 
       .withEndNamespace()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
 
       .withStartAssociationSubclass(extensionAssociation, coreAssociation)
       .withDocumentation('doc')
@@ -59,7 +59,7 @@ describe('when generating xsd for association extension in extension namespace b
       .withEndAssociationSubclass()
 
       .withEndNamespace()
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(associationBuilder)
       .sendToListener(associationSubclassBuilder);

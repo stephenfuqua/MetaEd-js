@@ -1,5 +1,5 @@
 // @flow
-import { DomainBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import { DomainBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
 
@@ -15,7 +15,7 @@ describe('when validating domain item is missing metaEdId', () => {
       .withDomainEntityDomainItem('DomainItemName')
       .withEndDomain()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -51,7 +51,7 @@ describe('when validating subdomain item is missing metaEdId for entity', () => 
       .withEndSubdomain()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
     failures = validate(metaEd);

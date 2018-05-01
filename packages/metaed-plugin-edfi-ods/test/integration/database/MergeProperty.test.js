@@ -7,7 +7,7 @@ import {
   DomainEntitySubclassBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -20,7 +20,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when domain entity merges references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -31,7 +31,7 @@ describe('when domain entity merges references', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -52,7 +52,7 @@ describe('when domain entity merges references', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -61,21 +61,21 @@ describe('when domain entity merges references', () => {
   afterAll(async () => testTearDown());
 
   it('should not have merge path column', async () => {
-    const column1: DatabaseColumn = column(namespace, domainEntityName3, contextName + integerPropertyName3);
+    const column1: DatabaseColumn = column(namespaceName, domainEntityName3, contextName + integerPropertyName3);
     expect(await columnExists(column1)).toBe(false);
   });
 
   it('should use target path in place of merge path', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName3, integerPropertyName1),
-        column(namespace, domainEntityName3, integerPropertyName2),
-        column(namespace, domainEntityName3, integerPropertyName3),
+        column(namespaceName, domainEntityName3, integerPropertyName1),
+        column(namespaceName, domainEntityName3, integerPropertyName2),
+        column(namespaceName, domainEntityName3, integerPropertyName3),
       ],
       [
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
-        column(namespace, domainEntityName2, integerPropertyName3),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName3),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -85,7 +85,7 @@ describe('when domain entity merges references', () => {
 
 describe('when domain entity merges abstract references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const abstractEntityName: string = 'AbstractEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -97,7 +97,7 @@ describe('when domain entity merges abstract references', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -123,7 +123,7 @@ describe('when domain entity merges abstract references', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -133,19 +133,19 @@ describe('when domain entity merges abstract references', () => {
   afterAll(async () => testTearDown());
 
   it('should not have merge path column', async () => {
-    const column1: DatabaseColumn = column(namespace, domainEntityName2, integerPropertyName1);
+    const column1: DatabaseColumn = column(namespaceName, domainEntityName2, integerPropertyName1);
     expect(await columnExists(column1)).toBe(false);
   });
 
   it('should use target path in place of merge path', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName2, integerPropertyName2),
-        column(namespace, domainEntityName2, integerPropertyName3),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName3),
       ],
       [
-        column(namespace, domainEntityName1, integerPropertyName1),
-        column(namespace, domainEntityName1, integerPropertyName3),
+        column(namespaceName, domainEntityName1, integerPropertyName1),
+        column(namespaceName, domainEntityName1, integerPropertyName3),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -155,7 +155,7 @@ describe('when domain entity merges abstract references', () => {
 
 describe('when domain entity merges collection references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const abstractEntityName: string = 'AbstractEntityName';
   const commonName: string = 'CommonName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
@@ -169,7 +169,7 @@ describe('when domain entity merges collection references', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -201,7 +201,7 @@ describe('when domain entity merges collection references', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
@@ -212,25 +212,25 @@ describe('when domain entity merges collection references', () => {
   afterAll(async () => testTearDown());
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + commonName))).toBe(true);
   });
 
   it('should not have merge path column', async () => {
-    const column1: DatabaseColumn = column(namespace, domainEntityName2 + commonName, integerPropertyName1);
+    const column1: DatabaseColumn = column(namespaceName, domainEntityName2 + commonName, integerPropertyName1);
     expect(await columnExists(column1)).toBe(false);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName2 + commonName, integerPropertyName2),
-        column(namespace, domainEntityName2 + commonName, integerPropertyName3),
-        column(namespace, domainEntityName2 + commonName, integerPropertyName5),
+        column(namespaceName, domainEntityName2 + commonName, integerPropertyName2),
+        column(namespaceName, domainEntityName2 + commonName, integerPropertyName3),
+        column(namespaceName, domainEntityName2 + commonName, integerPropertyName5),
       ],
       [
-        column(namespace, domainEntityName2, integerPropertyName2),
-        column(namespace, domainEntityName2, integerPropertyName3),
-        column(namespace, domainEntityName2, integerPropertyName5),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName3),
+        column(namespaceName, domainEntityName2, integerPropertyName5),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -240,7 +240,7 @@ describe('when domain entity merges collection references', () => {
 
 describe('when association merges domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const shortenTo: string = 'ShortenTo';
   const abstractEntityName: string = 'AbstractEntityName';
   const associationName1: string = 'AssociationName1';
@@ -253,7 +253,7 @@ describe('when association merges domain entity property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -282,7 +282,7 @@ describe('when association merges domain entity property', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -292,16 +292,16 @@ describe('when association merges domain entity property', () => {
   afterAll(async () => testTearDown());
 
   it('should not have merge path column', async () => {
-    const contextColumn1: DatabaseColumn = column(namespace, associationName2, shortenTo + integerPropertyName2);
+    const contextColumn1: DatabaseColumn = column(namespaceName, associationName2, shortenTo + integerPropertyName2);
     expect(await columnExists(contextColumn1)).toBe(false);
   });
 
   it('should hav reference columns', async () => {
-    const referenceColumn1: DatabaseColumn = column(namespace, associationName2, shortenTo + integerPropertyName1);
+    const referenceColumn1: DatabaseColumn = column(namespaceName, associationName2, shortenTo + integerPropertyName1);
     expect(await columnExists(referenceColumn1)).toBe(true);
     expect(await columnIsNullable(referenceColumn1)).toBe(true);
 
-    const referenceColumn2: DatabaseColumn = column(namespace, associationName2, shortenTo + integerPropertyName3);
+    const referenceColumn2: DatabaseColumn = column(namespaceName, associationName2, shortenTo + integerPropertyName3);
     expect(await columnExists(referenceColumn2)).toBe(true);
     expect(await columnIsNullable(referenceColumn2)).toBe(true);
   });
@@ -309,14 +309,14 @@ describe('when association merges domain entity property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, associationName2, shortenTo + integerPropertyName1),
-        column(namespace, associationName2, integerPropertyName2),
-        column(namespace, associationName2, shortenTo + integerPropertyName3),
+        column(namespaceName, associationName2, shortenTo + integerPropertyName1),
+        column(namespaceName, associationName2, integerPropertyName2),
+        column(namespaceName, associationName2, shortenTo + integerPropertyName3),
       ],
       [
-        column(namespace, associationName1, integerPropertyName1),
-        column(namespace, associationName1, integerPropertyName2),
-        column(namespace, associationName1, shortenTo + integerPropertyName3),
+        column(namespaceName, associationName1, integerPropertyName1),
+        column(namespaceName, associationName1, integerPropertyName2),
+        column(namespaceName, associationName1, shortenTo + integerPropertyName3),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -326,7 +326,7 @@ describe('when association merges domain entity property', () => {
 
 describe('when domain entity merges deep path', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const abstractEntityName: string = 'AbstractEntityName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -341,7 +341,7 @@ describe('when domain entity merges deep path', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -381,7 +381,7 @@ describe('when domain entity merges deep path', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -391,19 +391,19 @@ describe('when domain entity merges deep path', () => {
   afterAll(async () => testTearDown());
 
   it('should not have merge path column', async () => {
-    const column1: DatabaseColumn = column(namespace, domainEntityName4, integerPropertyName1);
+    const column1: DatabaseColumn = column(namespaceName, domainEntityName4, integerPropertyName1);
     expect(await columnExists(column1)).toBe(false);
   });
 
   it('should use target path in place of merge path', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName4, integerPropertyName2),
-        column(namespace, domainEntityName4, integerPropertyName5),
+        column(namespaceName, domainEntityName4, integerPropertyName2),
+        column(namespaceName, domainEntityName4, integerPropertyName5),
       ],
       [
-        column(namespace, domainEntityName3, integerPropertyName1),
-        column(namespace, domainEntityName3, integerPropertyName5),
+        column(namespaceName, domainEntityName3, integerPropertyName1),
+        column(namespaceName, domainEntityName3, integerPropertyName5),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -413,7 +413,7 @@ describe('when domain entity merges deep path', () => {
 
 describe('when domain entity merges collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
   const domainEntityName3: string = 'DomainEntityName3';
@@ -422,7 +422,7 @@ describe('when domain entity merges collection property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -443,7 +443,7 @@ describe('when domain entity merges collection property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -452,41 +452,51 @@ describe('when domain entity merges collection property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName1))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const referenceColumn1: DatabaseColumn = column(namespace, domainEntityName3, integerPropertyName1);
+    const referenceColumn1: DatabaseColumn = column(namespaceName, domainEntityName3, integerPropertyName1);
     expect(await columnExists(referenceColumn1)).toBe(true);
     expect(await columnIsNullable(referenceColumn1)).toBe(false);
 
-    const referenceColumn2: DatabaseColumn = column(namespace, domainEntityName3, integerPropertyName2);
+    const referenceColumn2: DatabaseColumn = column(namespaceName, domainEntityName3, integerPropertyName2);
     expect(await columnExists(referenceColumn2)).toBe(true);
     expect(await columnIsNullable(referenceColumn2)).toBe(false);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName3 + domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName3 + domainEntityName2))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const referenceColumn1: DatabaseColumn = column(namespace, domainEntityName3 + domainEntityName2, integerPropertyName1);
+    const referenceColumn1: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName3 + domainEntityName2,
+      integerPropertyName1,
+    );
     expect(await columnExists(referenceColumn1)).toBe(true);
     expect(await columnIsNullable(referenceColumn1)).toBe(false);
 
-    const referenceColumn2: DatabaseColumn = column(namespace, domainEntityName3 + domainEntityName2, integerPropertyName2);
+    const referenceColumn2: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName3 + domainEntityName2,
+      integerPropertyName2,
+    );
     expect(await columnExists(referenceColumn2)).toBe(true);
     expect(await columnIsNullable(referenceColumn2)).toBe(false);
   });
 
   it('should not have merge path column', async () => {
     expect(
-      await columnExists(column(namespace, domainEntityName3 + domainEntityName2, domainEntityName2 + integerPropertyName1)),
+      await columnExists(
+        column(namespaceName, domainEntityName3 + domainEntityName2, domainEntityName2 + integerPropertyName1),
+      ),
     ).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName3 + domainEntityName2))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName3 + domainEntityName2))).toEqual([
       domainEntityName2 + integerPropertyName2,
       integerPropertyName1,
       integerPropertyName2,
@@ -496,12 +506,12 @@ describe('when domain entity merges collection property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName3 + domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName3 + domainEntityName2, domainEntityName2 + integerPropertyName2),
+        column(namespaceName, domainEntityName3 + domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName3 + domainEntityName2, domainEntityName2 + integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -511,7 +521,7 @@ describe('when domain entity merges collection property', () => {
 
 describe('when domain entity merges self reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -520,7 +530,7 @@ describe('when domain entity merges self reference property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -535,7 +545,7 @@ describe('when domain entity merges self reference property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -544,17 +554,17 @@ describe('when domain entity merges self reference property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have reference property', async () => {
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName2, integerPropertyName1);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName2, integerPropertyName1);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(false);
   });
 
   it('should have self reference property', async () => {
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName2, contextName + integerPropertyName2);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName2, contextName + integerPropertyName2);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(true);
   });
@@ -562,12 +572,12 @@ describe('when domain entity merges self reference property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, contextName + integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, contextName + integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -577,7 +587,7 @@ describe('when domain entity merges self reference property', () => {
 
 describe('when domain entity merges descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const contextName: string = 'ContextName';
   const descriptorName: string = 'DescriptorName';
   const descriptorIdColumnName: string = `${descriptorName}DescriptorId`;
@@ -589,7 +599,7 @@ describe('when domain entity merges descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
@@ -614,7 +624,7 @@ describe('when domain entity merges descriptor property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -624,33 +634,33 @@ describe('when domain entity merges descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName3))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName3))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, domainEntityName3, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, domainEntityName3, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
 
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName3, contextName + integerPropertyName1);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName3, contextName + integerPropertyName1);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(false);
   });
 
   it('should not have merge path column', async () => {
-    expect(await columnExists(column(namespace, domainEntityName3, contextName + descriptorIdColumnName))).toBe(false);
+    expect(await columnExists(column(namespaceName, domainEntityName3, contextName + descriptorIdColumnName))).toBe(false);
   });
 
   it('should have referenced domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, domainEntityName2, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, domainEntityName2, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
 
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName2, integerPropertyName1);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName2, integerPropertyName1);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(false);
   });
@@ -658,14 +668,14 @@ describe('when domain entity merges descriptor property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName3, descriptorIdColumnName),
-        column(namespace, domainEntityName3, contextName + integerPropertyName1),
-        column(namespace, domainEntityName3, contextName + integerPropertyName2),
+        column(namespaceName, domainEntityName3, descriptorIdColumnName),
+        column(namespaceName, domainEntityName3, contextName + integerPropertyName1),
+        column(namespaceName, domainEntityName3, contextName + integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName2, descriptorIdColumnName),
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, descriptorIdColumnName),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -675,7 +685,7 @@ describe('when domain entity merges descriptor property', () => {
 
 describe('when domain entity merges enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const contextName: string = 'ContextName';
   const enumerationName: string = 'EnumerationName';
   const enumerationIdColumnName: string = `${enumerationName}TypeId`;
@@ -688,7 +698,7 @@ describe('when domain entity merges enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName)
@@ -717,7 +727,7 @@ describe('when domain entity merges enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -727,33 +737,33 @@ describe('when domain entity merges enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName3))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName3))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const enumerationIdColumn: DatabaseColumn = column(namespace, domainEntityName3, enumerationIdColumnName);
+    const enumerationIdColumn: DatabaseColumn = column(namespaceName, domainEntityName3, enumerationIdColumnName);
     expect(await columnExists(enumerationIdColumn)).toBe(true);
     expect(await columnIsNullable(enumerationIdColumn)).toBe(false);
 
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName3, contextName + integerPropertyName1);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName3, contextName + integerPropertyName1);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(false);
   });
 
   it('should not have merge path column', async () => {
-    expect(await columnExists(column(namespace, domainEntityName3, contextName + enumerationIdColumnName))).toBe(false);
+    expect(await columnExists(column(namespaceName, domainEntityName3, contextName + enumerationIdColumnName))).toBe(false);
   });
 
   it('should have referenced domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have reference properties', async () => {
-    const enumerationIdColumn: DatabaseColumn = column(namespace, domainEntityName2, enumerationIdColumnName);
+    const enumerationIdColumn: DatabaseColumn = column(namespaceName, domainEntityName2, enumerationIdColumnName);
     expect(await columnExists(enumerationIdColumn)).toBe(true);
     expect(await columnIsNullable(enumerationIdColumn)).toBe(false);
 
-    const referenceColumn: DatabaseColumn = column(namespace, domainEntityName2, integerPropertyName1);
+    const referenceColumn: DatabaseColumn = column(namespaceName, domainEntityName2, integerPropertyName1);
     expect(await columnExists(referenceColumn)).toBe(true);
     expect(await columnIsNullable(referenceColumn)).toBe(false);
   });
@@ -761,14 +771,14 @@ describe('when domain entity merges enumeration property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName3, enumerationIdColumnName),
-        column(namespace, domainEntityName3, contextName + integerPropertyName1),
-        column(namespace, domainEntityName3, contextName + integerPropertyName2),
+        column(namespaceName, domainEntityName3, enumerationIdColumnName),
+        column(namespaceName, domainEntityName3, contextName + integerPropertyName1),
+        column(namespaceName, domainEntityName3, contextName + integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName2, enumerationIdColumnName),
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, enumerationIdColumnName),
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);

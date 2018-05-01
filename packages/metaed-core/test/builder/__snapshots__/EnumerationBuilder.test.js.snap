@@ -65,7 +65,7 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",
@@ -97,7 +97,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -137,7 +137,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -249,7 +249,7 @@ Object {
     "line": 2,
     "tokenText": "SchoolYear",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

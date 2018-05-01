@@ -12,7 +12,7 @@ import {
   loadFileIndex,
   loadFiles,
   loadPlugins,
-  addProjectNameToNamespaceInfo,
+  addProjectNameToNamespace,
   newMetaEdConfiguration,
   newState,
   orderByProp,
@@ -72,7 +72,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespace: 'edfi',
+          namespaceName: 'edfi',
           projectExtension: '',
           projectVersion: '2.0.0',
         },
@@ -92,7 +92,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespaceInfo(state);
+    addProjectNameToNamespace(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);

@@ -13,13 +13,13 @@ describe('when deploying 3.0 artifacts', () => {
       projects: [
         {
           ...newMetaEdProject(),
-          namespace: 'sample',
+          namespaceName: 'sample',
           projectName: 'Sample',
           projectVersion: '1.0.0',
         },
         {
           ...newMetaEdProject(),
-          namespace: 'edfi',
+          namespaceName: 'edfi',
           projectName: 'Ed-Fi',
           projectVersion: '3.0.0',
         },
@@ -30,7 +30,7 @@ describe('when deploying 3.0 artifacts', () => {
 
   it('should have correct core directory paths', () => {
     const core = result[0];
-    expect(core.namespace).toBe('edfi');
+    expect(core.namespaceName).toBe('edfi');
     expect(core.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Metadata/');
     expect(core.databaseData.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Database/Data/EdFi/');
     expect(core.databaseStructure.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Database/Structure/EdFi/');
@@ -40,7 +40,7 @@ describe('when deploying 3.0 artifacts', () => {
 
   it('should have correct extension directory paths', () => {
     const extension = result[1];
-    expect(extension.namespace).toBe('sample');
+    expect(extension.namespaceName).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe(
       'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Metadata/',
     );
@@ -68,13 +68,13 @@ describe('when deploying 2.0 artifacts', () => {
       projects: [
         {
           ...newMetaEdProject(),
-          namespace: 'sample',
+          namespaceName: 'sample',
           projectName: 'Sample',
           projectVersion: '1.0.0',
         },
         {
           ...newMetaEdProject(),
-          namespace: 'edfi',
+          namespaceName: 'edfi',
           projectName: 'Ed-Fi',
           projectVersion: '2.0.0',
         },
@@ -85,7 +85,7 @@ describe('when deploying 2.0 artifacts', () => {
 
   it('should have correct core directory paths', () => {
     const core = result[0];
-    expect(core.namespace).toBe('edfi');
+    expect(core.namespaceName).toBe('edfi');
     expect(core.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Standard/Metadata/');
     expect(core.databaseData.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Database/Data/EdFi/');
     expect(core.databaseStructure.replace(/\\/g, '/')).toBe('Ed-Fi-ODS/Database/Structure/EdFi/');
@@ -95,7 +95,7 @@ describe('when deploying 2.0 artifacts', () => {
 
   it('should have correct extension directory paths', () => {
     const extension = result[1];
-    expect(extension.namespace).toBe('sample');
+    expect(extension.namespaceName).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Extensions/Metadata/');
     expect(extension.databaseData.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Database/Data/EdFi/');
     expect(extension.databaseStructure.replace(/\\/g, '/')).toBe('Ed-Fi-ODS-Implementation/Database/Structure/EdFi/');

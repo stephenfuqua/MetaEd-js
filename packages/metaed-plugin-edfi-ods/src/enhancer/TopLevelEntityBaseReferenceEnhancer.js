@@ -44,7 +44,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         isPartOfIdentity: true,
         parentEntity: entity,
         referencedEntity: entity.baseEntity ? entity.baseEntity : NoTopLevelEntity,
-        namespaceInfo: entity.namespaceInfo,
+        namespace: entity.namespace,
         data: {
           edfiOds: {
             ods_DeleteCascadePrimaryKey: true,

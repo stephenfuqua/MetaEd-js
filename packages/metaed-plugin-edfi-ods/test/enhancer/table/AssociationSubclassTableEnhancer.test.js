@@ -5,28 +5,28 @@ import {
   newAssociationSubclass,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
-import type { Association, AssociationSubclass, IntegerProperty, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import type { Association, AssociationSubclass, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/AssociationSubclassTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationSubclassTableEnhancer enhances association subclass', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const associationSubclassName: string = 'AssociationSubclassName';
   const associationSubclassPropertyName: string = 'AssociationSubclassPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationName,
       data: {
@@ -52,12 +52,12 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const associationSubclass: AssociationSubclass = Object.assign(newAssociationSubclass(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationSubclassName,
       baseEntityName: associationName,
@@ -72,7 +72,7 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
       },
     });
     const associationSubclassProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationSubclassPropertyName,
       isPartOfIdentity: false,
       parentEntity: associationSubclass,
@@ -96,7 +96,7 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationSubclassName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationSubclassName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -113,19 +113,19 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
 
 describe('when AssociationSubclassTableEnhancer enhances association subclass with primary key', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const associationSubclassName: string = 'AssociationSubclassName';
   const associationSubclassPkPropertyName: string = 'AssociationSubclassPkPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationName,
       data: {
@@ -151,12 +151,12 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const associationSubclass: AssociationSubclass = Object.assign(newAssociationSubclass(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationSubclassName,
       baseEntityName: associationName,
@@ -171,7 +171,7 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
       },
     });
     const associationSubclassPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationSubclassPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: associationSubclass,

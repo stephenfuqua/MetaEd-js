@@ -4,7 +4,7 @@ import {
   MetaEdTextBuilder,
   CommonBuilder,
   CommonExtensionBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonExtension/CommonExtensionIdentifierMustMatchACommon';
@@ -29,7 +29,7 @@ describe('when common extension extends common', () => {
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
@@ -58,7 +58,7 @@ describe('when common extension extends an invalid identifier', () => {
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
     failures = validate(metaEd);

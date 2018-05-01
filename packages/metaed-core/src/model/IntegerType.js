@@ -5,7 +5,7 @@ import { NoSourceMap } from './SourceMap';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 
 export type IntegerTypeSourceMap = {
   ...$Exact<ModelBaseSourceMap>,
@@ -46,7 +46,7 @@ export function newIntegerType(): IntegerType {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     generatedSimpleType: false,
     documentationInherited: false,
     typeHumanizedName: 'Integer Type',

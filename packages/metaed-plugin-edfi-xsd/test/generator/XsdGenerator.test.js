@@ -1,6 +1,6 @@
 // @flow
 import xmlParser from 'xml-js';
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import {
   createElementComplexTypeItem,
@@ -39,8 +39,8 @@ describe('when generating schema', () => {
     schemaSection.complexTypes.push(complexType);
     const schema = createSchema(schemaVersion, schemaDocumentation);
     schema.sections.push(schemaSection);
-    const namespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       projectExtension: 'EXTENSION',
       data: {
         edfiXsd: {
@@ -49,7 +49,7 @@ describe('when generating schema', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
     result = xmlParser.xml2js(rawXsd);
   });

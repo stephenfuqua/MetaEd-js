@@ -3,7 +3,7 @@ import type { MetaEdEnvironment, GeneratorResult, SemVer } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   DomainEntityBuilder,
   EnumerationBuilder,
 } from 'metaed-core';
@@ -26,7 +26,7 @@ describe('when generating xsd for domain entity', () => {
   let workbook: Workbook;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -49,7 +49,7 @@ describe('when generating xsd for domain entity', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(enumerationBuilder)
       .sendToListener(domainEntityBuilder);
 

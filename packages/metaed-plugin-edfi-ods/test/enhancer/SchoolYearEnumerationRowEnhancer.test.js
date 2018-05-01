@@ -1,11 +1,5 @@
 // @flow
-import {
-  addEntity,
-  newSchoolYearEnumeration,
-  newEnumerationItem,
-  newMetaEdEnvironment,
-  newNamespaceInfo,
-} from 'metaed-core';
+import { addEntity, newSchoolYearEnumeration, newEnumerationItem, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { EnumerationItem, MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -13,7 +7,7 @@ import type { SchoolYearEnumerationRow } from '../../src/model/database/SchoolYe
 
 describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const itemDocumentation1: string = 'ItemDocumentation1';
   const itemDocumentation2: string = 'ItemDocumentation2';
@@ -23,8 +17,8 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
   beforeAll(() => {
     const entity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: entityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -58,8 +52,8 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     const row: SchoolYearEnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`2017${shortDescription1}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2017');
-    expect(row.namespace).toBe(namespace);
-    expect(row.schemaName).toBe(namespace);
+    expect(row.namespace).toBe(namespaceName);
+    expect(row.schemaName).toBe(namespaceName);
     expect(row.tableName).toBe('SchoolYearType');
     expect(row.documentation).toBe(itemDocumentation1);
     expect(row.schoolYear).toBe(2017);
@@ -70,8 +64,8 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     const row: SchoolYearEnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`2018${shortDescription2}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2018');
-    expect(row.namespace).toBe(namespace);
-    expect(row.schemaName).toBe(namespace);
+    expect(row.namespace).toBe(namespaceName);
+    expect(row.schemaName).toBe(namespaceName);
     expect(row.tableName).toBe('SchoolYearType');
     expect(row.documentation).toBe(itemDocumentation2);
     expect(row.schoolYear).toBe(2018);

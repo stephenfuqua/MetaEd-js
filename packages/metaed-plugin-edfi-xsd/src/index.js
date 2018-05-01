@@ -20,7 +20,7 @@ export type { SchemaContainer } from './model/schema/SchemaContainer';
 export type { SchemaSection } from './model/schema/SchemaSection';
 export type { SimpleType } from './model/schema/SimpleType';
 export type { StringSimpleType } from './model/schema/StringSimpleType';
-export type { NamespaceInfoEdfiXsd } from './model/NamespaceInfo';
+export type { NamespaceEdfiXsd } from './model/Namespace';
 export type { MergedInterchange } from './model/MergedInterchange';
 export type { EdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 

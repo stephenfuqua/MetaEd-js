@@ -12,7 +12,7 @@ const enhancerName: string = 'EnumerationRowEnhancer';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'enumeration').forEach((entity: ModelBase) => {
     const rows: Array<EnumerationRow> = enumerationRowCreator.createRows(
-      entity.namespaceInfo.namespace,
+      entity.namespace.namespaceName,
       entity.data.edfiOds.ods_TableName,
       R.prop('enumerationItems')(entity),
     );

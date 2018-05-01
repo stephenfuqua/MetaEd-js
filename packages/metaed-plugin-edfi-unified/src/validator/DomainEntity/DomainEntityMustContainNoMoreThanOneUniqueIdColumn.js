@@ -11,7 +11,7 @@ const hasDuplicateUniqueIds = (properties: Array<EntityProperty>) =>
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.entity.domainEntity.forEach(domainEntity => {
-    if (!domainEntity.namespaceInfo.isExtension && hasDuplicateUniqueIds(domainEntity.properties)) {
+    if (!domainEntity.namespace.isExtension && hasDuplicateUniqueIds(domainEntity.properties)) {
       failures.push({
         validatorName: 'DomainEntityMustContainNoMoreThanOneUniqueIdColumn',
         category: 'error',

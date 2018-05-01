@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   InterchangeBuilder,
   IntegerTypeBuilder,
   DescriptorBuilder,
@@ -25,7 +25,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
   let interchangeResults;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
@@ -51,7 +51,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(integerTypeBuilder)
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityBuilder);
@@ -89,7 +89,7 @@ describe('when generating xsd for extension interchange with a new domain entity
   let interchangeResults: Array<string>;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
@@ -122,7 +122,7 @@ describe('when generating xsd for extension interchange with a new domain entity
       .withEndInterchangeExtension()
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(integerTypeBuilder)
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityBuilder);
@@ -192,7 +192,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
   let interchangeResults: Array<string>;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
@@ -227,7 +227,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(integerTypeBuilder)
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityExtensionBuilder)
@@ -298,7 +298,7 @@ describe('when generating xsd for extension interchange with an association exte
   let interchangeResults: Array<string>;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const associationBuilder = new AssociationBuilder(metaEd, []);
@@ -344,7 +344,7 @@ describe('when generating xsd for extension interchange with an association exte
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(associationBuilder)
       .sendToListener(associationExtensionBuilder)
       .sendToListener(interchangeBuilder)
@@ -413,7 +413,7 @@ describe('when generating xsd for extension interchange with extension descripto
   let interchangeResults: Array<string>;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     const descriptorBuilder = new DescriptorBuilder(metaEd, []);
@@ -439,7 +439,7 @@ describe('when generating xsd for extension interchange with extension descripto
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(descriptorBuilder)
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityExtensionBuilder)

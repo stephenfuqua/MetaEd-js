@@ -4,7 +4,7 @@ import {
   MetaEdTextBuilder,
   DomainEntityBuilder,
   SharedStringBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/StringProperty/StringPropertyMustNotMatchACommonString';
@@ -31,7 +31,7 @@ describe('when validating string property does not match common string', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
@@ -69,7 +69,7 @@ describe('when validating string identity matches common string', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
@@ -111,7 +111,7 @@ describe('when validating string property matches common string', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 

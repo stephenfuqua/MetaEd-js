@@ -3,7 +3,7 @@ import {
   DomainEntityBuilder,
   DomainEntitySubclassBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -16,7 +16,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when core domain entity subclass has identity rename property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -24,7 +24,7 @@ describe('when core domain entity subclass has identity rename property', () => 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -36,7 +36,7 @@ describe('when core domain entity subclass has identity rename property', () => 
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -46,23 +46,23 @@ describe('when core domain entity subclass has identity rename property', () => 
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -70,36 +70,36 @@ describe('when core domain entity subclass has identity rename property', () => 
   });
 
   it('should have domain entity subclass table', async () => {
-    expect(await tableExists(table(namespace, domainEntitySubclassName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntitySubclassName))).toBe(true);
   });
 
   it('should have domain entity subclass column', async () => {
-    expect(await columnExists(column(namespace, domainEntitySubclassName, integerPropertyName2))).toBe(true);
+    expect(await columnExists(column(namespaceName, domainEntitySubclassName, integerPropertyName2))).toBe(true);
   });
 
   it('should have correct primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntitySubclassName))).toEqual([integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntitySubclassName))).toEqual([integerPropertyName2]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntitySubclassName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntitySubclassName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should not have standard resource columns', async () => {
-    expect(await columnExists(column(namespace, domainEntitySubclassName, 'Id'))).toBe(false);
-    expect(await columnExists(column(namespace, domainEntitySubclassName, 'LastModifiedDate'))).toBe(false);
-    expect(await columnExists(column(namespace, domainEntitySubclassName, 'CreateDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, domainEntitySubclassName, 'Id'))).toBe(false);
+    expect(await columnExists(column(namespaceName, domainEntitySubclassName, 'LastModifiedDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, domainEntitySubclassName, 'CreateDate'))).toBe(false);
   });
 });
 
 describe('when extension domain entity subclasses core domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
@@ -108,7 +108,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -122,7 +122,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
@@ -132,23 +132,23 @@ describe('when extension domain entity subclasses core domain entity', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -170,7 +170,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntitySubclassName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -205,7 +205,7 @@ describe('when extension domain entity subclasses extension domain entity', () =
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 

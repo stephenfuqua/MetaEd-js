@@ -41,7 +41,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         const foreignKey: ForeignKey = createForeignKey(
           property,
           [enumerationColumn],
-          enumeration.referencedEntity.namespaceInfo.namespace,
+          enumeration.referencedEntity.namespace.namespaceName,
           enumeration.referencedEntity.data.edfiOds.ods_TableName,
           foreignKeyStrategyFor(enumeration),
         );
@@ -79,7 +79,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,
-          enumeration.referencedEntity.namespaceInfo.namespace,
+          enumeration.referencedEntity.namespace.namespaceName,
           enumeration.referencedEntity.data.edfiOds.ods_TableName,
           foreignKeyStrategyFor(enumeration),
         );

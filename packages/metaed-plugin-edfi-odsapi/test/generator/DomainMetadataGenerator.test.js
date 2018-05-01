@@ -1,11 +1,11 @@
 // @flow
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/domainMetadata/DomainMetadataGenerator';
 import type { Aggregate } from '../../src/model/domainMetadata/Aggregate';
 
 describe('when generating aggregate for edfi', () => {
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -13,7 +13,7 @@ describe('when generating aggregate for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -22,7 +22,7 @@ describe('when generating aggregate for edfi', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
@@ -31,15 +31,15 @@ describe('when generating aggregate for edfi', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       data: {
         edfiOdsApi: {
@@ -48,7 +48,7 @@ describe('when generating aggregate for edfi', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -58,7 +58,7 @@ describe('when generating aggregate for edfi', () => {
 });
 
 describe('when generating aggregate for extensions', () => {
-  const namespace: string = 'extension';
+  const namespaceName: string = 'extension';
   let result: string = '';
 
   beforeAll(async () => {
@@ -66,7 +66,7 @@ describe('when generating aggregate for extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -75,15 +75,15 @@ describe('when generating aggregate for extensions', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: true,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: true,
       projectExtension: 'EXTENSION',
       data: {
@@ -93,7 +93,7 @@ describe('when generating aggregate for extensions', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -103,7 +103,7 @@ describe('when generating aggregate for extensions', () => {
 });
 
 describe('when generating aggregate with subclass for edfi', () => {
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -111,7 +111,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -120,15 +120,15 @@ describe('when generating aggregate with subclass for edfi', () => {
           isA: 'Entity4',
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: true,
           requiresSchema: false,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -138,7 +138,7 @@ describe('when generating aggregate with subclass for edfi', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -148,7 +148,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 });
 
 describe('when generating aggregate extensions', () => {
-  const namespace: string = 'extension';
+  const namespaceName: string = 'extension';
   let result: string = '';
 
   beforeAll(async () => {
@@ -156,7 +156,7 @@ describe('when generating aggregate extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: true,
       entityTables: [
@@ -165,15 +165,15 @@ describe('when generating aggregate extensions', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: true,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: true,
       projectExtension: 'EXTENSION',
       data: {
@@ -183,7 +183,7 @@ describe('when generating aggregate extensions', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -193,7 +193,7 @@ describe('when generating aggregate extensions', () => {
 });
 
 describe('when generating abstract aggregate for edfi', () => {
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -201,7 +201,7 @@ describe('when generating abstract aggregate for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -210,15 +210,15 @@ describe('when generating abstract aggregate for edfi', () => {
           isA: null,
           isAbstract: true,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -228,7 +228,7 @@ describe('when generating abstract aggregate for edfi', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -238,7 +238,7 @@ describe('when generating abstract aggregate for edfi', () => {
 });
 
 describe('when generating aggregate with primary key update', () => {
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -246,7 +246,7 @@ describe('when generating aggregate with primary key update', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [
@@ -255,15 +255,15 @@ describe('when generating aggregate with primary key update', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -273,7 +273,7 @@ describe('when generating aggregate with primary key update', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -283,7 +283,7 @@ describe('when generating aggregate with primary key update', () => {
 });
 
 describe('when generating aggregate with required collection table', () => {
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -291,7 +291,7 @@ describe('when generating aggregate with required collection table', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [
@@ -300,15 +300,15 @@ describe('when generating aggregate with required collection table', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: true,
-          schema: namespace,
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
       ],
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -318,7 +318,7 @@ describe('when generating aggregate with required collection table', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 

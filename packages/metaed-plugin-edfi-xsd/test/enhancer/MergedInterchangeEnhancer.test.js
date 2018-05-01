@@ -3,7 +3,7 @@ import {
   newMetaEdEnvironment,
   newInterchange,
   newInterchangeItem,
-  newNamespaceInfo,
+  newNamespace,
   newInterchangeExtension,
   newPluginEnvironment,
 } from 'metaed-core';
@@ -60,7 +60,7 @@ describe('when running with no interchange extensions', () => {
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeName);
 
     expect(mergedInterchange).toBeDefined();
-    expect(mergedInterchange.namespaceInfo.isExtension).toBe(false);
+    expect(mergedInterchange.namespace.isExtension).toBe(false);
     expect(mergedInterchange.elements.length).toBe(1);
     expect(mergedInterchange.documentation).toBe(interchangeDocumentation);
     expect(mergedInterchange.extendedDocumentation).toBe(interchangeExtendedDocumentation);
@@ -76,8 +76,8 @@ describe('when running with interchange extensions', () => {
   metaEd.plugin.set('edfiXsd', plugin);
   const interchangeToBeExtendedName: string = 'InterchangeToBeExtendedName';
   const interchangeDocumentation: string = 'InterchangeDocumentation';
-  const coreNamespace: string = 'edfi';
-  const extensionNamespace: string = 'extensionNamespace';
+  const coreNamespaceName: string = 'edfi';
+  const extensionNamespaceName: string = 'extensionNamespace';
   const projectExtension: string = 'EXTENSION';
   const elementNoExtensionBaseName: string = 'InterchangeElement';
   const elementNoExtensionBaseType: string = 'InterchangeElementType';
@@ -115,8 +115,8 @@ describe('when running with interchange extensions', () => {
 
     const interchangeToBeExtended = Object.assign(newInterchange(), {
       metaEdName: interchangeToBeExtendedName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: coreNamespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName: coreNamespaceName,
         isExtension: false,
       }),
       documentation: interchangeDocumentation,
@@ -130,8 +130,8 @@ describe('when running with interchange extensions', () => {
 
     const interchangeExtension = Object.assign(newInterchangeExtension(), {
       metaEdName: interchangeToBeExtendedName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: extensionNamespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName: extensionNamespaceName,
         projectExtension,
         isExtension: true,
       }),
@@ -155,7 +155,7 @@ describe('when running with interchange extensions', () => {
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeToBeExtendedName);
 
     expect(mergedInterchange).toBeDefined();
-    expect(mergedInterchange.namespaceInfo.isExtension).toBe(false);
+    expect(mergedInterchange.namespace.isExtension).toBe(false);
     expect(mergedInterchange.elements.length).toBe(2);
     expect(mergedInterchange.documentation).toBe(interchangeDocumentation);
     expect(mergedInterchange.elements[0].metaEdName).toBe(extensionElementBaseName);

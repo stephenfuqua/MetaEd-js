@@ -11,7 +11,7 @@ export function addAssociationExtensionEdfiOdsTo(associationExtension: Associati
   if (associationExtension.data.edfiOds == null) associationExtension.data.edfiOds = {};
 
   Object.assign(associationExtension.data.edfiOds, {
-    ods_ExtensionName: associationExtension.metaEdName + associationExtension.namespaceInfo.extensionEntitySuffix,
+    ods_ExtensionName: associationExtension.metaEdName + associationExtension.namespace.extensionEntitySuffix,
   });
 }
 

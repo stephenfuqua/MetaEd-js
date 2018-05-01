@@ -12,7 +12,7 @@ import {
   loadFileIndex,
   loadFiles,
   loadPlugins,
-  addProjectNameToNamespaceInfo,
+  addProjectNameToNamespace,
   newMetaEdConfiguration,
   newState,
   runEnhancers,
@@ -71,7 +71,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespace: 'edfi',
+          namespaceName: 'edfi',
           projectExtension: '',
           projectVersion: '2.0.0',
         },
@@ -92,7 +92,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespaceInfo(state);
+    addProjectNameToNamespace(state);
 
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
@@ -102,7 +102,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
     fileMapForFailure(state);
 
-    state.metaEd.entity.namespaceInfo.forEach(namespace =>
+    state.metaEd.entity.namespace.forEach(namespace =>
       namespace.data.edfiXsd.xsd_Schema.sections.forEach(section => {
         complexTypeNames.push(section.sectionAnnotation.documentation, ...section.complexTypes.map(y => y.name));
         simpleTypeNames.push(section.sectionAnnotation.documentation, ...section.simpleTypes.map(y => y.name));

@@ -2,7 +2,7 @@
 import {
   newMetaEdEnvironment,
   newEnumeration,
-  newNamespaceInfo,
+  newNamespace,
   newMapTypeEnumeration,
   newSchoolYearEnumeration,
 } from 'metaed-core';
@@ -41,7 +41,7 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration', () => {
 
 describe('when EnumerationBasePropertiesEnhancer enhances enumeration with extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'EXTENSION';
 
   const enumerationBaseName: string = 'EnumerationName';
@@ -50,8 +50,8 @@ describe('when EnumerationBasePropertiesEnhancer enhances enumeration with exten
   beforeAll(() => {
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationBaseName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         projectExtension,
       }),
       data: {

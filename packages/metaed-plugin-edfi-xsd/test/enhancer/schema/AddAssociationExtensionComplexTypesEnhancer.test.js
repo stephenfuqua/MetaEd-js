@@ -3,7 +3,7 @@ import {
   newMetaEdEnvironment,
   newAssociation,
   newAssociationExtension,
-  newNamespaceInfo,
+  newNamespace,
   newCommon,
   newCommonExtension,
   newCommonProperty,
@@ -108,8 +108,8 @@ describe('when enhancing association extension with common type override', () =>
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension,
       isExtension: true,
     });
@@ -127,7 +127,7 @@ describe('when enhancing association extension with common type override', () =>
       metaEdName: commonTypeExtensionName,
       baseEntityName: baseCommonTypeName,
       baseEntity: baseCommon,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -167,7 +167,7 @@ describe('when enhancing association extension with common type override', () =>
       metaEdName: associationExtensionName,
       documentation,
       baseEntity: baseAssociation,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       properties: [
         Object.assign(newCommonProperty(), {
           metaEdName: baseCommonTypeName,

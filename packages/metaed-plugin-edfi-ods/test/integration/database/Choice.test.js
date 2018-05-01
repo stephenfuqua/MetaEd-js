@@ -6,7 +6,7 @@ import {
   DescriptorBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -19,7 +19,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when choice is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const contextName: string = 'ContextName';
   const domainEntityName: string = 'DomainEntityName';
@@ -31,7 +31,7 @@ describe('when choice is a required property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartChoice(choiceName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -47,7 +47,7 @@ describe('when choice is a required property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -57,29 +57,29 @@ describe('when choice is a required property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have choice properties', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
-    const contextColumn: DatabaseColumn = column(namespace, domainEntityName, contextName + integerPropertyName2);
+    const contextColumn: DatabaseColumn = column(namespaceName, domainEntityName, contextName + integerPropertyName2);
     expect(await columnExists(contextColumn)).toBe(true);
     expect(await columnIsNullable(contextColumn)).toBe(true);
 
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName3);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName3);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
   });
 
   it('should have join table for collection property', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + integerPropertyName4))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + integerPropertyName4))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + integerPropertyName4))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + integerPropertyName4))).toEqual([
       integerPropertyName4,
       integerPropertyName5,
     ]);
@@ -87,7 +87,7 @@ describe('when choice is a required property', () => {
 
   it('should have collection property', async () => {
     const collectionColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + integerPropertyName4,
       integerPropertyName4,
     );
@@ -97,8 +97,8 @@ describe('when choice is a required property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + integerPropertyName4, integerPropertyName5)],
-      [column(namespace, domainEntityName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + integerPropertyName4, integerPropertyName5)],
+      [column(namespaceName, domainEntityName, integerPropertyName5)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -107,7 +107,7 @@ describe('when choice is a required property', () => {
 
 describe('when choice is an optional property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -116,7 +116,7 @@ describe('when choice is an optional property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartChoice(choiceName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -130,7 +130,7 @@ describe('when choice is an optional property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -140,15 +140,15 @@ describe('when choice is an optional property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have choice properties', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName2);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName2);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
   });
@@ -156,7 +156,7 @@ describe('when choice is an optional property', () => {
 
 describe('when choice is a required property on extension entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const choiceName: string = 'ChoiceName';
   const contextName: string = 'ContextName';
@@ -169,7 +169,7 @@ describe('when choice is a required property on extension entity', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartChoice(choiceName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -187,7 +187,7 @@ describe('when choice is a required property on extension entity', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -247,7 +247,7 @@ describe('when choice is a required property on extension entity', () => {
 
 describe('when extension choice is a required property on extension entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const choiceName: string = 'ChoiceName';
   const contextName: string = 'ContextName';
@@ -260,7 +260,7 @@ describe('when extension choice is a required property on extension entity', () 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -283,7 +283,7 @@ describe('when extension choice is a required property on extension entity', () 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -343,7 +343,7 @@ describe('when extension choice is a required property on extension entity', () 
 
 describe('when choice has an enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const enumerationName: string = 'EnumerationName';
   const enumerationItemName: string = 'EnumerationItemName';
   const enumerationTableName: string = `${enumerationName}Type`;
@@ -353,7 +353,7 @@ describe('when choice has an enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName)
@@ -371,7 +371,7 @@ describe('when choice has an enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
@@ -382,27 +382,27 @@ describe('when choice has an enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have enumeration property', async () => {
-    const enumerationColumn: DatabaseColumn = column(namespace, domainEntityName, enumerationColumnName);
+    const enumerationColumn: DatabaseColumn = column(namespaceName, domainEntityName, enumerationColumnName);
     expect(await columnExists(enumerationColumn)).toBe(true);
     expect(await columnIsNullable(enumerationColumn)).toBe(true);
   });
 
   it('should have enumeration table', async () => {
-    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, enumerationTableName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, enumerationTableName))).toEqual([enumerationColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, enumerationColumnName)],
-      [column(namespace, enumerationTableName, enumerationColumnName)],
+      [column(namespaceName, domainEntityName, enumerationColumnName)],
+      [column(namespaceName, enumerationTableName, enumerationColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -411,7 +411,7 @@ describe('when choice has an enumeration property', () => {
 
 describe('when choice has a collection enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const enumerationName: string = 'EnumerationName';
   const enumerationItemName: string = 'EnumerationItemName';
   const enumerationTableName: string = `${enumerationName}Type`;
@@ -422,7 +422,7 @@ describe('when choice has a collection enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName)
@@ -440,7 +440,7 @@ describe('when choice has a collection enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
@@ -451,29 +451,29 @@ describe('when choice has a collection enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have enumeration table', async () => {
-    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, enumerationTableName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, enumerationTableName))).toEqual([enumerationColumnName]);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + enumerationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + enumerationName))).toBe(true);
   });
 
   it('should have collection property', async () => {
-    const collectionColumn: DatabaseColumn = column(namespace, domainEntityName + enumerationName, integerPropertyName);
+    const collectionColumn: DatabaseColumn = column(namespaceName, domainEntityName + enumerationName, integerPropertyName);
     expect(await columnExists(collectionColumn)).toBe(true);
     expect(await columnIsNullable(collectionColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + enumerationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + enumerationName))).toEqual([
       enumerationColumnName,
       integerPropertyName,
     ]);
@@ -481,15 +481,15 @@ describe('when choice has a collection enumeration property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + enumerationName, integerPropertyName)],
-      [column(namespace, domainEntityName, integerPropertyName)],
+      [column(namespaceName, domainEntityName + enumerationName, integerPropertyName)],
+      [column(namespaceName, domainEntityName, integerPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + enumerationName, enumerationColumnName)],
-      [column(namespace, enumerationTableName, enumerationColumnName)],
+      [column(namespaceName, domainEntityName + enumerationName, enumerationColumnName)],
+      [column(namespaceName, enumerationTableName, enumerationColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -498,7 +498,7 @@ describe('when choice has a collection enumeration property', () => {
 
 describe('when choice has a descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = `${descriptorName}Descriptor`;
   const descriptorColumnName: string = `${descriptorName}DescriptorId`;
@@ -507,7 +507,7 @@ describe('when choice has a descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
@@ -524,7 +524,7 @@ describe('when choice has a descriptor property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
@@ -535,27 +535,27 @@ describe('when choice has a descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have descriptor property', async () => {
-    const descriptorColumn: DatabaseColumn = column(namespace, domainEntityName, descriptorColumnName);
+    const descriptorColumn: DatabaseColumn = column(namespaceName, domainEntityName, descriptorColumnName);
     expect(await columnExists(descriptorColumn)).toBe(true);
     expect(await columnIsNullable(descriptorColumn)).toBe(true);
   });
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, descriptorColumnName)],
-      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespaceName, domainEntityName, descriptorColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -564,7 +564,7 @@ describe('when choice has a descriptor property', () => {
 
 describe('when choice has a collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = `${descriptorName}Descriptor`;
   const descriptorColumnName: string = `${descriptorName}DescriptorId`;
@@ -574,7 +574,7 @@ describe('when choice has a collection descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
@@ -591,7 +591,7 @@ describe('when choice has a collection descriptor property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
@@ -602,29 +602,29 @@ describe('when choice has a collection descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorColumnName]);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + descriptorName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + descriptorName))).toBe(true);
   });
 
   it('should have collection property', async () => {
-    const collectionColumn: DatabaseColumn = column(namespace, domainEntityName + descriptorName, integerPropertyName);
+    const collectionColumn: DatabaseColumn = column(namespaceName, domainEntityName + descriptorName, integerPropertyName);
     expect(await columnExists(collectionColumn)).toBe(true);
     expect(await columnIsNullable(collectionColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + descriptorName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + descriptorName))).toEqual([
       descriptorColumnName,
       integerPropertyName,
     ]);
@@ -632,15 +632,15 @@ describe('when choice has a collection descriptor property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + descriptorName, integerPropertyName)],
-      [column(namespace, domainEntityName, integerPropertyName)],
+      [column(namespaceName, domainEntityName + descriptorName, integerPropertyName)],
+      [column(namespaceName, domainEntityName, integerPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + descriptorName, descriptorColumnName)],
-      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespaceName, domainEntityName + descriptorName, descriptorColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -649,7 +649,7 @@ describe('when choice has a collection descriptor property', () => {
 
 describe('when choice has a domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -659,7 +659,7 @@ describe('when choice has a domain entity property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -678,7 +678,7 @@ describe('when choice has a domain entity property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -688,23 +688,23 @@ describe('when choice has a domain entity property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have referenced domain entity property', async () => {
-    const column1: DatabaseColumn = column(namespace, domainEntityName2, integerPropertyName1);
+    const column1: DatabaseColumn = column(namespaceName, domainEntityName2, integerPropertyName1);
     expect(await columnExists(column1)).toBe(true);
     expect(await columnIsNullable(column1)).toBe(true);
   });
 
   it('should have referenced domainEntity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName1))).toBe(true);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName2, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -713,7 +713,7 @@ describe('when choice has a domain entity property', () => {
 
 describe('when choice has a collection domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -723,7 +723,7 @@ describe('when choice has a collection domain entity property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -742,7 +742,7 @@ describe('when choice has a collection domain entity property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -752,21 +752,25 @@ describe('when choice has a collection domain entity property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + domainEntityName1))).toBe(true);
   });
 
   it('should have collection property', async () => {
-    const collectionColumn: DatabaseColumn = column(namespace, domainEntityName2 + domainEntityName1, integerPropertyName1);
+    const collectionColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName2 + domainEntityName1,
+      integerPropertyName1,
+    );
     expect(await columnExists(collectionColumn)).toBe(true);
     expect(await columnIsNullable(collectionColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName2 + domainEntityName1))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName2 + domainEntityName1))).toEqual([
       integerPropertyName1,
       integerPropertyName3,
     ]);
@@ -774,15 +778,15 @@ describe('when choice has a collection domain entity property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + domainEntityName1, integerPropertyName3)],
-      [column(namespace, domainEntityName2, integerPropertyName3)],
+      [column(namespaceName, domainEntityName2 + domainEntityName1, integerPropertyName3)],
+      [column(namespaceName, domainEntityName2, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + domainEntityName1, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName2 + domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -791,7 +795,7 @@ describe('when choice has a collection domain entity property', () => {
 
 describe('when choice has a common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -800,7 +804,7 @@ describe('when choice has a common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -818,7 +822,7 @@ describe('when choice has a common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
@@ -829,27 +833,27 @@ describe('when choice has a common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have common table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common property', async () => {
-    const collectionColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const collectionColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(collectionColumn)).toBe(true);
     expect(await columnIsNullable(collectionColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([integerPropertyName2]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -858,7 +862,7 @@ describe('when choice has a common property', () => {
 
 describe('when choice has a collection common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -867,7 +871,7 @@ describe('when choice has a collection common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -885,7 +889,7 @@ describe('when choice has a collection common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
@@ -896,21 +900,21 @@ describe('when choice has a collection common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have collection property', async () => {
-    const collectionColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const collectionColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(collectionColumn)).toBe(true);
     expect(await columnIsNullable(collectionColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -918,8 +922,8 @@ describe('when choice has a collection common property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -928,7 +932,7 @@ describe('when choice has a collection common property', () => {
 
 describe('when choice has a inline common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const inlineCommonName: string = 'InlineCommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -938,7 +942,7 @@ describe('when choice has a inline common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartInlineCommon(inlineCommonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', true, false)
@@ -957,7 +961,7 @@ describe('when choice has a inline common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
@@ -968,27 +972,27 @@ describe('when choice has a inline common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have inline common properties', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName2);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName2);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName3]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName3]);
   });
 });
 
 describe('when choice has a inline common property with context with collection reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const contextName: string = 'ContextName';
   const inlineCommonName: string = 'InlineCommonName';
@@ -999,7 +1003,7 @@ describe('when choice has a inline common property with context with collection 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1022,7 +1026,7 @@ describe('when choice has a inline common property with context with collection 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
@@ -1033,16 +1037,16 @@ describe('when choice has a inline common property with context with collection 
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + contextName + domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + contextName + domainEntityName1))).toBe(true);
   });
 
   it('should have collection property', async () => {
     const collectionColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName2 + contextName + domainEntityName1,
       contextName + integerPropertyName1,
     );
@@ -1051,7 +1055,7 @@ describe('when choice has a inline common property with context with collection 
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName2 + contextName + domainEntityName1))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName2 + contextName + domainEntityName1))).toEqual([
       contextName + integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -1059,15 +1063,15 @@ describe('when choice has a inline common property with context with collection 
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + contextName + domainEntityName1, integerPropertyName2)],
-      [column(namespace, domainEntityName2, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2 + contextName + domainEntityName1, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + contextName + domainEntityName1, contextName + integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName2 + contextName + domainEntityName1, contextName + integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -1076,7 +1080,7 @@ describe('when choice has a inline common property with context with collection 
 
 describe('when choice has a choice property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName1: string = 'ChoiceName1';
   const choiceName2: string = 'ChoiceName2';
   const domainEntityName: string = 'DomainEntityName';
@@ -1086,7 +1090,7 @@ describe('when choice has a choice property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartChoice(choiceName1)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', true, false)
@@ -1105,7 +1109,7 @@ describe('when choice has a choice property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
@@ -1115,20 +1119,20 @@ describe('when choice has a choice property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have choice properties', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName, integerPropertyName2);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, integerPropertyName2);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName3]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName3]);
   });
 });

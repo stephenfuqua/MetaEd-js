@@ -9,7 +9,7 @@ const enhancerName: string = 'SchoolYearEnumerationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'schoolYearEnumeration').forEach((entity: ModelBase) => {
-    const table: Table = schoolYearEnumerationTableCreator.build(entity.namespaceInfo.namespace, entity.documentation);
+    const table: Table = schoolYearEnumerationTableCreator.build(entity.namespace.namespaceName, entity.documentation);
     entity.data.edfiOds.ods_Tables = [table];
     addTables(metaEd, [table]);
   });

@@ -12,7 +12,7 @@ import type {
   ComplexTypeItem,
   Element,
   ElementGroup,
-  NamespaceInfoEdfiXsd,
+  NamespaceEdfiXsd,
 } from 'metaed-plugin-edfi-xsd';
 
 import type { Workbook } from '../model/Workbook';
@@ -96,8 +96,8 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const allComplexTypes: Array<ComplexType> = [];
   const allSimpleTypes: Array<AnySimpleType> = [];
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
-    const schemaContainer: SchemaContainer = ((namespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema;
+  metaEd.entity.namespace.forEach(namespace => {
+    const schemaContainer: SchemaContainer = ((namespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
     schemaContainer.sections.forEach((section: SchemaSection) => {
       allComplexTypes.push(...section.complexTypes);
       const sectionSimpleTypes: Array<AnySimpleType> = ((section.simpleTypes: any): Array<AnySimpleType>);

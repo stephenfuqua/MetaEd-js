@@ -11,7 +11,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'enumeration').forEach((entity: ModelBase) => {
     const table: Table = enumerationTableCreator.build(
       entity.metaEdName,
-      entity.namespaceInfo.namespace,
+      entity.namespace.namespaceName,
       entity.documentation,
     );
     entity.data.edfiOds.ods_Tables = [table];

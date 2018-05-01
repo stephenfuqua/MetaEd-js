@@ -1,6 +1,6 @@
 // @flow
 import xmlParser from 'xml-js';
-import { addEntity, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { addEntity, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
 import { createSchema } from './GeneratorTestBase';
 import { generate } from '../../src/generator/SchemaAnnotationGenerator';
@@ -14,8 +14,8 @@ describe('when generating schema annotation for a single descriptor', () => {
 
   beforeAll(async () => {
     const schema = createSchema('200', 'Schema Documentation');
-    const namespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       projectExtension: 'EXTENSION',
       data: {
         edfiXsd: {
@@ -23,7 +23,7 @@ describe('when generating schema annotation for a single descriptor', () => {
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: 'DescriptorName',

@@ -1,6 +1,6 @@
 // @flow
 import { EnumerationBuilder } from '../../src/builder/EnumerationBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getEnumeration, getSchoolYearEnumeration } from '../TestHelper';
@@ -11,7 +11,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building single enumeration', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -25,13 +25,13 @@ describe('when building single enumeration', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -49,7 +49,7 @@ describe('when building single enumeration', () => {
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -57,7 +57,7 @@ describe('when building single enumeration', () => {
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -88,7 +88,7 @@ describe('when building single enumeration', () => {
 describe('when building school year enumeration', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityType: string = 'schoolYearEnumeration';
@@ -100,13 +100,13 @@ describe('when building school year enumeration', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -127,8 +127,8 @@ describe('when building school year enumeration', () => {
     expect(getSchoolYearEnumeration(metaEd.entity, entityName).sourceMap.type).toBeDefined();
   });
 
-  it('should have source map for namespaceInfo', () => {
-    expect(getSchoolYearEnumeration(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have source map for namespace', () => {
+    expect(getSchoolYearEnumeration(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have source map with line, column, text', () => {
@@ -139,7 +139,7 @@ describe('when building school year enumeration', () => {
 describe('when building duplicate enumerations', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -153,7 +153,7 @@ describe('when building duplicate enumerations', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
@@ -164,7 +164,7 @@ describe('when building duplicate enumerations', () => {
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -205,7 +205,7 @@ describe('when building duplicate enumerations', () => {
 describe('when building enumeration without item documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -216,13 +216,13 @@ describe('when building enumeration without item documentation', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -242,7 +242,7 @@ describe('when building enumeration without item documentation', () => {
 describe('when building multiple enumerations', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName1: string = 'EntityName1';
@@ -254,7 +254,7 @@ describe('when building multiple enumerations', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName1, metaEdId1)
       .withDocumentation('doc')
       .withEnumerationItem('sd1')
@@ -265,7 +265,7 @@ describe('when building multiple enumerations', () => {
       .withEnumerationItem('sd2')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -291,7 +291,7 @@ describe('when building enumeration with no enumeration name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -302,13 +302,13 @@ describe('when building enumeration with no enumeration name', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -325,7 +325,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -340,13 +340,13 @@ describe('when building enumeration with lowercase enumeration name', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, entityMetaEdId)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -364,7 +364,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -372,7 +372,7 @@ describe('when building enumeration with lowercase enumeration name', () => {
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -408,7 +408,7 @@ describe('when building enumeration with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -421,12 +421,12 @@ describe('when building enumeration with no documentation', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, entityMetaEdId)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -444,7 +444,7 @@ describe('when building enumeration with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -452,7 +452,7 @@ describe('when building enumeration with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
@@ -488,7 +488,7 @@ describe('when building enumeration with no enumeration item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -499,12 +499,12 @@ describe('when building enumeration with no enumeration item', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, entityMetaEdId)
       .withDocumentation(documentation)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -522,7 +522,7 @@ describe('when building enumeration with no enumeration item', () => {
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -530,7 +530,7 @@ describe('when building enumeration with no enumeration item', () => {
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -554,7 +554,7 @@ describe('when building enumeration with empty enumeration item description', ()
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -567,13 +567,13 @@ describe('when building enumeration with empty enumeration item description', ()
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
       .withTrailingText(`\r\nitem  [${itemMetaEdId}]`)
       .withTrailingText(`documentation "${itemDocumentation}"`)
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -591,7 +591,7 @@ describe('when building enumeration with empty enumeration item description', ()
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -599,7 +599,7 @@ describe('when building enumeration with empty enumeration item description', ()
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -639,7 +639,7 @@ describe('when building enumeration with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -654,14 +654,14 @@ describe('when building enumeration with invalid trailing text', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withTrailingText(trailingText)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -679,7 +679,7 @@ describe('when building enumeration with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -687,7 +687,7 @@ describe('when building enumeration with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getEnumeration(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getEnumeration(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -722,7 +722,7 @@ describe('when building enumeration with invalid trailing text', () => {
 describe('when building enumeration source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -739,14 +739,14 @@ describe('when building enumeration source map', () => {
     const builder = new EnumerationBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartEnumeration(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEnumerationItem(itemShortDescription, itemDocumentation, itemMetaEdId)
       .withEnumerationItem(itemShortDescription2, itemDocumentation2, itemMetaEdId2)
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -766,8 +766,8 @@ describe('when building enumeration source map', () => {
     expect(getEnumeration(metaEd.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getEnumeration(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getEnumeration(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have for enumerationItems', () => {

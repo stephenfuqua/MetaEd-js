@@ -1,24 +1,24 @@
 // @flow
 import R from 'ramda';
 import { getEntitiesOfType, asTopLevelEntity, normalizeEnumerationSuffix } from 'metaed-core';
-import type { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, NamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, Namespace } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds, DescriptorEdfiOds } from 'metaed-plugin-edfi-ods';
 import type { DescriptorEdfiOdsApi } from '../../model/Descriptor';
 import type { TopLevelEntityEdfiOdsApi } from '../../model/TopLevelEntity';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { NoAggregate } from '../../model/domainMetadata/Aggregate';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import { defaultOrderedAndUniqueTablesFor } from './AggregateEnhancerBase';
 
 const enhancerName: string = 'DescriptorAggregateEnhancer';
 
-function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo): ?Aggregate {
-  const tables: Array<Table> = defaultOrderedAndUniqueTablesFor(entity, namespaceInfo);
+function generateAggregate(entity: TopLevelEntity, namespace: Namespace): ?Aggregate {
+  const tables: Array<Table> = defaultOrderedAndUniqueTablesFor(entity, namespace);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
-    schema: entity.namespaceInfo.namespace,
+    schema: entity.namespace.namespaceName,
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: false,
     entityTables: [],
@@ -28,13 +28,13 @@ function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo)
   if (entity.type === 'descriptor' && ((entity.data.edfiOds: any): DescriptorEdfiOds).ods_IsMapType) {
     typeAggregate = {
       root: normalizeEnumerationSuffix(entity.metaEdName),
-      schema: entity.namespaceInfo.namespace,
+      schema: entity.namespace.namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [],
     };
     ((entity.data.edfiOdsApi: any): DescriptorEdfiOdsApi).typeAggregate = typeAggregate;
-    ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.push(typeAggregate);
+    ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(typeAggregate);
   }
 
   tables.forEach((table: Table) => {
@@ -45,7 +45,7 @@ function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo)
       isRequiredCollection: false,
       schema: table.schema,
       hasIsA: table.name === ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
-      requiresSchema: entity.namespaceInfo.isExtension,
+      requiresSchema: entity.namespace.isExtension,
     };
 
     if (typeAggregate !== NoAggregate && table.name === normalizeEnumerationSuffix(entity.metaEdName)) {
@@ -59,17 +59,17 @@ function generateAggregate(entity: TopLevelEntity, namespaceInfo: NamespaceInfo)
   return aggregate;
 }
 
-function enhanceSingleEntity(entity: TopLevelEntity, namespaceInfos: Array<NamespaceInfo>) {
-  const entityNamespaceInfo = R.head(namespaceInfos.filter(n => n.namespace === entity.namespaceInfo.namespace));
-  const aggregate = generateAggregate(entity, entityNamespaceInfo);
+function enhanceSingleEntity(entity: TopLevelEntity, namespaces: Array<Namespace>) {
+  const entityNamespace = R.head(namespaces.filter(n => n.namespaceName === entity.namespace.namespaceName));
+  const aggregate = generateAggregate(entity, entityNamespace);
   if (aggregate == null) return;
   ((entity.data.edfiOdsApi: any): TopLevelEntityEdfiOdsApi).aggregate = aggregate;
-  ((entityNamespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.push(aggregate);
+  ((entityNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(aggregate);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'descriptor').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), Array.from(metaEd.entity.namespaceInfo.values()));
+    enhanceSingleEntity(asTopLevelEntity(modelBase), Array.from(metaEd.entity.namespace.values()));
   });
 
   return {

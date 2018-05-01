@@ -9,7 +9,7 @@ import {
   newDomainEntityProperty,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
 import type {
   Common,
@@ -20,7 +20,7 @@ import type {
   DomainEntityProperty,
   IntegerProperty,
   MetaEdEnvironment,
-  NamespaceInfo,
+  Namespace,
 } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
@@ -28,19 +28,19 @@ import type { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
   const domainEntityExtensionPropertyName: string = 'DomainEntityExtensionPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntityName,
       data: {
@@ -66,12 +66,12 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
@@ -86,7 +86,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     const domainEntityExtensionProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionPropertyName,
       isPartOfIdentity: false,
       parentEntity: domainEntityExtension,
@@ -111,7 +111,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -132,13 +132,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   const domainEntityExtensionPkPropertyName: string = 'DomainEntityExtensionPkPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
@@ -163,12 +163,12 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -182,7 +182,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     const domainEntityExtensionPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: domainEntityExtension,
@@ -228,13 +228,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -261,7 +261,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     addEntity(metaEd.entity, common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
@@ -286,13 +286,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonExtensionName,
       baseEntityName: common.metaEdName,
       baseEntity: common,
@@ -322,7 +322,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     common.extender = commonExtension;
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -337,7 +337,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     const domainEntityExtensionRequiredPropertyName: string = 'DomainEntityExtensionRequiredPropertyName';
     const domainEntityExtensionRequiredProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionRequiredPropertyName,
       isRequired: true,
       parentEntity: domainEntityExtension,
@@ -351,7 +351,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionRequiredProperty);
     const domainEntityExtensionReferencePropertyName: string = 'DomainEntityExtensionReferencePropertyName';
     const domainEntityExtensionReferenceProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionReferencePropertyName,
       isPartOfIdentity: true,
       parentEntity: domainEntityExtension,
@@ -367,7 +367,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionReferenceProperty);
     domainEntityExtension.data.edfiOds.ods_IdentityProperties.push(domainEntityExtensionReferenceProperty);
     const domainEntityExtensionCommonExtensionOverrideProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonExtensionName,
       isRequired: true,
       parentEntity: domainEntityExtension,
@@ -414,13 +414,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -447,7 +447,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     addEntity(metaEd.entity, common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
@@ -472,13 +472,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -493,7 +493,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     const domainEntityExtensionRequiredPropertyName: string = 'DomainEntityExtensionRequiredPropertyName';
     const domainEntityExtensionRequiredProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionRequiredPropertyName,
       isRequired: true,
       parentEntity: domainEntityExtension,
@@ -507,7 +507,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionRequiredProperty);
     const domainEntityExtensionReferencePropertyName: string = 'DomainEntityExtensionReferencePropertyName';
     const domainEntityExtensionReferenceProperty: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionReferencePropertyName,
       isPartOfIdentity: true,
       parentEntity: domainEntityExtension,
@@ -523,7 +523,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionReferenceProperty);
     domainEntityExtension.data.edfiOds.ods_IdentityProperties.push(domainEntityExtensionReferenceProperty);
     const domainEntityExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName,
       isRequired: true,
       parentEntity: domainEntityExtension,
@@ -570,13 +570,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -603,7 +603,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     addEntity(metaEd.entity, common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
@@ -628,13 +628,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -648,7 +648,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     const domainEntityExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName,
       isOptional: true,
       parentEntity: domainEntityExtension,
@@ -690,13 +690,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName1,
       data: {
         edfiOds: {
@@ -723,7 +723,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     addEntity(metaEd.entity, common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityName,
       data: {
         edfiOds: {
@@ -748,13 +748,13 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
     addEntity(metaEd.entity, domainEntity);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -768,7 +768,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     const domainEntityExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName1,
       isOptional: true,
       parentEntity: domainEntityExtension,
@@ -783,7 +783,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
     const domainEntityExtensionCommonProperty2: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName2,
       isOptional: true,
       parentEntity: domainEntityExtension,

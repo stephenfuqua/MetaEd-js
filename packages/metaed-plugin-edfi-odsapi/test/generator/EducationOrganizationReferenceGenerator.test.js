@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo, GeneratorResult } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, GeneratorResult } from 'metaed-core';
 import { newEducationOrganizationReference } from '../../src/model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 import type { EducationOrganizationReference } from '../../src/model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 import { generate } from '../../src/generator/educationOrganizationReferenceMetadata/EducationOrganizationReferenceMetadataGenerator';
@@ -17,8 +17,8 @@ describe('when generating education organization reference for core', () => {
       identityPropertyName: 'SchoolId',
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       data: {
         edfiOdsApi: {
           api_EducationOrganizationReferences: [educationOrganizationReference],
@@ -26,7 +26,7 @@ describe('when generating education organization reference for core', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -47,8 +47,8 @@ describe('when generating education organization reference for extension', () =>
       identityPropertyName: 'EducationProviderId',
     };
 
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {
@@ -58,7 +58,7 @@ describe('when generating education organization reference for extension', () =>
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -79,23 +79,23 @@ describe('when generating education organization reference for both core and ext
       name: 'School',
       identityPropertyName: 'SchoolId',
     };
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       data: {
         edfiOdsApi: {
           api_EducationOrganizationReferences: [coreEducationOrganizationReference],
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     const extensionEducationOrganizationReference: EducationOrganizationReference = {
       ...newEducationOrganizationReference(),
       name: 'EducationProvider',
       identityPropertyName: 'EducationProviderId',
     };
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {
@@ -104,7 +104,7 @@ describe('when generating education organization reference for both core and ext
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const generatedResult: GeneratorResult = await generate(metaEd);
     coreResult = generatedResult.generatedOutput[0].resultString;
@@ -131,18 +131,18 @@ describe('when generating education organization reference for both core and emp
       name: 'School',
       identityPropertyName: 'SchoolId',
     };
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
       data: {
         edfiOdsApi: {
           api_EducationOrganizationReferences: [coreEducationOrganizationReference],
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {
@@ -151,7 +151,7 @@ describe('when generating education organization reference for both core and emp
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const generatedResult: GeneratorResult = await generate(metaEd);
     expect(generatedResult.generatedOutput).toHaveLength(1);

@@ -1,6 +1,6 @@
 // @flow
 import { DomainEntityBuilder } from '../../src/builder/DomainEntityBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
@@ -12,7 +12,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building simple domain entity in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -24,14 +24,14 @@ describe('when building simple domain entity in extension namespace', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -49,7 +49,7 @@ describe('when building simple domain entity in extension namespace', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have correct metaEdId', () => {
@@ -57,7 +57,7 @@ describe('when building simple domain entity in extension namespace', () => {
   });
 
   it('should have correct project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not be abstract', () => {
@@ -80,16 +80,16 @@ describe('when building simple domain entity in extension namespace', () => {
     const property = getDomainEntity(metaEd.entity, entityName).properties[0];
     expect(property.metaEdName).toBe(propertyName);
     expect(property.type).toBe('integer');
-    expect(property.namespaceInfo.namespace).toBe(namespace);
-    expect(property.namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(property.namespace.namespaceName).toBe(namespaceName);
+    expect(property.namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have string property', () => {
     const property = getDomainEntity(metaEd.entity, entityName).properties[1];
     expect(property.metaEdName).toBe(stringPropertyName);
     expect(property.type).toBe('string');
-    expect(property.namespaceInfo.namespace).toBe(namespace);
-    expect(property.namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(property.namespace.namespaceName).toBe(namespaceName);
+    expect(property.namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have queryable fields', () => {
@@ -100,7 +100,7 @@ describe('when building simple domain entity in extension namespace', () => {
 describe('when building duplicate domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -112,7 +112,7 @@ describe('when building duplicate domain entities', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -125,7 +125,7 @@ describe('when building duplicate domain entities', () => {
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -166,7 +166,7 @@ describe('when building duplicate domain entities', () => {
 describe('when building duplicate property names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -178,7 +178,7 @@ describe('when building duplicate property names', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -186,7 +186,7 @@ describe('when building duplicate property names', () => {
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -218,7 +218,7 @@ describe('when building duplicate property names', () => {
 describe('when building duplicate property names with different with context names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -230,7 +230,7 @@ describe('when building duplicate property names with different with context nam
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -238,7 +238,7 @@ describe('when building duplicate property names with different with context nam
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -250,7 +250,7 @@ describe('when building duplicate property names with different with context nam
 describe('when building duplicate property names with same with context name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -262,7 +262,7 @@ describe('when building duplicate property names with same with context name', (
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -270,7 +270,7 @@ describe('when building duplicate property names with same with context name', (
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2', 'Context')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -302,7 +302,7 @@ describe('when building duplicate property names with same with context name', (
 describe('when building domain entity without extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const entityName: string = 'EntityName';
   const stringPropertyName: string = 'StringPropertyName';
@@ -311,13 +311,13 @@ describe('when building domain entity without extension', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation('doc')
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -331,7 +331,7 @@ describe('when building domain entity without extension', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have correct metaEdId', () => {
@@ -339,7 +339,7 @@ describe('when building domain entity without extension', () => {
   });
 
   it('should have no project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe('');
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe('');
   });
 
   it('should not be abstract', () => {
@@ -363,7 +363,7 @@ describe('when building domain entity without extension', () => {
 describe('when building domain entity with a with context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const withContextName: string = 'WithContextName';
@@ -372,13 +372,13 @@ describe('when building domain entity with a with context', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withCommonProperty(propertyName, 'doc', true, false, withContextName)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -396,7 +396,7 @@ describe('when building domain entity with a with context', () => {
 describe('when building domain entity with a with context and shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const withContextName: string = 'WithContextName';
@@ -406,13 +406,13 @@ describe('when building domain entity with a with context and shorten to', () =>
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withCommonProperty(propertyName, 'doc', true, false, withContextName, null, shortenToName)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -434,7 +434,7 @@ describe('when building domain entity with a with context and shorten to', () =>
 describe('when building domain entity with choice', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const documentation: string = 'Documentation';
@@ -443,13 +443,13 @@ describe('when building domain entity with choice', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withChoiceProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -467,7 +467,7 @@ describe('when building domain entity with choice', () => {
 describe('when building domain entity with inline common reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const documentation: string = 'Documentation';
@@ -476,13 +476,13 @@ describe('when building domain entity with inline common reference', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withInlineCommonProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -500,7 +500,7 @@ describe('when building domain entity with inline common reference', () => {
 describe('when building domain entity with queryable field', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
@@ -508,13 +508,13 @@ describe('when building domain entity with queryable field', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringPropertyAsQueryableField(propertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -533,7 +533,7 @@ describe('when building domain entity with queryable field', () => {
 describe('when building domain entity with queryable only property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const queryableOnlyName: string = 'QueryableOnlyName';
@@ -542,14 +542,14 @@ describe('when building domain entity with queryable only property', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringProperty(propertyName, 'doc', true, false, '10', '2')
       .withQueryableOnlyDomainEntityProperty(queryableOnlyName, 'doc')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -569,7 +569,7 @@ describe('when building domain entity with queryable only property', () => {
 describe('when building domain entity with shared decimal reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
@@ -578,13 +578,13 @@ describe('when building domain entity with shared decimal reference', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedDecimalProperty(sharedPropertyType, propertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -602,7 +602,7 @@ describe('when building domain entity with shared decimal reference', () => {
 describe('when building domain entity with shared decimal reference without name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
@@ -610,13 +610,13 @@ describe('when building domain entity with shared decimal reference without name
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedDecimalProperty(sharedPropertyType, null, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -634,7 +634,7 @@ describe('when building domain entity with shared decimal reference without name
 describe('when building domain entity with shared integer reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
@@ -643,13 +643,13 @@ describe('when building domain entity with shared integer reference', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedIntegerProperty(sharedPropertyType, propertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -671,7 +671,7 @@ describe('when building domain entity with shared integer reference', () => {
 describe('when building domain entity with shared integer reference without name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
@@ -679,13 +679,13 @@ describe('when building domain entity with shared integer reference without name
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedIntegerProperty(sharedPropertyType, null, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -707,7 +707,7 @@ describe('when building domain entity with shared integer reference without name
 describe('when building domain entity with shared short reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
@@ -716,13 +716,13 @@ describe('when building domain entity with shared short reference', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedShortProperty(sharedPropertyType, propertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -740,7 +740,7 @@ describe('when building domain entity with shared short reference', () => {
 describe('when building domain entity with shared short reference without name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
@@ -748,13 +748,13 @@ describe('when building domain entity with shared short reference without name',
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedShortProperty(sharedPropertyType, null, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -772,7 +772,7 @@ describe('when building domain entity with shared short reference without name',
 describe('when building domain entity with shared string reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
@@ -781,13 +781,13 @@ describe('when building domain entity with shared string reference', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedStringProperty(sharedPropertyType, propertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -805,7 +805,7 @@ describe('when building domain entity with shared string reference', () => {
 describe('when building domain entity with shared string reference without name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const sharedPropertyType: string = 'SharedPropertyType';
 
@@ -813,13 +813,13 @@ describe('when building domain entity with shared string reference without name'
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedStringProperty(sharedPropertyType, null, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -837,7 +837,7 @@ describe('when building domain entity with shared string reference without name'
 describe('when building domain entity with shared string reference inheriting documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
   const sharedPropertyType: string = 'SharedPropertyType';
@@ -846,13 +846,13 @@ describe('when building domain entity with shared string reference inheriting do
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withSharedStringProperty(sharedPropertyType, propertyName, 'inherited', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -871,7 +871,7 @@ describe('when building domain entity with shared string reference inheriting do
 describe('when building domain entity with domain entity reference inheriting documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
@@ -879,13 +879,13 @@ describe('when building domain entity with domain entity reference inheriting do
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withDomainEntityProperty(propertyName, 'inherited', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -904,7 +904,7 @@ describe('when building domain entity with domain entity reference inheriting do
 describe('when building domain entity with cascading updates', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const entityName: string = 'EntityName';
   const propertyName: string = 'PropertyName';
 
@@ -912,14 +912,14 @@ describe('when building domain entity with cascading updates', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withCascadeUpdate()
       .withDomainEntityProperty(propertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -931,7 +931,7 @@ describe('when building domain entity with cascading updates', () => {
 describe('when building abstract entity in extension namespace', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEdId: string = '1';
   const projectExtension: string = 'ProjectExtension';
   const entityName: string = 'EntityName';
@@ -943,14 +943,14 @@ describe('when building abstract entity in extension namespace', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAbstractEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndAbstractEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -964,7 +964,7 @@ describe('when building abstract entity in extension namespace', () => {
   });
 
   it('should have correct namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have correct metaEdId', () => {
@@ -972,7 +972,7 @@ describe('when building abstract entity in extension namespace', () => {
   });
 
   it('should have correct project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should be abstract', () => {
@@ -1042,7 +1042,7 @@ describe('when building domain entity with no project extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = '';
 
   const entityName: string = 'EntityName';
@@ -1055,14 +1055,14 @@ describe('when building domain entity with no project extension', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1079,7 +1079,7 @@ describe('when building domain entity with uppercase namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'Namespace';
+  const namespaceName: string = 'Namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1092,14 +1092,14 @@ describe('when building domain entity with uppercase namespace', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1113,11 +1113,11 @@ describe('when building domain entity with uppercase namespace', () => {
   });
 
   it('should not have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe('');
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe('');
   });
 
   it('should have a project extension that takes the namespace value', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -1151,7 +1151,7 @@ describe('when building domain entity with lowercase project extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'projectExtension';
 
   const entityName: string = 'EntityName';
@@ -1164,14 +1164,14 @@ describe('when building domain entity with lowercase project extension', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1185,11 +1185,11 @@ describe('when building domain entity with lowercase project extension', () => {
   });
 
   it('should note have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension but with lowercase prefix ignored', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe('Extension');
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe('Extension');
   });
 
   it('should have metaEdId', () => {
@@ -1223,7 +1223,7 @@ describe('when building domain entity with no namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = '';
+  const namespaceName: string = '';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1236,23 +1236,23 @@ describe('when building domain entity with no namespace', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should not have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe('');
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe('');
   });
 
   it('should have incorrect project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaEdId', () => {
@@ -1286,7 +1286,7 @@ describe('when building domain entity with no end namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1299,22 +1299,22 @@ describe('when building domain entity with no end namespace', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should not have project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaEdId', () => {
@@ -1348,7 +1348,7 @@ describe('when building domain entity with no top level entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const documentation: string = 'Doc';
@@ -1359,12 +1359,12 @@ describe('when building domain entity with no top level entity', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1381,7 +1381,7 @@ describe('when building domain entity with no domain entity name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -1394,14 +1394,14 @@ describe('when building domain entity with no domain entity name', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1418,7 +1418,7 @@ describe('when building domain entity with lowercase domain entity name', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -1431,14 +1431,14 @@ describe('when building domain entity with lowercase domain entity name', () => 
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -1455,7 +1455,7 @@ describe('when building domain entity with no metaed id', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1468,23 +1468,23 @@ describe('when building domain entity with no metaed id', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should not have project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaEdId', () => {
@@ -1518,7 +1518,7 @@ describe('when building domain entity with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1530,22 +1530,22 @@ describe('when building domain entity with no documentation', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should not have project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaEdId', () => {
@@ -1579,7 +1579,7 @@ describe('when building domain entity with no properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1590,21 +1590,21 @@ describe('when building domain entity with no properties', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should not have project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaEdId', () => {
@@ -1627,7 +1627,7 @@ describe('when building domain entity with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1641,7 +1641,7 @@ describe('when building domain entity with invalid trailing text', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -1649,16 +1649,16 @@ describe('when building domain entity with invalid trailing text', () => {
       .withTrailingText(trailingText)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should not have project extension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have metaEdId', () => {
@@ -1691,7 +1691,7 @@ describe('when building domain entity with invalid trailing text', () => {
 describe('when building domain entity source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1703,19 +1703,19 @@ describe('when building domain entity source map', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withCascadeUpdate()
       .withIntegerProperty(propertyName, 'Doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have type property', () => {
@@ -1751,7 +1751,7 @@ describe('when building domain entity source map', () => {
 describe('when building domain entity namespace info source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1763,55 +1763,53 @@ describe('when building domain entity namespace info source map', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withCascadeUpdate()
       .withIntegerProperty(propertyName, 'Doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have source map', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap).toBeDefined();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap).toBeDefined();
   });
 
   it('should have type', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.type).toBeDefined();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.type).toBeDefined();
   });
 
   it('should have namespace', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.namespace).toBeDefined();
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.namespace.tokenText).toBe(namespace);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.namespaceName).toBeDefined();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.namespaceName.tokenText).toBe(namespaceName);
   });
 
   it('should have projectExtension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.projectExtension).toBeDefined();
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.projectExtension.tokenText).toBe(
-      projectExtension,
-    );
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.projectExtension).toBeDefined();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.projectExtension.tokenText).toBe(projectExtension);
   });
 
   it('should have isExtension', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.isExtension).toBeDefined();
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap.isExtension.tokenText).toBe(projectExtension);
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.isExtension).toBeDefined();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap.isExtension.tokenText).toBe(projectExtension);
   });
 
   it('should have line, column, text for each property', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).namespaceInfo.sourceMap).toMatchSnapshot();
+    expect(getDomainEntity(metaEd.entity, entityName).namespace.sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when building abstract entity source map', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -1823,18 +1821,18 @@ describe('when building abstract entity source map', () => {
     const builder = new DomainEntityBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartAbstractEntity(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'Doc', true, false)
       .withEndAbstractEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getDomainEntity(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have type property', () => {

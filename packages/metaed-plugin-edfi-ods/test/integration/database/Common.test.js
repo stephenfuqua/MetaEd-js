@@ -6,7 +6,7 @@ import {
   DescriptorBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -19,7 +19,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when common is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const contextName: string = 'ContextName';
   const domainEntityName: string = 'DomainEntityName';
@@ -31,7 +31,7 @@ describe('when common is a required property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -47,7 +47,7 @@ describe('when common is a required property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -57,42 +57,42 @@ describe('when common is a required property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common properties', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
     const contextColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName,
       contextName + integerPropertyName2,
     );
     expect(await columnExists(contextColumn)).toBe(true);
     expect(await columnIsNullable(contextColumn)).toBe(true);
 
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName3);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName3);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName5)],
-      [column(namespace, domainEntityName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName, integerPropertyName5)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have create date resource column', async () => {
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -100,19 +100,19 @@ describe('when common is a required property', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(false);
   });
 
   it('should have join table for collection property', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName + integerPropertyName4))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName + integerPropertyName4))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName + integerPropertyName4))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName + integerPropertyName4))).toEqual([
       integerPropertyName4,
       integerPropertyName5,
     ]);
@@ -120,7 +120,7 @@ describe('when common is a required property', () => {
 
   it('should have collection property', async () => {
     const collectionColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName + integerPropertyName4,
       integerPropertyName4,
     );
@@ -130,8 +130,8 @@ describe('when common is a required property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName + integerPropertyName4, integerPropertyName5)],
-      [column(namespace, domainEntityName + commonName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + commonName + integerPropertyName4, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName5)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -139,7 +139,7 @@ describe('when common is a required property', () => {
 
   it('should have create date resource column', async () => {
     const createDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName + integerPropertyName4,
       'CreateDate',
     );
@@ -150,11 +150,11 @@ describe('when common is a required property', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName + commonName + integerPropertyName4, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName + integerPropertyName4, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName + integerPropertyName4,
       'LastModifiedDate',
     );
@@ -164,7 +164,7 @@ describe('when common is a required property', () => {
 
 describe('when common is a required property with context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const contextName1: string = 'ContextName1';
   const contextName2: string = 'ContextName2';
@@ -177,7 +177,7 @@ describe('when common is a required property with context', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -193,7 +193,7 @@ describe('when common is a required property with context', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -203,16 +203,16 @@ describe('when common is a required property with context', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + contextName2 + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + contextName2 + commonName))).toBe(true);
   });
 
   it('should have common properties', async () => {
     const optionalColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName,
       integerPropertyName1,
     );
@@ -220,7 +220,7 @@ describe('when common is a required property with context', () => {
     expect(await columnIsNullable(optionalColumn)).toBe(true);
 
     const contextColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName,
       contextName1 + integerPropertyName2,
     );
@@ -228,7 +228,7 @@ describe('when common is a required property with context', () => {
     expect(await columnIsNullable(contextColumn)).toBe(true);
 
     const requiredColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName,
       integerPropertyName3,
     );
@@ -238,15 +238,19 @@ describe('when common is a required property with context', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + contextName2 + commonName, integerPropertyName5)],
-      [column(namespace, domainEntityName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + contextName2 + commonName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName, integerPropertyName5)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have create date resource column', async () => {
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName + contextName2 + commonName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + contextName2 + commonName,
+      'CreateDate',
+    );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -254,11 +258,11 @@ describe('when common is a required property with context', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName + contextName2 + commonName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName + contextName2 + commonName, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName,
       'LastModifiedDate',
     );
@@ -266,20 +270,20 @@ describe('when common is a required property with context', () => {
   });
 
   it('should have join table for collection property', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + contextName2 + commonName + integerPropertyName4))).toBe(
-      true,
-    );
+    expect(
+      await tableExists(table(namespaceName, domainEntityName + contextName2 + commonName + integerPropertyName4)),
+    ).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
     expect(
-      await tablePrimaryKeys(table(namespace, domainEntityName + contextName2 + commonName + integerPropertyName4)),
+      await tablePrimaryKeys(table(namespaceName, domainEntityName + contextName2 + commonName + integerPropertyName4)),
     ).toEqual([integerPropertyName4, integerPropertyName5]);
   });
 
   it('should have collection property', async () => {
     const collectionColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName + integerPropertyName4,
       integerPropertyName4,
     );
@@ -289,8 +293,8 @@ describe('when common is a required property with context', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + contextName2 + commonName + integerPropertyName4, integerPropertyName5)],
-      [column(namespace, domainEntityName + contextName2 + commonName, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + contextName2 + commonName + integerPropertyName4, integerPropertyName5)],
+      [column(namespaceName, domainEntityName + contextName2 + commonName, integerPropertyName5)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -298,7 +302,7 @@ describe('when common is a required property with context', () => {
 
   it('should have create date resource column', async () => {
     const createDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName + integerPropertyName4,
       'CreateDate',
     );
@@ -310,14 +314,14 @@ describe('when common is a required property with context', () => {
 
   it('should not have id and last modified date resource columns', async () => {
     const idColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName + integerPropertyName4,
       'Id',
     );
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + contextName2 + commonName + integerPropertyName4,
       'LastModifiedDate',
     );
@@ -327,7 +331,7 @@ describe('when common is a required property with context', () => {
 
 describe('when common is an optional property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -335,7 +339,7 @@ describe('when common is an optional property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -348,7 +352,7 @@ describe('when common is an optional property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -358,27 +362,27 @@ describe('when common is an optional property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([integerPropertyName2]);
   });
 
   it('should have common property', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -387,7 +391,7 @@ describe('when common is an optional property', () => {
 
 describe('when common is a required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -396,7 +400,7 @@ describe('when common is a required collection property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -410,7 +414,7 @@ describe('when common is a required collection property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -420,25 +424,25 @@ describe('when common is a required collection property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common properties', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
 
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName2);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName2);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName3,
     ]);
@@ -446,8 +450,8 @@ describe('when common is a required collection property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName3)],
-      [column(namespace, domainEntityName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -456,7 +460,7 @@ describe('when common is a required collection property', () => {
 
 describe('when common is an optional collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -465,7 +469,7 @@ describe('when common is an optional collection property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -479,7 +483,7 @@ describe('when common is an optional collection property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -489,25 +493,25 @@ describe('when common is an optional collection property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common properties', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
 
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName2);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName2);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName3,
     ]);
@@ -515,8 +519,8 @@ describe('when common is an optional collection property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName3)],
-      [column(namespace, domainEntityName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -525,7 +529,7 @@ describe('when common is an optional collection property', () => {
 
 describe('when common is a required property with primary key', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -534,7 +538,7 @@ describe('when common is a required property with primary key', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -548,7 +552,7 @@ describe('when common is a required property with primary key', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -558,25 +562,25 @@ describe('when common is a required property with primary key', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common properties', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
 
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName2);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName2);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName3,
     ]);
@@ -584,8 +588,8 @@ describe('when common is a required property with primary key', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName3)],
-      [column(namespace, domainEntityName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -594,7 +598,7 @@ describe('when common is a required property with primary key', () => {
 
 describe('when common has an enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const enumerationName: string = 'EnumerationName';
@@ -605,7 +609,7 @@ describe('when common has an enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName, 'Documentation')
@@ -623,7 +627,7 @@ describe('when common has an enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
@@ -634,34 +638,38 @@ describe('when common has an enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have enumeration property', async () => {
-    const enumerationItemColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, enumerationColumnName);
+    const enumerationItemColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + commonName,
+      enumerationColumnName,
+    );
     expect(await columnExists(enumerationItemColumn)).toBe(true);
     expect(await columnIsNullable(enumerationItemColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([integerPropertyName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([integerPropertyName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName)],
-      [column(namespace, domainEntityName, integerPropertyName)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName)],
+      [column(namespaceName, domainEntityName, integerPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, enumerationColumnName)],
-      [column(namespace, enumerationTableName, enumerationColumnName)],
+      [column(namespaceName, domainEntityName + commonName, enumerationColumnName)],
+      [column(namespaceName, enumerationTableName, enumerationColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -670,7 +678,7 @@ describe('when common has an enumeration property', () => {
 
 describe('when common has a collection enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const enumerationName: string = 'EnumerationName';
@@ -682,7 +690,7 @@ describe('when common has a collection enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName, 'Documentation')
@@ -701,7 +709,7 @@ describe('when common has a collection enumeration property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
@@ -712,15 +720,15 @@ describe('when common has a collection enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -728,20 +736,20 @@ describe('when common has a collection enumeration property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have join table for enumeration', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName + enumerationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName + enumerationName))).toBe(true);
   });
 
   it('should have enumeration property', async () => {
     const enumerationItemColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName + enumerationName,
       enumerationColumnName,
     );
@@ -750,7 +758,7 @@ describe('when common has a collection enumeration property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName + enumerationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName + enumerationName))).toEqual([
       enumerationColumnName,
       integerPropertyName1,
       integerPropertyName2,
@@ -760,20 +768,20 @@ describe('when common has a collection enumeration property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName + commonName + enumerationName, integerPropertyName1),
-        column(namespace, domainEntityName + commonName + enumerationName, integerPropertyName2),
+        column(namespaceName, domainEntityName + commonName + enumerationName, integerPropertyName1),
+        column(namespaceName, domainEntityName + commonName + enumerationName, integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName + commonName, integerPropertyName1),
-        column(namespace, domainEntityName + commonName, integerPropertyName2),
+        column(namespaceName, domainEntityName + commonName, integerPropertyName1),
+        column(namespaceName, domainEntityName + commonName, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName + enumerationName, enumerationColumnName)],
-      [column(namespace, enumerationTableName, enumerationColumnName)],
+      [column(namespaceName, domainEntityName + commonName + enumerationName, enumerationColumnName)],
+      [column(namespaceName, enumerationTableName, enumerationColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -782,7 +790,7 @@ describe('when common has a collection enumeration property', () => {
 
 describe('when common has a descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const descriptorName: string = 'DescriptorName';
@@ -792,7 +800,7 @@ describe('when common has a descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
@@ -809,7 +817,7 @@ describe('when common has a descriptor property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
@@ -820,34 +828,34 @@ describe('when common has a descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have descriptor IntegerPropertyName2', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, descriptorColumnName);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, descriptorColumnName);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([integerPropertyName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([integerPropertyName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName)],
-      [column(namespace, domainEntityName, integerPropertyName)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName)],
+      [column(namespaceName, domainEntityName, integerPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, descriptorColumnName)],
-      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespaceName, domainEntityName + commonName, descriptorColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -856,7 +864,7 @@ describe('when common has a descriptor property', () => {
 
 describe('when common has a collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const descriptorName: string = 'DescriptorName';
@@ -867,7 +875,7 @@ describe('when common has a collection descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
@@ -885,7 +893,7 @@ describe('when common has a collection descriptor property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
@@ -896,15 +904,15 @@ describe('when common has a collection descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -912,20 +920,20 @@ describe('when common has a collection descriptor property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have join table for descriptor', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName + descriptorName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName + descriptorName))).toBe(true);
   });
 
   it('should have descriptor property', async () => {
     const descriptorItemColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName + descriptorName,
       descriptorColumnName,
     );
@@ -934,7 +942,7 @@ describe('when common has a collection descriptor property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName + descriptorName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName + descriptorName))).toEqual([
       descriptorColumnName,
       integerPropertyName1,
       integerPropertyName2,
@@ -944,20 +952,20 @@ describe('when common has a collection descriptor property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName + commonName + descriptorName, integerPropertyName1),
-        column(namespace, domainEntityName + commonName + descriptorName, integerPropertyName2),
+        column(namespaceName, domainEntityName + commonName + descriptorName, integerPropertyName1),
+        column(namespaceName, domainEntityName + commonName + descriptorName, integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName + commonName, integerPropertyName1),
-        column(namespace, domainEntityName + commonName, integerPropertyName2),
+        column(namespaceName, domainEntityName + commonName, integerPropertyName1),
+        column(namespaceName, domainEntityName + commonName, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName + descriptorName, descriptorColumnName)],
-      [column(namespace, descriptorTableName, descriptorColumnName)],
+      [column(namespaceName, domainEntityName + commonName + descriptorName, descriptorColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -966,7 +974,7 @@ describe('when common has a collection descriptor property', () => {
 
 describe('when common has a domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -975,7 +983,7 @@ describe('when common has a domain entity property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -993,7 +1001,7 @@ describe('when common has a domain entity property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1003,34 +1011,34 @@ describe('when common has a domain entity property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + commonName))).toBe(true);
   });
 
   it('should have domain entity property', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName2 + commonName, integerPropertyName1);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName2 + commonName, integerPropertyName1);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName2 + commonName))).toEqual([integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName2 + commonName))).toEqual([integerPropertyName2]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName2, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2 + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + commonName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName2 + commonName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -1039,7 +1047,7 @@ describe('when common has a domain entity property', () => {
 
 describe('when common has a collection domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -1048,7 +1056,7 @@ describe('when common has a collection domain entity property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1066,7 +1074,7 @@ describe('when common has a collection domain entity property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1076,24 +1084,24 @@ describe('when common has a collection domain entity property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + commonName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName2 + commonName))).toEqual([integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName2 + commonName))).toEqual([integerPropertyName2]);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName2 + commonName + domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName2 + commonName + domainEntityName1))).toBe(true);
   });
 
   it('should have domain entity property', async () => {
     const identityColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName2 + commonName + domainEntityName1,
       integerPropertyName1,
     );
@@ -1102,7 +1110,7 @@ describe('when common has a collection domain entity property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName2 + commonName + domainEntityName1))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName2 + commonName + domainEntityName1))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -1110,15 +1118,15 @@ describe('when common has a collection domain entity property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + commonName + domainEntityName1, integerPropertyName2)],
-      [column(namespace, domainEntityName2 + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2 + commonName + domainEntityName1, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2 + commonName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName2 + commonName + domainEntityName1, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName2 + commonName + domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -1127,7 +1135,7 @@ describe('when common has a collection domain entity property', () => {
 
 describe('when common has a common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName1: string = 'CommonName1';
   const commonName2: string = 'CommonName2';
   const domainEntityName: string = 'DomainEntityName';
@@ -1137,7 +1145,7 @@ describe('when common has a common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName1)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', true, false)
@@ -1156,7 +1164,7 @@ describe('when common has a common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1166,33 +1174,33 @@ describe('when common has a common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName2))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName2))).toEqual([integerPropertyName3]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName2))).toEqual([integerPropertyName3]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName2, integerPropertyName3)],
-      [column(namespace, domainEntityName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2, integerPropertyName3)],
+      [column(namespaceName, domainEntityName, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have join table for nested common', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName2 + commonName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName2 + commonName1))).toBe(true);
   });
 
   it('should have nested common properties', async () => {
     const requiredColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName2 + commonName1,
       integerPropertyName1,
     );
@@ -1200,7 +1208,7 @@ describe('when common has a common property', () => {
     expect(await columnIsNullable(requiredColumn)).toBe(false);
 
     const optionalColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName2 + commonName1,
       integerPropertyName2,
     );
@@ -1209,15 +1217,15 @@ describe('when common has a common property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName2 + commonName1))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName2 + commonName1))).toEqual([
       integerPropertyName3,
     ]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName2 + commonName1, integerPropertyName3)],
-      [column(namespace, domainEntityName + commonName2, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2 + commonName1, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -1226,7 +1234,7 @@ describe('when common has a common property', () => {
 
 describe('when common has a collection common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName1: string = 'CommonName1';
   const commonName2: string = 'CommonName2';
   const domainEntityName: string = 'DomainEntityName';
@@ -1236,7 +1244,7 @@ describe('when common has a collection common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1255,7 +1263,7 @@ describe('when common has a collection common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1265,33 +1273,33 @@ describe('when common has a collection common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName2))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName2))).toEqual([integerPropertyName3]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName2))).toEqual([integerPropertyName3]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName2, integerPropertyName3)],
-      [column(namespace, domainEntityName, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2, integerPropertyName3)],
+      [column(namespaceName, domainEntityName, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have join table for nested common', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName2 + commonName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName2 + commonName1))).toBe(true);
   });
 
   it('should have nested common properties', async () => {
     const requiredColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName2 + commonName1,
       integerPropertyName1,
     );
@@ -1299,7 +1307,7 @@ describe('when common has a collection common property', () => {
     expect(await columnIsNullable(requiredColumn)).toBe(false);
 
     const optionalColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       domainEntityName + commonName2 + commonName1,
       integerPropertyName2,
     );
@@ -1308,7 +1316,7 @@ describe('when common has a collection common property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName2 + commonName1))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName2 + commonName1))).toEqual([
       integerPropertyName1,
       integerPropertyName3,
     ]);
@@ -1316,8 +1324,8 @@ describe('when common has a collection common property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName2 + commonName1, integerPropertyName3)],
-      [column(namespace, domainEntityName + commonName2, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2 + commonName1, integerPropertyName3)],
+      [column(namespaceName, domainEntityName + commonName2, integerPropertyName3)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -1326,7 +1334,7 @@ describe('when common has a collection common property', () => {
 
 describe('when common has an inline common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const inlineCommonName: string = 'InlineCommonName';
@@ -1336,7 +1344,7 @@ describe('when common has an inline common property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartInlineCommon(inlineCommonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', true, false)
@@ -1355,7 +1363,7 @@ describe('when common has an inline common property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1365,19 +1373,19 @@ describe('when common has an inline common property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have inline common properties', async () => {
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
 
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName2);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName2);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
@@ -1385,7 +1393,7 @@ describe('when common has an inline common property', () => {
 
 describe('when common has a choice property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const choiceName: string = 'ChoiceName';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -1395,7 +1403,7 @@ describe('when common has a choice property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartChoice(choiceName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', true, false)
@@ -1414,7 +1422,7 @@ describe('when common has a choice property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
@@ -1425,19 +1433,19 @@ describe('when common has a choice property', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have inline common properties', async () => {
-    const requiredColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(true);
 
-    const optionalColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName2);
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName2);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
   });
@@ -1445,7 +1453,7 @@ describe('when common has a choice property', () => {
 
 describe('when common has name that starts with another entities name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'EntityNameCommonName';
   const domainEntityName: string = 'EntityName';
   const integerPropertyName1: string = 'IntegerPropertyName1';
@@ -1453,7 +1461,7 @@ describe('when common has name that starts with another entities name', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1466,7 +1474,7 @@ describe('when common has name that starts with another entities name', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1476,17 +1484,17 @@ describe('when common has name that starts with another entities name', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, commonName))).toBe(true);
   });
 });
 
 describe('when common has name that overlaps with another entities name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'OverlapCommonName';
   const domainEntityName: string = 'EntityNameOverlap';
   const overlappedName: string = 'EntityNameOverlapCommonName';
@@ -1495,7 +1503,7 @@ describe('when common has name that overlaps with another entities name', () => 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1508,7 +1516,7 @@ describe('when common has name that overlaps with another entities name', () => 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1518,17 +1526,17 @@ describe('when common has name that overlaps with another entities name', () => 
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, overlappedName))).toBe(true);
+    expect(await tableExists(table(namespaceName, overlappedName))).toBe(true);
   });
 });
 
 describe('when common has overlapping property names with another entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const commonName: string = 'CommonName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -1538,7 +1546,7 @@ describe('when common has overlapping property names with another entity', () =>
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
@@ -1558,7 +1566,7 @@ describe('when common has overlapping property names with another entity', () =>
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1568,15 +1576,15 @@ describe('when common has overlapping property names with another entity', () =>
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName1))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName1))).toBe(true);
   });
 
   it('should have join table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName1 + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName1 + commonName))).toBe(true);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName1 + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName1 + commonName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
       integerPropertyName3,
@@ -1586,12 +1594,12 @@ describe('when common has overlapping property names with another entity', () =>
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName1 + commonName, integerPropertyName1),
-        column(namespace, domainEntityName1 + commonName, integerPropertyName2),
+        column(namespaceName, domainEntityName1 + commonName, integerPropertyName1),
+        column(namespaceName, domainEntityName1 + commonName, integerPropertyName2),
       ],
       [
-        column(namespace, domainEntityName1, integerPropertyName1),
-        column(namespace, domainEntityName1, integerPropertyName2),
+        column(namespaceName, domainEntityName1, integerPropertyName1),
+        column(namespaceName, domainEntityName1, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
@@ -1599,12 +1607,12 @@ describe('when common has overlapping property names with another entity', () =>
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, domainEntityName1 + commonName, integerPropertyName2),
-        column(namespace, domainEntityName1 + commonName, integerPropertyName3),
+        column(namespaceName, domainEntityName1 + commonName, integerPropertyName2),
+        column(namespaceName, domainEntityName1 + commonName, integerPropertyName3),
       ],
       [
-        column(namespace, domainEntityName2, integerPropertyName2),
-        column(namespace, domainEntityName2, integerPropertyName3),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
+        column(namespaceName, domainEntityName2, integerPropertyName3),
       ],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
@@ -1614,7 +1622,7 @@ describe('when common has overlapping property names with another entity', () =>
 
 describe('when core common is referenced from extension entity as a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const contextName: string = 'ContextName';
@@ -1627,7 +1635,7 @@ describe('when core common is referenced from extension entity as a required pro
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName1, 'Documentation', false, false)
@@ -1645,7 +1653,7 @@ describe('when core common is referenced from extension entity as a required pro
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
@@ -1766,7 +1774,7 @@ describe('when core common is referenced from extension entity as a required pro
 
 describe('when extension common is referenced from extension entity as a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const contextName: string = 'ContextName';
@@ -1781,7 +1789,7 @@ describe('when extension common is referenced from extension entity as a require
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -1804,7 +1812,7 @@ describe('when extension common is referenced from extension entity as a require
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 

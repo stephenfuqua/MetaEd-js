@@ -1,25 +1,25 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newNamespaceInfo, NoNamespaceInfo } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace, NoNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/diminisher/domainMetadata/MoveFederalFundsDiminisher';
 import { NoAggregate } from '../../../src/model/domainMetadata/Aggregate';
 import type { Aggregate } from '../../../src/model/domainMetadata/Aggregate';
-import type { NamespaceInfoEdfiOdsApi } from '../../../src/model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 
 describe('when diminishing with no matching entity tables', () => {
   const entityName: string = 'EntityName';
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
 
   let aggregate: Aggregate = NoAggregate;
-  let namespaceInfo: NamespaceInfo = NoNamespaceInfo;
+  let namespace: Namespace = NoNamespace;
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
     aggregate = {
       root: entityName,
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -35,8 +35,8 @@ describe('when diminishing with no matching entity tables', () => {
       ],
     };
 
-    namespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [aggregate],
@@ -44,12 +44,12 @@ describe('when diminishing with no matching entity tables', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespaceName, namespace);
     enhance(metaEd);
   });
 
   it('should not change aggregates in namespace', () => {
-    const aggregates = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates;
+    const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
     expect(aggregates).toHaveLength(1);
     expect(aggregates[0]).toBe(aggregate);
   });
@@ -60,11 +60,11 @@ describe('when diminishing with matching entity tables', () => {
   const entityName2: string = 'EntityName2';
   const localEducationAgencyFederalFunds: string = 'LocalEducationAgencyFederalFunds';
   const stateEducationAgencyFederalFunds: string = 'StateEducationAgencyFederalFunds';
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
 
   let aggregate1: Aggregate = NoAggregate;
   let aggregate2: Aggregate = NoAggregate;
-  let namespaceInfo: NamespaceInfo = NoNamespaceInfo;
+  let namespace: Namespace = NoNamespace;
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -72,7 +72,7 @@ describe('when diminishing with matching entity tables', () => {
 
     aggregate1 = {
       root: entityName1,
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -99,7 +99,7 @@ describe('when diminishing with matching entity tables', () => {
 
     aggregate2 = {
       root: entityName2,
-      schema: namespace,
+      schema: namespaceName,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -124,8 +124,8 @@ describe('when diminishing with matching entity tables', () => {
       ],
     };
 
-    namespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [aggregate1, aggregate2],
@@ -133,7 +133,7 @@ describe('when diminishing with matching entity tables', () => {
       },
     });
 
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     enhance(metaEd);
   });
 
@@ -145,7 +145,7 @@ describe('when diminishing with matching entity tables', () => {
   });
 
   it('should add fake aggregates', () => {
-    const aggregates = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates;
+    const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
     expect(aggregates).toHaveLength(4);
 
     const localEducationAgencyFederalFundsAggregate: Aggregate = R.head(

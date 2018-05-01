@@ -11,9 +11,9 @@ import type { TopLevelEntity } from '../model/TopLevelEntity';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 import { isSharedProperty } from '../model/property/PropertyType';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { newBooleanProperty } from '../model/property/BooleanProperty';
 import { newCurrencyProperty } from '../model/property/CurrencyProperty';
@@ -78,18 +78,18 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.propertyRepository = metaEd.propertyIndex;
   }
 
-  getNamespaceInfo(): ?NamespaceInfo {
-    return this.entityRepository.namespaceInfo.get(this.currentNamespace);
+  getNamespace(): ?Namespace {
+    return this.entityRepository.namespace.get(this.currentNamespace);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enteringEntity(entityFactory: () => TopLevelEntity) {
-    const namespaceInfo = this.getNamespaceInfo();
-    if (namespaceInfo == null) return;
-    this.currentTopLevelEntity = { ...entityFactory(), namespaceInfo };
+    const namespace = this.getNamespace();
+    if (namespace == null) return;
+    this.currentTopLevelEntity = { ...entityFactory(), namespace };
     this.currentTopLevelEntityPropertyLookup.clear();
   }
 
@@ -332,7 +332,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   exitingProperty() {
     if (this.currentProperty === NoEntityProperty) return;
-    this.currentProperty.namespaceInfo = this.currentTopLevelEntity.namespaceInfo;
+    this.currentProperty.namespace = this.currentTopLevelEntity.namespace;
 
     // Shared simple properties have propertyName as optional. If omitted, name is same as type being referenced
     if (!this.currentProperty.metaEdName && isSharedProperty(this.currentProperty)) {

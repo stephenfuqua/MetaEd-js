@@ -1,5 +1,5 @@
 // @flow
-import { newAssociationExtension, newNamespaceInfo, newMetaEdEnvironment } from 'metaed-core';
+import { newAssociationExtension, newNamespace, newMetaEdEnvironment } from 'metaed-core';
 import type { AssociationExtension, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/AssociationExtension';
 
@@ -12,7 +12,7 @@ describe('when AssociationExtension enhances association extension entity', () =
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     associationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: associationExtensionName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
+      namespace: Object.assign(newNamespace(), {
         extensionEntitySuffix,
       }),
     });

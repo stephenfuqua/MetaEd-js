@@ -1,5 +1,5 @@
 // @flow
-import { newDomainEntity, newIntegerProperty, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { newDomainEntity, newIntegerProperty, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { DomainEntity, IntegerProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/CreateUsisFromUniqueIdsEnhancer';
 
@@ -25,7 +25,7 @@ describe('when enhancing entity with unique id property', () => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { isExtension: false }),
+      namespace: Object.assign(newNamespace(), { isExtension: false }),
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],
@@ -100,7 +100,7 @@ describe('when enhancing entity with non unique id property', () => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { isExtension: false }),
+      namespace: Object.assign(newNamespace(), { isExtension: false }),
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],
@@ -148,7 +148,7 @@ describe('when enhancing entity with unique id property in extension namespace',
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), { isExtension: true }),
+      namespace: Object.assign(newNamespace(), { isExtension: true }),
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],

@@ -75,7 +75,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   const academicWeek: string = 'AcademicWeek';
 
   beforeAll(() => {
-    const namespace: string = 'edfi';
+    const namespaceName: string = 'edfi';
     const beginDate: string = 'BeginDate';
     const calendarDate: string = 'CalendarDate';
     const date: string = 'Date';
@@ -87,7 +87,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
       name: academicWeek,
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespace,
+          foreignTableSchema: namespaceName,
           foreignTableName: calendarDate,
           columnNames: [
             Object.assign(newColumnNamePair(), {
@@ -101,7 +101,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
           ],
         }),
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespace,
+          foreignTableSchema: namespaceName,
           foreignTableName: calendarDate,
           columnNames: [
             Object.assign(newColumnNamePair(), {

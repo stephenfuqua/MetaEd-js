@@ -14,7 +14,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     if (!entity.data.edfiOds.ods_IsMapType) return;
 
     const rows: Array<EnumerationRow> = enumerationRowCreator.createRows(
-      entity.namespaceInfo.namespace,
+      entity.namespace.namespaceName,
       normalizeEnumerationSuffix(entity.metaEdName),
       R.path(['mapTypeEnumeration', 'enumerationItems'])(entity),
     );

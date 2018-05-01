@@ -4,7 +4,7 @@ import {
   AssociationSubclassBuilder,
   DomainEntityBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -17,7 +17,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when association subclass has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -28,7 +28,7 @@ describe('when association subclass has a single property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -51,7 +51,7 @@ describe('when association subclass has a single property', () => {
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
@@ -62,15 +62,15 @@ describe('when association subclass has a single property', () => {
   afterAll(async () => testTearDown());
 
   it('should have association subclass table', async () => {
-    expect(await tableExists(table(namespace, associationSubclassName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationSubclassName))).toBe(true);
   });
 
   it('should have association subclass column', async () => {
-    expect(await columnExists(column(namespace, associationSubclassName, integerPropertyName3))).toBe(true);
+    expect(await columnExists(column(namespaceName, associationSubclassName, integerPropertyName3))).toBe(true);
   });
 
   it('should have domain entity primary keys as association primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationSubclassName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationSubclassName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
     ]);
@@ -79,29 +79,32 @@ describe('when association subclass has a single property', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, associationSubclassName, integerPropertyName1),
-        column(namespace, associationSubclassName, integerPropertyName2),
+        column(namespaceName, associationSubclassName, integerPropertyName1),
+        column(namespaceName, associationSubclassName, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have standard resource columns on association', async () => {
-    const idColumn: DatabaseColumn = column(namespace, associationName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, associationName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, associationName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, associationName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -109,15 +112,15 @@ describe('when association subclass has a single property', () => {
   });
 
   it('should not have standard resource columns on association subclass', async () => {
-    expect(await columnExists(column(namespace, associationSubclassName, 'Id'))).toBe(false);
-    expect(await columnExists(column(namespace, associationSubclassName, 'LastModifiedDate'))).toBe(false);
-    expect(await columnExists(column(namespace, associationSubclassName, 'CreateDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationSubclassName, 'Id'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationSubclassName, 'LastModifiedDate'))).toBe(false);
+    expect(await columnExists(column(namespaceName, associationSubclassName, 'CreateDate'))).toBe(false);
   });
 });
 
 describe('when extension association subclasses core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -129,7 +132,7 @@ describe('when extension association subclasses core association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -154,7 +157,7 @@ describe('when extension association subclasses core association', () => {
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
@@ -185,26 +188,29 @@ describe('when extension association subclasses core association', () => {
         column(extension, associationSubclassName, integerPropertyName1),
         column(extension, associationSubclassName, integerPropertyName2),
       ],
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
+      [
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have standard resource columns on association', async () => {
-    const idColumn: DatabaseColumn = column(namespace, associationName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, associationName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, associationName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, associationName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -220,7 +226,7 @@ describe('when extension association subclasses core association', () => {
 
 describe('when extension association subclasses extension association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -232,7 +238,7 @@ describe('when extension association subclasses extension association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -257,7 +263,7 @@ describe('when extension association subclasses extension association', () => {
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));

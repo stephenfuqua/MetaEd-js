@@ -3,19 +3,17 @@ import fs from 'fs';
 import handlebars from 'handlebars';
 import path from 'path';
 import R from 'ramda';
-import type { NamespaceInfo } from 'metaed-core';
+import type { Namespace } from 'metaed-core';
 
 export const odsPath: string = '/Database/SQLServer/ODS/';
 export const dataPath: string = `${odsPath}Data/`;
 export const structurePath: string = `${odsPath}Structure/`;
 
-export function fileNameFor(prefix: string, namespaceInfo: NamespaceInfo, suffix: string): string {
-  if (namespaceInfo.namespace === 'edfi') return `${prefix}-${suffix}.sql`;
+export function fileNameFor(prefix: string, namespace: Namespace, suffix: string): string {
+  if (namespace.namespaceName === 'edfi') return `${prefix}-${suffix}.sql`;
 
   const extensionNamespace: string =
-    namespaceInfo.projectExtension === ''
-      ? namespaceInfo.namespace
-      : `${namespaceInfo.projectExtension}-${namespaceInfo.namespace}`;
+    namespace.projectExtension === '' ? namespace.namespaceName : `${namespace.projectExtension}-${namespace.namespaceName}`;
   return `${prefix}-${extensionNamespace}-${suffix}.sql`;
 }
 

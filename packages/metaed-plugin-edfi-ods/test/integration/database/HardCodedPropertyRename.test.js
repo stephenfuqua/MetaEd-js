@@ -3,7 +3,7 @@ import {
   DomainEntityBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -34,7 +34,7 @@ import type { DatabaseIndex } from './DatabaseIndex';
 
 describe('when domain entity is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const student: string = 'Student';
   const uniqueId: string = 'UniqueId';
   const usiColumnName: string = `${student}USI`;
@@ -43,14 +43,14 @@ describe('when domain entity is student', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(student)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', maxLength.toString(), '1', student)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -59,17 +59,17 @@ describe('when domain entity is student', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, student))).toBe(true);
+    expect(await tableExists(table(namespaceName, student))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, student, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, student, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(true);
     expect(await columnDataType(usiColumn)).toBe(columnDataTypes.integer);
 
-    const uniqueIdColumn: DatabaseColumn = column(namespace, student, uniqueIdColumnName);
+    const uniqueIdColumn: DatabaseColumn = column(namespaceName, student, uniqueIdColumnName);
     expect(await columnExists(uniqueIdColumn)).toBe(true);
     expect(await columnIsNullable(uniqueIdColumn)).toBe(false);
     expect(await columnDataType(uniqueIdColumn)).toBe(columnDataTypes.nvarchar);
@@ -77,19 +77,19 @@ describe('when domain entity is student', () => {
   });
 
   it('should have unique index', async () => {
-    const uniqueIdIndex: DatabaseIndex = index(column(namespace, student, uniqueIdColumnName));
+    const uniqueIdIndex: DatabaseIndex = index(column(namespaceName, student, uniqueIdColumnName));
     expect(await indexExists(uniqueIdIndex)).toBe(true);
     expect(await indexIsUnique(uniqueIdIndex)).toBe(true);
   });
 
   it('should have usi primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, student))).toEqual([usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, student))).toEqual([usiColumnName]);
   });
 });
 
 describe('when referenced domain entity is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const student: string = 'Student';
@@ -98,7 +98,7 @@ describe('when referenced domain entity is student', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(student)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', student)
@@ -111,7 +111,7 @@ describe('when referenced domain entity is student', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -120,15 +120,15 @@ describe('when referenced domain entity is student', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have student table', async () => {
-    expect(await tableExists(table(namespace, student))).toBe(true);
+    expect(await tableExists(table(namespaceName, student))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, domainEntityName, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, domainEntityName, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(false);
@@ -136,13 +136,13 @@ describe('when referenced domain entity is student', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, usiColumnName)],
-      [column(namespace, student, usiColumnName)],
+      [column(namespaceName, domainEntityName, usiColumnName)],
+      [column(namespaceName, student, usiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -151,7 +151,7 @@ describe('when referenced domain entity is student', () => {
 
 describe('when domain entity is staff', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const staff: string = 'Staff';
   const uniqueId: string = 'UniqueId';
   const usiColumnName: string = `${staff}USI`;
@@ -160,14 +160,14 @@ describe('when domain entity is staff', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(staff)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', maxLength.toString(), '1', staff)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -176,17 +176,17 @@ describe('when domain entity is staff', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, staff))).toBe(true);
+    expect(await tableExists(table(namespaceName, staff))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, staff, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, staff, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(true);
     expect(await columnDataType(usiColumn)).toBe(columnDataTypes.integer);
 
-    const uniqueIdColumn: DatabaseColumn = column(namespace, staff, uniqueIdColumnName);
+    const uniqueIdColumn: DatabaseColumn = column(namespaceName, staff, uniqueIdColumnName);
     expect(await columnExists(uniqueIdColumn)).toBe(true);
     expect(await columnIsNullable(uniqueIdColumn)).toBe(false);
     expect(await columnDataType(uniqueIdColumn)).toBe(columnDataTypes.nvarchar);
@@ -194,19 +194,19 @@ describe('when domain entity is staff', () => {
   });
 
   it('should have unique index', async () => {
-    const uniqueIdIndex: DatabaseIndex = index(column(namespace, staff, uniqueIdColumnName));
+    const uniqueIdIndex: DatabaseIndex = index(column(namespaceName, staff, uniqueIdColumnName));
     expect(await indexExists(uniqueIdIndex)).toBe(true);
     expect(await indexIsUnique(uniqueIdIndex)).toBe(true);
   });
 
   it('should have usi primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, staff))).toEqual([usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, staff))).toEqual([usiColumnName]);
   });
 });
 
 describe('when referenced domain entity is staff', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const staff: string = 'Staff';
@@ -215,7 +215,7 @@ describe('when referenced domain entity is staff', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(staff)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', staff)
@@ -228,7 +228,7 @@ describe('when referenced domain entity is staff', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -237,15 +237,15 @@ describe('when referenced domain entity is staff', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have staff table', async () => {
-    expect(await tableExists(table(namespace, staff))).toBe(true);
+    expect(await tableExists(table(namespaceName, staff))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, domainEntityName, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, domainEntityName, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(false);
@@ -253,13 +253,13 @@ describe('when referenced domain entity is staff', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, usiColumnName)],
-      [column(namespace, staff, usiColumnName)],
+      [column(namespaceName, domainEntityName, usiColumnName)],
+      [column(namespaceName, staff, usiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -268,7 +268,7 @@ describe('when referenced domain entity is staff', () => {
 
 describe('when domain entity is parent', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const parent: string = 'Parent';
   const uniqueId: string = 'UniqueId';
   const usiColumnName: string = `${parent}USI`;
@@ -277,14 +277,14 @@ describe('when domain entity is parent', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(parent)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', maxLength.toString(), '1', parent)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -293,17 +293,17 @@ describe('when domain entity is parent', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, parent))).toBe(true);
+    expect(await tableExists(table(namespaceName, parent))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, parent, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, parent, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(true);
     expect(await columnDataType(usiColumn)).toBe(columnDataTypes.integer);
 
-    const uniqueIdColumn: DatabaseColumn = column(namespace, parent, uniqueIdColumnName);
+    const uniqueIdColumn: DatabaseColumn = column(namespaceName, parent, uniqueIdColumnName);
     expect(await columnExists(uniqueIdColumn)).toBe(true);
     expect(await columnIsNullable(uniqueIdColumn)).toBe(false);
     expect(await columnDataType(uniqueIdColumn)).toBe(columnDataTypes.nvarchar);
@@ -311,19 +311,19 @@ describe('when domain entity is parent', () => {
   });
 
   it('should have unique index', async () => {
-    const uniqueIdIndex: DatabaseIndex = index(column(namespace, parent, uniqueIdColumnName));
+    const uniqueIdIndex: DatabaseIndex = index(column(namespaceName, parent, uniqueIdColumnName));
     expect(await indexExists(uniqueIdIndex)).toBe(true);
     expect(await indexIsUnique(uniqueIdIndex)).toBe(true);
   });
 
   it('should have usi primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, parent))).toEqual([usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, parent))).toEqual([usiColumnName]);
   });
 });
 
 describe('when referenced domain entity is parent', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const parent: string = 'Parent';
@@ -332,7 +332,7 @@ describe('when referenced domain entity is parent', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(parent)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', parent)
@@ -345,7 +345,7 @@ describe('when referenced domain entity is parent', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -354,15 +354,15 @@ describe('when referenced domain entity is parent', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have parent table', async () => {
-    expect(await tableExists(table(namespace, parent))).toBe(true);
+    expect(await tableExists(table(namespaceName, parent))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, domainEntityName, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, domainEntityName, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(false);
@@ -370,13 +370,13 @@ describe('when referenced domain entity is parent', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName, usiColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, usiColumnName)],
-      [column(namespace, parent, usiColumnName)],
+      [column(namespaceName, domainEntityName, usiColumnName)],
+      [column(namespaceName, parent, usiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -385,7 +385,7 @@ describe('when referenced domain entity is parent', () => {
 
 describe('when referenced domain entity is required', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const parent: string = 'Parent';
@@ -394,7 +394,7 @@ describe('when referenced domain entity is required', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(parent)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', parent)
@@ -407,7 +407,7 @@ describe('when referenced domain entity is required', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -416,15 +416,15 @@ describe('when referenced domain entity is required', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have parent table', async () => {
-    expect(await tableExists(table(namespace, parent))).toBe(true);
+    expect(await tableExists(table(namespaceName, parent))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, domainEntityName, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, domainEntityName, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(false);
     expect(await columnIsIdentity(usiColumn)).toBe(false);
@@ -432,13 +432,13 @@ describe('when referenced domain entity is required', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, usiColumnName)],
-      [column(namespace, parent, usiColumnName)],
+      [column(namespaceName, domainEntityName, usiColumnName)],
+      [column(namespaceName, parent, usiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -447,7 +447,7 @@ describe('when referenced domain entity is required', () => {
 
 describe('when referenced domain entity is optional', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const parent: string = 'Parent';
@@ -456,7 +456,7 @@ describe('when referenced domain entity is optional', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(parent)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', parent)
@@ -469,7 +469,7 @@ describe('when referenced domain entity is optional', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -478,15 +478,15 @@ describe('when referenced domain entity is optional', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have parent table', async () => {
-    expect(await tableExists(table(namespace, parent))).toBe(true);
+    expect(await tableExists(table(namespaceName, parent))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const usiColumn: DatabaseColumn = column(namespace, domainEntityName, usiColumnName);
+    const usiColumn: DatabaseColumn = column(namespaceName, domainEntityName, usiColumnName);
     expect(await columnExists(usiColumn)).toBe(true);
     expect(await columnIsNullable(usiColumn)).toBe(true);
     expect(await columnIsIdentity(usiColumn)).toBe(false);
@@ -494,13 +494,13 @@ describe('when referenced domain entity is optional', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, usiColumnName)],
-      [column(namespace, parent, usiColumnName)],
+      [column(namespaceName, domainEntityName, usiColumnName)],
+      [column(namespaceName, parent, usiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -509,7 +509,7 @@ describe('when referenced domain entity is optional', () => {
 
 describe('when referenced two domain entities with one as collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const student: string = 'Student';
   const staff: string = 'Staff';
@@ -519,7 +519,7 @@ describe('when referenced two domain entities with one as collection', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(student)
       .withDocumentation('Documentation')
       .withStringIdentity(uniqueId, 'Documentation', '32', '1', student)
@@ -537,7 +537,7 @@ describe('when referenced two domain entities with one as collection', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -546,15 +546,15 @@ describe('when referenced two domain entities with one as collection', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have parent table', async () => {
-    expect(await tableExists(table(namespace, student))).toBe(true);
+    expect(await tableExists(table(namespaceName, student))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const studentUsiColumn: DatabaseColumn = column(namespace, domainEntityName, studentUsiColumnName);
+    const studentUsiColumn: DatabaseColumn = column(namespaceName, domainEntityName, studentUsiColumnName);
     expect(await columnExists(studentUsiColumn)).toBe(true);
     expect(await columnIsNullable(studentUsiColumn)).toBe(false);
     expect(await columnIsIdentity(studentUsiColumn)).toBe(false);
@@ -562,30 +562,30 @@ describe('when referenced two domain entities with one as collection', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([studentUsiColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([studentUsiColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, studentUsiColumnName)],
-      [column(namespace, student, studentUsiColumnName)],
+      [column(namespaceName, domainEntityName, studentUsiColumnName)],
+      [column(namespaceName, student, studentUsiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
   });
 
   it('should have collection table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + staff))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + staff))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const studentUsiColumn: DatabaseColumn = column(namespace, domainEntityName + staff, studentUsiColumnName);
+    const studentUsiColumn: DatabaseColumn = column(namespaceName, domainEntityName + staff, studentUsiColumnName);
     expect(await columnExists(studentUsiColumn)).toBe(true);
     expect(await columnIsNullable(studentUsiColumn)).toBe(false);
     expect(await columnIsIdentity(studentUsiColumn)).toBe(false);
     expect(await columnDataType(studentUsiColumn)).toBe(columnDataTypes.integer);
 
-    const staffUsiColumn: DatabaseColumn = column(namespace, domainEntityName + staff, staffUsiColumnName);
+    const staffUsiColumn: DatabaseColumn = column(namespaceName, domainEntityName + staff, staffUsiColumnName);
     expect(await columnExists(staffUsiColumn)).toBe(true);
     expect(await columnIsNullable(staffUsiColumn)).toBe(false);
     expect(await columnIsIdentity(staffUsiColumn)).toBe(false);
@@ -594,15 +594,15 @@ describe('when referenced two domain entities with one as collection', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + staff, studentUsiColumnName)],
-      [column(namespace, domainEntityName, studentUsiColumnName)],
+      [column(namespaceName, domainEntityName + staff, studentUsiColumnName)],
+      [column(namespaceName, domainEntityName, studentUsiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + staff, staffUsiColumnName)],
-      [column(namespace, staff, staffUsiColumnName)],
+      [column(namespaceName, domainEntityName + staff, staffUsiColumnName)],
+      [column(namespaceName, staff, staffUsiColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -611,7 +611,7 @@ describe('when referenced two domain entities with one as collection', () => {
 
 describe('when enumeration is school year', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const schoolYear: string = 'SchoolYear';
   const schoolYearTableName: string = `${schoolYear}Type`;
   const year1: string = '1991';
@@ -626,7 +626,7 @@ describe('when enumeration is school year', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(schoolYear)
       .withDocumentation('Documentation')
       .withEnumerationItem(`${year1}-${year2}`)
@@ -640,7 +640,7 @@ describe('when enumeration is school year', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -649,45 +649,49 @@ describe('when enumeration is school year', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, schoolYearTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, schoolYearTableName))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const schoolYearColumn: DatabaseColumn = column(namespace, schoolYearTableName, schoolYear);
+    const schoolYearColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, schoolYear);
     expect(await columnExists(schoolYearColumn)).toBe(true);
     expect(await columnIsNullable(schoolYearColumn)).toBe(false);
     expect(await columnDataType(schoolYearColumn)).toBe(columnDataTypes.smallint);
 
-    const schoolYearDescriptionColumn: DatabaseColumn = column(namespace, schoolYearTableName, `${schoolYear}Description`);
+    const schoolYearDescriptionColumn: DatabaseColumn = column(
+      namespaceName,
+      schoolYearTableName,
+      `${schoolYear}Description`,
+    );
     expect(await columnExists(schoolYearDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(schoolYearDescriptionColumn)).toBe(false);
     expect(await columnDataType(schoolYearDescriptionColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(schoolYearDescriptionColumn)).toBe(50);
 
-    const currentSchoolYearColumn: DatabaseColumn = column(namespace, schoolYearTableName, `Current${schoolYear}`);
+    const currentSchoolYearColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, `Current${schoolYear}`);
     expect(await columnExists(currentSchoolYearColumn)).toBe(true);
     expect(await columnIsNullable(currentSchoolYearColumn)).toBe(false);
     expect(await columnDataType(currentSchoolYearColumn)).toBe(columnDataTypes.bit);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, schoolYearTableName))).toEqual([schoolYear]);
+    expect(await tablePrimaryKeys(table(namespaceName, schoolYearTableName))).toEqual([schoolYear]);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, schoolYearTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, schoolYearTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, schoolYearTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -695,7 +699,7 @@ describe('when enumeration is school year', () => {
   });
 
   it('should have correct inserted values', async () => {
-    const schoolYearColumn: DatabaseColumn = column(namespace, schoolYearTableName, schoolYear);
+    const schoolYearColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, schoolYear);
     expect(await columnExists(schoolYearColumn)).toBe(true);
     expect(await columnNthRowValue(schoolYearColumn, schoolYear, '1')).toBe(parseInt(year1, 10));
     expect(await columnNthRowValue(schoolYearColumn, schoolYear, '2')).toBe(parseInt(year2, 10));
@@ -706,7 +710,11 @@ describe('when enumeration is school year', () => {
     expect(await columnNthRowValue(schoolYearColumn, schoolYear, '7')).toBe(parseInt(year7, 10));
     expect(await columnNthRowValue(schoolYearColumn, schoolYear, '8')).toBe(parseInt(year8, 10));
 
-    const schoolYearDescriptionColumn: DatabaseColumn = column(namespace, schoolYearTableName, `${schoolYear}Description`);
+    const schoolYearDescriptionColumn: DatabaseColumn = column(
+      namespaceName,
+      schoolYearTableName,
+      `${schoolYear}Description`,
+    );
     expect(await columnExists(schoolYearDescriptionColumn)).toBe(true);
     expect(await columnNthRowValue(schoolYearDescriptionColumn, schoolYear, '1')).toBe(`${year1}-${year2}`);
     expect(await columnNthRowValue(schoolYearDescriptionColumn, schoolYear, '2')).toBe(`${year2}-${year3}`);
@@ -721,7 +729,7 @@ describe('when enumeration is school year', () => {
 
 describe('when enumeration property is school year', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
   const schoolYear: string = 'SchoolYear';
@@ -729,7 +737,7 @@ describe('when enumeration property is school year', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(schoolYear)
       .withDocumentation('Documentation')
       .withEnumerationItem('1991-1992')
@@ -749,7 +757,7 @@ describe('when enumeration property is school year', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
@@ -759,28 +767,28 @@ describe('when enumeration property is school year', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have school year table', async () => {
-    expect(await tableExists(table(namespace, schoolYearTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, schoolYearTableName))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const schoolYearColumn: DatabaseColumn = column(namespace, domainEntityName, schoolYear);
+    const schoolYearColumn: DatabaseColumn = column(namespaceName, domainEntityName, schoolYear);
     expect(await columnExists(schoolYearColumn)).toBe(true);
     expect(await columnIsNullable(schoolYearColumn)).toBe(false);
     expect(await columnDataType(schoolYearColumn)).toBe(columnDataTypes.smallint);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName, schoolYear]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName, schoolYear]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, schoolYear)],
-      [column(namespace, schoolYearTableName, schoolYear)],
+      [column(namespaceName, domainEntityName, schoolYear)],
+      [column(namespaceName, schoolYearTableName, schoolYear)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -789,7 +797,7 @@ describe('when enumeration property is school year', () => {
 
 describe('when enumeration property is school year with context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const domainEntityName: string = 'DomainEntityName';
   const integerPropertyName: string = 'IntegerPropertyName';
@@ -798,7 +806,7 @@ describe('when enumeration property is school year with context', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(schoolYear)
       .withDocumentation('Documentation')
       .withEnumerationItem('1991-1992')
@@ -818,7 +826,7 @@ describe('when enumeration property is school year with context', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
@@ -828,28 +836,28 @@ describe('when enumeration property is school year with context', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have school year table', async () => {
-    expect(await tableExists(table(namespace, schoolYearTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, schoolYearTableName))).toBe(true);
   });
 
   it('should have correct columns', async () => {
-    const schoolYearColumn: DatabaseColumn = column(namespace, domainEntityName, contextName + schoolYear);
+    const schoolYearColumn: DatabaseColumn = column(namespaceName, domainEntityName, contextName + schoolYear);
     expect(await columnExists(schoolYearColumn)).toBe(true);
     expect(await columnIsNullable(schoolYearColumn)).toBe(true);
     expect(await columnDataType(schoolYearColumn)).toBe(columnDataTypes.smallint);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName))).toEqual([integerPropertyName]);
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName))).toEqual([integerPropertyName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName, contextName + schoolYear)],
-      [column(namespace, schoolYearTableName, schoolYear)],
+      [column(namespaceName, domainEntityName, contextName + schoolYear)],
+      [column(namespaceName, schoolYearTableName, schoolYear)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);

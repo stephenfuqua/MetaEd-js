@@ -2,7 +2,7 @@
 import deepFreeze from 'deep-freeze';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 import type { ModelType } from './ModelType';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
@@ -35,7 +35,7 @@ export function newDomainItem(): DomainItem {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     referencedType: 'unknown',
     sourceMap: newDomainItemSourceMap(),
     data: {},

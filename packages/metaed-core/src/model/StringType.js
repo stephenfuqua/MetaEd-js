@@ -5,7 +5,7 @@ import { NoSourceMap } from './SourceMap';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
 import type { EntityProperty } from './property/EntityProperty';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 
 export type StringTypeSourceMap = {
   ...$Exact<ModelBaseSourceMap>,
@@ -41,7 +41,7 @@ export function newStringType(): StringType {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     generatedSimpleType: false,
     documentationInherited: false,
     typeHumanizedName: 'String Type',

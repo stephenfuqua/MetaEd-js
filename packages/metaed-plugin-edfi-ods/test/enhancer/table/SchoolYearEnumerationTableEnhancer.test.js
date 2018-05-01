@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { addEntity, newMetaEdEnvironment, newNamespaceInfo, newSchoolYearEnumeration } from 'metaed-core';
+import { addEntity, newMetaEdEnvironment, newNamespace, newSchoolYearEnumeration } from 'metaed-core';
 import type { MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
@@ -16,8 +16,8 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     const schoolYearEnumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYear,
       documentation: schoolYearEnumerationDocumentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {

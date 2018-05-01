@@ -1,10 +1,10 @@
 // @flow
 import type { StringType } from '../model/StringType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { newStringType, NoStringType } from '../model/StringType';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
@@ -26,7 +26,7 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enterSharedString(context: MetaEdGrammar.SharedStringContext) {
@@ -41,11 +41,11 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext,
     generatedSimpleType: boolean = false,
   ) {
-    const namespaceInfo: ?NamespaceInfo = this.metaEd.entity.namespaceInfo.get(this.currentNamespace);
-    if (namespaceInfo == null) return;
-    this.currentStringType = { ...newStringType(), namespaceInfo, generatedSimpleType };
+    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
+    if (namespace == null) return;
+    this.currentStringType = { ...newStringType(), namespace, generatedSimpleType };
     this.currentStringType.sourceMap.type = sourceMapFrom(context);
-    this.currentStringType.sourceMap.namespaceInfo = namespaceInfo.sourceMap.type;
+    this.currentStringType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -135,7 +135,7 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     if (this.currentStringType === NoStringType) return;
 
     // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
-    const projectExtension = this.currentStringType.namespaceInfo.projectExtension;
+    const projectExtension = this.currentStringType.namespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentStringType.metaEdName}`
       : this.currentStringType.metaEdName;

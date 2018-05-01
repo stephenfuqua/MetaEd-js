@@ -4,19 +4,19 @@ import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 import type { ModelType } from './ModelType';
 
-export type NamespaceInfoSourceMap = {
+export type NamespaceSourceMap = {
   type: SourceMap,
-  namespace: SourceMap,
+  namespaceName: SourceMap,
   isExtension: SourceMap,
   projectExtension: SourceMap,
   projectName: SourceMap,
   extensionEntitySuffix: SourceMap,
 };
 
-export function newNamespaceInfoSourceMap(): NamespaceInfoSourceMap {
+export function newNamespaceSourceMap(): NamespaceSourceMap {
   return {
     type: NoSourceMap,
-    namespace: NoSourceMap,
+    namespaceName: NoSourceMap,
     isExtension: NoSourceMap,
     projectExtension: NoSourceMap,
     projectName: NoSourceMap,
@@ -24,36 +24,36 @@ export function newNamespaceInfoSourceMap(): NamespaceInfoSourceMap {
   };
 }
 
-export type NamespaceInfo = {
+export type Namespace = {
   type: ModelType,
-  namespace: string,
+  namespaceName: string,
   isExtension: boolean,
   projectExtension: string,
   projectName: string,
   extensionEntitySuffix: string,
-  sourceMap: NamespaceInfoSourceMap,
+  sourceMap: NamespaceSourceMap,
   data: any,
   config: any,
 };
 
 export const DefaultExtensionEntitySuffix: string = 'Extension';
 
-export function newNamespaceInfo(): NamespaceInfo {
+export function newNamespace(): Namespace {
   return {
-    type: 'namespaceInfo',
-    namespace: '',
+    type: 'namespace',
+    namespaceName: '',
     isExtension: false,
     projectExtension: '',
     projectName: '',
     extensionEntitySuffix: DefaultExtensionEntitySuffix,
-    sourceMap: newNamespaceInfoSourceMap(),
+    sourceMap: newNamespaceSourceMap(),
     data: {},
     config: {},
   };
 }
 
-export const NoNamespaceInfo: NamespaceInfo = deepFreeze({
-  ...newNamespaceInfo(),
-  namespace: 'nonamespaceinfo',
-  projectExtension: 'NoNamespaceInfo',
+export const NoNamespace: Namespace = deepFreeze({
+  ...newNamespace(),
+  namespaceName: 'nonamespace',
+  projectExtension: 'NoNamespace',
 });

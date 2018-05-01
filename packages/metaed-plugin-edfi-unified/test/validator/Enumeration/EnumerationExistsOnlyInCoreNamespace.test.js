@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, MetaEdTextBuilder, EnumerationBuilder, NamespaceInfoBuilder } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, EnumerationBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/Enumeration/EnumerationExistsOnlyInCoreNamespace';
 
@@ -17,7 +17,7 @@ describe('when validating enumeration type exists in core', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -46,7 +46,7 @@ describe('when validating enumeration exists in extension', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     failures = validate(metaEd);

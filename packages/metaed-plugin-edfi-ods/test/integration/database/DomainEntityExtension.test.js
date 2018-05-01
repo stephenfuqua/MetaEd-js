@@ -4,7 +4,7 @@ import {
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -17,7 +17,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when domain entity extension has multiple properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -29,7 +29,7 @@ describe('when domain entity extension has multiple properties', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -49,7 +49,7 @@ describe('when domain entity extension has multiple properties', () => {
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
@@ -60,23 +60,23 @@ describe('when domain entity extension has multiple properties', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -98,7 +98,7 @@ describe('when domain entity extension has multiple properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityExtensionName, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -136,7 +136,7 @@ describe('when domain entity extension has multiple properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + commonName, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -185,7 +185,7 @@ describe('when domain entity extension has multiple properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + integerPropertyName4, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -203,7 +203,7 @@ describe('when domain entity extension has multiple properties', () => {
 
 describe('when domain entity extension has optional collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
@@ -212,7 +212,7 @@ describe('when domain entity extension has optional collection property', () => 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -224,7 +224,7 @@ describe('when domain entity extension has optional collection property', () => 
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
@@ -234,23 +234,23 @@ describe('when domain entity extension has optional collection property', () => 
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -291,7 +291,7 @@ describe('when domain entity extension has optional collection property', () => 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + integerPropertyName2, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -309,7 +309,7 @@ describe('when domain entity extension has optional collection property', () => 
 
 describe('when domain entity extension has required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
@@ -318,7 +318,7 @@ describe('when domain entity extension has required collection property', () => 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -330,7 +330,7 @@ describe('when domain entity extension has required collection property', () => 
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
@@ -340,23 +340,23 @@ describe('when domain entity extension has required collection property', () => 
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -397,7 +397,7 @@ describe('when domain entity extension has required collection property', () => 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + integerPropertyName2, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -415,7 +415,7 @@ describe('when domain entity extension has required collection property', () => 
 
 describe('when domain entity extension has multiple common properties', () => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName1: string = 'CommonName1';
   const commonName2: string = 'CommonName2';
@@ -427,7 +427,7 @@ describe('when domain entity extension has multiple common properties', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -451,7 +451,7 @@ describe('when domain entity extension has multiple common properties', () => {
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
@@ -462,23 +462,23 @@ describe('when domain entity extension has multiple common properties', () => {
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, domainEntityName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, domainEntityName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -512,7 +512,7 @@ describe('when domain entity extension has multiple common properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + commonName1, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -553,7 +553,7 @@ describe('when domain entity extension has multiple common properties', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + commonName2, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);

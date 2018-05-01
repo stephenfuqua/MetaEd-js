@@ -40,7 +40,7 @@ async function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
 
   metaEdProjectMetadata.forEach(pm => {
     metaEdConfiguration.projects.push({
-      namespace: pm.projectNamespace,
+      namespaceName: pm.projectNamespace,
       projectName: pm.projectName,
       projectVersion: pm.projectVersion,
       projectExtension: pm.projectExtension,

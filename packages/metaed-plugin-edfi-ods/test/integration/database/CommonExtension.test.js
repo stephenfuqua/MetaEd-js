@@ -7,7 +7,7 @@ import {
   CommonBuilder,
   CommonExtensionBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -20,7 +20,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when common extension is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -31,7 +31,7 @@ describe('when common extension is a required property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -50,7 +50,7 @@ describe('when common extension is a required property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
@@ -144,7 +144,7 @@ describe('when common extension is a required property', () => {
 
 describe('when common extension is a required property on association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const commonName: string = 'CommonName';
@@ -158,7 +158,7 @@ describe('when common extension is a required property on association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -188,7 +188,7 @@ describe('when common extension is a required property on association', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
@@ -288,7 +288,7 @@ describe('when common extension is a required property on association', () => {
 
 describe('when common extension is a required property on association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const commonName: string = 'CommonName';
@@ -302,7 +302,7 @@ describe('when common extension is a required property on association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -332,7 +332,7 @@ describe('when common extension is a required property on association', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
@@ -432,7 +432,7 @@ describe('when common extension is a required property on association', () => {
 
 describe('when common extension is a required property on domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -444,7 +444,7 @@ describe('when common extension is a required property on domain entity extensio
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -466,7 +466,7 @@ describe('when common extension is a required property on domain entity extensio
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
@@ -478,7 +478,7 @@ describe('when common extension is a required property on domain entity extensio
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have domain entity extension table', async () => {
@@ -492,7 +492,7 @@ describe('when common extension is a required property on domain entity extensio
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityExtensionName, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -518,7 +518,7 @@ describe('when common extension is a required property on domain entity extensio
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityName + commonName, integerPropertyName1)],
-      [column(namespace, domainEntityName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -553,7 +553,7 @@ describe('when common extension is a required property on domain entity extensio
 
 describe('when common extension is a required property on association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
@@ -569,7 +569,7 @@ describe('when common extension is a required property on association extension'
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -603,7 +603,7 @@ describe('when common extension is a required property on association extension'
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
@@ -617,7 +617,7 @@ describe('when common extension is a required property on association extension'
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have association extension table', async () => {
@@ -637,7 +637,10 @@ describe('when common extension is a required property on association extension'
         column(extension, associationExtensionName, integerPropertyName2),
         column(extension, associationExtensionName, integerPropertyName3),
       ],
-      [column(namespace, associationName, integerPropertyName2), column(namespace, associationName, integerPropertyName3)],
+      [
+        column(namespaceName, associationName, integerPropertyName2),
+        column(namespaceName, associationName, integerPropertyName3),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -667,7 +670,10 @@ describe('when common extension is a required property on association extension'
         column(extension, associationName + commonName, integerPropertyName2),
         column(extension, associationName + commonName, integerPropertyName3),
       ],
-      [column(namespace, associationName, integerPropertyName2), column(namespace, associationName, integerPropertyName3)],
+      [
+        column(namespaceName, associationName, integerPropertyName2),
+        column(namespaceName, associationName, integerPropertyName3),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -711,7 +717,7 @@ describe('when common extension is a required property on association extension'
 
 describe('when common extension is a required common override property on domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -723,7 +729,7 @@ describe('when common extension is a required common override property on domain
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartCommon(commonName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -746,7 +752,7 @@ describe('when common extension is a required common override property on domain
       .withEndCommonExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
@@ -758,7 +764,7 @@ describe('when common extension is a required common override property on domain
   afterAll(async () => testTearDown());
 
   it('should have domain entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have domain entity extension table', async () => {
@@ -772,24 +778,24 @@ describe('when common extension is a required common override property on domain
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, domainEntityExtensionName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have common table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName + commonName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName + commonName))).toBe(true);
   });
 
   it('should have common property', async () => {
-    const identityColumn: DatabaseColumn = column(namespace, domainEntityName + commonName, integerPropertyName1);
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, integerPropertyName1);
     expect(await columnExists(identityColumn)).toBe(true);
     expect(await columnIsNullable(identityColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, domainEntityName + commonName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + commonName))).toEqual([
       integerPropertyName2,
       integerPropertyName1,
     ]);
@@ -797,8 +803,8 @@ describe('when common extension is a required common override property on domain
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
-      [column(namespace, domainEntityName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -824,7 +830,7 @@ describe('when common extension is a required common override property on domain
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, commonExtensionName, integerPropertyName2)],
-      [column(namespace, domainEntityName + commonName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName + commonName, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);

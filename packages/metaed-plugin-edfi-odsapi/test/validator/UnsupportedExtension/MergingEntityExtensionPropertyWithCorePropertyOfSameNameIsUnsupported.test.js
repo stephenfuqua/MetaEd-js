@@ -4,7 +4,7 @@ import {
   AssociationExtensionBuilder,
   DomainEntityBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
@@ -55,7 +55,7 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
@@ -126,7 +126,7 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
@@ -190,7 +190,7 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));

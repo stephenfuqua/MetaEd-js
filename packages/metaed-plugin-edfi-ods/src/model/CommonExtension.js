@@ -11,7 +11,7 @@ export function addCommonExtensionEdfiOdsTo(commonExtension: CommonExtension) {
   if (commonExtension.data.edfiOds == null) commonExtension.data.edfiOds = {};
 
   Object.assign(commonExtension.data.edfiOds, {
-    ods_ExtensionName: commonExtension.metaEdName + commonExtension.namespaceInfo.extensionEntitySuffix,
+    ods_ExtensionName: commonExtension.metaEdName + commonExtension.namespace.extensionEntitySuffix,
   });
 }
 

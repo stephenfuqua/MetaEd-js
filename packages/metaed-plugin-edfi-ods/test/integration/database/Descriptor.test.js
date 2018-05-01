@@ -4,7 +4,7 @@ import {
   DomainEntityBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -35,19 +35,19 @@ import type { DatabaseTable } from './DatabaseTable';
 
 describe('when descriptor is defined', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = 'Descriptor';
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('Documentation')
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -56,17 +56,17 @@ describe('when descriptor is defined', () => {
   afterAll(async () => testTearDown());
 
   it('should have base descriptor table', async () => {
-    expect(await tableExists(table(namespace, baseDescriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, baseDescriptorTableName))).toBe(true);
   });
 
   it('should have table documentation', async () => {
-    expect(await tableMSDescription(table(namespace, baseDescriptorTableName))).toBe(
+    expect(await tableMSDescription(table(namespaceName, baseDescriptorTableName))).toBe(
       'This is the base entity for the descriptor pattern.',
     );
   });
 
   it('should have standard descriptor columns', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'DescriptorId');
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'DescriptorId');
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
     expect(await columnDataType(descriptorIdColumn)).toBe(columnDataTypes.integer);
@@ -75,7 +75,7 @@ describe('when descriptor is defined', () => {
       'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.',
     );
 
-    const namespaceColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'Namespace');
+    const namespaceColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'Namespace');
     expect(await columnExists(namespaceColumn)).toBe(true);
     expect(await columnIsNullable(namespaceColumn)).toBe(false);
     expect(await columnDataType(namespaceColumn)).toBe(columnDataTypes.nvarchar);
@@ -84,7 +84,7 @@ describe('when descriptor is defined', () => {
       'A globally unique namespace that identifies this descriptor set. Author is strongly encouraged to use the Universal Resource Identifier (http, ftp, file, etc.) for the source of the descriptor definition. Best practice is for this source to be the descriptor file itself, so that it can be machine-readable and be fetched in real-time, if necessary.',
     );
 
-    const codeValueColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnIsNullable(codeValueColumn)).toBe(false);
     expect(await columnDataType(codeValueColumn)).toBe(columnDataTypes.nvarchar);
@@ -93,21 +93,21 @@ describe('when descriptor is defined', () => {
       'A code or abbreviation that is used to refer to the descriptor.',
     );
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(shortDescriptionColumn)).toBe(false);
     expect(await columnDataType(shortDescriptionColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(shortDescriptionColumn)).toBe(75);
     expect(await columnMSDescription(shortDescriptionColumn)).toBe('A shortened description for the descriptor.');
 
-    const descriptionColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnIsNullable(descriptionColumn)).toBe(true);
     expect(await columnDataType(descriptionColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(descriptionColumn)).toBe(1024);
     expect(await columnMSDescription(descriptionColumn)).toBe('The description of the descriptor.');
 
-    const priorDescriptorIdColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'PriorDescriptorId');
+    const priorDescriptorIdColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'PriorDescriptorId');
     expect(await columnExists(priorDescriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(priorDescriptorIdColumn)).toBe(true);
     expect(await columnDataType(priorDescriptorIdColumn)).toBe(columnDataTypes.integer);
@@ -115,7 +115,7 @@ describe('when descriptor is defined', () => {
       'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.',
     );
 
-    const effectiveBeginDateColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'EffectiveBeginDate');
+    const effectiveBeginDateColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'EffectiveBeginDate');
     expect(await columnExists(effectiveBeginDateColumn)).toBe(true);
     expect(await columnIsNullable(effectiveBeginDateColumn)).toBe(true);
     expect(await columnDataType(effectiveBeginDateColumn)).toBe(columnDataTypes.date);
@@ -123,7 +123,7 @@ describe('when descriptor is defined', () => {
       'The beginning date of the period when the descriptor is in effect. If omitted, the default is immediate effectiveness.',
     );
 
-    const effectiveEndDateColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'EffectiveEndDate');
+    const effectiveEndDateColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'EffectiveEndDate');
     expect(await columnExists(effectiveEndDateColumn)).toBe(true);
     expect(await columnIsNullable(effectiveEndDateColumn)).toBe(true);
     expect(await columnDataType(effectiveEndDateColumn)).toBe(columnDataTypes.date);
@@ -133,27 +133,27 @@ describe('when descriptor is defined', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, baseDescriptorTableName))).toEqual(['DescriptorId']);
+    expect(await tablePrimaryKeys(table(namespaceName, baseDescriptorTableName))).toEqual(['DescriptorId']);
   });
 
   it('should have alternate keys', async () => {
-    expect(await tableUniqueConstraints(table(namespace, baseDescriptorTableName))).toEqual(['CodeValue', 'Namespace']);
+    expect(await tableUniqueConstraints(table(namespaceName, baseDescriptorTableName))).toEqual(['CodeValue', 'Namespace']);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, baseDescriptorTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, baseDescriptorTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -163,7 +163,7 @@ describe('when descriptor is defined', () => {
 
 describe('when descriptor does not have a map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
   const descriptorName: string = 'DescriptorName';
@@ -172,13 +172,13 @@ describe('when descriptor does not have a map type', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation(descriptorDocumentation)
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -187,17 +187,17 @@ describe('when descriptor does not have a map type', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have table documentation', async () => {
-    expect(await tableMSDescription(table(namespace, descriptorTableName))).toBe(
+    expect(await tableMSDescription(table(namespaceName, descriptorTableName))).toBe(
       descriptorDocumentation.replace(/""/g, '"'),
     );
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
     expect(await columnDataType(descriptorIdColumn)).toBe(columnDataTypes.integer);
@@ -207,31 +207,31 @@ describe('when descriptor does not have a map type', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should not have map type table', async () => {
-    expect(await tableExists(table(namespace, `${descriptorName}Type`))).toBe(false);
+    expect(await tableExists(table(namespaceName, `${descriptorName}Type`))).toBe(false);
   });
 
   it('should not have map type foreign key column', async () => {
-    expect(await columnExists(column(namespace, descriptorTableName, `${baseDescriptorTableName}TypeId`))).toBe(false);
-    expect(await tableColumnCount(table(namespace, descriptorTableName))).toBe(1);
+    expect(await columnExists(column(namespaceName, descriptorTableName, `${baseDescriptorTableName}TypeId`))).toBe(false);
+    expect(await tableColumnCount(table(namespaceName, descriptorTableName))).toBe(1);
   });
 });
 
 describe('when descriptor has required map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation: string = 'DescriptorDocumentation';
   const descriptorName: string = 'DescriptorName';
@@ -244,7 +244,7 @@ describe('when descriptor has required map type', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation(descriptorDocumentation)
       .withStartMapType(true)
@@ -254,7 +254,7 @@ describe('when descriptor has required map type', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -263,17 +263,17 @@ describe('when descriptor has required map type', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have table documentation', async () => {
-    expect(await tableMSDescription(table(namespace, descriptorTableName))).toBe(
+    expect(await tableMSDescription(table(namespaceName, descriptorTableName))).toBe(
       descriptorDocumentation.replace(/""/g, '"'),
     );
   });
 
   it('should have descriptor and type id columns', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
     expect(await columnIsIdentity(descriptorIdColumn)).toBe(false);
@@ -282,7 +282,7 @@ describe('when descriptor has required map type', () => {
       'A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.',
     );
 
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(false);
     expect(await columnDataType(typeIdColumn)).toBe(columnDataTypes.integer);
@@ -292,28 +292,28 @@ describe('when descriptor has required map type', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have map type table', async () => {
-    expect(await tableExists(table(namespace, typeTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, typeTableName))).toBe(true);
   });
 
   it('should have table documentation', async () => {
-    expect(await tableMSDescription(table(namespace, typeTableName))).toBe(mapTypeDocumentation.replace(/""/g, '"'));
+    expect(await tableMSDescription(table(namespaceName, typeTableName))).toBe(mapTypeDocumentation.replace(/""/g, '"'));
   });
 
   it('should have type id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, typeTableName, typeIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, typeTableName, typeIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
     expect(await columnIsIdentity(descriptorIdColumn)).toBe(true);
@@ -322,20 +322,20 @@ describe('when descriptor has required map type', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, typeTableName))).toEqual([typeIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, typeTableName))).toEqual([typeIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, typeIdColumnName)],
-      [column(namespace, typeTableName, typeIdColumnName)],
+      [column(namespaceName, descriptorTableName, typeIdColumnName)],
+      [column(namespaceName, typeTableName, typeIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
   });
 
   it('should have standard descriptor columns', async () => {
-    const codeValueColumn: DatabaseColumn = column(namespace, typeTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, typeTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnIsNullable(codeValueColumn)).toBe(false);
     expect(await columnDataType(codeValueColumn)).toBe(columnDataTypes.nvarchar);
@@ -343,7 +343,7 @@ describe('when descriptor has required map type', () => {
     expect(await columnMSDescription(codeValueColumn)).toBe('This column is deprecated.');
     expect(await columnFirstRowValue(codeValueColumn)).toBe('');
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, typeTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, typeTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(shortDescriptionColumn)).toBe(false);
     expect(await columnDataType(shortDescriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -351,7 +351,7 @@ describe('when descriptor has required map type', () => {
     expect(await columnMSDescription(shortDescriptionColumn)).toBe(`The value for the ${descriptorName} type.`);
     expect(await columnFirstRowValue(shortDescriptionColumn)).toBe(mapTypeShortDescription.replace(/""/g, '"'));
 
-    const descriptionColumn: DatabaseColumn = column(namespace, typeTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, typeTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnIsNullable(descriptionColumn)).toBe(false);
     expect(await columnDataType(descriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -361,19 +361,19 @@ describe('when descriptor has required map type', () => {
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, typeTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, typeTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, typeTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, typeTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, typeTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, typeTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -383,7 +383,7 @@ describe('when descriptor has required map type', () => {
 
 describe('when descriptor has required map type with multiple items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const descriptorDocumentation: string = 'DescriptorDocumentation';
   const descriptorName: string = 'DescriptorName';
   const mapTypeDocumentation: string = `MapTypeDocumentation`;
@@ -395,7 +395,7 @@ describe('when descriptor has required map type with multiple items', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation(descriptorDocumentation)
       .withStartMapType(true)
@@ -407,7 +407,7 @@ describe('when descriptor has required map type with multiple items', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -416,27 +416,27 @@ describe('when descriptor has required map type with multiple items', () => {
   afterAll(async () => testTearDown());
 
   it('should have map type table', async () => {
-    expect(await tableExists(table(namespace, typeTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, typeTableName))).toBe(true);
   });
 
   it('should have three rows', async () => {
-    expect(await tableRowCount(table(namespace, typeTableName))).toBe(3);
+    expect(await tableRowCount(table(namespaceName, typeTableName))).toBe(3);
   });
 
   it('should have blank code value', async () => {
-    const codeValueColumn: DatabaseColumn = column(namespace, typeTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, typeTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnFirstRowValue(codeValueColumn)).toBe('');
     expect(await columnNthRowValue(codeValueColumn, typeIdColumnName, '2')).toBe('');
     expect(await columnNthRowValue(codeValueColumn, typeIdColumnName, '3')).toBe('');
 
-    const descriptionColumn: DatabaseColumn = column(namespace, typeTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, typeTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnFirstRowValue(descriptionColumn)).toBe(mapTypeShortDescription1);
     expect(await columnNthRowValue(descriptionColumn, typeIdColumnName, '2')).toBe(mapTypeShortDescription2);
     expect(await columnNthRowValue(descriptionColumn, typeIdColumnName, '3')).toBe(mapTypeShortDescription3);
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, typeTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, typeTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnFirstRowValue(shortDescriptionColumn)).toBe(mapTypeShortDescription1);
     expect(await columnNthRowValue(shortDescriptionColumn, typeIdColumnName, '2')).toBe(mapTypeShortDescription2);
@@ -446,7 +446,7 @@ describe('when descriptor has required map type with multiple items', () => {
 
 describe('when descriptor has optional map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -455,7 +455,7 @@ describe('when descriptor has optional map type', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType(false)
@@ -465,7 +465,7 @@ describe('when descriptor has optional map type', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -474,19 +474,19 @@ describe('when descriptor has optional map type', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(true);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, typeIdColumnName)],
-      [column(namespace, typeTableName, typeIdColumnName)],
+      [column(namespaceName, descriptorTableName, typeIdColumnName)],
+      [column(namespaceName, typeTableName, typeIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -495,7 +495,7 @@ describe('when descriptor has optional map type', () => {
 
 describe('when descriptor name has type suffix', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation: string = 'DescriptorDocumentation';
   const descriptorName: string = 'DescriptorNameType';
@@ -508,7 +508,7 @@ describe('when descriptor name has type suffix', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation(descriptorDocumentation)
       .withStartMapType()
@@ -518,7 +518,7 @@ describe('when descriptor name has type suffix', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -527,30 +527,30 @@ describe('when descriptor name has type suffix', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    expect(await tableExists(table(namespace, descriptorTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, descriptorTableName))).toBe(true);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, typeIdColumnName)],
-      [column(namespace, typeTableName, typeIdColumnName)],
+      [column(namespaceName, descriptorTableName, typeIdColumnName)],
+      [column(namespaceName, typeTableName, typeIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -559,7 +559,7 @@ describe('when descriptor name has type suffix', () => {
 
 describe('when descriptor has properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation: string = 'DescriptorDocumentation';
   const descriptorName: string = 'DescriptorName';
@@ -575,7 +575,7 @@ describe('when descriptor has properties', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation(descriptorDocumentation)
       .withStringProperty(stringPropertyName1, stringPropertyDocumentation1, false, false, maxLength)
@@ -583,7 +583,7 @@ describe('when descriptor has properties', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -592,26 +592,26 @@ describe('when descriptor has properties', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(3);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
     expect(await columnIsIdentity(descriptorIdColumn)).toBe(false);
   });
 
   it('should have property columns', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, descriptorTableName, stringPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, descriptorTableName, stringPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
     expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnMSDescription(optionalColumn)).toBe(stringPropertyDocumentation1);
 
-    const requiredColumn: DatabaseColumn = column(namespace, descriptorTableName, stringPropertyName2);
+    const requiredColumn: DatabaseColumn = column(namespaceName, descriptorTableName, stringPropertyName2);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
     expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.nvarchar);
@@ -619,32 +619,32 @@ describe('when descriptor has properties', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should not have map type table', async () => {
-    const typeTable: DatabaseTable = table(namespace, typeTableName);
+    const typeTable: DatabaseTable = table(namespaceName, typeTableName);
     expect(await tableExists(typeTable)).toBe(false);
   });
 
   it('should not have map type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(false);
   });
 });
 
 describe('when descriptor has properties and map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -659,7 +659,7 @@ describe('when descriptor has properties and map type', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
       .withStringProperty(stringPropertyName1, stringPropertyDocumentation1, false, false, maxLength)
@@ -671,7 +671,7 @@ describe('when descriptor has properties and map type', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -680,25 +680,25 @@ describe('when descriptor has properties and map type', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(4);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(false);
   });
 
   it('should have property columns', async () => {
-    const optionalColumn: DatabaseColumn = column(namespace, descriptorTableName, stringPropertyName1);
+    const optionalColumn: DatabaseColumn = column(namespaceName, descriptorTableName, stringPropertyName1);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
     expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnMSDescription(optionalColumn)).toBe(stringPropertyDocumentation1);
 
-    const requiredColumn: DatabaseColumn = column(namespace, descriptorTableName, stringPropertyName2);
+    const requiredColumn: DatabaseColumn = column(namespaceName, descriptorTableName, stringPropertyName2);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
     expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.nvarchar);
@@ -706,27 +706,27 @@ describe('when descriptor has properties and map type', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have map type table', async () => {
-    const typeTable: DatabaseTable = table(namespace, typeTableName);
+    const typeTable: DatabaseTable = table(namespaceName, typeTableName);
     expect(await tableExists(typeTable)).toBe(true);
   });
 });
 
 describe('when descriptor has required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -739,14 +739,14 @@ describe('when descriptor has required collection property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
       .withStringProperty(stringPropertyName, stringPropertyDocumentation, true, true, maxLength)
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -755,30 +755,30 @@ describe('when descriptor has required collection property', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(1);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have collection table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName + stringPropertyName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName + stringPropertyName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(3);
   });
 
   it('should have descriptor id column', async () => {
     const descriptorIdColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + stringPropertyName,
       descriptorIdColumnName,
     );
@@ -787,7 +787,11 @@ describe('when descriptor has required collection property', () => {
   });
 
   it('should have property column', async () => {
-    const requiredColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, stringPropertyName);
+    const requiredColumn: DatabaseColumn = column(
+      namespaceName,
+      descriptorTableName + stringPropertyName,
+      stringPropertyName,
+    );
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
     expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.nvarchar);
@@ -795,7 +799,7 @@ describe('when descriptor has required collection property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName + stringPropertyName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName + stringPropertyName))).toEqual([
       descriptorIdColumnName,
       stringPropertyName,
     ]);
@@ -803,15 +807,15 @@ describe('when descriptor has required collection property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName + stringPropertyName, descriptorIdColumnName)],
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName + stringPropertyName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have create date resource column', async () => {
-    const createDateColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, descriptorTableName + stringPropertyName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -819,11 +823,11 @@ describe('when descriptor has required collection property', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, descriptorTableName + stringPropertyName, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + stringPropertyName,
       'LastModifiedDate',
     );
@@ -831,19 +835,19 @@ describe('when descriptor has required collection property', () => {
   });
 
   it('should not have map type table', async () => {
-    const typeTable: DatabaseTable = table(namespace, typeTableName);
+    const typeTable: DatabaseTable = table(namespaceName, typeTableName);
     expect(await tableExists(typeTable)).toBe(false);
   });
 
   it('should not have map type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(false);
   });
 });
 
 describe('when descriptor has optional collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -856,14 +860,14 @@ describe('when descriptor has optional collection property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
       .withStringProperty(stringPropertyName, stringPropertyDocumentation, false, true, maxLength)
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -872,30 +876,30 @@ describe('when descriptor has optional collection property', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(1);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have collection table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName + stringPropertyName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName + stringPropertyName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(3);
   });
 
   it('should have descriptor id column', async () => {
     const descriptorIdColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + stringPropertyName,
       descriptorIdColumnName,
     );
@@ -904,7 +908,11 @@ describe('when descriptor has optional collection property', () => {
   });
 
   it('should have property column', async () => {
-    const requiredColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, stringPropertyName);
+    const requiredColumn: DatabaseColumn = column(
+      namespaceName,
+      descriptorTableName + stringPropertyName,
+      stringPropertyName,
+    );
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
     expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.nvarchar);
@@ -912,7 +920,7 @@ describe('when descriptor has optional collection property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName + stringPropertyName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName + stringPropertyName))).toEqual([
       descriptorIdColumnName,
       stringPropertyName,
     ]);
@@ -920,15 +928,15 @@ describe('when descriptor has optional collection property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName + stringPropertyName, descriptorIdColumnName)],
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName + stringPropertyName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have create date resource column', async () => {
-    const createDateColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, descriptorTableName + stringPropertyName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -936,11 +944,11 @@ describe('when descriptor has optional collection property', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, descriptorTableName + stringPropertyName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, descriptorTableName + stringPropertyName, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + stringPropertyName,
       'LastModifiedDate',
     );
@@ -948,19 +956,19 @@ describe('when descriptor has optional collection property', () => {
   });
 
   it('should not have map type table', async () => {
-    const typeTable: DatabaseTable = table(namespace, typeTableName);
+    const typeTable: DatabaseTable = table(namespaceName, typeTableName);
     expect(await tableExists(typeTable)).toBe(false);
   });
 
   it('should not have map type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(false);
   });
 });
 
 describe('when descriptor has enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -972,7 +980,7 @@ describe('when descriptor has enumeration property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withEnumerationItem('EnumerationItemName')
       .withEndEnumeration()
@@ -983,7 +991,7 @@ describe('when descriptor has enumeration property', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
@@ -993,19 +1001,19 @@ describe('when descriptor has enumeration property', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(2);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, descriptorTableName, typeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, typeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(true);
     expect(await columnDataType(typeIdColumn)).toBe(columnDataTypes.integer);
@@ -1013,13 +1021,13 @@ describe('when descriptor has enumeration property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, typeIdColumnName)],
-      [column(namespace, typeTableName, typeIdColumnName)],
+      [column(namespaceName, descriptorTableName, typeIdColumnName)],
+      [column(namespaceName, typeTableName, typeIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -1028,7 +1036,7 @@ describe('when descriptor has enumeration property', () => {
 
 describe('when descriptor has descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const referencedDescriptorName: string = 'ReferencedDescriptorName';
   const descriptorName: string = 'DescriptorName';
@@ -1040,7 +1048,7 @@ describe('when descriptor has descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(referencedDescriptorName)
       .withDocumentation('ReferencedDescriptorDocumentation')
       .withEndDescriptor()
@@ -1051,7 +1059,7 @@ describe('when descriptor has descriptor property', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -1060,20 +1068,20 @@ describe('when descriptor has descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(2);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have referenced descriptor id column', async () => {
     const referencedDescriptorIdColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName,
       referencedDescriptorIdColumnName,
     );
@@ -1084,13 +1092,13 @@ describe('when descriptor has descriptor property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName, referencedDescriptorIdColumnName)],
-      [column(namespace, referencedDescriptorTableName, referencedDescriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName, referencedDescriptorIdColumnName)],
+      [column(namespaceName, referencedDescriptorTableName, referencedDescriptorIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -1099,7 +1107,7 @@ describe('when descriptor has descriptor property', () => {
 
 describe('when descriptor has collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
   const descriptorPropertyDocumentation: string = 'DescriptorPropertyDocumentation';
@@ -1111,7 +1119,7 @@ describe('when descriptor has collection descriptor property', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDescriptor(referencedDescriptorName)
       .withDocumentation('ReferencedDescriptorDocumentation')
       .withEndDescriptor()
@@ -1122,7 +1130,7 @@ describe('when descriptor has collection descriptor property', () => {
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -1131,30 +1139,30 @@ describe('when descriptor has collection descriptor property', () => {
   afterAll(async () => testTearDown());
 
   it('should have descriptor table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(1);
   });
 
   it('should have descriptor id column', async () => {
-    const descriptorIdColumn: DatabaseColumn = column(namespace, descriptorTableName, descriptorIdColumnName);
+    const descriptorIdColumn: DatabaseColumn = column(namespaceName, descriptorTableName, descriptorIdColumnName);
     expect(await columnExists(descriptorIdColumn)).toBe(true);
     expect(await columnIsNullable(descriptorIdColumn)).toBe(false);
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName))).toEqual([descriptorIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName))).toEqual([descriptorIdColumnName]);
   });
 
   it('should have collection table', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName + referencedDescriptorName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName + referencedDescriptorName);
     expect(await tableExists(descriptorTable)).toBe(true);
     expect(await tableColumnCount(descriptorTable)).toBe(3);
   });
 
   it('should have descriptor id column', async () => {
     const descriptorIdColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + referencedDescriptorName,
       descriptorIdColumnName,
     );
@@ -1164,7 +1172,7 @@ describe('when descriptor has collection descriptor property', () => {
 
   it('should have property column', async () => {
     const requiredColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + referencedDescriptorName,
       referencedDescriptorIdColumnName,
     );
@@ -1175,7 +1183,7 @@ describe('when descriptor has collection descriptor property', () => {
   });
 
   it('should have correct primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, descriptorTableName + referencedDescriptorName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, descriptorTableName + referencedDescriptorName))).toEqual([
       descriptorIdColumnName,
       referencedDescriptorIdColumnName,
     ]);
@@ -1183,15 +1191,19 @@ describe('when descriptor has collection descriptor property', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, descriptorTableName + referencedDescriptorName, descriptorIdColumnName)],
-      [column(namespace, descriptorTableName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName + referencedDescriptorName, descriptorIdColumnName)],
+      [column(namespaceName, descriptorTableName, descriptorIdColumnName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
   });
 
   it('should have create date resource column', async () => {
-    const createDateColumn: DatabaseColumn = column(namespace, descriptorTableName + referencedDescriptorName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(
+      namespaceName,
+      descriptorTableName + referencedDescriptorName,
+      'CreateDate',
+    );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -1199,11 +1211,11 @@ describe('when descriptor has collection descriptor property', () => {
   });
 
   it('should not have id and last modified date resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, descriptorTableName + referencedDescriptorName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, descriptorTableName + referencedDescriptorName, 'Id');
     expect(await columnExists(idColumn)).toBe(false);
 
     const lastModifiedDateColumn: DatabaseColumn = column(
-      namespace,
+      namespaceName,
       descriptorTableName + referencedDescriptorName,
       'LastModifiedDate',
     );
@@ -1213,7 +1225,7 @@ describe('when descriptor has collection descriptor property', () => {
 
 describe('when extension descriptor has required reference properties to core entity and map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const extension: string = 'extension';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName: string = 'DescriptorName';
@@ -1228,7 +1240,7 @@ describe('when extension descriptor has required reference properties to core en
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName, integerPropertyDocumentation)
@@ -1246,7 +1258,7 @@ describe('when extension descriptor has required reference properties to core en
       .withEndDescriptor()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
@@ -1262,7 +1274,7 @@ describe('when extension descriptor has required reference properties to core en
   });
 
   it('should not have descriptor table in core', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, descriptorTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, descriptorTableName);
     expect(await tableExists(descriptorTable)).toBe(false);
   });
 
@@ -1301,7 +1313,7 @@ describe('when extension descriptor has required reference properties to core en
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, descriptorTableName, descriptorIdColumnName)],
-      [column(namespace, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
+      [column(namespaceName, baseDescriptorTableName, `${baseDescriptorTableName}Id`)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
@@ -1320,7 +1332,7 @@ describe('when extension descriptor has required reference properties to core en
   });
 
   it('should not have descriptor table in core', async () => {
-    const descriptorTable: DatabaseTable = table(namespace, typeTableName);
+    const descriptorTable: DatabaseTable = table(namespaceName, typeTableName);
     expect(await tableExists(descriptorTable)).toBe(false);
   });
 

@@ -71,12 +71,8 @@ const getHandbookTableTemplate: () => any => string = ramda.once(() =>
   handlebars.compile(getTemplateString('handbookTable')),
 );
 
-// sql is not implemented yet
-// eslint-disable-next-line
 function generatedTableSqlFor(entity: TopLevelEntity): Array<string> {
-  // TODO when ods is finished.
-  // $FlowIgnore
-  if (!entity.data.edfiOds || !entity.data.edfiOds.ods_Tables) return null;
+  if (entity.data.edfiOds == null || entity.data.edfiOds.ods_Tables == null) return [];
 
   const tables = entity.data.edfiOds.ods_Tables;
   const results: Array<string> = [];

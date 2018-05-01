@@ -1,6 +1,6 @@
 // @flow
-import { newMetaEdEnvironment, newEnumeration, newNamespaceInfo } from 'metaed-core';
-import type { MetaEdEnvironment, Enumeration, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newEnumeration, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Enumeration, Namespace } from 'metaed-core';
 import { newTable } from 'metaed-plugin-edfi-ods';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { enhance } from '../../../src/enhancer/domainMetadata/EnumerationAggregateEnhancer';
@@ -11,11 +11,11 @@ import type { EntityTable } from '../../../src/model/domainMetadata/EntityTable'
 describe('when enhancing enumerations', () => {
   const metaEdName: string = 'MetaEdName';
   const tableName: string = 'TableName';
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-    namespace,
+  const namespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
@@ -26,18 +26,18 @@ describe('when enhancing enumerations', () => {
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespace,
+      schema: namespaceName,
     };
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
         data: {
           edfiOdsApi: {
             aggregates: [],
@@ -69,7 +69,7 @@ describe('when enhancing enumerations', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespace);
+    expect(entityTable.schema).toBe(namespaceName);
     expect(entityTable.table).toBe(tableName);
   });
 });

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, NamespaceInfo, GeneratorResult, GeneratedOutput } from 'metaed-core';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { MetaEdEnvironment, Namespace, GeneratorResult, GeneratedOutput } from 'metaed-core';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { registerPartials, template } from './DomainMetadataGeneratorBase';
 import { logicalNameFor } from '../../model/apiModel/SchemaDefinition';
@@ -17,18 +17,18 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     const schema: SchemaDefinition = {
-      logicalName: logicalNameFor(namespaceInfo.namespace),
-      physicalName: namespaceInfo.namespace,
+      logicalName: logicalNameFor(namespace.namespaceName),
+      physicalName: namespace.namespaceName,
     };
-    const aggregates = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.filter(
+    const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.filter(
       (a: Aggregate) => !a.isExtension,
     );
     let formattedGeneratedResult = '';
 
-    if (namespaceInfo.isExtension) {
-      const aggregateExtensions = ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.filter(
+    if (namespace.isExtension) {
+      const aggregateExtensions = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.filter(
         (a: Aggregate) => a.isExtension,
       );
       if (aggregates.length === 0 && aggregateExtensions.length === 0) return;
@@ -49,9 +49,9 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     results.push({
       name: 'Domain Metadata',
-      namespace: namespaceInfo.namespace,
+      namespace: namespace.namespaceName,
       folderName: 'ApiMetadata',
-      fileName: fileName(namespaceInfo.namespace, namespaceInfo.projectExtension),
+      fileName: fileName(namespace.namespaceName, namespace.projectExtension),
       resultString: formattedGeneratedResult,
       resultStream: null,
     });

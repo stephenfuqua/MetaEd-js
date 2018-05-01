@@ -18,9 +18,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   groupByMetaEdName(simpleTypes).forEach((entities, metaEdName) => {
     if (entities.length > 1) {
       entities.forEach(entity => {
-        const repositoryId = `${entity.namespaceInfo.projectExtension}-${entity.metaEdName}`;
+        const repositoryId = `${entity.namespace.projectExtension}-${entity.metaEdName}`;
         // $FlowIgnore - we reference the entity repository by entity.type
-        if (entity.namespaceInfo.isExtension) metaEd.entity[entity.type].delete(repositoryId);
+        if (entity.namespace.isExtension) metaEd.entity[entity.type].delete(repositoryId);
       });
     }
   });

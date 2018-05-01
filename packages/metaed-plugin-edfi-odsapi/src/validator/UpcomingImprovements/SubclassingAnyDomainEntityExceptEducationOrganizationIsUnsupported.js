@@ -17,7 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
     if (!domainEntitySubclass.baseEntity) return;
-    if (!domainEntitySubclass.namespaceInfo.isExtension) return;
+    if (!domainEntitySubclass.namespace.isExtension) return;
     if (domainEntitySubclass.baseEntityName !== 'EducationOrganization') {
       failures.push({
         validatorName: 'SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported',

@@ -2,7 +2,7 @@
 import deepFreeze from 'deep-freeze';
 import type { ModelBase, ModelBaseSourceMap } from './ModelBase';
 import { newModelBaseSourceMap } from './ModelBase';
-import { newNamespaceInfo } from './NamespaceInfo';
+import { newNamespace } from './Namespace';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 
@@ -34,7 +34,7 @@ export function newEnumerationItem(): EnumerationItem {
     documentation: '',
     metaEdName: '',
     metaEdId: '',
-    namespaceInfo: newNamespaceInfo(),
+    namespace: newNamespace(),
     shortDescription: '',
     sourceMap: newEnumerationItemSourceMap(),
     data: {},

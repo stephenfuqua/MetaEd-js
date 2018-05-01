@@ -35,7 +35,7 @@ function createTables(descriptor: Descriptor): Array<Table> {
   const tables: Array<Table> = [];
 
   const mainTable: Table = Object.assign(newTable(), {
-    schema: descriptor.namespaceInfo.namespace,
+    schema: descriptor.namespace.namespaceName,
     name: descriptor.data.edfiOds.ods_TableName,
     description: descriptor.documentation,
     parentEntity: descriptor,
@@ -72,7 +72,7 @@ function createTables(descriptor: Descriptor): Array<Table> {
   if (descriptor.data.edfiOds.ods_IsMapType) {
     const mapTypeTable: Table = enumerationTableCreator.build(
       descriptor.metaEdName,
-      descriptor.namespaceInfo.namespace,
+      descriptor.namespace.namespaceName,
       descriptor.mapTypeEnumeration.documentation,
     );
     tables.push(mapTypeTable);

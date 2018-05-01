@@ -1,10 +1,10 @@
 // @flow
 import type { IntegerType } from '../model/IntegerType';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { newIntegerType, newShortType, NoIntegerType } from '../model/IntegerType';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
@@ -26,7 +26,7 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enterSharedInteger(context: MetaEdGrammar.SharedIntegerContext) {
@@ -53,13 +53,13 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
       | MetaEdGrammar.ShortPropertyContext,
     { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean },
   ) {
-    const namespaceInfo: ?NamespaceInfo = this.metaEd.entity.namespaceInfo.get(this.currentNamespace);
-    if (namespaceInfo == null) return;
+    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
+    if (namespace == null) return;
     const factory = isShort ? newShortType : newIntegerType;
-    this.currentIntegerType = { ...factory(), namespaceInfo, generatedSimpleType };
+    this.currentIntegerType = { ...factory(), namespace, generatedSimpleType };
 
     this.currentIntegerType.sourceMap.type = sourceMapFrom(context);
-    this.currentIntegerType.sourceMap.namespaceInfo = namespaceInfo.sourceMap.type;
+    this.currentIntegerType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -162,7 +162,7 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
   exitingIntegerType() {
     if (this.currentIntegerType === NoIntegerType) return;
 
-    const projectExtension = this.currentIntegerType.namespaceInfo.projectExtension;
+    const projectExtension = this.currentIntegerType.namespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentIntegerType.metaEdName}`
       : this.currentIntegerType.metaEdName;

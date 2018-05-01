@@ -12,7 +12,7 @@ Object {
     "line": 1,
     "tokenText": "ProjectExtension",
   },
-  "namespace": Object {
+  "namespaceName": Object {
     "column": 16,
     "line": 1,
     "tokenText": "namespace",

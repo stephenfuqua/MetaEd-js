@@ -6,7 +6,7 @@ import { enhance as commonExtension } from '../model/CommonExtension';
 import { enhance as descriptor } from '../model/Descriptor';
 import { enhance as domainEntityExtension } from '../model/DomainEntityExtension';
 import { enhance as edFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
-import { enhance as namespaceInfo } from '../model/NamespaceInfo';
+import { enhance as namespace } from '../model/Namespace';
 import { enhance as topLevelEntity } from '../model/TopLevelEntity';
 
 import { enhance as descriptorProperty } from '../model/property/DescriptorProperty';
@@ -139,7 +139,7 @@ export function enhancerList(): Array<Enhancer> {
     templateSpecificTablePropertyEnhancerV2,
     templateSpecificTablePropertyEnhancer,
 
-    namespaceInfo,
+    namespace,
     addSchemaContainerEnhancer,
   ];
 }

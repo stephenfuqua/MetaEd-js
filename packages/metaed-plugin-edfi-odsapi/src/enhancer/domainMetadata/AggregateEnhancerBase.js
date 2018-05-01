@@ -1,15 +1,15 @@
 // @flow
 import R from 'ramda';
-import type { NamespaceInfo, TopLevelEntity } from 'metaed-core';
+import type { Namespace, TopLevelEntity } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import type { TopLevelEntityEdfiOdsApi } from '../../model/TopLevelEntity';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 
 export type EnhanceEntityTable = (entity: TopLevelEntity, table: Table, entityTable: EntityTable) => void;
 export type IsAggregateExtension = () => boolean;
-export type OrderedAndUniqueTablesFor = (entity: TopLevelEntity, namespaceInfo: NamespaceInfo) => Array<Table>;
+export type OrderedAndUniqueTablesFor = (entity: TopLevelEntity, namespace: Namespace) => Array<Table>;
 
 export type EnhanceSingleEntityOptions = {
   enhanceEntityTable: EnhanceEntityTable,
@@ -20,9 +20,9 @@ export type EnhanceSingleEntityOptions = {
 // eslint-disable-next-line no-unused-vars
 export function nullEnhanceEntityTable(entity: TopLevelEntity, table: Table, entityTable: EntityTable): void {}
 
-export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespaceInfo: NamespaceInfo): Array<Table> {
+export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace): Array<Table> {
   const tablesForNamespace = ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_Tables.filter(
-    (t: Table) => t.schema === namespaceInfo.namespace,
+    (t: Table) => t.schema === namespace.namespaceName,
   );
   // TODO: why is unique necessary?
   const uniquedTables = R.uniqBy(R.prop('name'), tablesForNamespace);
@@ -31,14 +31,14 @@ export function defaultOrderedAndUniqueTablesFor(entity: TopLevelEntity, namespa
 
 function generateAggregate(
   entity: TopLevelEntity,
-  namespaceInfo: NamespaceInfo,
+  namespace: Namespace,
   { enhanceEntityTable, isAggregateExtension, orderedAndUniqueTablesFor }: EnhanceSingleEntityOptions,
 ): ?Aggregate {
-  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespaceInfo);
+  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespace);
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
-    schema: entity.namespaceInfo.namespace,
+    schema: entity.namespace.namespaceName,
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: isAggregateExtension(),
     entityTables: [],
@@ -52,7 +52,7 @@ function generateAggregate(
       isRequiredCollection: table.isRequiredCollectionTable,
       schema: table.schema,
       hasIsA: false,
-      requiresSchema: namespaceInfo.isExtension,
+      requiresSchema: namespace.isExtension,
     };
     enhanceEntityTable(entity, table, entityTable);
     aggregate.entityTables.push(entityTable);
@@ -62,22 +62,22 @@ function generateAggregate(
 
 export function enhanceSingleEntity(
   entity: TopLevelEntity,
-  namespaceInfoMap: Map<string, NamespaceInfo>,
+  namespaceMap: Map<string, Namespace>,
   {
     enhanceEntityTable = nullEnhanceEntityTable,
     isAggregateExtension = () => false,
     orderedAndUniqueTablesFor = defaultOrderedAndUniqueTablesFor,
   }: EnhanceSingleEntityOptions = {},
 ) {
-  const entityNamespaceInfo = R.head(
-    Array.from(namespaceInfoMap.values()).filter(n => n.namespace === entity.namespaceInfo.namespace),
+  const entityNamespace = R.head(
+    Array.from(namespaceMap.values()).filter(n => n.namespaceName === entity.namespace.namespaceName),
   );
-  const aggregate = generateAggregate(entity, entityNamespaceInfo, {
+  const aggregate = generateAggregate(entity, entityNamespace, {
     enhanceEntityTable,
     isAggregateExtension,
     orderedAndUniqueTablesFor,
   });
   if (aggregate == null) return;
   ((entity.data.edfiOdsApi: any): TopLevelEntityEdfiOdsApi).aggregate = aggregate;
-  ((entityNamespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.push(aggregate);
+  ((entityNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(aggregate);
 }

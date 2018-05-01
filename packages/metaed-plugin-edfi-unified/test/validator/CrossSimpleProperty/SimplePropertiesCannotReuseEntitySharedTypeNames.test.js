@@ -3,7 +3,7 @@ import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
   DomainEntityBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   SharedDecimalBuilder,
   SharedIntegerBuilder,
 } from 'metaed-core';
@@ -12,7 +12,7 @@ import { validate } from '../../../src/validator/CrossSimpleProperty/SimplePrope
 
 describe('when building shared integer with duplicate integer property in extension namespace', () => {
   let validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const projectExtension: string = 'ProjectExtension';
 
@@ -24,7 +24,7 @@ describe('when building shared integer with duplicate integer property in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue, null, metaEdId)
@@ -36,7 +36,7 @@ describe('when building shared integer with duplicate integer property in extens
       .withEndSharedInteger()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
     validationFailures = validate(metaEd);
@@ -61,7 +61,7 @@ describe('when building shared integer with duplicate integer property in extens
 describe('when building shared decimal with duplicate decimal property in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -74,7 +74,7 @@ describe('when building shared decimal with duplicate decimal property in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withDecimalProperty(
@@ -98,7 +98,7 @@ describe('when building shared decimal with duplicate decimal property in extens
 
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
     validationFailures = validate(metaEd);

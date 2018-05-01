@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newNamespaceInfo, newPluginEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newInterchangeItem, newNamespace, newPluginEnvironment } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeElementOrderEnhancer';
@@ -51,7 +51,7 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
     extensionMergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
       repositoryId: interchangeName,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
+      namespace: Object.assign(newNamespace(), {
         projectExtension,
         isExtension: true,
       }),

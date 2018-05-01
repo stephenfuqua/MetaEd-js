@@ -28,7 +28,7 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     this.enteringEntity(newDescriptor);
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
-    this.currentTopLevelEntity.sourceMap.namespaceInfo = this.currentTopLevelEntity.namespaceInfo.sourceMap.type;
+    this.currentTopLevelEntity.sourceMap.namespace = this.currentTopLevelEntity.namespace.sourceMap.type;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -59,12 +59,12 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentMapTypeEnumeration = Object.assign(newMapTypeEnumeration(), {
       metaEdName: `${this.currentTopLevelEntity.metaEdName}Map`,
-      namespaceInfo: this.currentTopLevelEntity.namespaceInfo,
+      namespace: this.currentTopLevelEntity.namespace,
     });
     ((this.currentTopLevelEntity.sourceMap: any): DescriptorSourceMap).mapTypeEnumeration = sourceMapFrom(context);
 
     this.currentMapTypeEnumeration.sourceMap.type = sourceMapFrom(context);
-    this.currentMapTypeEnumeration.sourceMap.namespaceInfo = this.currentTopLevelEntity.sourceMap.namespaceInfo;
+    this.currentMapTypeEnumeration.sourceMap.namespace = this.currentTopLevelEntity.sourceMap.namespace;
     ((this.currentMapTypeEnumeration.sourceMap: any): DescriptorSourceMap).mapTypeEnumeration = sourceMapFrom(context);
   }
 
@@ -94,7 +94,7 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = newEnumerationItem();
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
-    this.currentEnumerationItem.sourceMap.namespaceInfo = this.currentTopLevelEntity.sourceMap.namespaceInfo;
+    this.currentEnumerationItem.sourceMap.namespace = this.currentTopLevelEntity.sourceMap.namespace;
   }
 
   exitEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {

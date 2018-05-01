@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   CommonBuilder,
   CommonExtensionBuilder,
 } from 'metaed-core';
@@ -15,7 +15,7 @@ describe('when generating xsd for common type extension in extension namespace b
   const coreEntity: string = 'CoreEntity';
   const coreEntityProperty: string = 'CoreEntityProperty';
   const extensionProperty: string = 'ExtensionProperty';
-  const namespace: string = 'extension';
+  const namespaceName: string = 'extension';
   const projectExtension: string = 'EXTENSION';
 
   let coreResult;
@@ -23,7 +23,7 @@ describe('when generating xsd for common type extension in extension namespace b
 
   beforeAll(async () => {
     const commonExtensionBuilder = new CommonExtensionBuilder(metaEd, []);
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -35,7 +35,7 @@ describe('when generating xsd for common type extension in extension namespace b
       .withEndCommon()
 
       .withEndNamespace()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
 
       .withStartCommonExtension(coreEntity, '1')
       .withIntegerProperty(extensionProperty, 'doc', true, false)
@@ -43,7 +43,7 @@ describe('when generating xsd for common type extension in extension namespace b
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(commonExtensionBuilder)
       .sendToListener(commonBuilder)
       .toString();

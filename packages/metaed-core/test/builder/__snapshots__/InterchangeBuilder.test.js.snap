@@ -120,7 +120,7 @@ Object {
     "line": 9,
     "tokenText": "domain entity",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -165,7 +165,7 @@ Object {
     "line": 10,
     "tokenText": "domain entity identity",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -229,7 +229,7 @@ Object {
     "line": 2,
     "tokenText": "InterchangeName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

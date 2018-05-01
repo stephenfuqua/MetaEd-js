@@ -40,7 +40,7 @@ const metaEdConfiguration = {
   projects: [
     {
       projectName: 'Ed-Fi',
-      namespace: 'edfi',
+      namespaceName: 'edfi',
       projectVersion: '2.0.0',
     },
   ],

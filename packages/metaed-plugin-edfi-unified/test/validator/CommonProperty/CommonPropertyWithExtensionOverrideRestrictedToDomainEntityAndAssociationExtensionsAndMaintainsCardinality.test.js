@@ -8,7 +8,7 @@ import {
   CommonExtensionBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
@@ -31,7 +31,7 @@ describe('when validating common property does not have extension override', () 
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
@@ -70,7 +70,7 @@ describe('when validating common property has extension override on non domain e
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
@@ -126,7 +126,7 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
@@ -189,7 +189,7 @@ describe('when validating common property has extension override on association 
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
@@ -251,7 +251,7 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
@@ -306,7 +306,7 @@ describe('when validating common property has extension override on association 
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
@@ -359,7 +359,7 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
@@ -423,7 +423,7 @@ describe('when validating common property has extension override on association 
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
@@ -485,7 +485,7 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
@@ -549,7 +549,7 @@ describe('when validating common property has extension override on association 
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))

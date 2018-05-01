@@ -1,18 +1,18 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
-import type { GeneratorResult, MetaEdEnvironment, NamespaceInfo } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import type { GeneratorResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/OdsGenerator';
 import { newSchemaContainer } from '../../src/model/database/SchemaContainer';
 
 describe('when generating output for namespace', () => {
-  const namespace: string = 'namespaceName';
+  const namespaceName: string = 'namespaceName';
   let result: GeneratorResult;
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       data: {
         edfiOds: {
@@ -20,15 +20,15 @@ describe('when generating output for namespace', () => {
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });
 
   it('should generate empty output', () => {
     expect(result.generatorName).toEqual('edfiOds.OdsGenerator');
-    expect(R.head(result.generatedOutput).fileName).toBe(`0020-${namespace}-Tables.sql`);
-    expect(R.head(result.generatedOutput).namespace).toBe(namespace);
+    expect(R.head(result.generatedOutput).fileName).toBe(`0020-${namespaceName}-Tables.sql`);
+    expect(R.head(result.generatedOutput).namespace).toBe(namespaceName);
     expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Tables');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
@@ -41,9 +41,9 @@ describe('when generating output for core namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: string = 'edfi';
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespaceName: string = 'edfi';
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
       data: {
         edfiOds: {
@@ -51,7 +51,7 @@ describe('when generating output for core namespace', () => {
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });
@@ -62,14 +62,14 @@ describe('when generating output for core namespace', () => {
 });
 
 describe('when generating output for extension namespace', () => {
-  const namespace: string = 'extension';
+  const namespaceName: string = 'extension';
   const projectExtension: string = 'EXTENSION';
   let result: GeneratorResult;
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       projectExtension,
       isExtension: true,
       data: {
@@ -78,12 +78,12 @@ describe('when generating output for extension namespace', () => {
         },
       },
     });
-    metaEd.entity.namespaceInfo.set(namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });
 
   it('should generate correct file name', () => {
-    expect(R.head(result.generatedOutput).fileName).toBe(`0020-${projectExtension}-${namespace}-Tables.sql`);
+    expect(R.head(result.generatedOutput).fileName).toBe(`0020-${projectExtension}-${namespaceName}-Tables.sql`);
   });
 });

@@ -15,7 +15,7 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'AddFksFromAcademicWeekToCalendarDateDiminisher';
 const targetVersions: string = '2.x';
 
-const namespace: string = 'edfi';
+const namespaceName: string = 'edfi';
 
 const academicWeek: string = 'AcademicWeek';
 const beginDate: string = 'BeginDate';
@@ -29,7 +29,7 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
     table == null ||
     getForeignKeys(table).find(
       (fk: ForeignKey) =>
-        fk.foreignTableSchema === namespace &&
+        fk.foreignTableSchema === namespaceName &&
         fk.foreignTableName === calendarDate &&
         fk.columnNames.find(
           (columnNamePair: ColumnNamePair) =>
@@ -40,7 +40,7 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
     return;
 
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-    foreignTableSchema: namespace,
+    foreignTableSchema: namespaceName,
     foreignTableName: calendarDate,
     withDeleteCascade: false,
     sourceReference: {

@@ -9,10 +9,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const results: Array<GeneratedOutput> = [];
   const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0009' : '0040';
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+  metaEd.entity.namespace.forEach(namespace => {
     const tables: Array<Table> = orderByProp('name')(
       [...pluginEnvironment(metaEd).entity.table.values()].filter(
-        (table: Table) => table.includeLastModifiedDateAndIdColumn && table.schema === namespaceInfo.namespace,
+        (table: Table) => table.includeLastModifiedDateAndIdColumn && table.schema === namespace.namespaceName,
       ),
     );
 
@@ -21,9 +21,9 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
       results.push({
         name: 'ODS Id Indexes',
-        namespace: namespaceInfo.namespace,
+        namespace: namespace.namespaceName,
         folderName: structurePath,
-        fileName: fileNameFor(prefix, namespaceInfo, 'IdColumnUniqueIndexes'),
+        fileName: fileNameFor(prefix, namespace, 'IdColumnUniqueIndexes'),
         resultString: generatedResult,
         resultStream: null,
       });

@@ -3,19 +3,19 @@ import {
   newDomainEntity,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
   newDomainEntitySubclass,
 } from 'metaed-core';
-import type { NamespaceInfo, DomainEntity, MetaEdEnvironment, DomainEntitySubclass } from 'metaed-core';
+import type { Namespace, DomainEntity, MetaEdEnvironment, DomainEntitySubclass } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/educationOrganizationReferenceMetadata/EducationOrganizationReferenceEnhancer';
 
 const educationOrganizationName: string = 'EducationOrganization';
 const educationOrganizationIdName: string = 'EducationOrganizationId';
 
-function buildEducationOrganizationEntity(namespaceInfo: NamespaceInfo): DomainEntity {
+function buildEducationOrganizationEntity(namespace: Namespace): DomainEntity {
   const edOrgEntity = Object.assign(newDomainEntity(), {
     metaEdName: educationOrganizationName,
-    namespaceInfo,
+    namespace,
     isAbstract: true,
   });
   edOrgEntity.identityProperties.push(
@@ -35,13 +35,13 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
 
   beforeAll(() => {
     metaEd = newMetaEdEnvironment();
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const edOrgEntity: DomainEntity = Object.assign(buildEducationOrganizationEntity(coreNamespaceInfo), {
+    const edOrgEntity: DomainEntity = Object.assign(buildEducationOrganizationEntity(coreNamespace), {
       metaEdName: 'NotEducationOrganization',
     });
     metaEd.entity.domainEntity.set(edOrgEntity.metaEdName, edOrgEntity);
@@ -49,7 +49,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
     const edOrgSubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: entityName1,
       baseEntityName: educationOrganizationName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
     });
     edOrgSubclass.identityProperties.push(
       Object.assign(newIntegerProperty(), { data: { edfiXsd: { xsd_Name: entityIdName1 } }, isIdentityRename: true }),
@@ -60,8 +60,8 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
   });
 
   it('should have no education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values())[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values())[0];
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
   });
 });
 
@@ -72,21 +72,21 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
   beforeAll(() => {
     metaEd = newMetaEdEnvironment();
 
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespaceInfo);
+    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespace);
     metaEd.entity.domainEntity.set(edOrgEntity.metaEdName, edOrgEntity);
 
     enhance(metaEd);
   });
 
   it('should have no education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values())[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values())[0];
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
   });
 });
 
@@ -98,19 +98,19 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
 
   beforeAll(() => {
     metaEd = newMetaEdEnvironment();
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespaceInfo);
+    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespace);
     metaEd.entity.domainEntity.set(edOrgEntity.metaEdName, edOrgEntity);
 
     const edOrgSubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: entityName1,
       baseEntityName: educationOrganizationName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
     });
     edOrgSubclass.identityProperties.push(
       Object.assign(newIntegerProperty(), { data: { edfiXsd: { xsd_Name: entityIdName1 } }, isIdentityRename: true }),
@@ -121,9 +121,9 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
   });
 
   it('should have education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values())[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
-    const educationOrganizationReference = namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences[0];
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values())[0];
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
+    const educationOrganizationReference = namespace.data.edfiOdsApi.api_EducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();
     expect(educationOrganizationReference.name).toBe(entityName1);
     expect(educationOrganizationReference.identityPropertyName).toBe(entityIdName1);
@@ -140,26 +140,26 @@ describe('when EducationOrganizationReferenceEnhancer enhances extension namespa
   beforeAll(() => {
     metaEd = newMetaEdEnvironment();
 
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
-    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespaceInfo);
+    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespace);
     metaEd.entity.domainEntity.set(edOrgEntity.metaEdName, edOrgEntity);
 
     const edOrgSubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: entityName1,
       baseEntityName: educationOrganizationName,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
     });
     edOrgSubclass.identityProperties.push(
       Object.assign(newIntegerProperty(), { data: { edfiXsd: { xsd_Name: entityIdName1 } }, isIdentityRename: true }),
@@ -170,17 +170,17 @@ describe('when EducationOrganizationReferenceEnhancer enhances extension namespa
   });
 
   it('should have no core education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values()).filter(
-      x => x.namespace === namespaceName,
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values()).filter(
+      x => x.namespaceName === namespaceName,
     )[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(0);
   });
   it('should have extension education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values()).filter(
-      x => x.namespace === extensionNamespaceName,
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values()).filter(
+      x => x.namespaceName === extensionNamespaceName,
     )[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
-    const educationOrganizationReference = namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences[0];
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
+    const educationOrganizationReference = namespace.data.edfiOdsApi.api_EducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();
     expect(educationOrganizationReference.name).toBe(entityName1);
     expect(educationOrganizationReference.identityPropertyName).toBe(entityIdName1);
@@ -195,19 +195,19 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
   beforeAll(() => {
     metaEd = newMetaEdEnvironment();
 
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       data: { edfiOdsApi: { api_EducationOrganizationReferences: [] } },
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespaceInfo);
+    const edOrgEntity: DomainEntity = buildEducationOrganizationEntity(coreNamespace);
     metaEd.entity.domainEntity.set(edOrgEntity.metaEdName, edOrgEntity);
 
     const edOrgSubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: entityName1,
       baseEntityName: educationOrganizationName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
     });
     metaEd.entity.domainEntitySubclass.set(edOrgSubclass.metaEdName, edOrgSubclass);
 
@@ -215,11 +215,11 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
   });
 
   it('should have extension education organization reference', () => {
-    const namespaceInfo: NamespaceInfo = Array.from(metaEd.entity.namespaceInfo.values()).filter(
-      x => x.namespace === namespaceName,
+    const namespace: Namespace = Array.from(metaEd.entity.namespace.values()).filter(
+      x => x.namespaceName === namespaceName,
     )[0];
-    expect(namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
-    const educationOrganizationReference = namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences[0];
+    expect(namespace.data.edfiOdsApi.api_EducationOrganizationReferences.length).toBe(1);
+    const educationOrganizationReference = namespace.data.edfiOdsApi.api_EducationOrganizationReferences[0];
     expect(educationOrganizationReference).toBeDefined();
     expect(educationOrganizationReference.name).toBe(entityName1);
     expect(educationOrganizationReference.identityPropertyName).toBe(educationOrganizationIdName);

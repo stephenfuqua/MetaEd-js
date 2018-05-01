@@ -4,7 +4,7 @@ import {
   EnumerationBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForEnumerationItems';
@@ -21,7 +21,7 @@ describe('when validating enumeration item is missing metaEdId', () => {
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -60,7 +60,7 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
     failures = validate(metaEd);
@@ -91,7 +91,7 @@ describe('when validating school year enumeration item is missing metaEdId', () 
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
       .withEndEnumeration()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     failures = validate(metaEd);

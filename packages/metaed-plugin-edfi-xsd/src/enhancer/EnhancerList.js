@@ -15,7 +15,7 @@ import { enhance as domainEntitySubclassSetupEnhancer } from '../model/DomainEnt
 import { enhance as enumerationBaseSetupEnhancer } from '../model/EnumerationBase';
 import { enhance as interchangeItemSetupEnhancer } from '../model/InterchangeItem';
 import { enhance as modelBaseSetupEnhancer } from '../model/ModelBase';
-import { enhance as namespaceInfoSetupEnhancer } from '../model/NamespaceInfo';
+import { enhance as namespaceSetupEnhancer } from '../model/Namespace';
 import { enhance as simpleTypeBaseSetupEnhancer } from '../model/SimpleTypeBase';
 import { enhance as topLevelEntitySetupEnhancer } from '../model/TopLevelEntity';
 
@@ -84,7 +84,7 @@ export function enhancerList(): Array<Enhancer> {
     enumerationBaseSetupEnhancer,
     interchangeItemSetupEnhancer,
     modelBaseSetupEnhancer,
-    namespaceInfoSetupEnhancer,
+    namespaceSetupEnhancer,
     simpleTypeBaseSetupEnhancer,
     topLevelEntitySetupEnhancer,
 

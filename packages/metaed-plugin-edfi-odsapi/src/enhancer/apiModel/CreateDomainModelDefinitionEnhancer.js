@@ -1,10 +1,10 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
 import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
 import type { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
@@ -17,16 +17,16 @@ import type { ApiFullName } from '../../model/apiModel/ApiFullName';
 const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 
 // Schema definition is the database schema and project name for a namespace
-export function buildSchemaDefinition(namespaceInfo: NamespaceInfo): SchemaDefinition {
+export function buildSchemaDefinition(namespace: Namespace): SchemaDefinition {
   return {
-    logicalName: logicalNameFor(namespaceInfo.namespace),
-    physicalName: namespaceInfo.namespace,
+    logicalName: logicalNameFor(namespace.namespaceName),
+    physicalName: namespace.namespaceName,
   };
 }
 
-export function buildAggregateDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateDefinition> {
+export function buildAggregateDefinitions(namespace: Namespace): Array<AggregateDefinition> {
   const result: Array<AggregateDefinition> = [];
-  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+  ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates
     .filter((a: Aggregate) => !a.isExtension)
     .forEach((aggregate: Aggregate) => {
       const aggregateDefinition: AggregateDefinition = {
@@ -50,9 +50,9 @@ export function buildAggregateDefinitions(namespaceInfo: NamespaceInfo): Array<A
   return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
 }
 
-export function buildAggregateExtensionDefinitions(namespaceInfo: NamespaceInfo): Array<AggregateExtensionDefinition> {
+export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<AggregateExtensionDefinition> {
   const result: Array<AggregateExtensionDefinition> = [];
-  ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates
+  ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates
     .filter((a: Aggregate) => a.isExtension)
     .forEach((aggregate: Aggregate) => {
       const aggregateExtensionDefinition: AggregateExtensionDefinition = {
@@ -89,19 +89,19 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   const edFiOdsEntityRepository: EdFiOdsEntityRepository = ((odsPlugin.entity: any): EdFiOdsEntityRepository);
 
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     const additionalEntityDefinitions = [];
 
     const domainModelDefinition: DomainModelDefinition = {
       odsApiVersion: '3.0.0',
-      schemaDefinition: buildSchemaDefinition(namespaceInfo),
-      aggregateDefinitions: buildAggregateDefinitions(namespaceInfo),
-      aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespaceInfo),
-      entityDefinitions: buildEntityDefinitions(edFiOdsEntityRepository.table, namespaceInfo, additionalEntityDefinitions),
-      associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table, namespaceInfo),
+      schemaDefinition: buildSchemaDefinition(namespace),
+      aggregateDefinitions: buildAggregateDefinitions(namespace),
+      aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),
+      entityDefinitions: buildEntityDefinitions(edFiOdsEntityRepository.table, namespace, additionalEntityDefinitions),
+      associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table, namespace),
     };
 
-    ((namespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).domainModelDefinition = domainModelDefinition;
+    ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).domainModelDefinition = domainModelDefinition;
   });
 
   return {

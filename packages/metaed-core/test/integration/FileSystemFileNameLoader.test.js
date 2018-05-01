@@ -32,7 +32,7 @@ describe('When a single file', () => {
         projects: [
           {
             projectName: 'Ed-Fi',
-            namespace: 'edfi',
+            namespaceName: 'edfi',
             projectVersion: '2.0.0',
           },
         ],
@@ -92,7 +92,7 @@ describe('When multiple files', () => {
         projects: [
           {
             projectName: 'Ed-Fi',
-            namespace: 'edfi',
+            namespaceName: 'edfi',
             projectVersion: '2.0.0',
           },
         ],

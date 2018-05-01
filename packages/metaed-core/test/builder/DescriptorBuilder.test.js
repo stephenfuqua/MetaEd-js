@@ -1,6 +1,6 @@
 // @flow
 import { DescriptorBuilder } from '../../src/builder/DescriptorBuilder';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { getDescriptor, getMapTypeEnumeration } from '../TestHelper';
@@ -12,7 +12,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building descriptor without map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -24,13 +24,13 @@ describe('when building descriptor without map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -48,7 +48,7 @@ describe('when building descriptor without map type', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -56,7 +56,7 @@ describe('when building descriptor without map type', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -82,7 +82,7 @@ describe('when building descriptor without map type', () => {
 describe('when building multiple descriptors', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -94,7 +94,7 @@ describe('when building multiple descriptors', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -105,7 +105,7 @@ describe('when building multiple descriptors', () => {
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -146,7 +146,7 @@ describe('when building multiple descriptors', () => {
 describe('when building descriptor with optional map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -161,7 +161,7 @@ describe('when building descriptor with optional map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withStartMapType(false)
@@ -170,7 +170,7 @@ describe('when building descriptor with optional map type', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -184,7 +184,7 @@ describe('when building descriptor with optional map type', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -192,7 +192,7 @@ describe('when building descriptor with optional map type', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -244,7 +244,7 @@ describe('when building descriptor with optional map type', () => {
 describe('when building descriptor with required map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -259,7 +259,7 @@ describe('when building descriptor with required map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withStartMapType(true)
@@ -268,7 +268,7 @@ describe('when building descriptor with required map type', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -282,7 +282,7 @@ describe('when building descriptor with required map type', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -290,7 +290,7 @@ describe('when building descriptor with required map type', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -343,7 +343,7 @@ describe('when building descriptor with no descriptor name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = '';
@@ -354,12 +354,12 @@ describe('when building descriptor with no descriptor name', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -376,7 +376,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'entityName';
@@ -389,13 +389,13 @@ describe('when building descriptor with lowercase descriptor name', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -413,7 +413,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, expectedName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -421,7 +421,7 @@ describe('when building descriptor with lowercase descriptor name', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, expectedName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -452,7 +452,7 @@ describe('when building descriptor with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -463,12 +463,12 @@ describe('when building descriptor with no documentation', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -486,7 +486,7 @@ describe('when building descriptor with no documentation', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -494,7 +494,7 @@ describe('when building descriptor with no documentation', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should not have documentation', () => {
@@ -525,7 +525,7 @@ describe('when building descriptor with no documentation in map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -539,7 +539,7 @@ describe('when building descriptor with no documentation in map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withStartMapType(true)
@@ -547,7 +547,7 @@ describe('when building descriptor with no documentation in map type', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -561,7 +561,7 @@ describe('when building descriptor with no documentation in map type', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -569,7 +569,7 @@ describe('when building descriptor with no documentation in map type', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -626,7 +626,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -638,7 +638,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withStartMapType(true)
@@ -646,7 +646,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -660,7 +660,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -668,7 +668,7 @@ describe('when building descriptor with no enumeration item in map type', () => 
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -709,7 +709,7 @@ describe('when building descriptor with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -722,14 +722,14 @@ describe('when building descriptor with invalid trailing text', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     textBuilder
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
       .withTrailingText(trailingText)
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -747,7 +747,7 @@ describe('when building descriptor with invalid trailing text', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.namespace).toBe(namespace);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
@@ -755,7 +755,7 @@ describe('when building descriptor with invalid trailing text', () => {
   });
 
   it('should have project extension', () => {
-    expect(getDescriptor(metaEd.entity, entityName).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDescriptor(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have documentation', () => {
@@ -785,7 +785,7 @@ describe('when building descriptor with invalid trailing text', () => {
 describe('when building descriptor source map with optional map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -797,7 +797,7 @@ describe('when building descriptor source map with optional map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -805,7 +805,7 @@ describe('when building descriptor source map with optional map type', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -825,8 +825,8 @@ describe('when building descriptor source map with optional map type', () => {
     expect(getDescriptor(metaEd.entity, entityName).sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getDescriptor(metaEd.entity, entityName).sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getDescriptor(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
   });
 
   it('should have isMapTypeOptional', () => {
@@ -841,7 +841,7 @@ describe('when building descriptor source map with optional map type', () => {
 describe('when building descriptor source map with required map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -853,7 +853,7 @@ describe('when building descriptor source map with required map type', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -861,7 +861,7 @@ describe('when building descriptor source map with required map type', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -883,7 +883,7 @@ describe('when building descriptor source map with required map type', () => {
 describe('when building required map type enumeration source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -897,7 +897,7 @@ describe('when building required map type enumeration source map', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', false, false)
@@ -907,7 +907,7 @@ describe('when building required map type enumeration source map', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -919,8 +919,8 @@ describe('when building required map type enumeration source map', () => {
     expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.sourceMap.documentation).toBeDefined();
   });
 
-  it('should have namespaceInfo', () => {
-    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.sourceMap.namespaceInfo).toBeDefined();
+  it('should have namespace', () => {
+    expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.sourceMap.namespace).toBeDefined();
   });
 
   it('should have enumerationItems', () => {
@@ -937,7 +937,7 @@ describe('when building required map type enumeration source map', () => {
 describe('when building map type enumeration item source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -951,7 +951,7 @@ describe('when building map type enumeration item source map', () => {
     const builder = new DescriptorBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDescriptor(entityName, metaEdId)
       .withDocumentation(documentation)
       .withIntegerProperty(propertyName, 'doc', true, false)
@@ -961,7 +961,7 @@ describe('when building map type enumeration item source map', () => {
       .withEndMapType()
       .withEndDescriptor()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
   });
 
@@ -979,9 +979,9 @@ describe('when building map type enumeration item source map', () => {
     expect(getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.metaEdId).toBeDefined();
   });
 
-  it('should have namespaceInfo', () => {
+  it('should have namespace', () => {
     expect(
-      getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.namespaceInfo,
+      getDescriptor(metaEd.entity, entityName).mapTypeEnumeration.enumerationItems[0].sourceMap.namespace,
     ).toBeDefined();
   });
 

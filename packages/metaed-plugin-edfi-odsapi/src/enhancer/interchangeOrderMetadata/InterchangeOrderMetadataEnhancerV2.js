@@ -17,7 +17,7 @@ import type {
   InlineCommonProperty,
   InterchangeItem,
   MetaEdEnvironment,
-  NamespaceInfo,
+  Namespace,
   ReferentialProperty,
   TopLevelEntity,
 } from 'metaed-core';
@@ -40,7 +40,7 @@ type Dependency = {
 };
 
 function getDependencies(entity: TopLevelEntity, includeExtensions: boolean, parentIsRequired: boolean = true): Array<Edge> {
-  if (!includeExtensions && entity.namespaceInfo.isExtension) return [];
+  if (!includeExtensions && entity.namespace.isExtension) return [];
 
   const result: Array<Edge> = [];
 
@@ -124,17 +124,17 @@ export function sortGraph(graph: Graph, removeRequiredCycles: boolean = false): 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     const entityGraph: Graph = new Graph();
     const interchangeGraph: Graph = new Graph();
     const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
 
     edFiXsdEntityRepository.mergedInterchange.forEach((mergedInterchange: MergedInterchange) => {
-      if (mergedInterchange.namespaceInfo.namespace !== namespaceInfo.namespace) return;
+      if (mergedInterchange.namespace.namespaceName !== namespace.namespaceName) return;
 
       const elementDependencies: Array<Dependency> = mergedInterchange.elements.map((element: InterchangeItem) => ({
         vertex: element.referencedEntity.metaEdName,
-        edges: getDependencies(element.referencedEntity, mergedInterchange.namespaceInfo.isExtension).filter(
+        edges: getDependencies(element.referencedEntity, mergedInterchange.namespace.isExtension).filter(
           (edge: Edge) => element.referencedEntity.metaEdName !== edge.target,
         ),
       }));
@@ -178,10 +178,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const interchange = Array.from(edFiXsdEntityRepository.mergedInterchange.values()).find(
         (mergedInterchange: MergedInterchange) =>
           mergedInterchange.metaEdName === sortedInterchange.name &&
-          mergedInterchange.namespaceInfo.namespace === namespaceInfo.namespace,
+          mergedInterchange.namespace.namespaceName === namespace.namespaceName,
       );
       if (interchange == null) {
-        winston.error(`Unable to find interchange ${sortedInterchange.name} in namespace ${namespaceInfo.namespace}.`);
+        winston.error(`Unable to find interchange ${sortedInterchange.name} in namespace ${namespace.namespaceName}.`);
         return;
       }
 

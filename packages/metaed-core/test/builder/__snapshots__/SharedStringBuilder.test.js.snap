@@ -47,7 +47,7 @@ Object {
     "line": 5,
     "tokenText": "min length",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

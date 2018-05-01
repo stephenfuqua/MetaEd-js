@@ -5,7 +5,7 @@ import type {
   EnhancerResult,
   EntityProperty,
   MetaEdEnvironment,
-  NamespaceInfo,
+  Namespace,
 } from 'metaed-core';
 import { newEducationOrganizationReference } from '../../model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 import type { EducationOrganizationReference } from '../../model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
@@ -20,10 +20,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (educationOrganizationAbstractEntity == null || educationOrganizationAbstractEntity.identityProperties.length !== 1)
     return { enhancerName, success: true };
 
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     metaEd.entity.domainEntitySubclass.forEach((subclass: DomainEntitySubclass) => {
       if (
-        subclass.namespaceInfo.namespace !== namespaceInfo.namespace ||
+        subclass.namespace.namespaceName !== namespace.namespaceName ||
         subclass.baseEntityName !== educationOrganizationEntityName
       )
         return;
@@ -39,7 +39,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         identityPropertyName: identityProperty.data.edfiXsd.xsd_Name,
       };
 
-      namespaceInfo.data.edfiOdsApi.api_EducationOrganizationReferences.push(educationOrganizationReference);
+      namespace.data.edfiOdsApi.api_EducationOrganizationReferences.push(educationOrganizationReference);
     });
   });
 

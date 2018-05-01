@@ -9,7 +9,7 @@ import type { MetaEdConfiguration } from '../MetaEdConfiguration';
 
 export type InputDirectory = {
   path: string,
-  namespace: string,
+  namespaceName: string,
   projectExtension: string,
   projectName: string,
   isExtension: boolean,
@@ -29,21 +29,21 @@ export function loadFiles(state: State): boolean {
   for (let i = 0; i < metaEdConfiguration.projects.length; i += 1) {
     const projectExtension =
       metaEdConfiguration.projects[i].projectExtension ||
-      (metaEdConfiguration.projects[i].namespace === 'edfi' ? '' : 'EXTENSION');
+      (metaEdConfiguration.projects[i].namespaceName === 'edfi' ? '' : 'EXTENSION');
 
     state.inputDirectories.push({
       path: metaEdConfiguration.projectPaths[i],
-      namespace: metaEdConfiguration.projects[i].namespace,
+      namespaceName: metaEdConfiguration.projects[i].namespaceName,
       projectExtension,
       projectName: metaEdConfiguration.projects[i].projectName,
-      isExtension: metaEdConfiguration.projects[i].namespace !== 'edfi',
+      isExtension: metaEdConfiguration.projects[i].namespaceName !== 'edfi',
     });
   }
 
   const fileSets: FileSet[] = [];
   state.inputDirectories.forEach(inputDirectory => {
     const fileSet: FileSet = {
-      namespace: inputDirectory.namespace,
+      namespaceName: inputDirectory.namespaceName,
       projectExtension: inputDirectory.projectExtension,
       projectName: inputDirectory.projectName,
       isExtension: inputDirectory.isExtension,

@@ -2,8 +2,8 @@
 
 import R from 'ramda';
 import xmlParser from 'xml-js';
-import { newPluginEnvironment, newMetaEdEnvironment, newNamespaceInfo, newInterchangeItem } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo, InterchangeItem, GeneratedOutput } from 'metaed-core';
+import { newPluginEnvironment, newMetaEdEnvironment, newNamespace, newInterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, InterchangeItem, GeneratedOutput } from 'metaed-core';
 import { newEdFiXsdEntityRepository, newMergedInterchange, addMergedInterchangeToRepository } from 'metaed-plugin-edfi-xsd';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { nextHead, nextSecond, nextThird, nextLength, xsdAttributeName } from './TemplateTestHelper';
@@ -23,10 +23,10 @@ describe('when generating core interchange', () => {
   let result: GeneratedOutput;
 
   beforeAll(async () => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const element1: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementName1,
@@ -37,7 +37,7 @@ describe('when generating core interchange', () => {
     });
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       metaEdName: interchangeName,
       orderedElements: [element1, element2],
     });
@@ -78,12 +78,12 @@ describe('when generating extension interchange', () => {
   let result: GeneratedOutput;
 
   beforeAll(async () => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(namespaceInfo.namespace, namespaceInfo);
+    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
 
     const element1: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementName1,
@@ -94,7 +94,7 @@ describe('when generating extension interchange', () => {
     });
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo,
+      namespace,
       metaEdName: interchangeName,
       orderedElements: [element1, element2],
     });
@@ -138,17 +138,17 @@ describe('when generating core and extension interchange', () => {
   let result: Array<GeneratedOutput>;
 
   beforeAll(async () => {
-    const coreNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'edfi',
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'edfi',
     });
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
     });
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const element1: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementName1,
@@ -163,14 +163,14 @@ describe('when generating core and extension interchange', () => {
     });
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       metaEdName: coreInterchangeName,
       orderedElements: [element1, element2],
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
     const mergedExtensionInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: extensionInterchangeName,
       orderedElements: [element1, element3, element2],
     });

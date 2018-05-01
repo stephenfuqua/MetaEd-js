@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
   SharedStringBuilder,
@@ -20,7 +20,7 @@ describe('when generating xsd for domain entity', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -33,7 +33,7 @@ describe('when generating xsd for domain entity', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -68,7 +68,7 @@ describe('when generating xsd for domain entity with inline common type as part 
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -87,7 +87,7 @@ describe('when generating xsd for domain entity with inline common type as part 
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -129,7 +129,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
@@ -152,7 +152,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
@@ -222,7 +222,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -241,7 +241,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -284,7 +284,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -299,7 +299,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -343,7 +343,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const sharedStringBuilder = new SharedStringBuilder(metaEd, []);
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
@@ -365,7 +365,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(stringTypeBuilder)
       .sendToListener(sharedStringBuilder);

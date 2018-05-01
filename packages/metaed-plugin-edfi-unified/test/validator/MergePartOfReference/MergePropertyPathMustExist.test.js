@@ -11,7 +11,7 @@ import {
   DomainEntityExtensionBuilder,
   DomainEntitySubclassBuilder,
   EnumerationBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
@@ -39,7 +39,7 @@ describe('when validating domain entity has merge property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
     failures = validate(metaEd);
@@ -77,7 +77,7 @@ describe('when validating domain entity has merge property and entity is wrong',
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
     failures = validate(metaEd);
@@ -123,7 +123,7 @@ describe('when validating domain entity has merge property and property is wrong
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
     failures = validate(metaEd);
@@ -175,7 +175,7 @@ describe('when validating domain entity has merge property on common type', () =
 
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new CommonBuilder(metaEd, failures));
 
@@ -218,7 +218,7 @@ describe('when validating domain entity has merge property on school year enumer
 
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new EnumerationBuilder(metaEd, failures));
 
@@ -259,7 +259,7 @@ describe('when validating domain entity extension has merge property', () => {
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, failures));
 
@@ -304,7 +304,7 @@ describe('when validating domain entity subclass has merge property', () => {
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, failures));
 
@@ -353,7 +353,7 @@ describe('when validating association has merge property', () => {
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new AssociationBuilder(metaEd, failures));
 
@@ -404,7 +404,7 @@ describe('when validating association extension has merge property', () => {
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new AssociationBuilder(metaEd, failures))
       .sendToListener(new AssociationExtensionBuilder(metaEd, failures));
@@ -457,7 +457,7 @@ describe('when validating association subclass has merge property', () => {
       .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new AssociationBuilder(metaEd, failures))
       .sendToListener(new AssociationSubclassBuilder(metaEd, failures));
@@ -496,7 +496,7 @@ describe('when validating abstract entity has merge property', () => {
       .withEndAbstractEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
     failures = validate(metaEd);
@@ -514,7 +514,7 @@ describe('when validating abstract entity has merge property', () => {
 // METAED-797 - StudentProgramAssociation extension cause incorrect merge validation errors
 describe('when validating association subclass extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const extension: string = 'extension';
   const associationName1: string = 'AssociationName1';
   const associationName2: string = 'AssociationName2';
@@ -533,7 +533,7 @@ describe('when validating association subclass extension', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -587,7 +587,7 @@ describe('when validating association subclass extension', () => {
       .withEndAssociationExtension()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))

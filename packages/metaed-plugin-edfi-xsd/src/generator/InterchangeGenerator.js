@@ -12,27 +12,25 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     (metaEd.plugin.get('edfiXsd'): any).entity.mergedInterchange.values(),
   );
 
-  orderedInterchange
-    .filter((interchange: MergedInterchange) => !interchange.namespaceInfo.isExtension)
-    .forEach(interchange => {
-      const templateData = {
-        schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
-        interchange,
-      };
-      const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));
-      generatedOutput.push({
-        name: outputName,
-        namespace: interchange.namespaceInfo.namespace,
-        folderName: 'Interchange',
-        fileName: interchange.namespaceInfo.isExtension
-          ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
-          : `Interchange-${interchange.metaEdName}.xsd`,
-        resultString: formattedGeneratedResult,
-        resultStream: null,
-      });
+  orderedInterchange.filter((interchange: MergedInterchange) => !interchange.namespace.isExtension).forEach(interchange => {
+    const templateData = {
+      schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
+      interchange,
+    };
+    const formattedGeneratedResult = formatAndPrependHeader(template().interchange(templateData));
+    generatedOutput.push({
+      name: outputName,
+      namespace: interchange.namespace.namespaceName,
+      folderName: 'Interchange',
+      fileName: interchange.namespace.isExtension
+        ? `${interchange.namespace.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
+        : `Interchange-${interchange.metaEdName}.xsd`,
+      resultString: formattedGeneratedResult,
+      resultStream: null,
     });
+  });
   orderedInterchange
-    .filter((interchange: MergedInterchange) => interchange.namespaceInfo.isExtension)
+    .filter((interchange: MergedInterchange) => interchange.namespace.isExtension)
     .forEach((interchange: MergedInterchange) => {
       const templateData = {
         schemaVersion: formatVersionForSchema(metaEd.dataStandardVersion),
@@ -42,10 +40,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
       generatedOutput.push({
         name: outputName,
-        namespace: interchange.namespaceInfo.namespace,
+        namespace: interchange.namespace.namespaceName,
         folderName: 'Interchange',
-        fileName: interchange.namespaceInfo.isExtension
-          ? `${interchange.namespaceInfo.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
+        fileName: interchange.namespace.isExtension
+          ? `${interchange.namespace.projectExtension}-Interchange-${interchange.metaEdName}-Extension.xsd`
           : `Interchange-${interchange.metaEdName}.xsd`,
         resultString: formattedGeneratedResult,
         resultStream: null,

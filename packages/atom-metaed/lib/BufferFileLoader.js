@@ -25,7 +25,7 @@ export function loadFromModifiedEditors(state: State, metaEdProjectMetadata: Arr
     if (modifiedFiles.length === 0) return;
 
     const fileSetForProject: FileSet = {
-      namespace: projectNamespace,
+      namespaceName: projectNamespace,
       projectExtension,
       projectName,
       isExtension: isExtensionProject,

@@ -52,7 +52,7 @@ Object {
     "line": 7,
     "tokenText": "min value",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 1,
     "tokenText": "Begin Namespace",

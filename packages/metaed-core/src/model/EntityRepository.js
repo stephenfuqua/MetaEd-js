@@ -15,7 +15,7 @@ import type { IntegerType } from './IntegerType';
 import type { Interchange } from './Interchange';
 import type { InterchangeExtension } from './InterchangeExtension';
 import type { MapTypeEnumeration } from './MapTypeEnumeration';
-import type { NamespaceInfo } from './NamespaceInfo';
+import type { Namespace } from './Namespace';
 import type { SchoolYearEnumeration } from './SchoolYearEnumeration';
 import type { SharedDecimal } from './SharedDecimal';
 import type { SharedInteger } from './SharedInteger';
@@ -53,7 +53,7 @@ export class EntityRepository {
   interchange: Map<string, Interchange>;
   interchangeExtension: Map<string, InterchangeExtension>;
   mapTypeEnumeration: Map<string, MapTypeEnumeration>;
-  namespaceInfo: Map<string, NamespaceInfo>;
+  namespace: Map<string, Namespace>;
   schoolYearEnumeration: Map<string, SchoolYearEnumeration>;
   sharedDecimal: Map<string, SharedDecimal>;
   sharedInteger: Map<string, SharedInteger>;
@@ -82,7 +82,7 @@ export function newEntityRepository(): EntityRepository {
     interchange: new Map(),
     interchangeExtension: new Map(),
     mapTypeEnumeration: new Map(),
-    namespaceInfo: new Map(),
+    namespace: new Map(),
     schoolYearEnumeration: new Map(),
     sharedDecimal: new Map(),
     sharedInteger: new Map(),
@@ -119,11 +119,11 @@ export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: A
   return ((result: any): Array<ModelBase>);
 }
 
-export function getEntity(repository: EntityRepository, metaEdId: string, ...modelTypes: Array<ModelType>): ?ModelBase {
+export function getEntity(repository: EntityRepository, entityName: string, ...modelTypes: Array<ModelType>): ?ModelBase {
   let result: ?ModelBase = null;
   modelTypes.forEach(modelType => {
     // $FlowIgnore - using model type repository lookup
-    if (!result) result = repository[modelType].get(metaEdId);
+    if (!result) result = repository[modelType].get(entityName);
   });
   return result;
 }
@@ -133,11 +133,11 @@ export function addEntity(repository: EntityRepository, entity: ModelBase) {
   repository[entity.type].set(entity.metaEdName, entity);
 }
 
-export function getTopLevelCoreEntity(repository: EntityRepository, metaEdId: string): ?TopLevelEntity {
+export function getTopLevelCoreEntity(repository: EntityRepository, entityName: string): ?TopLevelEntity {
   let result: ?TopLevelEntity = null;
   topLevelCoreEntityModelTypes.forEach(modelType => {
     // $FlowIgnore - using model type repository lookup
-    if (!result) result = asTopLevelEntity(repository[modelType].get(metaEdId));
+    if (!result) result = asTopLevelEntity(repository[modelType].get(entityName));
   });
   return result;
 }

@@ -162,7 +162,7 @@ Object {
     "line": 11,
     "tokenText": "min value",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -390,7 +390,7 @@ Object {
     "line": 9,
     "tokenText": "min value",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -675,7 +675,7 @@ Object {
     "line": 5,
     "tokenText": "PropertyName",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -840,7 +840,7 @@ Object {
     "line": 9,
     "tokenText": "min value",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -965,7 +965,7 @@ Object {
     "line": 9,
     "tokenText": "min length",
   },
-  "namespaceInfo": Object {
+  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",

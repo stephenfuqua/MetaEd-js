@@ -8,11 +8,11 @@ import type { Table } from '../../model/database/Table';
 
 const removeTypeSuffix = R.when(R.endsWith('Type'), R.dropLast(4));
 
-export const enumerationTableCreator: { build(name: string, namespace: string, documentation: string): Table } = {
-  build(name: string, namespace: string, documentation: string): Table {
+export const enumerationTableCreator: { build(name: string, namespaceName: string, documentation: string): Table } = {
+  build(name: string, namespaceName: string, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: normalizeEnumerationSuffix(name),
-      schema: namespace,
+      schema: namespaceName,
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,

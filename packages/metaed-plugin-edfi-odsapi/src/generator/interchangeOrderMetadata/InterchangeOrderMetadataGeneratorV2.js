@@ -4,7 +4,7 @@ import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
 import { V2Only, versionSatisfies } from 'metaed-core';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, NamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace, InterchangeItem } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 
 const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
@@ -23,12 +23,12 @@ export function templateNamed(templateName: string) {
 
 export const template = R.memoize(() => templateNamed('InterchangeOrderMetadata'))();
 
-function generateFile(input: any, namespaceInfo: NamespaceInfo): GeneratedOutput {
+function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   return {
     name: outputName,
-    namespace: namespaceInfo.namespace,
+    namespace: namespace.namespaceName,
     folderName: 'ApiMetadata',
-    fileName: `InterchangeOrderMetadata${namespaceInfo.projectExtension ? `-${namespaceInfo.projectExtension}` : ''}.xml`,
+    fileName: `InterchangeOrderMetadata${namespace.projectExtension ? `-${namespace.projectExtension}` : ''}.xml`,
     resultString: template(input),
     resultStream: null,
   };
@@ -53,15 +53,15 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     };
   const results: Array<GeneratedOutput> = [];
 
-  if (metaEd.entity.namespaceInfo.size > 0) {
+  if (metaEd.entity.namespace.size > 0) {
     let coreInterchanges: Array<InterchangeMetadata> = [];
 
-    metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+    metaEd.entity.namespace.forEach((namespace: Namespace) => {
       const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
 
       let interchanges: Array<InterchangeMetadata> = [];
       edFiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
-        if (interchange.namespaceInfo.namespace !== namespaceInfo.namespace) return;
+        if (interchange.namespace.namespaceName !== namespace.namespaceName) return;
 
         const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
           (element: { name: string, globalDependencyOrder: number }) => ({
@@ -75,13 +75,13 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
       interchanges = R.sortBy(R.prop('order'))(interchanges);
       // Extension interchanges must also include their core interchanges
-      if (!namespaceInfo.isExtension) {
+      if (!namespace.isExtension) {
         coreInterchanges = interchanges;
       } else {
         interchanges = R.union(coreInterchanges, interchanges);
       }
 
-      results.push(generateFile({ interchanges }, namespaceInfo));
+      results.push(generateFile({ interchanges }, namespace));
     });
   }
 

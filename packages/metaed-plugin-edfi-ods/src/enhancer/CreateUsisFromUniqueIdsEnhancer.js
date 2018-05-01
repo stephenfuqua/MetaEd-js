@@ -8,7 +8,7 @@ const enhancerName: string = 'CreateUsisFromUniqueIdsEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getEntitiesOfType(metaEd.entity, 'domainEntity').forEach((entity: ModelBase) => {
-    if (entity.namespaceInfo.isExtension) return;
+    if (entity.namespace.isExtension) return;
 
     const uniqueIdStrategy = x => x.metaEdName === 'UniqueId';
     const uniqueIdProperty: ?EntityProperty = entity.data.edfiOds.ods_IdentityProperties.find(uniqueIdStrategy);

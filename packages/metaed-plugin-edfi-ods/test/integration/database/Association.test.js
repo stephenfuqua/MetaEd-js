@@ -4,7 +4,7 @@ import {
   DomainEntityBuilder,
   EnumerationBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
@@ -17,7 +17,7 @@ import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
 describe('when association references two different domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -26,7 +26,7 @@ describe('when association references two different domain entities', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -44,7 +44,7 @@ describe('when association references two different domain entities', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -54,39 +54,39 @@ describe('when association references two different domain entities', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName2)],
-      [column(namespace, domainEntityName2, integerPropertyName2)],
+      [column(namespaceName, associationName, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, associationName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, associationName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, associationName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, associationName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -96,7 +96,7 @@ describe('when association references two different domain entities', () => {
 
 describe('when association references two different domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -106,7 +106,7 @@ describe('when association references two different domain entities', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -124,7 +124,7 @@ describe('when association references two different domain entities', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -134,11 +134,11 @@ describe('when association references two different domain entities', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have domain entity primary keys as association primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       contextName + integerPropertyName2,
       integerPropertyName1,
     ]);
@@ -146,15 +146,15 @@ describe('when association references two different domain entities', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, contextName + integerPropertyName2)],
-      [column(namespace, domainEntityName2, integerPropertyName2)],
+      [column(namespaceName, associationName, contextName + integerPropertyName2)],
+      [column(namespaceName, domainEntityName2, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -163,7 +163,7 @@ describe('when association references two different domain entities', () => {
 
 describe('when association references the same domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -171,7 +171,7 @@ describe('when association references the same domain entity', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -184,7 +184,7 @@ describe('when association references the same domain entity', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -194,11 +194,11 @@ describe('when association references the same domain entity', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have domain entity primary keys as association primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       contextName + integerPropertyName1,
       integerPropertyName1,
     ]);
@@ -206,15 +206,15 @@ describe('when association references the same domain entity', () => {
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, contextName + integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, associationName, contextName + integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -223,7 +223,7 @@ describe('when association references the same domain entity', () => {
 
 describe('when association has additional primary key simple properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -237,7 +237,7 @@ describe('when association has additional primary key simple properties', () => 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -264,7 +264,7 @@ describe('when association has additional primary key simple properties', () => 
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -274,11 +274,11 @@ describe('when association has additional primary key simple properties', () => 
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       datePropertyName1,
       integerPropertyName1,
       integerPropertyName2,
@@ -287,14 +287,14 @@ describe('when association has additional primary key simple properties', () => 
   });
 
   it('should have properties', async () => {
-    expect(await columnExists(column(namespace, associationName, datePropertyName2))).toBe(true);
-    expect(await columnExists(column(namespace, associationName, booleanPropertyName))).toBe(true);
+    expect(await columnExists(column(namespaceName, associationName, datePropertyName2))).toBe(true);
+    expect(await columnExists(column(namespaceName, associationName, booleanPropertyName))).toBe(true);
   });
 });
 
 describe('when association has additional primary key reference properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const enumerationName: string = 'EnumerationName';
   const enumerationItemName: string = 'EnumerationItemName';
@@ -309,7 +309,7 @@ describe('when association has additional primary key reference properties', () 
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemName, 'Documentation')
@@ -341,7 +341,7 @@ describe('when association has additional primary key reference properties', () 
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
@@ -352,11 +352,11 @@ describe('when association has additional primary key reference properties', () 
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       `${contextName + enumerationName}TypeId`,
       contextName + integerPropertyName1,
       contextName + stringPropertyName,
@@ -368,8 +368,8 @@ describe('when association has additional primary key reference properties', () 
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, associationName, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -378,7 +378,7 @@ describe('when association has additional primary key reference properties', () 
 
 describe('when association references another association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const contextName: string = 'ContextName';
   const associationName1: string = 'AssociationName1';
   const associationName2: string = 'AssociationNameTest';
@@ -389,7 +389,7 @@ describe('when association references another association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -414,7 +414,7 @@ describe('when association references another association', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -424,25 +424,31 @@ describe('when association references another association', () => {
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName2))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName2))).toBe(true);
   });
 
   it('should have primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName2))).toEqual([integerPropertyName1, integerPropertyName2]);
+    expect(await tablePrimaryKeys(table(namespaceName, associationName2))).toEqual([
+      integerPropertyName1,
+      integerPropertyName2,
+    ]);
   });
 
   it('should have properties', async () => {
-    expect(await columnExists(column(namespace, associationName2, contextName + integerPropertyName1))).toBe(true);
-    expect(await columnExists(column(namespace, associationName2, contextName + integerPropertyName2))).toBe(true);
+    expect(await columnExists(column(namespaceName, associationName2, contextName + integerPropertyName1))).toBe(true);
+    expect(await columnExists(column(namespaceName, associationName2, contextName + integerPropertyName2))).toBe(true);
   });
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, associationName2, contextName + integerPropertyName1),
-        column(namespace, associationName2, contextName + integerPropertyName2),
+        column(namespaceName, associationName2, contextName + integerPropertyName1),
+        column(namespaceName, associationName2, contextName + integerPropertyName2),
       ],
-      [column(namespace, associationName1, integerPropertyName1), column(namespace, associationName1, integerPropertyName2)],
+      [
+        column(namespaceName, associationName1, integerPropertyName1),
+        column(namespaceName, associationName1, integerPropertyName2),
+      ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
@@ -451,7 +457,7 @@ describe('when association references another association', () => {
 
 describe('when association has overlapping primary key properties with domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -462,7 +468,7 @@ describe('when association has overlapping primary key properties with domain en
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -487,7 +493,7 @@ describe('when association has overlapping primary key properties with domain en
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -497,11 +503,11 @@ describe('when association has overlapping primary key properties with domain en
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       integerPropertyName1,
       integerPropertyName2,
       integerPropertyName3,
@@ -510,20 +516,26 @@ describe('when association has overlapping primary key properties with domain en
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName2)],
       [
-        column(namespace, domainEntityName2, integerPropertyName1),
-        column(namespace, domainEntityName2, integerPropertyName2),
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName2),
+      ],
+      [
+        column(namespaceName, domainEntityName2, integerPropertyName1),
+        column(namespaceName, domainEntityName2, integerPropertyName2),
       ],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName1), column(namespace, associationName, integerPropertyName3)],
       [
-        column(namespace, domainEntityName3, integerPropertyName1),
-        column(namespace, domainEntityName3, integerPropertyName3),
+        column(namespaceName, associationName, integerPropertyName1),
+        column(namespaceName, associationName, integerPropertyName3),
+      ],
+      [
+        column(namespaceName, domainEntityName3, integerPropertyName1),
+        column(namespaceName, domainEntityName3, integerPropertyName3),
       ],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
@@ -533,7 +545,7 @@ describe('when association has overlapping primary key properties with domain en
 
 describe('when association references another association property with matching context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
@@ -542,7 +554,7 @@ describe('when association references another association property with matching
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName, 'Documentation')
@@ -561,7 +573,7 @@ describe('when association references another association property with matching
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -571,11 +583,11 @@ describe('when association references another association property with matching
   afterAll(async () => testTearDown());
 
   it('should have association table', async () => {
-    expect(await tableExists(table(namespace, associationName))).toBe(true);
+    expect(await tableExists(table(namespaceName, associationName))).toBe(true);
   });
 
   it('should have primary keys', async () => {
-    expect(await tablePrimaryKeys(table(namespace, associationName))).toEqual([
+    expect(await tablePrimaryKeys(table(namespaceName, associationName))).toEqual([
       domainEntityName2 + integerPropertyName,
       domainEntityName2 + stringPropertyName,
       integerPropertyName,
@@ -584,20 +596,20 @@ describe('when association references another association property with matching
 
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
-      [column(namespace, associationName, integerPropertyName)],
-      [column(namespace, domainEntityName1, integerPropertyName)],
+      [column(namespaceName, associationName, integerPropertyName)],
+      [column(namespaceName, domainEntityName1, integerPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
       [
-        column(namespace, associationName, domainEntityName2 + stringPropertyName),
-        column(namespace, associationName, domainEntityName2 + integerPropertyName),
+        column(namespaceName, associationName, domainEntityName2 + stringPropertyName),
+        column(namespaceName, associationName, domainEntityName2 + integerPropertyName),
       ],
       [
-        column(namespace, domainEntityName2, domainEntityName2 + stringPropertyName),
-        column(namespace, domainEntityName2, integerPropertyName),
+        column(namespaceName, domainEntityName2, domainEntityName2 + stringPropertyName),
+        column(namespaceName, domainEntityName2, integerPropertyName),
       ],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
@@ -607,7 +619,7 @@ describe('when association references another association property with matching
 
 describe('when extension association references core domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -617,7 +629,7 @@ describe('when extension association references core domain entities', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -637,7 +649,7 @@ describe('when extension association references core domain entities', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
@@ -657,14 +669,14 @@ describe('when extension association references core domain entities', () => {
   it('should have correct foreign key relationship', async () => {
     const foreignKey1: DatabaseForeignKey = foreignKey(
       [column(extension, associationName, integerPropertyName1)],
-      [column(namespace, domainEntityName1, integerPropertyName1)],
+      [column(namespaceName, domainEntityName1, integerPropertyName1)],
     );
     expect(await foreignKeyExists(foreignKey1)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(false);
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
       [column(extension, associationName, integerPropertyName2)],
-      [column(namespace, domainEntityName2, integerPropertyName2)],
+      [column(namespaceName, domainEntityName2, integerPropertyName2)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);
     expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(false);
@@ -693,7 +705,7 @@ describe('when extension association references core domain entities', () => {
 
 describe('when extension association references extension domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -705,7 +717,7 @@ describe('when extension association references extension domain entities', () =
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -730,7 +742,7 @@ describe('when extension association references extension domain entities', () =
       .withEndAssociation()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 

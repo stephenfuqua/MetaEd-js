@@ -2,7 +2,7 @@
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import { versionSatisfies } from 'metaed-core';
-import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 
@@ -21,10 +21,10 @@ function remove(array: Array<EntityTable>, element: EntityTable) {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  const coreNamespaceInfo = R.head(Array.from(metaEd.entity.namespaceInfo.values()).filter(n => !n.isExtension));
+  const coreNamespace = R.head(Array.from(metaEd.entity.namespace.values()).filter(n => !n.isExtension));
 
-  const aggregatesToClean = ((coreNamespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.filter(
-    (a: Aggregate) => a.entityTables.some((et: EntityTable) => affectedTables.includes(et.table)),
+  const aggregatesToClean = ((coreNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.filter((a: Aggregate) =>
+    a.entityTables.some((et: EntityTable) => affectedTables.includes(et.table)),
   );
 
   // Only if this is DS 2.0
@@ -54,7 +54,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         ],
       };
 
-      ((coreNamespaceInfo.data.edfiOdsApi: any): NamespaceInfoEdfiOdsApi).aggregates.push(newAggregate);
+      ((coreNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(newAggregate);
     });
   }
 

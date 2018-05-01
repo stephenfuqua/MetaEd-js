@@ -16,17 +16,12 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'DomainEntitySubclassTableEnhancer';
 
 function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): void {
-  // NOTE: This should make flow ignores unnecessary but does not
   if (entity.baseEntity == null) return;
 
   entity.data.edfiOds.ods_Properties.forEach((keyRenameProperty: EntityProperty) => {
     if (!keyRenameProperty.isIdentityRename) return;
 
     const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-      // $FlowIgnore - baseEntity could be null/undefined
-      foreignTableSchema: entity.baseEntity.namespaceInfo.namespace,
-      // $FlowIgnore - baseEntity could be null/undefined
-      foreignTableName: entity.baseEntity.data.edfiOds.ods_TableName,
       withDeleteCascade: true,
       sourceReference: {
         ...newForeignKeySourceReference(),
@@ -34,6 +29,12 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
         isSubclassRelationship: true,
       },
     });
+
+    // null check for Flow
+    if (entity.baseEntity != null) {
+      foreignKey.foreignTableSchema = entity.baseEntity.namespace.namespaceName;
+      foreignKey.foreignTableName = entity.baseEntity.data.edfiOds.ods_TableName;
+    }
 
     const localColumnNames: Array<string> = columnCreatorFactory
       .columnCreatorFor(keyRenameProperty)

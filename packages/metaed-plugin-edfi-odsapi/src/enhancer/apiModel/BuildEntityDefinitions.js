@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { asDomainEntity, asAssociation } from 'metaed-core';
-import type { NamespaceInfo } from 'metaed-core';
+import type { Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
 import type { EntityDefinition } from '../../model/apiModel/EntityDefinition';
@@ -145,15 +145,15 @@ function shouldIncludeAlternateKeys(table: Table): boolean {
   return table.name === 'Descriptor' && table.schema === 'edfi';
 }
 
-// Entity definitions are the ODS table definitions for a namespace, including columns and primary keys
+// Entity definitions are the ODS table definitions for a namespaceName, including columns and primary keys
 export function buildEntityDefinitions(
   tables: Map<string, Table>,
-  namespaceInfo: NamespaceInfo,
+  namespace: Namespace,
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
   Array.from(tables.values())
-    .filter((table: Table) => table.schema === namespaceInfo.namespace)
+    .filter((table: Table) => table.schema === namespace.namespaceName)
     .forEach((table: Table) => {
       result.push(
         buildSingleEntityDefinitionFrom(table, {

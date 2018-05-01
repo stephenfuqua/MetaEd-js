@@ -3,7 +3,7 @@ import type { MetaEdEnvironment } from 'metaed-core';
 import {
   newMetaEdEnvironment,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   CommonBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
@@ -19,7 +19,7 @@ describe('when generating xsd for common type', () => {
   let coreResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
@@ -32,7 +32,7 @@ describe('when generating xsd for common type', () => {
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(commonBuilder);
 
     ({ coreResult } = await enhanceAndGenerate(metaEd));
@@ -62,7 +62,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -86,7 +86,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(commonBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
@@ -117,7 +117,7 @@ describe('when generating xsd for common type in extension namespace with refere
   let extensionResult;
 
   beforeAll(async () => {
-    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
@@ -142,7 +142,7 @@ describe('when generating xsd for common type in extension namespace with refere
 
       .withEndNamespace()
 
-      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(namespaceBuilder)
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(commonBuilder);

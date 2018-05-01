@@ -2,7 +2,7 @@
 import {
   DomainEntityBuilder,
   MetaEdTextBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
   newMetaEdEnvironment,
   SharedDecimalBuilder,
   SharedIntegerBuilder,
@@ -23,7 +23,7 @@ import type { DatabaseColumn } from './DatabaseColumn';
 
 describe('when entity has shared decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const sharedPropertyName: string = 'SharedPropertyName';
   const totalDigits: number = 10;
@@ -33,7 +33,7 @@ describe('when entity has shared decimal property', () => {
     const sharedDecimalName: string = 'SharedDecimalName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartSharedDecimal(sharedDecimalName)
       .withDocumentation('Documentation')
       .withDecimalRestrictions(totalDigits.toString(), decimalPlaces.toString())
@@ -46,7 +46,7 @@ describe('when entity has shared decimal property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
@@ -56,11 +56,11 @@ describe('when entity has shared decimal property', () => {
   afterAll(async () => testTearDown());
 
   it('should have entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have shared column', async () => {
-    const sharedColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName);
+    const sharedColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName);
     expect(await columnExists(sharedColumn)).toBe(true);
     expect(await columnIsNullable(sharedColumn)).toBe(false);
     expect(await columnDataType(sharedColumn)).toBe(columnDataTypes.decimal);
@@ -71,7 +71,7 @@ describe('when entity has shared decimal property', () => {
 
 describe('when entity has shared integer property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const sharedPropertyName: string = 'SharedPropertyName';
 
@@ -79,7 +79,7 @@ describe('when entity has shared integer property', () => {
     const sharedIntegerName: string = 'SharedIntegerName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartSharedInteger(sharedIntegerName)
       .withDocumentation('Documentation')
       .withEndSharedInteger()
@@ -91,7 +91,7 @@ describe('when entity has shared integer property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
@@ -101,11 +101,11 @@ describe('when entity has shared integer property', () => {
   afterAll(async () => testTearDown());
 
   it('should have entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have shared column', async () => {
-    const sharedColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName);
+    const sharedColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName);
     expect(await columnExists(sharedColumn)).toBe(true);
     expect(await columnIsNullable(sharedColumn)).toBe(false);
     expect(await columnDataType(sharedColumn)).toBe(columnDataTypes.integer);
@@ -114,7 +114,7 @@ describe('when entity has shared integer property', () => {
 
 describe('when entity has shared short property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const sharedPropertyName: string = 'SharedPropertyName';
 
@@ -122,7 +122,7 @@ describe('when entity has shared short property', () => {
     const sharedShortName: string = 'SharedShortName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartSharedShort(sharedShortName)
       .withDocumentation('Documentation')
       .withEndSharedShort()
@@ -134,7 +134,7 @@ describe('when entity has shared short property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
@@ -144,11 +144,11 @@ describe('when entity has shared short property', () => {
   afterAll(async () => testTearDown());
 
   it('should have entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have shared column', async () => {
-    const sharedColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName);
+    const sharedColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName);
     expect(await columnExists(sharedColumn)).toBe(true);
     expect(await columnIsNullable(sharedColumn)).toBe(false);
     expect(await columnDataType(sharedColumn)).toBe(columnDataTypes.smallint);
@@ -157,7 +157,7 @@ describe('when entity has shared short property', () => {
 
 describe('when entity has shared string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const sharedPropertyName: string = 'SharedPropertyName';
   const maxLength: number = 50;
@@ -166,7 +166,7 @@ describe('when entity has shared string property', () => {
     const sharedStringName: string = 'SharedStringName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartSharedString(sharedStringName)
       .withDocumentation('Documentation')
       .withMaxLength(maxLength.toString())
@@ -179,7 +179,7 @@ describe('when entity has shared string property', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
@@ -189,11 +189,11 @@ describe('when entity has shared string property', () => {
   afterAll(async () => testTearDown());
 
   it('should have entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have shared column', async () => {
-    const sharedColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName);
+    const sharedColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName);
     expect(await columnExists(sharedColumn)).toBe(true);
     expect(await columnIsNullable(sharedColumn)).toBe(false);
     expect(await columnDataType(sharedColumn)).toBe(columnDataTypes.nvarchar);
@@ -203,7 +203,7 @@ describe('when entity has shared string property', () => {
 
 describe('when entity has multiple shared properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const domainEntityName: string = 'DomainEntityName';
   const sharedPropertyName1: string = 'SharedPropertyName1';
   const sharedPropertyName2: string = 'SharedPropertyName2';
@@ -220,7 +220,7 @@ describe('when entity has multiple shared properties', () => {
     const sharedStringName: string = 'SharedStringName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartSharedDecimal(sharedDecimalName)
       .withDocumentation('Documentation')
       .withDecimalRestrictions(totalDigits.toString(), decimalPlaces.toString())
@@ -249,7 +249,7 @@ describe('when entity has multiple shared properties', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []))
@@ -261,28 +261,28 @@ describe('when entity has multiple shared properties', () => {
   afterAll(async () => testTearDown());
 
   it('should have entity table', async () => {
-    expect(await tableExists(table(namespace, domainEntityName))).toBe(true);
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
   });
 
   it('should have shared columns', async () => {
-    const sharedDecimalColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName1);
+    const sharedDecimalColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName1);
     expect(await columnExists(sharedDecimalColumn)).toBe(true);
     expect(await columnIsNullable(sharedDecimalColumn)).toBe(false);
     expect(await columnDataType(sharedDecimalColumn)).toBe(columnDataTypes.decimal);
     expect(await columnPrecision(sharedDecimalColumn)).toBe(totalDigits);
     expect(await columnScale(sharedDecimalColumn)).toBe(decimalPlaces);
 
-    const sharedIntegerColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName2);
+    const sharedIntegerColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName2);
     expect(await columnExists(sharedIntegerColumn)).toBe(true);
     expect(await columnIsNullable(sharedIntegerColumn)).toBe(false);
     expect(await columnDataType(sharedIntegerColumn)).toBe(columnDataTypes.integer);
 
-    const sharedShortColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName3);
+    const sharedShortColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName3);
     expect(await columnExists(sharedShortColumn)).toBe(true);
     expect(await columnIsNullable(sharedShortColumn)).toBe(false);
     expect(await columnDataType(sharedShortColumn)).toBe(columnDataTypes.smallint);
 
-    const sharedStringColumn: DatabaseColumn = column(namespace, domainEntityName, sharedPropertyName4);
+    const sharedStringColumn: DatabaseColumn = column(namespaceName, domainEntityName, sharedPropertyName4);
     expect(await columnExists(sharedStringColumn)).toBe(true);
     expect(await columnIsNullable(sharedStringColumn)).toBe(false);
     expect(await columnDataType(sharedStringColumn)).toBe(columnDataTypes.nvarchar);

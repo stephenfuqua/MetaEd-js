@@ -2,7 +2,7 @@
 import {
   newMetaEdEnvironment,
   newInterchangeItem,
-  newNamespaceInfo,
+  newNamespace,
   newPluginEnvironment,
   newDomainEntity,
   newDomainEntityExtension,
@@ -31,23 +31,23 @@ describe('when enhances MergedInterchange with no extension', () => {
   const interchangeName: string = 'InterchangeName';
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -56,7 +56,7 @@ describe('when enhances MergedInterchange with no extension', () => {
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
@@ -73,7 +73,7 @@ describe('when enhances MergedInterchange with no extension', () => {
 
     const mergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
@@ -119,24 +119,24 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
   let domainEntityExtension;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
       documentation: domainEntity1Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -145,7 +145,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
 
     domainEntityExtension = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -158,7 +158,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
@@ -183,7 +183,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(expectedExtensionInterchangeName);
 
     expect(mergedInterchange).toBeDefined();
-    expect(mergedInterchange.namespaceInfo.isExtension).toBe(true);
+    expect(mergedInterchange.namespace.isExtension).toBe(true);
     expect(mergedInterchange.metaEdName).toBe(interchangeName);
     expect(mergedInterchange.documentation).toBe(interchangeDocumentation);
     expect(mergedInterchange.extendedDocumentation).toBe(interchangeExtendedDocumentation);
@@ -193,7 +193,7 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
     expect(mergedInterchange.elements[0].metaEdName).toBe(domainEntity1Name);
     expect(mergedInterchange.elements[0].documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(mergedInterchange.elements[0].referencedEntity).toBe(domainEntityExtension);
-    expect(mergedInterchange.elements[0].namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe(extensionNamespaceName);
   });
 });
 
@@ -222,24 +222,24 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
   let domainEntityExtension;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
       documentation: domainEntity1Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -249,7 +249,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity2Name,
       documentation: domainEntity2Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -258,7 +258,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
 
     domainEntityExtension = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -270,7 +270,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
@@ -290,7 +290,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
@@ -328,7 +328,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     const extensionInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(expectedExtensionInterchangeName);
 
     expect(extensionInterchange).toBeDefined();
-    expect(extensionInterchange.namespaceInfo.isExtension).toBe(true);
+    expect(extensionInterchange.namespace.isExtension).toBe(true);
     expect(extensionInterchange.metaEdName).toBe(interchangeName);
     expect(extensionInterchange.elements.length).toBe(2);
 
@@ -338,7 +338,7 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     const extensionInterchangeElement2 = extensionInterchange.elements.find(e => e.metaEdName === domainEntity1Name);
     expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
     expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension);
-    expect(extensionInterchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(extensionInterchangeElement2.namespace.namespaceName).toBe(extensionNamespaceName);
   });
 });
 
@@ -372,24 +372,24 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
   let domainEntity3;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
       documentation: domainEntity1Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -399,7 +399,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity2Name,
       documentation: domainEntity2Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -409,7 +409,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     domainEntity3 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity3Name,
       documentation: domainEntity3Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -418,7 +418,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
 
     domainEntityExtension1 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -427,7 +427,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
 
     domainEntityExtension2 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntity2Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -440,13 +440,13 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
           documentation: interchangeItemDomainEntity1Documentation,
           referencedEntity: domainEntity1,
-          namespaceInfo: extensionNamespaceInfo,
+          namespace: extensionNamespace,
           data: {
             edfiXsd: {},
           },
@@ -455,7 +455,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           metaEdName: domainEntity2Name,
           documentation: interchangeItemDomainEntity2Documentation,
           referencedEntity: domainEntity2,
-          namespaceInfo: extensionNamespaceInfo,
+          namespace: extensionNamespace,
           data: {
             edfiXsd: {},
           },
@@ -464,7 +464,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
           metaEdName: domainEntity3Name,
           documentation: interchangeItemDomainEntity3Documentation,
           referencedEntity: domainEntity3,
-          namespaceInfo: coreNamespaceInfo,
+          namespace: coreNamespace,
           data: {
             edfiXsd: {},
           },
@@ -485,7 +485,7 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     const extensionInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(expectedExtensionInterchangeName);
 
     expect(extensionInterchange).toBeDefined();
-    expect(extensionInterchange.namespaceInfo.isExtension).toBe(true);
+    expect(extensionInterchange.namespace.isExtension).toBe(true);
     expect(extensionInterchange.metaEdName).toBe(interchangeName);
     expect(extensionInterchange.documentation).toBe(interchangeDocumentation);
     expect(extensionInterchange.extendedDocumentation).toBe(interchangeExtendedDocumentation);
@@ -496,19 +496,19 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     expect(extensionInterchangeElement1.metaEdName).toBe(domainEntity2Name);
     expect(extensionInterchangeElement1.documentation).toBe(interchangeItemDomainEntity2Documentation);
     expect(extensionInterchangeElement1.referencedEntity).toBe(domainEntityExtension2);
-    expect(extensionInterchangeElement1.namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(extensionInterchangeElement1.namespace.namespaceName).toBe(extensionNamespaceName);
 
     const extensionInterchangeElement2 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity1Name);
     expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
     expect(extensionInterchangeElement2.documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension1);
-    expect(extensionInterchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(extensionInterchangeElement2.namespace.namespaceName).toBe(extensionNamespaceName);
 
     const extensionInterchangeElement3 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity3Name);
     expect(extensionInterchangeElement3.metaEdName).toBe(domainEntity3Name);
     expect(extensionInterchangeElement3.documentation).toBe(interchangeItemDomainEntity3Documentation);
     expect(extensionInterchangeElement3.referencedEntity).toBe(domainEntity3);
-    expect(extensionInterchangeElement3.namespaceInfo.namespace).toBe(namespaceName);
+    expect(extensionInterchangeElement3.namespace.namespaceName).toBe(namespaceName);
   });
 });
 
@@ -539,24 +539,24 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
   let domainEntityExtension1;
 
   beforeAll(() => {
-    const coreNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: namespaceName,
+    const coreNamespace = Object.assign(newNamespace(), {
+      namespaceName,
       isExtension: false,
     });
 
-    const extensionNamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: extensionNamespaceName,
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
     });
 
-    metaEd.entity.namespaceInfo.set(coreNamespaceInfo.namespace, coreNamespaceInfo);
-    metaEd.entity.namespaceInfo.set(extensionNamespaceInfo.namespace, extensionNamespaceInfo);
+    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
       documentation: domainEntity1Documentation,
-      namespaceInfo: coreNamespaceInfo,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -566,7 +566,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     domainEntity2 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity2Name,
       documentation: domainEntity2Documentation,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -575,7 +575,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
 
     domainEntityExtension1 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntity1Name,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       data: {
         edfiXsd: {},
       },
@@ -587,13 +587,13 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCaseDocumentation,
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: domainEntity1Name,
           documentation: interchangeItemDomainEntity1Documentation,
           referencedEntity: domainEntity1,
-          namespaceInfo: extensionNamespaceInfo,
+          namespace: extensionNamespace,
           data: {
             edfiXsd: {},
           },
@@ -602,7 +602,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
           metaEdName: domainEntity2Name,
           documentation: interchangeItemDomainEntity2Documentation,
           referencedEntity: domainEntity2,
-          namespaceInfo: extensionNamespaceInfo,
+          namespace: extensionNamespace,
           data: {
             edfiXsd: {},
           },
@@ -623,7 +623,7 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     const interchange: any = edFiXsdEntityRepository.mergedInterchange.get(expectedExtensionInterchangeName);
 
     expect(interchange).toBeDefined();
-    expect(interchange.namespaceInfo.isExtension).toBe(true);
+    expect(interchange.namespace.isExtension).toBe(true);
     expect(interchange.metaEdName).toBe(interchangeName);
     expect(interchange.documentation).toBe(interchangeDocumentation);
     expect(interchange.extendedDocumentation).toBe(interchangeExtendedDocumentation);
@@ -634,12 +634,12 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     expect(interchangeElement1.metaEdName).toBe(domainEntity1Name);
     expect(interchangeElement1.documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(interchangeElement1.referencedEntity).toBe(domainEntityExtension1);
-    expect(interchangeElement1.namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(interchangeElement1.namespace.namespaceName).toBe(extensionNamespaceName);
 
     const interchangeElement2 = interchange.elements.find(x => x.metaEdName === domainEntity2Name);
     expect(interchangeElement2.metaEdName).toBe(domainEntity2Name);
     expect(interchangeElement2.documentation).toBe(interchangeItemDomainEntity2Documentation);
     expect(interchangeElement2.referencedEntity).toBe(domainEntity2);
-    expect(interchangeElement2.namespaceInfo.namespace).toBe(extensionNamespaceName);
+    expect(interchangeElement2.namespace.namespaceName).toBe(extensionNamespaceName);
   });
 });

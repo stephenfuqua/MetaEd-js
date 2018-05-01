@@ -5,10 +5,10 @@ import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import type { SharedSimple } from '../model/SharedSimple';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 
 import { NoSharedSimple } from '../model/SharedSimple';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
@@ -28,18 +28,18 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
     this.validationFailures = validationFailures;
   }
 
-  getNamespaceInfo(): ?NamespaceInfo {
-    return this.entityRepository.namespaceInfo.get(this.currentNamespace);
+  getNamespace(): ?Namespace {
+    return this.entityRepository.namespace.get(this.currentNamespace);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enteringSharedSimple(simpleFactory: () => SharedSimple) {
-    const namespaceInfo = this.getNamespaceInfo();
-    if (namespaceInfo == null) return;
-    this.currentSharedSimple = { ...simpleFactory(), namespaceInfo };
+    const namespace = this.getNamespace();
+    if (namespace == null) return;
+    this.currentSharedSimple = { ...simpleFactory(), namespace };
   }
 
   exitingSharedSimple() {

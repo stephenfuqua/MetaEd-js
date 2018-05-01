@@ -25,7 +25,7 @@ export class EnumerationBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+        namespace: this.currentTopLevelEntity.namespace.sourceMap.type,
       });
     }
   }
@@ -45,7 +45,7 @@ export class EnumerationBuilder extends TopLevelEntityBuilder {
       this.enteringEntity(newSchoolYearEnumeration);
       Object.assign(this.currentTopLevelEntity.sourceMap, {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentTopLevelEntity.namespaceInfo.sourceMap.type,
+        namespace: this.currentTopLevelEntity.namespace.sourceMap.type,
       });
     }
 
@@ -64,7 +64,7 @@ export class EnumerationBuilder extends TopLevelEntityBuilder {
   enterEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = newEnumerationItem();
-    this.currentEnumerationItem.namespaceInfo.sourceMap = this.currentTopLevelEntity.namespaceInfo.sourceMap;
+    this.currentEnumerationItem.namespace.sourceMap = this.currentTopLevelEntity.namespace.sourceMap;
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
   }
 

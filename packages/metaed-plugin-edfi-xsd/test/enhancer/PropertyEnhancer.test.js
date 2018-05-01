@@ -5,35 +5,31 @@ import {
   newAssociation,
   newDomainEntity,
   newDescriptor,
-  newNamespaceInfo,
+  newNamespace,
   newStringProperty,
   newAssociationProperty,
   newCommonProperty,
   newDescriptorProperty,
   newEnumerationProperty,
 } from 'metaed-core';
-import type { MetaEdEnvironment, NamespaceInfo, EntityProperty } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, EntityProperty } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/PropertyEnhancer';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
 
 const projectExtension = 'EXTENSION';
-const coreNamespace = Object.assign(newNamespaceInfo(), {
-  namespace: 'edfi',
+const coreNamespace = Object.assign(newNamespace(), {
+  namespaceName: 'edfi',
   isExtension: false,
 });
 
-const extensionNamespace = Object.assign(newNamespaceInfo(), {
-  namespace: 'extension',
+const extensionNamespace = Object.assign(newNamespace(), {
+  namespaceName: 'extension',
   projectExtension,
   isExtension: true,
 });
 
-function createRepositoryEntityWithProperty(
-  metaEd: MetaEdEnvironment,
-  namespaceInfo: NamespaceInfo,
-  property: EntityProperty,
-) {
+function createRepositoryEntityWithProperty(metaEd: MetaEdEnvironment, namespace: Namespace, property: EntityProperty) {
   const metaEdName = 'DomainEntityName';
 
   metaEd.entity.domainEntity.set(
@@ -41,7 +37,7 @@ function createRepositoryEntityWithProperty(
     Object.assign(newDomainEntity(), {
       metaEdName,
       documentation: 'doc',
-      namespaceInfo,
+      namespace,
       properties: [property],
       data: { edfiXsd: {} },
     }),
@@ -54,7 +50,7 @@ describe('when enhancing core string property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -77,7 +73,7 @@ describe('when enhancing core string property with a "with context"', () => {
   const withContext = 'Context';
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     withContext,
     data: { edfiXsd: {} },
   });
@@ -100,7 +96,7 @@ describe('when enhancing core string property with a "with context" with same na
   const propertyName = 'PropertyName';
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     withContext: propertyName,
     data: { edfiXsd: {} },
   });
@@ -123,7 +119,7 @@ describe('when enhancing extension string property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newStringProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: extensionNamespace,
+    namespace: extensionNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -145,7 +141,7 @@ describe('when enhancing core association property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newAssociationProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -167,7 +163,7 @@ describe('when enhancing extension association property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newAssociationProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: extensionNamespace,
+    namespace: extensionNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -190,11 +186,11 @@ describe('when enhancing extension association property referring to core entity
   const property = Object.assign(newAssociationProperty(), {
     metaEdName: propertyName,
     parentEntityName: propertyName,
-    namespaceInfo: extensionNamespace,
+    namespace: extensionNamespace,
     referencedEntity: Object.assign(newAssociation(), {
       metaEdName: propertyName,
       documentation: 'doc',
-      namespaceInfo: coreNamespace,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -220,7 +216,7 @@ describe('when enhancing core descriptor property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newDescriptorProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -242,7 +238,7 @@ describe('when enhancing extension descriptor property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newDescriptorProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: extensionNamespace,
+    namespace: extensionNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -265,11 +261,11 @@ describe('when enhancing extension descriptor property referring to core entity'
   const property = Object.assign(newDescriptorProperty(), {
     metaEdName: propertyName,
     parentEntityName: propertyName,
-    namespaceInfo: extensionNamespace,
+    namespace: extensionNamespace,
     referencedEntity: Object.assign(newDescriptor(), {
       metaEdName: propertyName,
       documentation: 'doc',
-      namespaceInfo: coreNamespace,
+      namespace: coreNamespace,
       data: {
         edfiXsd: {},
       },
@@ -295,7 +291,7 @@ describe('when enhancing enumeration property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newEnumerationProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -317,7 +313,7 @@ describe('when enhancing enumeration property with name ending in "Type"', () =>
   const propertyName = 'PropertyNameType';
   const property = Object.assign(newEnumerationProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -339,7 +335,7 @@ describe('when enhancing common property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newCommonProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     data: { edfiXsd: {} },
   });
 
@@ -361,7 +357,7 @@ describe('when enhancing extension override common property', () => {
   const propertyName = 'PropertyName';
   const property = Object.assign(newCommonProperty(), {
     metaEdName: propertyName,
-    namespaceInfo: coreNamespace,
+    namespace: coreNamespace,
     isExtensionOverride: true,
     data: { edfiXsd: {} },
   });
@@ -375,6 +371,6 @@ describe('when enhancing extension override common property', () => {
 
   it('should have correct xsdName and xsdType', () => {
     expect(property.data.edfiXsd.xsd_Name).toBe(propertyName);
-    expect(property.data.edfiXsd.xsd_Type).toBe(`${propertyName}${property.namespaceInfo.extensionEntitySuffix}`);
+    expect(property.data.edfiXsd.xsd_Type).toBe(`${propertyName}${property.namespace.extensionEntitySuffix}`);
   });
 });

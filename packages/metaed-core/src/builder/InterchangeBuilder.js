@@ -6,12 +6,12 @@ import type { Interchange, InterchangeSourceMap } from '../model/Interchange';
 import type { InterchangeItem } from '../model/InterchangeItem';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
-import type { NamespaceInfo } from '../model/NamespaceInfo';
+import type { Namespace } from '../model/Namespace';
 
 import { newInterchange, NoInterchange } from '../model/Interchange';
 import { newInterchangeItem, NoInterchangeItem } from '../model/InterchangeItem';
 import { newInterchangeExtension } from '../model/InterchangeExtension';
-import { namespaceName } from './NamespaceInfoBuilder';
+import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
@@ -32,12 +32,12 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
     this.validationFailures = validationFailures;
   }
 
-  getNamespaceInfo(): ?NamespaceInfo {
-    return this.metaEd.entity.namespaceInfo.get(this.currentNamespace);
+  getNamespace(): ?Namespace {
+    return this.metaEd.entity.namespace.get(this.currentNamespace);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceName(context);
+    this.currentNamespace = namespaceNameFrom(context);
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -77,20 +77,20 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
     }
   }
   enterInterchange(context: MetaEdGrammar.InterchangeContext) {
-    const namespaceInfo = this.getNamespaceInfo();
-    if (namespaceInfo == null) return;
-    this.currentInterchange = { ...newInterchange(), namespaceInfo };
+    const namespace = this.getNamespace();
+    if (namespace == null) return;
+    this.currentInterchange = { ...newInterchange(), namespace };
 
     Object.assign(this.currentInterchange.sourceMap, {
       type: sourceMapFrom(context),
-      namespaceInfo: this.currentInterchange.namespaceInfo.sourceMap.type,
+      namespace: this.currentInterchange.namespace.sourceMap.type,
     });
   }
 
   enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
-    const namespaceInfo = this.getNamespaceInfo();
-    if (namespaceInfo == null) return;
-    this.currentInterchange = { ...newInterchangeExtension(), namespaceInfo };
+    const namespace = this.getNamespace();
+    if (namespace == null) return;
+    this.currentInterchange = { ...newInterchangeExtension(), namespace };
     this.currentInterchange.sourceMap.type = sourceMapFrom(context);
   }
 

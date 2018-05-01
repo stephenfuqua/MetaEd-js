@@ -8,7 +8,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.entity.associationSubclass.forEach(associationSubclass => {
     if (!associationSubclass.baseEntity) return;
-    if (!associationSubclass.namespaceInfo.isExtension) return;
+    if (!associationSubclass.namespace.isExtension) return;
     if (associationSubclass.baseEntityName !== 'StudentProgramAssociation') {
       failures.push({
         validatorName: 'SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported',

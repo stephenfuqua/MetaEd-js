@@ -1,5 +1,5 @@
 // @flow
-import { EnumerationBuilder, MetaEdTextBuilder, NamespaceInfoBuilder, newMetaEdEnvironment } from 'metaed-core';
+import { EnumerationBuilder, MetaEdTextBuilder, NamespaceBuilder, newMetaEdEnvironment } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { column, columnDataTypes, enhanceGenerateAndExecuteSql, table, testTearDown } from './DatabaseTestBase';
 import {
@@ -16,7 +16,7 @@ import type { DatabaseColumn } from './DatabaseColumn';
 
 describe('when enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const enumerationName: string = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
@@ -24,14 +24,14 @@ describe('when enumeration has single item', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(enumerationItemShortDescription, 'Documentation')
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -40,11 +40,11 @@ describe('when enumeration has single item', () => {
   afterAll(async () => testTearDown());
 
   it('should have enumeration table', async () => {
-    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, enumerationTableName))).toBe(true);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationTypeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, enumerationTableName, enumerationTypeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(false);
     expect(await columnIsIdentity(typeIdColumn)).toBe(true);
@@ -53,21 +53,21 @@ describe('when enumeration has single item', () => {
   });
 
   it('should have standard descriptor columns', async () => {
-    const codeValueColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnIsNullable(codeValueColumn)).toBe(false);
     expect(await columnDataType(codeValueColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(codeValueColumn)).toBe(50);
     expect(await columnMSDescription(codeValueColumn)).toBe('This column is deprecated.');
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(shortDescriptionColumn)).toBe(false);
     expect(await columnDataType(shortDescriptionColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(shortDescriptionColumn)).toBe(450);
     expect(await columnMSDescription(shortDescriptionColumn)).toBe(`The value for the ${enumerationName} type.`);
 
-    const descriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnIsNullable(descriptionColumn)).toBe(false);
     expect(await columnDataType(descriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -76,23 +76,23 @@ describe('when enumeration has single item', () => {
   });
 
   it('should have correct primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -102,7 +102,7 @@ describe('when enumeration has single item', () => {
 
 describe('when enumeration has multiple items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const enumerationName: string = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
@@ -112,7 +112,7 @@ describe('when enumeration has multiple items', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(shortDescription1, 'Documentation')
@@ -121,7 +121,7 @@ describe('when enumeration has multiple items', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -130,11 +130,11 @@ describe('when enumeration has multiple items', () => {
   afterAll(async () => testTearDown());
 
   it('should have enumeration table', async () => {
-    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, enumerationTableName))).toBe(true);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationTypeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, enumerationTableName, enumerationTypeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(false);
     expect(await columnIsIdentity(typeIdColumn)).toBe(true);
@@ -142,21 +142,21 @@ describe('when enumeration has multiple items', () => {
   });
 
   it('should have standard descriptor columns', async () => {
-    const codeValueColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnIsNullable(codeValueColumn)).toBe(false);
     expect(await columnDataType(codeValueColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(codeValueColumn)).toBe(50);
     expect(await columnMSDescription(codeValueColumn)).toBe('This column is deprecated.');
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(shortDescriptionColumn)).toBe(false);
     expect(await columnDataType(shortDescriptionColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(shortDescriptionColumn)).toBe(450);
     expect(await columnMSDescription(shortDescriptionColumn)).toBe(`The value for the ${enumerationName} type.`);
 
-    const descriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnIsNullable(descriptionColumn)).toBe(false);
     expect(await columnDataType(descriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -165,23 +165,23 @@ describe('when enumeration has multiple items', () => {
   });
 
   it('should have correct primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -191,7 +191,7 @@ describe('when enumeration has multiple items', () => {
 
 describe('when enumeration name ends in type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const enumerationName: string = 'EnumerationNameType';
   const enumerationTableName: string = enumerationName;
   const enumerationTypeIdColumnName: string = `${enumerationName}Id`;
@@ -199,14 +199,14 @@ describe('when enumeration name ends in type', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration(enumerationName)
       .withDocumentation('Documentation')
       .withEnumerationItem(shortDescription, 'Documentation')
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);
@@ -215,11 +215,11 @@ describe('when enumeration name ends in type', () => {
   afterAll(async () => testTearDown());
 
   it('should have enumeration table', async () => {
-    expect(await tableExists(table(namespace, enumerationTableName))).toBe(true);
+    expect(await tableExists(table(namespaceName, enumerationTableName))).toBe(true);
   });
 
   it('should have type id column', async () => {
-    const typeIdColumn: DatabaseColumn = column(namespace, enumerationTableName, enumerationTypeIdColumnName);
+    const typeIdColumn: DatabaseColumn = column(namespaceName, enumerationTableName, enumerationTypeIdColumnName);
     expect(await columnExists(typeIdColumn)).toBe(true);
     expect(await columnIsNullable(typeIdColumn)).toBe(false);
     expect(await columnIsIdentity(typeIdColumn)).toBe(true);
@@ -227,14 +227,14 @@ describe('when enumeration name ends in type', () => {
   });
 
   it('should have standard descriptor columns', async () => {
-    const codeValueColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CodeValue');
+    const codeValueColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CodeValue');
     expect(await columnExists(codeValueColumn)).toBe(true);
     expect(await columnIsNullable(codeValueColumn)).toBe(false);
     expect(await columnDataType(codeValueColumn)).toBe(columnDataTypes.nvarchar);
     expect(await columnLength(codeValueColumn)).toBe(50);
     expect(await columnMSDescription(codeValueColumn)).toBe('This column is deprecated.');
 
-    const shortDescriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'ShortDescription');
+    const shortDescriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'ShortDescription');
     expect(await columnExists(shortDescriptionColumn)).toBe(true);
     expect(await columnIsNullable(shortDescriptionColumn)).toBe(false);
     expect(await columnDataType(shortDescriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -243,7 +243,7 @@ describe('when enumeration name ends in type', () => {
       `The value for the ${enumerationName.replace(/Type$/g, '')} type.`,
     );
 
-    const descriptionColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Description');
+    const descriptionColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Description');
     expect(await columnExists(descriptionColumn)).toBe(true);
     expect(await columnIsNullable(descriptionColumn)).toBe(false);
     expect(await columnDataType(descriptionColumn)).toBe(columnDataTypes.nvarchar);
@@ -254,23 +254,23 @@ describe('when enumeration name ends in type', () => {
   });
 
   it('should have correct primary key', async () => {
-    expect(await tablePrimaryKeys(table(namespace, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
+    expect(await tablePrimaryKeys(table(namespaceName, enumerationTableName))).toEqual([enumerationTypeIdColumnName]);
   });
 
   it('should have standard resource columns', async () => {
-    const idColumn: DatabaseColumn = column(namespace, enumerationTableName, 'Id');
+    const idColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'Id');
     expect(await columnExists(idColumn)).toBe(true);
     expect(await columnIsNullable(idColumn)).toBe(false);
     expect(await columnDataType(idColumn)).toBe(columnDataTypes.uniqueIdentifier);
     expect(await columnDefaultConstraint(idColumn)).toBe('(newid())');
 
-    const lastModifiedDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'LastModifiedDate');
+    const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
     expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
-    const createDateColumn: DatabaseColumn = column(namespace, enumerationTableName, 'CreateDate');
+    const createDateColumn: DatabaseColumn = column(namespaceName, enumerationTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
     expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
@@ -280,7 +280,7 @@ describe('when enumeration name ends in type', () => {
 
 describe('when extension enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const extension: string = 'extension';
   const enumerationName2: string = 'EnumerationName2';
   const enumerationTableName2: string = `${enumerationName2}Type`;
@@ -289,7 +289,7 @@ describe('when extension enumeration has single item', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace)
+      .withBeginNamespace(namespaceName)
       .withStartEnumeration('EnumerationName1')
       .withDocumentation('Documentation')
       .withEnumerationItem('EnumerationItemShortDescription1', 'Documentation')
@@ -303,7 +303,7 @@ describe('when extension enumeration has single item', () => {
       .withEndEnumeration()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
     return enhanceGenerateAndExecuteSql(metaEd);

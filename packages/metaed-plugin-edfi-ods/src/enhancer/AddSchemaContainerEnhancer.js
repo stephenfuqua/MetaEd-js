@@ -1,36 +1,35 @@
 // @flow
 import R from 'ramda';
 import { orderByProp } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { pluginEnvironment } from '../enhancer/EnhancerHelper';
 import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
-import type { EnumerationRow } from '../model/database/EnumerationRow';
+import type { EnumerationRowBase } from '../model/database/EnumerationRowBase';
 import type { ForeignKey } from '../model/database/ForeignKey';
-import type { SchoolYearEnumerationRow } from '../model/database/SchoolYearEnumerationRow';
 import type { Table } from '../model/database/Table';
 
 const enhancerName: string = 'AddSchemaContainerEnhancer';
 
-const inNamespace = (namespaceInfo: NamespaceInfo) => R.filter(x => x.namespace === namespaceInfo.namespace);
-
 export const orderRows = R.sortBy(R.compose(R.toLower, R.join(''), R.props(['name', 'description'])));
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.namespaceInfo.forEach((namespaceInfo: NamespaceInfo) => {
+  metaEd.entity.namespace.forEach((namespace: Namespace) => {
     const repository: EdFiOdsEntityRepository = pluginEnvironment(metaEd).entity;
-    const rows: Array<EnumerationRow | SchoolYearEnumerationRow> = inNamespace(namespaceInfo)([...repository.row.values()]);
+    const rows: Array<EnumerationRowBase> = Array.from(repository.row.values()).filter(
+      (row: EnumerationRowBase) => row.namespace === namespace.namespaceName,
+    );
     const tables: Array<Table> = orderByProp('name')(
-      [...repository.table.values()].filter((table: Table) => table.schema === namespaceInfo.namespace),
+      Array.from(repository.table.values()).filter((table: Table) => table.schema === namespace.namespaceName),
     );
     const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
-    const enumerationRows: Array<EnumerationRow> = orderRows(
-      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'enumerationRow'),
+    const enumerationRows: Array<EnumerationRowBase> = orderRows(
+      rows.filter((row: EnumerationRowBase) => row.type === 'enumerationRow'),
     );
-    const schoolYearEnumerationRows: Array<EnumerationRow> = orderByProp('name')(
-      rows.filter((row: EnumerationRow | SchoolYearEnumerationRow) => row.type === 'schoolYearEnumerationRow'),
+    const schoolYearEnumerationRows: Array<EnumerationRowBase> = orderByProp('name')(
+      rows.filter((row: EnumerationRowBase) => row.type === 'schoolYearEnumerationRow'),
     );
 
-    Object.assign(namespaceInfo.data.edfiOds.ods_Schema, {
+    Object.assign(namespace.data.edfiOds.ods_Schema, {
       tables,
       foreignKeys,
       enumerationRows,

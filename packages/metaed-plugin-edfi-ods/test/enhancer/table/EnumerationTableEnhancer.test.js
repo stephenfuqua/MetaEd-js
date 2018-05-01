@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { Enumeration, MetaEdEnvironment } from 'metaed-core';
-import { addEntity, newEnumeration, newMetaEdEnvironment, newNamespaceInfo } from 'metaed-core';
+import { addEntity, newEnumeration, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/EnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
@@ -16,8 +16,8 @@ describe('when EnumerationTableEnhancer enhances enumeration', () => {
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationName,
       documentation: enumerationDocumentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {
@@ -94,8 +94,8 @@ describe("when EnumerationTableEnhancer enhances enumeration name ending with 'T
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: enumerationNameType,
       documentation: enumerationDocumentation,
-      namespaceInfo: Object.assign(newNamespaceInfo(), {
-        namespace: namespaceName,
+      namespace: Object.assign(newNamespace(), {
+        namespaceName,
       }),
       data: {
         edfiOds: {

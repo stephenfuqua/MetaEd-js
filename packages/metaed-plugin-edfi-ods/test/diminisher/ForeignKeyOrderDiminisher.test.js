@@ -15,7 +15,7 @@ import type { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const parentTableName: string = 'ParentTableName';
   const gradebookEntryLearningObjective: string = 'GradebookEntryLearningObjective';
   const primaryKeyOrder: Array<string> = [
@@ -72,7 +72,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespace,
+          foreignTableSchema: namespaceName,
           foreignTableName: foreignTable.name,
           columnNames: primaryKeyNames.map((name: string) =>
             Object.assign(newColumnNamePair(), {
@@ -108,7 +108,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
 describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'edfi';
+  const namespaceName: string = 'edfi';
   const parentTableName: string = 'ParentTableName';
   const foreignTableName: string = 'ForeignTableName';
   const primaryKeyNames: Array<string> = [
@@ -147,7 +147,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespace,
+          foreignTableSchema: namespaceName,
           foreignTableName: foreignTable.name,
           columnNames: primaryKeyNames.map((name: string) =>
             Object.assign(newColumnNamePair(), {

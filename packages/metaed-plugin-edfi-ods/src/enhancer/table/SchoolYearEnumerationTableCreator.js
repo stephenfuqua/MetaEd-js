@@ -4,11 +4,11 @@ import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newBooleanColumn, newShortColumn, newStringColumn } from '../../model/database/Column';
 import type { Table } from '../../model/database/Table';
 
-export const schoolYearEnumerationTableCreator: { build(namespace: string, documentation: string): Table } = {
-  build(namespace: string, documentation: string): Table {
+export const schoolYearEnumerationTableCreator: { build(namespaceName: string, documentation: string): Table } = {
+  build(namespaceName: string, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: 'SchoolYearType',
-      schema: namespace,
+      schema: namespaceName,
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,

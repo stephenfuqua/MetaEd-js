@@ -3,7 +3,7 @@ import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, SemVer } from 'metaed-core';
 import { getEntitiesOfType, orderByProp, V3OrGreater, versionSatisfies } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
-import type { NamespaceInfoEdfiXsd } from '../../model/NamespaceInfo';
+import type { NamespaceEdfiXsd } from '../../model/Namespace';
 import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
 import type { SimpleTypeBase, SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
 import type { DescriptorEdfiXsd } from '../../model/Descriptor';
@@ -48,7 +48,7 @@ const removeNoSimpleType = R.filter(x => x !== NoSimpleType);
 const removeNoEnumerationSimpleType = R.filter(x => x !== NoEnumerationSimpleType);
 const removeNoStringSimpleType = R.filter(x => x !== NoStringSimpleType);
 
-const inNamespace = namespaceInfo => R.filter(x => x.namespaceInfo.namespace === namespaceInfo.namespace);
+const inNamespace = namespace => R.filter(x => x.namespace.namespaceName === namespace.namespaceName);
 
 function baseSchemaSection() {
   const schemaSection: SchemaSection = Object.assign(newSchemaSection(), {
@@ -174,12 +174,12 @@ function baseSchemaSection() {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.namespaceInfo.forEach(namespaceInfo => {
+  metaEd.entity.namespace.forEach(namespace => {
     const versionString = metaEd.dataStandardVersion;
     const schemaContainer: SchemaContainer = Object.assign(newSchemaContainer(), {
-      isExtension: namespaceInfo.isExtension,
+      isExtension: namespace.isExtension,
       schemaAnnotation: Object.assign(newAnnotation(), {
-        documentation: namespaceInfo.isExtension
+        documentation: namespace.isExtension
           ? `===== Ed-Fi ${versionString} Extensions =====`
           : `===== Ed-Fi-Core Version ${versionString} ====`,
       }),
@@ -187,7 +187,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     const complexTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
-      inNamespace(namespaceInfo),
+      inNamespace(namespace),
       complexTypesFrom,
       removeNoComplexType,
       orderByProp('name'),
@@ -231,12 +231,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     schemaContainer.sections.push(associationsSection);
 
     // Base Types
-    if (!namespaceInfo.isExtension) schemaContainer.sections.push(baseSchemaSection());
+    if (!namespace.isExtension) schemaContainer.sections.push(baseSchemaSection());
 
     // Extended Reference Types
     const manyReferenceTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
-      inNamespace(namespaceInfo),
+      inNamespace(namespace),
       manyReferenceTypesFrom,
       removeNoComplexType,
       orderByProp('name'),
@@ -261,7 +261,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     // Extended Descriptor Reference Types
     const referenceTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
-      inNamespace(namespaceInfo),
+      inNamespace(namespace),
       extendedReferenceTypesFrom,
       removeNoStringSimpleType,
       orderByProp('name'),
@@ -287,7 +287,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     // Enumerations and Enumerated Collections
     const enumerationSimpleTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
-      inNamespace(namespaceInfo),
+      inNamespace(namespace),
       enumerationSimpleTypesFrom,
       removeNoEnumerationSimpleType,
       orderByProp('name'),
@@ -309,13 +309,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     // String Simple Types
     const simpleTypesForEntitiesOfType = R.pipe(
       getEntitiesOfType,
-      inNamespace(namespaceInfo),
+      inNamespace(namespace),
       simpleTypesFrom,
       removeNoSimpleType,
     );
 
     const stringSimpleTypes = simpleTypesForEntitiesOfType(metaEd.entity, 'stringType');
-    if (!namespaceInfo.isExtension) {
+    if (!namespace.isExtension) {
       stringSimpleTypes.push(
         createCodeValueSimpleType(),
         createDescriptorReferenceSimpleType(),
@@ -334,7 +334,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     // Numeric Simple Types
     const numericSimpleTypes = simpleTypesForEntitiesOfType(metaEd.entity, 'decimalType', 'integerType');
-    if (!namespaceInfo.isExtension) {
+    if (!namespace.isExtension) {
       numericSimpleTypes.push(createCurrencySimpleType(), createPercentSimpleType());
     }
 
@@ -347,7 +347,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     schemaContainer.sections.push(numericSimpleTypesSection);
 
-    ((namespaceInfo.data.edfiXsd: any): NamespaceInfoEdfiXsd).xsd_Schema = schemaContainer;
+    ((namespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema = schemaContainer;
   });
 
   return {

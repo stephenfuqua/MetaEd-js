@@ -13,7 +13,7 @@ export class SharedDecimalBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple !== NoSharedSimple) {
       Object.assign(((this.currentSharedSimple: any): SharedDecimal).sourceMap, {
         type: sourceMapFrom(context),
-        namespaceInfo: this.currentSharedSimple.namespaceInfo.sourceMap.type,
+        namespace: this.currentSharedSimple.namespace.sourceMap.type,
       });
     }
   }

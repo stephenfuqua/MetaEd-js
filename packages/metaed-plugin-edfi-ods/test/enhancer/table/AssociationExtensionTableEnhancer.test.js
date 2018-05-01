@@ -9,7 +9,7 @@ import {
   newAssociationProperty,
   newIntegerProperty,
   newMetaEdEnvironment,
-  newNamespaceInfo,
+  newNamespace,
 } from 'metaed-core';
 import type {
   Association,
@@ -20,7 +20,7 @@ import type {
   CommonProperty,
   IntegerProperty,
   MetaEdEnvironment,
-  NamespaceInfo,
+  Namespace,
 } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
@@ -28,19 +28,19 @@ import type { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancer enhances association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const documentation: string = 'Documentation';
   const associationExtensionName: string = 'AssociationExtensionName';
   const associationExtensionPropertyName: string = 'AssociationExtensionPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace,
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
       extensionEntitySuffix: '',
     });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationName,
       data: {
@@ -66,12 +66,12 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       documentation,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
@@ -86,7 +86,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
       },
     });
     const associationExtensionProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionPropertyName,
       isPartOfIdentity: false,
       parentEntity: associationExtension,
@@ -111,7 +111,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).schema).toBe(namespace);
+    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).schema).toBe(namespaceName);
   });
 
   it('should have description equal to documentation', () => {
@@ -138,13 +138,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const associationExtensionPkPropertyName: string = 'AssociationExtensionPkPropertyName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationName,
       data: {
         edfiOds: {
@@ -169,12 +169,12 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -188,7 +188,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       },
     });
     const associationExtensionPkProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionPkPropertyName,
       isPartOfIdentity: true,
       parentEntity: associationExtension,
@@ -234,13 +234,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -267,7 +267,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     addEntity(metaEd.entity, common);
 
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationName,
       data: {
         edfiOds: {
@@ -292,13 +292,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonExtensionName,
       baseEntityName: common.metaEdName,
       baseEntity: common,
@@ -328,7 +328,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     common.extender = commonExtension;
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -343,7 +343,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     });
     const associationExtensionRequiredPropertyName: string = 'AssociationExtensionRequiredPropertyName';
     const associationExtensionRequiredProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionRequiredPropertyName,
       isRequired: true,
       parentEntity: associationExtension,
@@ -357,7 +357,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionRequiredProperty);
     const associationExtensionReferencePropertyName: string = 'AssociationExtensionReferencePropertyName';
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionReferencePropertyName,
       isPartOfIdentity: true,
       parentEntity: associationExtension,
@@ -373,7 +373,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionReferenceProperty);
     associationExtension.data.edfiOds.ods_IdentityProperties.push(associationExtensionReferenceProperty);
     const associationExtensionCommonExtensionOverrideProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonExtensionName,
       isRequired: true,
       parentEntity: associationExtension,
@@ -420,13 +420,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -453,7 +453,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     addEntity(metaEd.entity, common);
 
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationName,
       data: {
         edfiOds: {
@@ -478,13 +478,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -499,7 +499,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     });
     const associationExtensionRequiredPropertyName: string = 'AssociationExtensionRequiredPropertyName';
     const associationExtensionRequiredProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionRequiredPropertyName,
       isRequired: true,
       parentEntity: associationExtension,
@@ -513,7 +513,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionRequiredProperty);
     const associationExtensionReferencePropertyName: string = 'AssociationExtensionReferencePropertyName';
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionReferencePropertyName,
       isPartOfIdentity: true,
       parentEntity: associationExtension,
@@ -529,7 +529,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionReferenceProperty);
     associationExtension.data.edfiOds.ods_IdentityProperties.push(associationExtensionReferenceProperty);
     const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName,
       isRequired: true,
       parentEntity: associationExtension,
@@ -576,13 +576,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName,
       data: {
         edfiOds: {
@@ -609,7 +609,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     addEntity(metaEd.entity, common);
 
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationName,
       data: {
         edfiOds: {
@@ -634,13 +634,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -654,7 +654,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       },
     });
     const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName,
       isRequired: true,
       parentEntity: associationExtension,
@@ -696,13 +696,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'namespace',
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'namespace',
       extensionEntitySuffix: '',
     });
 
     const common: Common = Object.assign(newCommon(), {
-      namespaceInfo,
+      namespace,
       metaEdName: commonName1,
       data: {
         edfiOds: {
@@ -729,7 +729,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     addEntity(metaEd.entity, common);
 
     const association: Association = Object.assign(newAssociation(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationName,
       data: {
         edfiOds: {
@@ -754,13 +754,13 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
     addEntity(metaEd.entity, association);
 
-    const extensionNamespaceInfo: NamespaceInfo = Object.assign(newNamespaceInfo(), {
-      namespace: 'extension',
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
       isExtension: true,
     });
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespaceInfo,
+      namespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -774,7 +774,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
       },
     });
     const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName1,
       isRequired: true,
       parentEntity: associationExtension,
@@ -789,7 +789,7 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
     });
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty);
     const associationExtensionCommonProperty2: CommonProperty = Object.assign(newCommonProperty(), {
-      namespaceInfo: extensionNamespaceInfo,
+      namespace: extensionNamespace,
       metaEdName: commonName2,
       isRequired: true,
       parentEntity: associationExtension,

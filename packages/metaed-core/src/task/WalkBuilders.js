@@ -18,7 +18,7 @@ import { DomainEntitySubclassBuilder } from '../builder/DomainEntitySubclassBuil
 import { EnumerationBuilder } from '../builder/EnumerationBuilder';
 import { IntegerTypeBuilder } from '../builder/IntegerTypeBuilder';
 import { InterchangeBuilder } from '../builder/InterchangeBuilder';
-import { NamespaceInfoBuilder } from '../builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../builder/NamespaceBuilder';
 import { SharedDecimalBuilder } from '../builder/SharedDecimalBuilder';
 import { SharedIntegerBuilder } from '../builder/SharedIntegerBuilder';
 import { SharedStringBuilder } from '../builder/SharedStringBuilder';
@@ -27,8 +27,8 @@ import { StringTypeBuilder } from '../builder/StringTypeBuilder';
 export async function execute(state: State): Promise<void> {
   const builders: Array<MetaEdGrammarListener> = [];
 
-  // NamespaceInfoBuilder goes first, all others have a dependency on it
-  builders.push(new NamespaceInfoBuilder(state.metaEd, state.validationFailure));
+  // NamespaceBuilder goes first, all others have a dependency on it
+  builders.push(new NamespaceBuilder(state.metaEd, state.validationFailure));
 
   builders.push(new AssociationBuilder(state.metaEd, state.validationFailure));
   builders.push(new AssociationExtensionBuilder(state.metaEd, state.validationFailure));

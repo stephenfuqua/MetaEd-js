@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
-import { NamespaceInfoBuilder } from '../../src/builder/NamespaceInfoBuilder';
+import { NamespaceBuilder } from '../../src/builder/NamespaceBuilder';
 import { DecimalTypeBuilder } from '../../src/builder/DecimalTypeBuilder';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import { getDecimalType } from '../TestHelper';
@@ -10,7 +10,7 @@ import type { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building shared decimal in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -25,13 +25,13 @@ describe('when building shared decimal in extension namespace', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedDecimal(entityName, metaEdId)
       .withDocumentation(documentation)
       .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
       .withEndSharedDecimal()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
   });
 
@@ -48,11 +48,11 @@ describe('when building shared decimal in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -99,7 +99,7 @@ describe('when building shared decimal in extension namespace', () => {
 describe('when building domain entity with decimal property in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -114,7 +114,7 @@ describe('when building domain entity with decimal property in extension namespa
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withDecimalProperty(
@@ -131,7 +131,7 @@ describe('when building domain entity with decimal property in extension namespa
       )
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
   });
 
@@ -148,11 +148,11 @@ describe('when building domain entity with decimal property in extension namespa
   });
 
   it('should have namespace', () => {
-    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespaceInfo.namespace).toBe(namespace);
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespaceInfo.projectExtension).toBe(projectExtension);
+    expect(getDecimalType(metaEd.entity, expectedRepositoryId).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have type', () => {
@@ -199,7 +199,7 @@ describe('when building domain entity with decimal property in extension namespa
 describe('when building multiple shared decimals in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -217,7 +217,7 @@ describe('when building multiple shared decimals in extension namespace', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartSharedDecimal(entityName, metaEdId)
       .withDocumentation(documentation)
       .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
@@ -228,7 +228,7 @@ describe('when building multiple shared decimals in extension namespace', () => 
       .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
       .withEndSharedDecimal()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
   });
 
@@ -249,7 +249,7 @@ describe('when building multiple shared decimals in extension namespace', () => 
 describe('when building domain entity with multiple decimal properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespace: string = 'namespace';
+  const namespaceName: string = 'namespace';
   const projectExtension: string = 'ProjectExtension';
 
   const entityName: string = 'EntityName';
@@ -267,7 +267,7 @@ describe('when building domain entity with multiple decimal properties in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespace, projectExtension)
+      .withBeginNamespace(namespaceName, projectExtension)
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withDecimalProperty(
@@ -296,7 +296,7 @@ describe('when building domain entity with multiple decimal properties in extens
       )
       .withEndDomainEntity()
       .withEndNamespace()
-      .sendToListener(new NamespaceInfoBuilder(metaEd, validationFailures))
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(new DecimalTypeBuilder(metaEd, validationFailures));
   });
 

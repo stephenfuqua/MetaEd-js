@@ -40,19 +40,19 @@ const metaEdConfiguration = {
   projects: [
     {
       projectName: 'Ed-Fi',
-      namespace: 'edfi',
+      namespaceName: 'edfi',
       projectExtension: '',
       projectVersion: '2.0.0',
     },
     {
       projectName: 'Grand Bend',
-      namespace: 'gb',
+      namespaceName: 'gb',
       projectExtension: 'GrandBend',
       projectVersion: '1.0.0',
     },
     {
       projectName: 'Sample',
-      namespace: 'sample',
+      namespaceName: 'sample',
       projectExtension: 'Sample',
       projectVersion: '1.0.0',
     },
@@ -89,17 +89,17 @@ describe('when building a simple core and two simple extension projects', () => 
   it('should have extension domain entities referencing core entity (meaning unified enhancers ran)', () => {
     const edfiDomainEntity = state.metaEd.entity.domainEntity.get('EdfiDomainEntity');
     if (edfiDomainEntity == null) throw new Error();
-    expect(edfiDomainEntity.namespaceInfo.namespace).toBe('edfi');
+    expect(edfiDomainEntity.namespace.namespaceName).toBe('edfi');
 
     const gbDomainEntity = state.metaEd.entity.domainEntity.get('GbDomainEntity');
     if (gbDomainEntity == null) throw new Error();
-    expect(gbDomainEntity.namespaceInfo.namespace).toBe('gb');
+    expect(gbDomainEntity.namespace.namespaceName).toBe('gb');
     expect(gbDomainEntity.properties[2].metaEdName).toBe('EdfiDomainEntity');
     expect(asReferentialProperty(gbDomainEntity.properties[2]).referencedEntity).toBe(edfiDomainEntity);
 
     const sampleDomainEntity = state.metaEd.entity.domainEntity.get('SampleDomainEntity');
     if (sampleDomainEntity == null) throw new Error();
-    expect(sampleDomainEntity.namespaceInfo.namespace).toBe('sample');
+    expect(sampleDomainEntity.namespace.namespaceName).toBe('sample');
     expect(sampleDomainEntity.properties[2].metaEdName).toBe('EdfiDomainEntity');
     expect(asReferentialProperty(sampleDomainEntity.properties[2]).referencedEntity).toBe(edfiDomainEntity);
   });

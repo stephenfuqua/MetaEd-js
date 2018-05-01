@@ -49,10 +49,10 @@ export function overrideNamespace(projects: Array<MetaEdProjectPathPairs>, names
   if (namespaceOverrides.length > projects.length) return projects;
 
   namespaceOverrides.forEach((namespace: string, index: number) => {
-    if (projects[index].project.namespace === namespace) return;
+    if (projects[index].project.namespaceName === namespace) return;
 
-    winston.info(`Overriding namespace: ${projects[index].project.namespace} ${chalk.red('->')} ${namespace}`);
-    projects[index].project.namespace = namespace;
+    winston.info(`Overriding namespace: ${projects[index].project.namespaceName} ${chalk.red('->')} ${namespace}`);
+    projects[index].project.namespaceName = namespace;
   });
   return projects;
 }

@@ -13,10 +13,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
   const coreInterchanges: Array<MergedInterchange> = Array.from(edFiXsdEntityRepository.mergedInterchange.values());
 
-  Array.from(metaEd.entity.namespaceInfo.values())
+  Array.from(metaEd.entity.namespace.values())
     .filter(ni => ni.isExtension)
-    .forEach(extensionNamespaceInfo => {
-      const isInThisNamespace = x => x.namespaceInfo.namespace === extensionNamespaceInfo.namespace;
+    .forEach(extensionNamespace => {
+      const isInThisNamespace = x => x.namespace.namespaceName === extensionNamespace.namespaceName;
       const extensionEntities: Array<ModelBase> = getEntitiesOfType(
         metaEd.entity,
         'associationExtension',
@@ -27,7 +27,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       ).filter(isInThisNamespace);
 
       // Need to extend any interchange that contains an entity that has an extension in the current namespace
-      const interchangesToExtend = coreInterchanges.filter(i =>
+      const interchangesToExtend: Array<MergedInterchange> = coreInterchanges.filter(i =>
         i.elements.some(e => extensionEntities.some(ee => ee.metaEdName === e.metaEdName)),
       );
 
@@ -40,18 +40,18 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         if (!extensionInterchange) {
           extensionInterchange = Object.assign(newMergedInterchange(), {
             metaEdName: interchangeToExtend.metaEdName,
-            repositoryId: `${extensionNamespaceInfo.projectExtension}-${interchangeToExtend.metaEdName}`,
+            repositoryId: `${extensionNamespace.projectExtension}-${interchangeToExtend.metaEdName}`,
             interchangeName: interchangeToExtend.metaEdName,
             documentation: interchangeToExtend.documentation,
             extendedDocumentation: interchangeToExtend.extendedDocumentation,
             useCaseDocumentation: interchangeToExtend.useCaseDocumentation,
-            namespaceInfo: extensionNamespaceInfo,
+            namespace: extensionNamespace,
           });
 
           interchangeToExtend.elements.forEach(element => {
             const interchangeItem = Object.assign(newInterchangeItem(), {
               metaEdName: element.metaEdName,
-              namespaceInfo: element.namespaceInfo,
+              namespace: element.namespace,
               referencedEntity: element.referencedEntity,
               documentation: element.documentation,
             });
@@ -73,7 +73,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           if (elementToExtend) {
             const interchangeItem = Object.assign(newInterchangeItem(), {
               metaEdName: elementToExtend.element.metaEdName,
-              namespaceInfo: extensionNamespaceInfo,
+              namespace: extensionNamespace,
               referencedEntity: elementToExtend.extensionElement,
               documentation: elementToExtend.element.documentation,
             });
