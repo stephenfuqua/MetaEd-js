@@ -33,11 +33,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {

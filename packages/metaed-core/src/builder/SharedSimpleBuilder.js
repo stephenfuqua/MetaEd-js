@@ -1,45 +1,37 @@
 // @flow
-import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
-import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
-
 import type { SharedSimple } from '../model/SharedSimple';
-import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
-
+import type { ValidationFailure } from '../validator/ValidationFailure';
 import { NoSharedSimple } from '../model/SharedSimple';
 import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
+import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
-
-import type { ValidationFailure } from '../validator/ValidationFailure';
+import { NoNamespace } from '../model/Namespace';
 
 export class SharedSimpleBuilder extends MetaEdGrammarListener {
-  entityRepository: EntityRepository;
-  currentNamespace: string;
   currentSharedSimple: SharedSimple;
+  metaEd: MetaEdEnvironment;
+  currentNamespace: Namespace;
   validationFailures: Array<ValidationFailure>;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = metaEd.entity;
-    this.currentNamespace = '';
-    this.currentSharedSimple = NoSharedSimple;
+    this.metaEd = metaEd;
     this.validationFailures = validationFailures;
-  }
-
-  getNamespace(): ?Namespace {
-    return this.entityRepository.namespace.get(this.currentNamespace);
+    this.currentNamespace = NoNamespace;
+    this.currentSharedSimple = NoSharedSimple;
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enteringSharedSimple(simpleFactory: () => SharedSimple) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentSharedSimple = { ...simpleFactory(), namespace };
+    this.currentSharedSimple = { ...simpleFactory(), namespace: this.currentNamespace };
   }
 
   exitingSharedSimple() {
@@ -47,7 +39,7 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
 
     if (this.currentSharedSimple.metaEdName) {
       // $FlowIgnore - allowing currentSharedSimple.type to specify the entityRepository Map property
-      const currentSharedSimpleRepository = this.entityRepository[this.currentSharedSimple.type];
+      const currentSharedSimpleRepository = this.currentNamespace.entity[this.currentSharedSimple.type];
       if (currentSharedSimpleRepository.has(this.currentSharedSimple.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'SharedSimpleBuilder',

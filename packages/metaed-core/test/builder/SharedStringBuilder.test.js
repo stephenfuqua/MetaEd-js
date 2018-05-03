@@ -19,6 +19,7 @@ describe('when building shared string in extension namespace', () => {
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -31,15 +32,17 @@ describe('when building shared string in extension namespace', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(namespace.entity.sharedString.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getSharedString(metaEd.entity, entityName)).toBeDefined();
-    expect(getSharedString(metaEd.entity, entityName).metaEdName).toBe(entityName);
+    expect(getSharedString(namespace.entity, entityName)).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
   it('should have no validation failures', () => {
@@ -47,27 +50,27 @@ describe('when building shared string in extension namespace', () => {
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, entityName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).documentation).toBe(documentation);
+    expect(getSharedString(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
   it('should have min length', () => {
-    expect(getSharedString(metaEd.entity, entityName).minLength).toBe(minLength);
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
   });
 
   it('should have max length', () => {
-    expect(getSharedString(metaEd.entity, entityName).maxLength).toBe(maxLength);
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe(maxLength);
   });
 });
 
@@ -82,6 +85,7 @@ describe('when building duplicate shared strings', () => {
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -99,15 +103,17 @@ describe('when building duplicate shared strings', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(namespace.entity.sharedString.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getSharedString(metaEd.entity, entityName)).toBeDefined();
-    expect(getSharedString(metaEd.entity, entityName).metaEdName).toBe(entityName);
+    expect(getSharedString(namespace.entity, entityName)).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).metaEdName).toBe(entityName);
   });
 
   it('should have two validation failures', () => {
@@ -147,6 +153,7 @@ describe('when building shared string with no shared string name', () => {
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -160,10 +167,12 @@ describe('when building shared string with no shared string name', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should not build shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(0);
+    expect(namespace.entity.sharedString.size).toBe(0);
   });
 
   it('should have missing id error', () => {
@@ -184,6 +193,7 @@ describe('when building shared string with lowercase shared string name', () => 
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -197,39 +207,41 @@ describe('when building shared string with lowercase shared string name', () => 
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(namespace.entity.sharedString.size).toBe(1);
   });
 
   it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getSharedString(metaEd.entity, expectedName)).toBeDefined();
-    expect(getSharedString(metaEd.entity, expectedName).metaEdName).toBe(expectedName);
+    expect(getSharedString(namespace.entity, expectedName)).toBeDefined();
+    expect(getSharedString(namespace.entity, expectedName).metaEdName).toBe(expectedName);
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, expectedName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, expectedName).documentation).toBe(documentation);
+    expect(getSharedString(namespace.entity, expectedName).documentation).toBe(documentation);
   });
 
   it('should have min length', () => {
-    expect(getSharedString(metaEd.entity, expectedName).minLength).toBe(minLength);
+    expect(getSharedString(namespace.entity, expectedName).minLength).toBe(minLength);
   });
 
   it('should have max length', () => {
-    expect(getSharedString(metaEd.entity, expectedName).maxLength).toBe(maxLength);
+    expect(getSharedString(namespace.entity, expectedName).maxLength).toBe(maxLength);
   });
 
   it('should have extraneous input error', () => {
@@ -248,6 +260,7 @@ describe('when building shared string with no documentation', () => {
   const metaEdId: string = '123';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -260,30 +273,32 @@ describe('when building shared string with no documentation', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, entityName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should not have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).documentation).toBe('');
+    expect(getSharedString(namespace.entity, entityName).documentation).toBe('');
   });
 
   it('should have min length', () => {
-    expect(getSharedString(metaEd.entity, entityName).minLength).toBe(minLength);
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
   });
 
   it('should have max length', () => {
-    expect(getSharedString(metaEd.entity, entityName).maxLength).toBe(maxLength);
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe(maxLength);
   });
 
   it('should have mismatched input error', () => {
@@ -303,6 +318,7 @@ describe('when building shared string with no min length', () => {
   const documentation = 'doc';
   const minLength = '';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -316,30 +332,32 @@ describe('when building shared string with no min length', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, entityName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).documentation).toBe(documentation);
+    expect(getSharedString(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
   it('should have a min length because max length token was ignored', () => {
-    expect(getSharedString(metaEd.entity, entityName).minLength).toBe(maxLength);
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe(maxLength);
   });
 
   it('should not have max length', () => {
-    expect(getSharedString(metaEd.entity, entityName).maxLength).toBe('');
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe('');
   });
 
   it('should have extraneous input and mismatched input error', () => {
@@ -359,6 +377,7 @@ describe('when building shared string with no max length', () => {
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -372,30 +391,32 @@ describe('when building shared string with no max length', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, entityName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).documentation).toBe(documentation);
+    expect(getSharedString(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
   it('should have min length', () => {
-    expect(getSharedString(metaEd.entity, entityName).minLength).toBe(minLength);
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
   });
 
   it('should no max length', () => {
-    expect(getSharedString(metaEd.entity, entityName).maxLength).toBe('');
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe('');
   });
 
   it('should have missing unsigned int error', () => {
@@ -416,6 +437,7 @@ describe('when building shared string with invalid trailing text', () => {
   const minLength = '2';
   const maxLength = '100';
   const trailingText: string = '\r\nTrailingText';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -430,30 +452,32 @@ describe('when building shared string with invalid trailing text', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+    expect(getSharedString(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have project extension', () => {
-    expect(getSharedString(metaEd.entity, entityName).namespace.projectExtension).toBe(projectExtension);
+    expect(getSharedString(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have metaed id', () => {
-    expect(getSharedString(metaEd.entity, entityName).metaEdId).toBe(metaEdId);
+    expect(getSharedString(namespace.entity, entityName).metaEdId).toBe(metaEdId);
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).documentation).toBe(documentation);
+    expect(getSharedString(namespace.entity, entityName).documentation).toBe(documentation);
   });
 
   it('should have min length', () => {
-    expect(getSharedString(metaEd.entity, entityName).minLength).toBe(minLength);
+    expect(getSharedString(namespace.entity, entityName).minLength).toBe(minLength);
   });
 
   it('should have max length', () => {
-    expect(getSharedString(metaEd.entity, entityName).maxLength).toBe(maxLength);
+    expect(getSharedString(namespace.entity, entityName).maxLength).toBe(maxLength);
   });
 
   it('should have extraneous input error', () => {
@@ -472,6 +496,7 @@ describe('when building shared string source map', () => {
   const documentation = 'doc';
   const minLength = '2';
   const maxLength = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedStringBuilder(metaEd, validationFailures);
@@ -485,41 +510,39 @@ describe('when building shared string source map', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   // SharedSimpleSourceMap
   it('should have type', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.type).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).sourceMap.type).toBeDefined();
   });
 
   it('should have documentation', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.documentation).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.metaEdName).toBeDefined();
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
+    expect(getSharedString(namespace.entity, entityName).sourceMap.metaEdName).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).sourceMap.metaEdName.tokenText).toBe(entityName);
   });
 
   it('should have metaEdId', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.metaEdId).toBeDefined();
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
-  });
-
-  it('should have namespace', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap.namespace).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).sourceMap.metaEdId).toBeDefined();
+    expect(getSharedString(namespace.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
   // SharedStringSourceMap
   it('should have minLength', () => {
-    expect(((getSharedString(metaEd.entity, entityName).sourceMap: any): SharedStringSourceMap).minLength).toBeDefined();
+    expect(((getSharedString(namespace.entity, entityName).sourceMap: any): SharedStringSourceMap).minLength).toBeDefined();
   });
 
   it('should have maxLength', () => {
-    expect(((getSharedString(metaEd.entity, entityName).sourceMap: any): SharedStringSourceMap).maxLength).toBeDefined();
+    expect(((getSharedString(namespace.entity, entityName).sourceMap: any): SharedStringSourceMap).maxLength).toBeDefined();
   });
 
   it('should have line, column, text for each property', () => {
-    expect(getSharedString(metaEd.entity, entityName).sourceMap).toMatchSnapshot();
+    expect(getSharedString(namespace.entity, entityName).sourceMap).toMatchSnapshot();
   });
 });

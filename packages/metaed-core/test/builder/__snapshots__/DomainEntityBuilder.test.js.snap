@@ -38,52 +38,12 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {
     "column": 2,
     "line": 2,
     "tokenText": "Abstract Entity",
-  },
-}
-`;
-
-exports[`when building domain entity namespace info source map should have line, column, text for each property 1`] = `
-Object {
-  "extensionEntitySuffix": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
-  "isExtension": Object {
-    "column": 26,
-    "line": 1,
-    "tokenText": "ProjectExtension",
-  },
-  "namespaceName": Object {
-    "column": 16,
-    "line": 1,
-    "tokenText": "namespace",
-  },
-  "projectExtension": Object {
-    "column": 26,
-    "line": 1,
-    "tokenText": "ProjectExtension",
-  },
-  "projectName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
-  "type": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
 }
 `;
@@ -126,11 +86,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {
@@ -159,12 +114,6 @@ exports[`when building domain entity with lowercase project extension should hav
 Array [
   "extraneous input 'project' expecting {'core', ID}, column: 26, line: 1, token: project",
   "extraneous input 'project' expecting {'core', ID}, column: 26, line: 1, token: project",
-]
-`;
-
-exports[`when building domain entity with no begin namespace should have mismatched input error 1`] = `
-Array [
-  "mismatched input 'Domain Entity' expecting 'Begin Namespace', column: 0, line: 1, token: Domain Entity",
 ]
 `;
 
@@ -474,15 +423,6 @@ Object {
     "tokenText": "NoSourceMap",
   },
 }
-`;
-
-exports[`when building domain entity with uppercase namespace should have missing namespace id and extraneous input error 1`] = `
-Array [
-  "missing NAMESPACE_ID at 'Namespace', column: 16, line: 1, token: Namespace",
-  "extraneous input 'ProjectExtension' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 26, line: 1, token: ProjectExtension",
-  "missing NAMESPACE_ID at 'Namespace', column: 16, line: 1, token: Namespace",
-  "extraneous input 'ProjectExtension' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 26, line: 1, token: ProjectExtension",
-]
 `;
 
 exports[`when building duplicate domain entities should have validation failures for each entity: when building duplicate domain entities should have validation failures for each entity -> DE 1 message 1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;

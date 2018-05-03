@@ -1,54 +1,40 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import type { SourceMap } from './SourceMap';
-import { NoSourceMap } from './SourceMap';
-import type { ModelType } from './ModelType';
-
-export type NamespaceSourceMap = {
-  type: SourceMap,
-  namespaceName: SourceMap,
-  isExtension: SourceMap,
-  projectExtension: SourceMap,
-  projectName: SourceMap,
-  extensionEntitySuffix: SourceMap,
-};
-
-export function newNamespaceSourceMap(): NamespaceSourceMap {
-  return {
-    type: NoSourceMap,
-    namespaceName: NoSourceMap,
-    isExtension: NoSourceMap,
-    projectExtension: NoSourceMap,
-    projectName: NoSourceMap,
-    extensionEntitySuffix: NoSourceMap,
-  };
-}
+import type { EntityRepository } from './EntityRepository';
+import { newEntityRepository } from './EntityRepository';
 
 export type Namespace = {
-  type: ModelType,
+  entity: EntityRepository,
   namespaceName: string,
   isExtension: boolean,
+  dependencies: Array<Namespace>,
   projectExtension: string,
   projectName: string,
   extensionEntitySuffix: string,
-  sourceMap: NamespaceSourceMap,
   data: any,
   config: any,
+
+  // remove these
+  type: boolean,
+  sourceMap: boolean,
 };
 
 export const DefaultExtensionEntitySuffix: string = 'Extension';
 
 export function newNamespace(): Namespace {
   return {
-    type: 'namespace',
+    entity: newEntityRepository(),
     namespaceName: '',
     isExtension: false,
+    dependencies: [],
     projectExtension: '',
     projectName: '',
     extensionEntitySuffix: DefaultExtensionEntitySuffix,
-    sourceMap: newNamespaceSourceMap(),
     data: {},
     config: {},
+
+    type: false,
+    sourceMap: false,
   };
 }
 

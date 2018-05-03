@@ -9,24 +9,26 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
+import { NoNamespace } from '../model/Namespace';
 
 // Note DecimalType is XSD specific with the advent of SharedDecimal, and creation should be move to XSD enhancers
 export class DecimalTypeBuilder extends MetaEdGrammarListener {
   currentDecimalType: DecimalType;
   metaEd: MetaEdEnvironment;
-  currentNamespace: string;
+  currentNamespace: Namespace;
   validationFailures: Array<ValidationFailure>;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
     this.metaEd = metaEd;
     this.validationFailures = validationFailures;
-    this.currentNamespace = '';
+    this.currentNamespace = NoNamespace;
     this.currentDecimalType = NoDecimalType;
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
@@ -41,11 +43,8 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     context: MetaEdGrammar.SharedDecimalContext | MetaEdGrammar.DecimalPropertyContext,
     generatedSimpleType: boolean = false,
   ) {
-    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
-    if (namespace == null) return;
-    this.currentDecimalType = { ...newDecimalType(), namespace, generatedSimpleType };
+    this.currentDecimalType = { ...newDecimalType(), namespace: this.currentNamespace, generatedSimpleType };
     this.currentDecimalType.sourceMap.type = sourceMapFrom(context);
-    this.currentDecimalType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -160,12 +159,12 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   exitingDecimalType() {
     if (this.currentDecimalType === NoDecimalType) return;
 
-    const projectExtension = this.currentDecimalType.namespace.projectExtension;
+    const projectExtension = this.currentNamespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentDecimalType.metaEdName}`
       : this.currentDecimalType.metaEdName;
     // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
-    this.metaEd.entity[this.currentDecimalType.type].set(repositoryId, this.currentDecimalType);
+    this.currentNamespace.entity[this.currentDecimalType.type].set(repositoryId, this.currentDecimalType);
 
     this.currentDecimalType = NoDecimalType;
   }

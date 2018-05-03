@@ -48,11 +48,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {
@@ -110,11 +105,6 @@ Object {
     "column": 13,
     "line": 2,
     "tokenText": "EntityName",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "properties": Array [],
   "queryableFields": Array [],
@@ -184,11 +174,6 @@ Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "shortDescription": Object {
     "column": 11,
@@ -272,11 +257,6 @@ Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "properties": Array [],
   "queryableFields": Array [],

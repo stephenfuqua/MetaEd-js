@@ -52,11 +52,6 @@ Object {
     "line": 7,
     "tokenText": "min value",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "totalDigits": Object {
     "column": 6,
     "line": 5,

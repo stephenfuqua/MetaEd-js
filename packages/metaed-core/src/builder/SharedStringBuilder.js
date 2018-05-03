@@ -13,7 +13,6 @@ export class SharedStringBuilder extends SharedSimpleBuilder {
     if (this.currentSharedSimple !== NoSharedSimple) {
       Object.assign(((this.currentSharedSimple.sourceMap: any): SharedStringSourceMap), {
         type: sourceMapFrom(context),
-        namespace: this.currentSharedSimple.namespace.sourceMap.type,
       });
     }
   }

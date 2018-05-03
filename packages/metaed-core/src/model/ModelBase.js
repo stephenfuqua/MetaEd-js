@@ -9,7 +9,6 @@ export type ModelBaseSourceMap = {
   documentation: SourceMap,
   metaEdName: SourceMap,
   metaEdId: SourceMap,
-  namespace: SourceMap,
 };
 
 export function newModelBaseSourceMap() {
@@ -18,7 +17,6 @@ export function newModelBaseSourceMap() {
     documentation: NoSourceMap,
     metaEdName: NoSourceMap,
     metaEdId: NoSourceMap,
-    namespace: NoSourceMap,
   };
 }
 

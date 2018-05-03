@@ -9,9 +9,10 @@ import { newMergedProperty, NoMergedProperty } from '../model/property/MergedPro
 import type { MergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
 import type { TopLevelEntity } from '../model/TopLevelEntity';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
-import type { EntityRepository } from '../model/EntityRepository';
+import type { NamespaceRepository } from '../model/NamespaceRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
+import { NoNamespace } from '../model/Namespace';
 import { isSharedProperty } from '../model/property/PropertyType';
 import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, isErrorText, squareBracketRemoval } from './BuilderUtility';
@@ -55,8 +56,8 @@ function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<str
 }
 
 export class TopLevelEntityBuilder extends MetaEdGrammarListener {
-  entityRepository: EntityRepository;
-  currentNamespace: string;
+  namespaceRepository: NamespaceRepository;
+  currentNamespace: Namespace;
   currentTopLevelEntity: TopLevelEntity;
   currentProperty: EntityProperty;
   currentMergedProperty: MergedProperty;
@@ -67,8 +68,8 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = metaEd.entity;
-    this.currentNamespace = '';
+    this.namespaceRepository = metaEd.namespace;
+    this.currentNamespace = NoNamespace;
     this.currentTopLevelEntity = NoTopLevelEntity;
     this.currentProperty = NoEntityProperty;
     this.currentMergedProperty = NoMergedProperty;
@@ -78,18 +79,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.propertyRepository = metaEd.propertyIndex;
   }
 
-  getNamespace(): ?Namespace {
-    return this.entityRepository.namespace.get(this.currentNamespace);
-  }
-
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.namespaceRepository.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enteringEntity(entityFactory: () => TopLevelEntity) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentTopLevelEntity = { ...entityFactory(), namespace };
+    this.currentTopLevelEntity = { ...entityFactory(), namespace: this.currentNamespace };
     this.currentTopLevelEntityPropertyLookup.clear();
   }
 
@@ -97,7 +93,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
       // $FlowIgnore - allowing currentTopLevelEntity.type to specify the entityRepository Map property
-      const currentTopLevelEntityRepository = this.entityRepository[this.currentTopLevelEntity.type];
+      const currentTopLevelEntityRepository = this.currentNamespace.entity[this.currentTopLevelEntity.type];
       if (currentTopLevelEntityRepository.has(this.currentTopLevelEntity.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',

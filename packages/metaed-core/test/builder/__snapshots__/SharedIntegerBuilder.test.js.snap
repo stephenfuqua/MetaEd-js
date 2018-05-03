@@ -52,11 +52,6 @@ Object {
     "line": 5,
     "tokenText": "min value",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "type": Object {
     "column": 2,
     "line": 2,
@@ -138,11 +133,6 @@ Object {
     "column": 6,
     "line": 5,
     "tokenText": "min value",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "type": Object {
     "column": 2,

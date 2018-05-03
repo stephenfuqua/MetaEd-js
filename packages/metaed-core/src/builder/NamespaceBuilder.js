@@ -2,11 +2,10 @@
 import { String as sugar } from 'sugar';
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
-import type { EntityRepository } from '../model/EntityRepository';
+import type { NamespaceRepository } from '../model/NamespaceRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
 import { NoNamespace, newNamespace } from '../model/Namespace';
-import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
@@ -37,10 +36,10 @@ function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, name
   Object.assign(namespace, { namespaceName: context.NAMESPACE_ID().getText() });
 
   // This is a good guess -- capitalize the namespace -- given that projectName is not in the language yet,
-  // but the AddProjectNameToNamespace task sets the correct value after the builders run
+  // but the AddProjectNameToNamespace task sets the correct value after the builders run,
+  // so this is overwritten later.
   namespace.projectName = sugar.capitalize(namespace.namespaceName);
 
-  Object.assign(namespace.sourceMap, { namespaceName: sourceMapFrom(context) });
   return namespace;
 }
 
@@ -57,18 +56,17 @@ function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContext, name
     projectExtension: context.ID().getText(),
     isExtension: true,
   });
-  Object.assign(namespace.sourceMap, { projectExtension: sourceMapFrom(context), isExtension: sourceMapFrom(context) });
   return namespace;
 }
 
 export class NamespaceBuilder extends MetaEdGrammarListener {
-  entityRepository: EntityRepository;
+  namespaceRepository: NamespaceRepository;
   currentNamespace: Namespace;
   validationFailures: Array<ValidationFailure>;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
-    this.entityRepository = metaEd.entity;
+    this.namespaceRepository = metaEd.namespace;
     this.currentNamespace = NoNamespace;
     this.validationFailures = validationFailures;
   }
@@ -77,7 +75,6 @@ export class NamespaceBuilder extends MetaEdGrammarListener {
     if (context.exception) return;
     if (this.currentNamespace !== NoNamespace) return;
     this.currentNamespace = newNamespace();
-    this.currentNamespace.sourceMap.type = sourceMapFrom(context);
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
@@ -88,8 +85,11 @@ export class NamespaceBuilder extends MetaEdGrammarListener {
   enterNamespaceType(context: MetaEdGrammar.NamespaceTypeContext) {
     if (this.currentNamespace === NoNamespace) return;
     this.currentNamespace = enteringNamespaceType(context, this.currentNamespace);
+
     // we don't wait for exitNamespace to finish building Namespaces
-    this.entityRepository.namespace.set(this.currentNamespace.namespaceName, this.currentNamespace);
+    if (!this.namespaceRepository.has(this.currentNamespace.namespaceName)) {
+      this.namespaceRepository.set(this.currentNamespace.namespaceName, this.currentNamespace);
+    }
     this.currentNamespace = NoNamespace;
   }
 }

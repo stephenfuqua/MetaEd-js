@@ -120,11 +120,6 @@ Object {
     "line": 9,
     "tokenText": "domain entity",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
   "referencedEntity": Object {
     "column": 0,
     "line": 0,
@@ -164,11 +159,6 @@ Object {
     "column": 4,
     "line": 10,
     "tokenText": "domain entity identity",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
   "referencedEntity": Object {
     "column": 0,
@@ -228,11 +218,6 @@ Object {
     "column": 14,
     "line": 2,
     "tokenText": "InterchangeName",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "type": Object {
     "column": 2,

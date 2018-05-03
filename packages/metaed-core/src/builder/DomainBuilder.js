@@ -8,6 +8,7 @@ import type { Subdomain, SubdomainSourceMap } from '../model/Subdomain';
 import type { DomainItem, DomainItemSourceMap } from '../model/DomainItem';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
+import { NoNamespace } from '../model/Namespace';
 import { newDomainItem, NoDomainItem } from '../model/DomainItem';
 import { newDomain, NoDomain } from '../model/Domain';
 import { newSubdomain } from '../model/Subdomain';
@@ -18,7 +19,7 @@ import { sourceMapFrom } from '../model/SourceMap';
 
 export class DomainBuilder extends MetaEdGrammarListener {
   metaEd: MetaEdEnvironment;
-  currentNamespace: string;
+  currentNamespace: Namespace;
   currentDomain: Domain | Subdomain;
   currentDomainItem: DomainItem;
   validationFailures: Array<ValidationFailure>;
@@ -26,18 +27,15 @@ export class DomainBuilder extends MetaEdGrammarListener {
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
     this.metaEd = metaEd;
-    this.currentNamespace = '';
+    this.currentNamespace = NoNamespace;
     this.currentDomain = NoDomain;
     this.currentDomainItem = NoDomainItem;
     this.validationFailures = validationFailures;
   }
 
-  getNamespace(): ?Namespace {
-    return this.metaEd.entity.namespace.get(this.currentNamespace);
-  }
-
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -66,25 +64,19 @@ export class DomainBuilder extends MetaEdGrammarListener {
   }
 
   enterDomain(context: MetaEdGrammar.DomainContext) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentDomain = { ...newDomain(), namespace };
+    this.currentDomain = { ...newDomain(), namespace: this.currentNamespace };
     this.currentDomain.sourceMap.type = sourceMapFrom(context);
-    this.currentDomain.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterSubdomain(context: MetaEdGrammar.SubdomainContext) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentDomain = { ...newSubdomain(), namespace };
+    this.currentDomain = { ...newSubdomain(), namespace: this.currentNamespace };
     this.currentDomain.sourceMap.type = sourceMapFrom(context);
-    this.currentDomain.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   exitingEntity() {
     if (this.currentDomain === NoDomain) return;
     // $FlowIgnore
-    const currentDomainRepository = this.metaEd.entity[this.currentDomain.type];
+    const currentDomainRepository = this.currentNamespace.entity[this.currentDomain.type];
     if (this.currentDomain.metaEdName) {
       if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
         this.validationFailures.push({

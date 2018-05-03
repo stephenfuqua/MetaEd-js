@@ -65,11 +65,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "type": Object {
@@ -93,11 +88,6 @@ Object {
     "tokenText": "[2]",
   },
   "metaEdName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
-  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -133,11 +123,6 @@ Object {
     "tokenText": "[3]",
   },
   "metaEdName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
-  "namespace": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -248,11 +233,6 @@ Object {
     "column": 14,
     "line": 2,
     "tokenText": "SchoolYear",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "properties": Array [],
   "queryableFields": Array [],

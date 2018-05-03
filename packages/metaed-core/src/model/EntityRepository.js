@@ -15,7 +15,6 @@ import type { IntegerType } from './IntegerType';
 import type { Interchange } from './Interchange';
 import type { InterchangeExtension } from './InterchangeExtension';
 import type { MapTypeEnumeration } from './MapTypeEnumeration';
-import type { Namespace } from './Namespace';
 import type { SchoolYearEnumeration } from './SchoolYearEnumeration';
 import type { SharedDecimal } from './SharedDecimal';
 import type { SharedInteger } from './SharedInteger';
@@ -34,36 +33,39 @@ import {
   allEntityModelTypesNoSimpleTypes,
 } from './ModelType';
 
-export class EntityRepository {
-  unknown: Map<string, any>;
-  association: Map<string, Association>;
-  associationExtension: Map<string, AssociationExtension>;
-  associationSubclass: Map<string, AssociationSubclass>;
-  choice: Map<string, Choice>;
-  common: Map<string, Common>;
-  commonExtension: Map<string, CommonExtension>;
-  decimalType: Map<string, DecimalType>;
-  descriptor: Map<string, Descriptor>;
-  domain: Map<string, Domain>;
-  domainEntity: Map<string, DomainEntity>;
-  domainEntityExtension: Map<string, DomainEntityExtension>;
-  domainEntitySubclass: Map<string, DomainEntitySubclass>;
-  enumeration: Map<string, Enumeration>;
-  integerType: Map<string, IntegerType>;
-  interchange: Map<string, Interchange>;
-  interchangeExtension: Map<string, InterchangeExtension>;
-  mapTypeEnumeration: Map<string, MapTypeEnumeration>;
-  namespace: Map<string, Namespace>;
-  schoolYearEnumeration: Map<string, SchoolYearEnumeration>;
-  sharedDecimal: Map<string, SharedDecimal>;
-  sharedInteger: Map<string, SharedInteger>;
-  sharedString: Map<string, SharedString>;
-  stringType: Map<string, StringType>;
-  subdomain: Map<string, Subdomain>;
-}
+export type EntityRepository = {
+  unknown: Map<string, any>,
+  association: Map<string, Association>,
+  associationExtension: Map<string, AssociationExtension>,
+  associationSubclass: Map<string, AssociationSubclass>,
+  choice: Map<string, Choice>,
+  common: Map<string, Common>,
+  commonExtension: Map<string, CommonExtension>,
+  decimalType: Map<string, DecimalType>,
+  descriptor: Map<string, Descriptor>,
+  domain: Map<string, Domain>,
+  domainEntity: Map<string, DomainEntity>,
+  domainEntityExtension: Map<string, DomainEntityExtension>,
+  domainEntitySubclass: Map<string, DomainEntitySubclass>,
+  enumeration: Map<string, Enumeration>,
+  integerType: Map<string, IntegerType>,
+  interchange: Map<string, Interchange>,
+  interchangeExtension: Map<string, InterchangeExtension>,
+  mapTypeEnumeration: Map<string, MapTypeEnumeration>,
+
+  // remove
+  namespace: boolean,
+
+  schoolYearEnumeration: Map<string, SchoolYearEnumeration>,
+  sharedDecimal: Map<string, SharedDecimal>,
+  sharedInteger: Map<string, SharedInteger>,
+  sharedString: Map<string, SharedString>,
+  stringType: Map<string, StringType>,
+  subdomain: Map<string, Subdomain>,
+};
 
 export function newEntityRepository(): EntityRepository {
-  return Object.assign(new EntityRepository(), {
+  return {
     unknown: new Map(),
     association: new Map(),
     associationExtension: new Map(),
@@ -82,14 +84,14 @@ export function newEntityRepository(): EntityRepository {
     interchange: new Map(),
     interchangeExtension: new Map(),
     mapTypeEnumeration: new Map(),
-    namespace: new Map(),
+    namespace: false,
     schoolYearEnumeration: new Map(),
     sharedDecimal: new Map(),
     sharedInteger: new Map(),
     sharedString: new Map(),
     stringType: new Map(),
     subdomain: new Map(),
-  });
+  };
 }
 
 export function getAllEntities(repository: EntityRepository): Array<ModelBase> {

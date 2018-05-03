@@ -9,24 +9,26 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
+import { NoNamespace } from '../model/Namespace';
 
 // Note StringType is XSD specific with the advent of SharedString, and creation should be move to XSD enhancers
 export class StringTypeBuilder extends MetaEdGrammarListener {
   currentStringType: StringType;
   metaEd: MetaEdEnvironment;
-  currentNamespace: string;
+  currentNamespace: Namespace;
   validationFailures: Array<ValidationFailure>;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
     this.metaEd = metaEd;
     this.validationFailures = validationFailures;
-    this.currentNamespace = '';
+    this.currentNamespace = NoNamespace;
     this.currentStringType = NoStringType;
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enterSharedString(context: MetaEdGrammar.SharedStringContext) {
@@ -41,11 +43,8 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     context: MetaEdGrammar.SharedStringContext | MetaEdGrammar.StringPropertyContext,
     generatedSimpleType: boolean = false,
   ) {
-    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
-    if (namespace == null) return;
-    this.currentStringType = { ...newStringType(), namespace, generatedSimpleType };
+    this.currentStringType = { ...newStringType(), namespace: this.currentNamespace, generatedSimpleType };
     this.currentStringType.sourceMap.type = sourceMapFrom(context);
-    this.currentStringType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -135,12 +134,12 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     if (this.currentStringType === NoStringType) return;
 
     // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
-    const projectExtension = this.currentStringType.namespace.projectExtension;
+    const projectExtension = this.currentNamespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentStringType.metaEdName}`
       : this.currentStringType.metaEdName;
     // $FlowIgnore - allowing currentStringType.type to specify the entityRepository Map property
-    this.metaEd.entity[this.currentStringType.type].set(repositoryId, this.currentStringType);
+    this.currentNamespace.entity[this.currentStringType.type].set(repositoryId, this.currentStringType);
 
     this.currentStringType = NoStringType;
   }

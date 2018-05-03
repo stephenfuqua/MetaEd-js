@@ -23,6 +23,7 @@ describe('when building single interchange', () => {
   const interchangeElementMetaEdId: string = '2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
   const interchangeIdentityTemplateMetaEdId: string = '3';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -39,15 +40,17 @@ describe('when building single interchange', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchange(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have no validation failures', () => {
@@ -55,48 +58,48 @@ describe('when building single interchange', () => {
   });
 
   it('should have namespace', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have interchange documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).documentation).toBe(interchangeDocumentation);
+    expect(getInterchange(namespace.entity, interchangeName).documentation).toBe(interchangeDocumentation);
   });
 
   it('should have extended documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).extendedDocumentation).toBe(extendedDocumentation);
+    expect(getInterchange(namespace.entity, interchangeName).extendedDocumentation).toBe(extendedDocumentation);
   });
 
   it('should have use case documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).useCaseDocumentation).toBe(useCaseDocumentation);
+    expect(getInterchange(namespace.entity, interchangeName).useCaseDocumentation).toBe(useCaseDocumentation);
   });
 
   it('should have one element', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual([
+    expect(getInterchange(namespace.entity, interchangeName).elements).toHaveLength(1);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].referencedType).toEqual([
       'domainEntity',
       'domainEntitySubclass',
     ]);
   });
 
   it('should have one identity template', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates).toHaveLength(1);
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
       interchangeIdentityTemplateName,
     );
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
       interchangeIdentityTemplateMetaEdId,
     );
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
       'association',
       'associationSubclass',
     ]);
@@ -106,17 +109,18 @@ describe('when building single interchange', () => {
 describe('when building interchange with additional element and identity types', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-
+  const namespaceName: string = 'namespace';
   const interchangeName: string = 'InterchangeName';
   const interchangeElementName1: string = 'InterchangeElementName1';
   const interchangeElementName2: string = 'InterchangeElementName2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace(namespaceName, 'ProjectExtension')
       .withStartInterchange(interchangeName, '1')
       .withDocumentation('doc')
       .withExtendedDocumentation('doc')
@@ -128,25 +132,27 @@ describe('when building interchange with additional element and identity types',
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should have two element', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(2);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].referencedType).toEqual([
+    expect(getInterchange(namespace.entity, interchangeName).elements).toHaveLength(2);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName1);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].referencedType).toEqual([
       'association',
       'associationSubclass',
     ]);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[1].metaEdName).toBe(interchangeElementName2);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[1].referencedType).toEqual(['descriptor']);
+    expect(getInterchange(namespace.entity, interchangeName).elements[1].metaEdName).toBe(interchangeElementName2);
+    expect(getInterchange(namespace.entity, interchangeName).elements[1].referencedType).toEqual(['descriptor']);
   });
 
   it('should have one identity template', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates).toHaveLength(1);
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
       interchangeIdentityTemplateName,
     );
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].referencedType).toEqual([
       'domainEntity',
       'domainEntitySubclass',
     ]);
@@ -168,6 +174,7 @@ describe('when building duplicate interchanges', () => {
   const interchangeElementMetaEdId: string = '2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
   const interchangeIdentityTemplateMetaEdId: string = '3';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -192,15 +199,17 @@ describe('when building duplicate interchanges', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchange(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have two validation failures', () => {
@@ -240,6 +249,7 @@ describe('when building single interchange extension', () => {
   const interchangeElementMetaEdId: string = '2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
   const interchangeIdentityTemplateMetaEdId: string = '3';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -253,41 +263,43 @@ describe('when building single interchange extension', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(namespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have one element', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements).toHaveLength(1);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements).toHaveLength(1);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have one identity template', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates).toHaveLength(1);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
+    expect(getInterchangeExtension(namespace.entity, interchangeName).identityTemplates).toHaveLength(1);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).identityTemplates[0].metaEdName).toBe(
       interchangeIdentityTemplateName,
     );
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
+    expect(getInterchangeExtension(namespace.entity, interchangeName).identityTemplates[0].metaEdId).toBe(
       interchangeIdentityTemplateMetaEdId,
     );
   });
@@ -305,6 +317,7 @@ describe('when building duplicate interchange extensions', () => {
   const interchangeElementMetaEdId: string = '2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
   const interchangeIdentityTemplateMetaEdId: string = '3';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -323,15 +336,17 @@ describe('when building duplicate interchange extensions', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(namespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have two validation failures', () => {
@@ -371,6 +386,7 @@ describe('when building interchange with no interchange name', () => {
   const interchangeDocumentation: string = 'InterchangeDocumentation';
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -384,10 +400,12 @@ describe('when building interchange with no interchange name', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should not build interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(0);
+    expect(namespace.entity.interchange.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -407,6 +425,7 @@ describe('when building interchange with lowercase interchange name', () => {
   const interchangeDocumentation: string = 'InterchangeDocumentation';
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -420,10 +439,12 @@ describe('when building interchange with lowercase interchange name', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should not build interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(0);
+    expect(namespace.entity.interchange.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -442,6 +463,7 @@ describe('when building interchange with no documentation', () => {
   const interchangeMetaEdId: string = '1';
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -454,37 +476,39 @@ describe('when building interchange with no documentation', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchange(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).documentation).toBe('');
+    expect(getInterchange(namespace.entity, interchangeName).documentation).toBe('');
   });
 
   it('should have one element', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).elements).toHaveLength(1);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have mismatched input error', () => {
@@ -502,6 +526,7 @@ describe('when building interchange with no interchange component property', () 
   const interchangeName: string = 'InterchangeName';
   const interchangeMetaEdId: string = '1';
   const interchangeDocumentation: string = 'InterchangeDocumentation';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -514,34 +539,36 @@ describe('when building interchange with no interchange component property', () 
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchange(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).documentation).toBe(interchangeDocumentation);
+    expect(getInterchange(namespace.entity, interchangeName).documentation).toBe(interchangeDocumentation);
   });
 
   it('should have no element', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(0);
+    expect(getInterchange(namespace.entity, interchangeName).elements).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -562,6 +589,7 @@ describe('when building interchange with invalid trailing text', () => {
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
   const trailingText: string = '\r\nTrailingText';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -576,37 +604,39 @@ describe('when building interchange with invalid trailing text', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchange(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchange(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).documentation).toBe(interchangeDocumentation);
+    expect(getInterchange(namespace.entity, interchangeName).documentation).toBe(interchangeDocumentation);
   });
 
   it('should have one element', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements).toHaveLength(1);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(getInterchange(namespace.entity, interchangeName).elements).toHaveLength(1);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have extraneous input error', () => {
@@ -625,6 +655,7 @@ describe('when building interchange extension with no interchange extension name
   const interchangeMetaEdId: string = '1';
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -637,10 +668,12 @@ describe('when building interchange extension with no interchange extension name
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should not build interchange extension', () => {
-    expect(metaEd.entity.interchange.size).toBe(0);
+    expect(namespace.entity.interchange.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -659,6 +692,7 @@ describe('when building interchange extension with lowercase interchange extensi
   const interchangeMetaEdId: string = '1';
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -671,10 +705,12 @@ describe('when building interchange extension with lowercase interchange extensi
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should not build interchange extension', () => {
-    expect(metaEd.entity.interchange.size).toBe(0);
+    expect(namespace.entity.interchange.size).toBe(0);
   });
 
   it('should have no viable alternative error', () => {
@@ -691,6 +727,7 @@ describe('when building interchange extension with no element property', () => {
 
   const interchangeName: string = 'InterchangeName';
   const interchangeMetaEdId: string = '1';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -702,31 +739,33 @@ describe('when building interchange extension with no element property', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(namespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have project extension', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).namespace.projectExtension).toBe(projectExtension);
   });
 
   it('should have no element', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements).toHaveLength(0);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {
@@ -746,6 +785,7 @@ describe('when building interchange extension with invalid trailing text', () =>
   const interchangeElementName: string = 'InterchangeElementName';
   const interchangeElementMetaEdId: string = '2';
   const trailingText: string = '\r\nTrailingText';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -759,29 +799,31 @@ describe('when building interchange extension with invalid trailing text', () =>
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(namespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should be found in entity repository', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName)).toBeDefined();
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdName).toBe(interchangeName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName)).toBeDefined();
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdName).toBe(interchangeName);
   });
 
   it('should have namespace', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).namespace.namespaceName).toBe(namespaceName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).metaEdId).toBe(interchangeMetaEdId);
   });
 
   it('should have one element', () => {
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements).toHaveLength(1);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
-    expect(getInterchangeExtension(metaEd.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements).toHaveLength(1);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements[0].metaEdName).toBe(interchangeElementName);
+    expect(getInterchangeExtension(namespace.entity, interchangeName).elements[0].metaEdId).toBe(interchangeElementMetaEdId);
   });
 
   it('should have no viable alternative error', () => {
@@ -804,6 +846,7 @@ describe('when building single interchange source map', () => {
   const interchangeElementMetaEdId: string = '2';
   const interchangeIdentityTemplateName: string = 'InterchangeIdentityTemplateName';
   const interchangeIdentityTemplateMetaEdId: string = '3';
+  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new InterchangeBuilder(metaEd, validationFailures);
@@ -820,88 +863,88 @@ describe('when building single interchange source map', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
   });
 
   // ModelBaseSourceMap
   it('should have type', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.type).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.type).toBeDefined();
   });
 
   it('should have documentation', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.documentation).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.documentation).toBeDefined();
   });
 
   it('should have metaEdName', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.metaEdName).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.metaEdName.tokenText).toBe(interchangeName);
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.metaEdName).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.metaEdName.tokenText).toBe(interchangeName);
   });
 
   it('should have metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.metaEdId).toBeDefined();
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.metaEdId.tokenText).toBe(`[${interchangeMetaEdId}]`);
-  });
-
-  it('should have namespace', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap.namespace).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.metaEdId).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap.metaEdId.tokenText).toBe(`[${interchangeMetaEdId}]`);
   });
 
   // InterchangeSourceMap
   it('should have extendedDocumentation', () => {
     expect(
-      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).extendedDocumentation,
+      ((getInterchange(namespace.entity, interchangeName).sourceMap: any): InterchangeSourceMap).extendedDocumentation,
     ).toBeDefined();
   });
 
   it('should have useCaseDocumentation', () => {
     expect(
-      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).useCaseDocumentation,
+      ((getInterchange(namespace.entity, interchangeName).sourceMap: any): InterchangeSourceMap).useCaseDocumentation,
     ).toBeDefined();
   });
 
   it('should have one element', () => {
-    expect(((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).elements).toHaveLength(1);
+    expect(((getInterchange(namespace.entity, interchangeName).sourceMap: any): InterchangeSourceMap).elements).toHaveLength(
+      1,
+    );
   });
 
   it('should have one identityTemplate', () => {
     expect(
-      ((getInterchange(metaEd.entity, interchangeName).sourceMap: any): InterchangeSourceMap).identityTemplates,
+      ((getInterchange(namespace.entity, interchangeName).sourceMap: any): InterchangeSourceMap).identityTemplates,
     ).toHaveLength(1);
   });
 
   it('should have line, column, text for each property', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).sourceMap).toMatchSnapshot();
+    expect(getInterchange(namespace.entity, interchangeName).sourceMap).toMatchSnapshot();
   });
 
   // InterchangeItemSourceMap
   it('should have element type', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].sourceMap.type).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].sourceMap.type).toBeDefined();
   });
 
   it('should have element metaEdName', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].sourceMap.metaEdName).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have element metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].sourceMap.metaEdId).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have element line, column, text for each property', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).elements[0].sourceMap).toMatchSnapshot();
+    expect(getInterchange(namespace.entity, interchangeName).elements[0].sourceMap).toMatchSnapshot();
   });
 
   it('should have identityTemplate type', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].sourceMap.type).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].sourceMap.type).toBeDefined();
   });
 
   it('should have identityTemplate metaEdName', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].sourceMap.metaEdName).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].sourceMap.metaEdName).toBeDefined();
   });
 
   it('should have identityTemplate metaEdId', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].sourceMap.metaEdId).toBeDefined();
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].sourceMap.metaEdId).toBeDefined();
   });
 
   it('should have identityTemplate line, column, text for each property', () => {
-    expect(getInterchange(metaEd.entity, interchangeName).identityTemplates[0].sourceMap).toMatchSnapshot();
+    expect(getInterchange(namespace.entity, interchangeName).identityTemplates[0].sourceMap).toMatchSnapshot();
   });
 });

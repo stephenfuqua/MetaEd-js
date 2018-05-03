@@ -9,24 +9,26 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import type { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
+import { NoNamespace } from '../model/Namespace';
 
 // Note IntegerType is XSD specific with the advent of SharedInteger and SharedShort, and creation should be move to XSD enhancers
 export class IntegerTypeBuilder extends MetaEdGrammarListener {
   currentIntegerType: IntegerType;
   metaEd: MetaEdEnvironment;
-  currentNamespace: string;
+  currentNamespace: Namespace;
   validationFailures: Array<ValidationFailure>;
 
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
     this.metaEd = metaEd;
     this.validationFailures = validationFailures;
-    this.currentNamespace = '';
+    this.currentNamespace = NoNamespace;
     this.currentIntegerType = NoIntegerType;
   }
 
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enterSharedInteger(context: MetaEdGrammar.SharedIntegerContext) {
@@ -53,13 +55,10 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
       | MetaEdGrammar.ShortPropertyContext,
     { isShort, generatedSimpleType }: { isShort: boolean, generatedSimpleType: boolean },
   ) {
-    const namespace: ?Namespace = this.metaEd.entity.namespace.get(this.currentNamespace);
-    if (namespace == null) return;
     const factory = isShort ? newShortType : newIntegerType;
-    this.currentIntegerType = { ...factory(), namespace, generatedSimpleType };
+    this.currentIntegerType = { ...factory(), namespace: this.currentNamespace, generatedSimpleType };
 
     this.currentIntegerType.sourceMap.type = sourceMapFrom(context);
-    this.currentIntegerType.sourceMap.namespace = namespace.sourceMap.type;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -162,12 +161,12 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
   exitingIntegerType() {
     if (this.currentIntegerType === NoIntegerType) return;
 
-    const projectExtension = this.currentIntegerType.namespace.projectExtension;
+    const projectExtension = this.currentNamespace.projectExtension;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentIntegerType.metaEdName}`
       : this.currentIntegerType.metaEdName;
     // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
-    this.metaEd.entity[this.currentIntegerType.type].set(repositoryId, this.currentIntegerType);
+    this.currentNamespace.entity[this.currentIntegerType.type].set(repositoryId, this.currentIntegerType);
 
     this.currentIntegerType = NoIntegerType;
   }

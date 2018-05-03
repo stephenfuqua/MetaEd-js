@@ -46,11 +46,6 @@ Object {
     "line": 2,
     "tokenText": "DomainName",
   },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
-  },
   "properties": Array [],
   "queryableFields": Array [],
   "subdomains": Array [],
@@ -164,11 +159,6 @@ Object {
     "column": 12,
     "line": 2,
     "tokenText": "SubdomainName",
-  },
-  "namespace": Object {
-    "column": 0,
-    "line": 1,
-    "tokenText": "Begin Namespace",
   },
   "parent": Object {
     "column": 29,

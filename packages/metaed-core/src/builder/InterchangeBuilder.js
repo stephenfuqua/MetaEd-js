@@ -7,6 +7,7 @@ import type { InterchangeItem } from '../model/InterchangeItem';
 import type { EntityRepository } from '../model/EntityRepository';
 import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
+import { NoNamespace } from '../model/Namespace';
 
 import { newInterchange, NoInterchange } from '../model/Interchange';
 import { newInterchangeItem, NoInterchangeItem } from '../model/InterchangeItem';
@@ -18,7 +19,7 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 
 export class InterchangeBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
-  currentNamespace: string;
+  currentNamespace: Namespace;
   currentInterchange: Interchange;
   currentInterchangeItem: InterchangeItem;
   validationFailures: Array<ValidationFailure>;
@@ -26,18 +27,15 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
   constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
     super();
     this.metaEd = metaEd;
-    this.currentNamespace = '';
+    this.currentNamespace = NoNamespace;
     this.currentInterchange = NoInterchange;
     this.currentInterchangeItem = NoInterchangeItem;
     this.validationFailures = validationFailures;
   }
 
-  getNamespace(): ?Namespace {
-    return this.metaEd.entity.namespace.get(this.currentNamespace);
-  }
-
   enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
-    this.currentNamespace = namespaceNameFrom(context);
+    const namespace: ?Namespace = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
   }
 
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
@@ -77,20 +75,15 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
     }
   }
   enterInterchange(context: MetaEdGrammar.InterchangeContext) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentInterchange = { ...newInterchange(), namespace };
+    this.currentInterchange = { ...newInterchange(), namespace: this.currentNamespace };
 
     Object.assign(this.currentInterchange.sourceMap, {
       type: sourceMapFrom(context),
-      namespace: this.currentInterchange.namespace.sourceMap.type,
     });
   }
 
   enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
-    const namespace = this.getNamespace();
-    if (namespace == null) return;
-    this.currentInterchange = { ...newInterchangeExtension(), namespace };
+    this.currentInterchange = { ...newInterchangeExtension(), namespace: this.currentNamespace };
     this.currentInterchange.sourceMap.type = sourceMapFrom(context);
   }
 
@@ -99,7 +92,7 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
     if (this.currentInterchange.metaEdName) {
       const extensionMessageString = this.currentInterchange.type === 'interchangeExtension' ? 'Extension ' : '';
       // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
-      if (this.metaEd.entity[this.currentInterchange.type].has(this.currentInterchange.metaEdName)) {
+      if (this.currentNamespace.entity[this.currentInterchange.type].has(this.currentInterchange.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
           category: 'error',
@@ -110,7 +103,7 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
           fileMap: null,
         });
         // $FlowIgnore - we ensure the key is in the map above, and allow currentInterchange.type to specify the entityRepository Map property
-        const duplicateEntity: Interchange = this.metaEd.entity[this.currentInterchange.type].get(
+        const duplicateEntity: Interchange = this.currentNamespace.entity[this.currentInterchange.type].get(
           this.currentInterchange.metaEdName,
         );
         this.validationFailures.push({
@@ -124,7 +117,10 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
         });
       } else {
         // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
-        this.metaEd.entity[this.currentInterchange.type].set(this.currentInterchange.metaEdName, this.currentInterchange);
+        this.currentNamespace.entity[this.currentInterchange.type].set(
+          this.currentInterchange.metaEdName,
+          this.currentInterchange,
+        );
       }
     }
     this.currentInterchange = NoInterchange;

@@ -28,7 +28,6 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     this.enteringEntity(newDescriptor);
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.sourceMap.type = sourceMapFrom(context);
-    this.currentTopLevelEntity.sourceMap.namespace = this.currentTopLevelEntity.namespace.sourceMap.type;
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -64,7 +63,6 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     ((this.currentTopLevelEntity.sourceMap: any): DescriptorSourceMap).mapTypeEnumeration = sourceMapFrom(context);
 
     this.currentMapTypeEnumeration.sourceMap.type = sourceMapFrom(context);
-    this.currentMapTypeEnumeration.sourceMap.namespace = this.currentTopLevelEntity.sourceMap.namespace;
     ((this.currentMapTypeEnumeration.sourceMap: any): DescriptorSourceMap).mapTypeEnumeration = sourceMapFrom(context);
   }
 
@@ -86,7 +84,10 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity !== NoTopLevelEntity) {
       asDescriptor(this.currentTopLevelEntity).mapTypeEnumeration = this.currentMapTypeEnumeration;
     }
-    this.entityRepository.mapTypeEnumeration.set(this.currentMapTypeEnumeration.metaEdName, this.currentMapTypeEnumeration);
+    this.currentNamespace.entity.mapTypeEnumeration.set(
+      this.currentMapTypeEnumeration.metaEdName,
+      this.currentMapTypeEnumeration,
+    );
     this.currentMapTypeEnumeration = NoMapTypeEnumeration;
   }
 
@@ -94,7 +95,6 @@ export class DescriptorBuilder extends TopLevelEntityBuilder {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentEnumerationItem = newEnumerationItem();
     this.currentEnumerationItem.sourceMap.type = sourceMapFrom(context);
-    this.currentEnumerationItem.sourceMap.namespace = this.currentTopLevelEntity.sourceMap.namespace;
   }
 
   exitEnumerationItem(context: MetaEdGrammar.EnumerationItemContext) {
