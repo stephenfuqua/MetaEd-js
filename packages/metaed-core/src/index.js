@@ -7,7 +7,7 @@ export { createMetaEdFile } from './task/MetaEdFile';
 export { validateConfiguration } from './task/ValidateConfiguration';
 export { loadFiles } from './task/FileSystemFilenameLoader';
 export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
-export { addProjectNameToNamespace } from './task/AddProjectNameToNamespace';
+export { initializeNamespaces } from './task/InitializeNamespaces';
 export { newState } from './State';
 export { newPipelineOptions } from './task/PipelineOptions';
 export { loadFileIndex } from './task/LoadFileIndex';
@@ -29,7 +29,12 @@ export {
 } from './model/EntityRepository';
 export { addProperty, getAllProperties, getPropertiesOfType, newPropertyIndex } from './model/property/PropertyRepository';
 export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './model/property/PropertyType';
-export { allEntityModelTypes, allTopLevelEntityModelTypes, topLevelCoreEntityModelTypes } from './model/ModelType';
+export {
+  allEntityModelTypes,
+  allEntityModelTypesNoSimpleTypes,
+  allTopLevelEntityModelTypes,
+  topLevelCoreEntityModelTypes,
+} from './model/ModelType';
 
 // Builders
 export { AssociationBuilder } from './builder/AssociationBuilder';

@@ -7,6 +7,7 @@ export type Namespace = {
   entity: EntityRepository,
   namespaceName: string,
   isExtension: boolean,
+  // Namespace dependencies, in closest dependency first order
   dependencies: Array<Namespace>,
   projectExtension: string,
   projectName: string,

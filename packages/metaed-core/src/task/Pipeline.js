@@ -14,7 +14,7 @@ import { execute as runEnhancers } from './RunEnhancers';
 import { execute as runGenerators } from './RunGenerators';
 import { execute as writeOutput } from './WriteOutput';
 import { loadPlugins } from './LoadPlugins';
-import { addProjectNameToNamespace } from './AddProjectNameToNamespace';
+import { initializeNamespaces } from './InitializeNamespaces';
 import type { State } from '../State';
 
 winston.cli();
@@ -49,7 +49,7 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
   winston.info('Walking builders...');
   await walkBuilders(state);
 
-  addProjectNameToNamespace(state);
+  initializeNamespaces(state);
   await nextMacroTask();
 
   // eslint-disable-next-line no-restricted-syntax

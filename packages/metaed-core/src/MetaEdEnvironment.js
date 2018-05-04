@@ -1,5 +1,4 @@
 // @flow
-import { newEntityRepository } from './model/EntityRepository';
 import { newPropertyIndex } from './model/property/PropertyRepository';
 import type { Namespace } from './model/Namespace';
 import type { PluginEnvironment } from './plugin/PluginEnvironment';
@@ -9,9 +8,6 @@ export type SemVer = string;
 
 // provided to validators and enhancers
 export type MetaEdEnvironment = {
-  // the entity repository
-  entity: boolean,
-
   // namespaces
   namespace: Map<string, Namespace>,
 
@@ -29,7 +25,6 @@ export type MetaEdEnvironment = {
 };
 
 export const newMetaEdEnvironment: () => MetaEdEnvironment = () => ({
-  entity: newEntityRepository(),
   namespace: new Map(),
   propertyIndex: newPropertyIndex(),
   plugin: new Map(),

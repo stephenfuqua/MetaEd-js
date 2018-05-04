@@ -10,13 +10,12 @@ describe('when diminishing with no matching entity', () => {
   let association: Association;
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
+    const namespace: Namespace = { ...newNamespace(), namespaceName };
+    const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
-    association = Object.assign(newAssociation(), { namespace, metaEdName: entityName });
-    metaEd.entity.association.set(association.metaEdName, association);
+    association = { ...newAssociation(), namespace, metaEdName: entityName };
+    namespace.entity.association.set(association.metaEdName, association);
 
     enhance(metaEd);
   });
@@ -37,19 +36,18 @@ describe('when diminishing with matching entity', () => {
   let association3: Association;
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
+    const namespace: Namespace = { ...newNamespace(), namespaceName };
+    const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
-    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    association1 = { ...newAssociation(), namespace, metaEdName: generalStudentProgramAssociationName };
+    namespace.entity.association.set(association1.metaEdName, association1);
 
-    association1 = Object.assign(newAssociation(), { namespace, metaEdName: generalStudentProgramAssociationName });
-    metaEd.entity.association.set(association1.metaEdName, association1);
-
-    association2 = Object.assign(newAssociation(), { namespace, metaEdName: studentProgramAssociationName });
-    metaEd.entity.association.set(association2.metaEdName, association2);
+    association2 = { ...newAssociation(), namespace, metaEdName: studentProgramAssociationName };
+    namespace.entity.association.set(association2.metaEdName, association2);
 
     association3 = Object.assign(newAssociation(), { namespace, metaEdName: entityName });
-    metaEd.entity.association.set(association3.metaEdName, association3);
+    namespace.entity.association.set(association3.metaEdName, association3);
 
     enhance(metaEd);
   });

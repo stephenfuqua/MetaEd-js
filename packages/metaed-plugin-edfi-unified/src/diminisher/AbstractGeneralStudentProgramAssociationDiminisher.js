@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, Association, ModelBase } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Association, ModelBase, Namespace } from 'metaed-core';
 import { versionSatisfies, V3OrGreater, getEntitiesOfType, asAssociation } from 'metaed-core';
 
 // METAED-769
@@ -14,13 +14,13 @@ const generalStudentProgramAssociationName: string = 'GeneralStudentProgramAssoc
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: true };
+
   const generalStudentProgramAssociation: Association = R.head(
-    getEntitiesOfType(metaEd.entity, 'association')
+    getEntitiesOfType(coreNamespace.entity, 'association')
       .map((entity: ModelBase) => asAssociation(entity))
-      .filter(
-        (association: Association) =>
-          !association.namespace.isExtension && association.metaEdName === generalStudentProgramAssociationName,
-      ),
+      .filter((association: Association) => association.metaEdName === generalStudentProgramAssociationName),
   );
 
   if (generalStudentProgramAssociation != null) generalStudentProgramAssociation.isAbstract = true;
