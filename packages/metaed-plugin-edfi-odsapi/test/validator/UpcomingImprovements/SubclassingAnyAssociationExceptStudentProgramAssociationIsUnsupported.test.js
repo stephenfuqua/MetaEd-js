@@ -82,7 +82,7 @@ describe('when an association subclass subclasses a non-StudentProgramAssociatio
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported');
-    expect(failures[0].category).toBe('warning');
+    expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> message',
     );

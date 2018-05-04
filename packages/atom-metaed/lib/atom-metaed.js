@@ -5,7 +5,7 @@
 import 'babel-polyfill';
 import { install as packageDepsInstall } from 'atom-package-deps';
 
-// eslint-disable-next-line
+// eslint-disable-next-line import/no-extraneous-dependencies, import/extensions, import/no-unresolved
 import { CompositeDisposable } from 'atom';
 import { hideTreeViewContextMenuOperationsWhenCore } from './ContextMenuHider';
 import reportException from './ExceptionReporter';
@@ -22,6 +22,7 @@ import { updateEditorIfCore, addCopyBackToCore } from './MakeCoreTabsReadOnly';
 import { linterConfiguration } from './LinterProvider';
 import { allianceMode } from './PackageSettings';
 import { initializeCommands } from './CommandInitializer';
+import { isDevEnvironment, atomMetaEdPackageJson } from './Utility';
 
 let outputWindow: ?OutputWindow;
 let disposableTracker: ?CompositeDisposable;
@@ -47,14 +48,24 @@ export async function activate() {
   disposableTracker = new CompositeDisposable();
   outputWindow = new OutputWindow();
 
+  const packageJson: any = atomMetaEdPackageJson();
   atom.notifications.addInfo(
-    'MetaEd is ©2018 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.',
-    { dismissable: true },
+    `<b>MetaEd ${
+      packageJson != null ? `v${packageJson.version}` : ''
+    }</b><br />MetaEd is ©2018 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.`,
+    {
+      dismissable: true,
+      detail: isDevEnvironment ? 'Development Environment' : null,
+      icon: isDevEnvironment ? 'repo' : 'info',
+    },
   );
   if (allianceMode()) {
     atom.notifications.addWarning(
       'This is an Ed-Fi Alliance only version of MetaEd and is not suitable for extension authoring.',
-      { dismissable: true },
+      {
+        dismissable: true,
+        icon: 'shield',
+      },
     );
   }
 

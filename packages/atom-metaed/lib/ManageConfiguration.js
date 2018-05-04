@@ -17,7 +17,7 @@ import {
   getTargetOdsApiVersion,
   setTargetOdsApiVersion,
 } from './PackageSettings';
-import { devEnviromentCorrectedPath, nextMacroTask } from './Utility';
+import { devEnvironmentCorrectedPath, nextMacroTask } from './Utility';
 
 // keys are ODS/API versions, values are arrays of DS versions supported
 const odsApiVersionSupport: Map<string, Array<string>> = new Map([
@@ -31,21 +31,21 @@ const odsApiVersionSupport: Map<string, Array<string>> = new Map([
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
   disposableTracker.add(
     atom.config.observe('atom-metaed.targetDsVersion', (targetDsVersion: string) => {
-      if (targetDsVersion === '2.0.1') setCoreMetaEdSourceDirectory(devEnviromentCorrectedPath('ed-fi-model-2.0'));
-      if (targetDsVersion === '3.0') setCoreMetaEdSourceDirectory(devEnviromentCorrectedPath('ed-fi-model-3.0'));
+      if (targetDsVersion === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
+      if (targetDsVersion === '3.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
     }),
   );
 }
 
 async function setCoreToTwoDotX() {
-  setCoreMetaEdSourceDirectory(devEnviromentCorrectedPath('ed-fi-model-2.0'));
+  setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
   setTargetDsVersion('2.0.1');
   setTargetOdsApiVersion('2.3.1');
   await nextMacroTask();
 }
 
 async function setCoreToThreeDotX() {
-  setCoreMetaEdSourceDirectory(devEnviromentCorrectedPath('ed-fi-model-3.0'));
+  setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
   setTargetDsVersion('3.0');
   setTargetOdsApiVersion('3.0');
   await nextMacroTask();
@@ -60,10 +60,10 @@ export async function initializePackageSettings() {
     await setCoreToTwoDotX();
   }
   if (!getMetaEdConsoleSourceDirectory() || !await fs.exists(path.resolve(getMetaEdConsoleSourceDirectory()))) {
-    setMetaEdConsoleSourceDirectory(devEnviromentCorrectedPath('metaed-csharp'));
+    setMetaEdConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-csharp'));
   }
   if (!getMetaEdJsConsoleSourceDirectory() || !await fs.exists(path.resolve(getMetaEdJsConsoleSourceDirectory()))) {
-    setMetaEdJsConsoleSourceDirectory(devEnviromentCorrectedPath('metaed-console'));
+    setMetaEdJsConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-console'));
   }
 
   if (!atom.config.get('metaed-exception-report.user')) {

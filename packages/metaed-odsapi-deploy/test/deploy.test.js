@@ -40,19 +40,19 @@ describe('when deploying 3.0 artifacts', () => {
     const extension = result[1];
     expect(extension.namespace).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.sample/SupportingArtifacts/Metadata/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Metadata/',
     );
     expect(extension.databaseData.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.sample/SupportingArtifacts/Database/Data/EdFi/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Database/Data/EdFi/',
     );
     expect(extension.databaseStructure.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.sample/SupportingArtifacts/Database/Structure/EdFi/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Database/Structure/EdFi/',
     );
     expect(extension.interchange.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.sample/SupportingArtifacts/Schemas/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Schemas/',
     );
     expect(extension.xsd.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.sample/SupportingArtifacts/Schemas/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Schemas/',
     );
   });
 });

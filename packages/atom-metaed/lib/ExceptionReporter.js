@@ -18,18 +18,18 @@ import {
   setTelemetryConsent,
   allianceMode,
 } from './PackageSettings';
-import { devEnviromentCorrectedPath } from './Utility';
+import { devEnvironmentCorrectedPath } from './Utility';
 
 // $FlowIgnore
 const atomMetaEdPackageJson = require(path.resolve(__dirname, '../package.json'));
 // $FlowIgnore
-const metaEdJsPackageJson = require(devEnviromentCorrectedPath('metaed-core/package.json'));
+const metaEdJsPackageJson = require(devEnvironmentCorrectedPath('metaed-core/package.json'));
 // $FlowIgnore
-const metaCsharpPackageJson = require(devEnviromentCorrectedPath('metaed-csharp/package.json'));
+const metaCsharpPackageJson = require(devEnvironmentCorrectedPath('metaed-csharp/package.json'));
 // $FlowIgnore
-const edFiModel20PackageJson = require(devEnviromentCorrectedPath('ed-fi-model-2.0/package.json'));
+const edFiModel20PackageJson = require(devEnvironmentCorrectedPath('ed-fi-model-2.0/package.json'));
 // $FlowIgnore
-const edFiModel30PackageJson = require(devEnviromentCorrectedPath('ed-fi-model-3.0/package.json'));
+const edFiModel30PackageJson = require(devEnvironmentCorrectedPath('ed-fi-model-3.0/package.json'));
 
 const API_KEY = '572fefe3d435ced414e482499146e61e';
 const StackTraceCache = new WeakMap();
