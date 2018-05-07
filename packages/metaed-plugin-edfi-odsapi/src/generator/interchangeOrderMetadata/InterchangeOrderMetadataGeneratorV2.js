@@ -4,7 +4,7 @@ import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
 import { V2Only, versionSatisfies } from 'metaed-core';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, NamespaceInfo, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, NamespaceInfo } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 
 const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
@@ -64,8 +64,8 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         if (interchange.namespaceInfo.namespace !== namespaceInfo.namespace) return;
 
         const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
-          (element: InterchangeItem) => ({
-            name: element.metaEdName,
+          (element: { name: string, globalDependencyOrder: number }) => ({
+            name: element.name,
           }),
         );
 
