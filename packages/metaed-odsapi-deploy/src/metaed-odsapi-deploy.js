@@ -4,7 +4,6 @@ import path from 'path';
 import winston from 'winston';
 import Yargs from 'yargs';
 import {
-  findDataStandardVersions,
   scanForProjects,
   newMetaEdConfiguration,
   newState,
@@ -14,35 +13,16 @@ import {
 } from 'metaed-core';
 import type {
   SemVer,
-  MetaEdProject,
   MetaEdConfiguration,
   State,
   PipelineOptions,
   MetaEdEnvironment,
   MetaEdProjectPathPairs,
 } from 'metaed-core';
-import { executeDeploy } from './deploy';
+import { executeDeploy, dataStandardVersionFor } from './deploy';
 
 winston.cli();
 const chalk = new Chalk.constructor({ level: 3 });
-
-function getDataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
-  const dataStandardVersions: Array<SemVer> = findDataStandardVersions(projects);
-  const errorMessage: Array<string> = [];
-
-  if (dataStandardVersions.length === 0) {
-    errorMessage.push('No data standard project found.  Aborting.');
-  } else if (dataStandardVersions.length > 1) {
-    errorMessage.push('Multiple data standard projects found.  Aborting.');
-  } else {
-    return dataStandardVersions[0];
-  }
-  if (errorMessage.length > 0) {
-    errorMessage.forEach(err => winston.error(err));
-    process.exit(1);
-  }
-  return '0.0.0';
-}
 
 export async function metaEdDeploy() {
   const startTime = Date.now();
@@ -105,7 +85,7 @@ export async function metaEdDeploy() {
       runGenerators: true,
       stopOnValidationFailure: true,
     };
-    const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
+    const dataStandardVersion: SemVer = dataStandardVersionFor(metaEdConfiguration.projects);
     const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
     const state: State = { ...newState(), metaEdConfiguration, pipelineOptions, metaEd };
 
@@ -120,10 +100,9 @@ export async function metaEdDeploy() {
     metaEdConfiguration = { ...yargs.argv.metaEdConfiguration };
   }
 
-  const dataStandardVersion: SemVer = getDataStandardVersionFor(metaEdConfiguration.projects);
-
   try {
-    await executeDeploy(metaEdConfiguration, dataStandardVersion, yargs.argv.core);
+    const success: boolean = await executeDeploy(metaEdConfiguration, yargs.argv.core);
+    if (!success) process.exitCode = 1;
   } catch (error) {
     winston.error(error);
     process.exitCode = 1;

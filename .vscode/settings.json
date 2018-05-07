@@ -15,12 +15,15 @@
   "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
   "javascript.validate.enable": false,
 
+  // NPM
+  "npm.packageManager": "yarn",
+  "npm.enableScriptExplorer": true,
+
   // File Explorer
   "files.exclude": {
     "**/.git": true,
     "**/node_modules": true,
     "**/flow-typed": true,
-    "**/build": true,
     "**/dist": true,
   },
 }

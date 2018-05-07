@@ -1,29 +1,31 @@
 // @flow
-import { newMetaEdProject } from 'metaed-core';
-import type { MetaEdProject, SemVer } from 'metaed-core';
-import { getDeployTargetsFor } from '../src/deploy';
+import { newMetaEdConfiguration, newMetaEdProject } from 'metaed-core';
+import type { MetaEdConfiguration } from 'metaed-core';
+import { deployTargetsFor } from '../src/deploy';
 import type { DeployTargets } from '../src/deploy';
 
 describe('when deploying 3.0 artifacts', () => {
   let result: Array<DeployTargets> = [];
 
   beforeAll(async () => {
-    const dataStandardVersion: SemVer = '3.0.0';
-    const projects: Array<MetaEdProject> = [
-      {
-        ...newMetaEdProject(),
-        namespace: 'sample',
-        projectName: 'Sample',
-        projectVersion: '1.0.0',
-      },
-      {
-        ...newMetaEdProject(),
-        namespace: 'edfi',
-        projectName: 'Ed-Fi',
-        projectVersion: '3.0.0',
-      },
-    ];
-    result = await getDeployTargetsFor(dataStandardVersion, projects);
+    const metaEdConfiguration: MetaEdConfiguration = {
+      ...newMetaEdConfiguration(),
+      projects: [
+        {
+          ...newMetaEdProject(),
+          namespace: 'sample',
+          projectName: 'Sample',
+          projectVersion: '1.0.0',
+        },
+        {
+          ...newMetaEdProject(),
+          namespace: 'edfi',
+          projectName: 'Ed-Fi',
+          projectVersion: '3.0.0',
+        },
+      ],
+    };
+    result = await deployTargetsFor(metaEdConfiguration, true);
   });
 
   it('should have correct core directory paths', () => {
@@ -40,19 +42,19 @@ describe('when deploying 3.0 artifacts', () => {
     const extension = result[1];
     expect(extension.namespace).toBe('sample');
     expect(extension.apiMetadata.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Metadata/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Metadata/',
     );
     expect(extension.databaseData.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Database/Data/EdFi/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Database/Data/EdFi/',
     );
     expect(extension.databaseStructure.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Database/Structure/EdFi/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Database/Structure/EdFi/',
     );
     expect(extension.interchange.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Schemas/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Schemas/',
     );
     expect(extension.xsd.replace(/\\/g, '/')).toBe(
-      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Standard.Extensions.Sample/SupportingArtifacts/Schemas/',
+      'Ed-Fi-ODS-Implementation/Application/EdFi.Ods.Extensions.Sample/SupportingArtifacts/Schemas/',
     );
   });
 });
@@ -61,22 +63,24 @@ describe('when deploying 2.0 artifacts', () => {
   let result: Array<DeployTargets> = [];
 
   beforeAll(async () => {
-    const dataStandardVersion: SemVer = '2.0.0';
-    const projects: Array<MetaEdProject> = [
-      {
-        ...newMetaEdProject(),
-        namespace: 'sample',
-        projectName: 'Sample',
-        projectVersion: '1.0.0',
-      },
-      {
-        ...newMetaEdProject(),
-        namespace: 'edfi',
-        projectName: 'Ed-Fi',
-        projectVersion: '2.0.0',
-      },
-    ];
-    result = await getDeployTargetsFor(dataStandardVersion, projects);
+    const metaEdConfiguration: MetaEdConfiguration = {
+      ...newMetaEdConfiguration(),
+      projects: [
+        {
+          ...newMetaEdProject(),
+          namespace: 'sample',
+          projectName: 'Sample',
+          projectVersion: '1.0.0',
+        },
+        {
+          ...newMetaEdProject(),
+          namespace: 'edfi',
+          projectName: 'Ed-Fi',
+          projectVersion: '2.0.0',
+        },
+      ],
+    };
+    result = await deployTargetsFor(metaEdConfiguration, true);
   });
 
   it('should have correct core directory paths', () => {
