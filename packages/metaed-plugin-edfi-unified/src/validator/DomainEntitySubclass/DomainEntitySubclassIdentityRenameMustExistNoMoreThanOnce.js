@@ -5,13 +5,14 @@ import { failSubclassIdentityRenamingMoreThanOnce } from '../ValidatorShared/Fai
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
-    failSubclassIdentityRenamingMoreThanOnce(
-      'DomainEntitySubclassIdenitityRenameMustExistNoMoreThanOnce',
-      domainEntitySubclass,
-      failures,
-    );
+  metaEd.namespace.forEach(namespace => {
+    namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
+      failSubclassIdentityRenamingMoreThanOnce(
+        'DomainEntitySubclassIdenitityRenameMustExistNoMoreThanOnce',
+        domainEntitySubclass,
+        failures,
+      );
+    });
   });
-
   return failures;
 }

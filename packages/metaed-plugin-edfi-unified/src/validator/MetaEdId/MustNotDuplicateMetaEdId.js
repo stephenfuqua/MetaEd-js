@@ -10,12 +10,20 @@ import type {
   ValidationFailure,
   TopLevelEntity,
 } from 'metaed-core';
-import { getAllEntitiesNoSimpleTypes, getAllProperties } from 'metaed-core';
+import { getAllEntitiesNoSimpleTypesForNamespaces, getAllPropertiesForNamespaces } from 'metaed-core';
 
 function getDomainItems(entity: EntityRepository): Array<DomainItem> {
   const result = [];
   entity.domain.forEach(domain => result.push(...domain.domainItems));
   entity.subdomain.forEach(subdomain => result.push(...subdomain.domainItems));
+  return result;
+}
+
+function getDomainItemsForNamespaces(namespaces: Array<Namespace>): Array<DomainItem> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getDomainItems(namespace.entity));
+  });
   return result;
 }
 
@@ -27,6 +35,14 @@ function getEnumerationItems(entity: EntityRepository): Array<EnumerationItem> {
   return result;
 }
 
+function getEnumerationItemsForNamespaces(namespaces: Array<Namespace>): Array<EnumerationItem> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getEnumerationItems(namespace.entity));
+  });
+  return result;
+}
+
 function getInterchangeItems(entity: EntityRepository): Array<InterchangeItem> {
   const result = [];
   entity.interchange.forEach(interchange => result.push(...interchange.elements, ...interchange.identityTemplates));
@@ -34,14 +50,23 @@ function getInterchangeItems(entity: EntityRepository): Array<InterchangeItem> {
   return result;
 }
 
+function getInterchangeItemsForNamespaces(namespaces: Array<Namespace>): Array<InterchangeItem> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getInterchangeItems(namespace.entity));
+  });
+  return result;
+}
+
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+  const namespaces: Array<Namespace> = Array.from(metaEd.namespace.values());
   const index: Array<DomainItem | EntityProperty | EnumerationItem | InterchangeItem | ModelBase | TopLevelEntity> = [
-    ...getAllEntitiesNoSimpleTypes(metaEd.entity),
-    ...getAllProperties(metaEd.propertyIndex),
-    ...getDomainItems(metaEd.entity),
-    ...getEnumerationItems(metaEd.entity),
-    ...getInterchangeItems(metaEd.entity),
+    ...getAllEntitiesNoSimpleTypesForNamespaces(namespaces),
+    ...getAllPropertiesForNamespaces(metaEd.propertyIndex, namespaces),
+    ...getDomainItemsForNamespaces(namespaces),
+    ...getEnumerationItemsForNamespaces(namespaces),
+    ...getInterchangeItemsForNamespaces(namespaces),
   ];
 
   const metaEdIdMap: Object = {};

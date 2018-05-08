@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when enumeration property has invalid identifier should have validation failures: when enumeration property has invalid identifier should have validation failure -> message 1`] = `"Enumeration property PropertyName2 does not match any declared enumeration."`;
+exports[`when enumeration property has invalid identifier should have validation failures 1`] = `"Enumeration property PropertyName2 does not match any declared enumeration."`;
 
-exports[`when enumeration property has invalid identifier should have validation failures: when enumeration property has invalid identifier should have validation failure -> sourceMap 1`] = `
+exports[`when enumeration property has invalid identifier should have validation failures 2`] = `
 Object {
   "column": 4,
   "line": 10,

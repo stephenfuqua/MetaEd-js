@@ -1,11 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when common property has invalid identifier of common in dependency namespace should have validation failure for property 1`] = `"Common property 'NotValid' does not match any declared Common."`;
+
+exports[`when common property has invalid identifier of common in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 4,
+  "line": 15,
+  "tokenText": "common",
+}
+`;
+
 exports[`when common property has invalid identifier should have validation failure for property: when common property has invalid identifier should have validation failures for each property -> message  1`] = `"Common property 'EntityName' does not match any declared Common."`;
 
 exports[`when common property has invalid identifier should have validation failure for property: when common property has invalid identifier should have validation failures for each property -> sourceMap 1`] = `
 Object {
   "column": 4,
   "line": 13,
+  "tokenText": "common",
+}
+`;
+
+exports[`when common property refers to common in non-dependency namespace should have validation failure for property 1`] = `"Common property 'CommonEntity' does not match any declared Common."`;
+
+exports[`when common property refers to common in non-dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 4,
+  "line": 14,
   "tokenText": "common",
 }
 `;

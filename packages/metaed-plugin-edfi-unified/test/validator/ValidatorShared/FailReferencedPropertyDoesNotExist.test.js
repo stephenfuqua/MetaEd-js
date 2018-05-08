@@ -14,6 +14,7 @@ import { failReferencedPropertyDoesNotExist } from '../../../src/validator/Valid
 describe('when validating merge property path', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -30,10 +31,11 @@ describe('when validating merge property path', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName1): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName1): any),
       [integerIdentityName1],
       'IntegerIdentityName2',
       newSourceMap(),
@@ -42,7 +44,7 @@ describe('when validating merge property path', () => {
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -53,6 +55,7 @@ describe('when validating merge property path', () => {
 describe('when validating path with no matching merge property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -68,10 +71,11 @@ describe('when validating path with no matching merge property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName1): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName1): any),
       ['IntegerIdentityName2'],
       'DomainEntityName2',
       newSourceMap(),
@@ -80,7 +84,7 @@ describe('when validating path with no matching merge property', () => {
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -90,8 +94,8 @@ describe('when validating path with no matching merge property', () => {
 // Broke
 describe('when validating path with merge property collection targeting non identity on current', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -117,10 +121,11 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -129,7 +134,7 @@ describe('when validating path with merge property collection targeting non iden
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should have one validation failure', () => {
@@ -142,6 +147,7 @@ describe('when validating path with merge property collection targeting non iden
 describe('when validating path with merge property collection targeting identity on current', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -167,10 +173,11 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -179,7 +186,7 @@ describe('when validating path with merge property collection targeting identity
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should have no validation failures', () => {
@@ -190,6 +197,7 @@ describe('when validating path with merge property collection targeting identity
 describe('when validating path with merge property targeting non identity on current', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -215,10 +223,11 @@ describe('when validating path with merge property targeting non identity on cur
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [integerPropertyName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -227,7 +236,7 @@ describe('when validating path with merge property targeting non identity on cur
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should have no validation failures', () => {
@@ -238,6 +247,7 @@ describe('when validating path with merge property targeting non identity on cur
 describe('when validating path with merge property targeting identity on reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -270,10 +280,11 @@ describe('when validating path with merge property targeting identity on referen
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${domainEntityName1}`, `${contextName1}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -282,7 +293,7 @@ describe('when validating path with merge property targeting identity on referen
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have no validation failures', () => {
@@ -293,6 +304,7 @@ describe('when validating path with merge property targeting identity on referen
 describe('when validating path with merge property targeting non identity on reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -324,10 +336,11 @@ describe('when validating path with merge property targeting non identity on ref
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName3): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName3): any),
       [`${contextName1}${domainEntityName1}`, `${contextName2}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -336,7 +349,7 @@ describe('when validating path with merge property targeting non identity on ref
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have one validation failure', () => {
@@ -349,6 +362,7 @@ describe('when validating path with merge property targeting non identity on ref
 describe('when validating path with merge property targeting optional on common type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -381,10 +395,11 @@ describe('when validating path with merge property targeting optional on common 
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -393,11 +408,11 @@ describe('when validating path with merge property targeting optional on common 
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -408,6 +423,7 @@ describe('when validating path with merge property targeting optional on common 
 describe('when validating path with merge property targeting non identity inline common type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -440,10 +456,11 @@ describe('when validating path with merge property targeting non identity inline
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -452,11 +469,11 @@ describe('when validating path with merge property targeting non identity inline
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should have one validation failure', () => {
@@ -469,6 +486,7 @@ describe('when validating path with merge property targeting non identity inline
 describe('when validating path with merge property targeting non identity choice type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -501,10 +519,11 @@ describe('when validating path with merge property targeting non identity choice
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -513,11 +532,11 @@ describe('when validating path with merge property targeting non identity choice
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one choice', () => {
-    expect(metaEd.entity.choice.size).toBe(1);
+    expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -528,6 +547,7 @@ describe('when validating path with merge property targeting non identity choice
 describe('when validating path with merge property collection targeting non identity choice type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -560,10 +580,11 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -572,11 +593,11 @@ describe('when validating path with merge property collection targeting non iden
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one choice', () => {
-    expect(metaEd.entity.choice.size).toBe(1);
+    expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
   it('should have one validation failure', () => {
@@ -589,6 +610,7 @@ describe('when validating path with merge property collection targeting non iden
 describe('when validating path with merge property collection targeting identity choice type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const failures: Array<ValidationFailure> = [];
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -621,10 +643,11 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      metaEd.entity,
-      (metaEd.entity.domainEntity.get(domainEntityName2): any),
+      [coreNamespace],
+      (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
       newSourceMap(),
@@ -633,11 +656,11 @@ describe('when validating path with merge property collection targeting identity
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one choice', () => {
-    expect(metaEd.entity.choice.size).toBe(1);
+    expect(coreNamespace.entity.choice.size).toBe(1);
   });
 
   it('should have one validation failure', () => {

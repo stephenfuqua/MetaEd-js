@@ -10,10 +10,11 @@ describe('when validating decimal property with correct total digits and decimal
   const decimalPlaces: string = '2';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -22,12 +23,13 @@ describe('when validating decimal property with correct total digits and decimal
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
+    coreNamespace = metaEd.namespace.get('edfi');
 
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -42,10 +44,11 @@ describe('when validating decimal property with same total digits and decimal pl
   const decimalPlaces: string = '10';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -55,11 +58,12 @@ describe('when validating decimal property with same total digits and decimal pl
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -74,10 +78,11 @@ describe('when validating decimal property with decimal places greater than tota
   const decimalPlaces: string = '10';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -86,23 +91,19 @@ describe('when validating decimal property with decimal places greater than tota
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
-
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating decimal property with decimal places greater than total digits -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating decimal property with decimal places greater than total digits -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

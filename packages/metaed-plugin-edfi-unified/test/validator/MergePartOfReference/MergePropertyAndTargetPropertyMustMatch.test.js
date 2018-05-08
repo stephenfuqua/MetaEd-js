@@ -14,6 +14,7 @@ import { validate } from '../../../src/validator/MergePartOfReference/MergePrope
 describe('when validating merge property name and types match', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -37,11 +38,12 @@ describe('when validating merge property name and types match', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should have no validation failures', () => {
@@ -52,6 +54,7 @@ describe('when validating merge property name and types match', () => {
 describe('when validating merge property type mismatch', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -81,11 +84,12 @@ describe('when validating merge property type mismatch', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have validation failure', () => {
@@ -104,6 +108,7 @@ describe('when validating merge property type mismatch', () => {
 describe('when validating merge of nested domain entity with domain entity properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -132,11 +137,12 @@ describe('when validating merge of nested domain entity with domain entity prope
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have no validation failures', () => {
@@ -147,6 +153,7 @@ describe('when validating merge of nested domain entity with domain entity prope
 describe('when validating merge of domain entity with nested domain entity properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -175,11 +182,12 @@ describe('when validating merge of domain entity with nested domain entity prope
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have no validation failures', () => {
@@ -190,6 +198,7 @@ describe('when validating merge of domain entity with nested domain entity prope
 describe('when validating merge of doubly nested domain entity with domain entity properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -224,11 +233,12 @@ describe('when validating merge of doubly nested domain entity with domain entit
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build four domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(4);
+    expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
   it('should have no validation failures', () => {
@@ -239,6 +249,7 @@ describe('when validating merge of doubly nested domain entity with domain entit
 describe('when validating merge of domain entity and domain entity subclass properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName: string = 'DomainEntityNameTest';
@@ -268,15 +279,16 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -287,6 +299,7 @@ describe('when validating merge of domain entity and domain entity subclass prop
 describe('when validating merge of domain entity and domain entity subclass properties of base entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -331,15 +344,16 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build four domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(4);
+    expect(coreNamespace.entity.domainEntity.size).toBe(4);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -347,9 +361,11 @@ describe('when validating merge of domain entity and domain entity subclass prop
   });
 });
 
-describe('when validating merge of domain entity, domain entity extension, and domain entity subclass properties', () => {
+describe('when validating merge of domain entity, domain entity extension, and domain entity subclass properties, across namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -361,7 +377,9 @@ describe('when validating merge of domain entity, domain entity extension, and d
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
       .withEndDomainEntity()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'ProjectExtension')
       .withStartDomainEntityExtension(domainEntityName1)
       .withIntegerIdentity('IntegerIdentityName2', 'IntegerIdentityDocumentation')
       .withEndDomainEntityExtension()
@@ -384,19 +402,24 @@ describe('when validating merge of domain entity, domain entity extension, and d
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -407,6 +430,7 @@ describe('when validating merge of domain entity, domain entity extension, and d
 describe('when validating merging domain entity property of an association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     const domainEntityName1: string = 'DomainEntityName1';
@@ -444,15 +468,80 @@ describe('when validating merging domain entity property of an association', () 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating merging domain entity property of an association across namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    const domainEntityName1: string = 'DomainEntityName1';
+    const domainEntityName2: string = 'DomainEntityName2';
+    const domainEntityName3: string = 'DomainEntityName3';
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(domainEntityName1)
+      .withDocumentation('DomainEntityDocumentation')
+      .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(domainEntityName2)
+      .withDocumentation('DomainEntityDocumentation')
+      .withDomainEntityIdentity(domainEntityName1, 'DomainEntityDocumentation')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(domainEntityName3)
+      .withDocumentation('DomainEntityDocumentation')
+      .withIntegerIdentity('IntegerIdentityName2', 'IntegerIdentityDocumentation')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartAssociation('AssociationName')
+      .withDocumentation('AssociationDocumentation')
+      .withAssociationDomainEntityProperty(domainEntityName2, 'AssociationDomainEntityPropertyDocumentation')
+      .withAssociationDomainEntityProperty(domainEntityName3, 'AssociationDomainEntityPropertyDocumentation')
+      .withIntegerIdentity('IntegerIdentityName3', 'IntegerIdentityDocumentation')
+      .withDomainEntityIdentity(domainEntityName1, 'DomainEntityPropertyDocumentation')
+      .withMergePartOfReference(domainEntityName1, `${domainEntityName2}.${domainEntityName1}`)
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build three domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
+  });
+
+  it('should build one association', () => {
+    expect(extensionNamespace.entity.association.size).toBe(1);
   });
 
   it('should have no validation failures', () => {

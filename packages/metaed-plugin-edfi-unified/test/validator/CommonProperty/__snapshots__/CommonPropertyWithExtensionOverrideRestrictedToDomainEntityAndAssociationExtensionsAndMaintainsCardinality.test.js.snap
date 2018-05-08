@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failure: when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' must maintain original cardinality."`;
+exports[`when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' must maintain original cardinality."`;
 
-exports[`when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failure: when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 29,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failure: when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' must maintain original cardinality."`;
+exports[`when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' must maintain original cardinality."`;
 
-exports[`when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failure: when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 29,
@@ -20,9 +20,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on association extension without include on extendee should have validation failure: when validating common property has extension override on association extension without include on extendee should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' is only valid for referencing Common extensions."`;
+exports[`when validating common property has extension override on association extension without include on extendee should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Association Extension EntityName2. 'common extension' is only valid for referencing Common extensions."`;
 
-exports[`when validating common property has extension override on association extension without include on extendee should have validation failure: when validating common property has extension override on association extension without include on extendee should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on association extension without include on extendee should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 25,
@@ -30,9 +30,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failure: when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' must maintain original cardinality."`;
+exports[`when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' must maintain original cardinality."`;
 
-exports[`when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failure: when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 23,
@@ -40,9 +40,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failure: when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' must maintain original cardinality."`;
+exports[`when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' must maintain original cardinality."`;
 
-exports[`when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failure: when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 23,
@@ -50,9 +50,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on domain entity extension without include on extendee should have validation failure: when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' is only valid for referencing Common extensions."`;
+exports[`when validating common property has extension override on domain entity extension without include on extendee should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity Extension EntityName2. 'common extension' is only valid for referencing Common extensions."`;
 
-exports[`when validating common property has extension override on domain entity extension without include on extendee should have validation failure: when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on domain entity extension without include on extendee should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 19,
@@ -60,9 +60,9 @@ Object {
 }
 `;
 
-exports[`when validating common property has extension override on non domain entity or association extensions should have validation failure: when validating common property has extension override on non domain entity or association extensions should have validation failures -> message  1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity EntityName2. 'common extension' is only valid for referencing Common extensions."`;
+exports[`when validating common property has extension override on non domain entity or association extensions should have validation failure 1`] = `"'common extension' is invalid for property EntityName1 on Domain Entity EntityName2. 'common extension' is only valid for referencing Common extensions."`;
 
-exports[`when validating common property has extension override on non domain entity or association extensions should have validation failure: when validating common property has extension override on non domain entity or association extensions should have validation failures -> sourceMap 1`] = `
+exports[`when validating common property has extension override on non domain entity or association extensions should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 12,

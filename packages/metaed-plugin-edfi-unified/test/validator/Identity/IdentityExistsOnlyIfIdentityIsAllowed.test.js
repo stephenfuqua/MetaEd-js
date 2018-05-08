@@ -18,6 +18,7 @@ import { validate } from '../../../src/validator/Identity/IdentityExistsOnlyIfId
 describe('when validating association with valid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -33,11 +34,12 @@ describe('when validating association with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -48,6 +50,7 @@ describe('when validating association with valid identity property', () => {
 describe('when validating domain entity with valid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -61,11 +64,12 @@ describe('when validating domain entity with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -76,6 +80,7 @@ describe('when validating domain entity with valid identity property', () => {
 describe('when validating abstract entity with valid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -89,11 +94,12 @@ describe('when validating abstract entity with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -104,6 +110,7 @@ describe('when validating abstract entity with valid identity property', () => {
 describe('when validating common type with valid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -117,11 +124,12 @@ describe('when validating common type with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -132,6 +140,7 @@ describe('when validating common type with valid identity property', () => {
 describe('when validating inline common type with valid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -145,11 +154,12 @@ describe('when validating inline common type with valid identity property', () =
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -161,6 +171,7 @@ describe('when validating association extension with invalid identity property',
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -181,27 +192,24 @@ describe('when validating association extension with invalid identity property',
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityExistsOnlyIfIdentityIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating association extension with invalid identity property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating association extension with invalid identity property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -209,6 +217,7 @@ describe('when validating association subclass with invalid identity property', 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -230,33 +239,31 @@ describe('when validating association subclass with invalid identity property', 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association subclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityExistsOnlyIfIdentityIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating association subclass with invalid identity property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating association subclass with invalid identity property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when validating descriptor with invalid identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -275,23 +282,20 @@ describe('when validating descriptor with invalid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityExistsOnlyIfIdentityIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating descriptor with invalid identity property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating descriptor with invalid identity property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -299,6 +303,7 @@ describe('when validating domain entity extension with invalid identity property
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -317,27 +322,24 @@ describe('when validating domain entity extension with invalid identity property
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityExistsOnlyIfIdentityIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating domain entity extension with invalid identity property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating domain entity extension with invalid identity property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -345,6 +347,7 @@ describe('when validating domain entity subclass with invalid identity property'
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -364,26 +367,23 @@ describe('when validating domain entity subclass with invalid identity property'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('IdentityExistsOnlyIfIdentityIsAllowed');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating domain entity subclass with invalid identity property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating domain entity subclass with invalid identity property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

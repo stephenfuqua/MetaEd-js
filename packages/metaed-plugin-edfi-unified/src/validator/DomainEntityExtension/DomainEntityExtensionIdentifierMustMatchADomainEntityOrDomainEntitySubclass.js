@@ -1,21 +1,25 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntityExtension.forEach(entity => {
-    if (!metaEd.entity.domainEntity.has(entity.metaEdName) && !metaEd.entity.domainEntitySubclass.has(entity.metaEdName)) {
-      failures.push({
-        validatorName: 'DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass',
-        category: 'error',
-        message: `Domain Entity additions '${
-          entity.metaEdName
-        }' does not match any declared Domain Entity or Domain Entity Subclass.`,
-        sourceMap: entity.sourceMap.type,
-        fileMap: null,
-      });
-    }
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.domainEntityExtension.forEach(entity => {
+      if (
+        getEntityForNamespaces(entity.metaEdName, namespace.dependencies, 'domainEntity', 'domainEntitySubclass') == null
+      ) {
+        failures.push({
+          validatorName: 'DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass',
+          category: 'error',
+          message: `Domain Entity additions '${
+            entity.metaEdName
+          }' does not match any declared Domain Entity or Domain Entity Subclass.`,
+          sourceMap: entity.sourceMap.type,
+          fileMap: null,
+        });
+      }
+    });
   });
 
   return failures;

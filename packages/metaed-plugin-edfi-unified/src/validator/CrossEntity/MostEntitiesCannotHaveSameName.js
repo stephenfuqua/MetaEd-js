@@ -34,17 +34,21 @@ type MostEntities =
 
 // Domains, Subdomains, Interchanges, Enumerations and Descriptors don't have standard cross entity naming issues
 // and extension entities don't define a new identifier
-function entitiesNeedingDuplicateChecking(entity: EntityRepository): Array<MostEntities> {
+function entitiesNeedingDuplicateChecking(...namespaces: Array<Namespace>): Array<MostEntities> {
   const result: Array<MostEntities> = [];
-  result.push(...entity.association.values());
-  result.push(...entity.associationSubclass.values());
-  result.push(...entity.choice.values());
-  result.push(...entity.common.values());
-  result.push(...entity.domainEntity.values());
-  result.push(...entity.domainEntitySubclass.values());
-  result.push(...entity.sharedDecimal.values());
-  result.push(...entity.sharedInteger.values());
-  result.push(...entity.sharedString.values());
+
+  const entityRepositories: Array<EntityRepository> = namespaces.map((n: Namespace) => n.entity);
+  entityRepositories.forEach((entityRepository: EntityRepository) => {
+    result.push(...entityRepository.association.values());
+    result.push(...entityRepository.associationSubclass.values());
+    result.push(...entityRepository.choice.values());
+    result.push(...entityRepository.common.values());
+    result.push(...entityRepository.domainEntity.values());
+    result.push(...entityRepository.domainEntitySubclass.values());
+    result.push(...entityRepository.sharedDecimal.values());
+    result.push(...entityRepository.sharedInteger.values());
+    result.push(...entityRepository.sharedString.values());
+  });
   return result;
 }
 
@@ -70,7 +74,11 @@ function generateValidationErrorsForDuplicates(metaEdEntity: Array<MostEntities>
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  failures.push(...generateValidationErrorsForDuplicates(entitiesNeedingDuplicateChecking(metaEd.entity)));
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    failures.push(
+      ...generateValidationErrorsForDuplicates(entitiesNeedingDuplicateChecking(namespace, ...namespace.dependencies)),
+    );
+  });
 
   return failures;
 }

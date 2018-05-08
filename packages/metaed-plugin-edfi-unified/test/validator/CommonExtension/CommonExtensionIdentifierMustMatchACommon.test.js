@@ -13,6 +13,8 @@ describe('when common extension extends common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -33,11 +35,15 @@ describe('when common extension extends common', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -49,9 +55,18 @@ describe('when common extension extends an invalid identifier', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartCommon('NotAMatch')
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+
       .withBeginNamespace('extension', 'ProjectExtension')
       .withStartCommonExtension(commonName, '1')
       .withBooleanProperty('PropertyName2', 'doc', true, false)
@@ -61,11 +76,15 @@ describe('when common extension extends an invalid identifier', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {

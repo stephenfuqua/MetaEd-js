@@ -7,6 +7,7 @@ describe('when validating abstract entity with identity fields', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -19,12 +20,13 @@ describe('when validating abstract entity with identity fields', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
+    coreNamespace = metaEd.namespace.get('edfi');
 
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -36,6 +38,7 @@ describe('when validating abstract entity with no identity fields', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -48,12 +51,13 @@ describe('when validating abstract entity with no identity fields', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
+    coreNamespace = metaEd.namespace.get('edfi');
 
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failure', () => {

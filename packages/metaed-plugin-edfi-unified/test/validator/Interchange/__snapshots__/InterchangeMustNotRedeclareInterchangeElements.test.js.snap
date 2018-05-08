@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating interchange interchange element has duplicate names should have validation failures: when validating interchange interchange element has duplicate names should have no validation failures -> message 1`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName."`;
+exports[`when validating interchange interchange element has duplicate names should have validation failures 1`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName."`;
 
-exports[`when validating interchange interchange element has duplicate names should have validation failures: when validating interchange interchange element has duplicate names should have no validation failures -> sourceMap 1`] = `
+exports[`when validating interchange interchange element has duplicate names should have validation failures 2`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -10,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange interchange element has multiple duplicate names should have validation failures: when validating interchange interchange element has multiple duplicate names should have validation failures -> message 1`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName1."`;
+exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 1`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName1."`;
 
-exports[`when validating interchange interchange element has multiple duplicate names should have validation failures: when validating interchange interchange element has multiple duplicate names should have validation failures -> message 2`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName2."`;
-
-exports[`when validating interchange interchange element has multiple duplicate names should have validation failures: when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 2`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -22,7 +20,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange interchange element has multiple duplicate names should have validation failures: when validating interchange interchange element has multiple duplicate names should have validation failures -> sourceMap 2`] = `
+exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 3`] = `"Interchange InterchangeName redeclares interchange element DomainEntityElementName2."`;
+
+exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 4`] = `
 Object {
   "column": 4,
   "line": 7,

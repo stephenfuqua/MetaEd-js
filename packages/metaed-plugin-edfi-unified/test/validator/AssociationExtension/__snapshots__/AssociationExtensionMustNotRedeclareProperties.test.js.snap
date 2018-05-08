@@ -1,8 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association extension has duplicate property name should have validation failures(): when association extension has duplicate property name should have validation failure -> message 1`] = `"Association Extension EntityName redeclares property DuplicatePropertyName of base Association."`;
+exports[`when association extension has duplicate common property should have validation failures() 1`] = `"Association Extension EntityName redeclares property DuplicatePropertyName of base Association."`;
 
-exports[`when association extension has duplicate property name should have validation failures(): when association extension has duplicate property name should have validation failure -> sourceMap 1`] = `
+exports[`when association extension has duplicate common property should have validation failures() 2`] = `
+Object {
+  "column": 4,
+  "line": 18,
+  "tokenText": "common",
+}
+`;
+
+exports[`when association extension has duplicate property name should have validation failures() 1`] = `"Association Extension EntityName redeclares property DuplicatePropertyName of base Association."`;
+
+exports[`when association extension has duplicate property name should have validation failures() 2`] = `
 Object {
   "column": 4,
   "line": 18,
@@ -10,11 +20,9 @@ Object {
 }
 `;
 
-exports[`when association extension has multiple duplicates should have validation failures(): when association extension has multiple duplicates should have validation failure -> message 1`] = `"Association Extension EntityName redeclares property DuplicatePropertyName1 of base Association."`;
+exports[`when association extension has multiple duplicates should have validation failures() 1`] = `"Association Extension EntityName redeclares property DuplicatePropertyName1 of base Association."`;
 
-exports[`when association extension has multiple duplicates should have validation failures(): when association extension has multiple duplicates should have validation failure -> message 2`] = `"Association Extension EntityName redeclares property DuplicatePropertyName2 of base Association."`;
-
-exports[`when association extension has multiple duplicates should have validation failures(): when association extension has multiple duplicates should have validation failure -> sourceMap 1`] = `
+exports[`when association extension has multiple duplicates should have validation failures() 2`] = `
 Object {
   "column": 4,
   "line": 22,
@@ -22,7 +30,9 @@ Object {
 }
 `;
 
-exports[`when association extension has multiple duplicates should have validation failures(): when association extension has multiple duplicates should have validation failure -> sourceMap 2`] = `
+exports[`when association extension has multiple duplicates should have validation failures() 3`] = `"Association Extension EntityName redeclares property DuplicatePropertyName2 of base Association."`;
+
+exports[`when association extension has multiple duplicates should have validation failures() 4`] = `
 Object {
   "column": 4,
   "line": 26,

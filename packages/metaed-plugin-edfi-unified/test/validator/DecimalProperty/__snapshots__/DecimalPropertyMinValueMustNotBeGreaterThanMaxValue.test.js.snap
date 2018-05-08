@@ -1,10 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating decimal property with minimum value greater than maximum value should have validation failures: when validating decimal property with minimum value greater than maximum value -> message 1`] = `"decimal DecimalIdentity has min value greater than max value."`;
+exports[`when validating decimal property with minimum value greater than maximum value should have validation failures 1`] = `"decimal DecimalIdentity has min value greater than max value."`;
 
-exports[`when validating decimal property with minimum value greater than maximum value should have validation failures: when validating decimal property with minimum value greater than maximum value -> message2 1`] = `"decimal DecimalProperty has min value greater than max value."`;
-
-exports[`when validating decimal property with minimum value greater than maximum value should have validation failures: when validating decimal property with minimum value greater than maximum value -> sourceMap 1`] = `
+exports[`when validating decimal property with minimum value greater than maximum value should have validation failures 2`] = `
 Object {
   "column": 6,
   "line": 11,
@@ -12,7 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating decimal property with minimum value greater than maximum value should have validation failures: when validating decimal property with minimum value greater than maximum value -> sourceMap2 1`] = `
+exports[`when validating decimal property with minimum value greater than maximum value should have validation failures 3`] = `"decimal DecimalProperty has min value greater than max value."`;
+
+exports[`when validating decimal property with minimum value greater than maximum value should have validation failures 4`] = `
 Object {
   "column": 6,
   "line": 19,

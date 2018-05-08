@@ -30,9 +30,9 @@ import { validate as mostEntitiesCannotHaveSameName } from './validator/CrossEnt
 
 import { validate as decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
 import { validate as decimalPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as decimalPropertyMustNotMatchACommonDecimal } from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonDecimal';
-import { validate as decimalPropertyMustNotMatchACommonInteger } from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonInteger';
-import { validate as decimalPropertyMustNotMatchACommonString } from './validator/DecimalProperty/DecimalPropertyMustNotMatchACommonString';
+import { validate as decimalPropertyMustNotMatchASharedDecimal } from './validator/DecimalProperty/DecimalPropertyMustNotMatchASharedDecimal';
+import { validate as decimalPropertyMustNotMatchASharedInteger } from './validator/DecimalProperty/DecimalPropertyMustNotMatchASharedInteger';
+import { validate as decimalPropertyMustNotMatchASharedString } from './validator/DecimalProperty/DecimalPropertyMustNotMatchASharedString';
 
 import { validate as descriptorMapTypeItemsMustBeUnique } from './validator/Descriptor/DescriptorMapTypeItemsMustBeUnique';
 import { validate as descriptorNameCannotEndInDescriptor } from './validator/Descriptor/DescriptorNameCannotEndInDescriptor';
@@ -76,9 +76,9 @@ import { validate as identityRenameExistsOnlyIfIdentityRenameIsAllowed } from '.
 import { validate as inlineCommonExistsOnlyInCoreNamespace } from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
 
 import { validate as integerPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/IntegerProperty/IntegerPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as integerPropertyMustNotMatchACommonDecimal } from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonDecimal';
-import { validate as integerPropertyMustNotMatchACommonInteger } from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonInteger';
-import { validate as integerPropertyMustNotMatchACommonString } from './validator/IntegerProperty/IntegerPropertyMustNotMatchACommonString';
+import { validate as integerPropertyMustNotMatchASharedDecimal } from './validator/IntegerProperty/IntegerPropertyMustNotMatchASharedDecimal';
+import { validate as integerPropertyMustNotMatchASharedInteger } from './validator/IntegerProperty/IntegerPropertyMustNotMatchASharedInteger';
+import { validate as integerPropertyMustNotMatchASharedString } from './validator/IntegerProperty/IntegerPropertyMustNotMatchASharedString';
 
 import { validate as interchangeElementMustMatchADomainEntityOrAssociationOrSubclass } from './validator/Interchange/InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass';
 import { validate as interchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass } from './validator/Interchange/InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass';
@@ -111,14 +111,14 @@ import { validate as sharedIntegerMinValueMustNotBeGreaterThanMaxValue } from '.
 import { validate as sharedStringMinLengthMustNotBeGreaterThanMaxLength } from './validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
 import { validate as shortPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/ShortProperty/ShortPropertyMinValueMustNotBeGreaterThanMaxValue';
-import { validate as shortPropertyMustNotMatchACommonDecimal } from './validator/ShortProperty/ShortPropertyMustNotMatchACommonDecimal';
-import { validate as shortPropertyMustNotMatchACommonInteger } from './validator/ShortProperty/ShortPropertyMustNotMatchACommonInteger';
-import { validate as shortPropertyMustNotMatchACommonString } from './validator/ShortProperty/ShortPropertyMustNotMatchACommonString';
+import { validate as shortPropertyMustNotMatchASharedDecimal } from './validator/ShortProperty/ShortPropertyMustNotMatchASharedDecimal';
+import { validate as shortPropertyMustNotMatchASharedInteger } from './validator/ShortProperty/ShortPropertyMustNotMatchASharedInteger';
+import { validate as shortPropertyMustNotMatchASharedString } from './validator/ShortProperty/ShortPropertyMustNotMatchASharedString';
 
 import { validate as stringPropertyMinLengthMustNotBeGreaterThanMaxLength } from './validator/StringProperty/StringPropertyMinLengthMustNotBeGreaterThanMaxLength';
-import { validate as stringPropertyMustNotMatchACommonDecimal } from './validator/StringProperty/StringPropertyMustNotMatchACommonDecimal';
-import { validate as stringPropertyMustNotMatchACommonInteger } from './validator/StringProperty/StringPropertyMustNotMatchACommonInteger';
-import { validate as stringPropertyMustNotMatchACommonString } from './validator/StringProperty/StringPropertyMustNotMatchACommonString';
+import { validate as stringPropertyMustNotMatchASharedDecimal } from './validator/StringProperty/StringPropertyMustNotMatchASharedDecimal';
+import { validate as stringPropertyMustNotMatchASharedInteger } from './validator/StringProperty/StringPropertyMustNotMatchASharedInteger';
+import { validate as stringPropertyMustNotMatchASharedString } from './validator/StringProperty/StringPropertyMustNotMatchASharedString';
 
 import { validate as subdomainMustNotDuplicateDomainItems } from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 import { validate as subdomainParentDomainNameMustMatchADomain } from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
@@ -194,9 +194,9 @@ function validatorList(): Array<Validator> {
 
     decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits,
     decimalPropertyMinValueMustNotBeGreaterThanMaxValue,
-    decimalPropertyMustNotMatchACommonDecimal,
-    decimalPropertyMustNotMatchACommonInteger,
-    decimalPropertyMustNotMatchACommonString,
+    decimalPropertyMustNotMatchASharedDecimal,
+    decimalPropertyMustNotMatchASharedInteger,
+    decimalPropertyMustNotMatchASharedString,
 
     descriptorMapTypeItemsMustBeUnique,
     descriptorNameCannotEndInDescriptor,
@@ -241,9 +241,9 @@ function validatorList(): Array<Validator> {
     inlineCommonExistsOnlyInCoreNamespace,
 
     integerPropertyMinValueMustNotBeGreaterThanMaxValue,
-    integerPropertyMustNotMatchACommonDecimal,
-    integerPropertyMustNotMatchACommonInteger,
-    integerPropertyMustNotMatchACommonString,
+    integerPropertyMustNotMatchASharedDecimal,
+    integerPropertyMustNotMatchASharedInteger,
+    integerPropertyMustNotMatchASharedString,
 
     interchangeElementMustMatchADomainEntityOrAssociationOrSubclass,
     interchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass,
@@ -275,14 +275,14 @@ function validatorList(): Array<Validator> {
     sharedStringMinLengthMustNotBeGreaterThanMaxLength,
 
     shortPropertyMinValueMustNotBeGreaterThanMaxValue,
-    shortPropertyMustNotMatchACommonDecimal,
-    shortPropertyMustNotMatchACommonInteger,
-    shortPropertyMustNotMatchACommonString,
+    shortPropertyMustNotMatchASharedDecimal,
+    shortPropertyMustNotMatchASharedInteger,
+    shortPropertyMustNotMatchASharedString,
 
     stringPropertyMinLengthMustNotBeGreaterThanMaxLength,
-    stringPropertyMustNotMatchACommonDecimal,
-    stringPropertyMustNotMatchACommonInteger,
-    stringPropertyMustNotMatchACommonString,
+    stringPropertyMustNotMatchASharedDecimal,
+    stringPropertyMustNotMatchASharedInteger,
+    stringPropertyMustNotMatchASharedString,
 
     subdomainMustNotDuplicateDomainItems,
     subdomainParentDomainNameMustMatchADomain,

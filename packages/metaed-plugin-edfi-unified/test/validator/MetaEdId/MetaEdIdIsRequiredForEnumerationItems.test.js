@@ -12,6 +12,7 @@ import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/M
 describe('when validating enumeration item is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -24,20 +25,19 @@ describe('when validating enumeration item is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating enumeration item is missing metaEdId should have validation failures -> message',
-    );
+    expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot(
       'when validating enumeration item is missing metaEdId should have validation failures -> sourceMap',
     );
@@ -47,6 +47,7 @@ describe('when validating enumeration item is missing metaEdId', () => {
 describe('when validating map type enumeration item is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -63,15 +64,16 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
   it('should build one map type enumeration', () => {
-    expect(metaEd.entity.mapTypeEnumeration.size).toBe(1);
+    expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -82,6 +84,7 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
 describe('when validating school year enumeration item is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -94,22 +97,48 @@ describe('when validating school year enumeration item is missing metaEdId', () 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one school year enumeration', () => {
-    expect(metaEd.entity.schoolYearEnumeration.size).toBe(1);
+    expect(coreNamespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForEnumerationItems');
     expect(failures[0].category).toBe('warning');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating school year enumeration item is missing metaEdId should have validation failures -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating school year enumeration item is missing metaEdId should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating enumeration item is missing metaEdId in extension namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartEnumeration('EnumerationName')
+      .withDocumentation('EnumerationDocumentation')
+      .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
+      .withEndEnumeration()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
+
+    extensionNamespace = metaEd.namespace.get('extension');
+    failures = validate(metaEd);
+  });
+
+  it('should build one enumeration', () => {
+    expect(extensionNamespace.entity.enumeration.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when domain entity extension has duplicate property name should have validation failures(): when domain entity extension has duplicate property name should have validation failure -> message 1`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName of base Domain Entity."`;
+exports[`when domain entity extension has duplicate property name should have validation failures() 1`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName of base Domain Entity."`;
 
-exports[`when domain entity extension has duplicate property name should have validation failures(): when domain entity extension has duplicate property name should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity extension has duplicate property name should have validation failures() 2`] = `
 Object {
   "column": 4,
   "line": 12,
@@ -10,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when domain entity extension has multiple duplicates should have validation failures(): when domain entity extension has multiple duplicates should have validation failure -> message 1`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName1 of base Domain Entity."`;
+exports[`when domain entity extension has multiple duplicates should have validation failures() 1`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName1 of base Domain Entity."`;
 
-exports[`when domain entity extension has multiple duplicates should have validation failures(): when domain entity extension has multiple duplicates should have validation failure -> message 2`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName2 of base Domain Entity."`;
-
-exports[`when domain entity extension has multiple duplicates should have validation failures(): when domain entity extension has multiple duplicates should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity extension has multiple duplicates should have validation failures() 2`] = `
 Object {
   "column": 4,
   "line": 16,
@@ -22,7 +20,9 @@ Object {
 }
 `;
 
-exports[`when domain entity extension has multiple duplicates should have validation failures(): when domain entity extension has multiple duplicates should have validation failure -> sourceMap 2`] = `
+exports[`when domain entity extension has multiple duplicates should have validation failures() 3`] = `"Domain Entity Extension EntityName redeclares property DuplicatePropertyName2 of base Domain Entity."`;
+
+exports[`when domain entity extension has multiple duplicates should have validation failures() 4`] = `
 Object {
   "column": 4,
   "line": 20,
@@ -30,9 +30,9 @@ Object {
 }
 `;
 
-exports[`when domain entity subclass and extension have duplicate property name should have validation failures(): when domain entity extension has duplicate property name should have validation failure -> message 1`] = `"Domain Entity Extension SubclassEntityName redeclares property DuplicatePropertyName of base Domain Entity Subclass."`;
+exports[`when domain entity subclass and extension have duplicate property name should have validation failures() 1`] = `"Domain Entity Extension SubclassEntityName redeclares property DuplicatePropertyName of base Domain Entity Subclass."`;
 
-exports[`when domain entity subclass and extension have duplicate property name should have validation failures(): when domain entity extension has duplicate property name should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity subclass and extension have duplicate property name should have validation failures() 2`] = `
 Object {
   "column": 4,
   "line": 19,

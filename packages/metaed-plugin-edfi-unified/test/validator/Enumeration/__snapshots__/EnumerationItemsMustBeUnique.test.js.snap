@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when enumeration items have duplicate short descriptions should have validation failure: when enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName redeclares item ShortDescription."`;
+exports[`when enumeration items have duplicate short descriptions should have validation failure 1`] = `"Enumeration EntityName redeclares item ShortDescription."`;
 
-exports[`when enumeration items have duplicate short descriptions should have validation failure: when enumeration items have duplicate short descriptions should have validation failure -> sourceMap 1`] = `
+exports[`when enumeration items have duplicate short descriptions should have validation failure 2`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -10,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure: when enumeration items have multiple duplicate short descriptions should have validation failure -> message 1`] = `"Enumeration EntityName redeclares item ShortDescription1."`;
+exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 1`] = `"Enumeration EntityName redeclares item ShortDescription1."`;
 
-exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure: when enumeration items have multiple duplicate short descriptions should have validation failure -> message 2`] = `"Enumeration EntityName redeclares item ShortDescription2."`;
-
-exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure: when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap 1`] = `
+exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 2`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -22,7 +20,9 @@ Object {
 }
 `;
 
-exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure: when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap 2`] = `
+exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 3`] = `"Enumeration EntityName redeclares item ShortDescription2."`;
+
+exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 4`] = `
 Object {
   "column": 4,
   "line": 11,

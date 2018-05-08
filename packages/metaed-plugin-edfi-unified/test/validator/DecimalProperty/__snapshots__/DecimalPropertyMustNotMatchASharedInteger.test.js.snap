@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating decimal property matches shared integer should have validation failures: when validating decimal property matches shared integer -> message 1`] = `"Decimal Property DecimalProperty has the same name as a Shared Integer."`;
+
+exports[`when validating decimal property matches shared integer should have validation failures: when validating decimal property matches shared integer -> sourceMap 1`] = `
+Object {
+  "column": 12,
+  "line": 8,
+  "tokenText": "DecimalProperty",
+}
+`;

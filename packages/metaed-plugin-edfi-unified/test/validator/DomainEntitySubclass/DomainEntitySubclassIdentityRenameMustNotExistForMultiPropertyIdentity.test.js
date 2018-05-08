@@ -13,10 +13,11 @@ describe('when domain entity subclass renames base identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -32,15 +33,16 @@ describe('when domain entity subclass renames base identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -52,6 +54,7 @@ describe('when domain entity subclass does not rename identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -72,15 +75,16 @@ describe('when domain entity subclass does not rename identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -92,6 +96,7 @@ describe('when domain entity subclass renames base identity more than once', () 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -113,33 +118,31 @@ describe('when domain entity subclass renames base identity more than once', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity subclass renames base identity more than once should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity subclass renames base identity more than once should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when domain entity subclass extends non existent entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -153,22 +156,19 @@ describe('when domain entity subclass extends non existent entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubclassIdentityRenameMustNotExistForMultiPropertyIdentity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity subclass extends non existent entity should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity subclass extends non existent entity should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

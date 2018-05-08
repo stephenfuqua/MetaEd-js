@@ -6,6 +6,7 @@ import { validate } from '../../../src/validator/Enumeration/EnumerationItemsMus
 describe('when enumeration items have different short descriptions', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -20,11 +21,12 @@ describe('when enumeration items have different short descriptions', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -35,6 +37,7 @@ describe('when enumeration items have different short descriptions', () => {
 describe('when enumeration items have duplicate short descriptions', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,29 +52,27 @@ describe('when enumeration items have duplicate short descriptions', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when enumeration items have duplicate short descriptions should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when enumeration items have duplicate short descriptions should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
 describe('when enumeration items have multiple duplicate short descriptions', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -88,30 +89,23 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
   it('should have multiple validation failure', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when enumeration items have multiple duplicate short descriptions should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
     expect(failures[1].validatorName).toBe('EnumerationItemsMustBeUnique');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when enumeration items have multiple duplicate short descriptions should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when enumeration items have multiple duplicate short descriptions should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

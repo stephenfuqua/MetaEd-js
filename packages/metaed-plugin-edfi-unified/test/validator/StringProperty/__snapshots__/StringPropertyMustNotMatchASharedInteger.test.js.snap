@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating string identity matches shared integer should have no validation failures 1`] = `"String Property IntegerProperty has the same name as a Shared Integer."`;
+
+exports[`when validating string identity matches shared integer should have no validation failures 2`] = `
+Object {
+  "column": 11,
+  "line": 8,
+  "tokenText": "IntegerProperty",
+}
+`;
+
+exports[`when validating string property matches shared integer should have no validation failures 1`] = `"String Property IntegerProperty has the same name as a Shared Integer."`;
+
+exports[`when validating string property matches shared integer should have no validation failures 2`] = `
+Object {
+  "column": 11,
+  "line": 8,
+  "tokenText": "IntegerProperty",
+}
+`;

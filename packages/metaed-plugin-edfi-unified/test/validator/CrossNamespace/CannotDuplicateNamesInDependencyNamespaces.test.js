@@ -13,8 +13,8 @@ import { validate } from '../../../src/validator/CrossNamespace/CannotDuplicateN
 describe('when DEs have different names across dependency-linked namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
-  let coreNamespace: ?Namespace = null;
-  let extensionNamespace: ?Namespace = null;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -58,8 +58,8 @@ describe('when DEs have different names across dependency-linked namespaces', ()
 describe('when DEs have same names across dependency-linked namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
-  let coreNamespace: ?Namespace = null;
-  let extensionNamespace: ?Namespace = null;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -106,12 +106,12 @@ describe('when DEs have same names across dependency-linked namespaces', () => {
 });
 
 // not a name collision because they are completely separate namespaces
-describe('when DE has same name as DE that is not across dependency-linked namespaces', () => {
+describe('when DE Extension has same name as DE Extension that is not across dependency-linked namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
-  let coreNamespace: ?Namespace = null;
-  let extensionNamespacea: ?Namespace = null;
-  let extensionNamespaceb: ?Namespace = null;
+  let coreNamespace: any = null;
+  let extensionNamespacea: any = null;
+  let extensionNamespaceb: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -151,11 +151,11 @@ describe('when DE has same name as DE that is not across dependency-linked names
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
-  it('should build one extension1 domain entity', () => {
+  it('should build one extension1 domain entity extension', () => {
     expect(extensionNamespacea.entity.domainEntityExtension.size).toBe(1);
   });
 
-  it('should build one extension2 domain entity', () => {
+  it('should build one extension2 domain entity extension', () => {
     expect(extensionNamespaceb.entity.domainEntityExtension.size).toBe(1);
   });
 
@@ -168,8 +168,8 @@ describe('when DE has same name as DE that is not across dependency-linked names
 describe('when DE has same name as DE extension across dependency-linked namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
-  let coreNamespace: ?Namespace = null;
-  let extensionNamespace: ?Namespace = null;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -215,8 +215,8 @@ describe('when DE has same name as DE extension across dependency-linked namespa
 describe('when DE has same name as Common across dependency-linked namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
-  let coreNamespace: ?Namespace = null;
-  let extensionNamespace: ?Namespace = null;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()

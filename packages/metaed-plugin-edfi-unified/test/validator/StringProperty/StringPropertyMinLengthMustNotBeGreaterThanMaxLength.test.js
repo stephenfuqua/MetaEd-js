@@ -10,10 +10,11 @@ describe('when validating string property with correct minimum length and maximu
   const maxLength: string = '10';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -24,11 +25,12 @@ describe('when validating string property with correct minimum length and maximu
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build two properties', () => {
@@ -47,10 +49,11 @@ describe('when validating string property with same minimum length and maximum l
   const maxLength: string = '5';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -61,11 +64,12 @@ describe('when validating string property with same minimum length and maximum l
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build two properties', () => {
@@ -84,10 +88,11 @@ describe('when validating string property with minimum length greater than maxim
   const maxLength: string = '0';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -98,11 +103,12 @@ describe('when validating string property with minimum length greater than maxim
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build two properties', () => {
@@ -113,19 +119,11 @@ describe('when validating string property with minimum length greater than maxim
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('StringPropertyMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating string property with minimum length greater than maximum length -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating string property with minimum length greater than maximum length -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
     expect(failures[1].validatorName).toBe('StringPropertyMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when validating string property with minimum length greater than maximum length -> message2',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when validating string property with minimum length greater than maximum length -> sourceMap2',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

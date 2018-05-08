@@ -33,7 +33,7 @@ function generateValidationErrorsForDuplicates(metaEdProperty: Array<SimplePrope
     if (properties.length > 1) {
       properties.forEach(property => {
         failures.push({
-          validatorName: 'SimplePropertiesCannotDuplicateName',
+          validatorName: 'SimplePropertiesCannotDuplicateNames',
           category: 'error',
           message: `${property.typeHumanizedName} named ${metaEdName} is a duplicate declaration of that name.`,
           sourceMap: property.sourceMap.type,

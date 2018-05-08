@@ -13,10 +13,11 @@ describe('when association subclass renames base identity more than once', () =>
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -36,15 +37,16 @@ describe('when association subclass renames base identity more than once', () =>
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {

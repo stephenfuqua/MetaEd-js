@@ -7,6 +7,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -21,11 +22,12 @@ describe('when validating domain entity with no UniqueId fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -37,6 +39,7 @@ describe('when validating domain entity with one UniqueId field', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -51,11 +54,12 @@ describe('when validating domain entity with one UniqueId field', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -67,6 +71,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -82,19 +87,20 @@ describe('when validating domain entity with two UniqueId fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityMustContainNoMoreThanOneUniqueIdColumn');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot('when validating domain entity with two UniqueId fields -> message');
-    expect(failures[0].sourceMap).toMatchSnapshot('when validating domain entity with two UniqueId fields -> sourceMap');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -102,9 +108,18 @@ describe('when validating domain entity with two UniqueId fields in extension na
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('AnEntity')
+      .withDocumentation('doc')
+      .withStringIdentity('EntityId', 'doc', '100')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
       .withBeginNamespace('extension', 'ProjectExtension')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
@@ -117,11 +132,15 @@ describe('when validating domain entity with two UniqueId fields in extension na
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {

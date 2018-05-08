@@ -1,20 +1,26 @@
 // @flow
-import type { DomainEntity, DomainEntityExtension, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { DomainEntity, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
-    const extendedEntity: DomainEntity | DomainEntityExtension | void =
-      metaEd.entity.domainEntity.get(domainEntitySubclass.baseEntityName) ||
-      metaEd.entity.domainEntityExtension.get(domainEntitySubclass.baseEntityName);
-    if (!extendedEntity) return;
-    failExtensionPropertyRedeclarations(
-      'DomainEntitySubClassMustNotRedeclareProperties',
-      domainEntitySubclass,
-      extendedEntity,
-      failures,
-    );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
+      const extendedEntity: ?DomainEntity = getEntityForNamespaces(
+        domainEntitySubclass.baseEntityName,
+        [namespace, ...namespace.dependencies],
+        'domainEntity',
+      );
+
+      if (!extendedEntity) return;
+      failExtensionPropertyRedeclarations(
+        'DomainEntitySubClassMustNotRedeclareProperties',
+        domainEntitySubclass,
+        extendedEntity,
+        failures,
+      );
+    });
   });
 
   return failures;

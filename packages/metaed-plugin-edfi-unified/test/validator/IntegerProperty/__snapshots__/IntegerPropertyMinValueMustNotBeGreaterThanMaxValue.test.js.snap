@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating integer property with minimum value greater than maximum value should have validation failures: when validating integer property with minimum value greater than maximum value -> message 1`] = `"integer IntegerProperty has min value greater than max value."`;
+exports[`when validating integer property with minimum value greater than maximum value should have validation failures 1`] = `"integer IntegerProperty has min value greater than max value."`;
 
-exports[`when validating integer property with minimum value greater than maximum value should have validation failures: when validating integer property with minimum value greater than maximum value -> sourceMap 1`] = `
+exports[`when validating integer property with minimum value greater than maximum value should have validation failures 2`] = `
 Object {
   "column": 6,
   "line": 9,

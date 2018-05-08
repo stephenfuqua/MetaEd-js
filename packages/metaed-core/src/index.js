@@ -26,8 +26,19 @@ export {
   getTopLevelCoreEntity,
   getEntitiesOfType,
   getAllEntitiesNoSimpleTypes,
+  getEntityForNamespaces,
+  getAllEntitiesForNamespaces,
+  getAllTopLevelEntitiesForNamespaces,
+  getAllEntitiesNoSimpleTypesForNamespaces,
+  getEntitiesOfTypeForNamespaces,
 } from './model/EntityRepository';
-export { addProperty, getAllProperties, getPropertiesOfType, newPropertyIndex } from './model/property/PropertyRepository';
+export {
+  addProperty,
+  getAllProperties,
+  getAllPropertiesForNamespaces,
+  getPropertiesOfType,
+  newPropertyIndex,
+} from './model/property/PropertyRepository';
 export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './model/property/PropertyType';
 export {
   allEntityModelTypes,

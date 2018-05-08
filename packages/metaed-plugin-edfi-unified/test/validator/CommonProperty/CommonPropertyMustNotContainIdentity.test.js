@@ -6,6 +6,7 @@ import { validate } from '../../../src/validator/CommonProperty/CommonPropertyMu
 describe('when validating common property is part of identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -25,25 +26,23 @@ describe('when validating common property is part of identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failure for property', () => {
     expect(failures[0].validatorName).toBe('CommonPropertyMustNotContainIdentity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has primary key should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has primary key should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

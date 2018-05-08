@@ -14,6 +14,8 @@ describe('when association extension extends association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -36,11 +38,15 @@ describe('when association extension extends association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -53,6 +59,8 @@ describe('when association extension extends association subclass', () => {
   const entityName: string = 'EntityName';
   const subclassName: string = 'SubclassName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -81,11 +89,15 @@ describe('when association extension extends association subclass', () => {
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -97,9 +109,20 @@ describe('when association extension extends an invalid identifier', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation('NotAMatch')
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
+      .withAssociationDomainEntityProperty('DomainEntity2', 'doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndAssociation()
+      .withEndNamespace()
+
       .withBeginNamespace('extension', 'ProjectExtension')
       .withStartAssociationExtension(entityName)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
@@ -109,11 +132,15 @@ describe('when association extension extends an invalid identifier', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {

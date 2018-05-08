@@ -8,10 +8,11 @@ describe('when validating domain entity domain item does not duplicate domain it
   const domainName: string = 'DomainName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -22,11 +23,12 @@ describe('when validating domain entity domain item does not duplicate domain it
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -40,10 +42,11 @@ describe('when validating domain entity domain item duplicates domain items', ()
   const domainEntityName: string = 'DomainEntityName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem(domainEntityName)
@@ -54,23 +57,20 @@ describe('when validating domain entity domain item duplicates domain items', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -81,10 +81,11 @@ describe('when validating domain entity domain item has multiple duplicate domai
   const domainEntityName2: string = 'DomainEntityName2';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem(domainEntityName)
@@ -99,30 +100,23 @@ describe('when validating domain entity domain item has multiple duplicate domai
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have multiple validation failures', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DomainMustNotDuplicateDomainItems');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
     expect(failures[1].validatorName).toBe('DomainMustNotDuplicateDomainItems');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when domain entity domain item has duplicate should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

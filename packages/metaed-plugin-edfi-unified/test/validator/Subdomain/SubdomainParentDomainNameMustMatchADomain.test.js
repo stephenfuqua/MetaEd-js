@@ -9,10 +9,11 @@ describe('when validating subdomain entity parent domain name does match a domai
   const subdomainName: string = 'SubdomainName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName)
       .withDocumentation('doc')
       .withEndDomain()
@@ -27,12 +28,13 @@ describe('when validating subdomain entity parent domain name does match a domai
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain and one subdomain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
-    expect(metaEd.entity.subdomain.size).toBe(1);
+    expect(coreNamespace.entity.domain.size).toBe(1);
+    expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -46,10 +48,11 @@ describe('when validating subdomain entity parent domain name does not match a d
   const subdomainName: string = 'SubdomainName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain('DifferentDomain')
       .withDocumentation('doc')
       .withEndDomain()
@@ -64,23 +67,20 @@ describe('when validating subdomain entity parent domain name does not match a d
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain and one subdomain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
-    expect(metaEd.entity.subdomain.size).toBe(1);
+    expect(coreNamespace.entity.domain.size).toBe(1);
+    expect(coreNamespace.entity.subdomain.size).toBe(1);
   });
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SubdomainParentDomainNameMustMatchADomain');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when subdomain entity parent domain name does not match a domain should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when subdomain entity parent domain name does not match a domain should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

@@ -3,8 +3,9 @@ import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.associationExtension.forEach(entity => {
-    if (!entity.namespace.isExtension) {
+  metaEd.namespace.forEach(namespace => {
+    if (namespace.isExtension) return;
+    namespace.entity.associationExtension.forEach(entity => {
       failures.push({
         validatorName: 'AssociationExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
@@ -14,8 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
-    }
+    });
   });
-
   return failures;
 }

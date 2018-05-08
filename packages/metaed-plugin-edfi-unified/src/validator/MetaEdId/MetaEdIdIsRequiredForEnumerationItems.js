@@ -1,10 +1,11 @@
 // @flow
-import type { Enumeration, SchoolYearEnumeration, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { getEntitiesOfType, asEnumeration } from 'metaed-core';
+import type { Enumeration, SchoolYearEnumeration, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces, asEnumeration } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  getEntitiesOfType(metaEd.entity, 'enumeration', 'schoolYearEnumeration').forEach(entity => {
+  const namespaces: Array<Namespace> = Array.from(metaEd.namespace.values()).filter(n => !n.isExtension);
+  getEntitiesOfTypeForNamespaces(namespaces, 'enumeration', 'schoolYearEnumeration').forEach(entity => {
     const domain: Enumeration | SchoolYearEnumeration = asEnumeration(entity);
     if (domain.enumerationItems.length === 0) return;
     domain.enumerationItems.forEach(enumerationItem => {

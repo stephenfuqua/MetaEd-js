@@ -6,6 +6,7 @@ import { validate } from '../../../src/validator/InterchangeExtension/Interchang
 describe('when validating interchange extension element has different names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -19,11 +20,12 @@ describe('when validating interchange extension element has different names', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -35,6 +37,7 @@ describe('when validating interchange element has duplicate names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityElementName: string = 'DomainEntityElementName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -48,23 +51,20 @@ describe('when validating interchange element has duplicate names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareElements');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating interchange element has duplicate names should have no validation failures -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating interchange element has duplicate names should have no validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -73,6 +73,7 @@ describe('when validating interchange element has multiple duplicate names', () 
   const domainEntityElementName1: string = 'DomainEntityElementName1';
   const domainEntityElementName2: string = 'DomainEntityElementName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -88,30 +89,23 @@ describe('when validating interchange element has multiple duplicate names', () 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('InterchangeExtensionMustNotRedeclareElements');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating interchange element has multiple duplicate names should have validation failures -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating interchange element has multiple duplicate names should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
     expect(failures[1].validatorName).toBe('InterchangeExtensionMustNotRedeclareElements');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when validating interchange element has multiple duplicate names should have validation failures -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when validating interchange element has multiple duplicate names should have validation failures -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

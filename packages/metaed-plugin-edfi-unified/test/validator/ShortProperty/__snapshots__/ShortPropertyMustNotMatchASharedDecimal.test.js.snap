@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating short identity matches shared decimal should have one validation failure 1`] = `"Short Property EntityName has the same name as a Shared Decimal."`;
+
+exports[`when validating short identity matches shared decimal should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 10,
+  "tokenText": "EntityName",
+}
+`;
+
+exports[`when validating short property matches shared decimal should have one validation failure 1`] = `"Short Property EntityName has the same name as a Shared Decimal."`;
+
+exports[`when validating short property matches shared decimal should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 10,
+  "tokenText": "EntityName",
+}
+`;

@@ -5,6 +5,7 @@ import { getAllProperties } from 'metaed-core';
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   getAllProperties(metaEd.propertyIndex).forEach(property => {
+    if (property.namespace.isExtension) return;
     if (property.metaEdId) return;
     failures.push({
       validatorName: 'MetaEdIdIsRequiredForProperties',

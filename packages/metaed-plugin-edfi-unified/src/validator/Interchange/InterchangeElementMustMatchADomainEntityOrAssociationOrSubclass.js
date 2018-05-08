@@ -4,12 +4,14 @@ import { failInterchangeItemNotMatchingBaseClassProperty } from '../ValidatorSha
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  failInterchangeItemNotMatchingBaseClassProperty(
-    'InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass',
-    metaEd.entity,
-    'elements',
-    'Interchange element',
-    failures,
-  );
+  metaEd.namespace.forEach(namespace => {
+    failInterchangeItemNotMatchingBaseClassProperty(
+      'InterchangeElementMustMatchADomainEntityOrAssociationOrSubclass',
+      namespace.entity,
+      'elements',
+      'Interchange element',
+      failures,
+    );
+  });
   return failures;
 }

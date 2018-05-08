@@ -2,11 +2,12 @@
 import type {
   CommonPropertySourceMap,
   EntityProperty,
-  EntityRepository,
+  ModelBase,
   MetaEdEnvironment,
   ModelType,
   ValidationFailure,
 } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 const validEntityTypes: ModelType[] = ['domainEntityExtension', 'associationExtension'];
 
@@ -19,11 +20,12 @@ function cardinalitiesMatch(originalProperty: EntityProperty, overrideProperty: 
   );
 }
 
-function parentEntityProperty(entity: EntityRepository, overrideProperty: EntityProperty): EntityProperty | void {
+function parentEntityProperty(namespaces: Array<Namespace>, overrideProperty: EntityProperty): ?EntityProperty {
   if (!validEntityTypes.includes(overrideProperty.parentEntity.type)) return undefined;
+  // parent type is base type being extended - sketchy string manipulation here
   const parentType = overrideProperty.parentEntity.type.replace('Extension', '');
-  // $FlowIgnore - allowing parentType to specify the entityRepository Map property
-  const parentEntity = entity[parentType].get(overrideProperty.parentEntityName);
+  const parentEntity: ?ModelBase = getEntityForNamespaces(overrideProperty.parentEntityName, namespaces, parentType);
+  if (parentEntity == null) return null;
   return parentEntity.properties.find(
     property => property.metaEdName === overrideProperty.metaEdName && property.type === overrideProperty.type,
   );
@@ -33,8 +35,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.propertyIndex.common.forEach(common => {
     if (!common.isExtensionOverride) return;
-    const parentProperty = parentEntityProperty(metaEd.entity, common);
-    if (!parentProperty) {
+    const parentProperty: ?EntityProperty = parentEntityProperty(
+      [common.namespace, ...common.namespace.dependencies],
+      common,
+    );
+    if (parentProperty == null) {
       failures.push({
         validatorName:
           'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',

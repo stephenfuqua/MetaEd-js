@@ -1,5 +1,6 @@
 // @flow
-import type { DomainItem, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {
@@ -11,15 +12,19 @@ function getFailure(domainItem: DomainItem, name: string, failureMessage: string
   };
 }
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domain.forEach(domain => {
-    domain.domainItems.forEach(domainItem => {
-      if (domainItem.referencedType === 'association') {
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.domain.forEach(domain => {
+      domain.domainItems.forEach(domainItem => {
+        if (domainItem.referencedType !== 'association') return;
         if (
-          !metaEd.entity.association.has(domainItem.metaEdName) &&
-          !metaEd.entity.associationSubclass.has(domainItem.metaEdName)
+          getEntityForNamespaces(
+            domainItem.metaEdName,
+            [namespace, ...namespace.dependencies],
+            'association',
+            'associationSubclass',
+          ) == null
         ) {
           failures.push(
             getFailure(
@@ -31,7 +36,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             ),
           );
         }
-      }
+      });
     });
   });
 

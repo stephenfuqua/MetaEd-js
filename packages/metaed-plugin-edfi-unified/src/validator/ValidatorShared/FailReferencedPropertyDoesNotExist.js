@@ -1,7 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { SourceMap, ValidationFailure, ModelBase } from 'metaed-core';
-import { EntityRepository } from 'metaed-core';
+import type { SourceMap, ValidationFailure, ModelBase, Namespace } from 'metaed-core';
 import {
   findReferencedProperty,
   matchAll,
@@ -11,14 +10,14 @@ import {
 
 export function failReferencedPropertyDoesNotExist(
   validatorName: string,
-  repository: EntityRepository,
+  namespaces: Array<Namespace>,
   entity: ModelBase,
   propertyPath: Array<string>,
   pairedMergePropertyName: string,
   sourceMap: SourceMap,
   failures: Array<ValidationFailure>,
 ) {
-  const matchingProperty = findReferencedProperty(repository, entity, [pairedMergePropertyName], matchAll());
+  const matchingProperty = findReferencedProperty(namespaces, entity, [pairedMergePropertyName], matchAll());
   if (!matchingProperty) return;
 
   const filter =
@@ -26,7 +25,7 @@ export function failReferencedPropertyDoesNotExist(
       ? matchAllIdentityReferenceProperties()
       : matchAllButFirstAsIdentityProperties();
 
-  const propertyContext = findReferencedProperty(repository, entity, propertyPath, filter);
+  const propertyContext = findReferencedProperty(namespaces, entity, propertyPath, filter);
   if (!propertyContext) {
     failures.push({
       validatorName,

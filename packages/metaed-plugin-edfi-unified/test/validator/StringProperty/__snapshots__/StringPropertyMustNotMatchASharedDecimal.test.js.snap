@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating string identity matches shared decimal should have no validation failures 1`] = `"String Property DecimalProperty has the same name as a Shared Decimal."`;
+
+exports[`when validating string identity matches shared decimal should have no validation failures 2`] = `
+Object {
+  "column": 11,
+  "line": 10,
+  "tokenText": "DecimalProperty",
+}
+`;
+
+exports[`when validating string property matches shared decimal should have no validation failures 1`] = `"String Property DecimalProperty has the same name as a Shared Decimal."`;
+
+exports[`when validating string property matches shared decimal should have no validation failures 2`] = `
+Object {
+  "column": 11,
+  "line": 10,
+  "tokenText": "DecimalProperty",
+}
+`;

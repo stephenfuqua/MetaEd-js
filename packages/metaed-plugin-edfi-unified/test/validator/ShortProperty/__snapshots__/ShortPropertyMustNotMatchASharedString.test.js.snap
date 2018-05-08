@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating short identity matches shared string should have one validation failure 1`] = `"Short Property ShortProperty has the same name as a Shared String."`;
+
+exports[`when validating short identity matches shared string should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "ShortProperty",
+}
+`;
+
+exports[`when validating short property matches shared string should have one validation failure 1`] = `"Short Property ShortProperty has the same name as a Shared String."`;
+
+exports[`when validating short property matches shared string should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "ShortProperty",
+}
+`;

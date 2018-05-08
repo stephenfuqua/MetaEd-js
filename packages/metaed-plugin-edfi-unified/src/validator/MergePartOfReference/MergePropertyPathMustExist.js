@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { PropertyType, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { getPropertiesOfType, asReferentialProperty, isReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
 
@@ -21,10 +21,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     if (!isReferentialProperty(property)) return;
     const referentialProperty = asReferentialProperty(property);
+    const namespaces: Array<Namespace> = [referentialProperty.namespace, ...referentialProperty.namespace.dependencies];
     referentialProperty.mergedProperties.forEach(mergedProperty => {
       failReferencedPropertyDoesNotExist(
         'MergePropertyPathMustExist',
-        metaEd.entity,
+        namespaces,
         referentialProperty.parentEntity,
         mergedProperty.mergePropertyPath,
         R.head(mergedProperty.targetPropertyPath),

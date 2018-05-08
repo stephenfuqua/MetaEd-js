@@ -7,6 +7,7 @@ describe('when common extension is in correct namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -25,12 +26,12 @@ describe('when common extension is in correct namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
-
+    extensionNamespace = metaEd.namespace.get('extension');
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -42,6 +43,7 @@ describe('when common extension is in core namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -58,12 +60,12 @@ describe('when common extension is in core namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
-
+      coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(coreNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {

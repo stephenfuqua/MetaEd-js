@@ -1,19 +1,26 @@
 // @flow
-import type { Association, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { Association, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 import { failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty } from '../ValidatorShared/FailSubclassIdentityRenameNotMatchingBaseClassIdentityProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.entity.associationSubclass.forEach(associationSubclass => {
-    const extendedEntity: Association | void = metaEd.entity.association.get(associationSubclass.baseEntityName);
-    failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
-      'AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass',
-      associationSubclass,
-      extendedEntity,
-      failures,
-    );
-  });
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.associationSubclass.forEach(associationSubclass => {
+      const extendedEntity: ?Association = getEntityForNamespaces(
+        associationSubclass.baseEntityName,
+        [namespace, ...namespace.dependencies],
+        'association',
+      );
 
+      failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
+        'AssociationSubclassIdentityRenameMustMatchIdentityPropertyInBaseClass',
+        associationSubclass,
+        extendedEntity,
+        failures,
+      );
+    });
+  });
   return failures;
 }

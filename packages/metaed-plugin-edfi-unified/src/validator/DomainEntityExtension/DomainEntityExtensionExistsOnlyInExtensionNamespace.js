@@ -1,11 +1,11 @@
 // @flow
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntityExtension.forEach(entity => {
-    if (!entity.namespace.isExtension) {
+  metaEd.namespace.forEach(namespace => {
+    if (namespace.isExtension) return;
+    namespace.entity.domainEntityExtension.forEach(entity => {
       failures.push({
         validatorName: 'DomainEntityExtensionExistsOnlyInExtensionNamespace',
         category: 'error',
@@ -15,8 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         sourceMap: entity.sourceMap.type,
         fileMap: null,
       });
-    }
+    });
   });
-
   return failures;
 }

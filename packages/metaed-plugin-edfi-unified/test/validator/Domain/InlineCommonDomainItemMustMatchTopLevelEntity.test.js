@@ -9,35 +9,34 @@ describe('when validating inline common domain item matches top level entity', (
   const inlineCommonName: string = 'InlineCommonName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withInlineCommonDomainItem(inlineCommonName)
       .withFooterDocumentation('FooterDocumentation')
       .withEndDomain()
 
-      .withStartCommon(inlineCommonName)
+      .withStartInlineCommon(inlineCommonName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withInlineCommonProperty('InlineInOds', 'doc', true, false)
-      .withEndCommon()
+      .withEndInlineCommon()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    // $FlowIgnore
-    metaEd.entity.common.get(inlineCommonName).inlineInOds = true;
-
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -51,46 +50,41 @@ describe('when validating inline common domain item does not match top level ent
   const inlineCommonName: string = 'InlineCommonName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withInlineCommonDomainItem('InlineCommonDomainItemName')
       .withFooterDocumentation('FooterDocumentation')
       .withEndDomain()
 
-      .withStartCommon(inlineCommonName)
+      .withStartInlineCommon(inlineCommonName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withInlineCommonProperty('InlineInOds', 'doc', true, false)
-      .withEndCommon()
+      .withEndInlineCommon()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    // $FlowIgnore
-    metaEd.entity.common.get(inlineCommonName).inlineInOds = true;
-
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure()', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('CommonDomainItemMustMatchTopLevelEntity');
+    expect(failures[0].validatorName).toBe('InlineCommonDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when common domain item has no matching top level entity should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when common domain item has no matching top level entity should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

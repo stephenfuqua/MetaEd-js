@@ -16,6 +16,7 @@ describe('when validating interchange identity template is an abstract entity', 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const abstractEntityName: string = 'AbstractEntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -36,15 +37,16 @@ describe('when validating interchange identity template is an abstract entity', 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -56,6 +58,7 @@ describe('when validating interchange identity template is a domain entity', () 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -76,15 +79,16 @@ describe('when validating interchange identity template is a domain entity', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -97,6 +101,7 @@ describe('when validating interchange identity template is a domain entity subcl
   const domainEntityName: string = 'DomainEntityName';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -123,19 +128,20 @@ describe('when validating interchange identity template is a domain entity subcl
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -147,6 +153,7 @@ describe('when validating interchange identity template is an association', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName: string = 'AssociationName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -169,15 +176,16 @@ describe('when validating interchange identity template is an association', () =
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -190,6 +198,7 @@ describe('when validating interchange identity template is an association', () =
   const associationName: string = 'AssociationName';
   const associationSubclassName: string = 'AssociationSubclassName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -218,19 +227,20 @@ describe('when validating interchange identity template is an association', () =
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association subclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -241,6 +251,7 @@ describe('when validating interchange identity template is an association', () =
 describe('when validating interchange identity template has invalid name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -255,22 +266,19 @@ describe('when validating interchange identity template has invalid name', () =>
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeIdentityMustMatchADomainEntityOrAssociationOrSubclass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating interchange identity template has invalid name should have validation failures -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating interchange identity template has invalid name should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

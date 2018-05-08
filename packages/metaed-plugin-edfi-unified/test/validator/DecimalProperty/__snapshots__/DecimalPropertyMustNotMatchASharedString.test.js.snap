@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating decimal property matches shared string should have validation failures 1`] = `"Decimal Property DecimalProperty has the same name as a Shared String."`;
+
+exports[`when validating decimal property matches shared string should have validation failures 2`] = `
+Object {
+  "column": 12,
+  "line": 8,
+  "tokenText": "DecimalProperty",
+}
+`;

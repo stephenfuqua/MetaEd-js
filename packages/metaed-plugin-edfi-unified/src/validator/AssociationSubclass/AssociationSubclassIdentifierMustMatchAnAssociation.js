@@ -1,21 +1,24 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.entity.associationSubclass.forEach(associationSubclass => {
-    if (!metaEd.entity.association.has(associationSubclass.baseEntityName)) {
-      failures.push({
-        validatorName: 'AssociationSubclassIdentifierMustMatchAnAssociation',
-        category: 'error',
-        message: `Association ${associationSubclass.metaEdName} based on ${
-          associationSubclass.baseEntityName
-        } does not match any declared Association.`,
-        sourceMap: associationSubclass.sourceMap.type,
-        fileMap: null,
-      });
-    }
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.associationSubclass.forEach(entity => {
+      if (getEntityForNamespaces(entity.baseEntityName, [namespace, ...namespace.dependencies], 'association') == null) {
+        failures.push({
+          validatorName: 'AssociationSubclassIdentifierMustMatchAnAssociation',
+          category: 'error',
+          message: `Association ${entity.metaEdName} based on ${
+            entity.baseEntityName
+          } does not match any declared Association.`,
+          sourceMap: entity.sourceMap.type,
+          fileMap: null,
+        });
+      }
+    });
   });
   return failures;
 }

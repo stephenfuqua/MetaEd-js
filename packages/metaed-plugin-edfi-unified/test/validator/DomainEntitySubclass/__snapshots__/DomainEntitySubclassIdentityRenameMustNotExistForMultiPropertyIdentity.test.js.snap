@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when domain entity subclass extends non existent entity should have validation failures: when domain entity subclass extends non existent entity should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName based on EntityName is invalid for identity rename because parent entity EntityName has more than one identity property."`;
+exports[`when domain entity subclass extends non existent entity should have validation failures 1`] = `"Domain Entity Subclass SubclassName based on EntityName is invalid for identity rename because parent entity EntityName has more than one identity property."`;
 
-exports[`when domain entity subclass extends non existent entity should have validation failures: when domain entity subclass extends non existent entity should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity subclass extends non existent entity should have validation failures 2`] = `
 Object {
   "column": 2,
   "line": 2,
@@ -10,9 +10,9 @@ Object {
 }
 `;
 
-exports[`when domain entity subclass renames base identity more than once should have validation failures: when domain entity subclass renames base identity more than once should have validation failure -> message 1`] = `"Domain Entity Subclass SubclassName based on EntityName is invalid for identity rename because parent entity EntityName has more than one identity property."`;
+exports[`when domain entity subclass renames base identity more than once should have validation failures 1`] = `"Domain Entity Subclass SubclassName based on EntityName is invalid for identity rename because parent entity EntityName has more than one identity property."`;
 
-exports[`when domain entity subclass renames base identity more than once should have validation failures: when domain entity subclass renames base identity more than once should have validation failure -> sourceMap 1`] = `
+exports[`when domain entity subclass renames base identity more than once should have validation failures 2`] = `
 Object {
   "column": 2,
   "line": 15,

@@ -5,7 +5,7 @@ exports[`when common extension extends an invalid identifier should have validat
 exports[`when common extension extends an invalid identifier should have validation failures(): when common extension extends an invalid identifier should have validation failure -> sourceMap 1`] = `
 Object {
   "column": 2,
-  "line": 2,
+  "line": 11,
   "tokenText": "Common",
 }
 `;

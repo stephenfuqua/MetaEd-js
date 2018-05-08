@@ -4,15 +4,17 @@ import { failInterchangeItemRedeclarations } from '../ValidatorShared/FailInterc
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.interchangeExtension.forEach(interchangeExtension => {
-    if (interchangeExtension.elements.length === 0) return;
-    failInterchangeItemRedeclarations(
-      'InterchangeExtensionMustNotRedeclareElements',
-      'element',
-      interchangeExtension,
-      interchangeExtension.elements,
-      failures,
-    );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.interchangeExtension.forEach(interchangeExtension => {
+      if (interchangeExtension.elements.length === 0) return;
+      failInterchangeItemRedeclarations(
+        'InterchangeExtensionMustNotRedeclareElements',
+        'element',
+        interchangeExtension,
+        interchangeExtension.elements,
+        failures,
+      );
+    });
   });
   return failures;
 }

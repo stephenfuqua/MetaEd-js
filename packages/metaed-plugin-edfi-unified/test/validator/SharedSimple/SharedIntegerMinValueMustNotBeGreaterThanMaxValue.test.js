@@ -31,6 +31,7 @@ describe('when validating shared integer with max value greater than min value',
 describe('when validating shared integer with min value greater than max value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -45,23 +46,20 @@ describe('when validating shared integer with min value greater than max value',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one shared integer', () => {
-    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating shared integer with min value greater than max value -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating shared integer with min value greater than max value -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -93,6 +91,7 @@ describe('when validating shared short with max value greater than min value', (
 describe('when validating shared short with min value greater than max value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -107,22 +106,19 @@ describe('when validating shared short with min value greater than max value', (
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one shared integer', () => {
-    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedIntegerMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating shared short with min value greater than max value -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating shared short with min value greater than max value -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

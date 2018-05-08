@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 1`] = `"Shared Decimal named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 15,
+  "tokenText": "Shared Decimal",
+}
+`;
+
+exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 3`] = `"Decimal Property named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 4`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "decimal",
+}
+`;
+
+exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 1`] = `"Shared Integer named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 11,
+  "tokenText": "Shared Integer",
+}
+`;
+
+exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 3`] = `"Integer Property named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 4`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "integer",
+}
+`;
+
+exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 1`] = `"Shared Integer named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 13,
+  "tokenText": "Shared Integer",
+}
+`;
+
+exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 3`] = `"Integer Property named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 4`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "integer",
+}
+`;
+
+exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 1`] = `"Shared String named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 3`] = `"Integer Property named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 4`] = `
+Object {
+  "column": 4,
+  "line": 12,
+  "tokenText": "integer",
+}
+`;
+
+exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 1`] = `"Shared String named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Shared String",
+}
+`;
+
+exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 3`] = `"String Property named EntityName is a duplicate declaration of that name."`;
+
+exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 4`] = `
+Object {
+  "column": 4,
+  "line": 12,
+  "tokenText": "string",
+}
+`;

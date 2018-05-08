@@ -1,13 +1,19 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+
   metaEd.propertyIndex.domainEntity.forEach(property => {
-    if (
-      !metaEd.entity.domainEntity.has(property.metaEdName) &&
-      !metaEd.entity.domainEntitySubclass.has(property.metaEdName)
-    ) {
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(
+      property.metaEdName,
+      [property.namespace, ...property.namespace.dependencies],
+      'domainEntity',
+      'domainEntitySubclass',
+    );
+
+    if (referencedEntity == null) {
       failures.push({
         validatorName: 'DomainEntityPropertyMustMatchADomainEntity',
         category: 'error',

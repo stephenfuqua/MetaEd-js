@@ -13,10 +13,11 @@ describe('when association subclass renames base identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -34,15 +35,64 @@ describe('when association subclass renames base identity', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when association subclass renames base identity across dependent namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation(entityName)
+      .withDocumentation('EntityDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName2', 'PropertyDocumentation')
+      .withStringIdentity('PropertyName3', 'PropertyDocumentation', '100')
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartAssociationSubclass('SubclassName', entityName)
+      .withDocumentation('EntityDocumentation')
+      .withStringIdentityRename('PropertyName4', 'PropertyName3', 'PropertyDocumentation', '100')
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+    failures = validate(metaEd);
+  });
+
+  it('should build one association', () => {
+    expect(coreNamespace.entity.association.size).toBe(1);
+  });
+
+  it('should build one associationSubclass', () => {
+    expect(extensionNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -54,10 +104,11 @@ describe('when association subclass does not rename identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -75,15 +126,16 @@ describe('when association subclass does not rename identity', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -95,10 +147,11 @@ describe('when association subclass renames base identity that does not exist', 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -116,15 +169,16 @@ describe('when association subclass renames base identity that does not exist', 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
@@ -144,10 +198,11 @@ describe('when association subclass renames base property that is not identity',
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -165,15 +220,16 @@ describe('when association subclass renames base property that is not identity',
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
@@ -192,10 +248,11 @@ describe('when association subclass renames base property that is not identity',
 describe('when association subclass extends non existent entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociationSubclass('SubclassName', 'EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentityRename('PropertyName2', 'PropertyName1', 'PropertyDocumentation', '100')
@@ -205,15 +262,16 @@ describe('when association subclass extends non existent entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should not build association', () => {
-    expect(metaEd.entity.association.size).toBe(0);
+    expect(coreNamespace.entity.association.size).toBe(0);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {

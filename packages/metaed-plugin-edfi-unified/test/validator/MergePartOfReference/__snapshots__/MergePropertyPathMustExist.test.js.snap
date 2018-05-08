@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when validating domain entity has merge property across namespaces and entity is wrong should have one validation failure 1`] = `"Merge statement UnknownEntity.PropertyName1 must be a valid path. No Property PropertyName1 was found"`;
+
+exports[`when validating domain entity has merge property across namespaces and entity is wrong should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 22,
+  "tokenText": "UnknownEntity",
+}
+`;
+
 exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> message 1`] = `"Merge statement UnknowEntity.PropertyName1 must be a valid path. No Property PropertyName1 was found"`;
 
 exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> sourceMap 1`] = `

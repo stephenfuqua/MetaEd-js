@@ -1,4 +1,5 @@
 // @flow
+import R from 'ramda';
 import type { Association } from './Association';
 import type { AssociationExtension } from './AssociationExtension';
 import type { AssociationSubclass } from './AssociationSubclass';
@@ -101,10 +102,26 @@ export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
   return result;
 }
 
+export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getAllEntities(namespace.entity));
+  });
+  return result;
+}
+
 export function getAllTopLevelEntities(repository: EntityRepository): Array<TopLevelEntity> {
-  const result = [];
+  const result: Array<TopLevelEntity> = [];
   // $FlowIgnore - using model type repository lookup
   allTopLevelEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
+  return result;
+}
+
+export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>): Array<TopLevelEntity> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getAllTopLevelEntities(namespace.entity));
+  });
   return result;
 }
 
@@ -114,11 +131,31 @@ export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array
   allEntityModelTypesNoSimpleTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
+
+export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getAllEntitiesNoSimpleTypes(namespace.entity));
+  });
+  return result;
+}
+
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
   modelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return ((result: any): Array<ModelBase>);
+}
+
+export function getEntitiesOfTypeForNamespaces(
+  namespaces: Array<Namespace>,
+  ...modelTypes: Array<ModelType>
+): Array<ModelBase> {
+  const result: Array<ModelBase> = [];
+  namespaces.forEach((namespace: Namespace) => {
+    result.push(...getEntitiesOfType(namespace.entity, ...modelTypes));
+  });
+  return result;
 }
 
 export function getEntity(repository: EntityRepository, entityName: string, ...modelTypes: Array<ModelType>): ?ModelBase {
@@ -128,6 +165,24 @@ export function getEntity(repository: EntityRepository, entityName: string, ...m
     if (!result) result = repository[modelType].get(entityName);
   });
   return result;
+}
+
+export function getEntityForNamespaces(
+  entityName: string,
+  namespaces: Array<Namespace>,
+  ...modelTypes: Array<ModelType>
+): ?ModelBase {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const namespace of namespaces) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const modelType of modelTypes) {
+      if (namespace.entity[modelType].has(entityName)) {
+        return namespace.entity[modelType].get(entityName);
+      }
+    }
+  }
+
+  return null;
 }
 
 export function addEntity(repository: EntityRepository, entity: ModelBase) {

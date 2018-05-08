@@ -16,6 +16,7 @@ import { validate } from '../../../src/validator/CommonProperty/CommonPropertyWi
 describe('when validating common property does not have extension override', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -35,15 +36,16 @@ describe('when validating common property does not have extension override', () 
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -55,6 +57,7 @@ describe('when validating common property has extension override on non domain e
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName1';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -75,15 +78,17 @@ describe('when validating common property has extension override on non domain e
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -91,12 +96,8 @@ describe('when validating common property has extension override on non domain e
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on non domain entity or association extensions should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on non domain entity or association extensions should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -105,6 +106,8 @@ describe('when validating common property has extension override on domain entit
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -132,19 +135,23 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -152,12 +159,8 @@ describe('when validating common property has extension override on domain entit
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension without include on extendee should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -166,6 +169,8 @@ describe('when validating common property has extension override on association 
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -195,19 +200,23 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -215,12 +224,8 @@ describe('when validating common property has extension override on association 
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on association extension without include on extendee should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on association extension without include on extendee should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -229,6 +234,8 @@ describe('when validating common property has extension override on domain entit
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -257,19 +264,23 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -282,6 +293,8 @@ describe('when validating common property has extension override on association 
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -312,19 +325,23 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -337,6 +354,8 @@ describe('when validating common property has extension override on domain entit
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -365,32 +384,33 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe(
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -399,6 +419,8 @@ describe('when validating common property has extension override on association 
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -429,32 +451,33 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe(
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on association extension with include on extendee not matching collection cardinality should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -463,6 +486,8 @@ describe('when validating common property has extension override on domain entit
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -491,32 +516,33 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe(
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on domain entity extension with include on extendee not matching nullablility should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -525,6 +551,8 @@ describe('when validating common property has extension override on association 
   const entityName1: string = 'EntityName1';
   const entityName2: string = 'EntityName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -555,31 +583,32 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
+    expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe(
       'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
     );
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> message ',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating common property has extension override on association extension with include on extendee not matching nullablility should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating short property matches shared integer should have one validation failure 1`] = `"Short Property IntegerProperty has the same name as a Shared Integer."`;
+
+exports[`when validating short property matches shared integer should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "IntegerProperty",
+}
+`;
+
+exports[`when validating string identity matches shared integer should have one validation failure 1`] = `"Short Property IntegerProperty has the same name as a Shared Integer."`;
+
+exports[`when validating string identity matches shared integer should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 8,
+  "tokenText": "IntegerProperty",
+}
+`;

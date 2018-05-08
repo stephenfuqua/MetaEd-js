@@ -1,5 +1,5 @@
 // @flow
-import type { EntityProperty, MetaEdEnvironment, PropertyType, ValidationFailure, ModelBase } from 'metaed-core';
+import type { EntityProperty, MetaEdEnvironment, PropertyType, ValidationFailure, ModelBase, Namespace } from 'metaed-core';
 import {
   asReferentialProperty,
   asModelType,
@@ -24,16 +24,16 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     if (!isReferentialProperty(property)) return;
     const referentialProperty = asReferentialProperty(property);
     if (referentialProperty.mergedProperties.length === 0) return;
-
+    const namespaces: Array<Namespace> = [referentialProperty.namespace, ...referentialProperty.namespace.dependencies];
     referentialProperty.mergedProperties.forEach(mergedProperty => {
       const mergeProperty: ?EntityProperty = findReferencedProperty(
-        metaEd.entity,
+        namespaces,
         referentialProperty.parentEntity,
         mergedProperty.mergePropertyPath,
         matchAllButFirstAsIdentityProperties(),
       );
       const targetProperty: ?EntityProperty = findReferencedProperty(
-        metaEd.entity,
+        namespaces,
         referentialProperty.parentEntity,
         mergedProperty.targetPropertyPath,
         matchAllIdentityReferenceProperties(),
@@ -50,12 +50,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             referenceTypes.includes(asModelType(targetProperty.type))
           ) {
             const mergeBaseEntity: Array<ModelBase> = getReferencedEntities(
-              metaEd.entity,
+              namespaces,
               mergeProperty.metaEdName,
               mergeProperty.type,
             );
             const targetBaseEntity: Array<ModelBase> = getReferencedEntities(
-              metaEd.entity,
+              namespaces,
               targetProperty.metaEdName,
               targetProperty.type,
             );

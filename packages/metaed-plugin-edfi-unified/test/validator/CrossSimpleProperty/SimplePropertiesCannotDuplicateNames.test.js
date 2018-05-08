@@ -18,6 +18,7 @@ describe('when two integer properties in different DEs have the same name', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -36,16 +37,27 @@ describe('when two integer properties in different DEs have the same name', () =
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, and one integer property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(2);
   });
 
   it('should have validation failures for each entity', () => {
     expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('SimplePropertiesCannotDuplicateNames');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+
+    expect(failures[1].validatorName).toBe('SimplePropertiesCannotDuplicateNames');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -53,6 +65,7 @@ describe('when an integer property and a decimal property in different DEs have 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -72,11 +85,13 @@ describe('when an integer property and a decimal property in different DEs have 
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one integer property, one decimal property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
   });
@@ -90,6 +105,7 @@ describe('when a integer property and a string property in different DEs have th
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -109,11 +125,13 @@ describe('when a integer property and a string property in different DEs have th
       .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one integer property, one string property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.string.length).toBe(1);
   });
@@ -126,6 +144,7 @@ describe('when an string property and a string property in different DEs have th
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -144,11 +163,13 @@ describe('when an string property and a string property in different DEs have th
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, two string properties', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(2);
   });
 
@@ -160,6 +181,7 @@ describe('when an string property and a decimal property in different DEs have t
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -179,11 +201,13 @@ describe('when an string property and a decimal property in different DEs have t
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one string property, one decimal property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
   });
@@ -197,6 +221,7 @@ describe('when an decimal property and a decimal property in different DEs have 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -215,11 +240,13 @@ describe('when an decimal property and a decimal property in different DEs have 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DecimalTypeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, two decimal properties', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.decimal.length).toBe(2);
   });
 
@@ -232,6 +259,7 @@ describe('when a decimal property and a shared decimal property in different DEs
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -251,11 +279,13 @@ describe('when a decimal property and a shared decimal property in different DEs
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one shared decimal, one decimal property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.decimal.length).toBe(1);
     expect(metaEd.propertyIndex.sharedDecimal.length).toBe(1);
   });
@@ -268,6 +298,7 @@ describe('when a string property and a shared string property in different DEs h
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -287,11 +318,13 @@ describe('when a string property and a shared string property in different DEs h
       .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one shared string, one string property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.sharedString.length).toBe(1);
   });
@@ -305,6 +338,7 @@ describe('when an integer property and a shared integer property in different DE
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -324,11 +358,13 @@ describe('when an integer property and a shared integer property in different DE
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one shared integer, one integer property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.integer.length).toBe(1);
     expect(metaEd.propertyIndex.sharedInteger.length).toBe(1);
   });
@@ -341,6 +377,7 @@ describe('when a short property and a shared short property in different DEs hav
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -360,11 +397,13 @@ describe('when a short property and a shared short property in different DEs hav
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one shared short, one short property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.short.length).toBe(1);
     expect(metaEd.propertyIndex.sharedShort.length).toBe(1);
   });
@@ -378,6 +417,7 @@ describe('when a string property and a shared decimal property in different DEs 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName: string = 'PropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -397,11 +437,13 @@ describe('when a string property and a shared decimal property in different DEs 
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+
     failures = validate(metaEd);
   });
 
   it('should build two domain entities, one shared string, one string property', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
     expect(metaEd.propertyIndex.string.length).toBe(1);
     expect(metaEd.propertyIndex.sharedDecimal.length).toBe(1);
   });

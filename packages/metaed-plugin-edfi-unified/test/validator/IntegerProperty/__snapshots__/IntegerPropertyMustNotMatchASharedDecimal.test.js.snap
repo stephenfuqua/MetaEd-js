@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating integer property matches shared decimal should have no validation failures 1`] = `"integer EntityName has the same name as a Shared Decimal."`;
+
+exports[`when validating integer property matches shared decimal should have no validation failures 2`] = `
+Object {
+  "column": 12,
+  "line": 10,
+  "tokenText": "EntityName",
+}
+`;

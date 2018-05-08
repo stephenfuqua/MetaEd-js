@@ -13,6 +13,8 @@ describe('when association extension correctly has different property names', ()
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -35,11 +37,15 @@ describe('when association extension correctly has different property names', ()
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -52,6 +58,8 @@ describe('when association extension has duplicate property name', () => {
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -74,23 +82,23 @@ describe('when association extension has duplicate property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when association extension has duplicate property name should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when association extension has duplicate property name should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -99,6 +107,8 @@ describe('when association extension has duplicate base property name but differ
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -121,6 +131,10 @@ describe('when association extension has duplicate base property name but differ
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
@@ -136,6 +150,8 @@ describe('when association extension has multiple duplicates', () => {
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
   const duplicatePropertyName2: string = 'DuplicatePropertyName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -161,6 +177,10 @@ describe('when association extension has multiple duplicates', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
@@ -169,22 +189,14 @@ describe('when association extension has multiple duplicates', () => {
     expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[0].message).toMatchSnapshot(
-      'when association extension has multiple duplicates should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when association extension has multiple duplicates should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
 
     expect(failures[1].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
     expect(failures[1].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[1].message).toMatchSnapshot(
-      'when association extension has multiple duplicates should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when association extension has multiple duplicates should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -193,6 +205,8 @@ describe('when association extension has duplicate common property', () => {
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -215,11 +229,19 @@ describe('when association extension has duplicate common property', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should have validation failures()', () => {
     expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('AssociationExtensionMustNotRedeclareProperties');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -228,6 +250,8 @@ describe('when association extension has duplicate common extension override pro
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -249,6 +273,10 @@ describe('when association extension has duplicate common extension override pro
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
   });

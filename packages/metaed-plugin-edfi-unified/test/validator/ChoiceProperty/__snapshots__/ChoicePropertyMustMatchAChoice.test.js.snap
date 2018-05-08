@@ -1,8 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when choice property has invalid identifier should have validation failure for property: when choice property has invalid identifier should have validation failures for each property -> message  1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
+exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
 
-exports[`when choice property has invalid identifier should have validation failure for property: when choice property has invalid identifier should have validation failures for each property -> sourceMap 1`] = `
+exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 4,
+  "line": 15,
+  "tokenText": "choice",
+}
+`;
+
+exports[`when choice property has invalid identifier should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
+
+exports[`when choice property has invalid identifier should have validation failure for property 2`] = `
 Object {
   "column": 4,
   "line": 13,

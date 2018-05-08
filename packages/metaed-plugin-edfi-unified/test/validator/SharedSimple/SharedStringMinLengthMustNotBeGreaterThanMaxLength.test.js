@@ -6,6 +6,7 @@ import { validate } from '../../../src/validator/SharedSimple/SharedStringMinLen
 describe('when validating shared string with max length greater than min length', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -20,11 +21,12 @@ describe('when validating shared string with max length greater than min length'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -35,6 +37,7 @@ describe('when validating shared string with max length greater than min length'
 describe('when validating shared string with min length greater than max length', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,22 +52,19 @@ describe('when validating shared string with min length greater than max length'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('SharedStringMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating shared string with min value greater than max value -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating shared string with min value greater than max value -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

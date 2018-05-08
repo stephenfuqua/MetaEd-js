@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating subdomain entity domain item has duplicate domain items should have one validation failure: when subdomain entity domain item has duplicate should have validation failure -> message 1`] = `"Subdomain Entity Domain Item 'DomainEntityName' has a duplicate Domain Item."`;
+exports[`when validating subdomain entity domain item has duplicate domain items should have one validation failure 1`] = `"Subdomain Entity Domain Item 'DomainEntityName' has a duplicate Domain Item."`;
 
-exports[`when validating subdomain entity domain item has duplicate domain items should have one validation failure: when subdomain entity domain item has duplicate should have validation failure -> sourceMap 1`] = `
+exports[`when validating subdomain entity domain item has duplicate domain items should have one validation failure 2`] = `
 Object {
   "column": 4,
   "line": 5,
@@ -10,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures: when subdomain entity domain item has duplicate should have validation failure -> message 1`] = `"Subdomain Entity Domain Item 'DomainEntityName' has a duplicate Domain Item."`;
+exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures 1`] = `"Subdomain Entity Domain Item 'DomainEntityName' has a duplicate Domain Item."`;
 
-exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures: when subdomain entity domain item has duplicate should have validation failure -> message 2`] = `"Subdomain Entity Domain Item 'DomainEntityName2' has a duplicate Domain Item."`;
-
-exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures: when subdomain entity domain item has duplicate should have validation failure -> sourceMap 1`] = `
+exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures 2`] = `
 Object {
   "column": 4,
   "line": 6,
@@ -22,7 +20,9 @@ Object {
 }
 `;
 
-exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures: when subdomain entity domain item has duplicate should have validation failure -> sourceMap 2`] = `
+exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures 3`] = `"Subdomain Entity Domain Item 'DomainEntityName2' has a duplicate Domain Item."`;
+
+exports[`when validating subdomain entity domain item has multiple duplicate domain items should have multiple validation failures 4`] = `
 Object {
   "column": 4,
   "line": 9,

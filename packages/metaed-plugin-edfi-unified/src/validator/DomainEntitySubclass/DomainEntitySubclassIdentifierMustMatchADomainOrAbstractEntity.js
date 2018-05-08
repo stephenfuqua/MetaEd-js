@@ -1,21 +1,24 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
-    if (!metaEd.entity.domainEntity.has(domainEntitySubclass.baseEntityName)) {
-      failures.push({
-        validatorName: 'DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity',
-        category: 'error',
-        message: `${domainEntitySubclass.typeHumanizedName} ${domainEntitySubclass.metaEdName} based on ${
-          domainEntitySubclass.baseEntityName
-        } does not match any declared Domain or Abstract Entity.`,
-        sourceMap: domainEntitySubclass.sourceMap.baseEntityName,
-        fileMap: null,
-      });
-    }
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.domainEntitySubclass.forEach(entity => {
+      if (getEntityForNamespaces(entity.baseEntityName, [namespace, ...namespace.dependencies], 'domainEntity') == null) {
+        failures.push({
+          validatorName: 'DomainEntitySubclassIdentifierMustMatchADomainOrAbstractEntity',
+          category: 'error',
+          message: `${entity.typeHumanizedName} ${entity.metaEdName} based on ${
+            entity.baseEntityName
+          } does not match any declared Domain or Abstract Entity.`,
+          sourceMap: entity.sourceMap.baseEntityName,
+          fileMap: null,
+        });
+      }
+    });
   });
 
   return failures;

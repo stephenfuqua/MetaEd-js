@@ -6,6 +6,7 @@ import { validate } from '../../../src/validator/Descriptor/DescriptorNameCannot
 describe('when descriptor has name ending in Descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -18,11 +19,12 @@ describe('when descriptor has name ending in Descriptor', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
   it('should have validation failure', () => {
@@ -37,6 +39,7 @@ describe('when descriptor has name ending in Descriptor', () => {
 describe('when descriptor has name not ending in Descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -49,11 +52,12 @@ describe('when descriptor has name not ending in Descriptor', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one descriptor', () => {
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
   it('should have no validation failures', () => {

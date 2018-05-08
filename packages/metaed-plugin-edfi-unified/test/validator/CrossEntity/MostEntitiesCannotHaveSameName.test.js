@@ -19,6 +19,7 @@ import { validate } from '../../../src/validator/CrossEntity/MostEntitiesCannotH
 describe('when entities have different names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -39,12 +40,13 @@ describe('when entities have different names', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity and one association', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -56,6 +58,7 @@ describe('when DE and Association have identical names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -76,12 +79,13 @@ describe('when DE and Association have identical names', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity and one association', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -111,6 +115,7 @@ describe('when DE has same name as DE extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -130,12 +135,13 @@ describe('when DE has same name as DE extension', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one DE and one DE extension', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -147,6 +153,7 @@ describe('when Association has same name as Association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -168,12 +175,13 @@ describe('when Association has same name as Association extension', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one DE and one DE extension', () => {
-    expect(metaEd.entity.association.size).toBe(1);
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -185,6 +193,7 @@ describe('when DE and SharedInteger have identical names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -204,12 +213,13 @@ describe('when DE and SharedInteger have identical names', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity and one shared integer', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.sharedInteger.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -239,6 +249,7 @@ describe('when DE and Common have identical names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -258,12 +269,13 @@ describe('when DE and Common have identical names', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity and one common', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.common.size).toBe(1);
   });
 
   it('should have validation failures for each entity', () => {
@@ -289,10 +301,137 @@ describe('when DE and Common have identical names', () => {
   });
 });
 
+describe('when DE and Common in separate dependency-linked namespaces have identical names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('Prop1', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'Extension')
+      .withStartCommon(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('Prop2', 'doc', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one core domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one extension domain entity extension', () => {
+    expect(extensionNamespace.entity.common.size).toBe(1);
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(failures).toHaveLength(2);
+
+    expect(failures[0].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> DE message ',
+    );
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> DE sourceMap',
+    );
+
+    expect(failures[1].validatorName).toBe('MostEntitiesCannotHaveSameName');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> SharedInteger message ',
+    );
+    expect(failures[1].sourceMap).toMatchSnapshot(
+      'when DE and Common have identical names should have validation failures for each entity -> SharedInteger sourceMap',
+    );
+  });
+});
+
+describe('when DE and Common in non-dependency-linked namespaces have identical names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespacea: any = null;
+  let extensionNamespaceb: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityXYZ')
+      .withDocumentation('doc')
+      .withBooleanProperty('Prop1', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extensiona', 'Extensiona')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('Prop2', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extensionb', 'Extensionb')
+      .withStartCommon(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('Prop3', 'doc', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespacea = metaEd.namespace.get('extensiona');
+    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    extensionNamespacea.dependencies.push(coreNamespace);
+    extensionNamespaceb.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one core domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one extension1 domain entity', () => {
+    expect(extensionNamespacea.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one extension2 common', () => {
+    expect(extensionNamespaceb.entity.common.size).toBe(1);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when DE has same name as descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -312,12 +451,13 @@ describe('when DE has same name as descriptor', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one DE and one descriptor', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.descriptor.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -329,6 +469,7 @@ describe('when DE has same name as enumeration', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -348,12 +489,13 @@ describe('when DE has same name as enumeration', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one DE and one enumeration', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -365,6 +507,7 @@ describe('when DE has same name as interchange', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -384,12 +527,13 @@ describe('when DE has same name as interchange', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one DE and one interchange', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {

@@ -13,10 +13,11 @@ describe('when domain entity subclass has different property name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation3', true, false)
@@ -32,15 +33,16 @@ describe('when domain entity subclass has different property name', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -53,6 +55,7 @@ describe('when domain entity subclass has duplicate property name', () => {
   const entityName: string = 'EntityName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -72,27 +75,24 @@ describe('when domain entity subclass has duplicate property name', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -134,6 +134,7 @@ describe('when domain entity subclass has multiple duplicate property name', () 
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
   const duplicatePropertyName2: string = 'DuplicatePropertyName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -156,35 +157,28 @@ describe('when domain entity subclass has multiple duplicate property name', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(coreNamespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
 
     expect(failures[1].validatorName).toBe('DomainEntitySubClassMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when domain entity subclass has invalid extendee should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

@@ -1,10 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating interchange items have duplicate metaEdId should have validation failures: when validating interchange elements have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Interchange Item DomainEntityElementName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating interchange items have duplicate metaEdId should have validation failures 1`] = `"MetaEdId '1' on Interchange Item DomainEntityElementName1 already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating interchange items have duplicate metaEdId should have validation failures: when validating interchange elements have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Interchange Item DomainEntityIdentityTemplateName2 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating interchange items have duplicate metaEdId should have validation failures: when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating interchange items have duplicate metaEdId should have validation failures 2`] = `
 Object {
   "column": 43,
   "line": 5,
@@ -12,7 +10,9 @@ Object {
 }
 `;
 
-exports[`when validating interchange items have duplicate metaEdId should have validation failures: when validating interchange elements have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating interchange items have duplicate metaEdId should have validation failures 3`] = `"MetaEdId '1' on Interchange Item DomainEntityIdentityTemplateName2 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating interchange items have duplicate metaEdId should have validation failures 4`] = `
 Object {
   "column": 61,
   "line": 7,
@@ -20,17 +20,9 @@ Object {
 }
 `;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Domain Entity DomainEntityName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 1`] = `"MetaEdId '1' on Domain Entity DomainEntityName1 already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Domain Item DomainItemName1 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 3`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 4`] = `"MetaEdId '2' on Domain Entity DomainEntityName2 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 5`] = `"MetaEdId '2' on Interchange Item DomainEntityElementName1 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 2`] = `
 Object {
   "column": 34,
   "line": 2,
@@ -38,7 +30,59 @@ Object {
 }
 `;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 3`] = `"MetaEdId '1' on Domain Item DomainItemName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 4`] = `
+Object {
+  "column": 34,
+  "line": 30,
+  "tokenText": "[1]",
+}
+`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 5`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 6`] = `
+Object {
+  "column": 45,
+  "line": 24,
+  "tokenText": "[1]",
+}
+`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 7`] = `"MetaEdId '2' on Domain Entity DomainEntityName2 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 8`] = `
+Object {
+  "column": 34,
+  "line": 9,
+  "tokenText": "[2]",
+}
+`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 9`] = `"MetaEdId '2' on Interchange Item DomainEntityElementName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items across namespaces have duplicate metaEdId should have five validation failures 10`] = `
+Object {
+  "column": 43,
+  "line": 34,
+  "tokenText": "[2]",
+}
+`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 1`] = `"MetaEdId '1' on Domain Entity DomainEntityName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 2`] = `
+Object {
+  "column": 34,
+  "line": 2,
+  "tokenText": "[1]",
+}
+`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 3`] = `"MetaEdId '1' on Domain Item DomainItemName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 4`] = `
 Object {
   "column": 34,
   "line": 28,
@@ -46,7 +90,9 @@ Object {
 }
 `;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 3`] = `
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 5`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 6`] = `
 Object {
   "column": 45,
   "line": 22,
@@ -54,7 +100,9 @@ Object {
 }
 `;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 4`] = `
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 7`] = `"MetaEdId '2' on Domain Entity DomainEntityName2 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 8`] = `
 Object {
   "column": 34,
   "line": 9,
@@ -62,7 +110,9 @@ Object {
 }
 `;
 
-exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 5`] = `
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 9`] = `"MetaEdId '2' on Interchange Item DomainEntityElementName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating multiple entities, properties, and items have duplicate metaEdId should have five validation failures 10`] = `
 Object {
   "column": 43,
   "line": 32,
@@ -70,11 +120,9 @@ Object {
 }
 `;
 
-exports[`when validating two domain items have duplicate metaEdId should have validation failures: when validating two domain items have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Domain Item DomainItemName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating two domain items have duplicate metaEdId should have validation failures 1`] = `"MetaEdId '1' on Domain Item DomainItemName1 already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating two domain items have duplicate metaEdId should have validation failures: when validating two domain items have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Domain Item DomainItemName2 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating two domain items have duplicate metaEdId should have validation failures: when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating two domain items have duplicate metaEdId should have validation failures 2`] = `
 Object {
   "column": 34,
   "line": 5,
@@ -82,7 +130,9 @@ Object {
 }
 `;
 
-exports[`when validating two domain items have duplicate metaEdId should have validation failures: when validating two domain items have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating two domain items have duplicate metaEdId should have validation failures 3`] = `"MetaEdId '1' on Domain Item DomainItemName2 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating two domain items have duplicate metaEdId should have validation failures 4`] = `
 Object {
   "column": 34,
   "line": 9,
@@ -90,11 +140,9 @@ Object {
 }
 `;
 
-exports[`when validating two entities have duplicate metaEdId should have validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Domain Entity DomainEntityName1 already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating two entities have duplicate metaEdId should have validation failures 1`] = `"MetaEdId '1' on Domain Entity DomainEntityName1 already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating two entities have duplicate metaEdId should have validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Domain Entity DomainEntityName2 already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating two entities have duplicate metaEdId should have validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating two entities have duplicate metaEdId should have validation failures 2`] = `
 Object {
   "column": 34,
   "line": 2,
@@ -102,7 +150,9 @@ Object {
 }
 `;
 
-exports[`when validating two entities have duplicate metaEdId should have validation failures: when validating two domain entities have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating two entities have duplicate metaEdId should have validation failures 3`] = `"MetaEdId '1' on Domain Entity DomainEntityName2 already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating two entities have duplicate metaEdId should have validation failures 4`] = `
 Object {
   "column": 34,
   "line": 9,
@@ -110,11 +160,9 @@ Object {
 }
 `;
 
-exports[`when validating two enumeration items have duplicate metaEdId should have validation failures: when validating two enumeration items have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Enumeration Item EnumerationItemName already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating two enumeration items have duplicate metaEdId should have validation failures 1`] = `"MetaEdId '1' on Enumeration Item EnumerationItemName already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating two enumeration items have duplicate metaEdId should have validation failures: when validating two enumeration items have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Enumeration Item EnumerationItemName already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating two enumeration items have duplicate metaEdId should have validation failures: when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating two enumeration items have duplicate metaEdId should have validation failures 2`] = `
 Object {
   "column": 31,
   "line": 5,
@@ -122,7 +170,9 @@ Object {
 }
 `;
 
-exports[`when validating two enumeration items have duplicate metaEdId should have validation failures: when validating two enumeration items have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating two enumeration items have duplicate metaEdId should have validation failures 3`] = `"MetaEdId '1' on Enumeration Item EnumerationItemName already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating two enumeration items have duplicate metaEdId should have validation failures 4`] = `
 Object {
   "column": 31,
   "line": 11,
@@ -130,11 +180,9 @@ Object {
 }
 `;
 
-exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures: when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message 1`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
+exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures 1`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
 
-exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures: when validating two map type enumeration items have duplicate metaEdId should have validation failures -> message 2`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
-
-exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures: when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap 1`] = `
+exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures 2`] = `
 Object {
   "column": 45,
   "line": 8,
@@ -142,7 +190,9 @@ Object {
 }
 `;
 
-exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures: when validating two map type enumeration items have duplicate metaEdId should have validation failures -> sourceMap 2`] = `
+exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures 3`] = `"MetaEdId '1' on Enumeration Item EnumerationItemShortDescription already exists on another entity. All MetaEdIds must be globally unique."`;
+
+exports[`when validating two map type enumeration items have duplicate metaEdId should have validation failures 4`] = `
 Object {
   "column": 45,
   "line": 17,

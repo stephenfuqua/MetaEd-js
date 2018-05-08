@@ -7,6 +7,7 @@ describe('when domain entity extension is in correct namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -25,12 +26,12 @@ describe('when domain entity extension is in correct namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
-
+    extensionNamespace = metaEd.namespace.get('extension');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -42,6 +43,7 @@ describe('when domain entity extension is in core namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -58,23 +60,19 @@ describe('when domain entity extension is in core namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
-
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DomainEntityExtensionExistsOnlyInExtensionNamespace');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when domain entity extension is in core namespace should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when domain entity extension is in core namespace should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

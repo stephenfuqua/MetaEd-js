@@ -13,6 +13,8 @@ describe('when common extension correctly has different property names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName: string = 'CommonName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -33,11 +35,15 @@ describe('when common extension correctly has different property names', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -50,6 +56,8 @@ describe('when common extension has duplicate property name', () => {
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -70,23 +78,23 @@ describe('when common extension has duplicate property name', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(extensionNamespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should have validation failures()', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when common extension has duplicate property name should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when common extension has duplicate property name should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -95,6 +103,8 @@ describe('when common extension has duplicate property name but different role n
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -115,6 +125,10 @@ describe('when common extension has duplicate property name but different role n
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
@@ -130,6 +144,8 @@ describe('when common extension has multiple duplicates', () => {
   const duplicatePropertyName1: string = 'DuplicatePropertyName1';
   const duplicatePropertyName2: string = 'DuplicatePropertyName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -153,6 +169,10 @@ describe('when common extension has multiple duplicates', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
@@ -161,22 +181,14 @@ describe('when common extension has multiple duplicates', () => {
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[0].message).toMatchSnapshot(
-      'when common extension has multiple duplicates should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when common extension has multiple duplicates should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
 
     expect(failures[1].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
     expect(failures[1].message).not.toMatch(new RegExp(notDuplicatePropertyName));
-    expect(failures[1].message).toMatchSnapshot(
-      'when common extension has multiple duplicates should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when common extension has multiple duplicates should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -185,6 +197,8 @@ describe('when common extension has duplicate common property', () => {
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -205,6 +219,10 @@ describe('when common extension has duplicate common property', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
@@ -212,12 +230,8 @@ describe('when common extension has duplicate common property', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('CommonExtensionMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when common extension has duplicate common property should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when common extension has duplicate common property should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
@@ -226,6 +240,8 @@ describe('when common extension has duplicate common extension override property
   const commonName: string = 'CommonName';
   const duplicatePropertyName: string = 'DuplicatePropertyName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -245,6 +261,10 @@ describe('when common extension has duplicate common extension override property
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
   });

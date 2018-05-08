@@ -13,10 +13,11 @@ describe('when association subclass has different property name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edf')
+      .withBeginNamespace('edfi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation1')
@@ -34,15 +35,16 @@ describe('when association subclass has different property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -56,6 +58,7 @@ describe('when association subclass has duplicate property name', () => {
   const duplicatePropertyName1: string = 'DuplicatePropertyName';
   const duplicatePropertyName2: string = 'DuplicatePropertyName2';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -80,36 +83,91 @@ describe('when association subclass has duplicate property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(coreNamespace.entity.association.size).toBe(1);
   });
 
   it('should build one associationSubclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(coreNamespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when association subclass has invalid extendee should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when association subclass has invalid extendee should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
 
     expect(failures[1].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when association subclass has invalid extendee should have validation failure -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when association subclass has invalid extendee should have validation failure -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when association subclass has duplicate property name across dependent namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  const duplicatePropertyName1: string = 'DuplicatePropertyName';
+  const duplicatePropertyName2: string = 'DuplicatePropertyName2';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation(entityName)
+      .withDocumentation('EntityDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
+      .withAssociationDomainEntityProperty('PropertyName2', 'PropertyDocumentation')
+      .withBooleanProperty(duplicatePropertyName1, 'PropertyDocumentation3', true, false)
+      .withBooleanProperty(duplicatePropertyName2, 'PropertyDocumentation3', true, false)
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartAssociationSubclass('SubclassName', entityName)
+      .withDocumentation('EntityDocumentation')
+      .withBooleanProperty(duplicatePropertyName1, 'PropertyDocumentation3', true, false)
+      .withBooleanProperty(duplicatePropertyName2, 'PropertyDocumentation3', true, false)
+      .withBooleanProperty('PropertyName3', 'PropertyDocumentation', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationSubclassBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+    failures = validate(metaEd);
+  });
+
+  it('should build one association', () => {
+    expect(coreNamespace.entity.association.size).toBe(1);
+  });
+
+  it('should build one associationSubclass', () => {
+    expect(extensionNamespace.entity.associationSubclass.size).toBe(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+
+    expect(failures[1].validatorName).toBe('AssociationSubClassMustNotRedeclareProperties');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });
 

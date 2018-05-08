@@ -1,10 +1,18 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.propertyIndex.association.forEach(property => {
-    if (!metaEd.entity.association.has(property.metaEdName) && !metaEd.entity.associationSubclass.has(property.metaEdName)) {
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(
+      property.metaEdName,
+      [property.namespace, ...property.namespace.dependencies],
+      'association',
+      'associationSubclass',
+    );
+
+    if (referencedEntity == null) {
       failures.push({
         validatorName: 'AssociationPropertyMustMatchAnAssociation',
         category: 'error',

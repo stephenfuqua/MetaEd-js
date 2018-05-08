@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association extension is in core namespace should have validation failure: when association extension is in core namespace should have validation failure -> message 1`] = `"Association additions 'EntityName' is not valid in core namespace 'edfi"`;
+exports[`when association extension is in core namespace should have validation failure 1`] = `"Association additions 'EntityName' is not valid in core namespace 'edfi"`;
 
-exports[`when association extension is in core namespace should have validation failure: when association extension is in core namespace should have validation failure -> sourceMap 1`] = `
+exports[`when association extension is in core namespace should have validation failure 2`] = `
 Object {
   "column": 2,
   "line": 15,

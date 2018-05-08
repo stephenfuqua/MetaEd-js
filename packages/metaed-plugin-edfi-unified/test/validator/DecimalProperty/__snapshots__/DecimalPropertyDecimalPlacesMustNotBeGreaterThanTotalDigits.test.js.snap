@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating decimal property with decimal places greater than total digits should have validation failures: when validating decimal property with decimal places greater than total digits -> message 1`] = `"decimal DecimalProperty has decimal places greater than total digits."`;
+exports[`when validating decimal property with decimal places greater than total digits should have validation failures 1`] = `"decimal DecimalProperty has decimal places greater than total digits."`;
 
-exports[`when validating decimal property with decimal places greater than total digits should have validation failures: when validating decimal property with decimal places greater than total digits -> sourceMap 1`] = `
+exports[`when validating decimal property with decimal places greater than total digits should have validation failures 2`] = `
 Object {
   "column": 6,
   "line": 10,

@@ -1,19 +1,27 @@
 // @flow
-import type { Common, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.commonExtension.forEach(commonExtension => {
-    const extendedEntity: Common | void = metaEd.entity.common.get(commonExtension.metaEdName);
-    if (extendedEntity) {
-      failExtensionPropertyRedeclarations(
-        'CommonExtensionMustNotRedeclareProperties',
-        commonExtension,
-        extendedEntity,
-        failures,
+  metaEd.namespace.forEach(namespace => {
+    namespace.entity.commonExtension.forEach(commonExtension => {
+      const extendedEntity: ?ModelBase = getEntityForNamespaces(
+        commonExtension.metaEdName,
+        namespace.dependencies,
+        'common',
       );
-    }
+
+      if (extendedEntity) {
+        failExtensionPropertyRedeclarations(
+          'CommonExtensionMustNotRedeclareProperties',
+          commonExtension,
+          extendedEntity,
+          failures,
+        );
+      }
+    });
   });
   return failures;
 }

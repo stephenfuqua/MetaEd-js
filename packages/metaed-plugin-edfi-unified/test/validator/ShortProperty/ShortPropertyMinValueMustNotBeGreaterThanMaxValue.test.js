@@ -9,6 +9,7 @@ describe('when validating short property with correct minimum value and maximum 
   const minValue: string = '2';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -23,11 +24,12 @@ describe('when validating short property with correct minimum value and maximum 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -41,6 +43,7 @@ describe('when validating short property with same minimum value and maximum val
   const minValue: string = '5';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -55,11 +58,12 @@ describe('when validating short property with same minimum value and maximum val
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -73,6 +77,7 @@ describe('when validating short property with minimum value greater than maximum
   const minValue: string = '10';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -87,30 +92,23 @@ describe('when validating short property with minimum value greater than maximum
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
   it('should build one abstract entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(2);
     expect(failures[0].validatorName).toBe('ShortPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating short identity with minimum value greater than maximum value -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating short identity with minimum value greater than maximum value -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
     expect(failures[1].validatorName).toBe('ShortPropertyMinValueMustNotBeGreaterThanMaxValue');
     expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot(
-      'when validating short property with minimum value greater than maximum value -> message',
-    );
-    expect(failures[1].sourceMap).toMatchSnapshot(
-      'when validating short property with minimum value greater than maximum value -> sourceMap',
-    );
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
   });
 });

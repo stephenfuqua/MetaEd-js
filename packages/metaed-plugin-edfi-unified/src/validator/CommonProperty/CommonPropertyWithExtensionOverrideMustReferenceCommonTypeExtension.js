@@ -1,20 +1,29 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure, CommonPropertySourceMap } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, CommonPropertySourceMap, ModelBase } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.propertyIndex.common.forEach(common => {
-    if (!common.isExtensionOverride || (common.isExtensionOverride && metaEd.entity.commonExtension.has(common.metaEdName)))
-      return;
-    failures.push({
-      validatorName: 'CommonPropertyWIthExtensionOverrideMustReferenceCommonTypeExtension',
-      category: 'error',
-      message: `'common extension' is invalid for property ${common.metaEdName} on ${
-        common.parentEntity.typeHumanizedName
-      } ${common.parentEntity.metaEdName}. 'common extension' is only valid for referencing Common extensions.`,
-      sourceMap: ((common.sourceMap: any): CommonPropertySourceMap).isExtensionOverride,
-      fileMap: null,
-    });
+
+  metaEd.propertyIndex.common.forEach(property => {
+    if (!property.isExtensionOverride) return;
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(
+      property.metaEdName,
+      [property.namespace, ...property.namespace.dependencies],
+      'commonExtension',
+    );
+
+    if (referencedEntity == null) {
+      failures.push({
+        validatorName: 'CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension',
+        category: 'error',
+        message: `'common extension' is invalid for property ${property.metaEdName} on ${
+          property.parentEntity.typeHumanizedName
+        } ${property.parentEntity.metaEdName}. 'common extension' is only valid for referencing Common extensions.`,
+        sourceMap: ((property.sourceMap: any): CommonPropertySourceMap).isExtensionOverride,
+        fileMap: null,
+      });
+    }
   });
   return failures;
 }

@@ -9,10 +9,11 @@ describe('when validating descriptor domain item matches top level entity', () =
   const descriptorName: string = 'DescriptorName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDescriptorDomainItem(descriptorName)
@@ -29,11 +30,12 @@ describe('when validating descriptor domain item matches top level entity', () =
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -47,10 +49,11 @@ describe('when validating descriptor domain item does not match top level entity
   const descriptorName: string = 'DescriptorName';
 
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('namespace', 'ProjectExtension')
+      .withBeginNamespace('edfi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDescriptorDomainItem('DescriptorDomainItemName')
@@ -67,22 +70,19 @@ describe('when validating descriptor domain item does not match top level entity
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have one validation failure()', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('DescriptorDomainItemMustMatchTopLevelEntity');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when descriptor domain item has no matching top level entity should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when descriptor domain item has no matching top level entity should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

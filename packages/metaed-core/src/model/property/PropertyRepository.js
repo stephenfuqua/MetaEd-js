@@ -25,6 +25,7 @@ import type { YearProperty } from './YearProperty';
 import type { PropertyType } from './PropertyType';
 import type { EntityProperty } from './EntityProperty';
 import { allPropertyTypes } from './PropertyType';
+import { Namespace } from '../Namespace';
 
 export class PropertyIndex {
   association: Array<AssociationProperty>;
@@ -90,8 +91,32 @@ export function getPropertiesOfType(
   return result;
 }
 
+export function getPropertiesOfTypeForNamespaces(
+  propertyIndex: PropertyIndex,
+  namespaces: Array<Namespace>,
+  ...propertyTypes: Array<PropertyType>
+): Array<EntityProperty> {
+  const result: Array<EntityProperty> = [];
+
+  propertyTypes.forEach(propertyType => {
+    // $FlowIgnore - using model type repository lookup
+    const propertiesInNamespaces = propertyIndex[propertyType].filter((property: EntityProperty) =>
+      namespaces.includes(property.namespace),
+    );
+    result.push(...propertiesInNamespaces);
+  });
+  return result;
+}
+
 export function getAllProperties(propertyIndex: PropertyIndex): Array<EntityProperty> {
   return getPropertiesOfType(propertyIndex, ...allPropertyTypes);
+}
+
+export function getAllPropertiesForNamespaces(
+  propertyIndex: PropertyIndex,
+  namespaces: Array<Namespace>,
+): Array<EntityProperty> {
+  return getPropertiesOfTypeForNamespaces(propertyIndex, namespaces, ...allPropertyTypes);
 }
 
 export function addProperty(propertyIndex: PropertyIndex, property: EntityProperty) {

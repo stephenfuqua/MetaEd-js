@@ -4,16 +4,19 @@ import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.entity.common.forEach(common => {
-    if (!common.inlineInOds || !common.namespace.isExtension) return;
-    failures.push({
-      validatorName: 'InlineCommonExistsOnlyInCoreNamespace',
-      category: 'error',
-      message: `${common.typeHumanizedName} ${common.metaEdName} is not valid in extension namespace ${
-        common.namespace.projectExtension
-      } .`,
-      sourceMap: common.sourceMap.type,
-      fileMap: null,
+  metaEd.namespace.forEach(namespace => {
+    if (!namespace.isExtension) return;
+    namespace.entity.common.forEach(common => {
+      if (!common.inlineInOds || !common.namespace.isExtension) return;
+      failures.push({
+        validatorName: 'InlineCommonExistsOnlyInCoreNamespace',
+        category: 'error',
+        message: `${common.typeHumanizedName} ${common.metaEdName} is not valid in extension namespace ${
+          common.namespace.projectExtension
+        } .`,
+        sourceMap: common.sourceMap.type,
+        fileMap: null,
+      });
     });
   });
   return failures;

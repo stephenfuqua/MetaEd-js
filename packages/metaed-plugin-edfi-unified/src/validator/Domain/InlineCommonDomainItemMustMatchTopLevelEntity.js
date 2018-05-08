@@ -1,5 +1,6 @@
 // @flow
-import type { DomainItem, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {
@@ -11,23 +12,27 @@ function getFailure(domainItem: DomainItem, name: string, failureMessage: string
   };
 }
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domain.forEach(domain => {
-    domain.domainItems.forEach(domainItem => {
-      if (domainItem.referencedType === 'inlineCommon') {
-        const inlineCommon = metaEd.entity.common.get(domainItem.metaEdName);
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespace.entity.domain.forEach(domain => {
+      domain.domainItems.forEach(domainItem => {
+        if (domainItem.referencedType !== 'inlineCommon') return;
+        const inlineCommon: ?Common = getEntityForNamespaces(
+          domainItem.metaEdName,
+          [namespace, ...namespace.dependencies],
+          'common',
+        );
         if (inlineCommon == null || !inlineCommon.inlineInOds) {
           failures.push(
             getFailure(
               domainItem,
-              'CommonDomainItemMustMatchTopLevelEntity',
+              'InlineCommonDomainItemMustMatchTopLevelEntity',
               `Inline Common Domain Item property '${domainItem.metaEdName}' does not match any declared Inline Common.`,
             ),
           );
         }
-      }
+      });
     });
   });
 

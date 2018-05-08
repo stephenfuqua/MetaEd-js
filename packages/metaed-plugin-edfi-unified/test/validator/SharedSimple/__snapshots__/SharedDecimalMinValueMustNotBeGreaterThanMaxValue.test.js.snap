@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating shared decimal with min value greater than max value should have validation failures: when validating shared decimal with min value greater than max value -> message 1`] = `"Shared Decimal EntityName has min value greater than max value."`;
+exports[`when validating shared decimal with min value greater than max value should have validation failures 1`] = `"Shared Decimal EntityName has min value greater than max value."`;
 
-exports[`when validating shared decimal with min value greater than max value should have validation failures: when validating shared decimal with min value greater than max value -> sourceMap 1`] = `
+exports[`when validating shared decimal with min value greater than max value should have validation failures 2`] = `
 Object {
   "column": 4,
   "line": 7,

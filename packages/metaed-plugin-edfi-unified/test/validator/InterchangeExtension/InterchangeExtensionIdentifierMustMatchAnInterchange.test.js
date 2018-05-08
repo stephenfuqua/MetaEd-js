@@ -7,6 +7,8 @@ describe('when validating interchange extension has valid extendee', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName: string = 'InterchangeName';
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -17,7 +19,9 @@ describe('when validating interchange extension has valid extendee', () => {
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName1')
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName2')
       .withEndInterchange()
+      .withEndNamespace()
 
+      .withBeginNamespace('extension', 'ProjectExtension')
       .withStartInterchangeExtension(interchangeName)
       .withDomainEntityElement('DomainEntityIdentityTemplateName3')
       .withEndInterchangeExtension()
@@ -26,15 +30,19 @@ describe('when validating interchange extension has valid extendee', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(coreNamespace.entity.interchange.size).toBe(1);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should have no validation failures', () => {
@@ -45,10 +53,19 @@ describe('when validating interchange extension has valid extendee', () => {
 describe('when validating interchange extension has invalid extendee', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('edfi')
+      .withStartDomainEntity('AnEntity')
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
       .withStartInterchangeExtension('InterchangeExtensionName')
       .withDomainEntityElement('DomainEntityIdentityTemplateName')
       .withEndInterchangeExtension()
@@ -57,22 +74,22 @@ describe('when validating interchange extension has invalid extendee', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
     failures = validate(metaEd);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(extensionNamespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('InterchangeExtensionIdentifierMustMatchAnInterchange');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when validating interchange extension has invalid extendee should have validation failures -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when validating interchange extension has invalid extendee should have validation failures -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

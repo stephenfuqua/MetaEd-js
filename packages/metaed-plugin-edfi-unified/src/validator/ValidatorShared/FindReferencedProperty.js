@@ -1,6 +1,6 @@
 // @flow
-import type { EntityProperty, EntityRepository, ModelBase, ModelType, PropertyType } from 'metaed-core';
-import { asModelType, getEntity, asTopLevelEntity, allEntityModelTypes } from 'metaed-core';
+import type { EntityProperty, ModelBase, ModelType, PropertyType, Namespace } from 'metaed-core';
+import { asModelType, getEntityForNamespaces, asTopLevelEntity, allEntityModelTypes } from 'metaed-core';
 
 export const referenceTypes: Array<ModelType> = [
   'association',
@@ -30,13 +30,13 @@ function possibleModelTypesReferencedByProperty(propertyType: ModelType | Proper
 }
 
 export function getReferencedEntities(
-  repository: EntityRepository,
+  namespaces: Array<Namespace>,
   name: string,
   propertyType: ModelType | PropertyType,
 ): Array<ModelBase> {
   return possibleModelTypesReferencedByProperty(propertyType).reduce(
     (result: Array<ModelBase>, type: ModelType | PropertyType) => {
-      const entity = getEntity(repository, name, asModelType(type));
+      const entity = getEntityForNamespaces(name, namespaces, asModelType(type));
       if (entity != null) return result.concat(entity);
       return result;
     },
@@ -44,12 +44,12 @@ export function getReferencedEntities(
   );
 }
 
-export function getBaseEntity(repository: EntityRepository, entity: ?ModelBase): ?ModelBase {
+export function getBaseEntity(namespaces: Array<Namespace>, entity: ?ModelBase): ?ModelBase {
   if (!entity) return null;
   const modelTypes: Array<ModelType> = [];
   if (entity.type.match(subclassSuffix)) modelTypes.push(asModelType(entity.type.replace(subclassSuffix, '')));
   if (entity.type.match(extensionSuffix)) modelTypes.push(asModelType(entity.type.replace(extensionSuffix, '')));
-  return getEntity(repository, asTopLevelEntity(entity).baseEntityName, ...modelTypes);
+  return getEntityForNamespaces(asTopLevelEntity(entity).baseEntityName, namespaces, ...modelTypes);
 }
 
 export const matchAll = () => (): boolean => true;
@@ -79,7 +79,7 @@ export function withContext(property: EntityProperty): string {
 }
 
 export function findReferencedProperty(
-  repository: EntityRepository,
+  namespaces: Array<Namespace>,
   initialEntity: ModelBase,
   propertyPath: Array<string>,
   filter: (property: EntityProperty, parentContext: ModelBase) => boolean = matchAll(),
@@ -104,9 +104,9 @@ export function findReferencedProperty(
 
       if (currentProperty != null) {
         if (!referenceTypes.includes(asModelType(currentProperty.type))) return true;
-        entities.push(...getReferencedEntities(repository, currentProperty.metaEdName, asModelType(currentProperty.type)));
+        entities.push(...getReferencedEntities(namespaces, currentProperty.metaEdName, asModelType(currentProperty.type)));
       } else {
-        const baseEntity = getBaseEntity(repository, currentEntity);
+        const baseEntity = getBaseEntity(namespaces, currentEntity);
         if (baseEntity != null) entities.push(baseEntity);
         currentFilter = matchAllIdentityReferenceProperties();
       }

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when map type enumeration items have duplicate short descriptions should have validation failure: when map type enumeration items have duplicate short descriptions should have validation failure -> message 1`] = `"Descriptor EntityName redeclares item ShortDescription."`;
+exports[`when map type enumeration items have duplicate short descriptions should have validation failure 1`] = `"Descriptor EntityName redeclares item ShortDescription."`;
 
-exports[`when map type enumeration items have duplicate short descriptions should have validation failure: when map type enumeration items have duplicate short descriptions should have validation failure -> sourceMap 1`] = `
+exports[`when map type enumeration items have duplicate short descriptions should have validation failure 2`] = `
 Object {
   "column": 6,
   "line": 8,
@@ -10,11 +10,9 @@ Object {
 }
 `;
 
-exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure: when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message 1`] = `"Descriptor EntityName redeclares item ShortDescription1."`;
+exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 1`] = `"Descriptor EntityName redeclares item ShortDescription1."`;
 
-exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure: when map type enumeration items have multiple duplicate short descriptions should have validation failure-> message 2`] = `"Descriptor EntityName redeclares item ShortDescription2."`;
-
-exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure: when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap 1`] = `
+exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 2`] = `
 Object {
   "column": 6,
   "line": 8,
@@ -22,7 +20,9 @@ Object {
 }
 `;
 
-exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure: when map type enumeration items have multiple duplicate short descriptions should have validation failure-> sourceMap 2`] = `
+exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 3`] = `"Descriptor EntityName redeclares item ShortDescription2."`;
+
+exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 4`] = `
 Object {
   "column": 6,
   "line": 14,

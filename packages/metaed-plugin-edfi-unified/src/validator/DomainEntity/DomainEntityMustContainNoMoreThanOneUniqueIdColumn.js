@@ -7,22 +7,24 @@ const hasDuplicateUniqueIds = (properties: Array<EntityProperty>) =>
     0,
   ) > 1;
 
-// eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.entity.domainEntity.forEach(domainEntity => {
-    if (!domainEntity.namespace.isExtension && hasDuplicateUniqueIds(domainEntity.properties)) {
-      failures.push({
-        validatorName: 'DomainEntityMustContainNoMoreThanOneUniqueIdColumn',
-        category: 'error',
-        message: `Domain Entity ${
-          domainEntity.metaEdName
-        } has multiple properties with a property name of 'UniqueId'.  Only one column in a core domain entity can be named 'UniqueId'.`,
-        sourceMap: domainEntity.sourceMap.type,
-        fileMap: null,
-      });
-    }
-  });
 
+  metaEd.namespace.forEach(namespace => {
+    if (namespace.isExtension) return;
+    namespace.entity.domainEntity.forEach(domainEntity => {
+      if (hasDuplicateUniqueIds(domainEntity.properties)) {
+        failures.push({
+          validatorName: 'DomainEntityMustContainNoMoreThanOneUniqueIdColumn',
+          category: 'error',
+          message: `Domain Entity ${
+            domainEntity.metaEdName
+          } has multiple properties with a property name of 'UniqueId'.  Only one column in a core domain entity can be named 'UniqueId'.`,
+          sourceMap: domainEntity.sourceMap.type,
+          fileMap: null,
+        });
+      }
+    });
+  });
   return failures;
 }
