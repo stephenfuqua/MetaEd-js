@@ -1,12 +1,18 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'DomainEntityReferenceEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.domainEntity.forEach(property => {
-    let referencedEntity = metaEd.entity.domainEntity.get(property.metaEdName);
-    if (!referencedEntity) referencedEntity = metaEd.entity.domainEntitySubclass.get(property.metaEdName);
+    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(
+      property.metaEdName,
+      namespaces,
+      'domainEntity',
+      'domainEntitySubclass',
+    );
 
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;

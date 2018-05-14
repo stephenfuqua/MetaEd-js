@@ -1,31 +1,42 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newAssociationProperty, newAssociation, newAssociationSubclass } from 'metaed-core';
-import type { MetaEdEnvironment, AssociationProperty, Association, AssociationSubclass } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newNamespace,
+  newAssociationProperty,
+  newAssociation,
+  newAssociationSubclass,
+} from 'metaed-core';
+import type { MetaEdEnvironment, AssociationProperty, Association, AssociationSubclass, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/AssociationReferenceEnhancer';
 
 describe('when enhancing association property referring to association', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
     const property: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName,
+      namespace,
       parentEntityName,
     });
     metaEd.propertyIndex.association.push(property);
 
     const parentEntity: Association = Object.assign(newAssociation(), {
       metaEdName: parentEntityName,
+      namespace,
       properties: [property],
     });
-    metaEd.entity.association.set(parentEntity.metaEdName, parentEntity);
+    namespace.entity.association.set(parentEntity.metaEdName, parentEntity);
 
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
+      namespace,
     });
-    metaEd.entity.association.set(referencedEntity.metaEdName, referencedEntity);
+    namespace.entity.association.set(referencedEntity.metaEdName, referencedEntity);
 
     enhance(metaEd);
   });
@@ -38,27 +49,72 @@ describe('when enhancing association property referring to association', () => {
 });
 
 describe('when enhancing association property referring to subclass', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
     const property: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName,
+      namespace,
       parentEntityName,
     });
     metaEd.propertyIndex.association.push(property);
 
     const parentEntity: Association = Object.assign(newAssociation(), {
       metaEdName: parentEntityName,
+      namespace,
       properties: [property],
     });
-    metaEd.entity.association.set(parentEntity.metaEdName, parentEntity);
+    namespace.entity.association.set(parentEntity.metaEdName, parentEntity);
 
     const referencedEntity: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: referencedEntityName,
+      namespace,
     });
-    metaEd.entity.associationSubclass.set(referencedEntity.metaEdName, referencedEntity);
+    namespace.entity.associationSubclass.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+  });
+});
+
+describe('when enhancing association property referring to association across namespaces', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const parentEntityName: string = 'ParentEntityName';
+  const referencedEntityName: string = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: AssociationProperty = Object.assign(newAssociationProperty(), {
+      metaEdName: referencedEntityName,
+      namespace: extensionNamespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.association.push(property);
+
+    const parentEntity: Association = Object.assign(newAssociation(), {
+      metaEdName: parentEntityName,
+      namespace: extensionNamespace,
+      properties: [property],
+    });
+    extensionNamespace.entity.association.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: Association = Object.assign(newAssociation(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.association.set(referencedEntity.metaEdName, referencedEntity);
 
     enhance(metaEd);
   });

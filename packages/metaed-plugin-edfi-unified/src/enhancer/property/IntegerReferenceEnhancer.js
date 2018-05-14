@@ -1,5 +1,6 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, SharedInteger, SharedIntegerProperty, IntegerType } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, SharedIntegerProperty, Namespace } from 'metaed-core';
+import { getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'IntegerReferenceEnhancer';
 
@@ -10,19 +11,23 @@ const enhancerName: string = 'IntegerReferenceEnhancer';
 // referringSimpleProperties should be moved to SharedSimple instead of IntegerType
 function addReferringSimplePropertiesToIntegerType(metaEd: MetaEdEnvironment): void {
   metaEd.propertyIndex.sharedInteger.forEach((property: SharedIntegerProperty) => {
-    const referencedEntity: ?IntegerType = metaEd.entity.integerType.get(property.referencedType);
-    if (referencedEntity == null) return;
+    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(property.referencedType, namespaces, 'integerType');
 
-    referencedEntity.referringSimpleProperties.push(property);
+    if (referencedEntity) {
+      referencedEntity.referringSimpleProperties.push(property);
+    }
   });
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.sharedInteger.forEach((property: SharedIntegerProperty) => {
-    const referencedEntity: ?SharedInteger = metaEd.entity.sharedInteger.get(property.referencedType);
-    if (referencedEntity == null) return;
+    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
+    const referencedEntity: ?ModelBase = getEntityForNamespaces(property.referencedType, namespaces, 'sharedInteger');
 
-    property.referencedEntity = referencedEntity;
+    if (referencedEntity) {
+      property.referencedEntity = referencedEntity;
+    }
   });
 
   addReferringSimplePropertiesToIntegerType(metaEd);

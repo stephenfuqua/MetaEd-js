@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import type { Association } from './Association';
 import type { AssociationExtension } from './AssociationExtension';
 import type { AssociationSubclass } from './AssociationSubclass';

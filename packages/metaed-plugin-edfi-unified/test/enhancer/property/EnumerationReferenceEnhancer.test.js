@@ -1,31 +1,76 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment, newEnumerationProperty, newEnumeration } from 'metaed-core';
-import type { MetaEdEnvironment, EnumerationProperty, Enumeration } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace, newEnumerationProperty, newEnumeration } from 'metaed-core';
+import type { MetaEdEnvironment, EnumerationProperty, Enumeration, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/property/EnumerationReferenceEnhancer';
 
 describe('when enhancing enumeration property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityName: string = 'ReferencedEntityName';
 
   beforeAll(() => {
     const property: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: referencedEntityName,
+      namespace,
       parentEntityName,
     });
     metaEd.propertyIndex.enumeration.push(property);
 
     const parentEntity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: parentEntityName,
+      namespace,
       properties: [property],
     });
-    metaEd.entity.enumeration.set(parentEntity.metaEdName, parentEntity);
+    namespace.entity.enumeration.set(parentEntity.metaEdName, parentEntity);
 
     const referencedEntity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: referencedEntityName,
+      namespace,
     });
-    metaEd.entity.enumeration.set(referencedEntity.metaEdName, referencedEntity);
+    namespace.entity.enumeration.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    const property = R.head(metaEd.propertyIndex.enumeration.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+  });
+});
+
+describe('when enhancing enumeration property across namespaces', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const parentEntityName: string = 'ParentEntityName';
+  const referencedEntityName: string = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: EnumerationProperty = Object.assign(newEnumerationProperty(), {
+      metaEdName: referencedEntityName,
+      namespace: extensionNamespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.enumeration.push(property);
+
+    const parentEntity: Enumeration = Object.assign(newEnumeration(), {
+      metaEdName: parentEntityName,
+      namespace: extensionNamespace,
+      properties: [property],
+    });
+    extensionNamespace.entity.enumeration.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: Enumeration = Object.assign(newEnumeration(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.enumeration.set(referencedEntity.metaEdName, referencedEntity);
 
     enhance(metaEd);
   });
