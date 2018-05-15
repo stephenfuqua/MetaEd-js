@@ -1,6 +1,6 @@
 // @flow
 import type { EnhancerResult, EntityProperty, MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
-import { asTopLevelEntity, getAllEntities } from 'metaed-core';
+import { asTopLevelEntity, getAllEntitiesForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'SubclassQueryableEnhancer';
 
@@ -16,7 +16,7 @@ function includeBaseClassQueryableFields(
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntities(metaEd.entity)
+  getAllEntitiesForNamespaces(metaEd.namespace)
     .map(x => asTopLevelEntity(x))
     .filter(x => x.baseEntity && x.baseEntity.queryableFields)
     .forEach(entity => entity.queryableFields.push(...includeBaseClassQueryableFields(entity, [])));

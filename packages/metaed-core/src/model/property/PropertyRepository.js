@@ -25,7 +25,7 @@ import type { YearProperty } from './YearProperty';
 import type { PropertyType } from './PropertyType';
 import type { EntityProperty } from './EntityProperty';
 import { allPropertyTypes } from './PropertyType';
-import { Namespace } from '../Namespace';
+import type { Namespace } from '../Namespace';
 
 export class PropertyIndex {
   association: Array<AssociationProperty>;

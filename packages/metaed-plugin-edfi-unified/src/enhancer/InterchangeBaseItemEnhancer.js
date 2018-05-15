@@ -1,19 +1,20 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeItem } from 'metaed-core';
-import { asTopLevelEntity, getEntity, getEntitiesOfType, asInterchange } from 'metaed-core';
+import { asTopLevelEntity, getEntityForNamespaces, getAllEntitiesOfType, asInterchange } from 'metaed-core';
 
 const enhancerName: string = 'InterchangeBaseItemEnhancer';
 
-function assignReference(metaEd: MetaEdEnvironment, item: InterchangeItem) {
-  const referencedEntity = getEntity(metaEd.entity, item.metaEdName, ...item.referencedType);
+function assignReference(namespaces: Array<Namespace>, item: InterchangeItem) {
+  const referencedEntity = getEntityForNamespaces(item.metaEdName, namespaces, ...item.referencedType);
   if (referencedEntity) item.referencedEntity = asTopLevelEntity(referencedEntity);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'interchange', 'interchangeExtension').forEach(interchangeBase => {
+  getAllEntitiesOfType(metaEd, 'interchange', 'interchangeExtension').forEach(interchangeBase => {
     const interchange: Interchange = asInterchange(interchangeBase);
-    interchange.elements.forEach(item => assignReference(metaEd, item));
-    interchange.identityTemplates.forEach(item => assignReference(metaEd, item));
+    const namespaces: Array<Namespace> = [interchange.namespace, ...interchange.namespace.dependencies];
+    interchange.elements.forEach(item => assignReference(namespaces, item));
+    interchange.identityTemplates.forEach(item => assignReference(namespaces, item));
   });
 
   return {

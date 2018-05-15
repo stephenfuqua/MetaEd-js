@@ -118,7 +118,9 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
       } else {
         // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
         this.currentNamespace.entity[this.currentInterchange.type].set(
+          // $FlowIgnore
           this.currentInterchange.metaEdName,
+          // $FlowIgnore
           this.currentInterchange,
         );
       }

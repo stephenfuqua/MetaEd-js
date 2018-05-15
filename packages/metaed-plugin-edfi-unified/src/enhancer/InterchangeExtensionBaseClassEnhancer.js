@@ -1,11 +1,17 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'InterchangeExtensionBaseClassEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.interchangeExtension.forEach(childEntity => {
-    const baseEntity = metaEd.entity.interchange.get(childEntity.baseEntityName);
+  getAllEntitiesOfType(metaEd, 'interchangeExtension').forEach(childEntity => {
+    const baseEntity: ?ModelBase = getEntityForNamespaces(
+      childEntity.baseEntityName,
+      [childEntity.namespace, ...childEntity.namespace.dependencies],
+      'interchange',
+    );
+
     if (baseEntity) childEntity.baseEntity = baseEntity;
   });
 

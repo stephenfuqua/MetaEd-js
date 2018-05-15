@@ -26,11 +26,14 @@ export {
   getTopLevelCoreEntity,
   getEntitiesOfType,
   getAllEntitiesNoSimpleTypes,
+  addEntityForNamespace,
   getEntityForNamespaces,
   getAllEntitiesForNamespaces,
   getAllTopLevelEntitiesForNamespaces,
   getAllEntitiesNoSimpleTypesForNamespaces,
   getEntitiesOfTypeForNamespaces,
+  getAllEntitiesOfType,
+  getTopLevelCoreEntityForNamespaces,
 } from './model/EntityRepository';
 export {
   addProperty,
@@ -147,7 +150,7 @@ export type { InterchangeItem, InterchangeItemSourceMap } from './model/Intercha
 export type { MapTypeEnumeration } from './model/MapTypeEnumeration';
 export type { ModelBase, ModelBaseSourceMap } from './model/ModelBase';
 export type { ModelType } from './model/ModelType';
-export type { Namespace, NamespaceSourceMap } from './model/Namespace';
+export type { Namespace } from './model/Namespace';
 export type { NamespaceRepository } from './model/NamespaceRepository';
 export type { SchoolYearEnumeration } from './model/SchoolYearEnumeration';
 export type { SharedDecimal, SharedDecimalSourceMap } from './model/SharedDecimal';

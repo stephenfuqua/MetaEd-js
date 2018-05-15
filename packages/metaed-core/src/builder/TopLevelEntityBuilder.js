@@ -93,7 +93,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
       // $FlowIgnore - allowing currentTopLevelEntity.type to specify the entityRepository Map property
-      const currentTopLevelEntityRepository = this.currentNamespace.entity[this.currentTopLevelEntity.type];
+      const currentTopLevelEntityRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[this.currentTopLevelEntity.type];
       if (currentTopLevelEntityRepository.has(this.currentTopLevelEntity.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',
@@ -104,16 +104,18 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
           sourceMap: this.currentTopLevelEntity.sourceMap.type,
           fileMap: null,
         });
-        const duplicateEntity: TopLevelEntity = currentTopLevelEntityRepository.get(this.currentTopLevelEntity.metaEdName);
-        this.validationFailures.push({
-          validatorName: 'TopLevelEntityBuilder',
-          category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${
-            duplicateEntity.metaEdName
-          } is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
-          fileMap: null,
-        });
+        const duplicateEntity: ?TopLevelEntity = currentTopLevelEntityRepository.get(this.currentTopLevelEntity.metaEdName);
+        if (duplicateEntity != null) {
+          this.validationFailures.push({
+            validatorName: 'TopLevelEntityBuilder',
+            category: 'error',
+            message: `${duplicateEntity.typeHumanizedName} named ${
+              duplicateEntity.metaEdName
+            } is a duplicate declaration of that name.`,
+            sourceMap: duplicateEntity.sourceMap.type,
+            fileMap: null,
+          });
+        }
       } else {
         currentTopLevelEntityRepository.set(this.currentTopLevelEntity.metaEdName, this.currentTopLevelEntity);
       }

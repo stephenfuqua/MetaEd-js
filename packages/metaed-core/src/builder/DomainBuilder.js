@@ -16,6 +16,7 @@ import { namespaceNameFrom } from './NamespaceBuilder';
 import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
+import type { TopLevelEntity } from '../model/TopLevelEntity';
 
 export class DomainBuilder extends MetaEdGrammarListener {
   metaEd: MetaEdEnvironment;
@@ -76,7 +77,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
   exitingEntity() {
     if (this.currentDomain === NoDomain) return;
     // $FlowIgnore
-    const currentDomainRepository = this.currentNamespace.entity[this.currentDomain.type];
+    const currentDomainRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[this.currentDomain.type];
     if (this.currentDomain.metaEdName) {
       if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
         this.validationFailures.push({
@@ -88,7 +89,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
           sourceMap: this.currentDomain.sourceMap.type,
           fileMap: null,
         });
-        const duplicateEntity: Domain | Subdomain = currentDomainRepository.get(this.currentDomain.metaEdName);
+        const duplicateEntity: any = currentDomainRepository.get(this.currentDomain.metaEdName);
         this.validationFailures.push({
           validatorName: 'DomainBuilder',
           category: 'error',

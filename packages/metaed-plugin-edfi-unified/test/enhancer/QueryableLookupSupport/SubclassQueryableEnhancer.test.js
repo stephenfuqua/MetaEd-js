@@ -1,60 +1,66 @@
 // @flow
 import R from 'ramda';
 import {
-  addEntity,
+  addEntityForNamespace,
   newAssociation,
   newAssociationSubclass,
   newDomainEntity,
   newDomainEntitySubclass,
   newIntegerProperty,
   newMetaEdEnvironment,
+  newNamespace,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/QueryableLookupSupport/SubclassQueryableEnhancer';
 
 describe('when enhancing domain entity subclass queryables', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntitySubclassName1 = 'DomainEntitySubclassName2';
   const integerPropertyName2 = 'IntegerPropertyName2';
   const integerPropertyName4 = 'IntegerPropertyName4';
 
   beforeAll(() => {
     const domainEntityName1 = 'DomainEntityName1';
-    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1 });
+    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
     const integerProperty1 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName1',
+      namespace,
     });
     domainEntity1.properties.push(integerProperty1);
     domainEntity1.identityProperties.push(integerProperty1);
 
-    const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 });
+    const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2, namespace });
     domainEntity1.properties.push(integerProperty2);
     domainEntity1.queryableFields.push(integerProperty2);
-    addEntity(metaEd.entity, domainEntity1);
+    addEntityForNamespace(namespace, domainEntity1);
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclassName1,
       baseEntityName: domainEntityName1,
       baseEntity: domainEntity1,
+      namespace,
     });
     const integerProperty3 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName3',
+      namespace,
     });
     domainEntitySubclass1.properties.push(integerProperty3);
     domainEntitySubclass1.identityProperties.push(integerProperty3);
 
-    const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4 });
+    const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4, namespace });
     domainEntitySubclass1.properties.push(integerProperty4);
     domainEntitySubclass1.queryableFields.push(integerProperty4);
-    addEntity(metaEd.entity, domainEntitySubclass1);
+    addEntityForNamespace(namespace, domainEntitySubclass1);
 
     enhance(metaEd);
   });
 
   it('should have both queryable fields', () => {
-    const entity = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName1);
+    const entity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
     // $FlowIgnore - entity could be null
@@ -67,44 +73,49 @@ describe('when enhancing domain entity subclass queryables', () => {
 });
 
 describe('when enhancing domain entity subclass with identity rename of base class queryable', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntitySubclassName1 = 'DomainEntitySubclassName2';
   const integerPropertyName3 = 'IntegerPropertyName3';
 
   beforeAll(() => {
     const domainEntityName1 = 'DomainEntityName1';
-    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1 });
+    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
     const integerProperty1 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName1',
+      namespace,
     });
     domainEntity1.properties.push(integerProperty1);
     domainEntity1.identityProperties.push(integerProperty1);
     domainEntity1.queryableFields.push(integerProperty1);
-    addEntity(metaEd.entity, domainEntity1);
+    addEntityForNamespace(namespace, domainEntity1);
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclassName1,
       baseEntityName: domainEntityName1,
       baseEntity: domainEntity1,
+      namespace,
     });
     const integerProperty2 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName2',
+      namespace,
     });
     domainEntitySubclass1.properties.push(integerProperty2);
     domainEntitySubclass1.identityProperties.push(integerProperty2);
 
-    const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 });
+    const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3, namespace });
     domainEntitySubclass1.properties.push(integerProperty3);
     domainEntitySubclass1.queryableFields.push(integerProperty3);
-    addEntity(metaEd.entity, domainEntitySubclass1);
+    addEntityForNamespace(namespace, domainEntitySubclass1);
 
     enhance(metaEd);
   });
 
   it('should have both queryable fields', () => {
-    const entity = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName1);
+    const entity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
     // $FlowIgnore - entity could be null
@@ -113,48 +124,53 @@ describe('when enhancing domain entity subclass with identity rename of base cla
 });
 
 describe('when enhancing association subclass queryables', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationSubclassName1 = 'AssociationSubclassName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
   const integerPropertyName4 = 'IntegerPropertyName4';
 
   beforeAll(() => {
     const associationName1 = 'AssociationName1';
-    const association1 = Object.assign(newAssociation(), { metaEdName: associationName1 });
+    const association1 = Object.assign(newAssociation(), { metaEdName: associationName1, namespace });
     const integerProperty1 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName1',
+      namespace,
     });
     association1.properties.push(integerProperty1);
     association1.identityProperties.push(integerProperty1);
 
-    const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2 });
+    const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2, namespace });
     association1.properties.push(integerProperty2);
     association1.queryableFields.push(integerProperty2);
-    addEntity(metaEd.entity, association1);
+    addEntityForNamespace(namespace, association1);
 
     const associationSubclass1 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclassName1,
       baseEntityName: associationName1,
       baseEntity: association1,
+      namespace,
     });
     const integerProperty3 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: 'IntegerPropertyName3',
+      namespace,
     });
     associationSubclass1.properties.push(integerProperty3);
     associationSubclass1.identityProperties.push(integerProperty3);
 
-    const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4 });
+    const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4, namespace });
     associationSubclass1.properties.push(integerProperty4);
     associationSubclass1.queryableFields.push(integerProperty4);
-    addEntity(metaEd.entity, associationSubclass1);
+    addEntityForNamespace(namespace, associationSubclass1);
 
     enhance(metaEd);
   });
 
   it('should have both queryable fields', () => {
-    const entity = metaEd.entity.associationSubclass.get(associationSubclassName1);
+    const entity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
     // $FlowIgnore - entity could be null
@@ -167,17 +183,20 @@ describe('when enhancing association subclass queryables', () => {
 });
 
 describe('when enhancing association subclass with identity rename of base class queryable', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationSubclassName1 = 'AssociationSubclassName1';
   const integerPropertyName3 = 'IntegerPropertyName3';
 
   beforeAll(() => {
     const associationName1 = 'AssociationName1';
     const integerPropertyName1 = 'IntegerPropertyName1';
-    const association1 = Object.assign(newAssociation(), { metaEdName: associationName1 });
+    const association1 = Object.assign(newAssociation(), { metaEdName: associationName1, namespace });
     const integerProperty1 = Object.assign(newIntegerProperty(), {
       isPartOfIdentity: true,
       metaEdName: integerPropertyName1,
+      namespace,
     });
     association1.properties.push(integerProperty1);
     association1.identityProperties.push(integerProperty1);
@@ -187,25 +206,27 @@ describe('when enhancing association subclass with identity rename of base class
       metaEdName: associationSubclassName1,
       baseEntityName: associationName1,
       baseEntity: association1,
+      namespace,
     });
     const integerProperty2 = Object.assign(newIntegerProperty(), {
       isIdentityRename: true,
       baseKeyName: integerPropertyName1,
       metaEdName: 'IntegerPropertyRename',
+      namespace,
     });
     associationSubclass1.properties.push(integerProperty2);
     associationSubclass1.identityProperties.push(integerProperty2);
 
-    const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3 });
+    const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3, namespace });
     associationSubclass1.properties.push(integerProperty3);
     associationSubclass1.queryableFields.push(integerProperty3);
-    addEntity(metaEd.entity, associationSubclass1);
+    addEntityForNamespace(namespace, associationSubclass1);
 
     enhance(metaEd);
   });
 
   it('should ignore renamed identity', () => {
-    const entity = metaEd.entity.associationSubclass.get(associationSubclassName1);
+    const entity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
     // $FlowIgnore - entity could be null

@@ -1,12 +1,17 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'DomainEntitySubclassBaseClassEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.domainEntitySubclass.forEach(childEntity => {
-    let baseEntity = metaEd.entity.domainEntity.get(childEntity.baseEntityName);
-    if (!baseEntity) baseEntity = metaEd.entity.domainEntitySubclass.get(childEntity.baseEntityName);
+  getAllEntitiesOfType(metaEd, 'domainEntitySubclass').forEach(childEntity => {
+    const baseEntity: ?ModelBase = getEntityForNamespaces(
+      childEntity.baseEntityName,
+      [childEntity.namespace, ...childEntity.namespace.dependencies],
+      'domainEntity',
+      'domainEntitySubclass',
+    );
 
     if (baseEntity) {
       childEntity.baseEntity = baseEntity;

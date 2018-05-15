@@ -1,10 +1,12 @@
 // @flow
-import { newMetaEdEnvironment, newDomain, newSubdomain, addEntity } from 'metaed-core';
+import { newMetaEdEnvironment, newDomain, newSubdomain, addEntityForNamespace, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Domain, Subdomain } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SubdomainParentEntityEnhancer';
 
 describe('when enhancing subdomain with parent', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const childEntityName: string = 'ChildEntityName';
   let parentEntity: Domain;
@@ -13,14 +15,16 @@ describe('when enhancing subdomain with parent', () => {
   beforeAll(() => {
     parentEntity = Object.assign(newDomain(), {
       metaEdName: parentEntityName,
+      namespace,
     });
-    addEntity(metaEd.entity, parentEntity);
+    addEntityForNamespace(namespace, parentEntity);
 
     childEntity = Object.assign(newSubdomain(), {
       metaEdName: childEntityName,
       parentMetaEdName: parentEntityName,
+      namespace,
     });
-    addEntity(metaEd.entity, childEntity);
+    addEntityForNamespace(namespace, childEntity);
 
     enhance(metaEd);
   });

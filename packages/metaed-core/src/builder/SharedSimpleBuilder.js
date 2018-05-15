@@ -39,7 +39,9 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
 
     if (this.currentSharedSimple.metaEdName) {
       // $FlowIgnore - allowing currentSharedSimple.type to specify the entityRepository Map property
-      const currentSharedSimpleRepository = this.currentNamespace.entity[this.currentSharedSimple.type];
+      const currentSharedSimpleRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[
+        this.currentSharedSimple.type
+      ];
       if (currentSharedSimpleRepository.has(this.currentSharedSimple.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'SharedSimpleBuilder',
@@ -50,16 +52,18 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
           sourceMap: this.currentSharedSimple.sourceMap.type,
           fileMap: null,
         });
-        const duplicateEntity: SharedSimple = currentSharedSimpleRepository.get(this.currentSharedSimple.metaEdName);
-        this.validationFailures.push({
-          validatorName: 'SharedSimpleBuilder',
-          category: 'error',
-          message: `${duplicateEntity.typeHumanizedName} named ${
-            duplicateEntity.metaEdName
-          } is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
-          fileMap: null,
-        });
+        const duplicateEntity: ?SharedSimple = currentSharedSimpleRepository.get(this.currentSharedSimple.metaEdName);
+        if (duplicateEntity != null) {
+          this.validationFailures.push({
+            validatorName: 'SharedSimpleBuilder',
+            category: 'error',
+            message: `${duplicateEntity.typeHumanizedName} named ${
+              duplicateEntity.metaEdName
+            } is a duplicate declaration of that name.`,
+            sourceMap: duplicateEntity.sourceMap.type,
+            fileMap: null,
+          });
+        }
       } else {
         currentSharedSimpleRepository.set(this.currentSharedSimple.metaEdName, this.currentSharedSimple);
       }

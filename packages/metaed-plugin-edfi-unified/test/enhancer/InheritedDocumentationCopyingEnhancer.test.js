@@ -1,19 +1,22 @@
 // @flow
 import R from 'ramda';
 import {
-  addEntity,
+  addEntityForNamespace,
   addProperty,
   newDomainEntity,
   newDomainEntityProperty,
   newMetaEdEnvironment,
   newSharedInteger,
   newSharedIntegerProperty,
+  newNamespace,
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InheritedDocumentationCopyingEnhancer';
 
 describe('when enhancing shared integer property with inherited documentation', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityDocumentation: string = 'ReferencedEntityDocumentation';
   const referencedEntityName: string = 'ReferencedEntityName';
@@ -22,6 +25,7 @@ describe('when enhancing shared integer property with inherited documentation', 
     const referencedEntity = Object.assign(newSharedInteger(), {
       metaEdName: referencedEntityName,
       documentation: referencedEntityDocumentation,
+      namespace,
     });
 
     const property = Object.assign(newSharedIntegerProperty(), {
@@ -29,15 +33,17 @@ describe('when enhancing shared integer property with inherited documentation', 
       parentEntityName,
       referencedEntity,
       documentationInherited: true,
+      namespace,
     });
 
     const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
+      namespace,
     });
 
-    addEntity(metaEd.entity, referencedEntity);
-    addEntity(metaEd.entity, parentEntity);
+    addEntityForNamespace(namespace, referencedEntity);
+    addEntityForNamespace(namespace, parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);
@@ -50,7 +56,9 @@ describe('when enhancing shared integer property with inherited documentation', 
 });
 
 describe('when enhancing domain entity property with inherited documentation', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName: string = 'ParentEntityName';
   const referencedEntityDocumentation: string = 'ReferencedEntityDocumentation';
   const referencedEntityName: string = 'ReferencedEntityName';
@@ -59,6 +67,7 @@ describe('when enhancing domain entity property with inherited documentation', (
     const referencedEntity = Object.assign(newDomainEntity(), {
       metaEdName: referencedEntityName,
       documentation: referencedEntityDocumentation,
+      namespace,
     });
 
     const property = Object.assign(newDomainEntityProperty(), {
@@ -66,15 +75,17 @@ describe('when enhancing domain entity property with inherited documentation', (
       parentEntityName,
       referencedEntity,
       documentationInherited: true,
+      namespace,
     });
 
     const parentEntity = Object.assign(newDomainEntity(), {
       metaEdName: parentEntityName,
       properties: [property],
+      namespace,
     });
 
-    addEntity(metaEd.entity, referencedEntity);
-    addEntity(metaEd.entity, parentEntity);
+    addEntityForNamespace(namespace, referencedEntity);
+    addEntityForNamespace(namespace, parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);

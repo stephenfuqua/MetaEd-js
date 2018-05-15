@@ -1,10 +1,19 @@
 // @flow
-import { newMetaEdEnvironment, newSubdomain, newDomain, addEntity, getEntity } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newSubdomain,
+  newDomain,
+  addEntityForNamespace,
+  getEntityForNamespaces,
+  newNamespace,
+} from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DomainSubdomainEnhancer';
 
 describe('when enhancing domain', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainMetaEdName: string = 'DomainMetaEdName';
   const subdomain1MetaEdName: string = 'Subdomain1MetaEdName';
   const subdomain2MetaEdName: string = 'Subdomain2MetaEdName';
@@ -13,32 +22,35 @@ describe('when enhancing domain', () => {
   const subdomain1 = Object.assign(newSubdomain(), {
     metaEdName: subdomain1MetaEdName,
     parentMetaEdName: domainMetaEdName,
+    namespace,
     position: 1,
   });
 
   const subdomain2 = Object.assign(newSubdomain(), {
     metaEdName: subdomain2MetaEdName,
     parentMetaEdName: domainMetaEdName,
+    namespace,
     position: 2,
   });
 
   const subdomain3 = Object.assign(newSubdomain(), {
     metaEdName: subdomain3MetaEdName,
     parentMetaEdName: domainMetaEdName,
+    namespace,
     position: 3,
   });
 
   beforeAll(() => {
-    addEntity(metaEd.entity, Object.assign(newDomain(), { metaEdName: domainMetaEdName }));
-    addEntity(metaEd.entity, subdomain2);
-    addEntity(metaEd.entity, subdomain1);
-    addEntity(metaEd.entity, subdomain3);
+    addEntityForNamespace(namespace, Object.assign(newDomain(), { metaEdName: domainMetaEdName }));
+    addEntityForNamespace(namespace, subdomain2);
+    addEntityForNamespace(namespace, subdomain1);
+    addEntityForNamespace(namespace, subdomain3);
 
     enhance(metaEd);
   });
 
   it('should have sorted subdomain references', () => {
-    const domain: any = getEntity(metaEd.entity, domainMetaEdName, 'domain');
+    const domain: any = getEntityForNamespaces(domainMetaEdName, [namespace], 'domain');
     expect(domain.subdomains).toHaveLength(3);
     expect(domain.subdomains[0]).toBe(subdomain1);
     expect(domain.subdomains[1]).toBe(subdomain2);

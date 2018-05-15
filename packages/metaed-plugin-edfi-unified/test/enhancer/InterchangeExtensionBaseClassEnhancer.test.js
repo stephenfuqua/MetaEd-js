@@ -1,10 +1,14 @@
 // @flow
-import { newMetaEdEnvironment, newInterchange, newInterchangeExtension } from 'metaed-core';
+import { newMetaEdEnvironment, newInterchange, newInterchangeExtension, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Interchange, InterchangeExtension } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
 describe('when enhancing interchange extension referring to interchange', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const parentEntityName: string = 'ParentEntityName';
   let parentEntity: Interchange;
   let childEntity: InterchangeExtension;
@@ -12,14 +16,16 @@ describe('when enhancing interchange extension referring to interchange', () => 
   beforeAll(() => {
     parentEntity = Object.assign(newInterchange(), {
       metaEdName: parentEntityName,
+      namespace,
     });
-    metaEd.entity.interchange.set(parentEntity.metaEdName, parentEntity);
+    namespace.entity.interchange.set(parentEntity.metaEdName, parentEntity);
 
     childEntity = Object.assign(newInterchangeExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      namespace: extensionNamespace,
     });
-    metaEd.entity.interchangeExtension.set(childEntity.metaEdName, childEntity);
+    extensionNamespace.entity.interchangeExtension.set(childEntity.metaEdName, childEntity);
 
     enhance(metaEd);
   });

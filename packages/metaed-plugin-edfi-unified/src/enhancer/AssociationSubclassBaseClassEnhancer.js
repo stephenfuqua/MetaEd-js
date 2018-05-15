@@ -1,12 +1,17 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'AssociationSubclassBaseClassEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.associationSubclass.forEach(childEntity => {
-    let baseEntity = metaEd.entity.association.get(childEntity.baseEntityName);
-    if (!baseEntity) baseEntity = metaEd.entity.associationSubclass.get(childEntity.baseEntityName);
+  getAllEntitiesOfType(metaEd, 'associationSubclass').forEach(childEntity => {
+    const baseEntity: ?ModelBase = getEntityForNamespaces(
+      childEntity.baseEntityName,
+      [childEntity.namespace, ...childEntity.namespace.dependencies],
+      'association',
+      'associationSubclass',
+    );
 
     if (baseEntity) {
       childEntity.baseEntity = baseEntity;
