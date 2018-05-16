@@ -40,7 +40,7 @@ describe('when enhancing interchange in core', () => {
 
   beforeAll(() => {
     const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName, namespace });
-    addEntityForNamespace(namespace, interchange);
+    addEntityForNamespace(interchange);
 
     elementEntities.forEach(entity => {
       interchange.elements.push(
@@ -50,7 +50,7 @@ describe('when enhancing interchange in core', () => {
           namespace,
         }),
       );
-      addEntityForNamespace(namespace, entity);
+      addEntityForNamespace(entity);
     });
 
     identityTemplateEntities.forEach(entity => {
@@ -61,7 +61,7 @@ describe('when enhancing interchange in core', () => {
           namespace,
         }),
       );
-      addEntityForNamespace(namespace, entity);
+      addEntityForNamespace(entity);
     });
 
     enhance(metaEd);
@@ -94,14 +94,14 @@ describe('when enhancing interchange extension', () => {
   const domainEntityExtension = Object.assign(newDomainEntityExtension(), { metaEdName: 'DomainEntity', namespace });
 
   beforeAll(() => {
-    addEntityForNamespace(namespace, domainEntity);
-    addEntityForNamespace(namespace, domainEntityExtension);
+    addEntityForNamespace(domainEntity);
+    addEntityForNamespace(domainEntityExtension);
 
     const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName, namespace });
-    addEntityForNamespace(namespace, interchange);
+    addEntityForNamespace(interchange);
 
     const interchangeExtension = Object.assign(newInterchangeExtension(), { metaEdName: interchangeMetaEdName, namespace });
-    addEntityForNamespace(namespace, interchangeExtension);
+    addEntityForNamespace(interchangeExtension);
 
     interchange.elements.push(
       Object.assign(newInterchangeItem(), {

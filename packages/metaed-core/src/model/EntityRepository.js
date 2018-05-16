@@ -35,7 +35,6 @@ import {
   allEntityModelTypesNoSimpleTypes,
 } from './ModelType';
 
-
 export type EntityRepository = {
   unknown: Map<string, any>,
   association: Map<string, Association>,
@@ -197,9 +196,8 @@ export function addEntity(repository: EntityRepository, entity: ModelBase) {
   repository[entity.type].set(entity.metaEdName, entity);
 }
 
-export function addEntityForNamespace(namespace: Namespace, entity: ModelBase) {
-  entity.namespace = namespace;
-  addEntity(namespace.entity, entity);
+export function addEntityForNamespace(entity: ModelBase) {
+  addEntity(entity.namespace.entity, entity);
 }
 
 export function getTopLevelCoreEntity(repository: EntityRepository, entityName: string): ?TopLevelEntity {

@@ -1,6 +1,6 @@
 // @flow
 import {
-  addEntity,
+  addEntityForNamespace,
   newCommon,
   newCommonExtension,
   newCommonProperty,
@@ -22,22 +22,23 @@ import type {
   MetaEdEnvironment,
   Namespace,
 } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension', () => {
+  const namespaceName = 'edfi';
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const documentation: string = 'Documentation';
   const associationExtensionName: string = 'AssociationExtensionName';
   const associationExtensionPropertyName: string = 'AssociationExtensionPropertyName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName,
-      extensionEntitySuffix: '',
-    });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
       namespace,
@@ -64,14 +65,10 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
-    addEntity(metaEd.entity, association);
+    addEntityForNamespace(association);
 
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       documentation,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
@@ -98,7 +95,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionProperty);
-    addEntity(metaEd.entity, associationExtension);
+    addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -106,20 +103,20 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).schema).toBe(namespaceName);
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName).description).toBe(documentation);
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName);
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -127,15 +124,16 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with primary key', () => {
+  const namespaceName = 'edfi';
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const associationExtensionName: string = 'AssociationExtensionName';
   const associationExtensionPkPropertyName: string = 'AssociationExtensionPkPropertyName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
     const associationName: string = 'AssociationName';
     const association: Association = Object.assign(newAssociation(), {
       namespace,
@@ -161,14 +159,10 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
-    addEntity(metaEd.entity, association);
+    addEntityForNamespace(association);
 
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -194,7 +188,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionPkProperty);
-    addEntity(metaEd.entity, associationExtension);
+    addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -202,12 +196,12 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
   it('should have one primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName);
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
@@ -215,18 +209,18 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common extension override', () => {
+  const namespaceName = 'edfi';
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName: string = 'CommonName';
   const commonExtensionName: string = 'CommonExtensionName';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
@@ -252,7 +246,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
@@ -278,12 +272,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
-    addEntity(metaEd.entity, association);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(association);
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       namespace: extensionNamespace,
@@ -311,12 +300,12 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     commonExtension.data.edfiOds.ods_Properties.push(commonExtensionRequiredProperty);
-    addEntity(metaEd.entity, commonExtension);
+    addEntityForNamespace(commonExtension);
 
     common.extender = commonExtension;
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -375,7 +364,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonExtensionOverrideProperty);
-    addEntity(metaEd.entity, associationExtension);
+    addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -383,30 +372,30 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
   });
 
   it('should create table only for association extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
   it('should not create common extension override join table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationName + commonExtensionName)).toBeUndefined();
   });
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common', () => {
+  const namespaceName = 'edfi';
+  const namespace: Namespace = { ...newNamespace(), namespaceName };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName: string = 'CommonName';
   const associationName: string = 'AssociationName';
   const associationExtensionName: string = 'AssociationExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
@@ -432,7 +421,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const association: Association = Object.assign(newAssociation(), {
       namespace,
@@ -458,15 +447,10 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     association.data.edfiOds.ods_Properties.push(associationPkProperty);
-    addEntity(metaEd.entity, association);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(association);
 
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: associationExtensionName,
       baseEntityName: associationName,
       baseEntity: association,
@@ -525,7 +509,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
       },
     });
     associationExtension.data.edfiOds.ods_Properties.push(associationExtensionCommonProperty);
-    addEntity(metaEd.entity, associationExtension);
+    addEntityForNamespace(associationExtension);
 
     metaEd.dataStandardVersion = '2.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -533,14 +517,14 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
   it('should create a table for association extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
   it('should create join table from association and common', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName + commonName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(associationName + commonName)).toBeDefined();
   });
 });

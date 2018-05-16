@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { asTopLevelEntity, getEntitiesOfType } from 'metaed-core';
+import { asTopLevelEntity, getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from 'metaed-core';
 import { addForeignKey } from '../../model/database/Table';
 import { addTables, buildMainTable, buildTablesFromProperties } from '../table/TableCreatingEntityEnhancerBase';
@@ -66,7 +66,7 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'domainEntitySubclass')
+  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'domainEntitySubclass')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -75,7 +75,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       addForeignKeyToPrimaryKeyRename(mainTable, entity);
       buildTablesFromProperties(entity, mainTable, tables);
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, tables);
+      addTables(metaEd, entity.namespace, tables);
     });
 
   return {

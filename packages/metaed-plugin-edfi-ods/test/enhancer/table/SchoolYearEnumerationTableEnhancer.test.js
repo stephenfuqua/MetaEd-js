@@ -1,13 +1,15 @@
 // @flow
 import R from 'ramda';
-import { addEntity, newMetaEdEnvironment, newNamespace, newSchoolYearEnumeration } from 'metaed-core';
+import { addEntityForNamespace, newMetaEdEnvironment, newNamespace, newSchoolYearEnumeration } from 'metaed-core';
 import type { MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
 describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespaceName';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolYear: string = 'SchoolYear';
   const schoolYearType: string = `${schoolYear}Type`;
   const schoolYearEnumerationDocumentation: string = 'SchoolYearEnumerationDocumentation';
@@ -16,9 +18,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     const schoolYearEnumeration: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYear,
       documentation: schoolYearEnumerationDocumentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Tables: [],
@@ -27,27 +27,27 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
     });
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, schoolYearEnumeration);
+    addEntityForNamespace(schoolYearEnumeration);
     enhance(metaEd);
   });
 
   it('should create table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(schoolYearType): any);
+    const table = (tableEntities(metaEd, namespace).get(schoolYearType): any);
     expect(table).toBeDefined();
     expect(table.name).toBe(schoolYearType);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(schoolYearEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
   it('should have three columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(schoolYearType): any);
+    const table = (tableEntities(metaEd, namespace).get(schoolYearType): any);
     expect(table.columns).toHaveLength(3);
   });
 
   it('should have one primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(schoolYearType): any);
+    const table = (tableEntities(metaEd, namespace).get(schoolYearType): any);
     expect(R.head(table.columns).name).toBe(schoolYear);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
     expect(R.head(table.columns).isNullable).toBe(false);
@@ -55,7 +55,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
   });
 
   it('should have school year description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(schoolYearType): any);
+    const table = (tableEntities(metaEd, namespace).get(schoolYearType): any);
     const column = R.head(table.columns.filter(x => x.name === 'SchoolYearDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
@@ -65,7 +65,7 @@ describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration
   });
 
   it('should have current school year column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(schoolYearType): any);
+    const table = (tableEntities(metaEd, namespace).get(schoolYearType): any);
     const column = R.head(table.columns.filter(x => x.name === 'CurrentSchoolYear'));
     expect(column).toBeDefined();
     expect(column.isPartOfPrimaryKey).toBe(false);

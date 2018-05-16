@@ -31,7 +31,7 @@ describe('when enhancing entity property without with context', () => {
       namespace,
     });
 
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);
@@ -65,7 +65,7 @@ describe('when enhancing entity property with a with context', () => {
       namespace,
     });
 
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);
@@ -99,7 +99,7 @@ describe('when enhancing entity property with identical with context', () => {
       namespace,
     });
 
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);

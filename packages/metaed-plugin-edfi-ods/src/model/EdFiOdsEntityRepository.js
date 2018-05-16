@@ -20,17 +20,16 @@ export function newEdFiOdsEntityRepository(): EdFiOdsEntityRepository {
 }
 
 export function addEdFiOdsEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  if (metaEd.plugin.has('edfiOds')) {
-    Object.assign((metaEd.plugin.get('edfiOds'): any), {
-      entity: newEdFiOdsEntityRepository(),
-    });
+  const namespaces: Map<Namespace, EdFiOdsEntityRepository> = new Map();
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespaces.set(namespace, newEdFiOdsEntityRepository());
+  });
+
+  const edfiOdsPlugin = metaEd.plugin.get('edfiOds');
+  if (edfiOdsPlugin == null) {
+    metaEd.plugin.set('edfiOds', { ...newPluginEnvironment(), namespace: namespaces });
   } else {
-    metaEd.plugin.set(
-      'edfiOds',
-      Object.assign(newPluginEnvironment(), {
-        entity: newEdFiOdsEntityRepository(),
-      }),
-    );
+    edfiOdsPlugin.namespace = namespaces;
   }
 }
 

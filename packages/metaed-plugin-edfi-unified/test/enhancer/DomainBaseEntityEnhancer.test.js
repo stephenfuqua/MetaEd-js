@@ -68,16 +68,16 @@ describe('when enhancing domain', () => {
   const domainMetaEdName = 'domainMetaEdName';
 
   beforeAll(() => {
-    const domain: Domain = Object.assign(newDomain(), { metaEdName: domainMetaEdName });
-    addEntityForNamespace(namespace, domain);
-    addEntityForNamespace(namespace, domainEntity1);
-    addEntityForNamespace(namespace, domainEntity2);
-    addEntityForNamespace(namespace, domainEntitySubclass1);
-    addEntityForNamespace(namespace, domainEntitySubclass2);
-    addEntityForNamespace(namespace, association1);
-    addEntityForNamespace(namespace, association2);
-    addEntityForNamespace(namespace, associationSubclass1);
-    addEntityForNamespace(namespace, associationSubclass2);
+    const domain: Domain = Object.assign(newDomain(), { metaEdName: domainMetaEdName, namespace });
+    addEntityForNamespace(domain);
+    addEntityForNamespace(domainEntity1);
+    addEntityForNamespace(domainEntity2);
+    addEntityForNamespace(domainEntitySubclass1);
+    addEntityForNamespace(domainEntitySubclass2);
+    addEntityForNamespace(association1);
+    addEntityForNamespace(association2);
+    addEntityForNamespace(associationSubclass1);
+    addEntityForNamespace(associationSubclass2);
 
     domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName, namespace }));
     domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName, namespace }));
@@ -160,16 +160,16 @@ describe('when enhancing subdomain', () => {
   const subdomainMetaEdName = 'domainMetaEdName';
 
   beforeAll(() => {
-    const subdomain: Subdomain = Object.assign(newSubdomain(), { metaEdName: subdomainMetaEdName });
-    addEntityForNamespace(namespace, subdomain);
-    addEntityForNamespace(namespace, domainEntity1);
-    addEntityForNamespace(namespace, domainEntity2);
-    addEntityForNamespace(namespace, domainEntitySubclass1);
-    addEntityForNamespace(namespace, domainEntitySubclass2);
-    addEntityForNamespace(namespace, association1);
-    addEntityForNamespace(namespace, association2);
-    addEntityForNamespace(namespace, associationSubclass1);
-    addEntityForNamespace(namespace, associationSubclass2);
+    const subdomain: Subdomain = Object.assign(newSubdomain(), { metaEdName: subdomainMetaEdName, namespace });
+    addEntityForNamespace(subdomain);
+    addEntityForNamespace(domainEntity1);
+    addEntityForNamespace(domainEntity2);
+    addEntityForNamespace(domainEntitySubclass1);
+    addEntityForNamespace(domainEntitySubclass2);
+    addEntityForNamespace(association1);
+    addEntityForNamespace(association2);
+    addEntityForNamespace(associationSubclass1);
+    addEntityForNamespace(associationSubclass2);
 
     subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName, namespace }));
     subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName, namespace }));

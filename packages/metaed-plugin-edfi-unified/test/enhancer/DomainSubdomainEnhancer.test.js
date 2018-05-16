@@ -41,10 +41,10 @@ describe('when enhancing domain', () => {
   });
 
   beforeAll(() => {
-    addEntityForNamespace(namespace, Object.assign(newDomain(), { metaEdName: domainMetaEdName }));
-    addEntityForNamespace(namespace, subdomain2);
-    addEntityForNamespace(namespace, subdomain1);
-    addEntityForNamespace(namespace, subdomain3);
+    addEntityForNamespace(Object.assign(newDomain(), { metaEdName: domainMetaEdName, namespace }));
+    addEntityForNamespace(subdomain2);
+    addEntityForNamespace(subdomain1);
+    addEntityForNamespace(subdomain3);
 
     enhance(metaEd);
   });

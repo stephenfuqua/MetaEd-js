@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import {
-  addEntity,
+  addEntityForNamespace,
   newDescriptor,
   newIntegerProperty,
   newMapTypeEnumeration,
@@ -9,12 +9,14 @@ import {
   newNamespace,
 } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor, IntegerProperty, MapTypeEnumeration } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/DescriptorTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
 describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespaceName';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName: string = 'DescriptorName';
   const descriptorNameDescriptor: string = `${descriptorName}Descriptor`;
   const descriptorDocumentation: string = 'DescriptorDocumentation';
@@ -24,9 +26,7 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: descriptorNameDescriptor,
@@ -48,25 +48,25 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
     descriptor.data.edfiOds.ods_Properties.push(property);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, descriptor);
+    addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
 
   it('should create table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameDescriptor);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
 
   it('should create two columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.columns).toHaveLength(2);
   });
 
   it('should have primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
     expect(R.head(table.columns).isNullable).toBe(false);
@@ -74,7 +74,7 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
   });
 
   it('should have property column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.columns).name).toBe(integerPropertyName);
     expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
     expect(R.last(table.columns).isNullable).toBe(false);
@@ -82,7 +82,7 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.foreignKeys).columnNames).toHaveLength(1);
     expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
 
@@ -95,8 +95,9 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
 });
 
 describe('when DescriptorTableEnhancer enhances descriptor with required map type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespaceName';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName: string = 'DescriptorName';
   const descriptorNameDescriptor: string = `${descriptorName}Descriptor`;
   const descriptorNameType: string = `${descriptorName}Type`;
@@ -109,9 +110,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
       isMapTypeRequired: true,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_IsMapType: true,
@@ -128,29 +127,29 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, descriptor);
+    addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameDescriptor);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
 
   it('should have two columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.columns).toHaveLength(2);
   });
 
   it('should have primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
     expect(R.head(table.columns).isNullable).toBe(false);
@@ -158,7 +157,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have type column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
     expect(R.last(table.columns).isNullable).toBe(false);
@@ -166,12 +165,12 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have two foreign keys', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.foreignKeys).toHaveLength(2);
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
 
     expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
@@ -182,7 +181,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have foreign key to map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
     expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
 
@@ -194,22 +193,22 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameType);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
   it('should have four columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table.columns).toHaveLength(4);
   });
 
   it('should have one primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
@@ -218,7 +217,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have code value column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
@@ -228,7 +227,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
@@ -238,7 +237,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
   });
 
   it('should have short description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
@@ -249,8 +248,9 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 });
 
 describe('when DescriptorTableEnhancer enhances descriptor with optional map type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespaceName';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName: string = 'DescriptorName';
   const descriptorNameDescriptor: string = `${descriptorName}Descriptor`;
   const descriptorNameType: string = `${descriptorName}Type`;
@@ -263,9 +263,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
       metaEdName: descriptorName,
       documentation: descriptorDocumentation,
       isMapTypeOptional: true,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_IsMapType: true,
@@ -282,29 +280,29 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, descriptor);
+    addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameDescriptor);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
 
   it('should have two columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.columns).toHaveLength(2);
   });
 
   it('should have primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.columns).name).toBe(`${descriptorName}DescriptorId`);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
     expect(R.head(table.columns).isNullable).toBe(false);
@@ -312,7 +310,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have type column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
     expect(R.last(table.columns).isNullable).toBe(true);
@@ -320,12 +318,12 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have two foreign keys', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.foreignKeys).toHaveLength(2);
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
 
     expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
@@ -336,7 +334,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have foreign key to map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
     expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
 
@@ -348,22 +346,22 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameType);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
   it('should have four columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table.columns).toHaveLength(4);
   });
 
   it('should have one primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
@@ -372,7 +370,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have code value column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
@@ -382,7 +380,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
@@ -392,7 +390,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
   });
 
   it('should have short description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');
@@ -403,8 +401,9 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 });
 
 describe("when DescriptorTableEnhancer enhances descriptor with map type name ending with 'Type'", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespaceName';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName: string = 'DescriptorName';
   const descriptorNameDescriptor: string = `${descriptorName}Descriptor`;
   const descriptorNameType: string = `${descriptorName}Type`;
@@ -417,9 +416,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
       metaEdName: descriptorNameType,
       documentation: descriptorDocumentation,
       isMapTypeOptional: true,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_IsMapType: true,
@@ -436,29 +433,29 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
     descriptor.mapTypeEnumeration = mapTypeEnumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, descriptor);
+    addEntityForNamespace(descriptor);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameDescriptor);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(descriptorDocumentation);
   });
 
   it('should have two columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.columns).toHaveLength(2);
   });
 
   it('should have primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.columns).name).toBe(`${descriptorNameType}DescriptorId`);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
     expect(R.head(table.columns).isNullable).toBe(false);
@@ -466,7 +463,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have type column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.last(table.columns).isPartOfPrimaryKey).toBe(false);
     expect(R.last(table.columns).isNullable).toBe(true);
@@ -474,12 +471,12 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have two foreign keys', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(table.foreignKeys).toHaveLength(2);
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.head(table.foreignKeys).withDeleteCascade).toBe(true);
 
     expect(R.head(table.foreignKeys).parentTableName).toBe(descriptorNameDescriptor);
@@ -490,7 +487,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have foreign key to map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameDescriptor): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameDescriptor);
     expect(R.last(table.foreignKeys).columnNames).toHaveLength(1);
     expect(R.last(table.foreignKeys).withDeleteCascade).toBe(false);
 
@@ -502,22 +499,22 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have map type enumeration table', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table).toBeDefined();
     expect(table.name).toBe(descriptorNameType);
-    expect(table.schema).toBe(namespaceName);
+    expect(table.schema).toBe('edfi');
     expect(table.description).toBe(mapTypeEnumerationDocumentation);
     expect(table.includeCreateDateColumn).toBe(true);
     expect(table.includeLastModifiedDateAndIdColumn).toBe(true);
   });
 
   it('should have four columns', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(table.columns).toHaveLength(4);
   });
 
   it('should have one primary key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     expect(R.head(table.columns).name).toBe(`${descriptorNameType}Id`);
     expect(R.head(table.columns).isIdentityDatabaseType).toBe(true);
     expect(R.head(table.columns).isPartOfPrimaryKey).toBe(true);
@@ -526,7 +523,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have code value column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'CodeValue'));
     expect(column).toBeDefined();
     expect(column.length).toBe('50');
@@ -536,7 +533,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'Description'));
     expect(column).toBeDefined();
     expect(column.length).toBe('1024');
@@ -546,7 +543,7 @@ describe("when DescriptorTableEnhancer enhances descriptor with map type name en
   });
 
   it('should have short description column', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorNameType): any);
+    const table = tableEntities(metaEd, namespace).get(descriptorNameType);
     const column = R.head(table.columns.filter(x => x.name === 'ShortDescription'));
     expect(column).toBeDefined();
     expect(column.length).toBe('450');

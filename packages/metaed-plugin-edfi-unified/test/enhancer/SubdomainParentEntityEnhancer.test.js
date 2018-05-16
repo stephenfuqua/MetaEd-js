@@ -17,14 +17,14 @@ describe('when enhancing subdomain with parent', () => {
       metaEdName: parentEntityName,
       namespace,
     });
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(parentEntity);
 
     childEntity = Object.assign(newSubdomain(), {
       metaEdName: childEntityName,
       parentMetaEdName: parentEntityName,
       namespace,
     });
-    addEntityForNamespace(namespace, childEntity);
+    addEntityForNamespace(childEntity);
 
     enhance(metaEd);
   });

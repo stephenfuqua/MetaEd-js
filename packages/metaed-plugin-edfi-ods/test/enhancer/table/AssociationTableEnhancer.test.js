@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import {
-  addEntity,
+  addEntityForNamespace,
   newCommon,
   newCommonProperty,
   newDescriptor,
@@ -26,14 +26,16 @@ import type {
   IntegerProperty,
   MetaEdEnvironment,
 } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { ForeignKey } from '../../../src/model/database/ForeignKey';
 import type { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationTableEnhancer enhances entity with simple property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const documentation: string = 'Documentation';
   const propertyName: string = 'PropertyName';
@@ -42,9 +44,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -66,33 +66,34 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
     entity.data.edfiOds.ods_Properties.push(property);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).size).toBe(1);
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).schema).toBe(namespaceName);
+    expect(tableEntities(metaEd, namespace).get(entityName).schema).toBe('edfi');
   });
 
   it('should have description equal to documentation', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName).description).toBe(documentation);
+    expect(tableEntities(metaEd, namespace).get(entityName).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(propertyName);
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with required collection property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const associationName: string = 'AssociationName';
   const documentation: string = 'Documentation';
@@ -103,9 +104,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -143,9 +142,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: associationName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: associationName,
@@ -170,17 +167,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     requiredCollectionProperty.referencedEntity = association;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, association);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(association);
     enhance(metaEd);
   });
 
   it('should create three tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(3);
+    expect(tableEntities(metaEd, namespace).size).toBe(3);
   });
 
   it('should create table for entity with one primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -189,7 +186,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create table for association with one primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(associationName);
+    const table: Table = tableEntities(metaEd, namespace).get(associationName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -198,29 +195,30 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create join table from entity and association', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + associationName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + associationName)).toBeDefined();
   });
 
   it('should have join table with two columns', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + associationName).columns).toHaveLength(2);
+    expect(tableEntities(metaEd, namespace).get(entityName + associationName).columns).toHaveLength(2);
   });
 
   it('should have join table with foreign key to entity', () => {
-    const joinTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + associationName);
+    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName);
     expect(joinTable.columns[0].name).toBe(entityPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to association', () => {
-    const joinTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + associationName);
+    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName);
     expect(joinTable.columns[1].name).toBe(associationPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with required collection common property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const commonName: string = 'CommonName';
   const documentation: string = 'Documentation';
@@ -231,9 +229,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -272,9 +268,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     const common: Common = Object.assign(newCommon(), {
       metaEdName: commonName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: commonName,
@@ -299,17 +293,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     requiredCollectionProperty.referencedEntity = common;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(common);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should create table for entity with one primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -318,28 +312,30 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create join table from entity and association', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + commonName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + commonName)).toBeDefined();
   });
 
   it('should have join table with two columns', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + commonName).columns).toHaveLength(2);
+    expect(tableEntities(metaEd, namespace).get(entityName + commonName).columns).toHaveLength(2);
   });
 
   it('should have join table with foreign key to common', () => {
-    const joinTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + commonName);
+    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName);
     expect(joinTable.columns[0].name).toBe(commonPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to entity', () => {
-    const joinTable: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + commonName);
+    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName);
     expect(joinTable.columns[1].name).toBe(entityPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with primary key reference to another entity with a non primary key reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const entityPkPropertyName: string = 'EntityPkPropertyName';
   const referencedEntityName: string = 'ReferencedEntityName';
@@ -348,14 +344,11 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -393,9 +386,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: referencedEntityName,
@@ -434,9 +425,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: subReferencedEntityName,
@@ -461,18 +450,18 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     referencedEntityRequiredProperty.referencedEntity = subReferencedEntity;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, referencedEntity);
-    addEntity(metaEd.entity, subReferencedEntity);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(referencedEntity);
+    addEntityForNamespace(subReferencedEntity);
     enhance(metaEd);
   });
 
   it('should create three tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(3);
+    expect(tableEntities(metaEd, namespace).size).toBe(3);
   });
 
   it('should create table for entity with one primary key and one non primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -484,7 +473,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for referencedEntity with one primary key and one non primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(referencedEntityName);
+    const table: Table = tableEntities(metaEd, namespace).get(referencedEntityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -497,7 +486,9 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
 });
 
 describe('when AssociationTableEnhancer enhances entity with primary key reference to another entity with a primary key reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const entityPkPropertyName: string = 'EntityPkPropertyName';
   const referencedEntityName: string = 'ReferencedEntityName';
@@ -506,14 +497,11 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   const subReferencedEntityPkPropertyName: string = 'SubReferencedEntityPkPropertyName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -551,9 +539,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: referencedEntityName,
@@ -593,9 +579,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     const subReferencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: subReferencedEntityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: subReferencedEntityName,
@@ -620,18 +604,18 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     referencedEntityPkProperty2.referencedEntity = subReferencedEntity;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, referencedEntity);
-    addEntity(metaEd.entity, subReferencedEntity);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(referencedEntity);
+    addEntityForNamespace(subReferencedEntity);
     enhance(metaEd);
   });
 
   it('should create three tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(3);
+    expect(tableEntities(metaEd, namespace).size).toBe(3);
   });
 
   it('should create table for entity with one primary key and two non primary key columns', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);
@@ -646,7 +630,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for referencedEntity with two primary key columns', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(referencedEntityName);
+    const table: Table = tableEntities(metaEd, namespace).get(referencedEntityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -659,19 +643,18 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
 });
 
 describe("when AssociationTableEnhancer enhances entity with collection property whose name starts with the referenced entity's name", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const referencedEntityName: string = 'EntityNameOfReference';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -695,9 +678,7 @@ describe("when AssociationTableEnhancer enhances entity with collection property
     const referencedEntity: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: referencedEntityName,
@@ -709,32 +690,31 @@ describe("when AssociationTableEnhancer enhances entity with collection property
     entityCollectionProperty.referencedEntity = referencedEntity;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, referencedEntity);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(referencedEntity);
     enhance(metaEd);
   });
 
   it('should create join table that does not conflict with the referenced entity table name', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + referencedEntityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + referencedEntityName)).toBeDefined();
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with two reference properties that have same primary key names', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const referencedEntityName1: string = 'ReferencedEntityName1';
   const referencedEntityName2: string = 'ReferencedEntityName2';
   const commonPkPropertyName: string = 'CommonPkPropertyName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -773,9 +753,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     const referencedEntity1: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName1,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: referencedEntityName1,
@@ -802,9 +780,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     const referencedEntity2: Association = Object.assign(newAssociation(), {
       metaEdName: referencedEntityName2,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: referencedEntityName2,
@@ -829,19 +805,19 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     entityPkProperty2.referencedEntity = referencedEntity2;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
-    addEntity(metaEd.entity, referencedEntity1);
-    addEntity(metaEd.entity, referencedEntity2);
+    addEntityForNamespace(entity);
+    addEntityForNamespace(referencedEntity1);
+    addEntityForNamespace(referencedEntity2);
     enhance(metaEd);
   });
 
   it('should create three tables, one for each entity', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(referencedEntityName1)).toBeDefined();
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(referencedEntityName2)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(referencedEntityName1)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(referencedEntityName2)).toBeDefined();
   });
   it('should create single column in entity table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
@@ -849,20 +825,19 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
 });
 
 describe('when AssociationTableEnhancer enhances entity with optional collection property with context', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const contextName: string = 'ContextName';
   const entityName: string = 'EntityName';
   const optionalCollectionPropertyName: string = 'OptionalCollectionPropertyName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -894,39 +869,36 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
     entity.data.edfiOds.ods_Properties.push(optionalCollectionProperty);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should have join table with context', () => {
-    expect(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + contextName + optionalCollectionPropertyName),
-    ).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + contextName + optionalCollectionPropertyName)).toBeDefined();
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with collection enumeration property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -961,24 +933,24 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
     enumerationProperty.referencedEntity = enumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should have join table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + enumerationName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + enumerationName)).toBeDefined();
   });
 
   it('should have join table with foreign key to enumeration table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + enumerationName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName + enumerationName);
     const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
@@ -986,19 +958,18 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
 });
 
 describe('when AssociationTableEnhancer enhances entity with enumeration property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const enumerationName: string = 'EnumerationName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1032,16 +1003,16 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
     enumerationProperty.referencedEntity = enumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create one table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+    expect(tableEntities(metaEd, namespace).size).toBe(1);
   });
 
   it('should have foreign key to enumeration table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     const foreignKey: ForeignKey = R.head(table.foreignKeys);
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
@@ -1049,19 +1020,18 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
 });
 
 describe("when AssociationTableEnhancer enhances entity with enumeration property whose name starts with the parent entity's name", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const enumerationName: string = 'EntityNameForEnumeration';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1095,37 +1065,36 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
     enumerationProperty.referencedEntity = enumeration;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should create join table that does not conflict with the parent entity table name', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(enumerationName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(enumerationName)).toBeDefined();
   });
 });
 
 describe('when AssociationTableEnhancer enhances entity with descriptor collection property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1161,24 +1130,24 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
     descriptorProperty.referencedEntity = descriptor;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should have join table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + descriptorName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName + descriptorName)).toBeDefined();
   });
 
   it('should have join table with foreign key to descriptor table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName + descriptorName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName + descriptorName);
     const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
@@ -1186,19 +1155,18 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
 });
 
 describe('when AssociationTableEnhancer enhances entity with descriptor property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const descriptorName: string = 'DescriptorName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1233,16 +1201,16 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
     descriptorProperty.referencedEntity = descriptor;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create one table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+    expect(tableEntities(metaEd, namespace).size).toBe(1);
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     const foreignKey: ForeignKey = R.head(table.foreignKeys);
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
@@ -1250,19 +1218,18 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
 });
 
 describe("when AssociationTableEnhancer enhances entity with descriptor collection property whose name starts with the parent entity's name", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const descriptorName: string = 'EntityNameForDescriptor';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1298,25 +1265,27 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
     descriptorProperty.referencedEntity = descriptor;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(entityName)).toBeDefined();
   });
 
   it('should create join table that does not conflict with the parent entity table name', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(descriptorName)).toBeDefined();
+    expect(tableEntities(metaEd, namespace).get(descriptorName)).toBeDefined();
   });
 });
 
 describe("when AssociationTableEnhancer enhances entity with common collection property whose name starts with the parent entity's name", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const entityPkPropertyName: string = 'EntityPkPropertyName';
   const commonName: string = 'EntityNameForCommon';
@@ -1324,14 +1293,11 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
   const commonNonPkPropertyName: string = 'CommonNonPkPropertyName';
 
   beforeAll(() => {
-    const namespaceName: string = 'namespace';
     const documentation: string = 'Documentation';
     const entity: Association = Object.assign(newAssociation(), {
       metaEdName: entityName,
       documentation,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_Name: entityName,
@@ -1406,16 +1372,16 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
     commonProperty.referencedEntity = common;
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, namespace).size).toBe(2);
   });
 
   it('should have entity table with one primary key', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(entityName);
+    const table: Table = tableEntities(metaEd, namespace).get(entityName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -1424,7 +1390,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
   });
 
   it('should create join table with two primary keys and one non primary key', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(commonName);
+    const table: Table = tableEntities(metaEd, namespace).get(commonName);
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);

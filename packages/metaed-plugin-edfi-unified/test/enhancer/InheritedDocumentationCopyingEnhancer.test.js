@@ -42,8 +42,8 @@ describe('when enhancing shared integer property with inherited documentation', 
       namespace,
     });
 
-    addEntityForNamespace(namespace, referencedEntity);
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(referencedEntity);
+    addEntityForNamespace(parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);
@@ -84,8 +84,8 @@ describe('when enhancing domain entity property with inherited documentation', (
       namespace,
     });
 
-    addEntityForNamespace(namespace, referencedEntity);
-    addEntityForNamespace(namespace, parentEntity);
+    addEntityForNamespace(referencedEntity);
+    addEntityForNamespace(parentEntity);
     addProperty(metaEd.propertyIndex, property);
 
     enhance(metaEd);

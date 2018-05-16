@@ -29,11 +29,11 @@ describe('when enhancing top level entity with no merged properties', () => {
       namespace,
     });
     domainEntity1.properties.push(domainEntityProperty1);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
     addProperty(metaEd.propertyIndex, domainEntityProperty1);
 
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
-    addEntityForNamespace(namespace, domainEntity2);
+    addEntityForNamespace(domainEntity2);
 
     enhance(metaEd);
   });
@@ -61,7 +61,7 @@ describe('when enhancing top level entity with nested reference to top level ref
   beforeAll(() => {
     const domainEntityName2: string = 'DomainEntityName2';
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
-    addEntityForNamespace(namespace, domainEntity2);
+    addEntityForNamespace(domainEntity2);
 
     const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
     domainEntity3Property1 = Object.assign(newDomainEntityProperty(), {
@@ -73,7 +73,7 @@ describe('when enhancing top level entity with nested reference to top level ref
       namespace,
     });
     domainEntity3.properties.push(domainEntity3Property1);
-    addEntityForNamespace(namespace, domainEntity3);
+    addEntityForNamespace(domainEntity3);
 
     const domainEntityName1: string = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
@@ -102,7 +102,7 @@ describe('when enhancing top level entity with nested reference to top level ref
       namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     enhance(metaEd);
   });
@@ -135,7 +135,7 @@ describe('when enhancing top level entity with top level reference to nested ref
   let domainEntity2Property1: DomainEntityProperty;
   beforeAll(() => {
     const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
-    addEntityForNamespace(namespace, domainEntity3);
+    addEntityForNamespace(domainEntity3);
 
     const domainEntityName2: string = 'DomainEntityName2';
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
@@ -148,7 +148,7 @@ describe('when enhancing top level entity with top level reference to nested ref
       namespace,
     });
     domainEntity2.properties.push(domainEntity2Property1);
-    addEntityForNamespace(namespace, domainEntity2);
+    addEntityForNamespace(domainEntity2);
 
     const domainEntityName1: string = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
@@ -177,7 +177,7 @@ describe('when enhancing top level entity with top level reference to nested ref
       namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     enhance(metaEd);
   });
@@ -211,7 +211,7 @@ describe('when enhancing top level entity with nested reference to nested refere
   beforeAll(() => {
     const domainEntityName4: string = 'DomainEntityName4';
     const domainEntity4 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName4, namespace });
-    addEntityForNamespace(namespace, domainEntity4);
+    addEntityForNamespace(domainEntity4);
 
     const domainEntityName2: string = 'DomainEntityName2';
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
@@ -224,7 +224,7 @@ describe('when enhancing top level entity with nested reference to nested refere
       namespace,
     });
     domainEntity2.properties.push(domainEntity2Property1);
-    addEntityForNamespace(namespace, domainEntity2);
+    addEntityForNamespace(domainEntity2);
 
     const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
     domainEntity3Property1 = Object.assign(newDomainEntityProperty(), {
@@ -236,7 +236,7 @@ describe('when enhancing top level entity with nested reference to nested refere
       namespace,
     });
     domainEntity3.properties.push(domainEntity3Property1);
-    addEntityForNamespace(namespace, domainEntity3);
+    addEntityForNamespace(domainEntity3);
 
     const domainEntityName1: string = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
@@ -265,7 +265,7 @@ describe('when enhancing top level entity with nested reference to nested refere
       namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     enhance(metaEd);
   });
@@ -299,7 +299,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
   beforeAll(() => {
     const domainEntityName6: string = 'DomainEntityName6';
     const domainEntity6 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName6, namespace });
-    addEntityForNamespace(namespace, domainEntity6);
+    addEntityForNamespace(domainEntity6);
 
     const domainEntityName4: string = 'DomainEntityName4';
     const domainEntity4 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName4, namespace });
@@ -312,7 +312,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
       namespace,
     });
     domainEntity4.properties.push(domainEntity4Property1);
-    addEntityForNamespace(namespace, domainEntity4);
+    addEntityForNamespace(domainEntity4);
 
     const domainEntityName5: string = 'DomainEntityName5';
     const domainEntity5 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName5, namespace });
@@ -325,7 +325,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
       namespace,
     });
     domainEntity5.properties.push(domainEntity5Property1);
-    addEntityForNamespace(namespace, domainEntity5);
+    addEntityForNamespace(domainEntity5);
 
     const domainEntityName2: string = 'DomainEntityName2';
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
@@ -338,7 +338,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
       namespace,
     });
     domainEntity2.properties.push(domainEntity2Property1);
-    addEntityForNamespace(namespace, domainEntity2);
+    addEntityForNamespace(domainEntity2);
 
     const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
     const domainEntity3Property1 = Object.assign(newDomainEntityProperty(), {
@@ -350,7 +350,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
       namespace,
     });
     domainEntity3.properties.push(domainEntity3Property1);
-    addEntityForNamespace(namespace, domainEntity3);
+    addEntityForNamespace(domainEntity3);
 
     const domainEntityName1: string = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
@@ -379,7 +379,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
       namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     enhance(metaEd);
   });

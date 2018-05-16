@@ -1,6 +1,17 @@
 // @flow
 import type { MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import type { Table } from '../model/database/Table';
 
-export function pluginEnvironment(metaEd: MetaEdEnvironment): PluginEnvironment {
-  return ((metaEd.plugin.get('edfiOds'): any): PluginEnvironment);
+export function pluginEnvironment(metaEd: MetaEdEnvironment): ?PluginEnvironment {
+  return ((metaEd.plugin.get('edfiOds'): any): ?PluginEnvironment);
+}
+
+export function tableEntities(metaEd: MetaEdEnvironment, namespace: Namespace): Map<string, Table> {
+  const plugin: ?PluginEnvironment = pluginEnvironment(metaEd);
+  // if plugin not there, something's very wrong but just return an empty Map to keep going
+  if (plugin == null) return new Map();
+  const edfiOdsRepository: ?EdFiOdsEntityRepository = plugin.namespace.get(namespace);
+  // if repository for namespace not there, something's very wrong but just return an empty Map to keep going
+  if (edfiOdsRepository == null) return new Map();
+  return edfiOdsRepository.table;
 }

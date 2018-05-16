@@ -1,5 +1,5 @@
 // @flow
-import { asTopLevelEntity, getEntitiesOfType } from 'metaed-core';
+import { asTopLevelEntity, getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { TopLevelEntity, EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { addTables, buildMainTable, buildTablesFromProperties } from '../table/TableCreatingEntityEnhancerBase';
 import type { Table } from '../../model/database/Table';
@@ -7,7 +7,7 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'AssociationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'association')
+  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'association')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -15,7 +15,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       tables.push(mainTable);
       buildTablesFromProperties(entity, mainTable, tables);
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, tables);
+      addTables(metaEd, entity.namespace, tables);
     });
 
   return {

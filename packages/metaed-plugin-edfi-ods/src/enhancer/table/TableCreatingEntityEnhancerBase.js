@@ -1,11 +1,11 @@
 // @flow
-import type { EntityProperty, MetaEdEnvironment, PluginEnvironment, TopLevelEntity } from 'metaed-core';
+import type { EntityProperty, MetaEdEnvironment, TopLevelEntity, Namespace } from 'metaed-core';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { newTable } from '../../model/database/Table';
-import { pluginEnvironment } from '../EnhancerHelper';
+import { tableEntities } from '../EnhancerHelper';
 import { tableBuilderFactory } from './TableBuilderFactory';
 import { TableStrategy } from '../../model/database/TableStrategy';
 import type { Column } from '../../model/database/Column';
@@ -44,9 +44,7 @@ export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean):
   return mainTable;
 }
 
-export function addTables(metaEd: MetaEdEnvironment, tables: Array<Table>): void {
-  const plugin: ?PluginEnvironment = pluginEnvironment(metaEd);
-  if (plugin == null) return;
-
-  tables.forEach((table: Table) => plugin.entity.table.set(table.name, table));
+export function addTables(metaEd: MetaEdEnvironment, namespace: Namespace, tables: Array<Table>): void {
+  const tableMap: Map<string, Table> = tableEntities(metaEd, namespace);
+  tables.forEach((table: Table) => tableMap.set(table.name, table));
 }

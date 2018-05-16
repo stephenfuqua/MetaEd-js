@@ -1,6 +1,6 @@
 // @flow
 import {
-  addEntity,
+  addEntityForNamespace,
   newCommon,
   newCommonExtension,
   newCommonProperty,
@@ -22,22 +22,22 @@ import type {
   MetaEdEnvironment,
   Namespace,
 } from 'metaed-core';
+import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const documentation: string = 'Documentation';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
   const domainEntityExtensionPropertyName: string = 'DomainEntityExtensionPropertyName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName,
-      extensionEntitySuffix: '',
-    });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -64,14 +64,10 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
+    addEntityForNamespace(domainEntity);
 
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       documentation,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
@@ -98,7 +94,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionProperty);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -106,20 +102,20 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
   it('should have schema equal to namespace', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).schema).toBe(namespaceName);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).description).toBe(documentation);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).description).toBe(documentation);
   });
 
   it('should have two columns', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName);
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -127,15 +123,15 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
 });
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with primary key', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
   const domainEntityExtensionPkPropertyName: string = 'DomainEntityExtensionPkPropertyName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
     const domainEntityName: string = 'DomainEntityName';
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -161,14 +157,10 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
+    addEntityForNamespace(domainEntity);
 
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -194,7 +186,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionPkProperty);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -202,37 +194,34 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
   it('should have one primary key column', () => {
-    const table: Table = (metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName);
+    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName);
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).includeCreateDateColumn).toBe(true);
   });
 });
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common extension override', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName: string = 'CommonName';
   const commonExtensionName: string = 'CommonExtensionName';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
@@ -258,7 +247,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -284,12 +273,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(domainEntity);
 
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       namespace: extensionNamespace,
@@ -317,12 +301,12 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     commonExtension.data.edfiOds.ods_Properties.push(commonExtensionRequiredProperty);
-    addEntity(metaEd.entity, commonExtension);
+    addEntityForNamespace(commonExtension);
 
     common.extender = commonExtension;
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -381,7 +365,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonExtensionOverrideProperty);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -389,36 +373,33 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create a table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
   });
 
   it('should create table only for domain entity extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
   it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).includeCreateDateColumn).toBe(true);
   });
 
   it('should not create common extension override join table', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonExtensionName)).toBeUndefined();
   });
 });
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with common', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
@@ -444,7 +425,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -470,15 +451,10 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(domainEntity);
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -537,7 +513,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -545,36 +521,33 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
   it('should create a table for domain entity extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
   it('should include create date column', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName).includeCreateDateColumn).toBe(
-      true,
-    );
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).includeCreateDateColumn).toBe(true);
   });
 
   it('should create join table from domain entity and common', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName)).toBeDefined();
   });
 });
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only common', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName,
@@ -600,7 +573,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -626,15 +599,10 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(domainEntity);
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -662,7 +630,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -670,31 +638,30 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create one tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
   });
 
   it('should not create a table for domain entity extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeUndefined();
   });
 
   it('should create join table from domain entity and common', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName)).toBeDefined();
   });
 });
 
 describe('when DomainEntityExtensionTableEnhancer enhances domain entity extension with only commons', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const commonName1: string = 'CommonName1';
   const commonName2: string = 'CommonName2';
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'namespace',
-      extensionEntitySuffix: '',
-    });
-
     const common: Common = Object.assign(newCommon(), {
       namespace,
       metaEdName: commonName1,
@@ -720,7 +687,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
     });
     common.data.edfiOds.ods_Properties.push(commonPkProperty);
     common.data.edfiOds.ods_IdentityProperties.push(commonPkProperty);
-    addEntity(metaEd.entity, common);
+    addEntityForNamespace(common);
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -746,15 +713,10 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntity.data.edfiOds.ods_Properties.push(domainEntityPkProperty);
-    addEntity(metaEd.entity, domainEntity);
-
-    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      isExtension: true,
-    });
+    addEntityForNamespace(domainEntity);
 
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
-      namespace,
+      namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
       baseEntity: domainEntity,
@@ -798,7 +760,7 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
       },
     });
     domainEntityExtension.data.edfiOds.ods_Properties.push(domainEntityExtensionCommonProperty2);
-    addEntity(metaEd.entity, domainEntityExtension);
+    addEntityForNamespace(domainEntityExtension);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeEdFiOdsEntityRepository(metaEd);
@@ -806,18 +768,18 @@ describe('when DomainEntityExtensionTableEnhancer enhances domain entity extensi
   });
 
   it('should create two tables', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.size).toBe(2);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
   it('should not create a table for domain entity extension', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityExtensionName)).toBeUndefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeUndefined();
   });
 
   it('should create join table from domain entity and common', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName1)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName1)).toBeDefined();
   });
 
   it('should create join table from domain entity and common collection', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.table.get(domainEntityName + commonName2)).toBeDefined();
+    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonName2)).toBeDefined();
   });
 });

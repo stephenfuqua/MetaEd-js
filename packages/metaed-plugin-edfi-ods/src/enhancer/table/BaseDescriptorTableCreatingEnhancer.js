@@ -3,16 +3,13 @@ import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newDateColumn, newIntegerColumn, newStringColumn } from '../../model/database/Column';
-import { pluginEnvironment } from '../EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../../model/EdFiOdsEntityRepository';
+import { tableEntities } from '../EnhancerHelper';
 import type { Table } from '../../model/database/Table';
 
 // Generate hard coded base descriptor table
 const enhancerName: string = 'BaseDescriptorTableCreatingEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edFiOdsEntityRepository: EdFiOdsEntityRepository = pluginEnvironment(metaEd).entity;
-
   const descriptorTable: Table = Object.assign(newTable(), {
     name: 'Descriptor',
     schema: 'edfi',
@@ -83,7 +80,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     ColumnTransformUnchanged,
   );
 
-  edFiOdsEntityRepository.table.set(descriptorTable.name, descriptorTable);
+  const edfiNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (edfiNamespace == null) return { enhancerName, success: false };
+  tableEntities(metaEd, edfiNamespace).set(descriptorTable.name, descriptorTable);
 
   return {
     enhancerName,

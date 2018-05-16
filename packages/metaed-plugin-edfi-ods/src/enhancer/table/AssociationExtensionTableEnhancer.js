@@ -1,5 +1,5 @@
 // @flow
-import { asReferentialProperty, asTopLevelEntity, getEntitiesOfType, versionSatisfies } from 'metaed-core';
+import { asReferentialProperty, asTopLevelEntity, getEntitiesOfTypeForNamespaces, versionSatisfies } from 'metaed-core';
 import type {
   CommonProperty,
   EnhancerResult,
@@ -26,7 +26,7 @@ const targetVersions: string = '>=3.x';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  getEntitiesOfType(metaEd.entity, 'associationExtension')
+  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'associationExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -67,7 +67,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, tables);
+      addTables(metaEd, entity.namespace, tables);
     });
 
   return {

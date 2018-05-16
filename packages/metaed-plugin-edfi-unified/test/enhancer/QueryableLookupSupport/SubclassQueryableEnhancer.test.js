@@ -35,7 +35,7 @@ describe('when enhancing domain entity subclass queryables', () => {
     const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2, namespace });
     domainEntity1.properties.push(integerProperty2);
     domainEntity1.queryableFields.push(integerProperty2);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclassName1,
@@ -54,7 +54,7 @@ describe('when enhancing domain entity subclass queryables', () => {
     const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4, namespace });
     domainEntitySubclass1.properties.push(integerProperty4);
     domainEntitySubclass1.queryableFields.push(integerProperty4);
-    addEntityForNamespace(namespace, domainEntitySubclass1);
+    addEntityForNamespace(domainEntitySubclass1);
 
     enhance(metaEd);
   });
@@ -90,7 +90,7 @@ describe('when enhancing domain entity subclass with identity rename of base cla
     domainEntity1.properties.push(integerProperty1);
     domainEntity1.identityProperties.push(integerProperty1);
     domainEntity1.queryableFields.push(integerProperty1);
-    addEntityForNamespace(namespace, domainEntity1);
+    addEntityForNamespace(domainEntity1);
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclassName1,
@@ -109,7 +109,7 @@ describe('when enhancing domain entity subclass with identity rename of base cla
     const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3, namespace });
     domainEntitySubclass1.properties.push(integerProperty3);
     domainEntitySubclass1.queryableFields.push(integerProperty3);
-    addEntityForNamespace(namespace, domainEntitySubclass1);
+    addEntityForNamespace(domainEntitySubclass1);
 
     enhance(metaEd);
   });
@@ -145,7 +145,7 @@ describe('when enhancing association subclass queryables', () => {
     const integerProperty2 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName2, namespace });
     association1.properties.push(integerProperty2);
     association1.queryableFields.push(integerProperty2);
-    addEntityForNamespace(namespace, association1);
+    addEntityForNamespace(association1);
 
     const associationSubclass1 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclassName1,
@@ -164,7 +164,7 @@ describe('when enhancing association subclass queryables', () => {
     const integerProperty4 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName4, namespace });
     associationSubclass1.properties.push(integerProperty4);
     associationSubclass1.queryableFields.push(integerProperty4);
-    addEntityForNamespace(namespace, associationSubclass1);
+    addEntityForNamespace(associationSubclass1);
 
     enhance(metaEd);
   });
@@ -220,7 +220,7 @@ describe('when enhancing association subclass with identity rename of base class
     const integerProperty3 = Object.assign(newIntegerProperty(), { metaEdName: integerPropertyName3, namespace });
     associationSubclass1.properties.push(integerProperty3);
     associationSubclass1.queryableFields.push(integerProperty3);
-    addEntityForNamespace(namespace, associationSubclass1);
+    addEntityForNamespace(associationSubclass1);
 
     enhance(metaEd);
   });

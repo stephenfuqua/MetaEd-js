@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import {
   addColumns,
@@ -114,10 +114,10 @@ function createTables(descriptor: Descriptor): Array<Table> {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'descriptor').forEach((entity: ModelBase) => {
+  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'descriptor').forEach((entity: ModelBase) => {
     const tables: Array<Table> = createTables(((entity: any): Descriptor));
     entity.data.edfiOds.ods_Tables = tables;
-    addTables(metaEd, tables);
+    addTables(metaEd, entity.namespace, tables);
   });
 
   return {
