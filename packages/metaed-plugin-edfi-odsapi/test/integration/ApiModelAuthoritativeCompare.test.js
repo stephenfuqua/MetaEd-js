@@ -152,7 +152,7 @@ describe('when generating api model with simple extensions and comparing it to d
           projectVersion: '3.0.0',
         },
         {
-          projectName: 'Sample Project',
+          projectName: 'Sample',
           namespace: 'sample',
           projectExtension: 'Sample',
           projectVersion: '3.0.0',
@@ -263,7 +263,7 @@ describe('when generating api model with student transcript extensions and compa
           projectVersion: '3.0.0',
         },
         {
-          projectName: 'Extension Two',
+          projectName: 'ExtTwo',
           namespace: 'exttwo',
           projectExtension: 'ExtTwo',
           projectVersion: '3.0.0',

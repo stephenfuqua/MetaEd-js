@@ -1,7 +1,7 @@
 {
   "odsApiVersion": "3.0.0",
   "schemaDefinition": {
-    "logicalName": "Exttwo",
+    "logicalName": "ExtTwo",
     "physicalName": "exttwo"
   },
   "aggregateDefinitions": [
