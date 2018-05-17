@@ -1,8 +1,16 @@
 // @flow
 
 // 2.x - METAED-695 - ODS-1177
-import { asTopLevelEntity, getAllTopLevelEntities } from 'metaed-core';
-import type { EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity, ValidationFailure } from 'metaed-core';
+import { asTopLevelEntity, getAllTopLevelEntities, versionSatisfies, V2Only } from 'metaed-core';
+import type {
+  EntityProperty,
+  MetaEdEnvironment,
+  ModelBase,
+  TopLevelEntity,
+  ValidationFailure,
+  SemVer,
+  PluginEnvironment,
+} from 'metaed-core';
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
 type PropertyCollectorArray = Array<{
@@ -12,9 +20,18 @@ type PropertyCollectorArray = Array<{
 }>;
 
 const validatorName: string = 'MergingRequiredWithOptionalPropertyIsUnsupported';
+const targetTechnologyVersion: SemVer = V2Only;
+
+function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
+  return versionSatisfies(
+    ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
+    targetTechnologyVersion,
+  );
+}
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+  if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   getAllTopLevelEntities(metaEd.entity)
     .map((entity: ModelBase) => asTopLevelEntity(entity))
