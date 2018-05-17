@@ -1,6 +1,11 @@
 // @flow
 import R from 'ramda';
-import { asReferentialProperty, asTopLevelEntity, getAllTopLevelEntities, getEntitiesOfType } from 'metaed-core';
+import {
+  asReferentialProperty,
+  asTopLevelEntity,
+  getAllTopLevelEntitiesForNamespaces,
+  getAllEntitiesOfType,
+} from 'metaed-core';
 import type { EnhancerResult, EntityProperty, MetaEdEnvironment, TopLevelEntity, ModelBase } from 'metaed-core';
 import { isOdsReferenceProperty } from '../model/property/ReferenceProperty';
 
@@ -27,15 +32,16 @@ export function inEdges<T>(graph: BidirectionalGraph<T>, vertex: T): Array<Edge<
 // Find any entity with multiple reference edges pointing at it
 // Sort by Ods_TableName, only allow the first to cascade, disable the rest by marking the property as Ods_CausesCyclicUpdateCascade = true
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const declaredCascadingEntities: Array<TopLevelEntity> = R.union(
-    getEntitiesOfType(metaEd.entity, 'domainEntity').filter((x: ModelBase) => asTopLevelEntity(x).allowPrimaryKeyUpdates),
-    getEntitiesOfType(metaEd.entity, 'association').filter((x: ModelBase) => asTopLevelEntity(x).allowPrimaryKeyUpdates),
-  );
+  const declaredCascadingEntities: Array<TopLevelEntity> = getAllEntitiesOfType(
+    metaEd,
+    'domainEntity',
+    'association',
+  ).filter((x: ModelBase) => asTopLevelEntity(x).allowPrimaryKeyUpdates);
 
   const referenceEntityProperties: Array<EntityProperty> = R.chain(
     (entity: TopLevelEntity) =>
       entity.data.edfiOds.ods_Properties.filter((property: EntityProperty) => isOdsReferenceProperty(property)),
-    getAllTopLevelEntities(metaEd.entity),
+    getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())),
   );
 
   declaredCascadingEntities.forEach((declaredCascadingEntity: TopLevelEntity) => {

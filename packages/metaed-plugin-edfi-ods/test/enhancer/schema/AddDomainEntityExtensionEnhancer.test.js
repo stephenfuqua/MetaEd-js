@@ -7,16 +7,16 @@ describe('when DomainEntityExtension enhances domain entity extension entity', (
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
   const extensionEntitySuffix: string = 'Extension';
   let domainEntityExtension: DomainEntityExtension;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', extensionEntitySuffix };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     domainEntityExtension = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtensionName,
-      namespace: Object.assign(newNamespace(), {
-        extensionEntitySuffix,
-      }),
+      namespace,
     });
-    metaEd.entity.domainEntityExtension.set(domainEntityExtensionName, domainEntityExtension);
+    namespace.entity.domainEntityExtension.set(domainEntityExtensionName, domainEntityExtension);
     enhance(metaEd);
   });
 

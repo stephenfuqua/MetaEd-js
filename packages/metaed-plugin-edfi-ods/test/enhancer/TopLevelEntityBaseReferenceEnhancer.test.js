@@ -8,6 +8,7 @@ import {
   newDomainEntitySubclass,
   newIntegerProperty,
   newMetaEdEnvironment,
+  newNamespace,
 } from 'metaed-core';
 import type {
   Association,
@@ -22,7 +23,9 @@ import type {
 import { enhance } from '../../src/enhancer/TopLevelEntityBaseReferenceEnhancer';
 
 describe('when enhancing domain entity subclass base entity reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityDocumentation: string = 'DomainEntityDocumentation';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
@@ -30,6 +33,7 @@ describe('when enhancing domain entity subclass base entity reference', () => {
   beforeAll(() => {
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: domainEntityDocumentation,
       data: {
         edfiOds: {
@@ -40,6 +44,7 @@ describe('when enhancing domain entity subclass base entity reference', () => {
     });
     const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: 'DomainEntitySubclassDocumentation',
       baseEntity: domainEntity,
       data: {
@@ -49,13 +54,13 @@ describe('when enhancing domain entity subclass base entity reference', () => {
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
-    metaEd.entity.domainEntitySubclass.set(domainEntitySubclassName, domainEntitySubclass);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntitySubclass.set(domainEntitySubclassName, domainEntitySubclass);
     enhance(metaEd);
   });
 
   it('should create base entity reference property', () => {
-    const domainEntity: any = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName);
+    const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
 
     const referentialProperty: any = domainEntity.data.edfiOds.ods_IdentityProperties[0];
@@ -72,7 +77,9 @@ describe('when enhancing domain entity subclass base entity reference', () => {
 });
 
 describe('when enhancing domain entity subclass base entity reference with identity rename', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityDocumentation: string = 'DomainEntityDocumentation';
   const domainEntitySubclassName: string = 'DomainEntitySubclassName';
@@ -81,10 +88,12 @@ describe('when enhancing domain entity subclass base entity reference with ident
   beforeAll(() => {
     const integerProperty1: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'IntegerPropertyName1',
+      namespace,
       isPartOfIdentity: true,
     });
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: domainEntityDocumentation,
       data: {
         edfiOds: {
@@ -101,6 +110,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
     });
     const domainEntitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: 'DomainEntitySubclassDocumentation',
       baseEntity: domainEntity,
       data: {
@@ -110,13 +120,13 @@ describe('when enhancing domain entity subclass base entity reference with ident
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
-    metaEd.entity.domainEntitySubclass.set(domainEntitySubclassName, domainEntitySubclass);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntitySubclass.set(domainEntitySubclassName, domainEntitySubclass);
     enhance(metaEd);
   });
 
   it('should not create base entity reference property', () => {
-    const domainEntity: any = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName);
+    const domainEntity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
 
     const referentialProperty: any = domainEntity.data.edfiOds.ods_IdentityProperties[0];
@@ -126,7 +136,9 @@ describe('when enhancing domain entity subclass base entity reference with ident
 });
 
 describe('when enhancing domain entity extension base entity reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
   const domainEntityDocumentation: string = 'DomainEntityDocumentation';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
@@ -134,6 +146,7 @@ describe('when enhancing domain entity extension base entity reference', () => {
   beforeAll(() => {
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: domainEntityDocumentation,
       data: {
         edfiOds: {
@@ -144,6 +157,7 @@ describe('when enhancing domain entity extension base entity reference', () => {
     });
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityName,
+      namespace,
       documentation: 'DomainEntityExtensionDocumentation',
       baseEntity: domainEntity,
       data: {
@@ -153,13 +167,13 @@ describe('when enhancing domain entity extension base entity reference', () => {
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
-    metaEd.entity.domainEntityExtension.set(domainEntityExtensionName, domainEntityExtension);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntityExtension.set(domainEntityExtensionName, domainEntityExtension);
     enhance(metaEd);
   });
 
   it('should create base entity reference property', () => {
-    const domainEntity: any = metaEd.entity.domainEntityExtension.get(domainEntityExtensionName);
+    const domainEntity: any = namespace.entity.domainEntityExtension.get(domainEntityExtensionName);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
 
     const referentialProperty: any = domainEntity.data.edfiOds.ods_IdentityProperties[0];
@@ -176,7 +190,9 @@ describe('when enhancing domain entity extension base entity reference', () => {
 });
 
 describe('when enhancing association subclass base entity reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationName: string = 'AssociationName';
   const associationDocumentation: string = 'AssociationDocumentation';
   const associationSubclassName: string = 'AssociationSubclassName';
@@ -184,6 +200,7 @@ describe('when enhancing association subclass base entity reference', () => {
   beforeAll(() => {
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: associationName,
+      namespace,
       documentation: associationDocumentation,
       data: {
         edfiOds: {
@@ -194,6 +211,7 @@ describe('when enhancing association subclass base entity reference', () => {
     });
     const associationSubclass: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: associationName,
+      namespace,
       documentation: 'AssociationSubclassDocumentation',
       baseEntity: association,
       data: {
@@ -203,13 +221,13 @@ describe('when enhancing association subclass base entity reference', () => {
         },
       },
     });
-    metaEd.entity.association.set(associationName, association);
-    metaEd.entity.associationSubclass.set(associationSubclassName, associationSubclass);
+    namespace.entity.association.set(associationName, association);
+    namespace.entity.associationSubclass.set(associationSubclassName, associationSubclass);
     enhance(metaEd);
   });
 
   it('should create base entity reference property', () => {
-    const association: any = metaEd.entity.associationSubclass.get(associationSubclassName);
+    const association: any = namespace.entity.associationSubclass.get(associationSubclassName);
     expect(association.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
 
     const referentialProperty: any = association.data.edfiOds.ods_IdentityProperties[0];
@@ -226,7 +244,9 @@ describe('when enhancing association subclass base entity reference', () => {
 });
 
 describe('when enhancing association extension base entity reference', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationName: string = 'AssociationName';
   const associationDocumentation: string = 'AssociationDocumentation';
   const associationExtensionName: string = 'AssociationExtensionName';
@@ -234,6 +254,7 @@ describe('when enhancing association extension base entity reference', () => {
   beforeAll(() => {
     const association: Association = Object.assign(newAssociation(), {
       metaEdName: associationName,
+      namespace,
       documentation: associationDocumentation,
       data: {
         edfiOds: {
@@ -244,6 +265,7 @@ describe('when enhancing association extension base entity reference', () => {
     });
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: associationName,
+      namespace,
       documentation: 'AssociationExtensionDocumentation',
       baseEntity: association,
       data: {
@@ -253,13 +275,13 @@ describe('when enhancing association extension base entity reference', () => {
         },
       },
     });
-    metaEd.entity.association.set(associationName, association);
-    metaEd.entity.associationExtension.set(associationExtensionName, associationExtension);
+    namespace.entity.association.set(associationName, association);
+    namespace.entity.associationExtension.set(associationExtensionName, associationExtension);
     enhance(metaEd);
   });
 
   it('should create base entity reference property', () => {
-    const association: any = metaEd.entity.associationExtension.get(associationExtensionName);
+    const association: any = namespace.entity.associationExtension.get(associationExtensionName);
     expect(association.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
 
     const referentialProperty: any = association.data.edfiOds.ods_IdentityProperties[0];

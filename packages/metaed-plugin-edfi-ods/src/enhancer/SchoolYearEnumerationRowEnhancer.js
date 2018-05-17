@@ -1,17 +1,17 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { EnhancerResult, EnumerationItem, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { escapeSqlSingleQuote } from '../shared/Utility';
 import { newSchoolYearEnumerationRow } from '../model/database/SchoolYearEnumerationRow';
-import { pluginEnvironment } from './EnhancerHelper';
+import { rowEntities } from './EnhancerHelper';
 import type { SchoolYearEnumerationRow } from '../model/database/SchoolYearEnumerationRow';
 
 // Build special objects to support generating data inserts for School Year
 const enhancerName: string = 'SchoolYearEnumerationRowEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'schoolYearEnumeration').forEach((entity: ModelBase) => {
+  getAllEntitiesOfType(metaEd, 'schoolYearEnumeration').forEach((entity: ModelBase) => {
     R.prop('enumerationItems')(entity).forEach((item: EnumerationItem) => {
       const name: string = R.take(4)(item.shortDescription);
 
@@ -25,7 +25,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         schoolYearDescription: escapeSqlSingleQuote(item.shortDescription),
       });
 
-      pluginEnvironment(metaEd).entity.row.set(row.name + row.schoolYearDescription, row);
+      rowEntities(metaEd, entity.namespace).set(row.name + row.schoolYearDescription, row);
     });
   });
 

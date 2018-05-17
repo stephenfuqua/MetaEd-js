@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, DomainEntityExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type DomainEntityExtensionEdfiOds = {
   ods_ExtensionName: string,
@@ -16,7 +17,7 @@ export function addDomainEntityExtensionEdfiOdsTo(domainEntityExtension: DomainE
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.domainEntityExtension.forEach((domainEntityExtension: DomainEntityExtension) => {
+  getAllEntitiesOfType(metaEd, 'domainEntityExtension').forEach((domainEntityExtension: DomainEntityExtension) => {
     addDomainEntityExtensionEdfiOdsTo(domainEntityExtension);
   });
 

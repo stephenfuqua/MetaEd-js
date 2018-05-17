@@ -1,5 +1,5 @@
 // @flow
-import { newIntegerProperty, newMetaEdEnvironment } from 'metaed-core';
+import { newIntegerProperty, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { IntegerProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/property/EntityProperty';
 
@@ -8,7 +8,9 @@ describe('when PropertyEnhancer enhances integer property', () => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
     });
@@ -35,7 +37,9 @@ describe('when PropertyEnhancer enhances property with required collection', () 
 
   beforeAll(() => {
     const integerPropertyName: string = 'IntegerPropertyName';
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
       isRequiredCollection: true,
@@ -55,7 +59,9 @@ describe('when PropertyEnhancer enhances property with optional collection', () 
 
   beforeAll(() => {
     const integerPropertyName: string = 'IntegerPropertyName';
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
       isOptionalCollection: true,
@@ -76,7 +82,9 @@ describe('when PropertyEnhancer enhances property with context', () => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
       withContext: contextName,
@@ -102,7 +110,9 @@ describe('when PropertyEnhancer enhances property with shortened context', () =>
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: integerPropertyName,
       withContext: contextName,

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { getAllProperties, getAllTopLevelEntities } from 'metaed-core';
+import { getAllProperties, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, EntityProperty } from 'metaed-core';
 import { prependWithContextToMetaEdName } from '../../shared/Utility';
 
@@ -42,7 +42,7 @@ export function addEntityPropertyEdfiOdsTo(property: EntityProperty) {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   [
     ...getAllProperties(metaEd.propertyIndex),
-    ...R.chain(x => x.queryableFields, getAllTopLevelEntities(metaEd.entity)),
+    ...R.chain(x => x.queryableFields, getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values()))),
   ].forEach((property: EntityProperty) => {
     addEntityPropertyEdfiOdsTo(property);
   });

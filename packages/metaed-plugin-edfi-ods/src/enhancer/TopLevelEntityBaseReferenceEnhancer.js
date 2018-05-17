@@ -1,5 +1,5 @@
 // @flow
-import { asTopLevelEntity, getEntitiesOfType, newReferentialProperty, NoTopLevelEntity } from 'metaed-core';
+import { asTopLevelEntity, getAllEntitiesOfType, newReferentialProperty, NoTopLevelEntity } from 'metaed-core';
 import type {
   EnhancerResult,
   MetaEdEnvironment,
@@ -26,8 +26,8 @@ export function propertyTypeFor(entity: TopLevelEntity): PropertyType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(
-    metaEd.entity,
+  getAllEntitiesOfType(
+    metaEd,
     'associationExtension',
     'associationSubclass',
     'domainEntityExtension',

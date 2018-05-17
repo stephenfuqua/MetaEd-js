@@ -1,19 +1,22 @@
 // @flow
-import { newDescriptor, newMetaEdEnvironment } from 'metaed-core';
+import { newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { Descriptor, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/Descriptor';
 
 describe('when Descriptor enhances descriptor entity', () => {
   const descriptorName: string = 'DescriptorName';
   let descriptor: Descriptor;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     descriptor = Object.assign(newDescriptor(), {
       metaEdName: descriptorName,
+      namespace,
     });
 
-    metaEd.entity.descriptor.set(descriptorName, descriptor);
+    namespace.entity.descriptor.set(descriptorName, descriptor);
     enhance(metaEd);
   });
 
@@ -29,14 +32,17 @@ describe('when Descriptor enhances descriptor entity', () => {
 describe('when Descriptor enhances descriptor entity with descriptor suffix', () => {
   const descriptorName: string = 'DescriptorName';
   let descriptor: Descriptor;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     descriptor = Object.assign(newDescriptor(), {
       metaEdName: `${descriptorName}Descriptor`,
+      namespace,
     });
 
-    metaEd.entity.descriptor.set(descriptorName, descriptor);
+    namespace.entity.descriptor.set(descriptorName, descriptor);
     enhance(metaEd);
   });
 
@@ -51,14 +57,17 @@ describe('when Descriptor enhances descriptor entity with descriptor suffix', ()
 
 describe('when Descriptor enhances descriptor entity with is map type required', () => {
   let descriptor: Descriptor;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     descriptor = Object.assign(newDescriptor(), {
       isMapTypeRequired: true,
+      namespace,
     });
 
-    metaEd.entity.descriptor.set('DescriptorName', descriptor);
+    namespace.entity.descriptor.set('DescriptorName', descriptor);
     enhance(metaEd);
   });
 
@@ -69,14 +78,17 @@ describe('when Descriptor enhances descriptor entity with is map type required',
 
 describe('when Descriptor enhances descriptor entity with is amp type optional', () => {
   let descriptor: Descriptor;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     descriptor = Object.assign(newDescriptor(), {
       isMapTypeOptional: true,
+      namespace,
     });
 
-    metaEd.entity.descriptor.set('DescriptorName', descriptor);
+    namespace.entity.descriptor.set('DescriptorName', descriptor);
     enhance(metaEd);
   });
 

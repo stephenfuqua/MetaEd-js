@@ -2,8 +2,7 @@
 import R from 'ramda';
 import { orderByProp } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { tableEntities, rowEntities } from '../enhancer/EnhancerHelper';
 import type { EnumerationRowBase } from '../model/database/EnumerationRowBase';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
@@ -13,13 +12,14 @@ const enhancerName: string = 'AddSchemaContainerEnhancer';
 export const orderRows = R.sortBy(R.compose(R.toLower, R.join(''), R.props(['name', 'description'])));
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
-    const repository: EdFiOdsEntityRepository = pluginEnvironment(metaEd).entity;
-    const rows: Array<EnumerationRowBase> = Array.from(repository.row.values()).filter(
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const rows: Array<EnumerationRowBase> = Array.from(rowEntities(metaEd, namespace).values()).filter(
       (row: EnumerationRowBase) => row.namespace === namespace.namespaceName,
     );
     const tables: Array<Table> = orderByProp('name')(
-      Array.from(repository.table.values()).filter((table: Table) => table.schema === namespace.namespaceName),
+      Array.from(tableEntities(metaEd, namespace).values()).filter(
+        (table: Table) => table.schema === namespace.namespaceName,
+      ),
     );
     const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);
     const enumerationRows: Array<EnumerationRowBase> = orderRows(

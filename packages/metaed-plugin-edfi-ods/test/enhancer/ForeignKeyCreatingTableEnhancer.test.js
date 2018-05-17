@@ -6,6 +6,7 @@ import {
   newIntegerProperty,
   newMergedProperty,
   newMetaEdEnvironment,
+  newNamespace,
 } from 'metaed-core';
 import type { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -17,7 +18,7 @@ import {
   getMergePropertyColumn,
   getReferencePropertiesAndAssociatedColumns,
 } from '../../src/enhancer/ForeignKeyCreatingTableEnhancer';
-
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { PropertyColumnPair } from '../../src/enhancer/ForeignKeyCreatingTableEnhancer';
 import type { Table } from '../../src/model/database/Table';
@@ -619,7 +620,9 @@ describe('when using get merge property column with multiple source entity prope
 });
 
 describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const sourceEntityName: string = 'SourceEntityName';
   const sourceEntityPkName: string = 'SourceEntityPkName';
   const parentTableName: string = 'ParentTableName';
@@ -627,6 +630,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
   beforeAll(() => {
     const sourceEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: sourceEntityName,
+      namespace,
       data: {
         edfiOds: {
           ods_CascadePrimaryKeyUpdates: false,
@@ -636,11 +640,13 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
     const sourceEntityPK: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: sourceEntityPkName,
       isPartOfIdentity: true,
+      namespace,
     });
     sourceEntity.identityProperties.push(sourceEntityPK);
 
     const sourceReference: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: sourceEntityName,
+      namespace,
       referencedEntity: sourceEntity,
       data: {
         edfiOds: {
@@ -654,6 +660,7 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
+      schema: 'edfi',
     });
     const sourceColumn: Column = Object.assign(newIntegerColumn(), {
       name: sourceEntityName,
@@ -669,10 +676,11 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       sourceEntityProperties: [sourceReference, sourceEntityPK],
     });
     parentTable.columns.push(sourceColumnPk);
-    (metaEd.plugin.get('edfiOds'): any).entity.table.set(parentTable.name, parentTable);
+    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
 
     const foreignTable: Table = Object.assign(newTable(), {
       name: sourceEntityName,
+      schema: 'edfi',
       columns: [],
     });
     const foreignColumn: Column = Object.assign(newIntegerColumn(), {
@@ -683,23 +691,122 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
       sourceEntityProperties: [sourceEntityPK],
     });
     foreignTable.columns.push(foreignColumn);
-    (metaEd.plugin.get('edfiOds'): any).entity.table.set(foreignTable.name, foreignTable);
+    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
 
     enhance(metaEd);
   });
 
   it('should have one foreign key', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName): any);
+    const table = (tableEntities(metaEd, namespace).get(parentTableName): any);
     expect(table.foreignKeys).toHaveLength(1);
   });
 
   it('should have correct foreign key relationship', () => {
-    const table = ((metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName): any);
+    const table = (tableEntities(metaEd, namespace).get(parentTableName): any);
     expect(table.foreignKeys[0].columnNames).toHaveLength(1);
     expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
+    expect(table.foreignKeys[0].parentTableSchema).toBe('edfi');
     expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(sourceEntityPkName);
 
     expect(table.foreignKeys[0].foreignTableName).toBe(sourceEntityName);
+    expect(table.foreignKeys[0].foreignTableSchema).toBe('edfi');
+    expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(sourceEntityPkName);
+  });
+});
+
+describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column across namespaces', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const sourceEntityName: string = 'SourceEntityName';
+  const sourceEntityPkName: string = 'SourceEntityPkName';
+  const parentTableName: string = 'ParentTableName';
+
+  beforeAll(() => {
+    const sourceEntity: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: sourceEntityName,
+      namespace,
+      data: {
+        edfiOds: {
+          ods_CascadePrimaryKeyUpdates: false,
+        },
+      },
+    });
+    const sourceEntityPK: IntegerProperty = Object.assign(newIntegerProperty(), {
+      metaEdName: sourceEntityPkName,
+      isPartOfIdentity: true,
+      extensionNamespace,
+    });
+    sourceEntity.identityProperties.push(sourceEntityPK);
+
+    const sourceReference: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
+      metaEdName: sourceEntityName,
+      extensionNamespace,
+      referencedEntity: sourceEntity,
+      data: {
+        edfiOds: {
+          ods_DeleteCascadePrimaryKey: false,
+          ods_CausesCyclicUpdateCascade: false,
+        },
+      },
+    });
+
+    initializeEdFiOdsEntityRepository(metaEd);
+
+    const parentTable: Table = Object.assign(newTable(), {
+      name: parentTableName,
+      schema: 'extension',
+    });
+    const sourceColumn: Column = Object.assign(newIntegerColumn(), {
+      name: sourceEntityName,
+      referenceContext: sourceEntityName,
+      mergedReferenceContexts: [sourceEntityName],
+      sourceEntityProperties: [sourceReference],
+    });
+    parentTable.columns.push(sourceColumn);
+    const sourceColumnPk: Column = Object.assign(newIntegerColumn(), {
+      name: sourceEntityPkName,
+      referenceContext: sourceEntityName + sourceEntityPkName,
+      mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
+      sourceEntityProperties: [sourceReference, sourceEntityPK],
+    });
+    parentTable.columns.push(sourceColumnPk);
+    tableEntities(metaEd, extensionNamespace).set(parentTable.name, parentTable);
+
+    const foreignTable: Table = Object.assign(newTable(), {
+      name: sourceEntityName,
+      columns: [],
+      schema: 'edfi',
+    });
+    const foreignColumn: Column = Object.assign(newIntegerColumn(), {
+      name: sourceEntityPkName,
+      isPartOfPrimaryKey: true,
+      referenceContext: sourceEntityName + sourceEntityPkName,
+      mergedReferenceContexts: [sourceEntityName + sourceEntityPkName],
+      sourceEntityProperties: [sourceEntityPK],
+    });
+    foreignTable.columns.push(foreignColumn);
+    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
+
+    enhance(metaEd);
+  });
+
+  it('should have one foreign key', () => {
+    const table = (tableEntities(metaEd, extensionNamespace).get(parentTableName): any);
+    expect(table.foreignKeys).toHaveLength(1);
+  });
+
+  it('should have correct foreign key relationship', () => {
+    const table = (tableEntities(metaEd, extensionNamespace).get(parentTableName): any);
+    expect(table.foreignKeys[0].columnNames).toHaveLength(1);
+    expect(table.foreignKeys[0].parentTableName).toBe(parentTableName);
+    expect(table.foreignKeys[0].parentTableSchema).toBe('extension');
+    expect(table.foreignKeys[0].columnNames[0].parentTableColumnName).toBe(sourceEntityPkName);
+
+    expect(table.foreignKeys[0].foreignTableName).toBe(sourceEntityName);
+    expect(table.foreignKeys[0].foreignTableSchema).toBe('edfi');
     expect(table.foreignKeys[0].columnNames[0].foreignTableColumnName).toBe(sourceEntityPkName);
   });
 });

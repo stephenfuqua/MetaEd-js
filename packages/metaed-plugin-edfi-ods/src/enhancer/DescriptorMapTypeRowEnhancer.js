@@ -1,16 +1,16 @@
 // @flow
 import R from 'ramda';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
-import { getEntitiesOfType, normalizeEnumerationSuffix } from 'metaed-core';
+import { getAllEntitiesOfType, normalizeEnumerationSuffix } from 'metaed-core';
 import { enumerationRowCreator } from './EnumerationRowCreator';
-import { pluginEnvironment } from './EnhancerHelper';
+import { rowEntities } from './EnhancerHelper';
 import type { EnumerationRow } from '../model/database/EnumerationRow';
 
 // Descriptors with map types have enumeration values
 const enhancerName: string = 'DescriptorMapTypeRowEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'descriptor').forEach((entity: ModelBase) => {
+  getAllEntitiesOfType(metaEd, 'descriptor').forEach((entity: ModelBase) => {
     if (!entity.data.edfiOds.ods_IsMapType) return;
 
     const rows: Array<EnumerationRow> = enumerationRowCreator.createRows(
@@ -19,7 +19,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       R.path(['mapTypeEnumeration', 'enumerationItems'])(entity),
     );
 
-    rows.forEach((row: EnumerationRow) => pluginEnvironment(metaEd).entity.row.set(row.name + row.description, row));
+    rows.forEach((row: EnumerationRow) => rowEntities(metaEd, entity.namespace).set(row.name + row.description, row));
   });
 
   return {

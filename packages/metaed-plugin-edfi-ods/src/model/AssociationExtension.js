@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, AssociationExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type AssociationExtensionEdfiOds = {
   ods_ExtensionName: string,
@@ -16,7 +17,7 @@ export function addAssociationExtensionEdfiOdsTo(associationExtension: Associati
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.associationExtension.forEach((associationExtension: AssociationExtension) => {
+  getAllEntitiesOfType(metaEd, 'associationExtension').forEach((associationExtension: AssociationExtension) => {
     addAssociationExtensionEdfiOdsTo(associationExtension);
   });
 

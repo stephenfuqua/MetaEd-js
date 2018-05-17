@@ -7,16 +7,16 @@ describe('when CommonExtension enhances common extension entity', () => {
   const commonExtensionName: string = 'CommonExtensionName';
   const extensionEntitySuffix: string = 'Extension';
   let commonExtension: CommonExtension;
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', extensionEntitySuffix };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     commonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonExtensionName,
-      namespace: Object.assign(newNamespace(), {
-        extensionEntitySuffix,
-      }),
+      namespace,
     });
-    metaEd.entity.commonExtension.set(commonExtensionName, commonExtension);
+    namespace.entity.commonExtension.set(commonExtensionName, commonExtension);
     enhance(metaEd);
   });
 

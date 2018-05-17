@@ -1,25 +1,28 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/ForeignKeyReverseIndexEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key matching primary key columns', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
 
   beforeAll(() => {
     const table: Table = Object.assign(newTable(), {
       name: tableName,
+      schema: 'edfi',
     });
     const primaryKey: Column = Object.assign(newColumn(), {
       name: 'PrimaryKeyName',
@@ -38,18 +41,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
     table.foreignKeys.push(foreignKey);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
     enhance(metaEd);
   });
 
   it('should have foreign key with reverse foreign key index set to false', () => {
-    const foreignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key not matching primary key columns', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
 
   beforeAll(() => {
@@ -76,18 +81,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
     table.foreignKeys.push(foreignKey);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
     enhance(metaEd);
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
-    const foreignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column foreign key matching primary key columns', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
 
   beforeAll(() => {
@@ -120,18 +127,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
     table.foreignKeys.push(foreignKey);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
     enhance(metaEd);
   });
 
   it('should have foreign key with reverse foreign key index set to false', () => {
-    const foreignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key subset of primary key columns', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
 
   beforeAll(() => {
@@ -160,18 +169,20 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
     table.foreignKeys.push(foreignKey);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
     enhance(metaEd);
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
-    const foreignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key superset of primary key columns', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
 
   beforeAll(() => {
@@ -203,12 +214,12 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
     table.foreignKeys.push(foreignKey);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
     enhance(metaEd);
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
-    const foreignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
 });

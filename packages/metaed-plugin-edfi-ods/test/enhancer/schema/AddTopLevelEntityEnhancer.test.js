@@ -1,5 +1,5 @@
 // @flow
-import { newDomainEntity, newIntegerProperty, newMetaEdEnvironment } from 'metaed-core';
+import { newDomainEntity, newIntegerProperty, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { DomainEntity, IntegerProperty, MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../../src/model/TopLevelEntity';
 import { NoTable } from '../../../src/model/database/Table';
@@ -8,14 +8,17 @@ describe('when enhancing domainEntity with string properties', () => {
   let domainEntity: DomainEntity;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     const domainEntityName: string = 'DomainEntityName';
 
     domainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
     });
 
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
   });
 
@@ -46,7 +49,9 @@ describe('when enhancing domainEntity with string properties', () => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     const domainEntityName: string = 'DomainEntityName';
 
     integerIdentityProperty = Object.assign(newIntegerProperty(), {
@@ -59,11 +64,12 @@ describe('when enhancing domainEntity with string properties', () => {
     });
     domainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       properties: [integerIdentityProperty, integerProperty],
       identityProperties: [integerIdentityProperty],
     });
 
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
   });
 

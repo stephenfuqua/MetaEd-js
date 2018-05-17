@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type CommonExtensionEdfiOds = {
   ods_ExtensionName: string,
@@ -16,7 +17,7 @@ export function addCommonExtensionEdfiOdsTo(commonExtension: CommonExtension) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.commonExtension.forEach((commonExtension: CommonExtension) => {
+  getAllEntitiesOfType(metaEd, 'commonExtension').forEach((commonExtension: CommonExtension) => {
     addCommonExtensionEdfiOdsTo(commonExtension);
   });
 

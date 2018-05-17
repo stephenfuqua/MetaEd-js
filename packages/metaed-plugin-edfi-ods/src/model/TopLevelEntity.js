@@ -1,5 +1,5 @@
 // @flow
-import { asTopLevelEntity, allTopLevelEntityModelTypes, getEntitiesOfType } from 'metaed-core';
+import { asTopLevelEntity, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity } from 'metaed-core';
 import { NoTable } from './database/Table';
 import type { Table } from './database/Table';
@@ -29,7 +29,7 @@ export function addTopLevelEntityEdfiOdsTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, ...allTopLevelEntityModelTypes).forEach(entity => {
+  getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())).forEach(entity => {
     addTopLevelEntityEdfiOdsTo(asTopLevelEntity(entity));
   });
 

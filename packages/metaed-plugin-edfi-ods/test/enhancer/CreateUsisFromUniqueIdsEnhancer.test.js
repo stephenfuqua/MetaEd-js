@@ -4,13 +4,16 @@ import type { DomainEntity, IntegerProperty, MetaEdEnvironment } from 'metaed-co
 import { enhance } from '../../src/enhancer/CreateUsisFromUniqueIdsEnhancer';
 
 describe('when enhancing entity with unique id property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'UniqueId',
+      namespace,
       withContext: 'WithContextName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
@@ -25,7 +28,7 @@ describe('when enhancing entity with unique id property', () => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespace: Object.assign(newNamespace(), { isExtension: false }),
+      namespace,
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],
@@ -34,18 +37,18 @@ describe('when enhancing entity with unique id property', () => {
       },
     });
 
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
   });
 
   it('should remove unique id property', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.ods_Properties).not.toContain(integerProperty);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).not.toContain(integerProperty);
   });
 
   it('should add unique id copy as not part of identity', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     const property: any = domainEntity.data.edfiOds.ods_Properties.find(x => x.metaEdName === integerProperty.metaEdName);
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe(integerProperty.metaEdName);
@@ -58,7 +61,7 @@ describe('when enhancing entity with unique id property', () => {
   });
 
   it('should add usi property', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     const property: any = domainEntity.data.edfiOds.ods_Properties.find(x => x.metaEdName === 'USI');
     expect(property).toBeDefined();
     expect(property.metaEdName).toBe('USI');
@@ -79,13 +82,16 @@ describe('when enhancing entity with unique id property', () => {
 });
 
 describe('when enhancing entity with non unique id property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
     integerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: 'UniqueID',
+      namespace,
       withContext: 'WithContextName',
       shortenTo: 'ShortenToName',
       documentation: 'IntegerPropertyDocumentation',
@@ -100,7 +106,7 @@ describe('when enhancing entity with non unique id property', () => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespace: Object.assign(newNamespace(), { isExtension: false }),
+      namespace,
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],
@@ -109,25 +115,29 @@ describe('when enhancing entity with non unique id property', () => {
       },
     });
 
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
   });
 
   it('should not remove property', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.ods_Properties).toContain(integerProperty);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toContain(integerProperty);
   });
 
   it('should not add additional properties', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.ods_Properties).toHaveLength(1);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
   });
 });
 
 describe('when enhancing entity with unique id property in extension namespace', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const domainEntityName: string = 'DomainEntityName';
   let integerProperty: IntegerProperty;
 
@@ -148,7 +158,7 @@ describe('when enhancing entity with unique id property in extension namespace',
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
-      namespace: Object.assign(newNamespace(), { isExtension: true }),
+      namespace: extensionNamespace,
       data: {
         edfiOds: {
           ods_Properties: [integerProperty],
@@ -157,18 +167,18 @@ describe('when enhancing entity with unique id property in extension namespace',
       },
     });
 
-    metaEd.entity.domainEntity.set(domainEntityName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntityName, domainEntity);
     enhance(metaEd);
   });
 
   it('should not remove property', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.ods_Properties).toContain(integerProperty);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toContain(integerProperty);
   });
 
   it('should not add additional properties', () => {
-    const domainEntity: any = metaEd.entity.domainEntity.get(domainEntityName);
+    const domainEntity: any = namespace.entity.domainEntity.get(domainEntityName);
     expect(domainEntity.data.edfiOds.ods_Properties).toHaveLength(1);
     expect(domainEntity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
   });

@@ -1,13 +1,15 @@
 // @flow
-import { addEntity, newEnumeration, newEnumerationItem, newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { addEntityForNamespace, newEnumeration, newEnumerationItem, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { Enumeration, EnumerationItem, MetaEdEnvironment } from 'metaed-core';
+import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/EnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import type { EnumerationRow } from '../../src/model/database/EnumerationRow';
 
 describe('when EnumerationRowEnhancer enhances enumeration', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const itemDocumentation1: string = 'ItemDocumentation1';
   const itemDocumentation2: string = 'ItemDocumentation2';
@@ -17,9 +19,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
   beforeAll(() => {
     const entity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: entityName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: entityName,
@@ -38,22 +38,22 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
     entity.enumerationItems.push(item2);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two rows', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.size).toBe(2);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription1}`)).toBeDefined();
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription2}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).size).toBe(2);
+    expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`)).toBeDefined();
   });
 
   it('should have correct first enumeration row', () => {
-    const row: EnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription1}`);
+    const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
-    expect(row.namespace).toBe(namespaceName);
-    expect(row.schemaName).toBe(namespaceName);
+    expect(row.namespace).toBe('edfi');
+    expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe(`${entityName}Type`);
     expect(row.documentation).toBe(itemDocumentation1);
     expect(row.codeValue).toBe('');
@@ -62,11 +62,11 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
   });
 
   it('should have correct second enumeration row', () => {
-    const row: EnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription2}`);
+    const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
-    expect(row.namespace).toBe(namespaceName);
-    expect(row.schemaName).toBe(namespaceName);
+    expect(row.namespace).toBe('edfi');
+    expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe(`${entityName}Type`);
     expect(row.documentation).toBe(itemDocumentation2);
     expect(row.codeValue).toBe('');
@@ -76,8 +76,9 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
 });
 
 describe("when EnumerationRowEnhancer enhances enumeration with name that ends with 'Type'", () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName: string = 'EntityName';
   const itemDocumentation1: string = 'ItemDocumentation1';
   const itemDocumentation2: string = 'ItemDocumentation2';
@@ -87,9 +88,7 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
   beforeAll(() => {
     const entity: Enumeration = Object.assign(newEnumeration(), {
       metaEdName: `${entityName}Type`,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: `${entityName}Type`,
@@ -108,22 +107,22 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
     entity.enumerationItems.push(item2);
 
     initializeEdFiOdsEntityRepository(metaEd);
-    addEntity(metaEd.entity, entity);
+    addEntityForNamespace(entity);
     enhance(metaEd);
   });
 
   it('should create two rows', () => {
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.size).toBe(2);
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription1}`)).toBeDefined();
-    expect((metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription2}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).size).toBe(2);
+    expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`)).toBeDefined();
   });
 
   it('should have correct first enumeration row', () => {
-    const row: EnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription1}`);
+    const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
-    expect(row.namespace).toBe(namespaceName);
-    expect(row.schemaName).toBe(namespaceName);
+    expect(row.namespace).toBe('edfi');
+    expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe(`${entityName}Type`);
     expect(row.documentation).toBe(itemDocumentation1);
     expect(row.codeValue).toBe('');
@@ -132,11 +131,11 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
   });
 
   it('should have correct second enumeration row', () => {
-    const row: EnumerationRow = (metaEd.plugin.get('edfiOds'): any).entity.row.get(`${entityName}Type${shortDescription2}`);
+    const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
-    expect(row.namespace).toBe(namespaceName);
-    expect(row.schemaName).toBe(namespaceName);
+    expect(row.namespace).toBe('edfi');
+    expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe(`${entityName}Type`);
     expect(row.documentation).toBe(itemDocumentation2);
     expect(row.codeValue).toBe('');

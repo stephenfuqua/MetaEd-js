@@ -1,15 +1,16 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType, newIntegerProperty } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces, newIntegerProperty } from 'metaed-core';
 import type { EnhancerResult, EntityProperty, IntegerProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
 import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'CreateUsisFromUniqueIdsEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'domainEntity').forEach((entity: ModelBase) => {
-    if (entity.namespace.isExtension) return;
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
 
+  getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
     const uniqueIdStrategy = x => x.metaEdName === 'UniqueId';
     const uniqueIdProperty: ?EntityProperty = entity.data.edfiOds.ods_IdentityProperties.find(uniqueIdStrategy);
     if (uniqueIdProperty == null) return;
