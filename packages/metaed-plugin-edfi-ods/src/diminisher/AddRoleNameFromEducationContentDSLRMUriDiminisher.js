@@ -2,10 +2,8 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { ColumnDataTypes } from '../model/database/ColumnDataTypes';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column, StringColumn } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-247
@@ -26,9 +24,9 @@ const learningResourceMetadataURI: string = 'LearningResourceMetadataURI';
 const uri: string = 'URI';
 
 function renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, educationContentDerivativeSourceLearningResourceMetadataURI);
+  const table: ?Table = tablesForCoreNamespace.get(educationContentDerivativeSourceLearningResourceMetadataURI);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === learningResourceMetadataURI) != null) return;
 
@@ -40,8 +38,8 @@ function renameAndTruncateEducationContentDerivativeSourceLearningResourceMetada
   ((column: any): StringColumn).length = '225';
 }
 
-function renameAndTruncateEducationContentDerivativeSourceURI(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, educationContentDerivativeSourceURI);
+function renameAndTruncateEducationContentDerivativeSourceURI(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(educationContentDerivativeSourceURI);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === uri) != null) return;
 
@@ -55,9 +53,12 @@ function renameAndTruncateEducationContentDerivativeSourceURI(repository: EdFiOd
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(pluginEnvironment(metaEd).entity);
-  renameAndTruncateEducationContentDerivativeSourceURI(pluginEnvironment(metaEd).entity);
+  renameAndTruncateEducationContentDerivativeSourceLearningResourceMetadataURI(tablesForCoreNamespace);
+  renameAndTruncateEducationContentDerivativeSourceURI(tablesForCoreNamespace);
 
   return {
     enhancerName,

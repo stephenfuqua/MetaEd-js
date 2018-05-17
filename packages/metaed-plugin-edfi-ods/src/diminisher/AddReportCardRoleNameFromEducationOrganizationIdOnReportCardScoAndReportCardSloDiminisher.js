@@ -1,10 +1,9 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getTable, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-243
@@ -19,9 +18,9 @@ const educationOrganizationId: string = 'EducationOrganizationId';
 const reportCard: string = 'ReportCard';
 
 function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, reportCardStudentCompetencyObjective);
+  const table: ?Table = tablesForCoreNamespace.get(reportCardStudentCompetencyObjective);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
 
@@ -37,9 +36,9 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 }
 
 function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, reportCardStudentLearningObjective);
+  const table: ?Table = tablesForCoreNamespace.get(reportCardStudentLearningObjective);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === reportCardEducationOrganizationId) != null) return;
 
@@ -56,12 +55,15 @@ function renameEducationOrganizationIdToReportCardEducationOrganizationIdOnRepor
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
   renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentCompetencyObjectiveTable(
-    pluginEnvironment(metaEd).entity,
+    tablesForCoreNamespace,
   );
   renameEducationOrganizationIdToReportCardEducationOrganizationIdOnReportCardStudentLearningObjectiveTable(
-    pluginEnvironment(metaEd).entity,
+    tablesForCoreNamespace,
   );
 
   return {

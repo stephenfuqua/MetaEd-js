@@ -9,9 +9,8 @@ import {
   studentCompetencyObjective,
   studentLearningObjective,
 } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
-import { getTable, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Table } from '../model/database/Table';
 
 // METAED-242
@@ -29,16 +28,20 @@ export const gradingPeriodToSchoolIdOnForeignTableOnly: Array<string> = [
   gradingPeriodSchoolId,
 ];
 
-function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, studentLearningObjective);
+function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(
+  tablesForCoreNamespace: Map<string, Table>,
+): void {
+  const table: ?Table = tablesForCoreNamespace.get(studentLearningObjective);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
   renameForeignKeyColumn(table, gradingPeriod, ...gradingPeriodToSchoolIdOnParentTableOnly);
 }
 
-function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, studentCompetencyObjective);
+function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(
+  tablesForCoreNamespace: Map<string, Table>,
+): void {
+  const table: ?Table = tablesForCoreNamespace.get(studentCompetencyObjective);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
@@ -46,36 +49,36 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, studentCompetencyObjective + studentProgramAssociation);
+  const table: ?Table = tablesForCoreNamespace.get(studentCompetencyObjective + studentProgramAssociation);
   if (table == null) return;
 
   renameForeignKeyColumn(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, studentCompetencyObjective + studentSectionAssociation);
+  const table: ?Table = tablesForCoreNamespace.get(studentCompetencyObjective + studentSectionAssociation);
   if (table == null) return;
 
   renameForeignKeyColumn(table, studentCompetencyObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, studentLearningObjective + studentProgramAssociation);
+  const table: ?Table = tablesForCoreNamespace.get(studentLearningObjective + studentProgramAssociation);
   if (table == null) return;
 
   renameForeignKeyColumn(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
 }
 
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, studentLearningObjective + studentSectionAssociation);
+  const table: ?Table = tablesForCoreNamespace.get(studentLearningObjective + studentSectionAssociation);
   if (table == null) return;
 
   renameForeignKeyColumn(table, studentLearningObjective, ...gradingPeriodToSchoolIdOnForeignTableOnly);
@@ -83,21 +86,16 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentS
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(
-    pluginEnvironment(metaEd).entity,
-  );
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(
-    pluginEnvironment(metaEd).entity,
-  );
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(
-    pluginEnvironment(metaEd).entity,
-  );
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(
-    pluginEnvironment(metaEd).entity,
-  );
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveTable(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveTable(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentProgramAssociationTableFk(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentCompetencyObjectiveStudentSectionAssociationTableFk(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentProgramAssociationTableFk(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentLearningObjectiveStudentSectionAssociationTableFk(tablesForCoreNamespace);
 
   return {
     enhancerName,

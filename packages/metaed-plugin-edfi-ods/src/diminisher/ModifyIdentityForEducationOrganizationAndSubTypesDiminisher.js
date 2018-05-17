@@ -1,11 +1,10 @@
 // @flow
 import R from 'ramda';
 import { String as sugar } from 'sugar';
-import { asTopLevelEntity, getEntitiesOfType, newIntegerProperty, versionSatisfies } from 'metaed-core';
+import { asTopLevelEntity, getEntitiesOfTypeForNamespaces, newIntegerProperty, versionSatisfies } from 'metaed-core';
 import type {
   EnhancerResult,
   EntityProperty,
-  EntityRepository,
   IntegerProperty,
   DomainEntitySubclass,
   MetaEdEnvironment,
@@ -18,17 +17,15 @@ import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 const enhancerName: string = 'ModifyIdentityForEducationOrganizationAndSubTypesDiminisher';
 const targetVersions: string = '2.x';
 
-const coreNamespace: string = 'edfi';
 const educationOrganization: string = 'EducationOrganization';
 const educationOrganizationIdentifier: string = 'EducationOrganizationIdentifier';
 const surrogateKeyNameTemplate: string = '{0}Id';
 const educationOrganizationSurrogateKeyName: string = sugar.format(surrogateKeyNameTemplate, educationOrganization);
 
-function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepository): void {
-  getEntitiesOfType(repository, 'domainEntitySubclass').forEach(entity => {
+function modifyIdentityForEducationOrganizationSubclasses(namespace: Namespace): void {
+  getEntitiesOfTypeForNamespaces([namespace], 'domainEntitySubclass').forEach(entity => {
     const entitySubclass: DomainEntitySubclass = ((entity: any): DomainEntitySubclass);
-    if (entitySubclass.baseEntityName !== educationOrganization && entitySubclass.namespace.namespaceName !== coreNamespace)
-      return;
+    if (entitySubclass.baseEntityName !== educationOrganization) return;
 
     const identifierProperty: ?EntityProperty = entitySubclass.data.edfiOds.ods_IdentityProperties.find(
       (x: EntityProperty) => x.metaEdName === educationOrganizationIdentifier,
@@ -70,9 +67,9 @@ function modifyIdentityForEducationOrganizationSubclasses(repository: EntityRepo
   });
 }
 
-function modifyIdentityForEducationOrganization(repository: EntityRepository): void {
-  const entity: ?ModelBase = getEntitiesOfType(repository, 'domainEntity').find(
-    (x: ModelBase) => x.metaEdName === educationOrganization && x.namespace.namespaceName === coreNamespace,
+function modifyIdentityForEducationOrganization(namespace: Namespace): void {
+  const entity: ?ModelBase = getEntitiesOfTypeForNamespaces([namespace], 'domainEntity').find(
+    (x: ModelBase) => x.metaEdName === educationOrganization,
   );
   if (entity == null || entity.data.edfiOds.ods_IdentityProperties.length === 0) return;
 
@@ -103,14 +100,15 @@ function modifyIdentityForEducationOrganization(repository: EntityRepository): v
   addEntityPropertyEdfiOdsTo(surrogateKeyProperty);
   entity.data.edfiOds.ods_IdentityProperties.push(surrogateKeyProperty);
   entity.data.edfiOds.ods_Properties.push(surrogateKeyProperty);
-
-  modifyIdentityForEducationOrganizationSubclasses(repository);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
 
-  modifyIdentityForEducationOrganization(metaEd.entity);
+  modifyIdentityForEducationOrganization(coreNamespace);
+  modifyIdentityForEducationOrganizationSubclasses(coreNamespace);
 
   return {
     enhancerName,

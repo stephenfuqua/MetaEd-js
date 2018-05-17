@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ForeignKeyOrderDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -8,13 +8,15 @@ import { newColumn } from '../../src/model/database/Column';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const namespaceName: string = 'edfi';
   const parentTableName: string = 'ParentTableName';
   const gradebookEntryLearningObjective: string = 'GradebookEntryLearningObjective';
@@ -61,7 +63,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
         }),
       ),
     });
-    pluginEnvironment(metaEd).entity.table.set(foreignTable.name, foreignTable);
+    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
@@ -83,31 +85,33 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(parentTable.name, parentTable);
+    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should have correct foreign key order', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyOrder);
   });
 
   it('should have order parity with foreign table primary keys', () => {
-    const primaryKeyNamesOnForeignTable: Array<string> = (metaEd.plugin.get('edfiOds'): any).entity.table
+    const primaryKeyNamesOnForeignTable: Array<string> = tableEntities(metaEd, namespace)
       .get(gradebookEntryLearningObjective)
       .primaryKeys.map((pk: Column) => pk.name);
     const foreignKeyNames: Array<string> = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName).foreignKeys,
+      tableEntities(metaEd, namespace).get(parentTableName).foreignKeys,
     );
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
   });
 });
 
 describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const namespaceName: string = 'edfi';
   const parentTableName: string = 'ParentTableName';
   const foreignTableName: string = 'ForeignTableName';
@@ -136,7 +140,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
         }),
       ),
     });
-    pluginEnvironment(metaEd).entity.table.set(foreignTable.name, foreignTable);
+    tableEntities(metaEd, namespace).set(foreignTable.name, foreignTable);
 
     const parentTable: Table = Object.assign(newTable(), {
       name: parentTableName,
@@ -158,24 +162,24 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(parentTable.name, parentTable);
+    tableEntities(metaEd, namespace).set(parentTable.name, parentTable);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should have correct foreign key order', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyNames);
   });
 
   it('should have order parity with foreign table primary keys', () => {
-    const primaryKeyNamesOnForeignTable: Array<string> = (metaEd.plugin.get('edfiOds'): any).entity.table
+    const primaryKeyNamesOnForeignTable: Array<string> = tableEntities(metaEd, namespace)
       .get(foreignTableName)
       .primaryKeys.map((pk: Column) => pk.name);
     const foreignKeyNames: Array<string> = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(parentTableName).foreignKeys,
+      tableEntities(metaEd, namespace).get(parentTableName).foreignKeys,
     );
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
   });

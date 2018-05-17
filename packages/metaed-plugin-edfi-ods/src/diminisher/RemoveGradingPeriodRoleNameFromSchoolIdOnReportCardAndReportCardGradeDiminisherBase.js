@@ -1,9 +1,8 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getTable, removeColumn, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { removeColumn, renameColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Table } from '../model/database/Table';
 
 // METAED-241, METAED-242
@@ -25,8 +24,8 @@ export const gradingPeriodToSchoolId: Array<string> = [gradingPeriodSchoolId, sc
 export const gradingPeriodToSchoolIdOnParentTableOnly: Array<string> = [schoolId, schoolId, gradingPeriodSchoolId, schoolId];
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, reportCard);
+function renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(reportCard);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
@@ -34,8 +33,8 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(repository: EdFi
 }
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function removeGradingPeriodSchoolIdOnReportCardGradeTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, reportCard + grade);
+function removeGradingPeriodSchoolIdOnReportCardGradeTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(reportCard + grade);
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
@@ -44,9 +43,9 @@ function removeGradingPeriodSchoolIdOnReportCardGradeTable(repository: EdFiOdsEn
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
 function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjectiveTable(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, reportCard + studentCompetencyObjective);
+  const table: ?Table = tablesForCoreNamespace.get(reportCard + studentCompetencyObjective);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
@@ -56,9 +55,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjec
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
 function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjectiveTable(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, reportCard + studentLearningObjective);
+  const table: ?Table = tablesForCoreNamespace.get(reportCard + studentLearningObjective);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
@@ -68,9 +67,9 @@ function renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjecti
 
 // METAED-242: Ed-Fi ODS 2.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
 function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardTable(
-  repository: EdFiOdsEntityRepository,
+  tablesForCoreNamespace: Map<string, Table>,
 ): void {
-  const table: ?Table = getTable(repository, studentAcademicRecord + reportCard);
+  const table: ?Table = tablesForCoreNamespace.get(studentAcademicRecord + reportCard);
   if (table == null) return;
 
   renameColumn(table, gradingPeriodSchoolId, schoolId);
@@ -79,12 +78,15 @@ function renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardT
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(pluginEnvironment(metaEd).entity);
-  removeGradingPeriodSchoolIdOnReportCardGradeTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
-  renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardTable(pluginEnvironment(metaEd).entity);
+  renameGradingPeriodSchoolIdToSchoolIdOnReportCardTable(tablesForCoreNamespace);
+  removeGradingPeriodSchoolIdOnReportCardGradeTable(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentCompetencyObjectiveTable(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnReportCardStudentLearningObjectiveTable(tablesForCoreNamespace);
+  renameGradingPeriodSchoolIdToSchoolIdOnStudentAcademicRecordReportCardTable(tablesForCoreNamespace);
 
   return {
     enhancerName,

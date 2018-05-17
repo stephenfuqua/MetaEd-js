@@ -3,13 +3,8 @@ import R from 'ramda';
 import { getForeignKeys } from '../model/database/Table';
 import type { Column } from '../model/database/Column';
 import type { ColumnNamePair } from '../model/database/ColumnNamePair';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
-
-export function getTable(repository: EdFiOdsEntityRepository, name: string): ?Table {
-  return repository.table.get(name);
-}
 
 export function renameForeignKeyColumn(
   table: Table,

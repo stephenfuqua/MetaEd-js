@@ -2,9 +2,7 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys, getForeignKeyName } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -13,12 +11,12 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyReverseForeignKeyIndexesDiminisher';
 const targetVersions: string = '2.x';
 
-const modifyReverseForeignKeyIndex = (repository: EdFiOdsEntityRepository) => (
+const modifyReverseForeignKeyIndex = (tablesForCoreNamespace: Map<string, Table>) => (
   parentTableName: string,
   foreignKeyName: string,
   withReverseForeignKeyIndex: boolean = true,
 ): void => {
-  const table: ?Table = getTable(repository, parentTableName);
+  const table: ?Table = tablesForCoreNamespace.get(parentTableName);
   if (table == null) return;
 
   const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => getForeignKeyName(x) === foreignKeyName);
@@ -28,8 +26,11 @@ const modifyReverseForeignKeyIndex = (repository: EdFiOdsEntityRepository) => (
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const modifyReverseForeignKeyIndexFor = modifyReverseForeignKeyIndex(pluginEnvironment(metaEd).entity);
+  const modifyReverseForeignKeyIndexFor = modifyReverseForeignKeyIndex(tablesForCoreNamespace);
   // one to one optional relationships
   modifyReverseForeignKeyIndexFor('AssessmentContentStandard', 'FK_AssessmentContentStandard_Assessment');
   modifyReverseForeignKeyIndexFor('AssessmentFamilyContentStandard', 'FK_AssessmentFamilyContentStandard_AssessmentFamily');

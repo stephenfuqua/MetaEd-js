@@ -1,20 +1,22 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentCompetencyObjective table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const reportCardStudentCompetencyObjective: string = 'ReportCardStudentCompetencyObjective';
   const educationOrganizationId: string = 'EducationOrganizationId';
   const reportCard: string = 'ReportCard';
@@ -42,22 +44,20 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
-    const column: Column = R.head(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).columns,
-    );
+    const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).columns);
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
     const foreignKey: ForeignKey = R.head(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentCompetencyObjective).foreignKeys,
+      tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).foreignKeys,
     );
     expect(foreignKey.foreignTableName).toBe(reportCard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);
@@ -66,7 +66,9 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
 });
 
 describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher diminishes ReportCardStudentLearningObjective table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const reportCardStudentLearningObjective: string = 'ReportCardStudentLearningObjective';
   const educationOrganizationId: string = 'EducationOrganizationId';
   const reportCard: string = 'ReportCard';
@@ -94,22 +96,20 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
-    const column: Column = R.head(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).columns,
-    );
+    const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).columns);
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
     const foreignKey: ForeignKey = R.head(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(reportCardStudentLearningObjective).foreignKeys,
+      tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).foreignKeys,
     );
     expect(foreignKey.foreignTableName).toBe(reportCard);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(reportCardEducationOrganizationId);

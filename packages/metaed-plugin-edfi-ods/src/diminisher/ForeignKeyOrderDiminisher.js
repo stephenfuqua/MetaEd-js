@@ -3,11 +3,9 @@ import R from 'ramda';
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
 import type { ColumnNamePair } from '../model/database/ColumnNamePair';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -19,14 +17,14 @@ const targetVersions: string = '2.x';
 
 const namespaceName: string = 'edfi';
 
-function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void {
+function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
   const foreignKeys: Array<ForeignKey> = R.chain((table: Table) =>
     getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespaceName),
-  )([...repository.table.values()]);
+  )([...tablesForCoreNamespace.values()]);
   if (foreignKeys.length === 0) return;
 
   foreignKeys.forEach((fk: ForeignKey) => {
-    const foreignTable: ?Table = getTable(repository, fk.foreignTableName);
+    const foreignTable: ?Table = tablesForCoreNamespace.get(fk.foreignTableName);
     if (foreignTable == null) return;
 
     const primaryKeyOrder: Array<string> = foreignTable.primaryKeys.map((pk: Column) => pk.name);
@@ -47,8 +45,11 @@ function modifyForeignKeyColumnOrder(repository: EdFiOdsEntityRepository): void 
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  modifyForeignKeyColumnOrder(pluginEnvironment(metaEd).entity);
+  modifyForeignKeyColumnOrder(tablesForCoreNamespace);
 
   return {
     enhancerName,

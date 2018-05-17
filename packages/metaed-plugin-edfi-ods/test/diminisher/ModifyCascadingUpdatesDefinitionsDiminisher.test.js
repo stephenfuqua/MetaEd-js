@@ -1,17 +1,19 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyCascadingUpdatesDefinitionsDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const courseOfferingCurriculumUsed: string = 'CourseOfferingCurriculumUsed';
   const courseOffering: string = 'CourseOffering';
 
@@ -27,23 +29,23 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should modify with delete cascade', () => {
-    const foreignKey: ForeignKey = R.head(
-      (metaEd.plugin.get('edfiOds'): any).entity.table.get(courseOfferingCurriculumUsed).foreignKeys,
-    );
+    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(courseOfferingCurriculumUsed).foreignKeys);
     expect(foreignKey.foreignTableName).toBe(courseOffering);
     expect(foreignKey.withUpdateCascade).toBe(false);
   });
 });
 
 describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
   const foreignTableName: string = 'ForeignTableName';
 
@@ -59,14 +61,14 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matchi
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should not modify with delete cascade', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).foreignKeys);
+    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.foreignTableName).toBe(foreignTableName);
     expect(foreignKey.withDeleteCascade).toBe(true);
   });

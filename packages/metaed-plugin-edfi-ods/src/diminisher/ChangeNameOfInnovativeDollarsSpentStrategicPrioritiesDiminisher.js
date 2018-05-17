@@ -1,10 +1,9 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getTable, renameColumn } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { renameColumn } from './DiminisherHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-248
@@ -16,8 +15,8 @@ const innovativeDollarsSpentOnStrategicPriorities: string = 'InnovativeDollarsSp
 const innovativeDollarsSpentStrategicPriorities: string = 'InnovativeDollarsSpentStrategicPriorities';
 const localEducationAgencyFederalFunds: string = 'LocalEducationAgencyFederalFunds';
 
-function changeNameOfInnovativeDollarsSpentStrategicPriorities(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, localEducationAgencyFederalFunds);
+function changeNameOfInnovativeDollarsSpentStrategicPriorities(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(localEducationAgencyFederalFunds);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === innovativeDollarsSpentOnStrategicPriorities) != null) return;
 
@@ -26,8 +25,11 @@ function changeNameOfInnovativeDollarsSpentStrategicPriorities(repository: EdFiO
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  changeNameOfInnovativeDollarsSpentStrategicPriorities(pluginEnvironment(metaEd).entity);
+  changeNameOfInnovativeDollarsSpentStrategicPriorities(tablesForCoreNamespace);
 
   return {
     enhancerName,

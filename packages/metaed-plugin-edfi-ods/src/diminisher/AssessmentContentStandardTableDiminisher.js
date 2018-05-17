@@ -2,12 +2,11 @@
 import { newIntegerProperty, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumn, getForeignKeys } from '../model/database/Table';
-import { getTable, renameColumn } from './DiminisherHelper';
+import { renameColumn } from './DiminisherHelper';
 import { initializeColumn, newIntegerColumn } from '../model/database/Column';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
 import type { ColumnNamePair } from '../model/database/ColumnNamePair';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -23,8 +22,8 @@ const version: string = 'Version';
 const assessment: string = 'Assessment';
 const assessmentContentStandardAuthor: string = 'AssessmentContentStandardAuthor';
 
-function renameVersionColumnOnAssessmentContentStandardTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, assessmentContentStandard);
+function renameVersionColumnOnAssessmentContentStandardTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(assessmentContentStandard);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
 
@@ -60,8 +59,8 @@ function renameVersionColumnOnAssessmentContentStandardTable(repository: EdFiOds
   columnNamePair.parentTableColumnName = assessmentVersion;
 }
 
-function renameVersionColumnOnAssessmentContentStandardAuthorTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, assessmentContentStandardAuthor);
+function renameVersionColumnOnAssessmentContentStandardAuthorTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(assessmentContentStandardAuthor);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
 
@@ -81,9 +80,12 @@ function renameVersionColumnOnAssessmentContentStandardAuthorTable(repository: E
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  renameVersionColumnOnAssessmentContentStandardTable(pluginEnvironment(metaEd).entity);
-  renameVersionColumnOnAssessmentContentStandardAuthorTable(pluginEnvironment(metaEd).entity);
+  renameVersionColumnOnAssessmentContentStandardTable(tablesForCoreNamespace);
+  renameVersionColumnOnAssessmentContentStandardAuthorTable(tablesForCoreNamespace);
 
   return {
     enhancerName,

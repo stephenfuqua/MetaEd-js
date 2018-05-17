@@ -1,18 +1,20 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment } from 'metaed-core';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddFksFromAcademicWeekToCalendarDateDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumnNamePair } from '../../src/model/database/ColumnNamePair';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const academicWeek: string = 'AcademicWeek';
   const beginDate: string = 'BeginDate';
   const calendarDate: string = 'CalendarDate';
@@ -26,25 +28,25 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
     const table: Table = Object.assign(newTable(), {
       name: academicWeek,
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should add two foreign keys', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
   });
 
   it('should have sourceReference on each foreign key', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys[0].sourceReference.isSyntheticRelationship).toBe(true);
     expect(foreignKeys[1].sourceReference.isSyntheticRelationship).toBe(true);
   });
 
   it('should have correct foreign key relationship for first foreign key', () => {
-    const foreignKey: ForeignKey = R.head((metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys);
+    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(academicWeek).foreignKeys);
     expect(foreignKey.columnNames).toHaveLength(2);
 
     expect(foreignKey.parentTableName).toBe(academicWeek);
@@ -57,7 +59,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   });
 
   it('should have correct foreign key relationship for second foreign key', () => {
-    const foreignKey: ForeignKey = R.last((metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys);
+    const foreignKey: ForeignKey = R.last(tableEntities(metaEd, namespace).get(academicWeek).foreignKeys);
     expect(foreignKey.columnNames).toHaveLength(2);
 
     expect(foreignKey.parentTableName).toBe(academicWeek);
@@ -71,7 +73,9 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 });
 
 describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table with existing foreign keys to CalendarDate', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const academicWeek: string = 'AcademicWeek';
 
   beforeAll(() => {
@@ -116,14 +120,14 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should not modify existing foreign keys', () => {
-    const foreignKeys: Array<ForeignKey> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(academicWeek).foreignKeys;
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
     expect(R.head(foreignKeys).name).toBe('');
     expect(R.last(foreignKeys).name).toBe('');

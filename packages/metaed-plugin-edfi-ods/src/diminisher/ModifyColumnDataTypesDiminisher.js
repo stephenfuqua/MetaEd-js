@@ -2,10 +2,8 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { ColumnDataTypes } from '../model/database/ColumnDataTypes';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column, StringColumn } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-261
@@ -13,12 +11,12 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyColumnDataTypesDiminisher';
 const targetVersions: string = '2.x';
 
-const modifyColumnDataTypes = (repository: EdFiOdsEntityRepository) => (
+const modifyColumnDataTypes = (tablesForCoreNamespace: Map<string, Table>) => (
   tableName: string,
   columnName: string,
   dataType: string,
 ): void => {
-  const table: ?Table = getTable(repository, tableName);
+  const table: ?Table = tablesForCoreNamespace.get(tableName);
   if (table == null) return;
 
   const column: ?Column = table.columns.find((x: Column) => x.name === columnName);
@@ -26,12 +24,12 @@ const modifyColumnDataTypes = (repository: EdFiOdsEntityRepository) => (
   column.dataType = dataType;
 };
 
-const modifyStringColumnLength = (repository: EdFiOdsEntityRepository) => (
+const modifyStringColumnLength = (tablesForCoreNamespace: Map<string, Table>) => (
   tableName: string,
   columnName: string,
   length: string,
 ): void => {
-  const table: ?Table = getTable(repository, tableName);
+  const table: ?Table = tablesForCoreNamespace.get(tableName);
   if (table == null) return;
 
   const column: ?Column = table.columns.find((x: Column) => x.name === columnName);
@@ -42,14 +40,17 @@ const modifyStringColumnLength = (repository: EdFiOdsEntityRepository) => (
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const modifyColumnDataTypesFor = modifyColumnDataTypes(pluginEnvironment(metaEd).entity);
+  const modifyColumnDataTypesFor = modifyColumnDataTypes(tablesForCoreNamespace);
   modifyColumnDataTypesFor('StudentIndicator', 'BeginDate', '[DATETIME]');
   modifyColumnDataTypesFor('StudentIndicator', 'EndDate', '[DATETIME]');
   modifyColumnDataTypesFor('StudentProgramParticipation', 'BeginDate', '[DATETIME]');
   modifyColumnDataTypesFor('StudentProgramParticipation', 'EndDate', '[DATETIME]');
 
-  const modifyStringColumnLengthFor = modifyStringColumnLength(pluginEnvironment(metaEd).entity);
+  const modifyStringColumnLengthFor = modifyStringColumnLength(tablesForCoreNamespace);
   modifyStringColumnLengthFor('EducationContentAuthor', 'Author', '225');
   modifyStringColumnLengthFor('EducationOrganizationCategoryType', 'CodeValue', '75');
 

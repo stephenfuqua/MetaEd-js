@@ -2,9 +2,7 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -15,12 +13,12 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyCascadingUpdatesDefinitionsDiminisher';
 const targetVersions: string = '2.x';
 
-const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) => (
+const modifyCascadingUpdates = (tablesForCoreNamespace: Map<string, Table>) => (
   parentTableName: string,
   foreignTableName: string,
   withUpdateCascade: boolean = false,
 ): void => {
-  const table: ?Table = getTable(repository, parentTableName);
+  const table: ?Table = tablesForCoreNamespace.get(parentTableName);
   if (table == null) return;
 
   const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
@@ -30,8 +28,11 @@ const modifyCascadingUpdates = (repository: EdFiOdsEntityRepository) => (
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const modifyCascadingUpdatesFor = modifyCascadingUpdates(pluginEnvironment(metaEd).entity);
+  const modifyCascadingUpdatesFor = modifyCascadingUpdates(tablesForCoreNamespace);
   modifyCascadingUpdatesFor('CourseOfferingCurriculumUsed', 'CourseOffering');
   modifyCascadingUpdatesFor('Section', 'CourseOffering');
   modifyCascadingUpdatesFor('StudentSectionAssociation', 'Section');

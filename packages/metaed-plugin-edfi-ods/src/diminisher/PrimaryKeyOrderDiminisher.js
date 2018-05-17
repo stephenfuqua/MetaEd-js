@@ -3,9 +3,8 @@ import R from 'ramda';
 import { orderByProp, versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getPrimaryKeys } from '../model/database/Table';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-630
@@ -953,8 +952,8 @@ function primaryKeyOrderFor(table: Table): Array<string> {
   return R.propOr([], table.name)(primaryKeysFor);
 }
 
-function modifyPrimaryKeyColumnOrder(repository: EdFiOdsEntityRepository): void {
-  repository.table.forEach((table: Table) => {
+function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
+  Array.from(tablesForCoreNamespace.values()).forEach((table: Table) => {
     const primaryKeyOrder: Array<string> = primaryKeyOrderFor(table);
     if (primaryKeyOrder.length === 0) return;
 
@@ -970,8 +969,11 @@ function modifyPrimaryKeyColumnOrder(repository: EdFiOdsEntityRepository): void 
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  modifyPrimaryKeyColumnOrder(pluginEnvironment(metaEd).entity);
+  modifyPrimaryKeyColumnOrder(tablesForCoreNamespace);
 
   return {
     enhancerName,

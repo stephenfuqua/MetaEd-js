@@ -2,9 +2,8 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumn } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
 import { newIntegerColumn } from '../model/database/Column';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
 import type { Table } from '../model/database/Table';
 
@@ -18,8 +17,11 @@ const periodSequence: string = 'PeriodSequence';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const table: ?Table = getTable(pluginEnvironment(metaEd).entity, gradingPeriodType);
+  const table: ?Table = tablesForCoreNamespace.get(gradingPeriodType);
   if (table != null && table.columns.find((x: Column) => x.name === periodSequence) == null) {
     const column: Column = Object.assign(newIntegerColumn(), {
       name: periodSequence,

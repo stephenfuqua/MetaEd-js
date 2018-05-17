@@ -1,17 +1,19 @@
 // @flow
 import R from 'ramda';
-import { newMetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyColumnDataTypesDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newDateColumn, newStringColumn } from '../../src/model/database/Column';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import type { Column } from '../../src/model/database/Column';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when ModifyColumnDataTypesDiminisher diminishes data types for matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const studentIndicator: string = 'StudentIndicator';
   const beginDate: string = 'BeginDate';
   const endDate: string = 'EndDate';
@@ -30,14 +32,14 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should modify data type for matching columns', () => {
-    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(studentIndicator).columns;
+    const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentIndicator).columns;
     expect(columns).toHaveLength(2);
     expect(R.head(columns).name).toBe(beginDate);
     expect(R.head(columns).dataType).toBe('[DATETIME]');
@@ -47,7 +49,9 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
 });
 
 describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentAuthor: string = 'EducationContentAuthor';
   const author: string = 'Author';
   beforeAll(() => {
@@ -61,14 +65,14 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should modify data type for matching columns', () => {
-    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(educationContentAuthor).columns;
+    const columns: Array<Column> = tableEntities(metaEd, namespace).get(educationContentAuthor).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(author);
     expect(R.head(columns).length).toBe('225');
@@ -77,7 +81,9 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
 });
 
 describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName: string = 'TableName';
   const columnName: string = 'ColumnName';
 
@@ -92,14 +98,14 @@ describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (
         }),
       ],
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should not modify column datatype or length', () => {
-    const columns: Array<Column> = (metaEd.plugin.get('edfiOds'): any).entity.table.get(tableName).columns;
+    const columns: Array<Column> = tableEntities(metaEd, namespace).get(tableName).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(columnName);
     expect(R.head(columns).length).toBe('123');

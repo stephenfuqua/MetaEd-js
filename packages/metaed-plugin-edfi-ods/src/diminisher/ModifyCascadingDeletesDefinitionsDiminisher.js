@@ -2,9 +2,7 @@
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -13,12 +11,12 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'ModifyCascadingDeletesDefinitionsDiminisher';
 const targetVersions: string = '2.x';
 
-const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) => (
+const modifyCascadingDeletes = (tablesForCoreNamespace: Map<string, Table>) => (
   parentTableName: string,
   foreignTableName: string,
   withDeleteCascade: boolean = false,
 ): void => {
-  const table: ?Table = getTable(repository, parentTableName);
+  const table: ?Table = tablesForCoreNamespace.get(parentTableName);
   if (table == null) return;
 
   const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === foreignTableName);
@@ -28,8 +26,11 @@ const modifyCascadingDeletes = (repository: EdFiOdsEntityRepository) => (
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const modifyCascadingDeletesFor = modifyCascadingDeletes(pluginEnvironment(metaEd).entity);
+  const modifyCascadingDeletesFor = modifyCascadingDeletes(tablesForCoreNamespace);
   modifyCascadingDeletesFor('AssessmentCategoryDescriptor', 'Descriptor');
   modifyCascadingDeletesFor('AssessmentIdentificationSystemDescriptor', 'Descriptor');
   modifyCascadingDeletesFor('CountryDescriptor', 'Descriptor');

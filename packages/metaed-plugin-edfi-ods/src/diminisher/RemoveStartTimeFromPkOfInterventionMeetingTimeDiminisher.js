@@ -1,10 +1,8 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-249
@@ -15,8 +13,8 @@ const targetVersions: string = '2.x';
 const interventionMeetingTime: string = 'InterventionMeetingTime';
 const startTime: string = 'StartTime';
 
-function modifyStartTimeColumnOnInterventionMeetingTimeTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, interventionMeetingTime);
+function modifyStartTimeColumnOnInterventionMeetingTimeTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(interventionMeetingTime);
   if (table == null) return;
 
   const column: ?Column = table.columns.find((x: Column) => x.name === startTime);
@@ -28,8 +26,11 @@ function modifyStartTimeColumnOnInterventionMeetingTimeTable(repository: EdFiOds
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  modifyStartTimeColumnOnInterventionMeetingTimeTable(pluginEnvironment(metaEd).entity);
+  modifyStartTimeColumnOnInterventionMeetingTimeTable(tablesForCoreNamespace);
 
   return {
     enhancerName,

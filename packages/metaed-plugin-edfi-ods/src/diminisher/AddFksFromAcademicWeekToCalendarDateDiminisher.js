@@ -3,9 +3,8 @@ import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
 import { addColumnNamePairs, newForeignKey, newForeignKeySourceReference } from '../model/database/ForeignKey';
 import { addForeignKey, getForeignKeys } from '../model/database/Table';
-import { getTable } from './DiminisherHelper';
 import { newColumnNamePair } from '../model/database/ColumnNamePair';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { ColumnNamePair } from '../model/database/ColumnNamePair';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
@@ -15,7 +14,7 @@ import type { Table } from '../model/database/Table';
 const enhancerName: string = 'AddFksFromAcademicWeekToCalendarDateDiminisher';
 const targetVersions: string = '2.x';
 
-const namespaceName: string = 'edfi';
+const coreNamespaceName: string = 'edfi';
 
 const academicWeek: string = 'AcademicWeek';
 const beginDate: string = 'BeginDate';
@@ -29,7 +28,7 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
     table == null ||
     getForeignKeys(table).find(
       (fk: ForeignKey) =>
-        fk.foreignTableSchema === namespaceName &&
+        fk.foreignTableSchema === coreNamespaceName &&
         fk.foreignTableName === calendarDate &&
         fk.columnNames.find(
           (columnNamePair: ColumnNamePair) =>
@@ -40,7 +39,7 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
     return;
 
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-    foreignTableSchema: namespaceName,
+    foreignTableSchema: coreNamespaceName,
     foreignTableName: calendarDate,
     withDeleteCascade: false,
     sourceReference: {
@@ -64,8 +63,11 @@ function addForeignKeyToCalendarDate(table: ?Table, parentTableColumnName: strin
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get(coreNamespaceName);
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const table: ?Table = getTable(pluginEnvironment(metaEd).entity, academicWeek);
+  const table: ?Table = tablesForCoreNamespace.get(academicWeek);
   addForeignKeyToCalendarDate(table, beginDate);
   addForeignKeyToCalendarDate(table, endDate);
 

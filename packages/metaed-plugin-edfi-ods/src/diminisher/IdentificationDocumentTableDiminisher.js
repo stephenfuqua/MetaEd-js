@@ -1,10 +1,8 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType, versionSatisfies } from 'metaed-core';
-import type { ModelBase, EnhancerResult, MetaEdEnvironment } from 'metaed-core';
-import { getTable } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
+import { getEntitiesOfTypeForNamespaces, versionSatisfies } from 'metaed-core';
+import type { ModelBase, EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
 
@@ -16,8 +14,8 @@ const targetVersions: string = '2.x';
 
 const identificationDocument: string = 'IdentificationDocument';
 
-function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
-  getEntitiesOfType(metaEd.entity, 'domainEntity').forEach((entity: ModelBase) => {
+function renameIdentificationDocumentTables(coreNamespace: Namespace, tablesForCoreNamespace: Map<string, Table>): void {
+  getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {
     const identificationDocumentTableNames: Array<string> = entity.data.edfiOds.ods_Tables.reduce(
       (names: Array<string>, table: Table) => {
         if (
@@ -32,14 +30,12 @@ function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
     );
     if (identificationDocumentTableNames.length === 0) return;
 
-    const repository: EdFiOdsEntityRepository = pluginEnvironment(metaEd).entity;
-
     // only the first table survives, with a shortened name
     // note: this may not be stable as it relies on ordering when there are multiple identification document tables
-    const table: ?Table = getTable(repository, R.head(identificationDocumentTableNames));
+    const table: ?Table = tablesForCoreNamespace.get(R.head(identificationDocumentTableNames));
     if (table == null) return;
     table.name = entity.metaEdName + identificationDocument;
-    repository.table.set(table.name, table);
+    tablesForCoreNamespace.set(table.name, table);
 
     table.foreignKeys.forEach((fk: ForeignKey) => {
       fk.parentTableName = table.name;
@@ -51,15 +47,18 @@ function renameIdentificationDocumentTables(metaEd: MetaEdEnvironment): void {
         entity.data.edfiOds.ods_Tables,
       );
 
-      repository.table.delete(identificationDocumentTableName);
+      tablesForCoreNamespace.delete(identificationDocumentTableName);
     });
   });
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  renameIdentificationDocumentTables(metaEd);
+  renameIdentificationDocumentTables(coreNamespace, tablesForCoreNamespace);
 
   return {
     enhancerName,

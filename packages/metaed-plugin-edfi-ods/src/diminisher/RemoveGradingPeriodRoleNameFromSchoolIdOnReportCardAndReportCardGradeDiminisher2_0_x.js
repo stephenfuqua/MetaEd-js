@@ -9,10 +9,9 @@ import {
   studentCompetencyObjective,
   studentLearningObjective,
 } from './RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
-import { getTable, removeColumn, renameForeignKeyColumn } from './DiminisherHelper';
-import { pluginEnvironment } from '../enhancer/EnhancerHelper';
+import { removeColumn, renameForeignKeyColumn } from './DiminisherHelper';
+import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';
-import type { EdFiOdsEntityRepository } from '../model/EdFiOdsEntityRepository';
 import type { Table } from '../model/database/Table';
 
 // METAED-242
@@ -30,8 +29,8 @@ function makeColumnNonNullablePrimaryKey(table: Table, columnName: string): void
 }
 
 // METAED-242: Ed-Fi ODS 2.0 missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, studentCompetencyObjective);
+function removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(studentCompetencyObjective);
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
@@ -40,8 +39,8 @@ function removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(repository
 }
 
 // METAED-242: Ed-Fi ODS 2.0 missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
-function removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(repository: EdFiOdsEntityRepository): void {
-  const table: ?Table = getTable(repository, studentLearningObjective);
+function removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(tablesForCoreNamespace: Map<string, Table>): void {
+  const table: ?Table = tablesForCoreNamespace.get(studentLearningObjective);
   if (table == null) return;
 
   removeColumn(table, gradingPeriodSchoolId);
@@ -51,9 +50,12 @@ function removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(repository: 
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(pluginEnvironment(metaEd).entity);
-  removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(pluginEnvironment(metaEd).entity);
+  removeGradingPeriodSchoolIdOnStudentCompetencyObjectiveTable(tablesForCoreNamespace);
+  removeGradingPeriodSchoolIdOnStudentLearningObjectiveTable(tablesForCoreNamespace);
 
   return {
     enhancerName,

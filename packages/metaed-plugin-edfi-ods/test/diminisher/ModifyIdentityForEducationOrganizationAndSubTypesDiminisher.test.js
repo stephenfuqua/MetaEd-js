@@ -12,41 +12,37 @@ import { enhance } from '../../src/diminisher/ModifyIdentityForEducationOrganiza
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 
 describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher diminishes with no EducationOrganization entity', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName: string = 'DomainEntityName';
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
 
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
-    });
-
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
       namespace,
     });
-    metaEd.entity.domainEntity.set(entity.metaEdName, entity);
+    namespace.entity.domainEntity.set(entity.metaEdName, entity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should not fail', () => {
-    expect(metaEd.entity.domainEntity.get(domainEntityName)).toBeDefined();
+    expect(namespace.entity.domainEntity.get(domainEntityName)).toBeDefined();
   });
 });
 
 describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher diminishes EducationOrganization with no EducationOrganizationIdentifier', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationOrganization: string = 'EducationOrganization';
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
-
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
-    });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: educationOrganization,
@@ -59,21 +55,22 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
         },
       },
     });
-    metaEd.entity.domainEntity.set(entity.metaEdName, entity);
+    namespace.entity.domainEntity.set(entity.metaEdName, entity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should not fail', () => {
-    expect(metaEd.entity.domainEntity.get(educationOrganization)).toBeDefined();
-    expect((metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties).toHaveLength(0);
+    expect(namespace.entity.domainEntity.get(educationOrganization)).toBeDefined();
+    expect((namespace.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties).toHaveLength(0);
   });
 });
 
 describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher diminishes EducationOrganization with School subclass', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const edfi: string = 'edfi';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationOrganization: string = 'EducationOrganization';
   const educationOrganizationId: string = 'EducationOrganizationId';
   const educationOrganizationIdentifier: string = 'EducationOrganizationIdentifier';
@@ -82,10 +79,6 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
-
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: edfi,
-    });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: educationOrganization,
@@ -112,7 +105,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     });
     entity.data.edfiOds.ods_Properties.push(property);
     entity.data.edfiOds.ods_IdentityProperties.push(property);
-    metaEd.entity.domainEntity.set(entity.metaEdName, entity);
+    namespace.entity.domainEntity.set(entity.metaEdName, entity);
 
     const entitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: school,
@@ -127,21 +120,21 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     });
     entitySubclass.data.edfiOds.ods_Properties.push(property);
     entitySubclass.data.edfiOds.ods_IdentityProperties.push(property);
-    metaEd.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
+    namespace.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should have two ods properties on EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     expect(entity).toBeDefined();
     expect(entity.data.edfiOds.ods_Properties).toHaveLength(2);
   });
 
   it('should modify EducationOrganizationIdentifier property on EducationOrganization', () => {
     const property: IntegerProperty = R.head(
-      (metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
+      (namespace.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
     );
     expect(property.metaEdName).toBe(educationOrganizationIdentifier);
     expect(property.data.edfiOds.ods_IsUniqueIndex).toBe(true);
@@ -149,18 +142,18 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should remove EducationOrganizationIdentifier from identity properties on EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     expect(entity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
     expect(R.head(entity.data.edfiOds.ods_IdentityProperties).metaEdName).not.toBe(educationOrganizationIdentifier);
   });
 
   it('should add EducationOrganizationId property to EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     const property: IntegerProperty = R.last(entity.data.edfiOds.ods_Properties);
     expect(property.metaEdName).toBe(educationOrganizationId);
     expect(property.documentation).toBe(educationOrganizationIdentifierDocumentation);
     expect(property.isPartOfIdentity).toBe(true);
-    expect(property.namespace.namespaceName).toBe(edfi);
+    expect(property.namespace.namespaceName).toBe('edfi');
     expect(property.parentEntity).toBe(entity);
     expect(property.parentEntityName).toBe(educationOrganization);
     expect(property.data.edfiOds.ods_IsIdentityDatabaseType).toBe(false);
@@ -168,14 +161,14 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should remove EducationOrganizationIdentifier from identity properties on School', () => {
-    const entitySubclass: DomainEntity = (metaEd.entity.domainEntitySubclass.get(school): any);
+    const entitySubclass: DomainEntity = (namespace.entity.domainEntitySubclass.get(school): any);
     expect(entitySubclass.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
     expect(R.head(entitySubclass.data.edfiOds.ods_IdentityProperties).metaEdName).not.toBe(educationOrganizationIdentifier);
     expect(entitySubclass.data.edfiOds.ods_Properties.map(x => x.metaEdName)).not.toContain(educationOrganizationIdentifier);
   });
 
   it('should add EducationOrganizationId property to School', () => {
-    const entitySubclass: DomainEntitySubclass = (metaEd.entity.domainEntitySubclass.get(school): any);
+    const entitySubclass: DomainEntitySubclass = (namespace.entity.domainEntitySubclass.get(school): any);
     expect(entitySubclass).toBeDefined();
     expect(entitySubclass.data.edfiOds.ods_Properties).toHaveLength(1);
 
@@ -183,7 +176,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     expect(property.metaEdName).toBe(`${school}Id`);
     expect(property.documentation).toBe(`The identifier assigned to a ${entitySubclass.typeHumanizedName}.`);
     expect(property.isPartOfIdentity).toBe(true);
-    expect(property.namespace.namespaceName).toBe(edfi);
+    expect(property.namespace.namespaceName).toBe('edfi');
     expect(property.parentEntity).toBe(entitySubclass);
     expect(property.parentEntityName).toBe(school);
     expect(property.isIdentityRename).toBe(true);
@@ -193,8 +186,9 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
 });
 
 describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher diminishes EducationOrganization with School subclass with identity rename property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const edfi: string = 'edfi';
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationOrganization: string = 'EducationOrganization';
   const educationOrganizationId: string = 'EducationOrganizationId';
   const educationOrganizationIdentifier: string = 'EducationOrganizationIdentifier';
@@ -204,10 +198,6 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
-
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: edfi,
-    });
 
     const entity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: educationOrganization,
@@ -234,7 +224,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     });
     entity.data.edfiOds.ods_Properties.push(property);
     entity.data.edfiOds.ods_IdentityProperties.push(property);
-    metaEd.entity.domainEntity.set(entity.metaEdName, entity);
+    namespace.entity.domainEntity.set(entity.metaEdName, entity);
 
     const entitySubclass: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
       metaEdName: school,
@@ -257,21 +247,21 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     entitySubclass.data.edfiOds.ods_IdentityProperties.push(identityRename);
     entitySubclass.data.edfiOds.ods_Properties.push(property);
     entitySubclass.data.edfiOds.ods_IdentityProperties.push(property);
-    metaEd.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
+    namespace.entity.domainEntitySubclass.set(entitySubclass.metaEdName, entitySubclass);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
   });
 
   it('should have two ods properties on EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     expect(entity).toBeDefined();
     expect(entity.data.edfiOds.ods_Properties).toHaveLength(2);
   });
 
   it('should modify EducationOrganizationIdentifier property on EducationOrganization', () => {
     const property: IntegerProperty = R.head(
-      (metaEd.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
+      (namespace.entity.domainEntity.get(educationOrganization): any).data.edfiOds.ods_Properties,
     );
     expect(property.metaEdName).toBe(educationOrganizationIdentifier);
     expect(property.data.edfiOds.ods_IsUniqueIndex).toBe(true);
@@ -279,18 +269,18 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should remove EducationOrganizationIdentifier from identity properties on EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     expect(entity.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
     expect(R.head(entity.data.edfiOds.ods_IdentityProperties).metaEdName).not.toBe(educationOrganizationIdentifier);
   });
 
   it('should add EducationOrganizationId property to EducationOrganization', () => {
-    const entity: DomainEntity = (metaEd.entity.domainEntity.get(educationOrganization): any);
+    const entity: DomainEntity = (namespace.entity.domainEntity.get(educationOrganization): any);
     const property: IntegerProperty = R.last(entity.data.edfiOds.ods_Properties);
     expect(property.metaEdName).toBe(educationOrganizationId);
     expect(property.documentation).toBe(educationOrganizationIdentifierDocumentation);
     expect(property.isPartOfIdentity).toBe(true);
-    expect(property.namespace.namespaceName).toBe(edfi);
+    expect(property.namespace.namespaceName).toBe('edfi');
     expect(property.parentEntity).toBe(entity);
     expect(property.parentEntityName).toBe(educationOrganization);
     expect(property.data.edfiOds.ods_IsIdentityDatabaseType).toBe(false);
@@ -298,14 +288,14 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should remove EducationOrganizationIdentifier from identity properties on School', () => {
-    const entitySubclass: DomainEntity = (metaEd.entity.domainEntitySubclass.get(school): any);
+    const entitySubclass: DomainEntity = (namespace.entity.domainEntitySubclass.get(school): any);
     expect(entitySubclass.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
     expect(R.head(entitySubclass.data.edfiOds.ods_IdentityProperties).metaEdName).not.toBe(educationOrganizationIdentifier);
     expect(entitySubclass.data.edfiOds.ods_Properties.map(x => x.metaEdName)).not.toContain(educationOrganizationIdentifier);
   });
 
   it('should add EducationOrganizationId property to School', () => {
-    const entitySubclass: DomainEntitySubclass = (metaEd.entity.domainEntitySubclass.get(school): any);
+    const entitySubclass: DomainEntitySubclass = (namespace.entity.domainEntitySubclass.get(school): any);
     expect(entitySubclass).toBeDefined();
     expect(entitySubclass.data.edfiOds.ods_Properties).toHaveLength(1);
 
@@ -313,7 +303,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
     expect(property.metaEdName).toBe(`${school}Id`);
     expect(property.documentation).toBe(`The identifier assigned to a ${entitySubclass.typeHumanizedName}.`);
     expect(property.isPartOfIdentity).toBe(true);
-    expect(property.namespace.namespaceName).toBe(edfi);
+    expect(property.namespace.namespaceName).toBe('edfi');
     expect(property.parentEntity).toBe(entitySubclass);
     expect(property.parentEntityName).toBe(school);
     expect(property.isIdentityRename).toBe(true);
@@ -322,7 +312,7 @@ describe('when ModifyIdentityForEducationOrganizationAndSubTypesDiminisher dimin
   });
 
   it('should remove identity rename properties on School', () => {
-    const entitySubclass: DomainEntity = (metaEd.entity.domainEntitySubclass.get(school): any);
+    const entitySubclass: DomainEntity = (namespace.entity.domainEntitySubclass.get(school): any);
     expect(entitySubclass.data.edfiOds.ods_Properties).toHaveLength(1);
     expect(entitySubclass.data.edfiOds.ods_IdentityProperties).toHaveLength(1);
     expect(R.head(entitySubclass.data.edfiOds.ods_Properties).metaEdName).not.toBe(schoolIdentityRename);
