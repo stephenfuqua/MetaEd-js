@@ -9,6 +9,7 @@ import {
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
+import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
 describe('when an association extension extends a non-student program association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -37,6 +38,12 @@ describe('when an association extension extends a non-student program associatio
 
     if (entity && extension) extension.baseEntity = entity;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -72,6 +79,12 @@ describe('when an association extension extends student program association', ()
 
     if (entity && extension) extension.baseEntity = entity;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -126,6 +139,12 @@ describe('when an association extension extends a subclass of student program as
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
