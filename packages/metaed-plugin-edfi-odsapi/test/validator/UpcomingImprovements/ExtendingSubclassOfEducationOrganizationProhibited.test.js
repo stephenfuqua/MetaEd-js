@@ -9,6 +9,7 @@ import {
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
+import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
 describe('when a domain entity extension extends a non-education organization domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -37,6 +38,12 @@ describe('when a domain entity extension extends a non-education organization do
 
     if (entity && extension) extension.baseEntity = entity;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -83,6 +90,12 @@ describe('when a domain entity extension extends a non-education organization su
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -129,6 +142,12 @@ describe('when a domain entity extension extends a subclass of education organiz
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
@@ -191,6 +210,12 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
     if (coreSubclass && extensionSubclass) extensionSubclass.baseEntity = coreSubclass;
     if (extensionSubclass && extension) extension.baseEntity = extensionSubclass;
 
+    metaEd.plugin.set(
+      'edfiOdsApi',
+      Object.assign(newPluginEnvironment(), {
+        targetTechnologyVersion: '2.0.0',
+      }),
+    );
     failures = validate(metaEd);
   });
 
