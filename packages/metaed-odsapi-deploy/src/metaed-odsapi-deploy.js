@@ -49,9 +49,9 @@ export async function metaEdDeploy() {
       conflicts: 'config',
       requiresArg: 'source',
     })
-    .option('namespace', {
+    .option('projectNames', {
       alias: 'p',
-      describe: 'The artifact source namespaces to override',
+      describe: 'The artifact source projectNames to override',
       type: 'string',
       array: true,
       requiresArg: ['source', 'target'],
@@ -69,7 +69,10 @@ export async function metaEdDeploy() {
   let metaEdConfiguration: MetaEdConfiguration;
 
   if (yargs.argv.metaEdConfiguration == null) {
-    const resolvedProjects: Array<MetaEdProjectPathPairs> = await scanForProjects(yargs.argv.source, yargs.argv.namespace);
+    const resolvedProjects: Array<MetaEdProjectPathPairs> = await scanForProjects(
+      yargs.argv.source,
+      yargs.argv.projectNames,
+    );
 
     metaEdConfiguration = {
       ...newMetaEdConfiguration(),

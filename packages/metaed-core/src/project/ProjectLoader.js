@@ -6,6 +6,7 @@ import winston from 'winston';
 import * as Chalk from 'chalk';
 import klawSync from 'klaw-sync';
 import type { MetaEdProjectPathPairs } from './ProjectTypes';
+import { deriveNamespaceFromProjectName } from './ProjectTypes';
 
 winston.cli();
 const chalk = new Chalk.constructor({ level: 3 });
@@ -44,14 +45,21 @@ async function findProjects(directories: string | Array<string>): Promise<Array<
   return projects;
 }
 
-export function overrideNamespace(projects: Array<MetaEdProjectPathPairs>, namespaceOverrides: Array<string>) {
-  if (namespaceOverrides == null) return projects;
-  if (namespaceOverrides.length > projects.length) return projects;
+export function overrideProjectNameAndNamespace(
+  projects: Array<MetaEdProjectPathPairs>,
+  projectNameOverrides: Array<string>,
+) {
+  if (projectNameOverrides == null) return projects;
+  if (projectNameOverrides.length > projects.length) return projects;
 
-  namespaceOverrides.forEach((namespace: string, index: number) => {
-    if (projects[index].project.namespace === namespace) return;
+  projectNameOverrides.forEach((projectName: string, index: number) => {
+    if (projects[index].project.projectName === projectName) return;
 
+    const namespace = deriveNamespaceFromProjectName(projectName) || '';
+    winston.info(`Overriding projectName: ${projects[index].project.projectName} ${chalk.red('->')} ${projectName}`);
     winston.info(`Overriding namespace: ${projects[index].project.namespace} ${chalk.red('->')} ${namespace}`);
+
+    projects[index].project.projectName = projectName;
     projects[index].project.namespace = namespace;
   });
   return projects;
@@ -60,7 +68,7 @@ export function overrideNamespace(projects: Array<MetaEdProjectPathPairs>, names
 // Scans the immediate directory then subdirectories for package.json with metaEdProject property
 export async function scanForProjects(
   directories: string | Array<string>,
-  namespaceOverrides: Array<string>,
+  projectNameOverrides: Array<string>,
 ): Promise<Array<MetaEdProjectPathPairs>> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
@@ -77,14 +85,17 @@ export async function scanForProjects(
     }
   }
 
-  const namespaceOverrideProjects: Array<MetaEdProjectPathPairs> = overrideNamespace(projects, namespaceOverrides);
+  const projectNameOverrideProjects: Array<MetaEdProjectPathPairs> = overrideProjectNameAndNamespace(
+    projects,
+    projectNameOverrides,
+  );
 
   // core first, then extensions in alphabetical order
   const sortedProjects = R.sortWith([
-    R.descend(R.pathEq(['project', 'namespace'], 'edfi')),
-    R.ascend(R.path(['project', 'namespace'])),
-  ])(namespaceOverrideProjects);
+    R.descend(R.pathEq(['project', 'projectName'], 'Ed-Fi')),
+    R.ascend(R.path(['project', 'projectName'])),
+  ])(projectNameOverrideProjects);
 
   // only projects with unique namespace values
-  return R.uniqBy(R.path(['project', 'namespace']))(sortedProjects);
+  return R.uniqBy(R.path(['project', 'projectName']))(sortedProjects);
 }

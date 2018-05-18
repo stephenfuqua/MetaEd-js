@@ -4,6 +4,7 @@ import type { MetaEdEnvironment, EnhancerResult, NamespaceInfo, PluginEnvironmen
 import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
+import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
 import type { NamespaceInfoEdfiOdsApi } from '../../model/NamespaceInfo';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
@@ -18,7 +19,7 @@ const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 // Schema definition is the database schema and project name for a namespace
 export function buildSchemaDefinition(namespaceInfo: NamespaceInfo): SchemaDefinition {
   return {
-    logicalName: namespaceInfo.projectName,
+    logicalName: deriveLogicalNameFromProjectName(namespaceInfo.projectName),
     physicalName: namespaceInfo.namespace,
   };
 }

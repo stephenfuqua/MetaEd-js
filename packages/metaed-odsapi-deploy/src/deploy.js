@@ -152,12 +152,9 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
   if (versionSatisfies(dataStandardVersion, V3OrGreater)) {
     projects.forEach((project: MetaEdProject) => {
       if (isDataStandard(project)) {
-        if (deployCore) targets.push(coreTarget(project.namespace));
-        // FIXME: MetaEdProject.projectName is not currently being read from package.json
-      } else if (project.namespace === 'gb') {
-        targets.push(extensionTarget(project.namespace, 'GrandBend'));
+        if (deployCore) targets.push(coreTarget(project.projectName));
       } else {
-        targets.push(extensionTarget(project.namespace, sugar.capitalize(project.namespace)));
+        targets.push(extensionTarget(project.namespace, project.projectName));
       }
     });
   }
