@@ -7,7 +7,7 @@ import {
   NamespaceInfoBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported';
+import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2';
 
 describe('when an association subclass subclasses StudentProgramAssociation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -36,6 +36,8 @@ describe('when an association subclass subclasses StudentProgramAssociation', ()
 
     const entity = metaEd.entity.association.get(baseEntityName);
     const subclass = metaEd.entity.associationSubclass.get(subclassName);
+
+    metaEd.dataStandardVersion = '2.0.0';
 
     if (entity && subclass) subclass.baseEntity = entity;
     failures = validate(metaEd);
@@ -74,6 +76,8 @@ describe('when an association subclass subclasses a non-StudentProgramAssociatio
     const entity = metaEd.entity.association.get(baseEntityName);
     const subclass = metaEd.entity.associationSubclass.get(subclassName);
 
+    metaEd.dataStandardVersion = '2.0.0';
+
     if (entity && subclass) subclass.baseEntity = entity;
 
     failures = validate(metaEd);
@@ -81,7 +85,7 @@ describe('when an association subclass subclasses a non-StudentProgramAssociatio
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported');
+    expect(failures[0].validatorName).toBe('SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when a association subclass subclasses a non-StudentProgramAssociation association should have validation failure -> message',

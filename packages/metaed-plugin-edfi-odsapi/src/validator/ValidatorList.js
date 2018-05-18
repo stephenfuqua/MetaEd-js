@@ -8,7 +8,8 @@ import { validate as extendingSubclassOfEducationOrganizationProhibited } from '
 import { validate as extendingStudentProgramAssociationOrSubclassProhibited } from './UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 import { validate as includingRequiredPropertiesInExtendedAssociationsProhibited } from './UpcomingImprovements/IncludingRequiredPropertiesInExtendedAssociationsProhibited';
 import { validate as includingRequiredPropertiesInExtendedDomainEntitiesProhibited } from './UpcomingImprovements/IncludingRequiredPropertiesInExtendedDomainEntitiesProhibited';
-import { validate as subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported } from './UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported';
+import { validate as subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2 } from './UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2';
+import { validate as subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported } from './UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 import { validate as subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported } from './UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
 
 export function validatorList(): Array<Validator> {
@@ -20,7 +21,8 @@ export function validatorList(): Array<Validator> {
     extendingSubclassOfEducationOrganizationProhibited,
     includingRequiredPropertiesInExtendedAssociationsProhibited,
     includingRequiredPropertiesInExtendedDomainEntitiesProhibited,
-    subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported,
+    subclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2,
+    subclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported,
     subclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported,
   ];
 }

@@ -1,17 +1,22 @@
 // @flow
 
 // 3.1.X.12 - METAED-701 - METAED-761
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, SemVer } from 'metaed-core';
+import { versionSatisfies, V2Only } from 'metaed-core';
+
+const validatorName: string = 'SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2';
+const targetVersions: SemVer = V2Only;
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return failures;
 
   metaEd.entity.associationSubclass.forEach(associationSubclass => {
     if (!associationSubclass.baseEntity) return;
     if (!associationSubclass.namespaceInfo.isExtension) return;
     if (associationSubclass.baseEntityName !== 'StudentProgramAssociation') {
       failures.push({
-        validatorName: 'SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupported',
+        validatorName,
         category: 'error',
         message: `${associationSubclass.typeHumanizedName} ${
           associationSubclass.metaEdName
