@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_0_x';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -56,18 +56,21 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should remove GradingPeriodSchoolId column', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentCompetencyObjective).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).not.toBe(gradingPeriodSchoolId);
   });
 
   it('should rename foreign key columns', () => {
+    // $FlowIgnore - null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentCompetencyObjective).foreignKeys);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
   });
 
   it('should make SchoolId column a non-nullable primary key', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(studentCompetencyObjective).columns);
     expect(column.name).toBe(schoolId);
     expect(column.isNullable).toBe(false);
@@ -118,18 +121,23 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should remove GradingPeriodSchoolId column', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentLearningObjective).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).not.toBe(gradingPeriodSchoolId);
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys);
+    // $FlowIgnore - null check
+    const foreignKey: ?ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys);
+    // $FlowIgnore - null check
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
+    // $FlowIgnore - null check
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
   });
 
   it('should make SchoolId column a non-nullable primary key', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(studentLearningObjective).columns);
     expect(column.name).toBe(schoolId);
     expect(column.isNullable).toBe(false);

@@ -26,7 +26,7 @@ const targetVersions: string = '2.x';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'associationExtension')
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'associationExtension')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -64,7 +64,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, entity.namespace, tables);
+      addTables(metaEd, tables);
     });
 
   return {

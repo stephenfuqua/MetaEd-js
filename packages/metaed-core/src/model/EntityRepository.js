@@ -119,7 +119,7 @@ export function getAllTopLevelEntities(repository: EntityRepository): Array<TopL
 }
 
 export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>): Array<TopLevelEntity> {
-  const result: Array<ModelBase> = [];
+  const result: Array<TopLevelEntity> = [];
   namespaces.forEach((namespace: Namespace) => {
     // $FlowIgnore - using model type repository lookup
     result.push(...getAllTopLevelEntities(namespace.entity));
@@ -182,7 +182,9 @@ export function getEntityForNamespaces(
   for (const namespace of namespaces) {
     // eslint-disable-next-line no-restricted-syntax
     for (const modelType of modelTypes) {
+      // $FlowIgnore - indexing with type
       if (namespace.entity[modelType].has(entityName)) {
+        // $FlowIgnore - indexing with type
         return namespace.entity[modelType].get(entityName);
       }
     }

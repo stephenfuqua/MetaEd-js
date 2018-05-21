@@ -8,7 +8,7 @@ import {
   addProperty,
   newNamespace,
 } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/PropertyPathNameEnhancer';
 
 describe('when enhancing entity property without with context', () => {

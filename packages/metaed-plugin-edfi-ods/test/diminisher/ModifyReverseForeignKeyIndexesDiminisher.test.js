@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyReverseForeignKeyIndexesDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -37,6 +37,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes matching tabl
   });
 
   it('should modify with reverse foreign key index', () => {
+    // $FlowIgnore - null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(assessmentContentStandard).foreignKeys);
     expect(foreignKey.parentTableName).toBe(assessmentContentStandard);
     expect(foreignKey.foreignTableName).toBe(assessment);
@@ -71,6 +72,7 @@ describe('when ModifyReverseForeignKeyIndexesDiminisher diminishes non matching 
   });
 
   it('should not modify with reverse foreign key index', () => {
+    // $FlowIgnore - null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(parentTableName).foreignKeys);
     expect(foreignKey.parentTableName).toBe(parentTableName);
     expect(foreignKey.foreignTableName).toBe(foreignTableName);

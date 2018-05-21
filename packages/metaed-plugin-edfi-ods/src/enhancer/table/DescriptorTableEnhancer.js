@@ -114,10 +114,10 @@ function createTables(descriptor: Descriptor): Array<Table> {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'descriptor').forEach((entity: ModelBase) => {
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'descriptor').forEach((entity: ModelBase) => {
     const tables: Array<Table> = createTables(((entity: any): Descriptor));
     entity.data.edfiOds.ods_Tables = tables;
-    addTables(metaEd, entity.namespace, tables);
+    addTables(metaEd, tables);
   });
 
   return {

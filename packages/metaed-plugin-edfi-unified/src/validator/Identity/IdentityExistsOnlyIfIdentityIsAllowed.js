@@ -1,5 +1,5 @@
 // @flow
-import type { ModelType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { ModelType, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 
 const invalidTypes: Array<ModelType> = [
   'associationExtension',
@@ -19,7 +19,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.namespace.forEach((namespace: Namespace) => {
     invalidTypes.forEach((invalidType: ModelType) => {
       // $FlowIgnore - allowing entityType to specify the entityRepository Map property
-      namespace.entity[invalidType].forEach(entity => {
+      const entities: Array<TopLevelEntity> = Array.from(namespace.entity[invalidType].values());
+      entities.forEach(entity => {
         if (!entity.identityProperties || entity.identityProperties.length === 0) return;
         entity.identityProperties.forEach(property => {
           if (property.isIdentityRename) return;

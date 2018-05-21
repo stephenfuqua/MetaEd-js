@@ -1,6 +1,6 @@
 // @flow
 import { newAssociationExtension, newNamespace, newMetaEdEnvironment } from 'metaed-core';
-import type { AssociationExtension, MetaEdEnvironment } from 'metaed-core';
+import type { AssociationExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/AssociationExtension';
 
 describe('when AssociationExtension enhances association extension entity', () => {

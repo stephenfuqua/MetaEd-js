@@ -25,12 +25,14 @@ import type {
   EnumerationProperty,
   IntegerProperty,
   MetaEdEnvironment,
+  Namespace,
 } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { ForeignKey } from '../../../src/model/database/ForeignKey';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when AssociationTableEnhancer enhances entity with simple property', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
@@ -76,15 +78,15 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
   });
 
   it('should have schema equal to namespace', () => {
-    expect(tableEntities(metaEd, namespace).get(entityName).schema).toBe('edfi');
+    expect(asTable(tableEntities(metaEd, namespace).get(entityName)).schema).toBe('edfi');
   });
 
   it('should have description equal to documentation', () => {
-    expect(tableEntities(metaEd, namespace).get(entityName).description).toBe(documentation);
+    expect(asTable(tableEntities(metaEd, namespace).get(entityName)).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(propertyName);
   });
@@ -177,7 +179,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create table for entity with one primary key column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -186,7 +188,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create table for association with one primary key column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(associationName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(associationName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -199,17 +201,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should have join table with two columns', () => {
-    expect(tableEntities(metaEd, namespace).get(entityName + associationName).columns).toHaveLength(2);
+    expect(asTable(tableEntities(metaEd, namespace).get(entityName + associationName)).columns).toHaveLength(2);
   });
 
   it('should have join table with foreign key to entity', () => {
-    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName);
+    const joinTable: Table = asTable(tableEntities(metaEd, namespace).get(entityName + associationName));
     expect(joinTable.columns[0].name).toBe(entityPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to association', () => {
-    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + associationName);
+    const joinTable: Table = asTable(tableEntities(metaEd, namespace).get(entityName + associationName));
     expect(joinTable.columns[1].name).toBe(associationPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
@@ -303,7 +305,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should create table for entity with one primary key column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -316,17 +318,17 @@ describe('when AssociationTableEnhancer enhances entity with required collection
   });
 
   it('should have join table with two columns', () => {
-    expect(tableEntities(metaEd, namespace).get(entityName + commonName).columns).toHaveLength(2);
+    expect(asTable(tableEntities(metaEd, namespace).get(entityName + commonName)).columns).toHaveLength(2);
   });
 
   it('should have join table with foreign key to common', () => {
-    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName);
+    const joinTable: Table = asTable(tableEntities(metaEd, namespace).get(entityName + commonName));
     expect(joinTable.columns[0].name).toBe(commonPkPropertyName);
     expect(joinTable.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should have join table with foreign key to entity', () => {
-    const joinTable: Table = tableEntities(metaEd, namespace).get(entityName + commonName);
+    const joinTable: Table = asTable(tableEntities(metaEd, namespace).get(entityName + commonName));
     expect(joinTable.columns[1].name).toBe(entityPkPropertyName);
     expect(joinTable.columns[1].isPartOfPrimaryKey).toBe(true);
   });
@@ -461,7 +463,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for entity with one primary key and one non primary key column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -473,7 +475,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for referencedEntity with one primary key and one non primary key column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(referencedEntityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(referencedEntityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -615,7 +617,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for entity with one primary key and two non primary key columns', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);
@@ -630,7 +632,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
   });
 
   it('should create table for referencedEntity with two primary key columns', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(referencedEntityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(referencedEntityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(2);
@@ -817,7 +819,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     expect(tableEntities(metaEd, namespace).get(referencedEntityName2)).toBeDefined();
   });
   it('should create single column in entity table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(commonPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
@@ -950,7 +952,7 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
   });
 
   it('should have join table with foreign key to enumeration table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName + enumerationName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName + enumerationName));
     const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
@@ -1012,7 +1014,7 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
   });
 
   it('should have foreign key to enumeration table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     const foreignKey: ForeignKey = R.head(table.foreignKeys);
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${enumerationName}Type`);
@@ -1147,7 +1149,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
   });
 
   it('should have join table with foreign key to descriptor table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName + descriptorName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName + descriptorName));
     const foreignKey: ForeignKey = R.head(table.foreignKeys.filter(x => x.foreignTableName !== entityName));
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
@@ -1210,7 +1212,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
   });
 
   it('should have foreign key to descriptor table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     const foreignKey: ForeignKey = R.head(table.foreignKeys);
     expect(foreignKey).toBeDefined();
     expect(foreignKey.foreignTableName).toBe(`${descriptorName}Descriptor`);
@@ -1381,7 +1383,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
   });
 
   it('should have entity table with one primary key', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(entityName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(entityName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(1);
@@ -1390,7 +1392,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
   });
 
   it('should create join table with two primary keys and one non primary key', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(commonName);
+    const table: Table = asTable(tableEntities(metaEd, namespace).get(commonName));
     expect(table).toBeDefined();
 
     expect(table.columns).toHaveLength(3);

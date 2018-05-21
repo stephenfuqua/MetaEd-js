@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
 import { versionSatisfies } from 'metaed-core';
 import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
@@ -21,8 +20,8 @@ function remove(array: Array<EntityTable>, element: EntityTable) {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  const coreNamespace = R.head(Array.from(metaEd.entity.namespace.values()).filter(n => !n.isExtension));
-
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
   const aggregatesToClean = ((coreNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.filter((a: Aggregate) =>
     a.entityTables.some((et: EntityTable) => affectedTables.includes(et.table)),
   );

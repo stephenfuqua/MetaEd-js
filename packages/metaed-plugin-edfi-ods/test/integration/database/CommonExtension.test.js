@@ -55,6 +55,12 @@ describe('when common extension is a required property', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -194,6 +200,12 @@ describe('when common extension is a required property on association', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -338,6 +350,12 @@ describe('when common extension is a required property on association', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -471,6 +489,12 @@ describe('when common extension is a required property on domain entity extensio
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
+
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
 
     return enhanceGenerateAndExecuteSql(metaEd);
   });
@@ -611,6 +635,12 @@ describe('when common extension is a required property on association extension'
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -717,7 +747,7 @@ describe('when common extension is a required property on association extension'
 
 describe('when common extension is a required common override property on domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  const namespaceName: string = 'edfi';
   const extension: string = 'extension';
   const commonName: string = 'CommonName';
   const domainEntityName: string = 'DomainEntityName';
@@ -757,6 +787,12 @@ describe('when common extension is a required common override property on domain
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
+
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
 
     return enhanceGenerateAndExecuteSql(metaEd);
   });

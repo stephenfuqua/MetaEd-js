@@ -1,6 +1,6 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumnNamePairs, newForeignKey, newForeignKeySourceReference } from '../model/database/ForeignKey';
 import { addForeignKey, getForeignKeys } from '../model/database/Table';
 import { newColumnNamePair } from '../model/database/ColumnNamePair';

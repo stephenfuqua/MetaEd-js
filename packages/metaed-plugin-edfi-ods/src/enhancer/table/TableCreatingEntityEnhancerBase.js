@@ -44,7 +44,10 @@ export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean):
   return mainTable;
 }
 
-export function addTables(metaEd: MetaEdEnvironment, namespace: Namespace, tables: Array<Table>): void {
-  const tableMap: Map<string, Table> = tableEntities(metaEd, namespace);
-  tables.forEach((table: Table) => tableMap.set(table.name, table));
+export function addTables(metaEd: MetaEdEnvironment, tables: Array<Table>): void {
+  tables.forEach((table: Table) => {
+    const namespace: ?Namespace = metaEd.namespace.get(table.schema);
+    if (namespace == null) return;
+    tableEntities(metaEd, namespace).set(table.name, table);
+  });
 }

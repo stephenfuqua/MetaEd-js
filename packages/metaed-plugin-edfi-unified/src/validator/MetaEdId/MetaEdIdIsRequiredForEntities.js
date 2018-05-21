@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { getAllEntitiesNoSimpleTypesForNamespaces, asTopLevelEntity } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

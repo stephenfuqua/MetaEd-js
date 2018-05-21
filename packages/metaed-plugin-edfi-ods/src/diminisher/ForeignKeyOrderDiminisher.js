@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { getForeignKeys } from '../model/database/Table';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column } from '../model/database/Column';

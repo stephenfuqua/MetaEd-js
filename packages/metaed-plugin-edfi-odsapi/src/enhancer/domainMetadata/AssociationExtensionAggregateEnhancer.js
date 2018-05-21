@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType, asTopLevelEntity } from 'metaed-core';
+import { getAllEntitiesOfType, asTopLevelEntity } from 'metaed-core';
 import type { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, Namespace } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds, AssociationExtensionEdfiOds } from 'metaed-plugin-edfi-ods';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
@@ -21,9 +21,9 @@ function orderedAndUniqueTablesFor(entity: TopLevelEntity, namespace: Namespace)
 const isAggregateExtension = () => true;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'associationExtension').forEach((modelBase: ModelBase) => {
+  getAllEntitiesOfType(metaEd, 'associationExtension').forEach((modelBase: ModelBase) => {
     // $FlowIgnore - Flow issue #183 - Add support for destructuring parameters + default values
-    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.entity.namespace, {
+    enhanceSingleEntity(asTopLevelEntity(modelBase), metaEd.namespace, {
       isAggregateExtension,
       orderedAndUniqueTablesFor,
     });

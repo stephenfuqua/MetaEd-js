@@ -107,7 +107,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         parentTable,
       );
       parentTablePropertyColumnPairs.forEach((parentTablePairs: PropertyColumnPair) => {
-        const foreignTableNamespace: Namespace = parentTablePairs.property.referencedEntity.namespace;
+        const foreignTableNamespace: Namespace = asReferentialProperty(parentTablePairs.property).referencedEntity.namespace;
         const foreignTable: ?Table = tableEntities(metaEd, foreignTableNamespace).get(parentTablePairs.property.metaEdName);
         // something is very wrong if table is not there, but for now just ignore
         if (foreignTable == null) return;

@@ -19,6 +19,7 @@ import type {
   DomainEntitySubclass,
   IntegerProperty,
   MetaEdEnvironment,
+  Namespace,
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/TopLevelEntityBaseReferenceEnhancer';
 

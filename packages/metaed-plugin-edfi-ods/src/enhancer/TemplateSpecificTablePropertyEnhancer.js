@@ -1,5 +1,5 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { versionSatisfies, V3OrGreater } from 'metaed-core';
 import {
   hasAlternateKeys,
@@ -43,11 +43,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       table.foreignKeys.forEach((foreignKey: ForeignKey) => {
-        const foreignTableNamespace: Namespace = metaEd.namespace.get(foreignKey.foreignTableSchema);
+        const foreignTableNamespace: ?Namespace = metaEd.namespace.get(foreignKey.foreignTableSchema);
         // something is very wrong if namespace is not there, but for now just ignore
         if (foreignTableNamespace == null) return;
 
-        const foreignTable: Table = tableEntities(metaEd, foreignTableNamespace).get(foreignKey.foreignTableName);
+        const foreignTable: ?Table = tableEntities(metaEd, foreignTableNamespace).get(foreignKey.foreignTableName);
+
         Object.assign(foreignKey, {
           name: getForeignKeyName(foreignKey),
           parentTableColumnNames: getParentTableColumnNames(foreignKey, foreignTable),

@@ -63,6 +63,8 @@ export function newTable(): Table {
   };
 }
 
+export const asTable = (x: any): Table => ((x: any): Table);
+
 export const NoTable: Table = deepFreeze(
   Object.assign(newTable(), {
     name: 'NoTable',

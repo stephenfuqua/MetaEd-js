@@ -1,5 +1,5 @@
 // @flow
-import { getEntitiesOfType, asAssociation } from 'metaed-core';
+import { getAllEntitiesOfType, asAssociation } from 'metaed-core';
 import type { MetaEdEnvironment, ModelBase, EnhancerResult, Association } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import { enhanceSingleEntity } from './AggregateEnhancerBase';
@@ -14,9 +14,9 @@ export function enhanceEntityTable(association: Association, table: Table, entit
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'association').forEach((modelBase: ModelBase) => {
+  getAllEntitiesOfType(metaEd, 'association').forEach((modelBase: ModelBase) => {
     // $FlowIgnore - Flow issue #183 - Add support for destructuring parameters + default values
-    enhanceSingleEntity(asAssociation(modelBase), metaEd.entity.namespace, { enhanceEntityTable });
+    enhanceSingleEntity(asAssociation(modelBase), metaEd.namespace, { enhanceEntityTable });
   });
 
   return {

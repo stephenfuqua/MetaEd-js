@@ -14,20 +14,19 @@ describe('when enhancing associations', () => {
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
-
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const table: Table = {
       ...newTable(),
       name: tableName,
@@ -36,14 +35,7 @@ describe('when enhancing associations', () => {
 
     const association: Association = Object.assign(newAssociation(), {
       metaEdName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -52,7 +44,7 @@ describe('when enhancing associations', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.association.set(association.metaEdName, association);
+    namespace.entity.association.set(association.metaEdName, association);
 
     enhance(metaEd);
     aggregate = association.data.edfiOdsApi.aggregate;

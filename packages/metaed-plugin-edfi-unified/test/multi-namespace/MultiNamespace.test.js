@@ -1,7 +1,7 @@
 // @flow
 import path from 'path';
 import { executePipeline, newMetaEdConfiguration, newPipelineOptions, newState, asReferentialProperty } from 'metaed-core';
-import type { State, DomainEntity } from 'metaed-core';
+import type { State } from 'metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(30000);
@@ -79,25 +79,24 @@ describe('when building a simple core and two simple extension projects', () => 
     expect(state.validationFailure.length).toBe(0);
   });
 
-  it('should have built three domain entities', () => {
-    const domainEntities: Map<string, DomainEntity> = state.metaEd.entity.domainEntity;
-    expect(domainEntities.get('EdfiDomainEntity')).toBeDefined();
-    expect(domainEntities.get('GbDomainEntity')).toBeDefined();
-    expect(domainEntities.get('SampleDomainEntity')).toBeDefined();
-  });
-
   it('should have extension domain entities referencing core entity (meaning unified enhancers ran)', () => {
-    const edfiDomainEntity = state.metaEd.entity.domainEntity.get('EdfiDomainEntity');
+    const coreNamespace = state.metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const edfiDomainEntity = coreNamespace.entity.domainEntity.get('EdfiDomainEntity');
     if (edfiDomainEntity == null) throw new Error();
     expect(edfiDomainEntity.namespace.namespaceName).toBe('edfi');
 
-    const gbDomainEntity = state.metaEd.entity.domainEntity.get('GbDomainEntity');
+    const gbNamespace = state.metaEd.namespace.get('gb');
+    if (gbNamespace == null) throw new Error();
+    const gbDomainEntity = gbNamespace.entity.domainEntity.get('GbDomainEntity');
     if (gbDomainEntity == null) throw new Error();
     expect(gbDomainEntity.namespace.namespaceName).toBe('gb');
     expect(gbDomainEntity.properties[2].metaEdName).toBe('EdfiDomainEntity');
     expect(asReferentialProperty(gbDomainEntity.properties[2]).referencedEntity).toBe(edfiDomainEntity);
 
-    const sampleDomainEntity = state.metaEd.entity.domainEntity.get('SampleDomainEntity');
+    const sampleNamespace = state.metaEd.namespace.get('sample');
+    if (sampleNamespace == null) throw new Error();
+    const sampleDomainEntity = sampleNamespace.entity.domainEntity.get('SampleDomainEntity');
     if (sampleDomainEntity == null) throw new Error();
     expect(sampleDomainEntity.namespace.namespaceName).toBe('sample');
     expect(sampleDomainEntity.properties[2].metaEdName).toBe('EdfiDomainEntity');

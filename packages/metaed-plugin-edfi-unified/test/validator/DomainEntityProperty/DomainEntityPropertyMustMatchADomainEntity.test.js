@@ -172,6 +172,7 @@ describe('when domain entity property has identifier of domain entity in depende
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -211,6 +212,7 @@ describe('when domain entity property has invalid identifier of domain entity in
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -265,7 +267,9 @@ describe('when domain entity property refers to domain entity in non-dependency 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespacea = metaEd.namespace.get('extensiona');
     extensionNamespaceb = metaEd.namespace.get('extensionb');
+    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
+    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

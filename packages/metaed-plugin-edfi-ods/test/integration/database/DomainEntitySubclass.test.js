@@ -126,6 +126,12 @@ describe('when extension domain entity subclasses core domain entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 

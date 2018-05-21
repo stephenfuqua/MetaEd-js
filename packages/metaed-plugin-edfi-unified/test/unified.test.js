@@ -33,6 +33,7 @@ describe('when building and enhancing domain item', () => {
   const domainEntityName2: string = 'DomainEntityName2';
   const domainName1: string = 'DomainName1';
   const subdomainName1: string = 'SubdomainName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -62,25 +63,26 @@ describe('when building and enhancing domain item', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(namespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one domain', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+    expect(namespace.entity.domain.size).toBe(1);
   });
 
   it('should build one subdomain', () => {
-    expect(metaEd.entity.subdomain.size).toBe(1);
+    expect(namespace.entity.subdomain.size).toBe(1);
   });
 
   it('should enhance domain entities', () => {
     // $FlowIgnore = entity could be null
-    const domainItem = R.head(metaEd.entity.domain.get(domainName1).entities);
-    const referencedEntity = metaEd.entity.domainEntity.get(domainEntityName1);
+    const domainItem = R.head(namespace.entity.domain.get(domainName1).entities);
+    const referencedEntity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainItem).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(domainItem).toBe(referencedEntity);
@@ -88,8 +90,8 @@ describe('when building and enhancing domain item', () => {
 
   it('should enhance subdomain entities', () => {
     // $FlowIgnore = entity could be null
-    const domainItem = R.head(metaEd.entity.subdomain.get(subdomainName1).entities);
-    const referencedEntity = metaEd.entity.domainEntity.get(domainEntityName2);
+    const domainItem = R.head(namespace.entity.subdomain.get(subdomainName1).entities);
+    const referencedEntity = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainItem).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(domainItem).toBe(referencedEntity);
@@ -101,6 +103,7 @@ describe('when building and enhancing subdomain', () => {
   const domainName1: string = 'DomainName1';
   const subdomainName1: string = 'SubdomainName1';
   const subdomainName2: string = 'SubdomainName2';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -126,21 +129,22 @@ describe('when building and enhancing subdomain', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
+    namespace = metaEd.namespace.get('edfi');
 
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain', () => {
-    expect(metaEd.entity.domain.size).toBe(1);
+    expect(namespace.entity.domain.size).toBe(1);
   });
 
   it('should build two subdomains', () => {
-    expect(metaEd.entity.subdomain.size).toBe(2);
+    expect(namespace.entity.subdomain.size).toBe(2);
   });
 
   it('should enhance subdomain with parent', () => {
-    const domain = metaEd.entity.domain.get(domainName1);
-    const subdomain = metaEd.entity.subdomain.get(subdomainName1);
+    const domain = namespace.entity.domain.get(domainName1);
+    const subdomain = namespace.entity.subdomain.get(subdomainName1);
     expect(domain).toBeDefined();
     expect(subdomain).toBeDefined();
     // $FlowIgnore = subdomain could be null
@@ -148,9 +152,9 @@ describe('when building and enhancing subdomain', () => {
   });
 
   it('should enhance domains with sorted subdomains', () => {
-    const domain = metaEd.entity.domain.get(domainName1);
-    const subdomain1 = metaEd.entity.subdomain.get(subdomainName1);
-    const subdomain2 = metaEd.entity.subdomain.get(subdomainName2);
+    const domain = namespace.entity.domain.get(domainName1);
+    const subdomain1 = namespace.entity.subdomain.get(subdomainName1);
+    const subdomain2 = namespace.entity.subdomain.get(subdomainName2);
     expect(domain).toBeDefined();
     expect(subdomain1).toBeDefined();
     expect(subdomain2).toBeDefined();
@@ -165,6 +169,7 @@ describe('when building and enhancing association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const associationName1: string = 'AssociationName1';
   const integerIdentityName1: string = 'IntegerIdentityName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -192,20 +197,21 @@ describe('when building and enhancing association extension', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(namespace.entity.association.size).toBe(1);
   });
 
   it('should build one association extension', () => {
-    expect(metaEd.entity.associationExtension.size).toBe(1);
+    expect(namespace.entity.associationExtension.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.association.get(associationName1);
-    const extensionEntity = metaEd.entity.associationExtension.get(associationName1);
+    const baseEntity = namespace.entity.association.get(associationName1);
+    const extensionEntity = namespace.entity.associationExtension.get(associationName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
@@ -213,7 +219,7 @@ describe('when building and enhancing association extension', () => {
   });
 
   it('should enhance extension with queryable fields', () => {
-    const extensionEntity = metaEd.entity.associationExtension.get(associationName1);
+    const extensionEntity = namespace.entity.associationExtension.get(associationName1);
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
@@ -227,6 +233,7 @@ describe('when building and enhancing association subclass', () => {
   const associationName1: string = 'AssociationName1';
   const associationSubclassName1: string = 'AssociationSubclassName1';
   const integerIdentityName1: string = 'IntegerIdentityName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -254,20 +261,21 @@ describe('when building and enhancing association subclass', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(namespace.entity.association.size).toBe(1);
   });
 
   it('should build one association subclass', () => {
-    expect(metaEd.entity.associationSubclass.size).toBe(1);
+    expect(namespace.entity.associationSubclass.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.association.get(associationName1);
-    const subclassEntity = metaEd.entity.associationSubclass.get(associationSubclassName1);
+    const baseEntity = namespace.entity.association.get(associationName1);
+    const subclassEntity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(baseEntity).toBeDefined();
     expect(subclassEntity).toBeDefined();
     // $FlowIgnore - subclassEntity could be null
@@ -275,7 +283,7 @@ describe('when building and enhancing association subclass', () => {
   });
 
   it('should enhance subclass with queryable fields', () => {
-    const subclassEntity = metaEd.entity.associationSubclass.get(associationSubclassName1);
+    const subclassEntity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(subclassEntity).toBeDefined();
     // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.queryableFields).toHaveLength(1);
@@ -288,6 +296,7 @@ describe('when building and enhancing common extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const commonName1: string = 'CommonName1';
   const integerIdentityName1: string = 'IntegerIdentityName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -307,20 +316,21 @@ describe('when building and enhancing common extension', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(namespace.entity.common.size).toBe(1);
   });
 
   it('should build one common extension', () => {
-    expect(metaEd.entity.commonExtension.size).toBe(1);
+    expect(namespace.entity.commonExtension.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.common.get(commonName1);
-    const extensionEntity = metaEd.entity.commonExtension.get(commonName1);
+    const baseEntity = namespace.entity.common.get(commonName1);
+    const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
@@ -328,8 +338,8 @@ describe('when building and enhancing common extension', () => {
   });
 
   it('should enhance base entity with extender', () => {
-    const baseEntity = metaEd.entity.common.get(commonName1);
-    const extensionEntity = metaEd.entity.commonExtension.get(commonName1);
+    const baseEntity = namespace.entity.common.get(commonName1);
+    const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - baseEntity could be null
@@ -337,7 +347,7 @@ describe('when building and enhancing common extension', () => {
   });
 
   it('should enhance extension with queryable fields', () => {
-    const extensionEntity = metaEd.entity.commonExtension.get(commonName1);
+    const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
@@ -350,6 +360,7 @@ describe('when building and enhancing domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1: string = 'DomainEntityName1';
   const integerIdentityName1: string = 'IntegerIdentityName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -369,20 +380,21 @@ describe('when building and enhancing domain entity extension', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity extension', () => {
-    expect(metaEd.entity.domainEntityExtension.size).toBe(1);
+    expect(namespace.entity.domainEntityExtension.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.domainEntity.get(domainEntityName1);
-    const extensionEntity = metaEd.entity.domainEntityExtension.get(domainEntityName1);
+    const baseEntity = namespace.entity.domainEntity.get(domainEntityName1);
+    const extensionEntity = namespace.entity.domainEntityExtension.get(domainEntityName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
@@ -390,7 +402,7 @@ describe('when building and enhancing domain entity extension', () => {
   });
 
   it('should enhance extension with queryable fields', () => {
-    const extensionEntity = metaEd.entity.domainEntityExtension.get(domainEntityName1);
+    const extensionEntity = namespace.entity.domainEntityExtension.get(domainEntityName1);
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
@@ -404,6 +416,7 @@ describe('when building and enhancing domain entity subclass', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntitySubclassName1: string = 'DomainEntitySubclassName1';
   const integerIdentityName1: string = 'IntegerIdentityName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -423,20 +436,21 @@ describe('when building and enhancing domain entity subclass', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one domain entity subclass', () => {
-    expect(metaEd.entity.domainEntitySubclass.size).toBe(1);
+    expect(namespace.entity.domainEntitySubclass.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.domainEntity.get(domainEntityName1);
-    const subclassEntity = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName1);
+    const baseEntity = namespace.entity.domainEntity.get(domainEntityName1);
+    const subclassEntity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(baseEntity).toBeDefined();
     expect(subclassEntity).toBeDefined();
     // $FlowIgnore - subclassEntity could be null
@@ -444,7 +458,7 @@ describe('when building and enhancing domain entity subclass', () => {
   });
 
   it('should enhance subclass with queryable fields', () => {
-    const subclassEntity = metaEd.entity.domainEntitySubclass.get(domainEntitySubclassName1);
+    const subclassEntity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(subclassEntity).toBeDefined();
     // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.queryableFields).toHaveLength(1);
@@ -456,6 +470,7 @@ describe('when building and enhancing domain entity subclass', () => {
 describe('when building and enhancing interchange extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const interchangeName1: string = 'InterchangeName1';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -477,20 +492,21 @@ describe('when building and enhancing interchange extension', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should build one interchange extension', () => {
-    expect(metaEd.entity.interchangeExtension.size).toBe(1);
+    expect(namespace.entity.interchangeExtension.size).toBe(1);
   });
 
   it('should enhance base entity', () => {
-    const baseEntity = metaEd.entity.interchange.get(interchangeName1);
-    const extensionEntity = metaEd.entity.interchangeExtension.get(interchangeName1);
+    const baseEntity = namespace.entity.interchange.get(interchangeName1);
+    const extensionEntity = namespace.entity.interchangeExtension.get(interchangeName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
     // $FlowIgnore - extensionEntity could be null
@@ -503,6 +519,7 @@ describe('when building and enhancing interchange items', () => {
   const interchangeName1: string = 'InterchangeName1';
   const domainEntityName1: string = 'DomainEntityName1';
   const domainEntityName2: string = 'DomainEntityName2';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -530,21 +547,22 @@ describe('when building and enhancing interchange items', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(namespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should build one interchange', () => {
-    expect(metaEd.entity.interchange.size).toBe(1);
+    expect(namespace.entity.interchange.size).toBe(1);
   });
 
   it('should enhance elements with referenced entity', () => {
     // $FlowIgnore = entity could be null
-    const property = R.head(metaEd.entity.interchange.get(interchangeName1).elements);
-    const referencedEntity = metaEd.entity.domainEntity.get(domainEntityName1);
+    const property = R.head(namespace.entity.interchange.get(interchangeName1).elements);
+    const referencedEntity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -552,8 +570,8 @@ describe('when building and enhancing interchange items', () => {
 
   it('should enhance identity templates with referenced entity', () => {
     // $FlowIgnore = entity could be null
-    const property = R.head(metaEd.entity.interchange.get(interchangeName1).identityTemplates);
-    const referencedEntity = metaEd.entity.domainEntity.get(domainEntityName2);
+    const property = R.head(namespace.entity.interchange.get(interchangeName1).identityTemplates);
+    const referencedEntity = namespace.entity.domainEntity.get(domainEntityName2);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -566,6 +584,7 @@ describe('when building and enhancing association property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const associationDocumentation: string = 'AssociationDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -592,15 +611,16 @@ describe('when building and enhancing association property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one association', () => {
-    expect(metaEd.entity.association.size).toBe(1);
+    expect(namespace.entity.association.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -611,7 +631,7 @@ describe('when building and enhancing association property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.association.filter(x => x.metaEdName === associationName1));
-    const referencedEntity = metaEd.entity.association.get(associationName1);
+    const referencedEntity = namespace.entity.association.get(associationName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -631,6 +651,7 @@ describe('when building and enhancing choice property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const choiceDocumentation: string = 'ChoiceDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -651,15 +672,16 @@ describe('when building and enhancing choice property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one choice', () => {
-    expect(metaEd.entity.choice.size).toBe(1);
+    expect(namespace.entity.choice.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -670,7 +692,7 @@ describe('when building and enhancing choice property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.choice.filter(x => x.metaEdName === choiceName1));
-    const referencedEntity = metaEd.entity.choice.get(choiceName1);
+    const referencedEntity = namespace.entity.choice.get(choiceName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -690,6 +712,7 @@ describe('when building and enhancing common property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const commonDocumentation: string = 'CommonDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -709,15 +732,16 @@ describe('when building and enhancing common property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one common', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(namespace.entity.common.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -728,7 +752,7 @@ describe('when building and enhancing common property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.common.filter(x => x.metaEdName === commonName1));
-    const referencedEntity = metaEd.entity.common.get(commonName1);
+    const referencedEntity = namespace.entity.common.get(commonName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -748,6 +772,7 @@ describe('when building and enhancing descriptor property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const descriptorDocumentation: string = 'DescriptorDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -767,15 +792,16 @@ describe('when building and enhancing descriptor property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one descriptor', () => {
-    expect(metaEd.entity.descriptor.size).toBe(1);
+    expect(namespace.entity.descriptor.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -786,7 +812,7 @@ describe('when building and enhancing descriptor property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.descriptor.filter(x => x.metaEdName === descriptorName1));
-    const referencedEntity = metaEd.entity.descriptor.get(descriptorName1);
+    const referencedEntity = namespace.entity.descriptor.get(descriptorName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -806,6 +832,7 @@ describe('when building and enhancing domain entity property', () => {
   const domainEntityName2: string = 'DomainEntityName2';
   const domainEntityDocumentation: string = 'DomainEntityDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -824,11 +851,12 @@ describe('when building and enhancing domain entity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build two domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(2);
+    expect(namespace.entity.domainEntity.size).toBe(2);
   });
 
   it('should enhance property path name with context', () => {
@@ -839,7 +867,7 @@ describe('when building and enhancing domain entity property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(x => x.metaEdName === domainEntityName1));
-    const referencedEntity = metaEd.entity.domainEntity.get(domainEntityName1);
+    const referencedEntity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -859,6 +887,7 @@ describe('when building and enhancing enumeration property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const enumerationDocumentation: string = 'EnumerationDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -878,15 +907,16 @@ describe('when building and enhancing enumeration property', () => {
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.enumeration.size).toBe(1);
+    expect(namespace.entity.enumeration.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -897,7 +927,7 @@ describe('when building and enhancing enumeration property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.enumeration.filter(x => x.metaEdName === enumerationName1));
-    const referencedEntity = metaEd.entity.enumeration.get(enumerationName1);
+    const referencedEntity = namespace.entity.enumeration.get(enumerationName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -917,6 +947,7 @@ describe('when building and enhancing inline common property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const inlineCommonDocumentation: string = 'InlineCommonDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -936,15 +967,16 @@ describe('when building and enhancing inline common property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one inlineCommon', () => {
-    expect(metaEd.entity.common.size).toBe(1);
+    expect(namespace.entity.common.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -955,7 +987,7 @@ describe('when building and enhancing inline common property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.inlineCommon.filter(x => x.metaEdName === inlineCommonName1));
-    const referencedEntity = metaEd.entity.common.get(inlineCommonName1);
+    const referencedEntity = namespace.entity.common.get(inlineCommonName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -975,6 +1007,7 @@ describe('when building and enhancing school year enumeration property', () => {
   const domainEntityName1: string = 'DomainEntityName1';
   const schoolYearEnumerationDocumentation: string = 'SchoolYearEnumerationDocumentation';
   const contextName: string = 'ContextName';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -994,15 +1027,16 @@ describe('when building and enhancing school year enumeration property', () => {
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one enumeration', () => {
-    expect(metaEd.entity.schoolYearEnumeration.size).toBe(1);
+    expect(namespace.entity.schoolYearEnumeration.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -1017,7 +1051,7 @@ describe('when building and enhancing school year enumeration property', () => {
     const property = R.head(
       metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
     );
-    const referencedEntity = metaEd.entity.schoolYearEnumeration.get(schoolYearEnumerationName1);
+    const referencedEntity = namespace.entity.schoolYearEnumeration.get(schoolYearEnumerationName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -1044,6 +1078,7 @@ describe('when building and enhancing shared decimal property', () => {
   const decimalPlaces: string = '2';
   const minValue: string = '0';
   const maxValue: string = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -1064,19 +1099,20 @@ describe('when building and enhancing shared decimal property', () => {
       .sendToListener(new SharedDecimalBuilder(metaEd, []))
       .sendToListener(new DecimalTypeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one shared decimal', () => {
-    expect(metaEd.entity.sharedDecimal.size).toBe(1);
+    expect(namespace.entity.sharedDecimal.size).toBe(1);
   });
 
   it('should build one shared decimal type', () => {
-    expect(metaEd.entity.decimalType.size).toBe(1);
+    expect(namespace.entity.decimalType.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -1087,7 +1123,7 @@ describe('when building and enhancing shared decimal property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(x => x.metaEdName === sharedDecimalPropertyName1));
-    const referencedEntity = metaEd.entity.sharedDecimal.get(sharedDecimalName1);
+    const referencedEntity = namespace.entity.sharedDecimal.get(sharedDecimalName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -1095,7 +1131,7 @@ describe('when building and enhancing shared decimal property', () => {
 
   it('should enhance referenced entity with referring simple property', () => {
     const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(x => x.metaEdName === sharedDecimalPropertyName1));
-    const referencedEntity = metaEd.entity.decimalType.get(sharedDecimalName1);
+    const referencedEntity = namespace.entity.decimalType.get(sharedDecimalName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     // $FlowIgnore - referencedEntity could be null
@@ -1143,6 +1179,7 @@ describe('when building and enhancing shared integer property', () => {
   const contextName: string = 'ContextName';
   const minValue: string = '0';
   const maxValue: string = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -1163,19 +1200,20 @@ describe('when building and enhancing shared integer property', () => {
       .sendToListener(new SharedIntegerBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one shared integer', () => {
-    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(namespace.entity.sharedInteger.size).toBe(1);
   });
 
   it('should build one shared integer type', () => {
-    expect(metaEd.entity.integerType.size).toBe(1);
+    expect(namespace.entity.integerType.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -1186,7 +1224,7 @@ describe('when building and enhancing shared integer property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(x => x.metaEdName === sharedIntegerPropertyName1));
-    const referencedEntity = metaEd.entity.sharedInteger.get(sharedIntegerName1);
+    const referencedEntity = namespace.entity.sharedInteger.get(sharedIntegerName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -1194,7 +1232,7 @@ describe('when building and enhancing shared integer property', () => {
 
   it('should enhance referenced entity with referring simple property', () => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(x => x.metaEdName === sharedIntegerPropertyName1));
-    const referencedEntity = metaEd.entity.integerType.get(sharedIntegerName1);
+    const referencedEntity = namespace.entity.integerType.get(sharedIntegerName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     // $FlowIgnore - referencedEntity could be null
@@ -1230,6 +1268,7 @@ describe('when building and enhancing shared short property', () => {
   const contextName: string = 'ContextName';
   const minValue: string = '0';
   const maxValue: string = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -1250,19 +1289,20 @@ describe('when building and enhancing shared short property', () => {
       .sendToListener(new SharedIntegerBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one shared integer', () => {
-    expect(metaEd.entity.sharedInteger.size).toBe(1);
+    expect(namespace.entity.sharedInteger.size).toBe(1);
   });
 
   it('should build one shared integer type', () => {
-    expect(metaEd.entity.integerType.size).toBe(1);
+    expect(namespace.entity.integerType.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -1273,7 +1313,7 @@ describe('when building and enhancing shared short property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.sharedShort.filter(x => x.metaEdName === sharedShortPropertyName1));
-    const referencedEntity = metaEd.entity.sharedInteger.get(sharedShortName1);
+    const referencedEntity = namespace.entity.sharedInteger.get(sharedShortName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -1281,7 +1321,7 @@ describe('when building and enhancing shared short property', () => {
 
   it('should enhance referenced entity with referring simple property', () => {
     const property = R.head(metaEd.propertyIndex.sharedShort.filter(x => x.metaEdName === sharedShortPropertyName1));
-    const referencedEntity = metaEd.entity.integerType.get(sharedShortName1);
+    const referencedEntity = namespace.entity.integerType.get(sharedShortName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     // $FlowIgnore - referencedEntity could be null
@@ -1317,6 +1357,7 @@ describe('when building and enhancing shared string property', () => {
   const contextName: string = 'ContextName';
   const minLength: string = '0';
   const maxLength: string = '100';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -1337,19 +1378,20 @@ describe('when building and enhancing shared string property', () => {
       .sendToListener(new SharedStringBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build one domain entity', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(1);
+    expect(namespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should build one shared string', () => {
-    expect(metaEd.entity.sharedString.size).toBe(1);
+    expect(namespace.entity.sharedString.size).toBe(1);
   });
 
   it('should build one shared string type', () => {
-    expect(metaEd.entity.stringType.size).toBe(1);
+    expect(namespace.entity.stringType.size).toBe(1);
   });
 
   it('should enhance property path name with context', () => {
@@ -1360,7 +1402,7 @@ describe('when building and enhancing shared string property', () => {
 
   it('should enhance referenced entity', () => {
     const property = R.head(metaEd.propertyIndex.sharedString.filter(x => x.metaEdName === sharedStringPropertyName1));
-    const referencedEntity = metaEd.entity.sharedString.get(sharedStringName1);
+    const referencedEntity = namespace.entity.sharedString.get(sharedStringName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     expect(property.referencedEntity).toBe(referencedEntity);
@@ -1368,7 +1410,7 @@ describe('when building and enhancing shared string property', () => {
 
   it('should enhance referenced entity with referring simple property', () => {
     const property = R.head(metaEd.propertyIndex.sharedString.filter(x => x.metaEdName === sharedStringPropertyName1));
-    const referencedEntity = metaEd.entity.stringType.get(sharedStringName1);
+    const referencedEntity = namespace.entity.stringType.get(sharedStringName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
     // $FlowIgnore - referencedEntity could be null
@@ -1405,6 +1447,7 @@ describe('when building and enhancing domain entity merged properties', () => {
   const contextName1: string = 'ContextName1';
   const contextName2: string = 'ContextName2';
   const contextName3: string = 'ContextName3';
+  let namespace: any = null;
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
@@ -1433,11 +1476,12 @@ describe('when building and enhancing domain entity merged properties', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    namespace = metaEd.namespace.get('edfi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
   it('should build three domain entities', () => {
-    expect(metaEd.entity.domainEntity.size).toBe(3);
+    expect(namespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should enhance property path name with context', () => {
@@ -1464,7 +1508,7 @@ describe('when building and enhancing domain entity merged properties', () => {
         x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName2,
       ),
     );
-    const referencedEntity2 = metaEd.entity.domainEntity.get(domainEntityName2);
+    const referencedEntity2 = namespace.entity.domainEntity.get(domainEntityName2);
     expect(property2).toBeDefined();
     expect(referencedEntity2).toBeDefined();
     expect(property2.referencedEntity).toBe(referencedEntity2);
@@ -1474,7 +1518,7 @@ describe('when building and enhancing domain entity merged properties', () => {
         x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
       ),
     );
-    const referencedEntity3 = metaEd.entity.domainEntity.get(domainEntityName3);
+    const referencedEntity3 = namespace.entity.domainEntity.get(domainEntityName3);
     expect(property3).toBeDefined();
     expect(referencedEntity3).toBeDefined();
     expect(property3.referencedEntity).toBe(referencedEntity3);

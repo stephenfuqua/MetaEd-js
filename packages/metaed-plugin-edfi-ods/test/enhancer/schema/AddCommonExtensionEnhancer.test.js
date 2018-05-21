@@ -1,6 +1,6 @@
 // @flow
 import { newCommonExtension, newNamespace, newMetaEdEnvironment } from 'metaed-core';
-import type { CommonExtension, MetaEdEnvironment } from 'metaed-core';
+import type { CommonExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/CommonExtension';
 
 describe('when CommonExtension enhances common extension entity', () => {

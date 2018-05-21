@@ -2,10 +2,11 @@
 import type {
   CommonPropertySourceMap,
   EntityProperty,
-  ModelBase,
+  TopLevelEntity,
   MetaEdEnvironment,
   ModelType,
   ValidationFailure,
+  Namespace,
 } from 'metaed-core';
 import { getEntityForNamespaces } from 'metaed-core';
 
@@ -23,8 +24,12 @@ function cardinalitiesMatch(originalProperty: EntityProperty, overrideProperty: 
 function parentEntityProperty(namespaces: Array<Namespace>, overrideProperty: EntityProperty): ?EntityProperty {
   if (!validEntityTypes.includes(overrideProperty.parentEntity.type)) return undefined;
   // parent type is base type being extended - sketchy string manipulation here
-  const parentType = overrideProperty.parentEntity.type.replace('Extension', '');
-  const parentEntity: ?ModelBase = getEntityForNamespaces(overrideProperty.parentEntityName, namespaces, parentType);
+  const parentType: ModelType = ((overrideProperty.parentEntity.type.replace('Extension', ''): any): ModelType);
+  const parentEntity: ?TopLevelEntity = ((getEntityForNamespaces(
+    overrideProperty.parentEntityName,
+    namespaces,
+    parentType,
+  ): any): ?TopLevelEntity);
   if (parentEntity == null) return null;
   return parentEntity.properties.find(
     property => property.metaEdName === overrideProperty.metaEdName && property.type === overrideProperty.type,

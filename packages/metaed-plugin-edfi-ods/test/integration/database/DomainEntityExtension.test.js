@@ -54,6 +54,12 @@ describe('when domain entity extension has multiple properties', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -228,6 +234,12 @@ describe('when domain entity extension has optional collection property', () => 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 
@@ -333,6 +345,12 @@ describe('when domain entity extension has required collection property', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
 
     return enhanceGenerateAndExecuteSql(metaEd);
   });
@@ -455,6 +473,12 @@ describe('when domain entity extension has multiple common properties', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
 
     return enhanceGenerateAndExecuteSql(metaEd);
   });

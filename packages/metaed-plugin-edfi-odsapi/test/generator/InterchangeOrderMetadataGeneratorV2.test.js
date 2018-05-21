@@ -3,7 +3,7 @@
 import R from 'ramda';
 import xmlParser from 'xml-js';
 import { newPluginEnvironment, newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, Namespace, InterchangeItem, GeneratedOutput } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, GeneratedOutput } from 'metaed-core';
 import { newEdFiXsdEntityRepository, newMergedInterchange, addMergedInterchangeToRepository } from 'metaed-plugin-edfi-xsd';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { nextHead, nextSecond, nextThird, nextLength, xsdAttributeName, xsdAttributeOrder } from './TemplateTestHelper';

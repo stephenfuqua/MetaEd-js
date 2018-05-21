@@ -32,6 +32,7 @@ describe('when validating interchange extension has valid extendee', () => {
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -76,6 +77,7 @@ describe('when validating interchange extension has invalid extendee', () => {
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

@@ -8,11 +8,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
-      const extendedEntity: ?DomainEntity = getEntityForNamespaces(
+      const extendedEntity: ?DomainEntity = ((getEntityForNamespaces(
         domainEntitySubclass.baseEntityName,
         [namespace, ...namespace.dependencies],
         'domainEntity',
-      );
+      ): any): ?DomainEntity);
 
       failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
         'DomainEntitySubclassIdentityRenameMustMatchIdentityPropertyInBaseClass',

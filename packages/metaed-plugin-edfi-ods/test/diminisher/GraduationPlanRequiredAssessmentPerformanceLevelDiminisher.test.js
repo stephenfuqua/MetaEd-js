@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/GraduationPlanRequiredAssessmentPerformanceLevelDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newForeignKey } from '../../src/model/database/ForeignKey';
@@ -38,20 +38,24 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
   });
 
   it('should rename GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(graduationPlanRequiredAssessmentPerformanceLevel);
+    // $FlowIgnore - null check
+    const table: ?Table = tableEntities(metaEd, namespace).get(graduationPlanRequiredAssessmentPerformanceLevel);
     expect(table).toBeUndefined();
 
-    const targetTable: Table = tableEntities(metaEd, namespace).get(
+    const targetTable: ?Table = tableEntities(metaEd, namespace).get(
       graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
     );
     expect(targetTable).toBeDefined();
+    // $FlowIgnore - null check
     expect(targetTable.name).toBe(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
   });
 
   it('should update foreign key parent table name', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
+    const foreignKeys: ?Array<ForeignKey> = tableEntities(metaEd, namespace).get(
       graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
+      // $FlowIgnore - null check
     ).foreignKeys;
+    // $FlowIgnore - null check
     expect(foreignKeys.every(fk => fk.parentTableName === graduationPlanRequiredAssessmentAssessmentPerformanceLevel)).toBe(
       true,
     );

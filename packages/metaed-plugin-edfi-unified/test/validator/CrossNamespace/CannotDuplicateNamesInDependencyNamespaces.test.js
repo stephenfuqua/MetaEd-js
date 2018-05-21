@@ -37,6 +37,7 @@ describe('when DEs have different names across dependency-linked namespaces', ()
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -82,6 +83,7 @@ describe('when DEs have same names across dependency-linked namespaces', () => {
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -141,7 +143,9 @@ describe('when DE Extension has same name as DE Extension that is not across dep
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespacea = metaEd.namespace.get('extensiona');
     extensionNamespaceb = metaEd.namespace.get('extensionb');
+    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
+    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -192,6 +196,7 @@ describe('when DE has same name as DE extension across dependency-linked namespa
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -240,6 +245,7 @@ describe('when DE has same name as Common across dependency-linked namespaces', 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

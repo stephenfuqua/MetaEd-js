@@ -137,6 +137,7 @@ describe('when validating common property has extension override on domain entit
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -202,6 +203,7 @@ describe('when validating common property has extension override on association 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -266,6 +268,7 @@ describe('when validating common property has extension override on domain entit
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -327,6 +330,7 @@ describe('when validating common property has extension override on association 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -386,6 +390,7 @@ describe('when validating common property has extension override on domain entit
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -453,6 +458,7 @@ describe('when validating common property has extension override on association 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -518,6 +524,7 @@ describe('when validating common property has extension override on domain entit
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -585,6 +592,7 @@ describe('when validating common property has extension override on association 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

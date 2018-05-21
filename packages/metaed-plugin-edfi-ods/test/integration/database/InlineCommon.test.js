@@ -1380,6 +1380,12 @@ describe('when core inline common is a required property on an extension entity'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
     return enhanceGenerateAndExecuteSql(metaEd);
   });
 

@@ -8,7 +8,7 @@ import {
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
-import type { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdEnvironment } from 'metaed-core';
+import type { DomainEntity, DomainEntityProperty, IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newTable } from '../../src/model/database/Table';
 import { newIntegerColumn } from '../../src/model/database/Column';
@@ -737,13 +737,13 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
     const sourceEntityPK: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: sourceEntityPkName,
       isPartOfIdentity: true,
-      extensionNamespace,
+      namespace: extensionNamespace,
     });
     sourceEntity.identityProperties.push(sourceEntityPK);
 
     const sourceReference: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: sourceEntityName,
-      extensionNamespace,
+      namespace: extensionNamespace,
       referencedEntity: sourceEntity,
       data: {
         edfiOds: {

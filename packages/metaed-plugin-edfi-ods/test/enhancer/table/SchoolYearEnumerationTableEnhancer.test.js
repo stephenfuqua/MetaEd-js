@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { addEntityForNamespace, newMetaEdEnvironment, newNamespace, newSchoolYearEnumeration } from 'metaed-core';
-import type { MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
+import type { MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';

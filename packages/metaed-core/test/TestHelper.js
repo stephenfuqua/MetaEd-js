@@ -94,10 +94,6 @@ export function getMapTypeEnumeration(repository: EntityRepository, metaEdId: st
   return ((getEntity(repository, metaEdId, 'mapTypeEnumeration'): any): MapTypeEnumeration);
 }
 
-export function getNamespace(repository: EntityRepository, metaEdId: string): Namespace {
-  return ((getEntity(repository, metaEdId, 'namespace'): any): Namespace);
-}
-
 export function getSchoolYearEnumeration(repository: EntityRepository, metaEdId: string): SchoolYearEnumeration {
   return ((getEntity(repository, metaEdId, 'schoolYearEnumeration'): any): SchoolYearEnumeration);
 }

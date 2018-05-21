@@ -1,7 +1,7 @@
 // @flow
 import path from 'path';
 import { executePipeline, newMetaEdConfiguration, newPipelineOptions, newState } from 'metaed-core';
-import type { State, DomainEntity } from 'metaed-core';
+import type { State } from 'metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(30000);
@@ -80,22 +80,37 @@ describe('when building a simple core and two simple extension projects', () => 
     expect(state.validationFailure.length).toBe(0);
   });
 
-  it('should have built three domain entities', () => {
-    const domainEntities: Map<string, DomainEntity> = state.metaEd.entity.domainEntity;
-    expect(domainEntities.get('EdfiDomainEntity')).toBeDefined();
-    expect(domainEntities.get('GbDomainEntity')).toBeDefined();
-    expect(domainEntities.get('SampleDomainEntity')).toBeDefined();
+  it('should have core domain entity', () => {
+    const namespace: ?Namespace = state.metaEd.namespace.get('edfi');
+    if (namespace == null) throw new Error();
+    expect(namespace.entity.domainEntity.get('EdfiDomainEntity')).toBeDefined();
+  });
+
+  it('should have gb domain entity', () => {
+    const namespace: ?Namespace = state.metaEd.namespace.get('gb');
+    if (namespace == null) throw new Error();
+    expect(namespace.entity.domainEntity.get('GbDomainEntity')).toBeDefined();
+  });
+
+  it('should have sample domain entity', () => {
+    const namespace: ?Namespace = state.metaEd.namespace.get('sample');
+    if (namespace == null) throw new Error();
+    expect(namespace.entity.domainEntity.get('SampleDomainEntity')).toBeDefined();
   });
 
   it('should have core ods table', () => {
-    const edfiDomainEntity = state.metaEd.entity.domainEntity.get('EdfiDomainEntity');
+    const namespace: ?Namespace = state.metaEd.namespace.get('edfi');
+    if (namespace == null) throw new Error();
+    const edfiDomainEntity = namespace.entity.domainEntity.get('EdfiDomainEntity');
     if (edfiDomainEntity == null) throw new Error();
     expect(edfiDomainEntity.data.edfiOds.ods_Tables[0].name).toBe('EdfiDomainEntity');
     expect(edfiDomainEntity.data.edfiOds.ods_Tables[0].schema).toBe('edfi');
   });
 
   it('should have gb ods table with reference to core', () => {
-    const gbDomainEntity = state.metaEd.entity.domainEntity.get('GbDomainEntity');
+    const namespace: ?Namespace = state.metaEd.namespace.get('gb');
+    if (namespace == null) throw new Error();
+    const gbDomainEntity = namespace.entity.domainEntity.get('GbDomainEntity');
     if (gbDomainEntity == null) throw new Error();
     expect(gbDomainEntity.data.edfiOds.ods_Tables[0].name).toBe('GbDomainEntity');
     expect(gbDomainEntity.data.edfiOds.ods_Tables[0].schema).toBe('gb');
@@ -105,7 +120,9 @@ describe('when building a simple core and two simple extension projects', () => 
   });
 
   it('should have sample ods table with reference to core', () => {
-    const sampleDomainEntity = state.metaEd.entity.domainEntity.get('SampleDomainEntity');
+    const namespace: ?Namespace = state.metaEd.namespace.get('sample');
+    if (namespace == null) throw new Error();
+    const sampleDomainEntity = namespace.entity.domainEntity.get('SampleDomainEntity');
     if (sampleDomainEntity == null) throw new Error();
     expect(sampleDomainEntity.data.edfiOds.ods_Tables[0].name).toBe('SampleDomainEntity');
     expect(sampleDomainEntity.data.edfiOds.ods_Tables[0].schema).toBe('sample');

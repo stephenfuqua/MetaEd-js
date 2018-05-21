@@ -12,7 +12,7 @@ import {
   loadFileIndex,
   loadFiles,
   loadPlugins,
-  addProjectNameToNamespace,
+  initializeNamespaces,
   newMetaEdConfiguration,
   newState,
   orderByProp,
@@ -22,7 +22,7 @@ import {
   walkBuilders,
 } from 'metaed-core';
 import type { Table } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities, rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { orderRows } from '../../src/enhancer/AddSchemaContainerEnhancer';
 
 jest.unmock('final-fs');
@@ -86,13 +86,14 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
     state.metaEd.dataStandardVersion = '2.0.0';
     validateConfiguration(state);
     loadPlugins(state);
-    // NOTE: filtering interchange brief because of TeamCity issues with phatonmjs(?)
-    state.pluginManifest = state.pluginManifest.filter(manifest => manifest.shortName !== 'edfiInterchangeBrief');
+    state.pluginManifest = state.pluginManifest.filter(
+      manifest => manifest.shortName === 'edfiUnified' || manifest.shortName === 'edfiOds',
+    );
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespace(state);
+    initializeNamespaces(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);
@@ -101,11 +102,14 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
 
     fileMapForFailure(state);
 
-    const tables: Array<Table> = orderByProp('name')([...pluginEnvironment(state.metaEd).entity.table.values()]);
+    const coreNamespace: Namespace = state.metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+
+    const tables: Array<Table> = orderByProp('name')([...tableEntities(state.metaEd, coreNamespace).values()]);
     tableOrder = tables.map(table => table.name);
     fkOrder = tables.reduce((acc: Array<string>, table: Table) => acc.concat([...table.foreignKeys.map(fk => fk.name)]), []);
 
-    rowOrder = orderRows([...pluginEnvironment(state.metaEd).entity.row.values()]).map(
+    rowOrder = orderRows([...rowEntities(state.metaEd, coreNamespace).values()]).map(
       x => x.name + (x.type === 'enumerationRow' ? x.description : ''),
     );
 

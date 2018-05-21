@@ -93,7 +93,9 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
       // $FlowIgnore - allowing currentTopLevelEntity.type to specify the entityRepository Map property
-      const currentTopLevelEntityRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[this.currentTopLevelEntity.type];
+      const currentTopLevelEntityRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[
+        this.currentTopLevelEntity.type
+      ];
       if (currentTopLevelEntityRepository.has(this.currentTopLevelEntity.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'TopLevelEntityBuilder',

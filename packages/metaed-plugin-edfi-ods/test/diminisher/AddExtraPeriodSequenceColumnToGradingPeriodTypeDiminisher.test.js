@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -29,9 +29,11 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
   });
 
   it('should add PeriodSequence column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(gradingPeriodType);
+    const table: ?Table = tableEntities(metaEd, namespace).get(gradingPeriodType);
     expect(table).toBeDefined();
+    // $FlowIgnore - null check
     expect(R.head(table.columns).name).toBe(periodSequence);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).isNullable).toBe(true);
   });
 });
@@ -62,10 +64,13 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
   });
 
   it('should not modify PeriodSequence column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(gradingPeriodType);
+    const table: ?Table = tableEntities(metaEd, namespace).get(gradingPeriodType);
     expect(table).toBeDefined();
+    // $FlowIgnore - null check
     expect(table.columns).toHaveLength(1);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).name).toBe(periodSequence);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).isNullable).toBe(false);
   });
 });

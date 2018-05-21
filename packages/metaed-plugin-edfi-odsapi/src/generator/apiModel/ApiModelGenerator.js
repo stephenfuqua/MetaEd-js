@@ -12,8 +12,8 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const results: Array<GeneratedOutput> = [];
 
   if (versionSatisfies(metaEd.dataStandardVersion, V3OrGreater)) {
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
-    const structuredOutput = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).domainModelDefinition;
+    metaEd.entity.namespace.forEach((namespace: Namespace) => {
+      const structuredOutput = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).domainModelDefinition;
 
       results.push({
         name: 'API Model',

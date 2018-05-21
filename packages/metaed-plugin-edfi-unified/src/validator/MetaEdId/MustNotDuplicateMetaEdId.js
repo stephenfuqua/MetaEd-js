@@ -9,18 +9,19 @@ import type {
   ModelBase,
   ValidationFailure,
   TopLevelEntity,
+  Namespace,
 } from 'metaed-core';
 import { getAllEntitiesNoSimpleTypesForNamespaces, getAllPropertiesForNamespaces } from 'metaed-core';
 
 function getDomainItems(entity: EntityRepository): Array<DomainItem> {
-  const result = [];
+  const result: Array<DomainItem> = [];
   entity.domain.forEach(domain => result.push(...domain.domainItems));
   entity.subdomain.forEach(subdomain => result.push(...subdomain.domainItems));
   return result;
 }
 
 function getDomainItemsForNamespaces(namespaces: Array<Namespace>): Array<DomainItem> {
-  const result: Array<ModelBase> = [];
+  const result: Array<DomainItem> = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getDomainItems(namespace.entity));
   });
@@ -28,7 +29,7 @@ function getDomainItemsForNamespaces(namespaces: Array<Namespace>): Array<Domain
 }
 
 function getEnumerationItems(entity: EntityRepository): Array<EnumerationItem> {
-  const result = [];
+  const result: Array<EnumerationItem> = [];
   entity.enumeration.forEach(enumeration => result.push(...enumeration.enumerationItems));
   entity.mapTypeEnumeration.forEach(mapType => result.push(...mapType.enumerationItems));
   entity.schoolYearEnumeration.forEach(schoolYear => result.push(...schoolYear.enumerationItems));
@@ -36,7 +37,7 @@ function getEnumerationItems(entity: EntityRepository): Array<EnumerationItem> {
 }
 
 function getEnumerationItemsForNamespaces(namespaces: Array<Namespace>): Array<EnumerationItem> {
-  const result: Array<ModelBase> = [];
+  const result: Array<EnumerationItem> = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getEnumerationItems(namespace.entity));
   });
@@ -44,14 +45,14 @@ function getEnumerationItemsForNamespaces(namespaces: Array<Namespace>): Array<E
 }
 
 function getInterchangeItems(entity: EntityRepository): Array<InterchangeItem> {
-  const result = [];
+  const result: Array<InterchangeItem> = [];
   entity.interchange.forEach(interchange => result.push(...interchange.elements, ...interchange.identityTemplates));
   entity.interchangeExtension.forEach(extension => result.push(...extension.elements, ...extension.identityTemplates));
   return result;
 }
 
 function getInterchangeItemsForNamespaces(namespaces: Array<Namespace>): Array<InterchangeItem> {
-  const result: Array<ModelBase> = [];
+  const result: Array<InterchangeItem> = [];
   namespaces.forEach((namespace: Namespace) => {
     result.push(...getInterchangeItems(namespace.entity));
   });

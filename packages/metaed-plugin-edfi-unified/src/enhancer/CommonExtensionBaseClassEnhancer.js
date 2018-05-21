@@ -1,16 +1,16 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, CommonExtension, TopLevelEntity } from 'metaed-core';
 import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'CommonExtensionBaseClassEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'commonExtension').forEach(childEntity => {
-    const baseEntity: ?ModelBase = getEntityForNamespaces(
+  ((getAllEntitiesOfType(metaEd, 'commonExtension'): any): Array<CommonExtension>).forEach(childEntity => {
+    const baseEntity: ?TopLevelEntity = ((getEntityForNamespaces(
       childEntity.baseEntityName,
       [childEntity.namespace, ...childEntity.namespace.dependencies],
       'common',
-    );
+    ): any): ?TopLevelEntity);
 
     if (baseEntity) {
       childEntity.baseEntity = baseEntity;

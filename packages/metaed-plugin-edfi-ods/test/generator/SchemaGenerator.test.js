@@ -9,11 +9,12 @@ describe('when generating schemas for core namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName: 'edfi',
       isExtension: false,
-    });
-    metaEd.entity.namespace.set('edfi', namespace);
+    };
+    metaEd.namespace.set('edfi', namespace);
 
     result = await generate(metaEd);
   });
@@ -34,12 +35,13 @@ describe('when generating schemas for extension namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName: 'extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
-    });
-    metaEd.entity.namespace.set('extension', namespace);
+    };
+    metaEd.namespace.set('extension', namespace);
 
     result = await generate(metaEd);
   });

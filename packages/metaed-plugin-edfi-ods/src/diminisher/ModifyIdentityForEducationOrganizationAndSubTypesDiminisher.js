@@ -9,6 +9,7 @@ import type {
   DomainEntitySubclass,
   MetaEdEnvironment,
   ModelBase,
+  Namespace,
 } from 'metaed-core';
 import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 
@@ -100,6 +101,8 @@ function modifyIdentityForEducationOrganization(namespace: Namespace): void {
   addEntityPropertyEdfiOdsTo(surrogateKeyProperty);
   entity.data.edfiOds.ods_IdentityProperties.push(surrogateKeyProperty);
   entity.data.edfiOds.ods_Properties.push(surrogateKeyProperty);
+
+  modifyIdentityForEducationOrganizationSubclasses(namespace);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -108,7 +111,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (coreNamespace == null) return { enhancerName, success: false };
 
   modifyIdentityForEducationOrganization(coreNamespace);
-  modifyIdentityForEducationOrganizationSubclasses(coreNamespace);
 
   return {
     enhancerName,

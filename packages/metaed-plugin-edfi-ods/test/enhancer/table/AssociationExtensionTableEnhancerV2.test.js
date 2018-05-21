@@ -26,6 +26,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension', () => {
   const namespaceName = 'edfi';
@@ -108,15 +109,17 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should have schema equal to namespace', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -201,7 +204,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should have one primary key column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);

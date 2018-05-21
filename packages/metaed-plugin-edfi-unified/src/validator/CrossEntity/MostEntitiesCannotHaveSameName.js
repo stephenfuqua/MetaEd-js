@@ -15,6 +15,7 @@ import type {
   MetaEdEnvironment,
   EntityRepository,
   ValidationFailure,
+  Namespace,
 } from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 

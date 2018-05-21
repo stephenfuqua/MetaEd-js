@@ -1,6 +1,6 @@
 // @flow
 import { newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { Descriptor, MetaEdEnvironment } from 'metaed-core';
+import type { Descriptor, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/Descriptor';
 
 describe('when Descriptor enhances descriptor entity', () => {

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
@@ -36,6 +36,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
   });
 
   it('should rename InnovativeDollarsSpentStrategicPriorities column to InnovativeDollarsSpentOnStrategicPriorities', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(localEducationAgencyFederalFunds).columns);
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });
@@ -66,6 +67,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
   });
 
   it('should have InnovativeDollarsSpentOnStrategicPriorities column', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(localEducationAgencyFederalFunds).columns);
     expect(column.name).toBe(innovativeDollarsSpentOnStrategicPriorities);
   });

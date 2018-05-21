@@ -19,7 +19,7 @@ export function addDescriptorEdfiOdsTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'descriptor').forEach((descriptor: Descriptor) => {
+  ((getAllEntitiesOfType(metaEd, 'descriptor'): any): Array<Descriptor>).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiOdsTo(descriptor);
   });
 

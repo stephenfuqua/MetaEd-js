@@ -15,20 +15,21 @@ describe('when enhancing descriptor with no map type', () => {
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   let aggregate: Aggregate = NoAggregate;
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
@@ -42,14 +43,7 @@ describe('when enhancing descriptor with no map type', () => {
       metaEdName,
       isMapTypeRequired: false,
       isMapTypeOptional: false,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -61,7 +55,7 @@ describe('when enhancing descriptor with no map type', () => {
         },
       },
     });
-    metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
+    namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
     enhance(metaEd);
     aggregate = descriptor.data.edfiOdsApi.aggregate;
@@ -98,20 +92,21 @@ describe('when enhancing descriptor with map type', () => {
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   let aggregate: Aggregate = NoAggregate;
   let typeAggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     aggregate = NoAggregate;
     typeAggregate = NoAggregate;
 
@@ -131,14 +126,7 @@ describe('when enhancing descriptor with map type', () => {
       metaEdName: entityName,
       isMapTypeRequired: true,
       isMapTypeOptional: false,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: descriptorTableName,
@@ -151,7 +139,7 @@ describe('when enhancing descriptor with map type', () => {
         },
       },
     });
-    metaEd.entity.descriptor.set(descriptor.metaEdName, descriptor);
+    namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
     enhance(metaEd);
     aggregate = descriptor.data.edfiOdsApi.aggregate;

@@ -1,5 +1,5 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newDateColumn, newIntegerColumn, newStringColumn } from '../../model/database/Column';

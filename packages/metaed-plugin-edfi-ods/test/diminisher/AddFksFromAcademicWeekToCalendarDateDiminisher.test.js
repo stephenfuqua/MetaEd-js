@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddFksFromAcademicWeekToCalendarDateDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -35,17 +35,20 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   });
 
   it('should add two foreign keys', () => {
+    // $FlowIgnore null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
   });
 
   it('should have sourceReference on each foreign key', () => {
+    // $FlowIgnore null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys[0].sourceReference.isSyntheticRelationship).toBe(true);
     expect(foreignKeys[1].sourceReference.isSyntheticRelationship).toBe(true);
   });
 
   it('should have correct foreign key relationship for first foreign key', () => {
+    // $FlowIgnore null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(academicWeek).foreignKeys);
     expect(foreignKey.columnNames).toHaveLength(2);
 
@@ -59,6 +62,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   });
 
   it('should have correct foreign key relationship for second foreign key', () => {
+    // $FlowIgnore null check
     const foreignKey: ForeignKey = R.last(tableEntities(metaEd, namespace).get(academicWeek).foreignKeys);
     expect(foreignKey.columnNames).toHaveLength(2);
 
@@ -127,6 +131,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
   });
 
   it('should not modify existing foreign keys', () => {
+    // $FlowIgnore null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
     expect(R.head(foreignKeys).name).toBe('');

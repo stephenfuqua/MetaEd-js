@@ -7,7 +7,7 @@ import {
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
-import type { Descriptor, EnumerationItem, MapTypeEnumeration, MetaEdEnvironment } from 'metaed-core';
+import type { Descriptor, EnumerationItem, MapTypeEnumeration, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/DescriptorMapTypeRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -55,6 +55,7 @@ describe('when DescriptorMapTypeRowEnhancer enhances map type descriptor', () =>
   });
 
   it('should have correct enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -105,11 +106,14 @@ describe("when DescriptorMapTypeRowEnhancer enhances map type descriptor with na
   });
 
   it('should create row', () => {
+    // $FlowIgnore - null check
     expect(rowEntities(metaEd, namespace).size).toBe(1);
+    // $FlowIgnore - null check
     expect(rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`)).toBeDefined();
   });
 
   it('should have correct enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);

@@ -1,6 +1,6 @@
 // @flow
 import { newIntegerProperty, newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { IntegerProperty, MetaEdEnvironment } from 'metaed-core';
+import type { IntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/property/EntityProperty';
 
 describe('when PropertyEnhancer enhances integer property', () => {

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { DomainEntity, MetaEdEnvironment } from 'metaed-core';
+import type { DomainEntity, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/IdentificationDocumentTableDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -51,10 +51,10 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
 
   it('should rename table in repository', () => {
     const newLocal = tableEntities(metaEd, namespace);
-    const table: Table = newLocal.get(`${domainEntityName}Schema${identificationDocument}`);
+    const table: ?Table = newLocal.get(`${domainEntityName}Schema${identificationDocument}`);
     expect(table).toBeUndefined();
 
-    const targetTable: Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
+    const targetTable: ?Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
     expect(targetTable).toBeDefined();
     expect(targetTable).toBe(identificationDocumentTable);
   });
@@ -66,6 +66,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
   });
 
   it('should update foreign key parent table name', () => {
+    // $FlowIgnore - null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument)
       .foreignKeys;
     expect(foreignKeys.every(fk => fk.parentTableName === domainEntityName + identificationDocument)).toBe(true);
@@ -109,14 +110,14 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
   });
 
   it('should rename tables in repository', () => {
-    const table1: Table = tableEntities(metaEd, namespace).get(`${domainEntityName}Schema${identificationDocument}`);
+    const table1: ?Table = tableEntities(metaEd, namespace).get(`${domainEntityName}Schema${identificationDocument}`);
     expect(table1).toBeUndefined();
 
-    const targetTable1: Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
+    const targetTable1: ?Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
     expect(targetTable1).toBeDefined();
     expect(targetTable1).toBe(identificationDocumentTable1);
 
-    const table2: Table = tableEntities(metaEd, namespace).get(`${domainEntityName}OtherSchema${identificationDocument}`);
+    const table2: ?Table = tableEntities(metaEd, namespace).get(`${domainEntityName}OtherSchema${identificationDocument}`);
     expect(table2).toBeUndefined();
   });
 
@@ -164,20 +165,20 @@ describe('when IdentificationDocumentTableDiminisher diminishes non matching tab
   });
 
   it('should not modify tables in repository', () => {
-    const table1: Table = tableEntities(metaEd, namespace).get(`${domainEntityName}Schema${identificationDocument}1`);
+    const table1: ?Table = tableEntities(metaEd, namespace).get(`${domainEntityName}Schema${identificationDocument}1`);
     expect(table1).toBeDefined();
     expect(table1).toBe(identificationDocumentTable1);
 
-    const targetTable1: Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
+    const targetTable1: ?Table = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument);
     expect(targetTable1).toBeUndefined();
 
-    const table2: Table = tableEntities(metaEd, namespace).get(`${domainEntityName}OtherSchema${identificationDocument}2`);
+    const table2: ?Table = tableEntities(metaEd, namespace).get(`${domainEntityName}OtherSchema${identificationDocument}2`);
     expect(table2).toBeDefined();
     expect(table2).toBe(identificationDocumentTable2);
   });
 
   it('should not modify table in the domain entity ods tables', () => {
-    const odsTables: Table = (namespace.entity.domainEntity.get(domainEntityName): any).data.edfiOds.ods_Tables;
+    const odsTables: ?Table = (namespace.entity.domainEntity.get(domainEntityName): any).data.edfiOds.ods_Tables;
     expect(odsTables).toHaveLength(2);
     expect(R.head(odsTables)).toBe(identificationDocumentTable1);
     expect(R.last(odsTables)).toBe(identificationDocumentTable2);

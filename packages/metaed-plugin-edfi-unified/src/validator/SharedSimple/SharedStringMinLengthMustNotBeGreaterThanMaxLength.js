@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure, SharedStringSourceMap } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, SharedStringSourceMap, Namespace } from 'metaed-core';
 
 // eslint-disable-next-line no-unused-vars
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

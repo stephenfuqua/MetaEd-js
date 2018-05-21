@@ -43,6 +43,7 @@ describe('when looking for property on current entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName1): any),
@@ -97,6 +98,7 @@ describe('when looking for first domain entity on association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.association.get(AssociationName1): any),
@@ -155,6 +157,7 @@ describe('when looking for second domain entity on association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.association.get(AssociationName1): any),
@@ -201,6 +204,7 @@ describe('when looking for non identity property on current entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName1): any),
@@ -239,6 +243,7 @@ describe('when looking for property that does not exist', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName1): any),
@@ -285,6 +290,7 @@ describe('when looking for duplicated property with context', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
@@ -342,6 +348,7 @@ describe('when looking for deep property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName3): any),
@@ -390,6 +397,7 @@ describe('when looking for non primary key property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntity.get(domainEntityName2): any),
@@ -443,6 +451,7 @@ describe('when looking for property on parent abstract entity', () => {
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntitySubclass.get(domainEntitySubclassName1): any),
@@ -500,6 +509,7 @@ describe('when looking for property on parent domain entity from subclass', () =
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntitySubclass.get(domainEntitySubclassName1): any),
@@ -556,6 +566,7 @@ describe('when looking for property on parent domain entity from extension', () 
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.domainEntityExtension.get(domainEntityName1): any),
@@ -621,6 +632,7 @@ describe('when looking for property on parent association from subclass', () => 
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.associationSubclass.get(associationSubclassName1): any),
@@ -689,6 +701,7 @@ describe('when looking for property on parent association from extension', () =>
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
       [coreNamespace],
       (coreNamespace.entity.associationExtension.get(associationName1): any),
@@ -761,8 +774,9 @@ describe('when looking for property on parent association from extension across 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    if (coreNamespace == null) throw new Error();
+    if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
-
     property = findReferencedProperty(
       [coreNamespace, extensionNamespace],
       (extensionNamespace.entity.associationExtension.get(associationName1): any),
@@ -819,6 +833,7 @@ describe('when looking for non identity property on parent domain entity from su
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
 
     property = findReferencedProperty(
       [coreNamespace],

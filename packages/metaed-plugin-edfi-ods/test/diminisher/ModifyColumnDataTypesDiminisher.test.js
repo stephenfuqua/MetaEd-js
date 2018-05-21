@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ModifyColumnDataTypesDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newDateColumn, newStringColumn } from '../../src/model/database/Column';
@@ -39,6 +39,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
   });
 
   it('should modify data type for matching columns', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentIndicator).columns;
     expect(columns).toHaveLength(2);
     expect(R.head(columns).name).toBe(beginDate);
@@ -72,6 +73,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
   });
 
   it('should modify data type for matching columns', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(educationContentAuthor).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(author);
@@ -105,6 +107,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', (
   });
 
   it('should not modify column datatype or length', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(tableName).columns;
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(columnName);

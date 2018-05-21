@@ -1,6 +1,6 @@
 // @flow
 import { newDomainEntityExtension, newNamespace, newMetaEdEnvironment } from 'metaed-core';
-import type { DomainEntityExtension, MetaEdEnvironment } from 'metaed-core';
+import type { DomainEntityExtension, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/DomainEntityExtension';
 
 describe('when DomainEntityExtension enhances domain entity extension entity', () => {

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { getEntitiesOfTypeForNamespaces, newIntegerProperty } from 'metaed-core';
-import type { EnhancerResult, EntityProperty, IntegerProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
+import type { EnhancerResult, EntityProperty, IntegerProperty, MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'CreateUsisFromUniqueIdsEnhancer';

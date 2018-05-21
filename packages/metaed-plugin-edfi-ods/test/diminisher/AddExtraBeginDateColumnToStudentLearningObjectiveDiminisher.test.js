@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
@@ -45,16 +45,22 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
   });
 
   it('should add StudentSectionAssociationBeginDate column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(studentLearningObjective);
+    const table: ?Table = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(table).toBeDefined();
+    // $FlowIgnore - null check
     expect(R.head(table.columns).name).toBe(studentSectionAssociationBeginDate);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).isNullable).toBe(true);
   });
 
   it('should have correct foreign key relationship', () => {
-    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys);
+    // $FlowIgnore - null check
+    const foreignKey: ?ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys);
+    // $FlowIgnore - null check
     expect(foreignKey.foreignTableName).toBe(studentSectionAssociation);
+    // $FlowIgnore - null check
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(studentSectionAssociationBeginDate);
+    // $FlowIgnore - null check
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(beginDate);
   });
 });
@@ -87,14 +93,18 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
   });
 
   it('should not modify StudentSectionAssociationBeginDate column', () => {
-    const table: Table = tableEntities(metaEd, namespace).get(studentLearningObjective);
+    const table: ?Table = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(table).toBeDefined();
+    // $FlowIgnore - null check
     expect(table.columns).toHaveLength(1);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).name).toBe(studentSectionAssociationBeginDate);
+    // $FlowIgnore - null check
     expect(R.head(table.columns).isNullable).toBe(false);
   });
 
   it('should not modify foreign keys', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys).toHaveLength(0);
   });
 });

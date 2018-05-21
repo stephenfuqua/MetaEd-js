@@ -1,5 +1,6 @@
 // @flow
 import type { SemVer } from '../MetaEdEnvironment';
+import type { Namespace } from '../model/Namespace';
 
 export type PluginEnvironment = {
   // the plugin-specific namespace partition to the plugin's entity repository

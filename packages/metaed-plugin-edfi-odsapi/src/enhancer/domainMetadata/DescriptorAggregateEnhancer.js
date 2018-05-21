@@ -1,6 +1,5 @@
 // @flow
-import R from 'ramda';
-import { getEntitiesOfType, asTopLevelEntity, normalizeEnumerationSuffix } from 'metaed-core';
+import { getAllEntitiesOfType, asTopLevelEntity, normalizeEnumerationSuffix } from 'metaed-core';
 import type { MetaEdEnvironment, ModelBase, EnhancerResult, TopLevelEntity, Namespace } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds, DescriptorEdfiOds } from 'metaed-plugin-edfi-ods';
 import type { DescriptorEdfiOdsApi } from '../../model/Descriptor';
@@ -59,17 +58,16 @@ function generateAggregate(entity: TopLevelEntity, namespace: Namespace): ?Aggre
   return aggregate;
 }
 
-function enhanceSingleEntity(entity: TopLevelEntity, namespaces: Array<Namespace>) {
-  const entityNamespace = R.head(namespaces.filter(n => n.namespaceName === entity.namespace.namespaceName));
-  const aggregate = generateAggregate(entity, entityNamespace);
+function enhanceSingleEntity(entity: TopLevelEntity) {
+  const aggregate = generateAggregate(entity, entity.namespace);
   if (aggregate == null) return;
   ((entity.data.edfiOdsApi: any): TopLevelEntityEdfiOdsApi).aggregate = aggregate;
-  ((entityNamespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(aggregate);
+  ((entity.namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.push(aggregate);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'descriptor').forEach((modelBase: ModelBase) => {
-    enhanceSingleEntity(asTopLevelEntity(modelBase), Array.from(metaEd.entity.namespace.values()));
+  getAllEntitiesOfType(metaEd, 'descriptor').forEach((modelBase: ModelBase) => {
+    enhanceSingleEntity(asTopLevelEntity(modelBase));
   });
 
   return {

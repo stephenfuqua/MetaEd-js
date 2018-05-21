@@ -12,6 +12,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationSubclassTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when AssociationSubclassTableEnhancer enhances association subclass', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
@@ -92,15 +93,17 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
   });
 
   it('should have schema equal to namespace', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationSubclassName).schema).toBe('extension');
+    // $FlowIgnore - null check
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(associationSubclassName)).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationSubclassName).description).toBe(documentation);
+    // $FlowIgnore - null check
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(associationSubclassName)).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationSubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationSubclassName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationSubclassPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -186,9 +189,11 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass wi
   });
 
   it('should have one primary key column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationSubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationSubclassName));
     expect(table.columns).toHaveLength(1);
+    // $FlowIgnore - null check
     expect(table.columns[0].name).toBe(associationSubclassPkPropertyName);
+    // $FlowIgnore - null check
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 });

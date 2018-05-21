@@ -25,7 +25,7 @@ describe('when there are duplicate string types', () => {
     );
     namespace.entity.stringType.set(
       coreDuplicatedSimpleTypeName,
-      Object.assign(newStringType(), { metaEdName: coreDuplicatedSimpleTypeName,namespace }),
+      Object.assign(newStringType(), { metaEdName: coreDuplicatedSimpleTypeName, namespace }),
     );
     extensionNamespace.entity.stringType.set(
       `${extensionNamespace.projectExtension}-${coreDuplicatedSimpleTypeName}`,

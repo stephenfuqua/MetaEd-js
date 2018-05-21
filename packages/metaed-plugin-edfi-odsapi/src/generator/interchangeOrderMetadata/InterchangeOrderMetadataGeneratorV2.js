@@ -4,7 +4,7 @@ import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
 import { V2Only, versionSatisfies } from 'metaed-core';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 
 const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';

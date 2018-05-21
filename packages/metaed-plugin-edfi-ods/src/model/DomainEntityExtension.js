@@ -17,9 +17,11 @@ export function addDomainEntityExtensionEdfiOdsTo(domainEntityExtension: DomainE
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'domainEntityExtension').forEach((domainEntityExtension: DomainEntityExtension) => {
-    addDomainEntityExtensionEdfiOdsTo(domainEntityExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'domainEntityExtension'): any): Array<DomainEntityExtension>).forEach(
+    (domainEntityExtension: DomainEntityExtension) => {
+      addDomainEntityExtensionEdfiOdsTo(domainEntityExtension);
+    },
+  );
 
   return {
     enhancerName,

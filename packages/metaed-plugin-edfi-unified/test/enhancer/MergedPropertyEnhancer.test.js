@@ -9,7 +9,7 @@ import {
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
-import type { DomainEntityProperty, MetaEdEnvironment } from 'metaed-core';
+import type { DomainEntityProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/MergedPropertyEnhancer';
 
 describe('when enhancing top level entity with no merged properties', () => {
@@ -99,7 +99,6 @@ describe('when enhancing top level entity with nested reference to top level ref
     const mergedProperty = Object.assign(newMergedProperty(), {
       mergePropertyPath: [domainEntityName3, domainEntityName2],
       targetPropertyPath: [domainEntityName2],
-      namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -174,7 +173,6 @@ describe('when enhancing top level entity with top level reference to nested ref
     const mergedProperty = Object.assign(newMergedProperty(), {
       mergePropertyPath: [domainEntityName3],
       targetPropertyPath: [domainEntityName2, domainEntityName3],
-      namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -262,7 +260,6 @@ describe('when enhancing top level entity with nested reference to nested refere
     const mergedProperty = Object.assign(newMergedProperty(), {
       mergePropertyPath: [domainEntityName3, domainEntityName4],
       targetPropertyPath: [domainEntityName2, domainEntityName4],
-      namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -376,7 +373,6 @@ describe('when enhancing top level entity with deep nested reference to deep nes
     const mergedProperty = Object.assign(newMergedProperty(), {
       mergePropertyPath: [domainEntityName3, domainEntityName4, domainEntityName6],
       targetPropertyPath: [domainEntityName2, domainEntityName5, domainEntityName6],
-      namespace,
     });
     domainEntity1Property2.mergedProperties.push(mergedProperty);
     addEntityForNamespace(domainEntity1);

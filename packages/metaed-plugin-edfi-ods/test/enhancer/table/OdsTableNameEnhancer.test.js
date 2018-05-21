@@ -7,7 +7,14 @@ import {
   newSchoolYearEnumeration,
   newNamespace,
 } from 'metaed-core';
-import type { Descriptor, DomainEntity, Enumeration, MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
+import type {
+  Descriptor,
+  DomainEntity,
+  Enumeration,
+  MetaEdEnvironment,
+  SchoolYearEnumeration,
+  Namespace,
+} from 'metaed-core';
 import { enhance } from '../../../src/enhancer/OdsTableNameEnhancer';
 
 describe('when enhancing a domain entity with ods table name', () => {

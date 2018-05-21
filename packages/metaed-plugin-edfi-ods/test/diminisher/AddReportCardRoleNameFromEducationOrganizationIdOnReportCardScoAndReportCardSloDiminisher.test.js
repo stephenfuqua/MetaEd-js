@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAndReportCardSloDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -51,12 +51,14 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
+    // $FlowIgnore null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).columns);
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
     const foreignKey: ForeignKey = R.head(
+      // $FlowIgnore null check
       tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).foreignKeys,
     );
     expect(foreignKey.foreignTableName).toBe(reportCard);
@@ -103,12 +105,14 @@ describe('when AddReportCardRoleNameFromEducationOrganizationIdOnReportCardScoAn
   });
 
   it('should rename EducationOrganizationId column to ReportCardEducationOrganizationId', () => {
+    // $FlowIgnore null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).columns);
     expect(column.name).toBe(reportCardEducationOrganizationId);
   });
 
   it('should have correct foreign key relationship', () => {
     const foreignKey: ForeignKey = R.head(
+      // $FlowIgnore null check
       tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).foreignKeys,
     );
     expect(foreignKey.foreignTableName).toBe(reportCard);

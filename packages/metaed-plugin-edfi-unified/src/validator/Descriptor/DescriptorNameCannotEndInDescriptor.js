@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure, DescriptorSourceMap } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, DescriptorSourceMap, Namespace } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

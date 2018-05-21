@@ -1,5 +1,5 @@
 // @flow
-import type { Interchange, InterchangeExtension, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { Interchange, InterchangeExtension, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { getEntitiesOfTypeForNamespaces, asInterchange } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {

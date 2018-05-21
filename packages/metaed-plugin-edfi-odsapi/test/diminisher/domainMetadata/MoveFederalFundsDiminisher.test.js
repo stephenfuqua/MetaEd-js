@@ -15,7 +15,13 @@ describe('when diminishing with no matching entity tables', () => {
   let namespace: Namespace = NoNamespace;
 
   beforeAll(() => {
+    namespace = {
+      ...newNamespace(),
+      namespaceName,
+    };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    metaEd.dataStandardVersion = '2.0.0';
 
     aggregate = {
       root: entityName,
@@ -28,15 +34,14 @@ describe('when diminishing with no matching entity tables', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: 'edfi',
+          schema: namespaceName,
           hasIsA: false,
           requiresSchema: false,
         },
       ],
     };
 
-    namespace = Object.assign(newNamespace(), {
-      namespaceName,
+    Object.assign(namespace, {
       data: {
         edfiOdsApi: {
           aggregates: [aggregate],
@@ -44,7 +49,6 @@ describe('when diminishing with no matching entity tables', () => {
       },
     });
 
-    metaEd.entity.namespace.set(namespaceName, namespace);
     enhance(metaEd);
   });
 
@@ -67,7 +71,12 @@ describe('when diminishing with matching entity tables', () => {
   let namespace: Namespace = NoNamespace;
 
   beforeAll(() => {
+    namespace = {
+      ...newNamespace(),
+      namespaceName,
+    };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     metaEd.dataStandardVersion = '2.0.0';
 
     aggregate1 = {
@@ -124,8 +133,7 @@ describe('when diminishing with matching entity tables', () => {
       ],
     };
 
-    namespace = Object.assign(newNamespace(), {
-      namespaceName,
+    Object.assign(namespace, {
       data: {
         edfiOdsApi: {
           aggregates: [aggregate1, aggregate2],
@@ -133,7 +141,6 @@ describe('when diminishing with matching entity tables', () => {
       },
     });
 
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
     enhance(metaEd);
   });
 

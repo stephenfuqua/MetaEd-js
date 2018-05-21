@@ -17,9 +17,11 @@ export function addAssociationExtensionEdfiOdsTo(associationExtension: Associati
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'associationExtension').forEach((associationExtension: AssociationExtension) => {
-    addAssociationExtensionEdfiOdsTo(associationExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'associationExtension'): any): Array<AssociationExtension>).forEach(
+    (associationExtension: AssociationExtension) => {
+      addAssociationExtensionEdfiOdsTo(associationExtension);
+    },
+  );
 
   return {
     enhancerName,

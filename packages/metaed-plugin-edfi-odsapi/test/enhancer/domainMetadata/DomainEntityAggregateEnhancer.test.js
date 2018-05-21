@@ -15,20 +15,19 @@ describe('when enhancing a domain entity', () => {
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
-
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const table: Table = {
       ...newTable(),
       name: tableName,
@@ -37,14 +36,7 @@ describe('when enhancing a domain entity', () => {
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -53,7 +45,7 @@ describe('when enhancing a domain entity', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
     aggregate = domainEntity.data.edfiOdsApi.aggregate;
@@ -87,20 +79,19 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
-
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const table: Table = {
       ...newTable(),
       name: tableName,
@@ -110,14 +101,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
       allowPrimaryKeyUpdates: true,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -126,7 +110,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
     aggregate = domainEntity.data.edfiOdsApi.aggregate;
@@ -154,20 +138,19 @@ describe('when enhancing a domain entity that has a required collection table', 
   const namespaceName: string = 'namespace';
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), {
+  const namespace: Namespace = {
+    ...newNamespace(),
     namespaceName,
     data: {
       edfiOdsApi: {
         aggregates: [],
       },
     },
-  });
-
+  };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   let aggregate: Aggregate = NoAggregate;
 
   beforeAll(() => {
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const table: Table = {
       ...newTable(),
       name: tableName,
@@ -177,14 +160,7 @@ describe('when enhancing a domain entity that has a required collection table', 
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -193,7 +169,7 @@ describe('when enhancing a domain entity that has a required collection table', 
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
+    namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
     aggregate = domainEntity.data.edfiOdsApi.aggregate;

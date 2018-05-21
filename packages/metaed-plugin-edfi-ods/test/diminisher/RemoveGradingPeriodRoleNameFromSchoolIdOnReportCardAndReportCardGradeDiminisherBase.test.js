@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisherBase';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
@@ -51,11 +51,13 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename column', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCard).columns);
     expect(column.name).toBe(schoolId);
   });
 
   it('should rename foreign key columns', () => {
+    // $FlowIgnore - null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(reportCard).foreignKeys);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
@@ -101,11 +103,13 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should remove column', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardGrade).columns);
     expect(column).toBeUndefined();
   });
 
   it('should rename foreign key columns', () => {
+    // $FlowIgnore - null check
     const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(reportCardGrade).foreignKeys);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
@@ -160,16 +164,15 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename column', () => {
-    const column: Column = R.head(
-      tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).columns,
-    );
+    // $FlowIgnore - null check
+    const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective).columns);
     expect(column.name).toBe(schoolId);
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      reportCardStudentCompetencyObjective,
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(reportCardStudentCompetencyObjective)
+      .foreignKeys;
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
     expect(R.head(R.last(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
@@ -225,16 +228,15 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename column', () => {
-    const column: Column = R.head(
-      tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).columns,
-    );
+    // $FlowIgnore - null check
+    const column: Column = R.head(tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective).columns);
     expect(column.name).toBe(schoolId);
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      reportCardStudentLearningObjective,
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(reportCardStudentLearningObjective)
+      .foreignKeys;
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
     expect(R.head(R.last(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
@@ -281,16 +283,14 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename column', () => {
-    const column: Column = R.head(
-      tableEntities(metaEd, namespace).get(studentAcademicRecordReportCard).columns,
-    );
+    // $FlowIgnore - null check
+    const column: Column = R.head(tableEntities(metaEd, namespace).get(studentAcademicRecordReportCard).columns);
     expect(column.name).toBe(schoolId);
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKey: ForeignKey = R.head(
-      tableEntities(metaEd, namespace).get(studentAcademicRecordReportCard).foreignKeys,
-    );
+    // $FlowIgnore - null check
+    const foreignKey: ForeignKey = R.head(tableEntities(metaEd, namespace).get(studentAcademicRecordReportCard).foreignKeys);
     expect(R.head(foreignKey.columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(foreignKey.columnNames).foreignTableColumnName).toBe(schoolId);
   });

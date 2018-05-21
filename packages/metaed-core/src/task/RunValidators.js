@@ -4,9 +4,9 @@ import type { Validator } from '../validator/Validator';
 import type { PluginManifest } from '../plugin/PluginTypes';
 
 export function execute(pluginManifest: PluginManifest, state: State): void {
+  if (state.metaEd.namespace == null || state.metaEd.propertyIndex == null) return;
+
   pluginManifest.metaEdPlugin.validator.forEach((validator: Validator) => {
-    if (state.metaEd.entity != null && state.metaEd.propertyIndex != null) {
-      state.validationFailure.push(...validator(state.metaEd));
-    }
+    state.validationFailure.push(...validator(state.metaEd));
   });
 }

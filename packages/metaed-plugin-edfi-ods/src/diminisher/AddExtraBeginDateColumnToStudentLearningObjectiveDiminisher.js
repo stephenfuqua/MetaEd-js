@@ -1,6 +1,6 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumn } from '../model/database/Table';
 import { renameForeignKeyColumn } from './DiminisherHelper';
 import { newDateColumn } from '../model/database/Column';

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/AddRoleNameFromEducationContentDSLRMUriDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -38,6 +38,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
 
   it('should rename DerivativeSourceLearningResourceMetadataURI column to LearningResourceMetadataURI', () => {
     const column: Column = R.head(
+      // $FlowIgnore null check
       tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI).columns,
     );
     expect(column.name).toBe(learningResourceMetadataURI);
@@ -45,6 +46,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
 
   it('should set column length', () => {
     const column: Column = R.head(
+      // $FlowIgnore null check
       tableEntities(metaEd, namespace).get(educationContentDerivativeSourceLearningResourceMetadataURI).columns,
     );
     expect(R.prop('length', column)).toBe('225');
@@ -78,11 +80,13 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 
   it('should rename DerivativeSourceURI column to URI', () => {
+    // $FlowIgnore null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI).columns);
     expect(column.name).toBe(uri);
   });
 
   it('should set column length', () => {
+    // $FlowIgnore null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI).columns);
     expect(R.prop('length', column)).toBe('225');
     expect(column.dataType).toBe('[NVARCHAR](225)');

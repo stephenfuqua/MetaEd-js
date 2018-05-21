@@ -7,7 +7,7 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'AssociationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'association')
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'association')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -15,7 +15,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       tables.push(mainTable);
       buildTablesFromProperties(entity, mainTable, tables);
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, entity.namespace, tables);
+      addTables(metaEd, tables);
     });
 
   return {

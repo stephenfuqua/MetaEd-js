@@ -1,6 +1,6 @@
 // @flow
 import { newIntegerProperty, versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addColumn, getForeignKeys } from '../model/database/Table';
 import { renameColumn } from './DiminisherHelper';
 import { initializeColumn, newIntegerColumn } from '../model/database/Column';

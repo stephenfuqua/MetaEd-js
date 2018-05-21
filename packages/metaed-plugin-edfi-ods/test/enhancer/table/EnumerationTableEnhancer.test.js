@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { Enumeration, MetaEdEnvironment } from 'metaed-core';
+import type { Enumeration, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { addEntityForNamespace, newEnumeration, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/EnumerationTableEnhancer';

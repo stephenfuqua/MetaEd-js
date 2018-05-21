@@ -20,6 +20,7 @@ import type {
   DomainEntitySubclass,
   Association,
   AssociationSubclass,
+  Namespace,
 } from 'metaed-core';
 
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';

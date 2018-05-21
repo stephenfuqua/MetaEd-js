@@ -19,27 +19,20 @@ describe('when enhancing association extensions', () => {
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [],
         },
       },
-    });
-
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     const baseEntity: Association = Object.assign(newAssociation(), {
       metaEdName: baseEntityName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: baseTableName,
@@ -47,7 +40,7 @@ describe('when enhancing association extensions', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.association.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
     const table: Table = {
       ...newTable(),
@@ -58,15 +51,7 @@ describe('when enhancing association extensions', () => {
     const entity: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: entityName,
       baseEntity,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName,
-        isExtension: true,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -75,7 +60,7 @@ describe('when enhancing association extensions', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.associationSubclass.set(entity.metaEdName, entity);
+    namespace.entity.associationSubclass.set(entity.metaEdName, entity);
 
     enhance(metaEd);
     aggregate = entity.data.edfiOdsApi.aggregate;

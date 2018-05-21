@@ -1,5 +1,12 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, SharedStringProperty, Namespace } from 'metaed-core';
+import type {
+  EnhancerResult,
+  MetaEdEnvironment,
+  SharedStringProperty,
+  Namespace,
+  StringType,
+  SharedString,
+} from 'metaed-core';
 import { getEntityForNamespaces } from 'metaed-core';
 
 const enhancerName: string = 'StringReferenceEnhancer';
@@ -12,7 +19,11 @@ const enhancerName: string = 'StringReferenceEnhancer';
 function addReferringSimplePropertiesToStringType(metaEd: MetaEdEnvironment): void {
   metaEd.propertyIndex.sharedString.forEach((property: SharedStringProperty) => {
     const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
-    const referencedEntity: ?ModelBase = getEntityForNamespaces(property.referencedType, namespaces, 'stringType');
+    const referencedEntity: ?StringType = ((getEntityForNamespaces(
+      property.referencedType,
+      namespaces,
+      'stringType',
+    ): any): ?StringType);
 
     if (referencedEntity) {
       referencedEntity.referringSimpleProperties.push(property);
@@ -23,7 +34,11 @@ function addReferringSimplePropertiesToStringType(metaEd: MetaEdEnvironment): vo
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.sharedString.forEach((property: SharedStringProperty) => {
     const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
-    const referencedEntity: ?ModelBase = getEntityForNamespaces(property.referencedType, namespaces, 'sharedString');
+    const referencedEntity: ?SharedString = ((getEntityForNamespaces(
+      property.referencedType,
+      namespaces,
+      'sharedString',
+    ): any): ?SharedString);
 
     if (referencedEntity) {
       property.referencedEntity = referencedEntity;

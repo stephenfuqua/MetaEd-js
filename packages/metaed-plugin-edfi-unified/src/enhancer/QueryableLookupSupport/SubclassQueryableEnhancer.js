@@ -16,7 +16,7 @@ function includeBaseClassQueryableFields(
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesForNamespaces(metaEd.namespace)
+  getAllEntitiesForNamespaces(Array.from(metaEd.namespace.values()))
     .map(x => asTopLevelEntity(x))
     .filter(x => x.baseEntity && x.baseEntity.queryableFields)
     .forEach(entity => entity.queryableFields.push(...includeBaseClassQueryableFields(entity, [])));

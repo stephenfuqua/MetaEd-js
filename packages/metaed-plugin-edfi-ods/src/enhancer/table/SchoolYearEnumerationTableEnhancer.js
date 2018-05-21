@@ -8,11 +8,13 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'SchoolYearEnumerationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'schoolYearEnumeration').forEach((entity: ModelBase) => {
-    const table: Table = schoolYearEnumerationTableCreator.build(entity.namespace.namespaceName, entity.documentation);
-    entity.data.edfiOds.ods_Tables = [table];
-    addTables(metaEd, entity.namespace, [table]);
-  });
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'schoolYearEnumeration').forEach(
+    (entity: ModelBase) => {
+      const table: Table = schoolYearEnumerationTableCreator.build(entity.namespace.namespaceName, entity.documentation);
+      entity.data.edfiOds.ods_Tables = [table];
+      addTables(metaEd, [table]);
+    },
+  );
 
   return {
     enhancerName,

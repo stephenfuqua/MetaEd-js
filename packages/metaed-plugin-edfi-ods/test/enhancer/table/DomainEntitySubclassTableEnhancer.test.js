@@ -13,6 +13,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/DomainEntitySubclassTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
@@ -93,15 +94,15 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 
   it('should have schema equal to namespace', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName).schema).toBe('extension');
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName).description).toBe(documentation);
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName)).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -187,7 +188,7 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 
   it('should have one primary key column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
@@ -274,14 +275,14 @@ describe('when DomainEntitySubclassTableEnhancer enhances domain entity subclass
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntitySubclassRenamePropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
 
   it('should create foreign key to from identity rename property to base entity property', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntitySubclassName));
     expect(table.foreignKeys).toHaveLength(1);
     expect(R.head(table.foreignKeys).parentTableName).toBe(domainEntitySubclassName);
     expect(R.head(table.foreignKeys).foreignTableName).toBe(domainEntityName);

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
@@ -37,6 +37,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
   });
 
   it('should modify StartTime column to be non-primary key and non-nullable', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(interventionMeetingTime).columns);
     expect(column.isPartOfPrimaryKey).toBe(false);
     expect(column.isNullable).toBe(false);
@@ -70,6 +71,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
   });
 
   it('should not modify column', () => {
+    // $FlowIgnore - null check
     const column: Column = R.head(tableEntities(metaEd, namespace).get(tableName).columns);
     expect(column.isPartOfPrimaryKey).toBe(true);
     expect(column.isNullable).toBe(true);

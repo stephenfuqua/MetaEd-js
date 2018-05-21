@@ -1,6 +1,6 @@
 // @flow
 import { addEntityForNamespace, newEnumeration, newEnumerationItem, newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { Enumeration, EnumerationItem, MetaEdEnvironment } from 'metaed-core';
+import type { Enumeration, EnumerationItem, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/EnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -49,6 +49,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
   });
 
   it('should have correct first enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -62,6 +63,7 @@ describe('when EnumerationRowEnhancer enhances enumeration', () => {
   });
 
   it('should have correct second enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -118,6 +120,7 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
   });
 
   it('should have correct first enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription1}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);
@@ -131,6 +134,7 @@ describe("when EnumerationRowEnhancer enhances enumeration with name that ends w
   });
 
   it('should have correct second enumeration row', () => {
+    // $FlowIgnore - null check
     const row: EnumerationRow = rowEntities(metaEd, namespace).get(`${entityName}Type${shortDescription2}`);
     expect(row.type).toBe('enumerationRow');
     expect(row.name).toBe(`${entityName}Type`);

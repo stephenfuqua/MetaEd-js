@@ -11,7 +11,8 @@ describe('when generating output for namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName,
       isExtension: false,
       data: {
@@ -19,8 +20,8 @@ describe('when generating output for namespace', () => {
           ods_Schema: newSchemaContainer(),
         },
       },
-    });
-    metaEd.entity.namespace.set(namespaceName, namespace);
+    };
+    metaEd.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });
@@ -42,7 +43,8 @@ describe('when generating output for core namespace', () => {
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const namespaceName: string = 'edfi';
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName,
       isExtension: false,
       data: {
@@ -50,8 +52,8 @@ describe('when generating output for core namespace', () => {
           ods_Schema: newSchemaContainer(),
         },
       },
-    });
-    metaEd.entity.namespace.set(namespaceName, namespace);
+    };
+    metaEd.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });
@@ -68,7 +70,8 @@ describe('when generating output for extension namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName,
       projectExtension,
       isExtension: true,
@@ -77,8 +80,8 @@ describe('when generating output for extension namespace', () => {
           ods_Schema: newSchemaContainer(),
         },
       },
-    });
-    metaEd.entity.namespace.set(namespaceName, namespace);
+    };
+    metaEd.namespace.set(namespaceName, namespace);
 
     result = await generate(metaEd);
   });

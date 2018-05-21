@@ -4,7 +4,7 @@ import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { GeneratorResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { generate } from '../../src/generator/IdIndexesGenerator';
 import { newTable } from '../../src/model/database/Table';
-import { pluginEnvironment } from '../../src/enhancer/EnhancerHelper';
+import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../src/model/database/Table';
 
@@ -12,21 +12,17 @@ describe('when generating id indexes for core namespace table with no id', () =>
   let result: GeneratorResult;
 
   beforeAll(async () => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const coreNamespace: string = 'edfi';
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: coreNamespace,
-      isExtension: false,
-    });
-    metaEd.entity.namespace.set(coreNamespace, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
-      schema: coreNamespace,
+      schema: 'edfi',
       includeLastModifiedDateAndIdColumn: false,
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     result = await generate(metaEd);
   });
@@ -41,22 +37,18 @@ describe('when generating id indexes for core namespace table with no type', () 
   let result: GeneratorResult;
 
   beforeAll(async () => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const coreNamespace: string = 'edfi';
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: coreNamespace,
-      isExtension: false,
-    });
-    metaEd.entity.namespace.set(coreNamespace, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
-      schema: coreNamespace,
+      schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     result = await generate(metaEd);
   });
@@ -77,22 +69,18 @@ describe('when generating id indexes for core namespace table with type', () => 
   let result: GeneratorResult;
 
   beforeAll(async () => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const coreNamespace: string = 'edfi';
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: coreNamespace,
-      isExtension: false,
-    });
-    metaEd.entity.namespace.set(coreNamespace, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableNameType',
-      schema: coreNamespace,
+      schema: 'edfi',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: true,
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     result = await generate(metaEd);
   });
@@ -113,23 +101,23 @@ describe('when generating id indexes for extension namespace table with no type'
   let result: GeneratorResult;
 
   beforeAll(async () => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const extensionNamespace: string = 'extension';
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: extensionNamespace,
-      projectExtension: 'EXTENSION',
+    const namespace: Namespace = {
+      ...newNamespace(),
+      namespaceName: 'extension',
       isExtension: true,
-    });
-    metaEd.entity.namespace.set(extensionNamespace, namespace);
+      projectExtension: 'EXTENSION',
+    };
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     initializeEdFiOdsEntityRepository(metaEd);
     const table: Table = Object.assign(newTable(), {
       name: 'TableName',
-      schema: extensionNamespace,
+      schema: 'extension',
       includeLastModifiedDateAndIdColumn: true,
       isTypeTable: false,
     });
-    pluginEnvironment(metaEd).entity.table.set(table.name, table);
+    tableEntities(metaEd, namespace).set(table.name, table);
 
     result = await generate(metaEd);
   });

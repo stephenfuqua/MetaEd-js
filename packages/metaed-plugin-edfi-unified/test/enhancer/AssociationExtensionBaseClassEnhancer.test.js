@@ -6,7 +6,7 @@ import {
   newAssociationExtension,
   newNamespace,
 } from 'metaed-core';
-import type { MetaEdEnvironment, Association, AssociationSubclass, AssociationExtension } from 'metaed-core';
+import type { MetaEdEnvironment, Association, AssociationSubclass, AssociationExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/AssociationExtensionBaseClassEnhancer';
 
 describe('when enhancing association extension referring to association', () => {

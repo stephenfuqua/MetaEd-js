@@ -65,6 +65,7 @@ describe('when choice property has identifier of choice in dependency namespace'
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
     failures = validate(metaEd);
   });
@@ -143,6 +144,7 @@ describe('when choice property has invalid identifier in dependency namespace', 
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

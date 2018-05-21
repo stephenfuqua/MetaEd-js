@@ -1,6 +1,6 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { ColumnDataTypes } from '../model/database/ColumnDataTypes';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Column, StringColumn } from '../model/database/Column';

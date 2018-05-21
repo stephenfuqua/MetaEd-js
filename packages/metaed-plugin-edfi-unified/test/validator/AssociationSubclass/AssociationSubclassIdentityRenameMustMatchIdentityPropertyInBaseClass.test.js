@@ -83,6 +83,7 @@ describe('when association subclass renames base identity across dependent names
 
     coreNamespace = metaEd.namespace.get('edfi');
     extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
     failures = validate(metaEd);
   });

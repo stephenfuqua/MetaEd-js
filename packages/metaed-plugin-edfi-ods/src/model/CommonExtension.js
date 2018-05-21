@@ -17,9 +17,11 @@ export function addCommonExtensionEdfiOdsTo(commonExtension: CommonExtension) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'commonExtension').forEach((commonExtension: CommonExtension) => {
-    addCommonExtensionEdfiOdsTo(commonExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'commonExtension'): any): Array<CommonExtension>).forEach(
+    (commonExtension: CommonExtension) => {
+      addCommonExtensionEdfiOdsTo(commonExtension);
+    },
+  );
 
   return {
     enhancerName,

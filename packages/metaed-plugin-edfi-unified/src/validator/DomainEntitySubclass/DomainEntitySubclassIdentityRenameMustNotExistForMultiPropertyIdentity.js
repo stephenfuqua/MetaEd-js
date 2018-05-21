@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, ValidationFailure, Namespace, ModelBase } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace, TopLevelEntity } from 'metaed-core';
 import { getEntityForNamespaces } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
@@ -9,11 +9,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
       if (!domainEntitySubclass.identityProperties.some(x => x.isIdentityRename)) return;
 
-      const baseEntity: ?ModelBase = getEntityForNamespaces(
+      const baseEntity: ?TopLevelEntity = ((getEntityForNamespaces(
         domainEntitySubclass.baseEntityName,
         [namespace, ...namespace.dependencies],
         'domainEntity',
-      );
+      ): any): ?TopLevelEntity);
       if (baseEntity && baseEntity.identityProperties.length <= 1) return;
 
       failures.push({

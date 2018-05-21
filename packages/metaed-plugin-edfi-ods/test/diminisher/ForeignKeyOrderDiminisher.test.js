@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/ForeignKeyOrderDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 import { newColumn } from '../../src/model/database/Column';
@@ -92,6 +92,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
   });
 
   it('should have correct foreign key order', () => {
+    // $FlowIgnore - null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyOrder);
@@ -100,8 +101,10 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
   it('should have order parity with foreign table primary keys', () => {
     const primaryKeyNamesOnForeignTable: Array<string> = tableEntities(metaEd, namespace)
       .get(gradebookEntryLearningObjective)
+      // $FlowIgnore - null check
       .primaryKeys.map((pk: Column) => pk.name);
     const foreignKeyNames: Array<string> = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
+      // $FlowIgnore - null check
       tableEntities(metaEd, namespace).get(parentTableName).foreignKeys,
     );
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);
@@ -169,6 +172,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
   });
 
   it('should have correct foreign key order', () => {
+    // $FlowIgnore - null check
     const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyNames);
@@ -177,8 +181,10 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
   it('should have order parity with foreign table primary keys', () => {
     const primaryKeyNamesOnForeignTable: Array<string> = tableEntities(metaEd, namespace)
       .get(foreignTableName)
+      // $FlowIgnore - null check
       .primaryKeys.map((pk: Column) => pk.name);
     const foreignKeyNames: Array<string> = R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(
+      // $FlowIgnore - null check
       tableEntities(metaEd, namespace).get(parentTableName).foreignKeys,
     );
     expect(primaryKeyNamesOnForeignTable).toEqual(foreignKeyNames);

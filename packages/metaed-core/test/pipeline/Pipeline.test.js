@@ -6,6 +6,7 @@ import { newPipelineOptions } from '../../src/task/PipelineOptions';
 import { newState } from '../../src/State';
 import type { State } from '../../src/State';
 import type { CommonProperty } from '../../src/model/property/CommonProperty';
+import type { Namespace } from '../../src/model/Namespace';
 
 jest.unmock('final-fs');
 jest.setTimeout(30000);
@@ -48,6 +49,7 @@ const metaEdConfiguration = {
 
 describe('when building a DE with a common property but no common declaration', () => {
   let state: State = newState();
+  let coreNamespace: ?Namespace = null;
 
   beforeAll(async () => {
     state = Object.assign(newState(), {
@@ -60,10 +62,13 @@ describe('when building a DE with a common property but no common declaration', 
 
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
+
+    coreNamespace = state.metaEd.namespace.get('edfi');
   });
 
   it('should have built one domain entity', () => {
-    expect(state.metaEd.entity.domainEntity.size).toBe(1);
+    if (coreNamespace == null) throw new Error();
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
   });
 
   it('should have validation error', () => {
@@ -73,7 +78,8 @@ describe('when building a DE with a common property but no common declaration', 
   });
 
   it('should have common property with undefined referenced entity (meaning unified enhancers ran)', () => {
-    const entity = state.metaEd.entity.domainEntity.get('EntityName');
+    if (coreNamespace == null) throw new Error();
+    const entity = coreNamespace.entity.domainEntity.get('EntityName');
     if (entity == null) throw new Error();
     expect(entity.properties[1].type).toBe('common');
     const referencedEntity = ((entity.properties[1]: any): CommonProperty).referencedEntity;

@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/diminisher/PrimaryKeyOrderDiminisher';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -64,6 +64,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
   });
 
   it('should have correct primary key order', () => {
+    // $FlowIgnore - null check
     const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective).primaryKeys;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
@@ -144,6 +145,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
   });
 
   it('should have correct primary key order', () => {
+    // $FlowIgnore - null check
     const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective).primaryKeys;
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
@@ -186,6 +188,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
   });
 
   it('should have correct primary key order', () => {
+    // $FlowIgnore - null check
     const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(TableName).primaryKeys;
     expect(primaryKeys).toEqual([]);
   });

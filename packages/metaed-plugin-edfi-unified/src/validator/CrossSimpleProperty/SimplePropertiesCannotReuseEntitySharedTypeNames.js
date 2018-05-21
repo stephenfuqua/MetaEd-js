@@ -1,5 +1,6 @@
 // @flow
 import type {
+  EntityProperty,
   ShortProperty,
   StringProperty,
   DecimalProperty,
@@ -9,6 +10,7 @@ import type {
   PropertyIndex,
   SharedSimple,
   ValidationFailure,
+  Namespace,
 } from 'metaed-core';
 
 type SimpleProperties = ShortProperty | DecimalProperty | IntegerProperty | StringProperty;

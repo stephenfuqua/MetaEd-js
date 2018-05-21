@@ -60,7 +60,7 @@ describe('when common extension is in core namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
-      coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('edfi');
     failures = validate(metaEd);
   });
 

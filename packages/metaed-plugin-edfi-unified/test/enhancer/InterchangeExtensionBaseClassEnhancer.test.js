@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newInterchange, newInterchangeExtension, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, Interchange, InterchangeExtension } from 'metaed-core';
+import type { MetaEdEnvironment, Interchange, InterchangeExtension, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
 describe('when enhancing interchange extension referring to interchange', () => {

@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/ForeignKeyReverseIndexEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -46,6 +46,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
   });
 
   it('should have foreign key with reverse foreign key index set to false', () => {
+    // $FlowIgnore - null check
     const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
@@ -86,6 +87,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
+    // $FlowIgnore - null check
     const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
@@ -132,6 +134,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
   });
 
   it('should have foreign key with reverse foreign key index set to false', () => {
+    // $FlowIgnore - null check
     const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(false);
   });
@@ -174,6 +177,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
+    // $FlowIgnore - null check
     const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });
@@ -219,6 +223,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
   });
 
   it('should have foreign key with reverse foreign key index set to true', () => {
+    // $FlowIgnore - null check
     const foreignKey = R.head(tableEntities(metaEd, namespace).get(tableName).foreignKeys);
     expect(foreignKey.withReverseForeignKeyIndex).toBe(true);
   });

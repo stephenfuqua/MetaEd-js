@@ -66,7 +66,7 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'domainEntitySubclass')
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'domainEntitySubclass')
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
@@ -75,7 +75,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       addForeignKeyToPrimaryKeyRename(mainTable, entity);
       buildTablesFromProperties(entity, mainTable, tables);
       entity.data.edfiOds.ods_Tables = tables;
-      addTables(metaEd, entity.namespace, tables);
+      addTables(metaEd, tables);
     });
 
   return {

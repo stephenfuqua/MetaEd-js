@@ -32,6 +32,7 @@ describe('when validating merge property path', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -72,6 +73,7 @@ describe('when validating path with no matching merge property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -122,6 +124,7 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -174,6 +177,7 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -224,6 +228,7 @@ describe('when validating path with merge property targeting non identity on cur
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -281,6 +286,7 @@ describe('when validating path with merge property targeting identity on referen
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -337,6 +343,7 @@ describe('when validating path with merge property targeting non identity on ref
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -396,6 +403,7 @@ describe('when validating path with merge property targeting optional on common 
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -457,6 +465,7 @@ describe('when validating path with merge property targeting non identity inline
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -520,6 +529,7 @@ describe('when validating path with merge property targeting non identity choice
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -581,6 +591,7 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],
@@ -644,6 +655,7 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
       [coreNamespace],

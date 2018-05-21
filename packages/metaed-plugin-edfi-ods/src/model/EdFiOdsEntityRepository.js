@@ -1,6 +1,6 @@
 // @flow
 import { newPluginEnvironment } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import type { EnumerationRow } from './database/EnumerationRow';
 import type { SchoolYearEnumerationRow } from './database/SchoolYearEnumerationRow';
 import type { Table } from './database/Table';

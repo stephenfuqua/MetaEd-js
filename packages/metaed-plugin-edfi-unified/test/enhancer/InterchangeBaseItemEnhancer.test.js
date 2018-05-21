@@ -14,7 +14,7 @@ import {
   addEntityForNamespace,
   getEntityForNamespaces,
 } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
 
 describe('when enhancing interchange in core', () => {

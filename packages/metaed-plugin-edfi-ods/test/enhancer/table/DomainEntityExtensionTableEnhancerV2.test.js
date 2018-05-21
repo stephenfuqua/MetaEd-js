@@ -26,6 +26,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/DomainEntityExtensionTableEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
@@ -107,15 +108,17 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
   });
 
   it('should have schema equal to namespace', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).schema).toBe('extension');
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName).description).toBe(documentation);
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).description).toBe(
+      documentation,
+    );
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
@@ -199,7 +202,7 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
   });
 
   it('should have one primary key column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(domainEntityExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);

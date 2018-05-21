@@ -6,7 +6,7 @@ import {
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
-import type { EnumerationItem, MetaEdEnvironment, SchoolYearEnumeration } from 'metaed-core';
+import type { EnumerationItem, MetaEdEnvironment, SchoolYearEnumeration, Namespace } from 'metaed-core';
 import { rowEntities } from '../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -55,6 +55,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
   });
 
   it('should have correct first enumeration row', () => {
+    // $FlowIgnore - null check
     const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2017${shortDescription1}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2017');
@@ -67,6 +68,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
   });
 
   it('should have correct second enumeration row', () => {
+    // $FlowIgnore - null check
     const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2018${shortDescription2}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2018');

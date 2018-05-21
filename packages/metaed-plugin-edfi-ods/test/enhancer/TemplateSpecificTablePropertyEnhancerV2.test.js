@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/TemplateSpecificTablePropertyEnhancerV2';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
@@ -47,10 +47,12 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
   });
 
   it('should have hasAlternateKeys property set to true', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, namespace).get(tableName).hasAlternateKeys).toBe(true);
   });
 
   it('should have correct alternate key order', () => {
+    // $FlowIgnore - null check
     const alternateKeys: Array<Column> = tableEntities(metaEd, namespace).get(tableName).alternateKeys;
     expect(alternateKeys).toHaveLength(2);
     expect(alternateKeys.map(x => x.name)).toEqual([alternateKeyName1, alternateKeyName2]);
@@ -92,6 +94,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
   });
 
   it('should have correct primary key order', () => {
+    // $FlowIgnore - null check
     const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(tableName).primaryKeys;
     expect(primaryKeys).toHaveLength(2);
     expect(primaryKeys.map(x => x.name)).toEqual([primaryKeyName1, primaryKeyName2]);
@@ -150,6 +153,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
   });
 
   it('should have correct foreign key order', () => {
+    // $FlowIgnore - null check
     const foreignKeys: Array<Column> = tableEntities(metaEd, namespace).get(tableName).foreignKeys;
     expect(foreignKeys).toHaveLength(2);
     expect(foreignKeys.map(x => x.name)).toEqual([
@@ -159,11 +163,13 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
   });
 
   it('should have correct foreign key column order', () => {
+    // $FlowIgnore - null check
     const parentTableColumnNames: Array<string> = R.last(tableEntities(metaEd, namespace).get(tableName).foreignKeys)
       .parentTableColumnNames;
     expect(parentTableColumnNames).toHaveLength(2);
     expect(parentTableColumnNames).toEqual([parentTableColumnName1, parentTableColumnName2]);
 
+    // $FlowIgnore - null check
     const foreignTableColumnNames: Array<string> = R.last(tableEntities(metaEd, namespace).get(tableName).foreignKeys)
       .foreignTableColumnNames;
     expect(foreignTableColumnNames).toHaveLength(2);
@@ -205,6 +211,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
   });
 
   it('should have correct unique index order', () => {
+    // $FlowIgnore - null check
     const uniqueIndexes: Array<Column> = tableEntities(metaEd, namespace).get(tableName).uniqueIndexes;
     expect(uniqueIndexes).toHaveLength(2);
     expect(uniqueIndexes.map(x => x.name)).toEqual([uniqueIndexName1, uniqueIndexName2]);
@@ -256,6 +263,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
   });
 
   it('should have correct column order with primary keys first', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(tableName).columns;
     expect(columns).toHaveLength(5);
     expect(columns.map(x => x.name)).toEqual([primaryKeyName1, primaryKeyName2, primaryKeyName3, columnName2, columnName1]);
@@ -293,12 +301,14 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns 
   });
 
   it('should have correct sql escaped descriptions for table', () => {
+    // $FlowIgnore - null check
     const table: Table = tableEntities(metaEd, namespace).get(tableName);
     expect(table).toBeDefined();
     expect(table.sqlEscapedDescription).toEqual(expectedDescription);
   });
 
   it('should have correct sql escaped descriptions for columns', () => {
+    // $FlowIgnore - null check
     const columns: Array<Column> = tableEntities(metaEd, namespace).get(tableName).columns;
     expect(columns).toHaveLength(2);
     expect(columns.map(x => x.sqlEscapedDescription)).toEqual([expectedDescription, expectedDescription]);

@@ -26,6 +26,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { enhance } from '../../../src/enhancer/table/AssociationExtensionTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 import type { Table } from '../../../src/model/database/Table';
+import { asTable } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancer enhances association extension', () => {
   const namespaceName = 'edfi';
@@ -109,21 +110,24 @@ describe('when AssociationExtensionTableEnhancer enhances association extension'
   });
 
   it('should have schema equal to namespace', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).description).toBe(documentation);
   });
 
   it('should have one column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(false);
   });
 
   it('should include create date column', () => {
+    // $FlowIgnore - null check
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).includeCreateDateColumn).toBe(true);
   });
 });
@@ -206,14 +210,16 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should have one primary key column', () => {
-    const table: Table = tableEntities(metaEd, extensionNamespace).get(associationExtensionName);
+    const table: Table = asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName));
     expect(table.columns).toHaveLength(1);
     expect(table.columns[0].name).toBe(associationExtensionPkPropertyName);
     expect(table.columns[0].isPartOfPrimaryKey).toBe(true);
   });
 
   it('should include create date column', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).includeCreateDateColumn).toBe(true);
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).includeCreateDateColumn).toBe(
+      true,
+    );
   });
 });
 
@@ -389,7 +395,9 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should include create date column', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).includeCreateDateColumn).toBe(true);
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).includeCreateDateColumn).toBe(
+      true,
+    );
   });
 
   it('should not create common extension override join table', () => {
@@ -538,7 +546,9 @@ describe('when AssociationExtensionTableEnhancer enhances association extension 
   });
 
   it('should include create date column', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName).includeCreateDateColumn).toBe(true);
+    expect(asTable(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).includeCreateDateColumn).toBe(
+      true,
+    );
   });
 
   it('should create join table from association and common', () => {

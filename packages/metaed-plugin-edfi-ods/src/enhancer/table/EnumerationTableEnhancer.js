@@ -8,14 +8,14 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'EnumerationTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfTypeForNamespaces(metaEd.namespace, 'enumeration').forEach((entity: ModelBase) => {
+  getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), 'enumeration').forEach((entity: ModelBase) => {
     const table: Table = enumerationTableCreator.build(
       entity.metaEdName,
       entity.namespace.namespaceName,
       entity.documentation,
     );
     entity.data.edfiOds.ods_Tables = [table];
-    addTables(metaEd, entity.namespace, [table]);
+    addTables(metaEd, [table]);
   });
 
   return {

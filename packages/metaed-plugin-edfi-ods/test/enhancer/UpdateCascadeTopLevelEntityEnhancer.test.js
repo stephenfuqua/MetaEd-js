@@ -16,6 +16,7 @@ import type {
   DomainEntityProperty,
   IntegerProperty,
   MetaEdEnvironment,
+  Namespace,
 } from 'metaed-core';
 import { enhance } from '../../src/enhancer/UpdateCascadeTopLevelEntityEnhancer';
 

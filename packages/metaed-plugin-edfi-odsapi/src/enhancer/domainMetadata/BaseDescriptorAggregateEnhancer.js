@@ -1,5 +1,4 @@
 // @flow
-import R from 'ramda';
 import type { MetaEdEnvironment, Namespace, EnhancerResult } from 'metaed-core';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
@@ -7,7 +6,7 @@ import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 const enhancerName: string = 'BaseDescriptorAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const coreNamespace: Namespace = R.head(Array.from(metaEd.entity.namespace.values()).filter(n => !n.isExtension));
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
   if (!coreNamespace) return { enhancerName, success: false };
 
   const aggregate: Aggregate = {

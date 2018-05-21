@@ -22,15 +22,17 @@ describe('when enhancing association extensions', () => {
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), {
+    const namespace: Namespace = {
+      ...newNamespace(),
       namespaceName,
       data: {
         edfiOdsApi: {
           aggregates: [],
         },
       },
-    });
-    extensionNamespace = Object.assign(newNamespace(), {
+    };
+    extensionNamespace = {
+      ...newNamespace(),
       namespaceName: extensionNamespaceName,
       isExtension: true,
       data: {
@@ -38,9 +40,10 @@ describe('when enhancing association extensions', () => {
           aggregates: [],
         },
       },
-    });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    };
+    extensionNamespace.dependencies.push(namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const baseEntity: Association = Object.assign(newAssociation(), {
       metaEdName: baseEntityName,
@@ -52,7 +55,7 @@ describe('when enhancing association extensions', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.association.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
     const table: Table = {
       ...newTable(),
@@ -62,15 +65,7 @@ describe('when enhancing association extensions', () => {
 
     const entity: AssociationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: entityName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName: extensionNamespaceName,
-        isExtension: true,
-        data: {
-          edfiOdsApi: {
-            aggregates: [],
-          },
-        },
-      }),
+      namespace: extensionNamespace,
       data: {
         edfiOds: {
           ods_TableName: tableName,
@@ -79,7 +74,7 @@ describe('when enhancing association extensions', () => {
         edfiOdsApi: {},
       },
     });
-    metaEd.entity.associationExtension.set(entity.metaEdName, entity);
+    extensionNamespace.entity.associationExtension.set(entity.metaEdName, entity);
 
     enhance(metaEd);
     aggregate = entity.data.edfiOdsApi.aggregate;

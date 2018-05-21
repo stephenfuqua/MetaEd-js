@@ -4,7 +4,7 @@ import type { TopLevelEntity, EntityProperty, ValidationFailure } from 'metaed-c
 export function failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty(
   validatorName: string,
   subclassEntity: TopLevelEntity,
-  baseEntity: TopLevelEntity | void,
+  baseEntity: ?TopLevelEntity,
   failures: Array<ValidationFailure>,
 ) {
   const identityRenames: Array<EntityProperty> = subclassEntity.properties.filter(x => x.isIdentityRename);

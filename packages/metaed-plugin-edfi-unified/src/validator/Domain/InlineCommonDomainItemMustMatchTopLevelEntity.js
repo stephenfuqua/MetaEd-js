@@ -1,5 +1,5 @@
 // @flow
-import type { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
+import type { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace, Common } from 'metaed-core';
 import { getEntityForNamespaces } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
@@ -18,11 +18,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     namespace.entity.domain.forEach(domain => {
       domain.domainItems.forEach(domainItem => {
         if (domainItem.referencedType !== 'inlineCommon') return;
-        const inlineCommon: ?Common = getEntityForNamespaces(
+        const inlineCommon: ?Common = ((getEntityForNamespaces(
           domainItem.metaEdName,
           [namespace, ...namespace.dependencies],
           'common',
-        );
+        ): any): ?Common);
+
         if (inlineCommon == null || !inlineCommon.inlineInOds) {
           failures.push(
             getFailure(

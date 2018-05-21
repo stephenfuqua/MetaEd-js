@@ -619,7 +619,7 @@ describe('when association references another association property with matching
 
 describe('when extension association references core domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName: string = 'namespace';
+  const namespaceName: string = 'edfi';
   const extension: string = 'extension';
   const associationName: string = 'AssociationName';
   const domainEntityName1: string = 'DomainEntityName1';
@@ -652,6 +652,12 @@ describe('when extension association references core domain entities', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
+
+    const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get(extension);
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
 
     return enhanceGenerateAndExecuteSql(metaEd);
   });
