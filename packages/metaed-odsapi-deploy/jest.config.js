@@ -1,4 +1,5 @@
 module.exports = {
+  testResultsProcessor: 'jest-teamcity-reporter',
   testEnvironment: 'node',
   transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*metaed-.*).*$'],
   collectCoverageFrom: ['packages/**/src/**/*.js'],
