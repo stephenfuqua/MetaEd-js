@@ -1,8 +1,9 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { MergedInterchange } from '../model/MergedInterchange';
+import { edfiXsdRepositoryForNamespace } from './EnhancerHelper';
 import { combinedElementsAndIdentityTemplatesFor } from '../model/MergedInterchange';
 import {
   unionOfInterchangeItems,
@@ -12,11 +13,10 @@ import {
 
 const enhancerName: string = 'MergedInterchangeElementOrderEnhancer';
 
-function addElementsInOrder(coreInterchanges: Array<MergedInterchange>, extensionInterchanges: Array<MergedInterchange>) {
-  coreInterchanges.forEach(core => {
-    core.orderedElements = combinedElementsAndIdentityTemplatesFor(core);
-  });
-
+function orderExtensionElements(
+  coreInterchanges: Array<MergedInterchange>,
+  extensionInterchanges: Array<MergedInterchange>,
+) {
   extensionInterchanges.forEach(extension => {
     const initialExtensionElements = combinedElementsAndIdentityTemplatesFor(extension);
     const matchingCoreInterchange = R.find(R.eqProps('metaEdName', extension), coreInterchanges);
@@ -42,18 +42,23 @@ function addElementsInOrder(coreInterchanges: Array<MergedInterchange>, extensio
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  const coreInterchanges: Array<MergedInterchange> = [];
-  const extensionInterchanges: Array<MergedInterchange> = [];
-  Array.from(edFiXsdEntityRepository.mergedInterchange.values()).forEach(mergedInterchange => {
-    if (mergedInterchange.namespace.isExtension) {
-      extensionInterchanges.push(mergedInterchange);
-    } else {
-      coreInterchanges.push(mergedInterchange);
-    }
+  const coreNamespace: Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+  const coreXsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
+  if (coreXsdRepository == null) return { enhancerName, success: false };
+
+  const coreInterchanges: Array<MergedInterchange> = [...coreXsdRepository.mergedInterchange.values()];
+  coreInterchanges.forEach((coreInterchange: MergedInterchange) => {
+    coreInterchange.orderedElements = combinedElementsAndIdentityTemplatesFor(coreInterchange);
   });
 
-  addElementsInOrder(coreInterchanges, extensionInterchanges);
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    if (!namespace.isExtension) return;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) return;
+
+    orderExtensionElements(coreInterchanges, [...xsdRepository.mergedInterchange.values()]);
+  });
 
   return {
     enhancerName,

@@ -18,7 +18,7 @@ export function addNamespaceEdfiXsdTo(namespace: Namespace) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
     addNamespaceEdfiXsdTo(namespace);
   });
 

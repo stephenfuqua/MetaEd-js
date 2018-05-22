@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension, InterchangeItem } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type InterchangeItemEdfiXsd = {
   xsd_Name: string,
@@ -32,13 +33,15 @@ function addInterchangeItemEdfiXsdToInterchange(interchange: Interchange | Inter
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.interchange.forEach((interchange: Interchange) => {
+  ((getAllEntitiesOfType(metaEd, 'interchange'): any): Array<Interchange>).forEach((interchange: Interchange) => {
     addInterchangeItemEdfiXsdToInterchange(interchange);
   });
 
-  metaEd.entity.interchangeExtension.forEach((interchangeExtension: InterchangeExtension) => {
-    addInterchangeItemEdfiXsdToInterchange(interchangeExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'interchangeExtension'): any): Array<InterchangeExtension>).forEach(
+    (interchangeExtension: InterchangeExtension) => {
+      addInterchangeItemEdfiXsdToInterchange(interchangeExtension);
+    },
+  );
 
   return {
     enhancerName,

@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import {
   typeGroupDomainEntity,
@@ -11,7 +12,7 @@ import {
 const enhancerName: string = 'AddDomainEntityExtensionComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.domainEntityExtension.forEach(domainEntityExtension => {
+  getAllEntitiesOfType(metaEd, 'domainEntityExtension').forEach(domainEntityExtension => {
     if (domainEntityExtension.data.edfiXsd.xsd_HasExtensionOverrideProperties()) {
       const domainEntityExtensionEdfiXsd: TopLevelEntityEdfiXsd = domainEntityExtension.data.edfiXsd;
       domainEntityExtensionEdfiXsd.xsd_ComplexTypes = [createCoreRestrictionForExtensionParent(domainEntityExtension)];

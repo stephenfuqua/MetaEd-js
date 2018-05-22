@@ -5,6 +5,7 @@ import {
   newMapTypeEnumeration,
   newBooleanProperty,
   newDescriptorProperty,
+  newNamespace,
 } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor, MapTypeEnumeration } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
@@ -16,7 +17,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDescriptorComplexTypesEnhancer';
 
 describe('when enhancing descriptor', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
@@ -40,7 +43,7 @@ describe('when enhancing descriptor', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -96,7 +99,9 @@ describe('when enhancing descriptor', () => {
 });
 
 describe('when enhancing descriptor with required map type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
@@ -124,7 +129,7 @@ describe('when enhancing descriptor with required map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
-    metaEd.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
+    namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
     enhancedItem = Object.assign(newDescriptor(), {
       metaEdName: complexTypeName,
@@ -140,7 +145,7 @@ describe('when enhancing descriptor with required map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -199,7 +204,9 @@ describe('when enhancing descriptor with required map type', () => {
 });
 
 describe('when enhancing descriptor with optional map type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
@@ -227,7 +234,7 @@ describe('when enhancing descriptor with optional map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
-    metaEd.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
+    namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
     enhancedItem = Object.assign(newDescriptor(), {
       metaEdName: complexTypeName,
@@ -243,7 +250,7 @@ describe('when enhancing descriptor with optional map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -302,7 +309,9 @@ describe('when enhancing descriptor with optional map type', () => {
 });
 
 describe('when enhancing descriptor with property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
@@ -338,7 +347,7 @@ describe('when enhancing descriptor with property', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -364,7 +373,9 @@ describe('when enhancing descriptor with property', () => {
 });
 
 describe('when enhancing descriptor with property and map type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
@@ -391,7 +402,7 @@ describe('when enhancing descriptor with property and map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(mapTypeEnumeration);
-    metaEd.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
+    namespace.entity.mapTypeEnumeration.set(mapTypeEnumeration.metaEdName, mapTypeEnumeration);
 
     enhancedItem = Object.assign(newDescriptor(), {
       metaEdName: complexTypeName,
@@ -417,7 +428,7 @@ describe('when enhancing descriptor with property and map type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -453,7 +464,9 @@ describe('when enhancing descriptor with property and map type', () => {
 });
 
 describe('when enhancing descriptor with descriptor property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
@@ -477,7 +490,7 @@ describe('when enhancing descriptor with descriptor property', () => {
       },
     });
     addModelBaseEdfiXsdTo(referencedDescriptor);
-    metaEd.entity.descriptor.set(referencedDescriptor.metaEdName, referencedDescriptor);
+    namespace.entity.descriptor.set(referencedDescriptor.metaEdName, referencedDescriptor);
 
     const descriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorName,
@@ -504,7 +517,7 @@ describe('when enhancing descriptor with descriptor property', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);
@@ -528,7 +541,9 @@ describe('when enhancing descriptor with descriptor property', () => {
 });
 
 describe('when enhancing descriptor with both queryable and identity property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'ComplexTypeName';
   const complexTypeNameWithExtension: string = `${projectExtension}-${complexTypeName}`;
@@ -586,7 +601,7 @@ describe('when enhancing descriptor with both queryable and identity property', 
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);

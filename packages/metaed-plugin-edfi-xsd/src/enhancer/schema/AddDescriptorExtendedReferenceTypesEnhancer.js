@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor, SemVer } from 'metaed-core';
-import { versionSatisfies, V3OrGreater } from 'metaed-core';
+import { versionSatisfies, V3OrGreater, getAllEntitiesOfType } from 'metaed-core';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { newStringSimpleType } from '../../model/schema/StringSimpleType';
 import type { StringSimpleType } from '../../model/schema/StringSimpleType';
@@ -25,7 +25,7 @@ function createExtendedReferenceType(descriptor: Descriptor): StringSimpleType {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.descriptor.forEach(descriptor => {
+  getAllEntitiesOfType(metaEd, 'descriptor').forEach(descriptor => {
     descriptor.data.edfiXsd.xsd_DescriptorExtendedReferenceType = createExtendedReferenceType(descriptor);
   });
 

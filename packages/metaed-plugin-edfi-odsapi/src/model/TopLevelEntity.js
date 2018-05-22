@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
-import { getAllTopLevelEntities } from 'metaed-core';
+import { getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { NoAggregate } from './domainMetadata/Aggregate';
 import type { Aggregate } from './domainMetadata/Aggregate';
 
@@ -19,7 +19,7 @@ export function addTopLevelEntityEdfiOdsApiTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllTopLevelEntities(metaEd.entity).forEach(entity => {
+  getAllTopLevelEntitiesForNamespaces([...metaEd.namespace.values()]).forEach(entity => {
     addTopLevelEntityEdfiOdsApiTo(entity);
   });
 

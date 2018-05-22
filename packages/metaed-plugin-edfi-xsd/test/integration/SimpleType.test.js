@@ -11,7 +11,7 @@ import {
   SharedStringBuilder,
   StringTypeBuilder,
 } from 'metaed-core';
-import { enhanceAndGenerate, xpathSelect } from './IntegrationTestHelper';
+import { enhanceAndGenerate, xpathSelect, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for domain entity in extension namespace with a simple type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -51,6 +51,7 @@ describe('when generating xsd for domain entity in extension namespace with a si
       .sendToListener(stringTypeBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -441,6 +442,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -505,6 +507,7 @@ describe('when generating xsd for renamed shared simple property in extension na
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -576,6 +579,7 @@ describe('when generating xsd for shared simple property in extension namespace 
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

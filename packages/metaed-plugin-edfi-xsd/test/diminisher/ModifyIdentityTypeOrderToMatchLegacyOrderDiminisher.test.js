@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
-import { addEntity, newAssociation, newDomainEntity, newMetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, TopLevelEntity, Namespace } from 'metaed-core';
+import { addEntityForNamespace, newAssociation, newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { ComplexType } from '../../src/model/schema/ComplexType';
 import { asElement, newElement } from '../../src/model/schema/Element';
 import type { ComplexTypeItem } from '../../src/model/schema/ComplexTypeItem';
@@ -17,6 +17,8 @@ const testBase = (
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+    metaEd.namespace.set(namespace.namespaceName, namespace);
 
     complexType = Object.assign(newComplexType(), {
       name: `${testEntityName}IdentityType`,
@@ -28,13 +30,14 @@ const testBase = (
 
     const topLevelEntity1: TopLevelEntity = Object.assign(isAssociation ? newAssociation() : newDomainEntity(), {
       metaEdName: testEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_IdentityType: complexType,
         },
       },
     });
-    addEntity(metaEd.entity, topLevelEntity1);
+    addEntityForNamespace(topLevelEntity1);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);

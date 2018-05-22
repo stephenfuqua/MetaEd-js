@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newDescriptor } from 'metaed-core';
+import { newMetaEdEnvironment, newDescriptor, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
 import type { StringSimpleType } from '../../../src/model/schema/StringSimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
@@ -7,7 +7,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDescriptorExtendedReferenceTypesEnhancer';
 
 describe('when enhancing descriptor', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const complexTypeName: string = 'Complex Type Name';
   const complexTypeDescriptorName: string = `${complexTypeName}Descriptor`;
@@ -28,7 +30,7 @@ describe('when enhancing descriptor', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.descriptor.set(enhancedItem.metaEdName, enhancedItem);
 
     metaEd.dataStandardVersion = '3.0.0';
     initializeTopLevelEntities(metaEd);

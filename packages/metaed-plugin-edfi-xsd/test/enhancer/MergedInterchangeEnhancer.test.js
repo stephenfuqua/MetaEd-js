@@ -5,21 +5,21 @@ import {
   newInterchangeItem,
   newNamespace,
   newInterchangeExtension,
-  newPluginEnvironment,
 } from 'metaed-core';
-import type { MetaEdEnvironment, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, InterchangeItem, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeEnhancer';
+import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
-import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import type { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when running with no interchange extensions', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const interchangeName: string = 'InterchangeName';
   const interchangeDocumentation: string = 'InterchangeDocumentation';
   const interchangeExtendedDocumentation: string = 'InterchangeExtendedDocumentation';
@@ -39,6 +39,7 @@ describe('when running with no interchange extensions', () => {
 
     const interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       documentation: interchangeDocumentation,
       extendedDocumentation: interchangeExtendedDocumentation,
       useCaseDocumentation: interchangeUseCase,
@@ -48,7 +49,7 @@ describe('when running with no interchange extensions', () => {
       },
     });
 
-    metaEd.entity.interchange.set(interchange.metaEdName, interchange);
+    namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);
@@ -56,7 +57,8 @@ describe('when running with no interchange extensions', () => {
   });
 
   it('should be core merged interchange', () => {
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) throw new Error();
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeName);
 
     expect(mergedInterchange).toBeDefined();
@@ -69,16 +71,20 @@ describe('when running with no interchange extensions', () => {
 });
 
 describe('when running with interchange extensions', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension: 'EXTENSION',
+    isExtension: true,
+  });
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  extensionNamespace.dependencies.push(namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const interchangeToBeExtendedName: string = 'InterchangeToBeExtendedName';
   const interchangeDocumentation: string = 'InterchangeDocumentation';
-  const coreNamespaceName: string = 'edfi';
-  const extensionNamespaceName: string = 'extensionNamespace';
-  const projectExtension: string = 'EXTENSION';
   const elementNoExtensionBaseName: string = 'InterchangeElement';
   const elementNoExtensionBaseType: string = 'InterchangeElementType';
   const elementBaseType: string = 'ElementType';
@@ -115,10 +121,7 @@ describe('when running with interchange extensions', () => {
 
     const interchangeToBeExtended = Object.assign(newInterchange(), {
       metaEdName: interchangeToBeExtendedName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName: coreNamespaceName,
-        isExtension: false,
-      }),
+      namespace,
       documentation: interchangeDocumentation,
       elements: [element, elementNoExtension],
       data: {
@@ -126,15 +129,11 @@ describe('when running with interchange extensions', () => {
       },
     });
 
-    metaEd.entity.interchange.set(interchangeToBeExtended.metaEdName, interchangeToBeExtended);
+    namespace.entity.interchange.set(interchangeToBeExtended.metaEdName, interchangeToBeExtended);
 
     const interchangeExtension = Object.assign(newInterchangeExtension(), {
       metaEdName: interchangeToBeExtendedName,
-      namespace: Object.assign(newNamespace(), {
-        namespaceName: extensionNamespaceName,
-        projectExtension,
-        isExtension: true,
-      }),
+      namespace: extensionNamespace,
       baseEntity: interchangeToBeExtended,
       documentation: interchangeDocumentation,
       elements: [extensionElement],
@@ -143,7 +142,7 @@ describe('when running with interchange extensions', () => {
       },
     });
 
-    metaEd.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
+    extensionNamespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);
@@ -151,7 +150,8 @@ describe('when running with interchange extensions', () => {
   });
 
   it('should have core merged interchange', () => {
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) throw new Error();
     const mergedInterchange: any = edFiXsdEntityRepository.mergedInterchange.get(interchangeToBeExtendedName);
 
     expect(mergedInterchange).toBeDefined();

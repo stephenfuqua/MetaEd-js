@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, AssociationExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type AssociationExtensionEdfiXsd = {
@@ -17,9 +18,11 @@ export function addAssociationExtensionEdfiXsdTo(associationExtension: Associati
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.associationExtension.forEach((associationExtension: AssociationExtension) => {
-    addAssociationExtensionEdfiXsdTo(associationExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'associationExtension'): any): Array<AssociationExtension>).forEach(
+    (associationExtension: AssociationExtension) => {
+      addAssociationExtensionEdfiXsdTo(associationExtension);
+    },
+  );
 
   return {
     enhancerName,

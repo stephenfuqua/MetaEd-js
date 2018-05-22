@@ -1,6 +1,7 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, InterchangeItem, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
 export type InterchangeItemEdfiOdsApi = {
   ...$Exact<InterchangeItem>,
@@ -18,10 +19,14 @@ export function addInterchangeItemEdfiOdsApiTo(interchangeItem: InterchangeItem)
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  edFiXsdEntityRepository.mergedInterchange.forEach((mergedInterchange: MergedInterchange) => {
-    mergedInterchange.elements.forEach((interchangeItem: InterchangeItem) => {
-      addInterchangeItemEdfiOdsApiTo(interchangeItem);
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const edfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edfiXsdEntityRepository == null) return;
+
+    edfiXsdEntityRepository.mergedInterchange.forEach((mergedInterchange: MergedInterchange) => {
+      mergedInterchange.elements.forEach((interchangeItem: InterchangeItem) => {
+        addInterchangeItemEdfiOdsApiTo(interchangeItem);
+      });
     });
   });
 

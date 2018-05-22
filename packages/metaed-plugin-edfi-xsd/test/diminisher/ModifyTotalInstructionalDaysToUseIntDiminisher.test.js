@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { DomainEntity, IntegerType, MetaEdEnvironment } from 'metaed-core';
-import { addEntity, newDomainEntity, newIntegerType, newMetaEdEnvironment } from 'metaed-core';
+import type { DomainEntity, IntegerType, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { addEntityForNamespace, newDomainEntity, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
@@ -10,14 +10,17 @@ import { enhance } from '../../src/diminisher/ModifyTotalInstructionalDaysToUseI
 describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academic week domain entity', () => {
   const intType: string = 'xs:int';
   let domainEntity: DomainEntity;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const domainEntityName: string = 'AcademicWeek';
     const elementNameType: string = 'TotalInstructionalDays';
 
     domainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -34,7 +37,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academi
         },
       },
     });
-    addEntity(metaEd.entity, domainEntity);
+    addEntityForNamespace(domainEntity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -48,14 +51,17 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academi
 describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session domain entity', () => {
   const intType: string = 'xs:int';
   let domainEntity: DomainEntity;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const domainEntityName: string = 'Session';
     const elementNameType: string = 'TotalInstructionalDays';
 
     domainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -72,7 +78,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session
         },
       },
     });
-    addEntity(metaEd.entity, domainEntity);
+    addEntityForNamespace(domainEntity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -85,6 +91,8 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session
 
 describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no academic week or session', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
     const domainEntityName: string = 'DomainEntityName';
@@ -92,6 +100,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -108,17 +117,18 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no
         },
       },
     });
-    addEntity(metaEd.entity, domainEntity);
+    addEntityForNamespace(domainEntity);
 
     const integerType: IntegerType = Object.assign(newIntegerType(), {
       metaEdName: integerTypeName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
         },
       },
     });
-    addEntity(metaEd.entity, integerType);
+    addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });

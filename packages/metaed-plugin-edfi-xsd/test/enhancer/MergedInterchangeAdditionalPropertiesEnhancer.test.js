@@ -1,19 +1,19 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newInterchange, newNamespace, newPluginEnvironment } from 'metaed-core';
-import type { MetaEdEnvironment, InterchangeItem, Interchange } from 'metaed-core';
+import { newMetaEdEnvironment, newInterchangeItem, newInterchange, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, InterchangeItem, Interchange, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeAdditionalPropertiesEnhancer';
+import { edfiXsdRepositoryForNamespace } from '../../src/enhancer/EnhancerHelper';
 import { newMergedInterchange } from '../../src/model/MergedInterchange';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
-import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import type { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with no extension', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName: string = 'InterchangeName';
   const elementBaseName: string = 'InterchangeElement';
   let mergedInterchange;
@@ -25,19 +25,21 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       elements: [element],
       data: {
         edfiXsd: {},
       },
     });
-    metaEd.entity.interchange.set(interchange.metaEdName, interchange);
+    namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
     mergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
       repositoryId: interchangeName,
       elements: [element],
     });
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 
     initializeTopLevelEntities(metaEd);
@@ -55,14 +57,18 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
 });
 
 describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with extension', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
+  const projectExtension: string = 'EXTENSION';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension,
+    isExtension: true,
+  });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName: string = 'InterchangeName';
   const elementBaseName: string = 'InterchangeElement';
-  const projectExtension: string = 'EXTENSION';
+
   let mergedInterchange;
 
   beforeAll(() => {
@@ -72,23 +78,22 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       elements: [element],
       data: {
         edfiXsd: {},
       },
     });
-    metaEd.entity.interchange.set(interchange.metaEdName, interchange);
+    namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
     mergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
       repositoryId: interchangeName,
-      namespace: Object.assign(newNamespace(), {
-        projectExtension,
-        isExtension: true,
-      }),
+      namespace,
       elements: [element],
     });
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) throw new Error();
     edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 
     initializeTopLevelEntities(metaEd);

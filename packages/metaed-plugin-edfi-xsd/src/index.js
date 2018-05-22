@@ -28,6 +28,7 @@ export { newMergedInterchange } from './model/MergedInterchange';
 export { newEdFiXsdEntityRepository } from './model/EdFiXsdEntityRepository';
 export { addEdFiXsdEntityRepositoryTo } from './model/EdFiXsdEntityRepository';
 export { addMergedInterchangeToRepository } from './model/MergedInterchange';
+
 // Factories
 export { newComplexType } from './model/schema/ComplexType';
 export { newAnnotation } from './model/schema/Annotation';
@@ -38,6 +39,9 @@ export {
   createPercentSimpleType,
   createTimeIntervalSimpleType,
 } from './enhancer/schema/BaseSimpleTypeCreator';
+
+// Utilities
+export { edfiXsdRepositoryForNamespace } from './enhancer/EnhancerHelper';
 
 export function initialize(): MetaEdPlugin {
   return {

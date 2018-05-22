@@ -2,8 +2,9 @@
 import { String as sugar } from 'sugar';
 import { newNamespace } from 'metaed-core';
 import type { Namespace, Interchange, InterchangeItem, MetaEdEnvironment } from 'metaed-core';
-import { unionOfInterchangeItems } from '../model/InterchangeItem';
-import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
+import { unionOfInterchangeItems } from './InterchangeItem';
+import type { EdFiXsdEntityRepository } from './EdFiXsdEntityRepository';
+import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 
 // From structure of Interchange - if core models move to structural typing, consider using Interchange directly
 type MergedInterchangeBase = {
@@ -37,13 +38,18 @@ export const combinedElementsAndIdentityTemplatesFor = (mergedInterchange: Merge
   unionOfInterchangeItems(mergedInterchange.elements, mergedInterchange.identityTemplates);
 
 export const addMergedInterchangeToRepository = (metaEd: MetaEdEnvironment, mergedInterchange: MergedInterchange) => {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+  const edfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(
+    metaEd,
+    mergedInterchange.namespace,
+  );
+  if (edfiXsdEntityRepository == null) return;
+
   mergedInterchange.repositoryId = mergedInterchange.namespace.isExtension
     ? `${mergedInterchange.namespace.projectExtension}-${mergedInterchange.metaEdName}`
     : mergedInterchange.metaEdName;
   mergedInterchange.humanizedName = addHumanizedNameFor(mergedInterchange);
 
-  edFiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
+  edfiXsdEntityRepository.mergedInterchange.set(mergedInterchange.repositoryId, mergedInterchange);
 };
 
 // warning: limitation of extending base model objects in an extension plugin is that the type field is restricted

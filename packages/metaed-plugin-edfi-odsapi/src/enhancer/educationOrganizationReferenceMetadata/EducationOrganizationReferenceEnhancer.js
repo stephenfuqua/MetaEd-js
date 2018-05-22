@@ -7,6 +7,7 @@ import type {
   MetaEdEnvironment,
   Namespace,
 } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import { newEducationOrganizationReference } from '../../model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 import type { EducationOrganizationReference } from '../../model/educationOrganizationReferenceMetadata/EducationOrganizationReference';
 
@@ -16,12 +17,17 @@ const educationOrganizationEntityName: string = 'EducationOrganization';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // If no Education Organization domain entity or if for some reason it
   // has more than one identity property, generating this metadata doesn't make any sense
-  const educationOrganizationAbstractEntity: ?DomainEntity = metaEd.entity.domainEntity.get(educationOrganizationEntityName);
+  const coreNamespace: Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+
+  const educationOrganizationAbstractEntity: ?DomainEntity = coreNamespace.entity.domainEntity.get(
+    educationOrganizationEntityName,
+  );
   if (educationOrganizationAbstractEntity == null || educationOrganizationAbstractEntity.identityProperties.length !== 1)
     return { enhancerName, success: true };
 
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
-    metaEd.entity.domainEntitySubclass.forEach((subclass: DomainEntitySubclass) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    getAllEntitiesOfType(metaEd, 'domainEntitySubclass').forEach((subclass: DomainEntitySubclass) => {
       if (
         subclass.namespace.namespaceName !== namespace.namespaceName ||
         subclass.baseEntityName !== educationOrganizationEntityName

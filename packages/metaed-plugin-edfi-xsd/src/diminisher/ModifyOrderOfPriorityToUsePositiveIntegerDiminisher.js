@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { getEntity, versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
+import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType, Namespace } from 'metaed-core';
 import { asElement } from '../model/schema/Element';
 import { NoSimpleType } from '../model/schema/SimpleType';
 import type { ComplexType } from '../model/schema/ComplexType';
@@ -20,8 +20,10 @@ const positiveIntegerType: string = 'xs:positiveInteger';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
 
-  const commonEntity: ?ModelBase = getEntity(metaEd.entity, commonEntityName, commonEntityType);
+  const commonEntity: ?ModelBase = getEntityForNamespaces(commonEntityName, [coreNamespace], commonEntityType);
   const complexType: ?ComplexType = commonEntity != null ? R.head(commonEntity.data.edfiXsd.xsd_ComplexTypes) : null;
 
   const element: ?Element =
@@ -30,7 +32,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       : null;
   if (element != null) element.type = positiveIntegerType;
 
-  const integerType: ?ModelBase = getEntity(metaEd.entity, nameType, integerTypeEntityType);
+  const integerType: ?ModelBase = getEntityForNamespaces(nameType, [coreNamespace], integerTypeEntityType);
   if (integerType != null) integerType.data.edfiXsd.xsd_SimpleType = NoSimpleType;
 
   return {

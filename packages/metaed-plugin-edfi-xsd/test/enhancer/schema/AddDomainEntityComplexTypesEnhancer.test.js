@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity } from 'metaed-core';
+import { newMetaEdEnvironment, newDomainEntity, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, DomainEntity } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -8,7 +8,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDomainEntityComplexTypesEnhancer';
 
 describe('when enhancing domainEntity', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: DomainEntity;
@@ -19,6 +21,7 @@ describe('when enhancing domainEntity', () => {
 
   beforeAll(() => {
     enhancedItem = Object.assign(newDomainEntity(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
@@ -26,7 +29,7 @@ describe('when enhancing domainEntity', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.domainEntity.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.domainEntity.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

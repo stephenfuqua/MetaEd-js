@@ -1,5 +1,5 @@
 // @flow
-import { getAllTopLevelEntities, prependIndefiniteArticle, versionSatisfies } from 'metaed-core';
+import { getAllTopLevelEntitiesForNamespaces, prependIndefiniteArticle, versionSatisfies } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
 import { createSchemaComplexTypeItems } from '../enhancer/schema/XsdElementFromPropertyCreator';
 import { newAnnotation } from '../model/schema/Annotation';
@@ -57,9 +57,11 @@ const createReferenceTypeItem = (entity: TopLevelEntity, lookupType: ComplexType
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
 
-  getAllTopLevelEntities(metaEd.entity)
-    .filter(x => !x.namespace.isExtension && lookupTypeNames.includes(x.metaEdName))
+  getAllTopLevelEntitiesForNamespaces([coreNamespace])
+    .filter(x => lookupTypeNames.includes(x.metaEdName))
     .forEach(entity => {
       const lookupType: ComplexType = createLookupType(entity);
       entity.data.edfiXsd.xsd_LookupType = lookupType;

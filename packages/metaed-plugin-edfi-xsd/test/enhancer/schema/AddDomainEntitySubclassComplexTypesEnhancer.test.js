@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass } from 'metaed-core';
+import { newMetaEdEnvironment, newDomainEntity, newDomainEntitySubclass, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, DomainEntitySubclass } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -8,7 +8,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDomainEntitySubclassComplexTypesEnhancer';
 
 describe('when enhancing domainEntity subclass', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName: string = 'BaseTypeName';
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
@@ -20,15 +22,17 @@ describe('when enhancing domainEntity subclass', () => {
 
   beforeAll(() => {
     const baseEntity = Object.assign(newDomainEntity(), {
+      namespace,
       metaEdName: baseTypeName,
       data: {
         edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
-    metaEd.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
 
     enhancedItem = Object.assign(newDomainEntitySubclass(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       baseEntity,
@@ -37,7 +41,7 @@ describe('when enhancing domainEntity subclass', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.domainEntitySubclass.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.domainEntitySubclass.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

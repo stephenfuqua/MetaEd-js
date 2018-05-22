@@ -16,17 +16,16 @@ export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
 }
 
 export function addEdFiXsdEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  if (metaEd.plugin.has('edfiXsd')) {
-    Object.assign((metaEd.plugin.get('edfiXsd'): any), {
-      entity: newEdFiXsdEntityRepository(),
-    });
+  const namespaces: Map<Namespace, EdFiOdsEntityRepository> = new Map();
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespaces.set(namespace, newEdFiXsdEntityRepository());
+  });
+
+  const edfiOdsPlugin = metaEd.plugin.get('edfiXsd');
+  if (edfiOdsPlugin == null) {
+    metaEd.plugin.set('edfiXsd', { ...newPluginEnvironment(), namespace: namespaces });
   } else {
-    metaEd.plugin.set(
-      'edfiXsd',
-      Object.assign(newPluginEnvironment(), {
-        entity: newEdFiXsdEntityRepository(),
-      }),
-    );
+    edfiOdsPlugin.namespace = namespaces;
   }
 }
 

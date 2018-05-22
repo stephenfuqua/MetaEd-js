@@ -1,34 +1,48 @@
 // @flow
 import R from 'ramda';
-import { getEntitiesOfType, newInterchangeItem } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult, ModelBase } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces, newInterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, ModelBase, Namespace } from 'metaed-core';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
+import { edfiXsdRepositoryForNamespace } from './EnhancerHelper';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { MergedInterchange } from '../model/MergedInterchange';
 
 const enhancerName: string = 'MergedInterchangeExtensionEnhancer';
 
-export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  const coreInterchanges: Array<MergedInterchange> = Array.from(edFiXsdEntityRepository.mergedInterchange.values());
+function allMergedInterchanges(metaEd: MetaEdEnvironment, namespace: Namespace): Array<MergedInterchange> {
+  const result: Array<MergedInterchange> = [];
+  const namespaces: Array<Namespace> = [namespace, ...namespace.dependencies];
+  namespaces.forEach((n: Namespace) => {
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, n);
+    if (xsdRepository == null) return;
+    result.push(...xsdRepository.mergedInterchange.values());
+  });
+  return result;
+}
 
-  Array.from(metaEd.entity.namespace.values())
-    .filter(ni => ni.isExtension)
-    .forEach(extensionNamespace => {
-      const isInThisNamespace = x => x.namespace.namespaceName === extensionNamespace.namespaceName;
-      const extensionEntities: Array<ModelBase> = getEntitiesOfType(
-        metaEd.entity,
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  Array.from(metaEd.namespace.values())
+    .filter(n => n.isExtension)
+    .forEach((extensionNamespace: Namespace) => {
+      const extensionEntities: Array<ModelBase> = getEntitiesOfTypeForNamespaces(
+        [extensionNamespace],
         'associationExtension',
         'domainEntityExtension',
-      ).filter(isInThisNamespace);
+      );
+
+      const extensionEdfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(
+        metaEd,
+        extensionNamespace,
+      );
+      if (extensionEdfiXsdEntityRepository == null) return;
       const extensionInterchanges: Array<MergedInterchange> = Array.from(
-        edFiXsdEntityRepository.mergedInterchange.values(),
-      ).filter(isInThisNamespace);
+        extensionEdfiXsdEntityRepository.mergedInterchange.values(),
+      );
 
       // Need to extend any interchange that contains an entity that has an extension in the current namespace
-      const interchangesToExtend: Array<MergedInterchange> = coreInterchanges.filter(i =>
-        i.elements.some(e => extensionEntities.some(ee => ee.metaEdName === e.metaEdName)),
+      const interchangesToExtend: Array<MergedInterchange> = allMergedInterchanges(metaEd, extensionNamespace).filter(
+        (mi: MergedInterchange) => mi.elements.some(e => extensionEntities.some(ee => ee.metaEdName === e.metaEdName)),
       );
 
       interchangesToExtend.forEach(interchangeToExtend => {

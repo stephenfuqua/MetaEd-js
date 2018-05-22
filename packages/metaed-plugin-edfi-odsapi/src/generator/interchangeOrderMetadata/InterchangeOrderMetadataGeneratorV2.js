@@ -6,6 +6,7 @@ import handlebars from 'handlebars';
 import { V2Only, versionSatisfies } from 'metaed-core';
 import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
 const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
 const targetVersions: string = V2Only;
@@ -53,14 +54,15 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
     };
   const results: Array<GeneratedOutput> = [];
 
-  if (metaEd.entity.namespace.size > 0) {
+  if (metaEd.namespace.size > 0) {
     let coreInterchanges: Array<InterchangeMetadata> = [];
 
-    metaEd.entity.namespace.forEach((namespace: Namespace) => {
-      const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    metaEd.namespace.forEach((namespace: Namespace) => {
+      const edfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+      if (edfiXsdEntityRepository == null) return;
 
       let interchanges: Array<InterchangeMetadata> = [];
-      edFiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
+      edfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
         if (interchange.namespace.namespaceName !== namespace.namespaceName) return;
 
         const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(

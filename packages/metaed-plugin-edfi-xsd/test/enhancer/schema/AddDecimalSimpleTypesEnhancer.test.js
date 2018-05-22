@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newDecimalType } from 'metaed-core';
+import { newMetaEdEnvironment, newDecimalType, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, DecimalType } from 'metaed-core';
 import type { DecimalSimpleType } from '../../../src/model/schema/DecimalSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
@@ -7,7 +7,9 @@ import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddDecimalSimpleTypesEnhancer';
 
 describe('when enhancing decimal type', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const minValue: string = '1';
@@ -31,7 +33,7 @@ describe('when enhancing decimal type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -77,7 +79,9 @@ describe('when enhancing decimal type', () => {
 });
 
 describe('when enhancing generated decimal type with min value only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const minValue: string = '1';
@@ -95,7 +99,7 @@ describe('when enhancing generated decimal type with min value only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -124,7 +128,9 @@ describe('when enhancing generated decimal type with min value only', () => {
 });
 
 describe('when enhancing generated decimal type with max value only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const maxValue: string = '100';
@@ -142,7 +148,7 @@ describe('when enhancing generated decimal type with max value only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -171,7 +177,9 @@ describe('when enhancing generated decimal type with max value only', () => {
 });
 
 describe('when enhancing generated decimal type with decimal places only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const decimalPlaces: string = '2';
@@ -189,7 +197,7 @@ describe('when enhancing generated decimal type with decimal places only', () =>
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -218,7 +226,9 @@ describe('when enhancing generated decimal type with decimal places only', () =>
 });
 
 describe('when enhancing generated decimal type with total digits only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const totalDigits: string = '5';
@@ -236,7 +246,7 @@ describe('when enhancing generated decimal type with total digits only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -265,7 +275,9 @@ describe('when enhancing generated decimal type with total digits only', () => {
 });
 
 describe('when enhancing non-generated decimal type with no restrictions', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: DecimalType;
@@ -281,7 +293,7 @@ describe('when enhancing non-generated decimal type with no restrictions', () =>
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -310,7 +322,9 @@ describe('when enhancing non-generated decimal type with no restrictions', () =>
 });
 
 describe('when enhancing generated decimal type with no restrictions', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: DecimalType;
@@ -326,7 +340,7 @@ describe('when enhancing generated decimal type with no restrictions', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.decimalType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 

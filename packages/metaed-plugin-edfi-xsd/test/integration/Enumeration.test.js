@@ -8,7 +8,7 @@ import {
   EnumerationBuilder,
   DomainEntityBuilder,
 } from 'metaed-core';
-import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
+import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for enumeration', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -97,6 +97,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .sendToListener(enumerationBuilder)
       .sendToListener(descriptorBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -161,6 +162,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
       .sendToListener(domainEntityBuilder)
       .sendToListener(enumerationBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

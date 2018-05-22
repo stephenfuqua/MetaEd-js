@@ -8,7 +8,7 @@ import {
   AssociationExtensionBuilder,
   NamespaceBuilder,
 } from 'metaed-core';
-import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
+import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for association extension in extension namespace based on core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -63,6 +63,7 @@ describe('when generating xsd for association extension in extension namespace b
       .sendToListener(associationBuilder)
       .sendToListener(associationExtensionBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

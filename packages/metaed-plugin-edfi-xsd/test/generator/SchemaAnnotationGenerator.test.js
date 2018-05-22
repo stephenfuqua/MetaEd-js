@@ -1,7 +1,8 @@
 // @flow
 import xmlParser from 'xml-js';
-import { addEntity, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { addEntityForNamespace, newBooleanProperty, newDescriptor, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { createSchema } from './GeneratorTestBase';
 import { generate } from '../../src/generator/SchemaAnnotationGenerator';
 
@@ -9,24 +10,26 @@ describe('when generating schema annotation for a single descriptor', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), {
     dataStandardVersion: '2.1.0',
   });
+  const schema = createSchema('200', 'Schema Documentation');
+  const namespace = Object.assign(newNamespace(), {
+    namespaceName: 'edfi',
+    projectExtension: 'EXTENSION',
+    data: {
+      edfiXsd: {
+        xsd_Schema: schema,
+      },
+    },
+  });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const xsdDescriptorName: string = 'DescriptorNameDescriptor';
   let descriptorElement;
 
   beforeAll(async () => {
-    const schema = createSchema('200', 'Schema Documentation');
-    const namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
-      projectExtension: 'EXTENSION',
-      data: {
-        edfiXsd: {
-          xsd_Schema: schema,
-        },
-      },
-    });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
       metaEdName: 'DescriptorName',
+      namespace,
       documentation: 'DescriptorDocumentation',
       data: {
         edfiXsd: {
@@ -38,13 +41,14 @@ describe('when generating schema annotation for a single descriptor', () => {
       },
       properties: [
         Object.assign(newBooleanProperty(), {
+          namespace,
           metaEdName: 'BooleanPropertyName',
           documentation: 'PropertyDocumentation',
           isRequired: false,
         }),
       ],
     });
-    addEntity(metaEd.entity, descriptor);
+    addEntityForNamespace(descriptor);
 
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
     descriptorElement = xmlParser.xml2js(rawXsd).elements[1].elements[1];

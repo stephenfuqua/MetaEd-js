@@ -36,16 +36,14 @@ function generateFile(input: any, namespace: Namespace): GeneratedOutput {
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
-  if (metaEd.entity.namespace.size > 0) {
-    metaEd.entity.namespace.forEach((namespace: Namespace) => {
-      const educationOrganizationReferences: Array<EducationOrganizationReference> = orderByProp('name')(
-        namespace.data.edfiOdsApi.api_EducationOrganizationReferences,
-      );
-      if (educationOrganizationReferences.length > 0) {
-        results.push(generateFile({ educationOrganizationReferences }, namespace));
-      }
-    });
-  }
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const educationOrganizationReferences: Array<EducationOrganizationReference> = orderByProp('name')(
+      namespace.data.edfiOdsApi.api_EducationOrganizationReferences,
+    );
+    if (educationOrganizationReferences.length > 0) {
+      results.push(generateFile({ educationOrganizationReferences }, namespace));
+    }
+  });
 
   return {
     generatorName,

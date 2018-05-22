@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newCommon } from 'metaed-core';
+import { newMetaEdEnvironment, newCommon, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Common } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -8,7 +8,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddCommonComplexTypesEnhancer';
 
 describe('when enhancing common', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: Common;
@@ -19,6 +21,7 @@ describe('when enhancing common', () => {
 
   beforeAll(() => {
     enhancedItem = Object.assign(newCommon(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
@@ -26,7 +29,7 @@ describe('when enhancing common', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.common.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.common.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

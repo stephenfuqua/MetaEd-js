@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { getEntity, versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, EntityRepository, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
+import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import type { EnhancerResult, Namespace, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
 import type { ComplexType } from '../model/schema/ComplexType';
 import { asElement } from '../model/schema/Element';
 
@@ -11,12 +11,12 @@ const enhancerName: string = 'ModifyIdentityTypeOrderToMatchLegacyOrderDiminishe
 const targetVersions: string = '2.0.x';
 
 function reorderIdentityType(
-  repository: EntityRepository,
+  namespace: Namespace,
   modelType: ModelType,
   metaEdName: string,
   newElementOrder: Array<string>,
 ): void {
-  const entity: ?ModelBase = getEntity(repository, metaEdName, modelType);
+  const entity: ?ModelBase = getEntityForNamespaces(metaEdName, [namespace], modelType);
   const identityType: ?ComplexType = entity != null ? entity.data.edfiXsd.xsd_IdentityType : null;
 
   if (
@@ -31,74 +31,68 @@ function reorderIdentityType(
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const namespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (namespace == null) return { enhancerName, success: false };
 
   const domainEntity: ModelType = 'domainEntity';
   const association: ModelType = 'association';
 
-  reorderIdentityType(metaEd.entity, association, 'StaffEducationOrganizationEmploymentAssociation', [
+  reorderIdentityType(namespace, association, 'StaffEducationOrganizationEmploymentAssociation', [
     'EducationOrganizationReference',
     'StaffReference',
     'EmploymentStatus',
     'HireDate',
   ]);
-  reorderIdentityType(metaEd.entity, association, 'StudentProgramAssociation', [
+  reorderIdentityType(namespace, association, 'StudentProgramAssociation', [
     'StudentReference',
     'EducationOrganizationReference',
     'ProgramReference',
     'BeginDate',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'AssessmentItem', ['AssessmentReference', 'IdentificationCode']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'ClassPeriod', ['ClassPeriodName', 'SchoolReference']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'CourseOffering', [
-    'LocalCourseCode',
-    'SessionReference',
-    'SchoolReference',
-  ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Grade', [
+  reorderIdentityType(namespace, domainEntity, 'AssessmentItem', ['AssessmentReference', 'IdentificationCode']);
+  reorderIdentityType(namespace, domainEntity, 'ClassPeriod', ['ClassPeriodName', 'SchoolReference']);
+  reorderIdentityType(namespace, domainEntity, 'CourseOffering', ['LocalCourseCode', 'SessionReference', 'SchoolReference']);
+  reorderIdentityType(namespace, domainEntity, 'Grade', [
     'StudentSectionAssociationReference',
     'GradingPeriodReference',
     'GradeType',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'GradebookEntry', [
+  reorderIdentityType(namespace, domainEntity, 'GradebookEntry', [
     'SectionReference',
     'GradebookEntryTitle',
     'DateAssigned',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'GradingPeriod', ['GradingPeriod', 'BeginDate', 'SchoolReference']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Intervention', [
+  reorderIdentityType(namespace, domainEntity, 'GradingPeriod', ['GradingPeriod', 'BeginDate', 'SchoolReference']);
+  reorderIdentityType(namespace, domainEntity, 'Intervention', [
     'InterventionIdentificationCode',
     'EducationOrganizationReference',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'InterventionPrescription', [
+  reorderIdentityType(namespace, domainEntity, 'InterventionPrescription', [
     'InterventionPrescriptionIdentificationCode',
     'EducationOrganizationReference',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Location', ['ClassroomIdentificationCode', 'SchoolReference']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'ObjectiveAssessment', ['AssessmentReference', 'IdentificationCode']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Program', [
-    'ProgramType',
-    'ProgramName',
-    'EducationOrganizationReference',
-  ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Section', [
+  reorderIdentityType(namespace, domainEntity, 'Location', ['ClassroomIdentificationCode', 'SchoolReference']);
+  reorderIdentityType(namespace, domainEntity, 'ObjectiveAssessment', ['AssessmentReference', 'IdentificationCode']);
+  reorderIdentityType(namespace, domainEntity, 'Program', ['ProgramType', 'ProgramName', 'EducationOrganizationReference']);
+  reorderIdentityType(namespace, domainEntity, 'Section', [
     'LocationReference',
     'ClassPeriodReference',
     'CourseOfferingReference',
     'UniqueSectionCode',
     'SequenceOfCourse',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'Session', ['SchoolReference', 'SchoolYear', 'Term']);
-  reorderIdentityType(metaEd.entity, domainEntity, 'StudentAssessment', [
+  reorderIdentityType(namespace, domainEntity, 'Session', ['SchoolReference', 'SchoolYear', 'Term']);
+  reorderIdentityType(namespace, domainEntity, 'StudentAssessment', [
     'StudentReference',
     'AssessmentReference',
     'AdministrationDate',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'StudentCompetencyObjective', [
+  reorderIdentityType(namespace, domainEntity, 'StudentCompetencyObjective', [
     'StudentReference',
     'CompetencyObjectiveReference',
     'GradingPeriodReference',
   ]);
-  reorderIdentityType(metaEd.entity, domainEntity, 'StudentLearningObjective', [
+  reorderIdentityType(namespace, domainEntity, 'StudentLearningObjective', [
     'StudentReference',
     'LearningObjectiveReference',
     'GradingPeriodReference',

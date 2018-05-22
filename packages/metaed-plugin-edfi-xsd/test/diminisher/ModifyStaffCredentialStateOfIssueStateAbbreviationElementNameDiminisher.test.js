@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { Common, IntegerType, MetaEdEnvironment } from 'metaed-core';
-import { addEntity, newCommon, newIntegerType, newMetaEdEnvironment } from 'metaed-core';
+import type { Common, IntegerType, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { addEntityForNamespace, newCommon, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
@@ -10,15 +10,18 @@ import { enhance } from '../../src/diminisher/ModifyStaffCredentialStateOfIssueS
 describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes credential common type', () => {
   const expectedElementName: string = 'StateOfIssueStateAbbreviationType';
   let commonEntity: Common;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const commonEntityName: string = 'Credential';
     const elementName: string = 'StateOfIssueStateAbbreviation';
     const elementType: string = 'StateAbbreviationType';
 
     commonEntity = Object.assign(newCommon(), {
       metaEdName: commonEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -35,7 +38,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
         },
       },
     });
-    addEntity(metaEd.entity, commonEntity);
+    addEntityForNamespace(commonEntity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -48,6 +51,8 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
 
 describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes with no credential common type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
     const commonEntityName: string = 'CommonEntityName';
@@ -55,6 +60,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
 
     const commonEntity: Common = Object.assign(newCommon(), {
       metaEdName: commonEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -71,17 +77,18 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
         },
       },
     });
-    addEntity(metaEd.entity, commonEntity);
+    addEntityForNamespace(commonEntity);
 
     const integerType: IntegerType = Object.assign(newIntegerType(), {
       metaEdName: integerTypeName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
         },
       },
     });
-    addEntity(metaEd.entity, integerType);
+    addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });

@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, EntityProperty, TopLevelEntity, CommonProperty } from 'metaed-core';
-import { getAllTopLevelEntities } from 'metaed-core';
+import { getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import { NoComplexType } from './schema/ComplexType';
 import type { ComplexType } from './schema/ComplexType';
 
@@ -42,7 +42,7 @@ export function addTopLevelEntityEdfiXsdTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllTopLevelEntities(metaEd.entity).forEach(entity => {
+  getAllTopLevelEntitiesForNamespaces(metaEd.namespace).forEach(entity => {
     addTopLevelEntityEdfiXsdTo(entity);
   });
 

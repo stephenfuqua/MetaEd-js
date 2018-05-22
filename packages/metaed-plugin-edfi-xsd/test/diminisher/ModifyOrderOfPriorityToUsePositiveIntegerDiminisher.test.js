@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { Common, MetaEdEnvironment, IntegerType } from 'metaed-core';
-import { addEntity, newCommon, newMetaEdEnvironment, newIntegerType } from 'metaed-core';
+import type { Common, MetaEdEnvironment, IntegerType, Namespace } from 'metaed-core';
+import { addEntityForNamespace, newCommon, newMetaEdEnvironment, newIntegerType, newNamespace } from 'metaed-core';
 import { newComplexType } from '../../src/model/schema/ComplexType';
 import { newElement } from '../../src/model/schema/Element';
 import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
@@ -11,14 +11,17 @@ import { enhance } from '../../src/diminisher/ModifyOrderOfPriorityToUsePositive
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes telephone common type', () => {
   const positiveIntegerType: string = 'xs:positiveInteger';
   let commonEntity: Common;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const commonEntityName: string = 'Telephone';
     const elementNameType: string = 'OrderOfPriority';
 
     commonEntity = Object.assign(newCommon(), {
       metaEdName: commonEntityName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -35,7 +38,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
         },
       },
     });
-    addEntity(metaEd.entity, commonEntity);
+    addEntityForNamespace(commonEntity);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -48,20 +51,23 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
 
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes order of priority simple type', () => {
   let integerType: IntegerType;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
-    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const integerTypeName: string = 'OrderOfPriority';
 
     integerType = Object.assign(newIntegerType(), {
       metaEdName: integerTypeName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
         },
       },
     });
-    addEntity(metaEd.entity, integerType);
+    addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
     enhance(metaEd);
@@ -74,12 +80,16 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
 
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes with no order of priority', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+
   beforeAll(() => {
     const commonEntityName: string = 'CommonEntityName';
     const integerTypeName: string = 'IntegerTypeName';
 
     const commonEntity: Common = Object.assign(newCommon(), {
       metaEdName: 'commonEntityName',
+      namespace,
       data: {
         edfiXsd: {
           xsd_ComplexTypes: [
@@ -96,17 +106,18 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes wi
         },
       },
     });
-    addEntity(metaEd.entity, commonEntity);
+    addEntityForNamespace(commonEntity);
 
     const integerType: IntegerType = Object.assign(newIntegerType(), {
       metaEdName: integerTypeName,
+      namespace,
       data: {
         edfiXsd: {
           xsd_SimpleType: Object.assign(newIntegerSimpleType(), { name: integerTypeName, minValue: '1' }),
         },
       },
     });
-    addEntity(metaEd.entity, integerType);
+    addEntityForNamespace(integerType);
 
     metaEd.dataStandardVersion = '2.0.0';
   });

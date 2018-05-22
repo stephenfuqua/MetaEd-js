@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
-import { getAllTopLevelEntities } from 'metaed-core';
+import { getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 const enhancerName: string = 'SubclassIdentityEnhancer';
@@ -19,7 +19,7 @@ function addBaseIdentityProperties(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllTopLevelEntities(metaEd.entity).forEach(entity => {
+  getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())).forEach(entity => {
     addBaseIdentityProperties(entity);
   });
 

@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { getEntity, versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
+import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType, Namespace } from 'metaed-core';
 import { asElement } from '../model/schema/Element';
 import type { ComplexType } from '../model/schema/ComplexType';
 import type { Element } from '../model/schema/Element';
@@ -19,8 +19,10 @@ const newElementName: string = 'StateOfIssueStateAbbreviationType';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
 
-  const common: ?ModelBase = getEntity(metaEd.entity, commonName, commonModelType);
+  const common: ?ModelBase = getEntityForNamespaces(commonName, [coreNamespace], commonModelType);
   const complexType: ?ComplexType = common != null ? R.head(common.data.edfiXsd.xsd_ComplexTypes) : null;
   const element: ?Element =
     complexType != null

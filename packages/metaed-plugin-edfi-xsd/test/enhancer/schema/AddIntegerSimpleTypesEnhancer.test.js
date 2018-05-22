@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newIntegerType } from 'metaed-core';
+import { newMetaEdEnvironment, newIntegerType, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, IntegerType } from 'metaed-core';
 import type { IntegerSimpleType } from '../../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
@@ -16,6 +16,9 @@ describe('when enhancing integer type', () => {
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newIntegerType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -27,7 +30,7 @@ describe('when enhancing integer type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -65,7 +68,9 @@ describe('when enhancing integer type', () => {
 });
 
 describe('when enhancing integer type is short', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const minValue: string = '1';
@@ -86,7 +91,7 @@ describe('when enhancing integer type is short', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -124,7 +129,9 @@ describe('when enhancing integer type is short', () => {
 });
 
 describe('when enhancing generated integer type with min value only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const minValue: string = '1';
@@ -142,7 +149,7 @@ describe('when enhancing generated integer type with min value only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -163,7 +170,9 @@ describe('when enhancing generated integer type with min value only', () => {
 });
 
 describe('when enhancing generated integer type with max value only', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   const maxValue: string = '100';
@@ -181,7 +190,7 @@ describe('when enhancing generated integer type with max value only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -202,7 +211,9 @@ describe('when enhancing generated integer type with max value only', () => {
 });
 
 describe('when enhancing non-generated integer type with no restrictions', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: IntegerType;
@@ -218,7 +229,7 @@ describe('when enhancing non-generated integer type with no restrictions', () =>
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -239,7 +250,9 @@ describe('when enhancing non-generated integer type with no restrictions', () =>
 });
 
 describe('when enhancing generated integer type with no restrictions', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName: string = 'SimpleTypeName';
   const documentation: string = 'Documentation';
   let enhancedItem: IntegerType;
@@ -255,7 +268,7 @@ describe('when enhancing generated integer type with no restrictions', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.integerType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 

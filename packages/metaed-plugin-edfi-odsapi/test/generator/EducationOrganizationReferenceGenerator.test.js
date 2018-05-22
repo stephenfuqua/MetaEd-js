@@ -26,7 +26,7 @@ describe('when generating education organization reference for core', () => {
       },
     });
 
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -58,7 +58,7 @@ describe('when generating education organization reference for extension', () =>
       },
     });
 
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     result = (await generate(metaEd)).generatedOutput[0].resultString;
   });
 
@@ -87,7 +87,7 @@ describe('when generating education organization reference for both core and ext
         },
       },
     });
-    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     const extensionEducationOrganizationReference: EducationOrganizationReference = {
       ...newEducationOrganizationReference(),
@@ -104,7 +104,7 @@ describe('when generating education organization reference for both core and ext
         },
       },
     });
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const generatedResult: GeneratorResult = await generate(metaEd);
     coreResult = generatedResult.generatedOutput[0].resultString;
@@ -139,7 +139,7 @@ describe('when generating education organization reference for both core and emp
         },
       },
     });
-    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     const extensionNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName: 'extension',
@@ -151,7 +151,7 @@ describe('when generating education organization reference for both core and emp
         },
       },
     });
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const generatedResult: GeneratorResult = await generate(metaEd);
     expect(generatedResult.generatedOutput).toHaveLength(1);

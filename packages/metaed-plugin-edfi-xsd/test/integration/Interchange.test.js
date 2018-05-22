@@ -12,7 +12,7 @@ import {
   AssociationBuilder,
   AssociationExtensionBuilder,
 } from 'metaed-core';
-import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
+import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for domain entity in both namespaces sharing a simple type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -127,6 +127,7 @@ describe('when generating xsd for extension interchange with a new domain entity
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -233,6 +234,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -351,6 +353,7 @@ describe('when generating xsd for extension interchange with an association exte
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -445,6 +448,7 @@ describe('when generating xsd for extension interchange with extension descripto
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 

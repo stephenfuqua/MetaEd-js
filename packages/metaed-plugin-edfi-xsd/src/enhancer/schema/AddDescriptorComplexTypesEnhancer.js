@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor, SemVer } from 'metaed-core';
-import { NoMapTypeEnumeration, versionSatisfies, V3OrGreater } from 'metaed-core';
+import { NoMapTypeEnumeration, versionSatisfies, V3OrGreater, getAllEntitiesOfType } from 'metaed-core';
 import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';
@@ -40,7 +40,7 @@ function createComplexType(descriptor: Descriptor): Array<ComplexType> {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.descriptor.forEach(descriptor => {
+  getAllEntitiesOfType(metaEd, 'descriptor').forEach(descriptor => {
     descriptor.data.edfiXsd.xsd_ComplexTypes = createComplexType(descriptor);
   });
 

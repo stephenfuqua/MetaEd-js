@@ -10,7 +10,7 @@ import {
   loadFileIndex,
   loadFiles,
   loadPlugins,
-  addProjectNameToNamespace,
+  initializeNamespaces,
   newMetaEdConfiguration,
   newState,
   runEnhancers,
@@ -75,12 +75,18 @@ describe('when generating api model and comparing it to data standard 3.0 author
 
     validateConfiguration(state);
     loadPlugins(state);
+    state.pluginManifest = state.pluginManifest.filter(
+      manifest =>
+        manifest.shortName === 'edfiUnified' ||
+        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiXsd' ||
+        manifest.shortName === 'edfiOdsApi',
+    );
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespace(state);
-
+    initializeNamespaces(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);
@@ -168,12 +174,18 @@ describe('when generating api model with simple extensions and comparing it to d
 
     validateConfiguration(state);
     loadPlugins(state);
+    state.pluginManifest = state.pluginManifest.filter(
+      manifest =>
+        manifest.shortName === 'edfiUnified' ||
+        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiXsd' ||
+        manifest.shortName === 'edfiOdsApi',
+    );
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespace(state);
-
+    initializeNamespaces(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);
@@ -279,12 +291,18 @@ describe('when generating api model with student transcript extensions and compa
 
     validateConfiguration(state);
     loadPlugins(state);
+    state.pluginManifest = state.pluginManifest.filter(
+      manifest =>
+        manifest.shortName === 'edfiUnified' ||
+        manifest.shortName === 'edfiOds' ||
+        manifest.shortName === 'edfiXsd' ||
+        manifest.shortName === 'edfiOdsApi',
+    );
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespace(state);
-
+    initializeNamespaces(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);

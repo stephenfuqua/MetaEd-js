@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation } from 'metaed-core';
+import { newMetaEdEnvironment, newAssociation, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Association } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -18,7 +18,11 @@ describe('when enhancing association', () => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newAssociation(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       data: {
@@ -26,7 +30,7 @@ describe('when enhancing association', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.association.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.association.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

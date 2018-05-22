@@ -2,7 +2,6 @@
 import R from 'ramda';
 import xmlParser from 'xml-js';
 import {
-  newPluginEnvironment,
   newMetaEdEnvironment,
   newNamespace,
   newInterchange,
@@ -27,17 +26,23 @@ import {
   xsdAttributeType,
   xsdMaxOccurs,
 } from './templates/TemplateTestHelper';
-import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../../src/model/MergedInterchange';
 import type { MergedInterchange } from '../../src/model/MergedInterchange';
 import { generate } from '../../src/generator/InterchangeGenerator';
 
 describe('when generating single interchange', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension: 'EXTENSION',
+    isExtension: true,
+  });
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  extensionNamespace.dependencies.push(namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
   const elementBaseName: string = 'ElementName';
   const elementTypeName: string = 'ElementNameType';
   const identityTemplateBaseName: string = 'IdentityTemplateNameReference';
@@ -49,11 +54,6 @@ describe('when generating single interchange', () => {
   let result;
 
   beforeAll(async () => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
-    });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementBaseName,
       data: {
@@ -76,11 +76,12 @@ describe('when generating single interchange', () => {
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       documentation: interchangeDocumentation,
       elements: [element],
       identityTemplates: [identityTemplate],
     });
-    metaEd.entity.interchange.set(interchange.metaEdName, interchange);
+    namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
@@ -135,11 +136,17 @@ describe('when generating single interchange', () => {
 });
 
 describe('when generating single interchange with extension', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension: 'EXTENSION',
+    isExtension: true,
+  });
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  extensionNamespace.dependencies.push(namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
   const elementBaseName: string = 'ElementName';
   const elementTypeName: string = 'ElementNameType';
   const identityTemplateBaseName: string = 'IdentityTemplateNameReference';
@@ -153,11 +160,6 @@ describe('when generating single interchange with extension', () => {
   let result: Array<GeneratedOutput>;
 
   beforeAll(() => {
-    const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
-    });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
     const element: InterchangeItem = Object.assign(newInterchangeItem(), {
       metaEdName: elementBaseName,
       data: {
@@ -190,19 +192,21 @@ describe('when generating single interchange with extension', () => {
 
     const interchange: Interchange = Object.assign(newInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       documentation: interchangeDocumentation,
       elements: [element],
       identityTemplates: [identityTemplate],
     });
-    metaEd.entity.interchange.set(interchange.metaEdName, interchange);
+    namespace.entity.interchange.set(interchange.metaEdName, interchange);
 
     const interchangeExtension: InterchangeExtension = Object.assign(newInterchangeExtension(), {
       metaEdName: interchangeName,
+      namespace: extensionNamespace,
       documentation: interchangeExtensionDocumentation,
       elements: [extensionElement],
       identityTemplates: [],
     });
-    metaEd.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
+    extensionNamespace.entity.interchangeExtension.set(interchangeExtension.metaEdName, interchangeExtension);
 
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       namespace,

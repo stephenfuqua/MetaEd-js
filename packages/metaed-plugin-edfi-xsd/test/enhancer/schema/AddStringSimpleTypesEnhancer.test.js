@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newStringType } from 'metaed-core';
+import { newMetaEdEnvironment, newStringType, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, StringType } from 'metaed-core';
 import type { StringSimpleType } from '../../../src/model/schema/StringSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
@@ -16,6 +16,9 @@ describe('when enhancing string type', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newStringType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -27,7 +30,7 @@ describe('when enhancing string type', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -73,6 +76,9 @@ describe('when enhancing generated string type with min length only', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newStringType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -83,7 +89,7 @@ describe('when enhancing generated string type with min length only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -112,6 +118,9 @@ describe('when enhancing generated string type with max length only', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newStringType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -122,7 +131,7 @@ describe('when enhancing generated string type with max length only', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -150,6 +159,9 @@ describe('when enhancing non-generated string type with no restrictions', () => 
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newStringType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -159,7 +171,7 @@ describe('when enhancing non-generated string type with no restrictions', () => 
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 
@@ -187,6 +199,9 @@ describe('when enhancing generated string type with no restrictions', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+
     enhancedItem = Object.assign(newStringType(), {
       metaEdName: simpleTypeName,
       documentation,
@@ -196,7 +211,7 @@ describe('when enhancing generated string type with no restrictions', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.stringType.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 

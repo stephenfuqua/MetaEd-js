@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import {
   typeGroupAssociation,
@@ -11,7 +12,7 @@ import {
 const enhancerName: string = 'AddAssociationExtensionComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.associationExtension.forEach(associationExtension => {
+  getAllEntitiesOfType(metaEd, 'associationExtension').forEach(associationExtension => {
     if (associationExtension.data.edfiXsd.xsd_HasExtensionOverrideProperties()) {
       const associationExtensionEdfiXsd: TopLevelEntityEdfiXsd = associationExtension.data.edfiXsd;
       associationExtensionEdfiXsd.xsd_ComplexTypes = [createCoreRestrictionForExtensionParent(associationExtension)];

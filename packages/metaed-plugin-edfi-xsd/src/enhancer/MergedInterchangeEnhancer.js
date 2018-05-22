@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { MergedInterchange } from '../model/MergedInterchange';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import type { ModelBaseEdfiXsd } from '../model/ModelBase';
@@ -9,7 +10,7 @@ const enhancerName: string = 'MergedInterchangeEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // Build merged interchanges for all the interchanges, in any namespace
-  metaEd.entity.interchange.forEach((interchange: Interchange) => {
+  getAllEntitiesOfType(metaEd, 'interchange').forEach((interchange: Interchange) => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchange.metaEdName,
       repositoryId: interchange.metaEdName,
@@ -25,7 +26,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   });
 
   // Build merged interchanges for all the extensions in the extension namespace
-  metaEd.entity.interchangeExtension.forEach((interchangeExtension: InterchangeExtension) => {
+  getAllEntitiesOfType(metaEd, 'interchangeExtension').forEach((interchangeExtension: InterchangeExtension) => {
     const interchange = interchangeExtension.baseEntity;
     if (!interchange) return;
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {

@@ -22,6 +22,7 @@ import type {
   TopLevelEntity,
 } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 import graphlib, { Graph } from '@dagrejs/graphlib';
 
 winston.cli();
@@ -124,10 +125,11 @@ export function sortGraph(graph: Graph, removeRequiredCycles: boolean = false): 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
     const entityGraph: Graph = new Graph();
     const interchangeGraph: Graph = new Graph();
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
 
     edFiXsdEntityRepository.mergedInterchange.forEach((mergedInterchange: MergedInterchange) => {
       if (mergedInterchange.namespace.namespaceName !== namespace.namespaceName) return;

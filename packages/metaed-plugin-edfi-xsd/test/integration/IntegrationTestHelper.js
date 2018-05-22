@@ -26,8 +26,21 @@ type EnhanceAndGenerateResult = {
   interchangeResults: Array<string>,
 };
 
+export function initializeNamespaceDependencies(
+  metaEd: MetaEdEnvironment,
+  namespaceName: string,
+  extensionNamespaceName: string,
+) {
+  const coreNamespace: ?Namespace = metaEd.namespace.get(namespaceName);
+  if (coreNamespace == null) throw new Error();
+  const extensionNamespace: ?Namespace = metaEd.namespace.get(extensionNamespaceName);
+  if (extensionNamespace == null) throw new Error();
+  extensionNamespace.dependencies.push(coreNamespace);
+}
+
 export async function enhanceAndGenerate(metaEd: MetaEdEnvironment): Promise<EnhanceAndGenerateResult> {
   metaEd.dataStandardVersion = '2.0.0';
+
   initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
   initializeXsdPlugin().enhancer.forEach(enhance => enhance(metaEd));
 

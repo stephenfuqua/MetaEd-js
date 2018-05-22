@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, IntegerType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
 import type { ModelBaseEdfiXsd } from '../../model/ModelBase';
 import { NoSimpleType } from '../../model/schema/SimpleType';
@@ -27,7 +28,7 @@ function createSchemaSimpleType(integerType: IntegerType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.integerType.forEach(integerType => {
+  getAllEntitiesOfType(metaEd, 'integerType').forEach(integerType => {
     ((integerType.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType = createSchemaSimpleType(integerType);
   });
 

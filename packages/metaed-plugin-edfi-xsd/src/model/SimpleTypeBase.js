@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, DecimalType, IntegerType, StringType } from 'metaed-core';
-import { getEntitiesOfType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { SimpleType } from './schema/SimpleType';
 import { NoSimpleType } from './schema/SimpleType';
 
@@ -21,10 +21,11 @@ export function addSimpleTypeBaseEdfiXsdTo(simpleTypeBase: SimpleTypeBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(metaEd.entity, 'decimalType', 'integerType', 'stringType').forEach(entity => {
-    const simpleTypeBase = ((entity: any): SimpleTypeBase);
-    addSimpleTypeBaseEdfiXsdTo(simpleTypeBase);
-  });
+  ((getAllEntitiesOfType(metaEd, 'decimalType', 'integerType', 'stringType'): any): Array<SimpleTypeBase>).forEach(
+    (entity: SimpleTypeBase) => {
+      addSimpleTypeBaseEdfiXsdTo(entity);
+    },
+  );
 
   return {
     enhancerName,

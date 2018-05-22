@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Namespace, Descriptor, InterchangeItem } from 'metaed-core';
-import { newInterchangeItem } from 'metaed-core';
+import { getAllEntitiesOfType, newInterchangeItem } from 'metaed-core';
 import { addInterchangeItemEdfiXsdTo } from '../model/InterchangeItem';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../model/MergedInterchange';
 import type { MergedInterchange } from '../model/MergedInterchange';
@@ -15,8 +15,8 @@ const descriptorUseCaseDocumentation: string = `1. Exchange state, district, or 
 2. Exchange code or enumeration values that change over time, but where longitudinal analysis is still important`;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const allDescriptors: Array<Descriptor> = Array.from(metaEd.entity.descriptor.values());
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
+  const allDescriptors: Array<Descriptor> = getAllEntitiesOfType(metaEd, 'descriptor');
+  metaEd.namespace.forEach((namespace: Namespace) => {
     // Skip this namespace if no new descriptors defined
     if (allDescriptors.every((descriptor: Descriptor) => descriptor.namespace.namespaceName !== namespace.namespaceName))
       return;

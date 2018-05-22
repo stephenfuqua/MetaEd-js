@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, SemVer } from 'metaed-core';
-import { getEntitiesOfType, orderByProp, V2Only, versionSatisfies } from 'metaed-core';
+import { getAllEntitiesOfType, orderByProp, V2Only, versionSatisfies } from 'metaed-core';
 import type { TopLevelEntityEdfiXsd } from '../../model/TopLevelEntity';
 import type { NamespaceEdfiXsd } from '../../model/Namespace';
 import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
@@ -196,7 +196,7 @@ function baseSchemaSection() {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  metaEd.entity.namespace.forEach(namespace => {
+  metaEd.namespace.forEach(namespace => {
     const versionString = metaEd.dataStandardVersion;
     const schemaContainer: SchemaContainer = Object.assign(newSchemaContainer(), {
       isExtension: namespace.isExtension,
@@ -208,7 +208,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     });
 
     const complexTypesForEntitiesOfType = R.pipe(
-      getEntitiesOfType,
+      getAllEntitiesOfType,
       inNamespace(namespace),
       complexTypesFrom,
       removeNoComplexType,
@@ -220,12 +220,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Domain Entities =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(
-        metaEd.entity,
-        'domainEntity',
-        'domainEntityExtension',
-        'domainEntitySubclass',
-      ),
+      complexTypes: complexTypesForEntitiesOfType(metaEd, 'domainEntity', 'domainEntityExtension', 'domainEntitySubclass'),
     });
     schemaContainer.sections.push(domainEntitiesSection);
 
@@ -234,7 +229,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Descriptors =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'descriptor'),
+      complexTypes: complexTypesForEntitiesOfType(metaEd, 'descriptor'),
     });
     schemaContainer.sections.push(descriptorsSection);
 
@@ -243,12 +238,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Associations =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(
-        metaEd.entity,
-        'association',
-        'associationExtension',
-        'associationSubclass',
-      ),
+      complexTypes: complexTypesForEntitiesOfType(metaEd, 'association', 'associationExtension', 'associationSubclass'),
     });
     schemaContainer.sections.push(associationsSection);
 
@@ -257,7 +247,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     // Extended Reference Types
     const manyReferenceTypesForEntitiesOfType = R.pipe(
-      getEntitiesOfType,
+      getAllEntitiesOfType,
       inNamespace(namespace),
       manyReferenceTypesFrom,
       removeNoComplexType,
@@ -269,7 +259,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         documentation: '===== Extended Reference Types =====',
       }),
       complexTypes: manyReferenceTypesForEntitiesOfType(
-        metaEd.entity,
+        metaEd,
         'association',
         'associationExtension',
         'associationSubclass',
@@ -282,7 +272,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     // Extended Descriptor Reference Types
     const referenceTypesForEntitiesOfType = R.pipe(
-      getEntitiesOfType,
+      getAllEntitiesOfType,
       inNamespace(namespace),
       referenceTypesFrom,
       removeNoComplexType,
@@ -293,7 +283,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Extended Descriptor Reference Types =====',
       }),
-      complexTypes: referenceTypesForEntitiesOfType(metaEd.entity, 'descriptor'),
+      complexTypes: referenceTypesForEntitiesOfType(metaEd, 'descriptor'),
     });
     schemaContainer.sections.push(descriptorExtendedReferencesSection);
 
@@ -302,13 +292,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       sectionAnnotation: Object.assign(newAnnotation(), {
         documentation: '===== Common Types =====',
       }),
-      complexTypes: complexTypesForEntitiesOfType(metaEd.entity, 'common', 'commonExtension'),
+      complexTypes: complexTypesForEntitiesOfType(metaEd, 'common', 'commonExtension'),
     });
     schemaContainer.sections.push(commonTypesSection);
 
     // Enumerations and Enumerated Collections
     const enumerationSimpleTypesForEntitiesOfType = R.pipe(
-      getEntitiesOfType,
+      getAllEntitiesOfType,
       inNamespace(namespace),
       enumerationSimpleTypesFrom,
       removeNoEnumerationSimpleType,
@@ -320,7 +310,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         documentation: '===== Enumerations and Enumerated Collections =====',
       }),
       simpleTypes: enumerationSimpleTypesForEntitiesOfType(
-        metaEd.entity,
+        metaEd,
         'enumeration',
         'mapTypeEnumeration',
         'schoolYearEnumeration',
@@ -330,13 +320,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     // String Simple Types
     const simpleTypesForEntitiesOfType = R.pipe(
-      getEntitiesOfType,
+      getAllEntitiesOfType,
       inNamespace(namespace),
       simpleTypesFrom,
       removeNoSimpleType,
     );
 
-    const stringSimpleTypes = simpleTypesForEntitiesOfType(metaEd.entity, 'stringType');
+    const stringSimpleTypes = simpleTypesForEntitiesOfType(metaEd, 'stringType');
     if (!namespace.isExtension) {
       stringSimpleTypes.push(createCodeValueSimpleType(), createTimeIntervalSimpleType());
     }
@@ -351,7 +341,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     schemaContainer.sections.push(stringSimpleTypesSection);
 
     // Numeric Simple Types
-    const numericSimpleTypes = simpleTypesForEntitiesOfType(metaEd.entity, 'decimalType', 'integerType');
+    const numericSimpleTypes = simpleTypesForEntitiesOfType(metaEd, 'decimalType', 'integerType');
     if (!namespace.isExtension) {
       numericSimpleTypes.push(createCurrencySimpleType(), createPercentSimpleType());
     }

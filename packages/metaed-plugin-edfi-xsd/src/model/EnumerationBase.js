@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Enumeration, MapTypeEnumeration, SchoolYearEnumeration } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { EnumerationSimpleType } from './schema/EnumerationSimpleType';
 import { NoEnumerationSimpleType } from './schema/EnumerationSimpleType';
 
@@ -24,17 +25,21 @@ export function addEnumerationEdfiXsdTo(enumeration: EnumerationBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.enumeration.forEach((enumeration: Enumeration) => {
+  ((getAllEntitiesOfType(metaEd, 'enumeration'): any): Array<Enumeration>).forEach((enumeration: Enumeration) => {
     addEnumerationEdfiXsdTo(enumeration);
   });
 
-  metaEd.entity.mapTypeEnumeration.forEach((mapTypeEnumeration: MapTypeEnumeration) => {
-    addEnumerationEdfiXsdTo(mapTypeEnumeration);
-  });
+  ((getAllEntitiesOfType(metaEd, 'mapTypeEnumeration'): any): Array<MapTypeEnumeration>).forEach(
+    (mapTypeEnumeration: MapTypeEnumeration) => {
+      addEnumerationEdfiXsdTo(mapTypeEnumeration);
+    },
+  );
 
-  metaEd.entity.schoolYearEnumeration.forEach((schoolYearEnumeration: SchoolYearEnumeration) => {
-    addEnumerationEdfiXsdTo(schoolYearEnumeration);
-  });
+  ((getAllEntitiesOfType(metaEd, 'schoolYearEnumeration'): any): Array<SchoolYearEnumeration>).forEach(
+    (schoolYearEnumeration: SchoolYearEnumeration) => {
+      addEnumerationEdfiXsdTo(schoolYearEnumeration);
+    },
+  );
 
   return {
     enhancerName,

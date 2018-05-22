@@ -9,7 +9,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   const results: Array<GeneratedOutput> = [];
 
-  metaEd.entity.namespace.forEach(namespace => {
+  metaEd.namespace.forEach(namespace => {
     const schema: SchemaContainer = ((namespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
     schema.schemaVersion = formatVersionForSchema(metaEd.dataStandardVersion);
     const formattedGeneratedResult = formatAndPrependHeader(template().schema(schema));

@@ -1,6 +1,7 @@
 // @flow
 import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput } from 'metaed-core';
 import { formatAndPrependHeader, template, formatVersionForSchema } from './XsdGeneratorBase';
+import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import type { MergedInterchange } from '../model/MergedInterchange';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
@@ -8,9 +9,13 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const generatorName = 'XSD Interchanges';
   const generatedOutput: Array<GeneratedOutput> = [];
 
-  const orderedInterchange: Array<MergedInterchange> = Array.from(
-    (metaEd.plugin.get('edfiXsd'): any).entity.mergedInterchange.values(),
-  );
+  const orderedInterchange: Array<MergedInterchange> = [];
+
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+    orderedInterchange.push(...edFiXsdEntityRepository.mergedInterchange.values());
+  });
 
   orderedInterchange.filter((interchange: MergedInterchange) => !interchange.namespace.isExtension).forEach(interchange => {
     const templateData = {

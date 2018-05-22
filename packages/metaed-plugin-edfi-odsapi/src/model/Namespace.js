@@ -24,7 +24,7 @@ export function addNamespaceEdfiOdsApiTo(namespace: Namespace) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
     addNamespaceEdfiOdsApiTo(namespace);
   });
 

@@ -89,7 +89,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   const edFiOdsEntityRepository: EdFiOdsEntityRepository = ((odsPlugin.entity: any): EdFiOdsEntityRepository);
 
-  metaEd.entity.namespace.forEach((namespace: Namespace) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
     const additionalEntityDefinitions = [];
 
     const domainModelDefinition: DomainModelDefinition = {

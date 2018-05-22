@@ -2,7 +2,6 @@
 import graphlib, { Graph } from '@dagrejs/graphlib';
 import {
   newMetaEdEnvironment,
-  newPluginEnvironment,
   newNamespace,
   newDomainEntity,
   newInterchangeItem,
@@ -11,7 +10,11 @@ import {
   newDomainEntityExtension,
 } from 'metaed-core';
 import type { MetaEdEnvironment, Namespace, DomainEntity, InterchangeItem, DomainEntityExtension } from 'metaed-core';
-import { newEdFiXsdEntityRepository, newMergedInterchange, addMergedInterchangeToRepository } from 'metaed-plugin-edfi-xsd';
+import {
+  newMergedInterchange,
+  addMergedInterchangeToRepository,
+  addEdFiXsdEntityRepositoryTo,
+} from 'metaed-plugin-edfi-xsd';
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { addMergedInterchangeEdfiOdsApiTo } from '../../../src/model/MergedInterchange';
 import { addInterchangeItemEdfiOdsApiTo } from '../../../src/model/InterchangeItem';
@@ -149,14 +152,9 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
       metaEdName: domainEntityName,
@@ -192,13 +190,9 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -236,13 +230,9 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -303,13 +293,9 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,
@@ -385,18 +371,15 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     const extensionNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName: extensionNamespaceName,
       isExtension: true,
     });
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    extensionNamespace.dependencies.push(namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace: extensionNamespace,
@@ -487,19 +470,15 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-    const plugin = Object.assign(newPluginEnvironment(), {
-      entity: newEdFiXsdEntityRepository(),
-    });
-    metaEd.plugin.set('edfiXsd', plugin);
-
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
-
+    metaEd.namespace.set(namespace.namespaceName, namespace);
     const extensionNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName: extensionNamespaceName,
       isExtension: true,
     });
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    extensionNamespace.dependencies.push(namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
 
     const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       namespace,

@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import {
   typeGroupDomainEntity,
   createDefaultComplexType,
@@ -10,7 +11,7 @@ import {
 const enhancerName: string = 'AddDomainEntitySubclassComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
+  getAllEntitiesOfType(metaEd, 'domainEntitySubclass').forEach(domainEntitySubclass => {
     if (domainEntitySubclass.baseEntity == null) return;
     domainEntitySubclass.data.edfiXsd.xsd_ComplexTypes = createDefaultComplexType(
       domainEntitySubclass,

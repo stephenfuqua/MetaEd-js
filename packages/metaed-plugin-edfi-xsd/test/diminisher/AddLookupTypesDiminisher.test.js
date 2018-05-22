@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { DomainEntity, MetaEdEnvironment } from 'metaed-core';
+import type { DomainEntity, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { newBooleanProperty, newDomainEntity, newMetaEdEnvironment, newNamespace } from 'metaed-core';
 import { newComplexType, NoComplexType } from '../../src/model/schema/ComplexType';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
@@ -9,6 +9,8 @@ import { enhance } from '../../src/diminisher/AddLookupTypesDiminisher';
 
 describe('when AddLookupTypesDiminisher diminishes entity included in lookupTypeNames list', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1: string = 'Assessment';
   const booleanPropertyName1: string = 'BooleanPropertyName1';
   const booleanPropertyType: string = 'BooleanPropertyType';
@@ -19,6 +21,7 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
   beforeAll(() => {
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
       metaEdName: domainEntityName1,
+      namespace,
       data: {
         edfiXsd: {
           xsd_ReferenceType: Object.assign(newComplexType(), {
@@ -39,14 +42,14 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
         }),
       ],
     });
-    metaEd.entity.domainEntity.set(domainEntityName1, domainEntity1);
+    namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
 
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);
     enhance(metaEd);
 
     // $FlowIgnore - entity could be undefined
-    entity = metaEd.entity.domainEntity.get(domainEntityName1);
+    entity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(entity).toBeDefined();
   });
 
@@ -148,15 +151,21 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
 
 describe('when AddLookupTypesDiminisher diminishes entity not included in lookupTypeNames list', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension: 'EXTENSION',
+    isExtension: true,
+  });
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  extensionNamespace.dependencies.push(namespace);
   const domainEntityName1: string = 'DomainEntityName1';
   let entity: DomainEntity;
 
   beforeAll(() => {
     const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
-      namespace: Object.assign(newNamespace(), {
-        isExtension: true,
-        projectExtension: 'Extension',
-      }),
+      namespace: extensionNamespace,
       metaEdName: domainEntityName1,
       data: {
         edfiXsd: {
@@ -178,13 +187,13 @@ describe('when AddLookupTypesDiminisher diminishes entity not included in lookup
         }),
       ],
     });
-    metaEd.entity.domainEntity.set(domainEntityName1, domainEntity1);
+    extensionNamespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
     initializeTopLevelEntities(metaEd);
     addModelBaseEdfiXsd(metaEd);
     enhance(metaEd);
 
     // $FlowIgnore - entity could be undefined
-    entity = metaEd.entity.domainEntity.get(domainEntityName1);
+    entity = extensionNamespace.entity.domainEntity.get(domainEntityName1);
     expect(entity).toBeDefined();
   });
 

@@ -19,7 +19,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddAssociationExtensionComplexTypesEnhancer';
 
 describe('when enhancing association extension', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName: string = 'BaseTypeName';
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
@@ -30,6 +32,7 @@ describe('when enhancing association extension', () => {
 
   beforeAll(() => {
     const baseEntity = Object.assign(newAssociation(), {
+      namespace,
       metaEdName: baseTypeName,
       documentation,
       data: {
@@ -37,9 +40,10 @@ describe('when enhancing association extension', () => {
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
-    metaEd.entity.association.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
     enhancedItem = Object.assign(newAssociationExtension(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       baseEntity,
@@ -48,7 +52,7 @@ describe('when enhancing association extension', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.associationExtension.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.associationExtension.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
@@ -94,8 +98,17 @@ describe('when enhancing association extension', () => {
 });
 
 describe('when enhancing association extension with common type override', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const projectExtension: string = 'EXTENSION';
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = {
+    ...newNamespace(),
+    namespaceName: 'extension',
+    projectExtension,
+    isExtension: true,
+  };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   const baseAssociationName: string = 'BaseAssociationName';
   const associationExtensionName: string = 'AssociationExtensionName';
   const baseCommonTypeName: string = 'BaseCommonTypeName';
@@ -108,20 +121,15 @@ describe('when enhancing association extension with common type override', () =>
   let createdExtensionComplexType: ComplexType;
 
   beforeAll(() => {
-    const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
-      projectExtension,
-      isExtension: true,
-    });
-
     const baseCommon = Object.assign(newCommon(), {
+      namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseCommon);
-    metaEd.entity.common.set(baseCommon.metaEdName, baseCommon);
+    extensionNamespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
     const commonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonTypeExtensionName,
@@ -133,9 +141,10 @@ describe('when enhancing association extension with common type override', () =>
       },
     });
     addModelBaseEdfiXsdTo(commonExtension);
-    metaEd.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
+    extensionNamespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
     const baseAssociation = Object.assign(newAssociation(), {
+      namespace,
       metaEdName: baseAssociationName,
       properties: [
         Object.assign(newCommonProperty(), {
@@ -161,7 +170,7 @@ describe('when enhancing association extension with common type override', () =>
       },
     });
     addModelBaseEdfiXsdTo(baseAssociation);
-    metaEd.entity.association.set(baseAssociation.metaEdName, baseAssociation);
+    extensionNamespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
 
     const associationExtension = Object.assign(newAssociationExtension(), {
       metaEdName: associationExtensionName,
@@ -192,7 +201,7 @@ describe('when enhancing association extension with common type override', () =>
       },
     });
     addModelBaseEdfiXsdTo(associationExtension);
-    metaEd.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
+    extensionNamespace.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

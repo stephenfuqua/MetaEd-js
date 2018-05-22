@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import { NoAggregate } from './domainMetadata/Aggregate';
 import type { Aggregate } from './domainMetadata/Aggregate';
 
@@ -18,7 +19,7 @@ export function addDescriptorEdfiOdsApiTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.descriptor.forEach((descriptor: Descriptor) => {
+  ((getAllEntitiesOfType(metaEd, 'descriptor'): any): Array<Descriptor>).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiOdsApiTo(descriptor);
   });
 

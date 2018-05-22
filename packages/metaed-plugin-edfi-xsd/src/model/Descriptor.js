@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { StringSimpleType } from './schema/StringSimpleType';
 import { NoStringSimpleType } from './schema/StringSimpleType';
 
@@ -26,7 +27,7 @@ export function addDescriptorEdfiXsdTo(descriptor: Descriptor) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.descriptor.forEach((descriptor: Descriptor) => {
+  ((getAllEntitiesOfType(metaEd, 'descriptor'): any): Array<Descriptor>).forEach((descriptor: Descriptor) => {
     addDescriptorEdfiXsdTo(descriptor);
   });
 

@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, DomainEntity, EntityProperty } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type DomainEntityEdfiXsd = {
   xsd_Properties: () => Array<EntityProperty>,
@@ -21,7 +22,7 @@ export function addDomainEntityEdfiXsdTo(domainEntity: DomainEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.domainEntity.forEach((domainEntity: DomainEntity) => {
+  ((getAllEntitiesOfType(metaEd, 'domainEntity'): any): Array<DomainEntity>).forEach((domainEntity: DomainEntity) => {
     addDomainEntityEdfiXsdTo(domainEntity);
   });
 

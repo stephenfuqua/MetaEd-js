@@ -9,7 +9,7 @@ import {
   SharedStringBuilder,
   StringTypeBuilder,
 } from 'metaed-core';
-import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
+import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -156,6 +156,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
+    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

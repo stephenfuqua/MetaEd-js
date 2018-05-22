@@ -1,5 +1,5 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newAssociationSubclass } from 'metaed-core';
+import { newMetaEdEnvironment, newAssociation, newAssociationSubclass, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, AssociationSubclass } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
@@ -8,7 +8,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddAssociationSubclassComplexTypesEnhancer';
 
 describe('when enhancing association subclass', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName: string = 'BaseTypeName';
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
@@ -20,15 +22,17 @@ describe('when enhancing association subclass', () => {
 
   beforeAll(() => {
     const baseEntity = Object.assign(newAssociation(), {
+      namespace,
       metaEdName: baseTypeName,
       data: {
         edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
-    metaEd.entity.association.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.association.set(baseEntity.metaEdName, baseEntity);
 
     enhancedItem = Object.assign(newAssociationSubclass(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       baseEntity,
@@ -37,7 +41,7 @@ describe('when enhancing association subclass', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.associationSubclass.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.associationSubclass.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

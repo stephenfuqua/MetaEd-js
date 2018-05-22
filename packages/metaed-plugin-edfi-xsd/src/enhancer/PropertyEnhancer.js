@@ -23,7 +23,7 @@ import type {
   AssociationProperty,
   DomainEntityProperty,
 } from 'metaed-core';
-import { NoTopLevelEntity, NoSharedSimple, getAllProperties, getAllTopLevelEntities } from 'metaed-core';
+import { NoTopLevelEntity, NoSharedSimple, getAllProperties, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import type { EntityPropertyEdfiXsd } from '../model/property/EntityProperty';
 
 const enhancerName: string = 'PropertyEnhancer';
@@ -143,7 +143,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const allProperties: Array<EntityProperty> = getAllProperties(metaEd.propertyIndex);
   allProperties.forEach(property => applyXsdNameAndType(property));
 
-  const allQueryableFields: Array<EntityProperty> = queryableFieldsFrom(getAllTopLevelEntities(metaEd.entity));
+  const allQueryableFields: Array<EntityProperty> = queryableFieldsFrom(
+    getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())),
+  );
   allQueryableFields.forEach(property => applyXsdNameAndType(property));
 
   return {

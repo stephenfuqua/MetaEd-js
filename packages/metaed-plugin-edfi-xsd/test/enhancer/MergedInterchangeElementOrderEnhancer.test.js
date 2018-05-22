@@ -1,30 +1,37 @@
 // @flow
-import { newMetaEdEnvironment, newInterchangeItem, newNamespace, newPluginEnvironment } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import { newMetaEdEnvironment, newInterchangeItem, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance } from '../../src/enhancer/MergedInterchangeElementOrderEnhancer';
 import { newMergedInterchange, addMergedInterchangeToRepository } from '../../src/model/MergedInterchange';
 import { enhance as addModelBaseEdfiXsd } from '../../src/model/ModelBase';
-import { newEdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 
 describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsd_Name', () => {
-  const plugin = Object.assign(newPluginEnvironment(), {
-    entity: newEdFiXsdEntityRepository(),
-  });
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiXsd', plugin);
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), {
+    namespaceName: 'extension',
+    projectExtension: 'EXTENSION',
+    isExtension: true,
+  });
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  extensionNamespace.dependencies.push(namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   const interchangeName: string = 'InterchangeName';
   const coreOnlyInterchangeItemName: string = 'CoreOnlyInterchangeItemName';
   const extensionOnlyInterchangeItemName: string = 'ExtensionOnlyInterchangeItemName';
   const extendedInterchangeItemName: string = 'ExtendedInterchangeItemName';
   const xsdType: string = 'XsdType';
-  const projectExtension: string = 'EXTENSION';
   let coreMergedInterchange;
   let extensionMergedInterchange;
 
   beforeAll(() => {
     coreMergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
+      namespace,
       repositoryId: interchangeName,
       elements: [
         Object.assign(newInterchangeItem(), {
@@ -51,10 +58,7 @@ describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges
     extensionMergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchangeName,
       repositoryId: interchangeName,
-      namespace: Object.assign(newNamespace(), {
-        projectExtension,
-        isExtension: true,
-      }),
+      namespace: extensionNamespace,
       elements: [
         Object.assign(newInterchangeItem(), {
           metaEdName: extensionOnlyInterchangeItemName,

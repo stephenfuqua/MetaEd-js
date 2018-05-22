@@ -12,7 +12,7 @@ import {
   loadFileIndex,
   loadFiles,
   loadPlugins,
-  addProjectNameToNamespace,
+  initializeNamespaces,
   newMetaEdConfiguration,
   newState,
   runEnhancers,
@@ -83,17 +83,16 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
       metaEdConfiguration,
     };
     state.metaEd.dataStandardVersion = '2.0.0';
-
     validateConfiguration(state);
     loadPlugins(state);
-    // NOTE: filtering interchange brief because of TeamCity issues with phatonmjs(?)
-    state.pluginManifest = state.pluginManifest.filter(manifest => manifest.shortName !== 'edfiInterchangeBrief');
+    state.pluginManifest = state.pluginManifest.filter(
+      manifest => manifest.shortName === 'edfiUnified' || manifest.shortName === 'edfiXsd',
+    );
     loadFiles(state);
     loadFileIndex(state);
     buildParseTree(buildMetaEd, state);
     await walkBuilders(state);
-    addProjectNameToNamespace(state);
-
+    initializeNamespaces(state);
     // eslint-disable-next-line no-restricted-syntax
     for (const pluginManifest of state.pluginManifest) {
       await runEnhancers(pluginManifest, state);
@@ -102,7 +101,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
 
     fileMapForFailure(state);
 
-    state.metaEd.entity.namespace.forEach(namespace =>
+    state.metaEd.namespace.forEach(namespace =>
       namespace.data.edfiXsd.xsd_Schema.sections.forEach(section => {
         complexTypeNames.push(section.sectionAnnotation.documentation, ...section.complexTypes.map(y => y.name));
         simpleTypeNames.push(section.sectionAnnotation.documentation, ...section.simpleTypes.map(y => y.name));

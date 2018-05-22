@@ -1,12 +1,20 @@
 // @flow
-import { newMetaEdEnvironment, newAssociation, newAssociationProperty, newAssociationSubclass } from 'metaed-core';
-import type { MetaEdEnvironment, Association, AssociationSubclass, AssociationProperty } from 'metaed-core';
+import {
+  newMetaEdEnvironment,
+  newAssociation,
+  newAssociationProperty,
+  newAssociationSubclass,
+  newNamespace,
+} from 'metaed-core';
+import type { MetaEdEnvironment, Association, AssociationSubclass, AssociationProperty, Namespace } from 'metaed-core';
 import { enhance as initializeTopLevelEntities } from '../../src/model/TopLevelEntity';
 import { enhance as copyPropertiesEnhance } from '../../src/enhancer/CopyPropertiesEnhancer';
 import { enhance } from '../../src/enhancer/SubclassIdentityEnhancer';
 
 describe('when enhancing association subclass without identity renames', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseAssociationName: string = 'BaseName';
   const subclassAssociationName: string = 'SubclassName';
   let baseIdentityProperty: AssociationProperty;
@@ -15,26 +23,30 @@ describe('when enhancing association subclass without identity renames', () => {
   beforeAll(() => {
     baseIdentityProperty = Object.assign(newAssociationProperty(), {
       metaEdName: 'BaseIdentityProperty',
+      namespace,
       isPartOfIdentity: true,
     });
 
     const baseAssociation: Association = Object.assign(newAssociation(), {
       metaEdName: baseAssociationName,
+      namespace,
       properties: [baseIdentityProperty],
       identityProperties: [baseIdentityProperty],
       data: {
         edfiXsd: {},
       },
     });
-    metaEd.entity.association.set(baseAssociation.metaEdName, baseAssociation);
+    namespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
 
     subclassIdentityProperty = Object.assign(newAssociationProperty(), {
       metaEdName: 'SubclassIdentityProperty',
+      namespace,
       isPartOfIdentity: true,
     });
 
     const subclassAssociation: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: subclassAssociationName,
+      namespace,
       baseEntityName: baseAssociationName,
       baseEntity: baseAssociation,
       properties: [subclassIdentityProperty],
@@ -43,7 +55,7 @@ describe('when enhancing association subclass without identity renames', () => {
         edfiXsd: {},
       },
     });
-    metaEd.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);
+    namespace.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);
 
     initializeTopLevelEntities(metaEd);
     copyPropertiesEnhance(metaEd);
@@ -51,23 +63,25 @@ describe('when enhancing association subclass without identity renames', () => {
   });
 
   it('should add base identity property to subclass primary key list', () => {
-    const associationSubclass: any = metaEd.entity.associationSubclass.get(subclassAssociationName);
+    const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsd_IdentityProperties).toContain(baseIdentityProperty);
   });
 
   it('should still have original identity', () => {
-    const associationSubclass: any = metaEd.entity.associationSubclass.get(subclassAssociationName);
+    const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsd_IdentityProperties).toContain(subclassIdentityProperty);
   });
 
   it('should not have base identity in properties', () => {
-    const associationSubclass: any = metaEd.entity.associationSubclass.get(subclassAssociationName);
+    const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsd_Properties).not.toContain(baseIdentityProperty);
   });
 });
 
 describe('when enhancing association subclass with identity renames', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseAssociationName: string = 'BaseName';
   const baseIdentityName: string = 'BaseKeyName';
   const subclassAssociationName: string = 'SubclassName';
@@ -78,32 +92,37 @@ describe('when enhancing association subclass with identity renames', () => {
   beforeAll(() => {
     baseIdentityProperty = Object.assign(newAssociationProperty(), {
       metaEdName: baseIdentityName,
+      namespace,
       isPartOfIdentity: true,
     });
 
     const baseAssociation: Association = Object.assign(newAssociation(), {
       metaEdName: baseAssociationName,
+      namespace,
       properties: [baseIdentityProperty],
       identityProperties: [baseIdentityProperty],
       data: {
         edfiXsd: {},
       },
     });
-    metaEd.entity.association.set(baseAssociation.metaEdName, baseAssociation);
+    namespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
 
     subclassIdentityProperty = Object.assign(newAssociationProperty(), {
       metaEdName: 'SubclassIdentityProperty',
+      namespace,
       isPartOfIdentity: true,
     });
 
     subclassIdentityRenameProperty = Object.assign(newAssociationProperty(), {
       metaEdName: 'SubclassIdentityRenameProperty',
+      namespace,
       isIdentityRename: true,
       baseKeyName: baseIdentityName,
     });
 
     const subclassAssociation: AssociationSubclass = Object.assign(newAssociationSubclass(), {
       metaEdName: subclassAssociationName,
+      namespace,
       baseEntityName: baseAssociationName,
       baseEntity: baseAssociation,
       properties: [subclassIdentityProperty, subclassIdentityRenameProperty],
@@ -112,7 +131,7 @@ describe('when enhancing association subclass with identity renames', () => {
         edfiXsd: {},
       },
     });
-    metaEd.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);
+    namespace.entity.associationSubclass.set(subclassAssociation.metaEdName, subclassAssociation);
 
     initializeTopLevelEntities(metaEd);
     copyPropertiesEnhance(metaEd);
@@ -120,7 +139,7 @@ describe('when enhancing association subclass with identity renames', () => {
   });
 
   it('should not add renamed identity property to subclass', () => {
-    const associationSubclass: any = metaEd.entity.associationSubclass.get(subclassAssociationName);
+    const associationSubclass: any = namespace.entity.associationSubclass.get(subclassAssociationName);
     expect(associationSubclass.data.edfiXsd.xsd_IdentityProperties).not.toContain(baseIdentityProperty);
   });
 });

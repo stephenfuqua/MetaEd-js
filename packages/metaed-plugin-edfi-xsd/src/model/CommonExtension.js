@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, CommonExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
 
 export type CommonExtensionEdfiXsd = {
@@ -17,9 +18,11 @@ export function addCommonExtensionEdfiXsdTo(commonExtension: CommonExtension) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.commonExtension.forEach((commonExtension: CommonExtension) => {
-    addCommonExtensionEdfiXsdTo(commonExtension);
-  });
+  ((getAllEntitiesOfType(metaEd, 'commonExtension'): any): Array<CommonExtension>).forEach(
+    (commonExtension: CommonExtension) => {
+      addCommonExtensionEdfiXsdTo(commonExtension);
+    },
+  );
 
   return {
     enhancerName,

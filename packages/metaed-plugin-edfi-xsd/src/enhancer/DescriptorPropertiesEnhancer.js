@@ -1,11 +1,12 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Descriptor } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { DescriptorEdfiXsd } from '../model/Descriptor';
 
 const enhancerName: string = 'DescriptorPropertiesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.descriptor.forEach((descriptor: Descriptor) => {
+  getAllEntitiesOfType(metaEd, 'descriptor').forEach((descriptor: Descriptor) => {
     const descriptorXsdData = ((descriptor.data.edfiXsd: any): DescriptorEdfiXsd);
     descriptorXsdData.xsd_DescriptorName = `${descriptor.metaEdName}Descriptor`;
     descriptorXsdData.xsd_DescriptorNameWithExtension = descriptor.namespace.projectExtension

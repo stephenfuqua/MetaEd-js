@@ -9,6 +9,7 @@ import {
   createSchemaSection,
   createSchema,
 } from './GeneratorTestBase';
+import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepository';
 import { generate } from '../../src/generator/XsdGenerator';
 
 describe('when generating schema', () => {
@@ -49,7 +50,8 @@ describe('when generating schema', () => {
       },
     });
 
-    metaEd.entity.namespace.set(namespace.namespaceName, namespace);
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
     result = xmlParser.xml2js(rawXsd);
   });

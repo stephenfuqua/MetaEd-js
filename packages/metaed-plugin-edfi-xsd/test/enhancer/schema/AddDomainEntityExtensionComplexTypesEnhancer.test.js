@@ -19,7 +19,9 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDomainEntityExtensionComplexTypesEnhancer';
 
 describe('when enhancing domainEntity extension', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName: string = 'BaseTypeName';
   const complexTypeName: string = 'ComplexTypeName';
   const documentation: string = 'Documentation';
@@ -30,6 +32,7 @@ describe('when enhancing domainEntity extension', () => {
 
   beforeAll(() => {
     const baseEntity = Object.assign(newDomainEntity(), {
+      namespace,
       metaEdName: baseTypeName,
       documentation,
       data: {
@@ -37,9 +40,10 @@ describe('when enhancing domainEntity extension', () => {
       },
     });
     addModelBaseEdfiXsdTo(baseEntity);
-    metaEd.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
+    namespace.entity.domainEntity.set(baseEntity.metaEdName, baseEntity);
 
     enhancedItem = Object.assign(newDomainEntityExtension(), {
+      namespace,
       metaEdName: complexTypeName,
       documentation,
       baseEntity,
@@ -48,7 +52,7 @@ describe('when enhancing domainEntity extension', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.domainEntityExtension.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.domainEntityExtension.set(enhancedItem.metaEdName, enhancedItem);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);
@@ -94,7 +98,9 @@ describe('when enhancing domainEntity extension', () => {
 });
 
 describe('when enhancing domainEntity extension with common type override', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const baseDomainEntityName: string = 'BaseDomainEntityName';
   const domainEntityExtensionName: string = 'DomainEntityExtensionName';
@@ -113,15 +119,17 @@ describe('when enhancing domainEntity extension with common type override', () =
       projectExtension,
       isExtension: true,
     });
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     const baseCommon = Object.assign(newCommon(), {
+      namespace,
       metaEdName: baseCommonTypeName,
       data: {
         edfiXsd: {},
       },
     });
     addModelBaseEdfiXsdTo(baseCommon);
-    metaEd.entity.common.set(baseCommon.metaEdName, baseCommon);
+    namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
 
     const commonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonTypeExtensionName,
@@ -133,9 +141,10 @@ describe('when enhancing domainEntity extension with common type override', () =
       },
     });
     addModelBaseEdfiXsdTo(commonExtension);
-    metaEd.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
+    namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
 
     const baseDomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
       metaEdName: baseDomainEntityName,
       properties: [
         Object.assign(newCommonProperty(), {
@@ -161,7 +170,7 @@ describe('when enhancing domainEntity extension with common type override', () =
       },
     });
     addModelBaseEdfiXsdTo(baseDomainEntity);
-    metaEd.entity.domainEntity.set(baseDomainEntity.metaEdName, baseDomainEntity);
+    namespace.entity.domainEntity.set(baseDomainEntity.metaEdName, baseDomainEntity);
 
     const domainEntityExtension = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtensionName,
@@ -192,7 +201,7 @@ describe('when enhancing domainEntity extension with common type override', () =
       },
     });
     addModelBaseEdfiXsdTo(domainEntityExtension);
-    metaEd.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
+    namespace.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
 
     initializeTopLevelEntities(metaEd);
     enhance(metaEd);

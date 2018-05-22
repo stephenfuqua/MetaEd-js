@@ -31,8 +31,8 @@ import { baseTypeDescriptorReference } from '../../../src/enhancer/schema/AddCom
 
 describe('when enhancing namespace info for core', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
@@ -40,7 +40,7 @@ describe('when enhancing namespace info for core', () => {
       namespaceName,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     enhance(metaEd);
     createdSchema = ((coreNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
@@ -72,8 +72,8 @@ describe('when enhancing namespace info for core', () => {
 
 describe('when enhancing namespace info for extension', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const extensionNamespaceName: string = 'extensionNamespace';
   const projectExtension: string = 'EXTENSION';
   let createdSchema: SchemaContainer;
@@ -89,8 +89,8 @@ describe('when enhancing namespace info for extension', () => {
       isExtension: true,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
     enhance(metaEd);
     createdSchema = ((extensionNamespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
@@ -121,8 +121,8 @@ describe('when enhancing namespace info for extension', () => {
 
 describe('when enhancing namespace info for core with children', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const namespaceName: string = 'edfi';
+  const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const extensionNamespaceName: string = 'extensionNamespace';
   const projectExtension: string = 'EXTENSION';
 
@@ -263,8 +263,9 @@ describe('when enhancing namespace info for core with children', () => {
       isExtension: true,
       data: { edfiXsd: {} },
     });
-    metaEd.entity.namespace.set(coreNamespace.namespaceName, coreNamespace);
-    metaEd.entity.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+    extensionNamespace.dependencies.push(coreNamespace);
 
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity1Name,
@@ -278,7 +279,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
+    coreNamespace.entity.domainEntity.set(domainEntity1.metaEdName, domainEntity1);
 
     const domainEntityExtension1 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtension1Name,
@@ -295,7 +296,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntityExtension.set(domainEntityExtension1.metaEdName, domainEntityExtension1);
+    coreNamespace.entity.domainEntityExtension.set(domainEntityExtension1.metaEdName, domainEntityExtension1);
 
     const domainEntitySubclass1 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclass1Name,
@@ -309,7 +310,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntitySubclass.set(domainEntitySubclass1.metaEdName, domainEntitySubclass1);
+    coreNamespace.entity.domainEntitySubclass.set(domainEntitySubclass1.metaEdName, domainEntitySubclass1);
 
     const descriptor1 = Object.assign(newDescriptor(), {
       metaEdName: descriptor1Name,
@@ -321,7 +322,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.descriptor.set(descriptor1.metaEdName, descriptor1);
+    coreNamespace.entity.descriptor.set(descriptor1.metaEdName, descriptor1);
 
     const association1 = Object.assign(newAssociation(), {
       metaEdName: association1Name,
@@ -335,7 +336,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.association.set(association1.metaEdName, association1);
+    coreNamespace.entity.association.set(association1.metaEdName, association1);
 
     const associationSubclass1 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclass1Name,
@@ -349,7 +350,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.associationSubclass.set(associationSubclass1.metaEdName, associationSubclass1);
+    coreNamespace.entity.associationSubclass.set(associationSubclass1.metaEdName, associationSubclass1);
 
     const common1 = Object.assign(newCommon(), {
       metaEdName: common1Name,
@@ -360,7 +361,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.common.set(common1.metaEdName, common1);
+    coreNamespace.entity.common.set(common1.metaEdName, common1);
 
     const inlineCommon1 = Object.assign(newCommon(), {
       metaEdName: inlineCommon1Name,
@@ -372,7 +373,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
+    coreNamespace.entity.common.set(inlineCommon1.metaEdName, inlineCommon1);
 
     const enumeration1 = Object.assign(newEnumeration(), {
       metaEdName: enumeration1Name,
@@ -383,7 +384,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.enumeration.set(enumeration1.metaEdName, enumeration1);
+    coreNamespace.entity.enumeration.set(enumeration1.metaEdName, enumeration1);
 
     const schoolYearEnumeration1 = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYearEnumeration1Name,
@@ -396,7 +397,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.schoolYearEnumeration.set(schoolYearEnumeration1.metaEdName, schoolYearEnumeration1);
+    coreNamespace.entity.schoolYearEnumeration.set(schoolYearEnumeration1.metaEdName, schoolYearEnumeration1);
 
     const xsdMapTypeEnumeration1 = Object.assign(newMapTypeEnumeration(), {
       metaEdName: xsdMapTypeEnumeration1Name,
@@ -409,7 +410,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration1.metaEdName, xsdMapTypeEnumeration1);
+    coreNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration1.metaEdName, xsdMapTypeEnumeration1);
 
     const stringType1 = Object.assign(newStringType(), {
       metaEdName: stringType1Name,
@@ -420,7 +421,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.stringType.set(stringType1.metaEdName, stringType1);
+    coreNamespace.entity.stringType.set(stringType1.metaEdName, stringType1);
 
     const integerType1 = Object.assign(newIntegerType(), {
       metaEdName: integerType1Name,
@@ -431,7 +432,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.integerType.set(integerType1.metaEdName, integerType1);
+    coreNamespace.entity.integerType.set(integerType1.metaEdName, integerType1);
 
     const decimalType1 = Object.assign(newDecimalType(), {
       metaEdName: decimalType1Name,
@@ -442,7 +443,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.decimalType.set(decimalType1.metaEdName, decimalType1);
+    coreNamespace.entity.decimalType.set(decimalType1.metaEdName, decimalType1);
 
     const domainEntity2 = Object.assign(newDomainEntity(), {
       metaEdName: domainEntity2Name,
@@ -456,7 +457,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
+    extensionNamespace.entity.domainEntity.set(domainEntity2.metaEdName, domainEntity2);
 
     const domainEntityExtension2 = Object.assign(newDomainEntityExtension(), {
       metaEdName: domainEntityExtension2Name,
@@ -470,7 +471,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntityExtension.set(domainEntityExtension2.metaEdName, domainEntityExtension2);
+    extensionNamespace.entity.domainEntityExtension.set(domainEntityExtension2.metaEdName, domainEntityExtension2);
 
     const domainEntitySubclass2 = Object.assign(newDomainEntitySubclass(), {
       metaEdName: domainEntitySubclass2Name,
@@ -484,7 +485,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntitySubclass.set(domainEntitySubclass2.metaEdName, domainEntitySubclass2);
+    extensionNamespace.entity.domainEntitySubclass.set(domainEntitySubclass2.metaEdName, domainEntitySubclass2);
 
     const descriptor2 = Object.assign(newDescriptor(), {
       metaEdName: descriptor2Name,
@@ -496,7 +497,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.descriptor.set(descriptor2.metaEdName, descriptor2);
+    extensionNamespace.entity.descriptor.set(descriptor2.metaEdName, descriptor2);
 
     const association2 = Object.assign(newAssociation(), {
       metaEdName: association2Name,
@@ -510,7 +511,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.association.set(association2.metaEdName, association2);
+    extensionNamespace.entity.association.set(association2.metaEdName, association2);
 
     const associationSubclass2 = Object.assign(newAssociationSubclass(), {
       metaEdName: associationSubclass2Name,
@@ -524,7 +525,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.associationSubclass.set(associationSubclass2.metaEdName, associationSubclass2);
+    extensionNamespace.entity.associationSubclass.set(associationSubclass2.metaEdName, associationSubclass2);
 
     const common2 = Object.assign(newCommon(), {
       metaEdName: common2Name,
@@ -535,7 +536,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.common.set(common2.metaEdName, common2);
+    extensionNamespace.entity.common.set(common2.metaEdName, common2);
 
     const commonExtension1 = Object.assign(newCommon(), {
       metaEdName: commonExtension1Name,
@@ -546,7 +547,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.common.set(commonExtension1.metaEdName, commonExtension1);
+    extensionNamespace.entity.common.set(commonExtension1.metaEdName, commonExtension1);
 
     const inlineCommon2 = Object.assign(newCommon(), {
       metaEdName: inlineCommon2Name,
@@ -558,7 +559,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
+    extensionNamespace.entity.common.set(inlineCommon2.metaEdName, inlineCommon2);
 
     const enumeration2 = Object.assign(newEnumeration(), {
       metaEdName: enumeration2Name,
@@ -569,7 +570,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.enumeration.set(enumeration2.metaEdName, enumeration2);
+    extensionNamespace.entity.enumeration.set(enumeration2.metaEdName, enumeration2);
 
     const schoolYearEnumeration2 = Object.assign(newSchoolYearEnumeration(), {
       metaEdName: schoolYearEnumeration2Name,
@@ -582,7 +583,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.schoolYearEnumeration.set(schoolYearEnumeration2.metaEdName, schoolYearEnumeration2);
+    extensionNamespace.entity.schoolYearEnumeration.set(schoolYearEnumeration2.metaEdName, schoolYearEnumeration2);
 
     const xsdMapTypeEnumeration2 = Object.assign(newMapTypeEnumeration(), {
       metaEdName: xsdMapTypeEnumeration2Name,
@@ -595,7 +596,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration2.metaEdName, xsdMapTypeEnumeration2);
+    extensionNamespace.entity.mapTypeEnumeration.set(xsdMapTypeEnumeration2.metaEdName, xsdMapTypeEnumeration2);
 
     const stringType2 = Object.assign(newStringType(), {
       metaEdName: stringType2Name,
@@ -606,7 +607,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.stringType.set(stringType2.metaEdName, stringType2);
+    extensionNamespace.entity.stringType.set(stringType2.metaEdName, stringType2);
 
     const integerType2 = Object.assign(newIntegerType(), {
       metaEdName: integerType2Name,
@@ -617,7 +618,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.integerType.set(integerType2.metaEdName, integerType2);
+    extensionNamespace.entity.integerType.set(integerType2.metaEdName, integerType2);
 
     const decimalType2 = Object.assign(newDecimalType(), {
       metaEdName: decimalType2Name,
@@ -628,7 +629,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.decimalType.set(decimalType2.metaEdName, decimalType2);
+    extensionNamespace.entity.decimalType.set(decimalType2.metaEdName, decimalType2);
 
     const domainEntityWithNoComplexTypes = Object.assign(newDomainEntity(), {
       metaEdName: 'DomainEntityWithNoComplexTypes',
@@ -642,7 +643,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.domainEntity.set(domainEntityWithNoComplexTypes.metaEdName, domainEntityWithNoComplexTypes);
+    extensionNamespace.entity.domainEntity.set(domainEntityWithNoComplexTypes.metaEdName, domainEntityWithNoComplexTypes);
 
     const enumerationWithNoEnumerationSimpleType = Object.assign(newEnumeration(), {
       metaEdName: 'EnumerationWithNoEnumerationSimpleType',
@@ -653,7 +654,10 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.enumeration.set(enumerationWithNoEnumerationSimpleType.metaEdName, enumerationWithNoEnumerationSimpleType);
+    extensionNamespace.entity.enumeration.set(
+      enumerationWithNoEnumerationSimpleType.metaEdName,
+      enumerationWithNoEnumerationSimpleType,
+    );
 
     const stringTypeWithNoSimpleType = Object.assign(newStringType(), {
       metaEdName: 'StringTypeWithNoSimpleType',
@@ -664,7 +668,7 @@ describe('when enhancing namespace info for core with children', () => {
         },
       },
     });
-    metaEd.entity.stringType.set(stringTypeWithNoSimpleType.metaEdName, stringTypeWithNoSimpleType);
+    extensionNamespace.entity.stringType.set(stringTypeWithNoSimpleType.metaEdName, stringTypeWithNoSimpleType);
 
     enhance(metaEd);
 

@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, ModelBase } from 'metaed-core';
-import { getEntitiesOfType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import { metaEdNameWithExtension } from './shared/AddMetaEdNameWithExtension';
 
 export type ModelBaseEdfiXsd = {
@@ -18,8 +18,8 @@ export function addModelBaseEdfiXsdTo(modelBase: ModelBase) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getEntitiesOfType(
-    metaEd.entity,
+  getAllEntitiesOfType(
+    metaEd,
     'association',
     'associationSubclass',
     'choice',

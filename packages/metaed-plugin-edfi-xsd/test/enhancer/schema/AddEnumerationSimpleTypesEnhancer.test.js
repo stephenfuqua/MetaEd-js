@@ -1,12 +1,14 @@
 // @flow
-import { newMetaEdEnvironment, newEnumeration, newEnumerationItem } from 'metaed-core';
+import { newMetaEdEnvironment, newEnumeration, newEnumerationItem, newNamespace } from 'metaed-core';
 import type { MetaEdEnvironment, Enumeration } from 'metaed-core';
 import type { EnumerationSimpleType } from '../../../src/model/schema/EnumerationSimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddEnumerationSimpleTypesEnhancer';
 
 describe('when enhancing enumeration', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension: string = 'EXTENSION';
   const simpleTypeName: string = 'EnumerationSimpleType';
   const simpleTypeNameWithExtension: string = `${projectExtension}-${simpleTypeName}`;
@@ -40,7 +42,7 @@ describe('when enhancing enumeration', () => {
       },
     });
     addModelBaseEdfiXsdTo(enhancedItem);
-    metaEd.entity.enumeration.set(enhancedItem.metaEdName, enhancedItem);
+    namespace.entity.enumeration.set(enhancedItem.metaEdName, enhancedItem);
 
     enhance(metaEd);
 

@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, DecimalType } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 import type { SimpleTypeBaseEdfiXsd } from '../../model/SimpleTypeBase';
 import type { ModelBaseEdfiXsd } from '../../model/ModelBase';
 import { NoSimpleType } from '../../model/schema/SimpleType';
@@ -35,7 +36,7 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.decimalType.forEach(decimalType => {
+  getAllEntitiesOfType(metaEd, 'decimalType').forEach(decimalType => {
     ((decimalType.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType = createSchemaSimpleType(decimalType);
   });
 

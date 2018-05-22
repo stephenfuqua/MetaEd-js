@@ -8,7 +8,7 @@ import {
   NamespaceBuilder,
   CommonBuilder,
 } from 'metaed-core';
-import { xpathSelect, enhanceAndGenerate } from './IntegrationTestHelper';
+import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from './IntegrationTestHelper';
 
 describe('when generating xsd for association with inline common type as part of identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -135,6 +135,7 @@ describe('when generating xsd for association in extension namespace with refere
       .sendToListener(commonBuilder)
       .toString();
 
+    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -277,6 +278,7 @@ describe('when generating xsd for association in extension namespace with refere
       .sendToListener(commonBuilder)
       .toString();
 
+    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

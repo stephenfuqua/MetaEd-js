@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { getEntity, versionSatisfies } from 'metaed-core';
-import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
+import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType, Namespace } from 'metaed-core';
 import { asElement } from '../model/schema/Element';
 import { asElementGroup, newElementGroup } from '../model/schema/ElementGroup';
 import type { ComplexType } from '../model/schema/ComplexType';
@@ -22,7 +22,10 @@ const elementType: ModelType = 'common';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  const entity: ?ModelBase = getEntity(metaEd.entity, entityName, entityType);
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (coreNamespace == null) return { enhancerName, success: false };
+
+  const entity: ?ModelBase = getEntityForNamespaces(entityName, [coreNamespace], entityType);
 
   if (entity != null && entity.data.edfiXsd.xsd_ComplexTypes.length === 1) {
     const entityComplexType: ComplexType = R.head(entity.data.edfiXsd.xsd_ComplexTypes);
@@ -34,7 +37,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const learningResourceElement: ?Element = asElement(
         entityElementGroup.items.find(x => asElement(x).name === elementName),
       );
-      const inlineCommon: ?ModelBase = getEntity(metaEd.entity, elementName, elementType);
+      const inlineCommon: ?ModelBase = getEntityForNamespaces(elementName, [coreNamespace], elementType);
 
       if (
         learningResourceElement != null &&
