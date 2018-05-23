@@ -1,7 +1,7 @@
 // @flow
 
 // 2.x - METAED-695 - ODS-1177
-import { asTopLevelEntity, getAllTopLevelEntities } from 'metaed-core';
+import { asTopLevelEntity, getAllTopLevelEntitiesForNamespaces } from 'metaed-core';
 import type { EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity, ValidationFailure } from 'metaed-core';
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
@@ -16,7 +16,7 @@ const validatorName: string = 'MergingRequiredWithOptionalPropertyIsUnsupported'
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  getAllTopLevelEntities(metaEd.entity)
+  getAllTopLevelEntitiesForNamespaces([...metaEd.namespace.values()])
     .map((entity: ModelBase) => asTopLevelEntity(entity))
     .forEach((entity: TopLevelEntity) => {
       const result: {

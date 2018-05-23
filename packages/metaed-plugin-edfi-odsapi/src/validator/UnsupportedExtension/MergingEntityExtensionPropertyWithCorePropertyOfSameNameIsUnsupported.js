@@ -1,7 +1,7 @@
 // @flow
 
 // 2.x - METAED-711 - ODS-1732
-import { asTopLevelEntity, getEntitiesOfType, versionSatisfies } from 'metaed-core';
+import { asTopLevelEntity, getAllEntitiesOfType, versionSatisfies } from 'metaed-core';
 import type {
   EntityProperty,
   MetaEdEnvironment,
@@ -27,8 +27,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
-  getEntitiesOfType(
-    metaEd.entity,
+  getAllEntitiesOfType(
+    metaEd,
     'associationExtension',
     'associationSubclass',
     'domainEntityExtension',

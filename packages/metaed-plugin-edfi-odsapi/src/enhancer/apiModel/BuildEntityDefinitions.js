@@ -3,6 +3,7 @@ import R from 'ramda';
 import { asDomainEntity, asAssociation } from 'metaed-core';
 import type { Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
+import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
 import type { EntityDefinition } from '../../model/apiModel/EntityDefinition';
 import type { EntityIdentifier } from '../../model/apiModel/EntityIdentifier';
@@ -147,21 +148,19 @@ function shouldIncludeAlternateKeys(table: Table): boolean {
 
 // Entity definitions are the ODS table definitions for a namespaceName, including columns and primary keys
 export function buildEntityDefinitions(
-  tables: Map<string, Table>,
+  metaEd: MetaEdEnvironment,
   namespace: Namespace,
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
-  Array.from(tables.values())
-    .filter((table: Table) => table.schema === namespace.namespaceName)
-    .forEach((table: Table) => {
-      result.push(
-        buildSingleEntityDefinitionFrom(table, {
-          isAbstract: isAbstract(table),
-          includeAlternateKeys: shouldIncludeAlternateKeys(table),
-        }),
-      );
-    });
+  tableEntities(metaEd, namespace).forEach((table: Table) => {
+    result.push(
+      buildSingleEntityDefinitionFrom(table, {
+        isAbstract: isAbstract(table),
+        includeAlternateKeys: shouldIncludeAlternateKeys(table),
+      }),
+    );
+  });
 
   result.push(...additionalEntityDefinitions);
   return R.sortBy(R.compose(R.toLower, R.prop('name')), result);

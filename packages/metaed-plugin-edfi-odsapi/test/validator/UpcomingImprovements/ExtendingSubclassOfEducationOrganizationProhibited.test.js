@@ -7,7 +7,7 @@ import {
   DomainEntityExtensionBuilder,
   NamespaceBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingSubclassOfEducationOrganizationProhibited';
 
 describe('when a domain entity extension extends a non-education organization domain entity', () => {
@@ -32,8 +32,11 @@ describe('when a domain entity extension extends a non-education organization do
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(entityName);
-    const extension = metaEd.entity.domainEntityExtension.get(entityName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+
+    const entity = coreNamespace.entity.domainEntity.get(entityName);
+    const extension = coreNamespace.entity.domainEntityExtension.get(entityName);
 
     if (entity && extension) extension.baseEntity = entity;
 
@@ -76,9 +79,15 @@ describe('when a domain entity extension extends a non-education organization su
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(entityName);
-    const coreSubclass = metaEd.entity.domainEntitySubclass.get(coreSubclassName);
-    const extension = metaEd.entity.domainEntityExtension.get(coreSubclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.domainEntity.get(entityName);
+    const coreSubclass = coreNamespace.entity.domainEntitySubclass.get(coreSubclassName);
+    const extension = extensionNamespace.entity.domainEntityExtension.get(coreSubclassName);
 
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;
@@ -122,9 +131,15 @@ describe('when a domain entity extension extends a subclass of education organiz
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(entityName);
-    const coreSubclass = metaEd.entity.domainEntitySubclass.get(coreSubclassName);
-    const extension = metaEd.entity.domainEntityExtension.get(coreSubclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.domainEntity.get(entityName);
+    const coreSubclass = coreNamespace.entity.domainEntitySubclass.get(coreSubclassName);
+    const extension = extensionNamespace.entity.domainEntityExtension.get(coreSubclassName);
 
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;
@@ -182,10 +197,16 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(entityName);
-    const coreSubclass = metaEd.entity.domainEntitySubclass.get(coreSubclassName);
-    const extensionSubclass = metaEd.entity.domainEntitySubclass.get(extensionSubclassName);
-    const extension = metaEd.entity.domainEntityExtension.get(extensionSubclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.domainEntity.get(entityName);
+    const coreSubclass = coreNamespace.entity.domainEntitySubclass.get(coreSubclassName);
+    const extensionSubclass = extensionNamespace.entity.domainEntitySubclass.get(extensionSubclassName);
+    const extension = extensionNamespace.entity.domainEntityExtension.get(extensionSubclassName);
 
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extensionSubclass) extensionSubclass.baseEntity = coreSubclass;

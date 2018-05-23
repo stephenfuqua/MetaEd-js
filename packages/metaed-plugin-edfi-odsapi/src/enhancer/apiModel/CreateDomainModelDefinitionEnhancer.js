@@ -1,7 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
-import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
@@ -80,15 +79,6 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const odsPlugin: PluginEnvironment = ((metaEd.plugin.get('edfiOds'): any): PluginEnvironment);
-  if (!odsPlugin || !odsPlugin.entity)
-    return {
-      enhancerName,
-      success: false,
-    };
-
-  const edFiOdsEntityRepository: EdFiOdsEntityRepository = ((odsPlugin.entity: any): EdFiOdsEntityRepository);
-
   metaEd.namespace.forEach((namespace: Namespace) => {
     const additionalEntityDefinitions = [];
 
@@ -97,8 +87,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       schemaDefinition: buildSchemaDefinition(namespace),
       aggregateDefinitions: buildAggregateDefinitions(namespace),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),
-      entityDefinitions: buildEntityDefinitions(edFiOdsEntityRepository.table, namespace, additionalEntityDefinitions),
-      associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table, namespace),
+      entityDefinitions: buildEntityDefinitions(metaEd, namespace, additionalEntityDefinitions),
+      associationDefinitions: buildAssociationDefinitions(metaEd, namespace),
     };
 
     ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).domainModelDefinition = domainModelDefinition;

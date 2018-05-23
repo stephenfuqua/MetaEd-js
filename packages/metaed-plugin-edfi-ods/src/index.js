@@ -39,6 +39,9 @@ export {
 } from './model/database/Column';
 export { newTable } from './model/database/Table';
 
+// Utilities
+export { edfiOdsRepositoryForNamespace, tableEntities, rowEntities } from './enhancer/EnhancerHelper';
+
 function validatorList(): Array<Validator> {
   return [];
 }
