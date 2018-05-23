@@ -332,6 +332,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
     expect(elements).toHaveLength(1);
   });
 });
+
 describe('when generating xsd for domain entity with queryable field', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
@@ -387,6 +388,58 @@ describe('when generating xsd for domain entity with queryable field', () => {
   it('should generate correct simple type for common string', () => {
     const elements = xpathSelect(
       "/xs:schema/xs:simpleType[@name='CommonStringReference']/xs:annotation/xs:appinfo/ann:TypeGroup",
+      coreResult,
+    );
+    expect(elements).toHaveLength(1);
+  });
+});
+
+describe('when generating xsd for abstract entity with identity property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+  const abstractEntityName: string = 'AbstractEntityName';
+  const pkProperty: string = 'PkProperty';
+  const stringPropertyName: string = 'StringPropertyName';
+
+  let coreResult;
+
+  beforeAll(async () => {
+    const namespaceInfoBuilder = new NamespaceInfoBuilder(metaEd, []);
+    const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
+    MetaEdTextBuilder.build()
+
+      .withBeginNamespace('edfi')
+
+      .withStartAbstractEntity(abstractEntityName)
+      .withDocumentation('doc')
+      .withIntegerIdentity(pkProperty, 'doc')
+      .withStringProperty(stringPropertyName, 'doc', false, false, '100')
+      .withEndAbstractEntity()
+
+      .withEndNamespace()
+
+      .sendToListener(namespaceInfoBuilder)
+      .sendToListener(domainEntityBuilder);
+
+    ({ coreResult } = await enhanceAndGenerate(metaEd));
+  });
+
+  it('should generate domain entity', () => {
+    const elements = xpathSelect(`/xs:schema/xs:complexType[@name='${abstractEntityName}']`, coreResult);
+    expect(elements).toHaveLength(1);
+  });
+
+  it('should not generate identity property', () => {
+    const elements = xpathSelect(
+      `/xs:schema/xs:complexType[@name='${abstractEntityName}']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='${pkProperty}']`,
+      coreResult,
+    );
+    expect(elements).toHaveLength(0);
+  });
+
+  it('should generate non identity property', () => {
+    const elements = xpathSelect(
+      `/xs:schema/xs:complexType[@name='${abstractEntityName}']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='${stringPropertyName}']`,
       coreResult,
     );
     expect(elements).toHaveLength(1);

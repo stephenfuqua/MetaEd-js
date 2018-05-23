@@ -11,7 +11,6 @@ import { enhance as commonExtensionSetupEnhancer } from '../model/CommonExtensio
 import { enhance as descriptorSetupEnhancer } from '../model/Descriptor';
 import { enhance as domainEntitySetupEnhancer } from '../model/DomainEntity';
 import { enhance as domainEntityExtensionSetupEnhancer } from '../model/DomainEntityExtension';
-import { enhance as domainEntitySubclassSetupEnhancer } from '../model/DomainEntitySubclass';
 import { enhance as enumerationBaseSetupEnhancer } from '../model/EnumerationBase';
 import { enhance as interchangeItemSetupEnhancer } from '../model/InterchangeItem';
 import { enhance as modelBaseSetupEnhancer } from '../model/ModelBase';
@@ -78,15 +77,14 @@ export function enhancerList(): Array<Enhancer> {
     associationExtensionSetupEnhancer,
     commonExtensionSetupEnhancer,
     descriptorSetupEnhancer,
-    domainEntitySetupEnhancer,
     domainEntityExtensionSetupEnhancer,
-    domainEntitySubclassSetupEnhancer,
     enumerationBaseSetupEnhancer,
     interchangeItemSetupEnhancer,
     modelBaseSetupEnhancer,
     namespaceInfoSetupEnhancer,
     simpleTypeBaseSetupEnhancer,
     topLevelEntitySetupEnhancer,
+    domainEntitySetupEnhancer,
 
     // ***************
     // Original XSD enhancers
