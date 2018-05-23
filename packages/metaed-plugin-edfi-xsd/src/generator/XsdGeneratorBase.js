@@ -58,8 +58,9 @@ export function formatVersionForSchema(version: SemVer): string {
   if (!semverLib.valid(version)) return '';
   const semverified = semverLib.parse(version);
   const major: string = semverified.major < 10 ? `0${semverified.major}` : `${semverified.major}`;
-  const minor: string = semverified.minor < 10 ? `${semverified.minor}0` : `${semverified.minor}`;
-  const patch: string = semverified.patch === 0 ? '' : `${semverified.minor}`;
+  const minor: string = `${semverified.minor}`;
+  // METAED-835 - Patch version isn't represented in schema version
+  const patch: string = '0';
   const prerelease: string = semverified.prerelease.length ? `-${semverified.prerelease.join('.')}` : '';
   return `${major}${minor}${patch}${prerelease}`;
 }
