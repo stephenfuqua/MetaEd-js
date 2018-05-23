@@ -3,6 +3,8 @@ import type { Enhancer, Validator, MetaEdPlugin } from 'metaed-core';
 import { newMetaEdPlugin } from 'metaed-core';
 
 import { validate as abstractEntityMustContainAnIdentity } from './validator/AbstractEntity/AbstractEntityMustContainAnIdentity';
+import { validate as abstractEntityMustNotBeExtended } from './validator/AbstractEntity/AbstractEntityMustNotBeExtended';
+import { validate as abstractGeneralStudentProgramAssociationMustNotBeExtended } from './validator/AbstractEntity/AbstractGeneralStudentProgramAssociationMustNotBeExtended';
 
 import { validate as associationExtensionExistsOnlyInExtensionNamespace } from './validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
 import { validate as associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass } from './validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
@@ -167,6 +169,8 @@ import { enhance as mergedPropertyEnhancer } from './enhancer/MergedPropertyEnha
 function validatorList(): Array<Validator> {
   return [
     abstractEntityMustContainAnIdentity,
+    abstractEntityMustNotBeExtended,
+    abstractGeneralStudentProgramAssociationMustNotBeExtended,
 
     associationExtensionExistsOnlyInExtensionNamespace,
     associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass,

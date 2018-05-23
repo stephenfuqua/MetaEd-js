@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating abstract entity additions in extension namespace should have one validation failure 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "Abstract Entity DomainEntityName2 additions is not valid.  Abstract entities cannot be extended.",
+    "sourceMap": Object {
+      "column": 2,
+      "line": 18,
+      "tokenText": "Domain Entity",
+    },
+    "validatorName": "AbstractEntityMustNotBeExtended",
+  },
+]
+`;
+
+exports[`when validating abstract entity additions should have one validation failure 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "Abstract Entity DomainEntityName additions is not valid.  Abstract entities cannot be extended.",
+    "sourceMap": Object {
+      "column": 2,
+      "line": 11,
+      "tokenText": "Domain Entity",
+    },
+    "validatorName": "AbstractEntityMustNotBeExtended",
+  },
+]
+`;

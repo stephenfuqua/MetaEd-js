@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating abstract GeneralStudentProgramAssociation additions should have one validation failure 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "Abstract Association GeneralStudentProgramAssociation additions is not valid.  Abstract entities cannot be extended.",
+    "sourceMap": Object {
+      "column": 2,
+      "line": 11,
+      "tokenText": "Association",
+    },
+    "validatorName": "AbstractGeneralStudentProgramAssociationMustNotBeExtended",
+  },
+]
+`;
