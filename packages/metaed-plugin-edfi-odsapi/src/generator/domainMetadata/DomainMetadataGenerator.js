@@ -4,7 +4,7 @@ import type { MetaEdEnvironment, Namespace, GeneratorResult, GeneratedOutput } f
 import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import { registerPartials, template } from './DomainMetadataGeneratorBase';
-import { logicalNameFor } from '../../model/apiModel/SchemaDefinition';
+import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
 import type { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 
 function fileName(namespace: string, projectPrefix: string): string {
@@ -19,7 +19,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     const schema: SchemaDefinition = {
-      logicalName: logicalNameFor(namespace.namespaceName),
+      logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
       physicalName: namespace.namespaceName,
     };
     const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates.filter(

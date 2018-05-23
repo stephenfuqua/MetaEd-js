@@ -10,7 +10,8 @@ const enhancerName: string = 'DomainEntitySetupEnhancer';
 
 // note this is an override of xsdProperties in TopLevelEntity
 function xsdProperties(domainEntity: DomainEntity): () => Array<EntityProperty> {
-  return () => (domainEntity.isAbstract ? [] : domainEntity.properties.filter(p => !p.isPartOfIdentity));
+  return () =>
+    domainEntity.isAbstract ? domainEntity.properties.filter(p => !p.isPartOfIdentity) : domainEntity.properties;
 }
 
 export function addDomainEntityEdfiXsdTo(domainEntity: DomainEntity) {

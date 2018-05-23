@@ -50,28 +50,36 @@ export function loadFiles(state: State): boolean {
       files: [],
     };
 
-    const filenames: string[] = ffs
-      .readdirRecursiveSync(inputDirectory.path, true, inputDirectory.path)
-      .filter(filename => filename.endsWith('.metaed'));
+    try {
+      const filenames: string[] = ffs
+        .readdirRecursiveSync(inputDirectory.path, true, inputDirectory.path)
+        .filter(filename => filename.endsWith('.metaed'));
 
-    if (filenames.length === 0) {
-      winston.error(`No MetaEd files found in input directory ${inputDirectory.path}.`);
+      if (filenames.length === 0) {
+        winston.error(`No MetaEd files found in input directory ${inputDirectory.path}.`);
+        success = false;
+      }
+
+      const filenamesToLoad: string[] = filenames.filter(filename => !state.filePathsToExclude.has(filename));
+
+      filenamesToLoad.forEach(filename => {
+        const contents = ffs.readFileSync(filename, 'utf-8');
+        const metaEdFile = createMetaEdFile(path.dirname(filename), path.basename(filename), contents);
+        fileSet.files.push(metaEdFile);
+      });
+
+      winston.info(
+        `  ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
+      );
+
+      fileSets.push(fileSet);
+    } catch (exception) {
+      winston.error(`FileSystemFilenameLoader: Unable to read files at location '${inputDirectory.path}'.`, exception);
+      if (exception.code === 'ENOTEMPTY' || exception.code === 'EPERM') {
+        winston.error('Please close any files or folders that may be open in other applications.');
+      }
       success = false;
     }
-
-    const filenamesToLoad: string[] = filenames.filter(filename => !state.filePathsToExclude.has(filename));
-
-    filenamesToLoad.forEach(filename => {
-      const contents = ffs.readFileSync(filename, 'utf-8');
-      const metaEdFile = createMetaEdFile(path.dirname(filename), path.basename(filename), contents);
-      fileSet.files.push(metaEdFile);
-    });
-
-    winston.info(
-      `  ${inputDirectory.path} (${filenamesToLoad.length} .metaed file${filenamesToLoad.length > 1 ? 's' : ''} loaded)`,
-    );
-
-    fileSets.push(fileSet);
   });
 
   state.loadedFileSet.push(...fileSets);

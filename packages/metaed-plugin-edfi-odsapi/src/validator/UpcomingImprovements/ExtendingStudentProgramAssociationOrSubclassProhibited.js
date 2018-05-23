@@ -1,7 +1,8 @@
 // @flow
 
 // 2.2.X.1 - METAED-701 - ODS-827
-import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity } from 'metaed-core';
+import { versionSatisfies, V2Only } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity, PluginEnvironment, SemVer } from 'metaed-core';
 
 function isStudentProgramAssociationOrSubclass(topLevelEntity: TopLevelEntity): boolean {
   if (topLevelEntity.metaEdName === 'StudentProgramAssociation') return true;
@@ -10,14 +11,25 @@ function isStudentProgramAssociationOrSubclass(topLevelEntity: TopLevelEntity): 
   return false;
 }
 
+const validatorName: string = 'ExtendingStudentProgramAssociationOrSubclassProhibited';
+const targetTechnologyVersion: SemVer = V2Only;
+
+function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
+  return versionSatisfies(
+    ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
+    targetTechnologyVersion,
+  );
+}
+
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+  if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   metaEd.entity.associationExtension.forEach(associationExtension => {
     if (!associationExtension.baseEntity) return;
     if (isStudentProgramAssociationOrSubclass(associationExtension.baseEntity)) {
       failures.push({
-        validatorName: 'ExtendingStudentProgramAssociationOrSubclassProhibited',
+        validatorName,
         category: 'warning',
         message: `[ODS-827] ${associationExtension.typeHumanizedName} ${
           associationExtension.metaEdName

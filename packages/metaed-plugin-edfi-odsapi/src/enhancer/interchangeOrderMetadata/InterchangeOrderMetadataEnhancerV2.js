@@ -182,10 +182,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           mergedInterchange.metaEdName === sortedInterchange.name &&
           mergedInterchange.namespace.namespaceName === namespace.namespaceName,
       );
-      if (interchange == null) {
-        winston.error(`Unable to find interchange ${sortedInterchange.name} in namespace ${namespace.namespaceName}.`);
-        return;
-      }
+
+      if (interchange == null) return;
 
       interchange.data.edfiOdsApi.apiOrder = sortedInterchange.apiOrder;
       interchange.data.edfiOdsApi.apiOrderedElements = sortedEntities

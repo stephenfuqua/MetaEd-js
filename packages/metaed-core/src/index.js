@@ -173,7 +173,7 @@ export { newMetaEdEnvironment } from './MetaEdEnvironment';
 export { newMetaEdPlugin } from './plugin/PluginTypes';
 export { newPluginEnvironment } from './plugin/PluginEnvironment';
 export { newMetaEdConfiguration, newPluginConfiguration } from './MetaEdConfiguration';
-export { newMetaEdProject } from './project/ProjectTypes';
+export { newMetaEdProject, deriveNamespaceFromProjectName } from './project/ProjectTypes';
 
 export { asAssociationProperty, newAssociationProperty } from './model/property/AssociationProperty';
 export { asBooleanProperty, newBooleanProperty } from './model/property/BooleanProperty';
@@ -239,7 +239,7 @@ export { asTopLevelEntity, newTopLevelEntity } from './model/TopLevelEntity';
 // utilities
 export { normalizeDescriptorSuffix, normalizeEnumerationSuffix } from './Utility';
 export { isDataStandard, findDataStandardVersions } from './project/ProjectTypes';
-export { scanForProjects, overrideNamespace } from './project/ProjectLoader';
+export { scanForProjects, overrideProjectNameAndNamespace } from './project/ProjectLoader';
 
 // for plugin testing
 export { MetaEdTextBuilder } from './grammar/MetaEdTextBuilder';

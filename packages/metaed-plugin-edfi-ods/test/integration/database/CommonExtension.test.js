@@ -10,7 +10,7 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { column, foreignKey, table, testTearDown, columnDataTypes, enhanceGenerateAndExecuteSql } from './DatabaseTestBase';
 import { columnExists, columnIsNullable, columnDataType, columnDefaultConstraint } from './DatabaseColumn';
 import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';

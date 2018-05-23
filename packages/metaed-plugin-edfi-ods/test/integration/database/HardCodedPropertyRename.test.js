@@ -6,7 +6,7 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import {
   column,
   columnDataTypes,

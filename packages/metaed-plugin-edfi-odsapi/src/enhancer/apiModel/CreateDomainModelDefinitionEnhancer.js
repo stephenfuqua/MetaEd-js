@@ -1,25 +1,23 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
-import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
+import type { EdFiOdsEntityRepository, NamespaceEdfiOdsApi } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
-import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
+import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
 import type { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
-import { logicalNameFor } from '../../model/apiModel/SchemaDefinition';
 import type { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 import type { ApiFullName } from '../../model/apiModel/ApiFullName';
-
 const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 
 // Schema definition is the database schema and project name for a namespace
 export function buildSchemaDefinition(namespace: Namespace): SchemaDefinition {
   return {
-    logicalName: logicalNameFor(namespace.namespaceName),
+    logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
     physicalName: namespace.namespaceName,
   };
 }
@@ -81,7 +79,7 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const odsPlugin: PluginEnvironment = ((metaEd.plugin.get('edfiOds'): any): PluginEnvironment);
-  if (!odsPlugin || !odsPlugin.entity)
+  if (odsPlugin == null || odsPlugin.namespace == null)
     return {
       enhancerName,
       success: false,

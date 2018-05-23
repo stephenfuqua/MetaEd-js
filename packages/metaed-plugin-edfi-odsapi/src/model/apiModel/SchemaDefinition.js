@@ -1,19 +1,15 @@
 // @flow
 import deepFreeze from 'deep-freeze';
-import { String as sugar } from 'sugar';
 
 export type SchemaDefinition = {
   logicalName: string,
   physicalName: string,
 };
 
+// Allow anything that would be valid for a projectName, except strip out the spaces
+export const deriveLogicalNameFromProjectName = (projectName: string): string => projectName.replace(/\s/g, '');
+
 export const NoSchemaDefinition: SchemaDefinition = deepFreeze({
   logicalName: '',
   physicalName: '',
 });
-
-export function logicalNameFor(namespace: string): string {
-  if (namespace === 'edfi') return 'Ed-Fi';
-  if (namespace === 'gb') return 'GrandBend';
-  return sugar.titleize(namespace);
-}

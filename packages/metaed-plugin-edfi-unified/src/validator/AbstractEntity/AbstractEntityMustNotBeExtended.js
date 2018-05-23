@@ -1,6 +1,6 @@
 // @flow
 
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityForNamespaces, asDomainEntity } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure, DomainEntityExtension, TopLevelEntity } from 'metaed-core';
 
 // METAED-805
@@ -17,7 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         'domainEntity',
       ): any): ?TopLevelEntity);
 
-      if (baseEntity == null || !baseEntity.isAbstract) return;
+      if (baseEntity == null || !asDomainEntity(baseEntity).isAbstract) return;
 
       failures.push({
         validatorName,

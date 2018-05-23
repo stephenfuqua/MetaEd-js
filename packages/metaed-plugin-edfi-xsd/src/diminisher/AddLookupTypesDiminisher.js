@@ -1,6 +1,6 @@
 // @flow
 import { getAllTopLevelEntitiesForNamespaces, prependIndefiniteArticle, versionSatisfies } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, TopLevelEntity, Namespace } from 'metaed-core';
 import { createSchemaComplexTypeItems } from '../enhancer/schema/XsdElementFromPropertyCreator';
 import { newAnnotation } from '../model/schema/Annotation';
 import { newComplexType, NoComplexType } from '../model/schema/ComplexType';

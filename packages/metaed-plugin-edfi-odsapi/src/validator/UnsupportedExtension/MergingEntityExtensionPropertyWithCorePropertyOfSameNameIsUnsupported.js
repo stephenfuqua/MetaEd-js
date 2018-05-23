@@ -1,7 +1,7 @@
 // @flow
 
 // 2.x - METAED-711 - ODS-1732
-import { asTopLevelEntity, getEntitiesOfType, versionSatisfies } from 'metaed-core';
+import { asTopLevelEntity, getEntitiesOfType, versionSatisfies, V2Only } from 'metaed-core';
 import type {
   EntityProperty,
   MetaEdEnvironment,
@@ -14,7 +14,7 @@ import type {
 import { collectSingleEntity, propertyCollector } from '../ValidatorShared/PropertyCollector';
 
 const validatorName: string = 'MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
-const targetTechnologyVersion: SemVer = '2.x';
+const targetTechnologyVersion: SemVer = V2Only;
 
 function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
   return versionSatisfies(

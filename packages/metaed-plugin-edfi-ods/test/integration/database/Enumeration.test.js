@@ -1,6 +1,6 @@
 // @flow
 import { EnumerationBuilder, MetaEdTextBuilder, NamespaceBuilder, newMetaEdEnvironment } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { column, columnDataTypes, enhanceGenerateAndExecuteSql, table, testTearDown } from './DatabaseTestBase';
 import {
   columnDataType,

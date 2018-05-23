@@ -6,6 +6,7 @@ import type { Aggregate } from '../../src/model/domainMetadata/Aggregate';
 
 describe('when generating aggregate for edfi', () => {
   const namespaceName: string = 'edfi';
+  const projectName: string = 'Ed-Fi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -40,6 +41,7 @@ describe('when generating aggregate for edfi', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: false,
       data: {
         edfiOdsApi: {
@@ -59,6 +61,7 @@ describe('when generating aggregate for edfi', () => {
 
 describe('when generating aggregate for extensions', () => {
   const namespaceName: string = 'extension';
+  const projectName: string = 'Extension';
   let result: string = '';
 
   beforeAll(async () => {
@@ -84,6 +87,7 @@ describe('when generating aggregate for extensions', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: true,
       projectExtension: 'EXTENSION',
       data: {
@@ -104,6 +108,7 @@ describe('when generating aggregate for extensions', () => {
 
 describe('when generating aggregate with subclass for edfi', () => {
   const namespaceName: string = 'edfi';
+  const projectName: string = 'Ed-Fi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -129,6 +134,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -149,6 +155,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 
 describe('when generating aggregate extensions', () => {
   const namespaceName: string = 'extension';
+  const projectName: string = 'Extension';
   let result: string = '';
 
   beforeAll(async () => {
@@ -174,6 +181,7 @@ describe('when generating aggregate extensions', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: true,
       projectExtension: 'EXTENSION',
       data: {
@@ -194,6 +202,7 @@ describe('when generating aggregate extensions', () => {
 
 describe('when generating abstract aggregate for edfi', () => {
   const namespaceName: string = 'edfi';
+  const projectName: string = 'Ed-Fi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -219,6 +228,7 @@ describe('when generating abstract aggregate for edfi', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -239,6 +249,7 @@ describe('when generating abstract aggregate for edfi', () => {
 
 describe('when generating aggregate with primary key update', () => {
   const namespaceName: string = 'edfi';
+  const projectName: string = 'Ed-Fi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -264,6 +275,7 @@ describe('when generating aggregate with primary key update', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: false,
       projectExtension: '',
       data: {
@@ -284,6 +296,7 @@ describe('when generating aggregate with primary key update', () => {
 
 describe('when generating aggregate with required collection table', () => {
   const namespaceName: string = 'edfi';
+  const projectName: string = 'Ed-Fi';
   let result: string = '';
 
   beforeAll(async () => {
@@ -309,6 +322,7 @@ describe('when generating aggregate with required collection table', () => {
 
     const namespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
+      projectName,
       isExtension: false,
       projectExtension: '',
       data: {

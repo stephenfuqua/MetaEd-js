@@ -6,7 +6,7 @@ import type { DescriptorEdfiXsd } from '../model/Descriptor';
 const enhancerName: string = 'DescriptorPropertiesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'descriptor').forEach((descriptor: Descriptor) => {
+  (getAllEntitiesOfType(metaEd, 'descriptor'): any).forEach((descriptor: Descriptor) => {
     const descriptorXsdData = ((descriptor.data.edfiXsd: any): DescriptorEdfiXsd);
     descriptorXsdData.xsd_DescriptorName = `${descriptor.metaEdName}Descriptor`;
     descriptorXsdData.xsd_DescriptorNameWithExtension = descriptor.namespace.projectExtension

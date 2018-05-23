@@ -9,7 +9,7 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
 } from 'metaed-core';
-import type { MetaEdEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { column, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown } from './DatabaseTestBase';
 import { columnExists, columnIsNullable } from './DatabaseColumn';
 import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';

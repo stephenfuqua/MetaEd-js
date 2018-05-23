@@ -3,6 +3,15 @@ import R from 'ramda';
 import semver from 'semver';
 import type { SemVer } from './MetaEdEnvironment';
 
+export function lowercaseAndNumericOnly(aString: string): ?string {
+  const alphanumericMatches: ?Array<string> = aString.match(/[a-zA-Z0-9]+/g);
+  if (alphanumericMatches == null) return null;
+  const alphanumericOnly = alphanumericMatches.join('');
+  const leadingAlphaCharacter = /^[a-zA-Z]/;
+  if (!alphanumericOnly || !alphanumericOnly.match(leadingAlphaCharacter)) return null;
+  return alphanumericOnly.toLowerCase();
+}
+
 export function prependIndefiniteArticle(phrase: string): string {
   if (phrase == null || phrase === '') return '';
   const firstChar = phrase.charAt(0).toLowerCase();

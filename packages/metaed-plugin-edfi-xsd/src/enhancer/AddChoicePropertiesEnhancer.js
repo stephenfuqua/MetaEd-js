@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, Choice, EntityProperty } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Choice, EntityProperty, Namespace } from 'metaed-core';
 import { getAllTopLevelEntitiesForNamespaces, getEntityForNamespaces } from 'metaed-core';
 import type { ChoicePropertyEdfiXsd } from '../model/property/ChoiceProperty';
 

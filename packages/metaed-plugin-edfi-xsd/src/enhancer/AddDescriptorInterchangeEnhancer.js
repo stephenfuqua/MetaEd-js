@@ -15,7 +15,7 @@ const descriptorUseCaseDocumentation: string = `1. Exchange state, district, or 
 2. Exchange code or enumeration values that change over time, but where longitudinal analysis is still important`;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const allDescriptors: Array<Descriptor> = getAllEntitiesOfType(metaEd, 'descriptor');
+  const allDescriptors: Array<Descriptor> = (getAllEntitiesOfType(metaEd, 'descriptor'): any);
   metaEd.namespace.forEach((namespace: Namespace) => {
     // Skip this namespace if no new descriptors defined
     if (allDescriptors.every((descriptor: Descriptor) => descriptor.namespace.namespaceName !== namespace.namespaceName))

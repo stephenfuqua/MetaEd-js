@@ -4,6 +4,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import semver from 'semver';
+import { deriveNamespaceFromProjectName } from 'metaed-core';
 import { packageJsonTemplate } from './ProjectTemplates';
 
 const PROJECT_SETTINGS_FILE_NAME: string = 'package.json';
@@ -43,15 +44,6 @@ async function projectValuesFromProjectJson(verifiedPathToProjectJson: string): 
   if (projectJson.metaEdProject && projectJson.metaEdProject.projectName && projectJson.metaEdProject.projectVersion)
     return projectJson.metaEdProject;
   return null;
-}
-
-function lowercaseAndNumericOnly(aString: string): ?string {
-  const alphanumericMatches: ?Array<string> = aString.match(/[a-zA-Z0-9]+/g);
-  if (alphanumericMatches == null) return null;
-  const alphanumericOnly = alphanumericMatches.join('');
-  const leadingAlphaCharacter = /^[a-zA-Z]/;
-  if (!alphanumericOnly || !alphanumericOnly.match(leadingAlphaCharacter)) return null;
-  return alphanumericOnly.toLowerCase();
 }
 
 export type MetaEdProjectMetadata = {
@@ -102,7 +94,7 @@ export async function findMetaEdProjectMetadata(createProjectJson: boolean = fal
         };
       }
 
-      const projectNamespace: ?string = lowercaseAndNumericOnly(projectFileData.projectName);
+      const projectNamespace: ?string = deriveNamespaceFromProjectName(projectFileData.projectName);
       if (projectNamespace == null) {
         return {
           ...newMetaEdProjectMetadata(projectPath),
