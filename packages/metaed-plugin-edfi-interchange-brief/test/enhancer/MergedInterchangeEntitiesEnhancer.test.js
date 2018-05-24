@@ -1,7 +1,7 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
-import type { MetaEdEnvironment, InterchangeItem, DomainEntity } from 'metaed-core';
-import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, InterchangeItem, DomainEntity, Namespace } from 'metaed-core';
+import { addEdFiXsdEntityRepositoryTo, newMergedInterchange, edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { enhance } from '../../src/enhancer/MergedInterchangeEntitiesEnhancer';
 import { addMergedInterchangeEdfiInterchangeBriefTo } from '../../src/model/MergedInterchange';
@@ -20,14 +20,19 @@ let interchangeLevelDomainEntity2: DomainEntity;
 let domainEntity1InterchangeItem: InterchangeItem;
 let domainEntity2InterchangeItem: InterchangeItem;
 
-const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+let metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
 function setupRepository() {
+  metaEd = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
+
   mergedInterchange = ((Object.assign(newMergedInterchange(), { metaEdName: interchangeName }): any): MergedInterchange);
   addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange);
 
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+  const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+  if (xsdRepository == null) throw new Error();
 
   interchangeLevelDomainEntity1 = Object.assign(newDomainEntity(), {
     metaEdName: interchangeLevelDomainEntity1Name,
@@ -46,7 +51,7 @@ function setupRepository() {
     referencedEntity: interchangeLevelDomainEntity2,
   });
 
-  edFiXsdEntityRepository.mergedInterchange.set(interchangeName, mergedInterchange);
+  xsdRepository.mergedInterchange.set(interchangeName, mergedInterchange);
 }
 
 describe('when MergedInterchangeEntitiesEnhancer enhances mergedInterchange with no identity templates', () => {

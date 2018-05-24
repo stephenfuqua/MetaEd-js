@@ -2,8 +2,9 @@
 import Horseman from 'node-horseman';
 import { path as phantomPath } from 'phantomjs-prebuilt';
 import path from 'path';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
-import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
+import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
 type SvgElement = {
   name: string,
@@ -14,24 +15,28 @@ const generatorName: string = 'InterchangeBriefImageGenerator';
 
 function getModel(metaEd: MetaEdEnvironment): Array<SvgElement> {
   const result: Array<SvgElement> = [];
-  const mergedInterchanges: Array<MergedInterchange> = (metaEd.plugin.get('edfiXsd'): any).entity.mergedInterchange;
 
-  mergedInterchanges.forEach(interchange => {
-    const svgElement: SvgElement = {
-      name: interchange.interchangeName,
-      children: [{ name: '<xs:choice>', children: [] }],
-    };
-    interchange.identityTemplates.forEach(identityTemplate => {
-      const identityTemplateEntity = { name: identityTemplate.data.edfiXsd.xsd_Name };
-      // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
-      if (svgElement.children[0].children) svgElement.children[0].children.push(identityTemplateEntity);
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) return;
+
+    xsdRepository.mergedInterchange.forEach(interchange => {
+      const svgElement: SvgElement = {
+        name: interchange.interchangeName,
+        children: [{ name: '<xs:choice>', children: [] }],
+      };
+      interchange.identityTemplates.forEach(identityTemplate => {
+        const identityTemplateEntity = { name: identityTemplate.data.edfiXsd.xsd_Name };
+        // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
+        if (svgElement.children[0].children) svgElement.children[0].children.push(identityTemplateEntity);
+      });
+      interchange.elements.forEach(element => {
+        const elementEntity = { name: element.data.edfiXsd.xsd_Name };
+        // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
+        if (svgElement.children[0].children) svgElement.children[0].children.push(elementEntity);
+      });
+      result.push(svgElement);
     });
-    interchange.elements.forEach(element => {
-      const elementEntity = { name: element.data.edfiXsd.xsd_Name };
-      // $FlowIgnore Flow thinks svgElement.children[0] could be undefined, but it was defined above.
-      if (svgElement.children[0].children) svgElement.children[0].children.push(elementEntity);
-    });
-    result.push(svgElement);
   });
   return result;
 }

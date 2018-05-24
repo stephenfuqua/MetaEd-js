@@ -4,8 +4,9 @@ import R from 'ramda';
 import handlebars from 'handlebars';
 import fs from 'fs';
 import path from 'path';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
 const generatorName = 'Interchange Brief Markdown Generator';
 const header =
@@ -33,12 +34,14 @@ export const registerPartials = R.once(() => {
 });
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
+  registerPartials();
   const generatedOutput: Array<GeneratedOutput> = [];
 
-  registerPartials();
-  ((Array.from(edFiXsdEntityRepository.mergedInterchange.values()): any): Array<MergedInterchange>).forEach(
-    (interchange: MergedInterchange) => {
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) return;
+
+    xsdRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
       const markdown: string = template().interchangeBrief(interchange);
       generatedOutput.push({
         name: 'Interchange Brief Html',
@@ -48,16 +51,16 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         resultString: `${header}${marked(markdown)}`,
         resultStream: null,
       });
-    },
-  );
+    });
 
-  generatedOutput.push({
-    name: 'confluence-like.css',
-    namespace: 'Documentation',
-    folderName: 'InterchangeBrief',
-    fileName: 'confluence-like.css',
-    resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
-    resultStream: null,
+    generatedOutput.push({
+      name: 'confluence-like.css',
+      namespace: 'Documentation',
+      folderName: 'InterchangeBrief',
+      fileName: 'confluence-like.css',
+      resultString: ((fs.readFileSync(path.resolve(__dirname, './confluence-like.css'), 'utf8'): any): string),
+      resultStream: null,
+    });
   });
 
   return {

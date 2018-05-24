@@ -2,7 +2,14 @@
 
 // 2.1.X.1 - METAED-701 - ODS-827
 import { versionSatisfies, V2Only, getAllEntitiesOfType } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity, PluginEnvironment, SemVer, DomainEntityExtension } from 'metaed-core';
+import type {
+  MetaEdEnvironment,
+  ValidationFailure,
+  TopLevelEntity,
+  PluginEnvironment,
+  SemVer,
+  DomainEntityExtension,
+} from 'metaed-core';
 
 function isEducationOrganizationSubclass(topLevelEntity: TopLevelEntity): boolean {
   if (topLevelEntity.type !== 'domainEntitySubclass') return false;
@@ -30,7 +37,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (!domainEntityExtension.baseEntity) return;
       if (isEducationOrganizationSubclass(domainEntityExtension.baseEntity)) {
         failures.push({
-        validatorName,
+          validatorName,
           category: 'warning',
           message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${
             domainEntityExtension.metaEdName

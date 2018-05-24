@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Association } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 import {
   typeGroupAssociation,
@@ -12,7 +12,7 @@ import {
 const enhancerName: string = 'AddAssociationComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'association').forEach(association => {
+  ((getAllEntitiesOfType(metaEd, 'association'): any): Array<Association>).forEach((association: Association) => {
     association.data.edfiXsd.xsd_ComplexTypes = createDefaultComplexType(
       association,
       typeGroupAssociation,

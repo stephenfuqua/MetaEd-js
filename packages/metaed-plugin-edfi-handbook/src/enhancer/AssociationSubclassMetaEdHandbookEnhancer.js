@@ -1,21 +1,26 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, AssociationSubclass, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { createDefaultHandbookEntry } from './TopLevelEntityMetaEdHandbookEnhancerBase';
-import type { HandbookEntry } from '../model/HandbookEntry';
+import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 
 const enhancerName: string = 'AssociationSubclassMetaEdHandbookEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const results: Array<HandbookEntry> = Array.from(metaEd.entity.associationSubclass.values()).map(association =>
-    Object.assign(createDefaultHandbookEntry(association, 'Association Subclass', metaEd), {
-      entityType: `Association Subclass extending ${association.baseEntityName}`,
-    }),
-  );
-
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
-    ...results,
-  );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const handbookRepository: ?EdfiHandbookRepository = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+    if (handbookRepository == null) return;
+    ((getEntitiesOfTypeForNamespaces([namespace], 'associationSubclass'): any): Array<AssociationSubclass>).forEach(
+      entity => {
+        handbookRepository.handbookEntries.push(
+          Object.assign(createDefaultHandbookEntry(entity, '', metaEd), {
+            entityType: `${entity.metaEdName} extending ${entity.baseEntityName}`,
+          }),
+        );
+      },
+    );
+  });
 
   return {
     enhancerName,

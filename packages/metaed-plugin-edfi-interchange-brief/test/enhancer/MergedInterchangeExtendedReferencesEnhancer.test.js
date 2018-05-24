@@ -19,7 +19,6 @@ import {
   newDecimalProperty,
   newDurationProperty,
   newIntegerProperty,
-  newPluginEnvironment,
   newPercentProperty,
   newSharedDecimalProperty,
   newSharedStringProperty,
@@ -28,9 +27,14 @@ import {
   newShortProperty,
   newStringProperty,
   newTimeProperty,
+  newNamespace,
 } from 'metaed-core';
-import type { Common } from 'metaed-core';
-import { newMergedInterchange } from 'metaed-plugin-edfi-xsd';
+import type { Common, Namespace } from 'metaed-core';
+import {
+  newMergedInterchange,
+  addEdFiXsdEntityRepositoryTo,
+  addMergedInterchangeToRepository,
+} from 'metaed-plugin-edfi-xsd';
 import { enhance as mergedInterchangeExtendedReferencesEnhancer } from '../../src/enhancer/MergedInterchangeExtendedReferencesEnhancer';
 
 function byReferenceName(a, b): number {
@@ -92,51 +96,56 @@ let referencedChoiceProperty;
 let domainEntityInterchangeItem;
 
 function setupRepository() {
-  metaEd = Object.assign(newMetaEdEnvironment(), {
-    plugin: new Map().set(
-      'edfiXsd',
-      Object.assign(newPluginEnvironment(), {
-        entity: {
-          mergedInterchange: [],
-        },
-      }),
-    ),
-  });
+  metaEd = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
+
   mergedInterchange = Object.assign(newMergedInterchange(), {
     metaEdName: interchangeName,
+    namespace,
   });
+  addMergedInterchangeToRepository(metaEd, mergedInterchange);
   interchangeLevelDomainEntity = Object.assign(newDomainEntity(), {
     metaEdName: interchangeLevelDomainEntityName,
+    namespace,
     documentation: interchangeLevelDomainEntityDocumentation,
   });
   referencedDomainEntity1 = Object.assign(newDomainEntity(), {
     metaEdName: referencedDomainEntity1Name,
+    namespace,
     documentation: referencedDomainEntity1Documentation,
   });
   referencedDomainEntity2 = Object.assign(newDomainEntity(), {
     metaEdName: referencedDomainEntity2Name,
+    namespace,
     documentation: referencedDomainEntity2Documentation,
   });
   referencedDescriptor1 = Object.assign(newDescriptor(), {
     metaEdName: 'UNUSED Referenced Descriptor 1',
+    namespace,
     data: { edfiXsd: { xsd_DescriptorName: referencedDescriptor1Name } },
     documentation: referencedDescriptor1Documentation,
   });
   referencedDescriptor2 = Object.assign(newDescriptor(), {
     metaEdName: 'UNUSED Referenced Descriptor 2',
+    namespace,
     data: { edfiXsd: { xsd_DescriptorName: referencedDescriptor2Name } },
     documentation: referencedDescriptor2Documentation,
   });
   referencedCommonType = Object.assign(newCommon(), {
     metaEdName: referencedCommonTypeName,
+    namespace,
     documentation: referencedCommonTypeDocumentation,
   });
   referencedInlineCommonType = Object.assign((newInlineCommon(): any), {
     metaEdName: referencedInlineCommonTypeName,
+    namespace,
     documentation: referencedInlineCommonTypeDocumentation,
   });
   referencedChoiceCommonType = Object.assign(((newChoiceProperty(): any): Common), newCommon(), {
     metaEdName: referencedChoiceCommonTypeName,
+    namespace,
     documentation: referencedChoiceCommonTypeDocumentation,
   });
   referencedDomainEntity1Property = Object.assign(newDomainEntityProperty(), {
@@ -178,14 +187,13 @@ function setupRepository() {
     metaEdName: interchangeLevelDomainEntityName,
     referencedEntity: interchangeLevelDomainEntity,
   });
-  const xsdRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  xsdRepository.mergedInterchange.push(mergedInterchange);
-  metaEd.entity.domainEntity.set(referencedDomainEntity1.metaEdName, referencedDomainEntity1);
-  metaEd.entity.descriptor.set(referencedDescriptor1.metaEdName, referencedDescriptor1);
-  metaEd.entity.descriptor.set(referencedDescriptor2.metaEdName, referencedDescriptor2);
-  metaEd.entity.common.set(referencedInlineCommonType.metaEdName, referencedInlineCommonType);
-  metaEd.entity.common.set(referencedCommonType.metaEdName, referencedCommonType);
-  metaEd.entity.common.set(referencedChoiceCommonType.metaEdName, referencedChoiceCommonType);
+
+  namespace.entity.domainEntity.set(referencedDomainEntity1.metaEdName, referencedDomainEntity1);
+  namespace.entity.descriptor.set(referencedDescriptor1.metaEdName, referencedDescriptor1);
+  namespace.entity.descriptor.set(referencedDescriptor2.metaEdName, referencedDescriptor2);
+  namespace.entity.common.set(referencedInlineCommonType.metaEdName, referencedInlineCommonType);
+  namespace.entity.common.set(referencedCommonType.metaEdName, referencedCommonType);
+  namespace.entity.common.set(referencedChoiceCommonType.metaEdName, referencedChoiceCommonType);
 }
 
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with element with bad markdown character', () => {
@@ -210,6 +218,7 @@ describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInte
     expect((mergedInterchange: any).data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.length).toBe(0);
   });
 });
+
 describe('when MergedInterchangeExtendedReferencesEnhancer enhances a mergedInterchange with item with nonreferencing properties', () => {
   const schoolYearEnumeration = Object.assign(newEnumeration(), { metaEdName: 'SchoolYearEnumeration' });
   const enumeration = Object.assign(newEnumeration(), { metaEdName: 'Enumeration' });

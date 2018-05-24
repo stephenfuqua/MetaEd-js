@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newCommon, newCommonExtension, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, CommonExtension } from 'metaed-core';
+import type { MetaEdEnvironment, CommonExtension, Namespace } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';

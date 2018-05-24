@@ -28,7 +28,7 @@ function createSchemaSimpleType(integerType: IntegerType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'integerType').forEach(integerType => {
+  ((getAllEntitiesOfType(metaEd, 'integerType'): any): Array<IntegerType>).forEach((integerType: IntegerType) => {
     ((integerType.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType = createSchemaSimpleType(integerType);
   });
 

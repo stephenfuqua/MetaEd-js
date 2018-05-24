@@ -14,7 +14,7 @@ import type {
   MetaEdEnvironment,
   ModelBase,
 } from 'metaed-core';
-import { getAllEntities } from 'metaed-core';
+import { getAllEntitiesForNamespaces } from 'metaed-core';
 import type { HandbookEntry, HandbookEntityReferenceProperty, HandbookMergeProperty } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 import { getAllReferentialProperties } from './EnhancerHelper';
@@ -185,7 +185,7 @@ export function createDefaultHandbookEntry(
   entityTypeName: string,
   metaEd: MetaEdEnvironment,
 ): HandbookEntry {
-  const allEntities: Array<ModelBase> = getAllEntities(metaEd.entity);
+  const allEntities: Array<ModelBase> = getAllEntitiesForNamespaces([...metaEd.namespace.values()]);
   const allReferentialProperties: Array<ReferentialProperty> = getAllReferentialProperties(metaEd);
   return Object.assign(newHandbookEntry(), {
     definition: entity.documentation,

@@ -37,7 +37,7 @@ describe('when running with one descriptor', () => {
   });
 
   it('should create only the one descriptor interchange element', () => {
-    const entity: MergedInterchange = edfiXsdRepositoryForNamespace(metaEd, namespace).mergedInterchange.get(
+    const entity: MergedInterchange = (edfiXsdRepositoryForNamespace(metaEd, namespace): any).mergedInterchange.get(
       descriptorInterchangeName,
     );
     expect(entity.elements.length).toBe(1);
@@ -45,7 +45,7 @@ describe('when running with one descriptor', () => {
   });
 
   it('should not create extension descriptor interchange element', () => {
-    expect(edfiXsdRepositoryForNamespace(metaEd, namespace).mergedInterchange.size).toBe(1);
+    expect((edfiXsdRepositoryForNamespace(metaEd, namespace): any).mergedInterchange.size).toBe(1);
   });
 });
 
@@ -106,12 +106,12 @@ describe('when running with one extension descriptor', () => {
   });
 
   it('should create two interchanges', () => {
-    expect(edfiXsdRepositoryForNamespace(metaEd, namespace).mergedInterchange.size).toBe(1);
-    expect(edfiXsdRepositoryForNamespace(metaEd, extensionNamespace).mergedInterchange.size).toBe(1);
+    expect((edfiXsdRepositoryForNamespace(metaEd, namespace): any).mergedInterchange.size).toBe(1);
+    expect((edfiXsdRepositoryForNamespace(metaEd, extensionNamespace): any).mergedInterchange.size).toBe(1);
   });
 
   it('should create one core descriptor interchange element', () => {
-    const entity: MergedInterchange = edfiXsdRepositoryForNamespace(metaEd, namespace).mergedInterchange.get(
+    const entity: MergedInterchange = (edfiXsdRepositoryForNamespace(metaEd, namespace): any).mergedInterchange.get(
       descriptorInterchangeName,
     );
     expect(entity.elements.length).toBe(1);
@@ -119,7 +119,7 @@ describe('when running with one extension descriptor', () => {
   });
 
   it('should create one extension descriptor interchange element', () => {
-    const entity: MergedInterchange = edfiXsdRepositoryForNamespace(metaEd, extensionNamespace).mergedInterchange.get(
+    const entity: MergedInterchange = (edfiXsdRepositoryForNamespace(metaEd, extensionNamespace): any).mergedInterchange.get(
       `${projectExtension}-${descriptorInterchangeName}`,
     );
     expect(entity.namespace.isExtension).toBe(true);
@@ -143,6 +143,6 @@ describe('when running with no descriptors', () => {
   });
 
   it('should not create descriptor interchange element', () => {
-    expect(edfiXsdRepositoryForNamespace(metaEd, namespace).mergedInterchange.size).toBe(0);
+    expect((edfiXsdRepositoryForNamespace(metaEd, namespace): any).mergedInterchange.size).toBe(0);
   });
 });

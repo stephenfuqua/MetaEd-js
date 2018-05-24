@@ -7,7 +7,7 @@ import {
   newDescriptorProperty,
   newNamespace,
 } from 'metaed-core';
-import type { MetaEdEnvironment, Descriptor, MapTypeEnumeration } from 'metaed-core';
+import type { MetaEdEnvironment, Descriptor, MapTypeEnumeration, Namespace } from 'metaed-core';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import type { Element } from '../../../src/model/schema/Element';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';

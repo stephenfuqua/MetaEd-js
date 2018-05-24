@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newDecimalType, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, DecimalType } from 'metaed-core';
+import type { MetaEdEnvironment, DecimalType, Namespace } from 'metaed-core';
 import type { DecimalSimpleType } from '../../../src/model/schema/DecimalSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';

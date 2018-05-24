@@ -1,6 +1,6 @@
 // @flow
 import { newPluginEnvironment } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import type { MergedInterchange } from './MergedInterchange';
 
 export type EdFiXsdEntityRepository = {
@@ -16,16 +16,16 @@ export function newEdFiXsdEntityRepository(): EdFiXsdEntityRepository {
 }
 
 export function addEdFiXsdEntityRepositoryTo(metaEd: MetaEdEnvironment) {
-  const namespaces: Map<Namespace, EdFiOdsEntityRepository> = new Map();
+  const namespaces: Map<Namespace, EdFiXsdEntityRepository> = new Map();
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespaces.set(namespace, newEdFiXsdEntityRepository());
   });
 
-  const edfiOdsPlugin = metaEd.plugin.get('edfiXsd');
-  if (edfiOdsPlugin == null) {
+  const edfiXsdPlugin = metaEd.plugin.get('edfiXsd');
+  if (edfiXsdPlugin == null) {
     metaEd.plugin.set('edfiXsd', { ...newPluginEnvironment(), namespace: namespaces });
   } else {
-    edfiOdsPlugin.namespace = namespaces;
+    edfiXsdPlugin.namespace = namespaces;
   }
 }
 

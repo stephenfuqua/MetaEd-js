@@ -1,5 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, EnhancerResult, Interchange, InterchangeItem } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
 
 export type InterchangeItemEdfiInterchangeBrief = {
   interchangeBriefDescription: string,
@@ -16,7 +17,7 @@ export function addInterchangeItemEdfiInterchangeBriefTo(interchangeItem: Interc
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.entity.interchange.forEach((interchange: Interchange) => {
+  ((getAllEntitiesOfType(metaEd, 'interchange'): any): Array<Interchange>).forEach((interchange: Interchange) => {
     if (interchange.elements.length === 0) return;
 
     interchange.elements.forEach(item => {

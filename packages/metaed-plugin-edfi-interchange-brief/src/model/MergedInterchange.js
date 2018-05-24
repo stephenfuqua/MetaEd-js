@@ -1,6 +1,7 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, InterchangeItem, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 import type { ReferenceUsageInfo } from './ReferenceUsageInfo';
 
 export type MergedInterchangeEdfiInterchangeBrief = {
@@ -24,9 +25,12 @@ export function addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange: Me
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edFiXsdEntityRepository: EdFiXsdEntityRepository = (metaEd.plugin.get('edfiXsd'): any).entity;
-  Array.from(edFiXsdEntityRepository.mergedInterchange.values()).forEach(mergedInterchange => {
-    addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange);
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) return;
+    xsdRepository.mergedInterchange.forEach(mergedInterchange => {
+      addMergedInterchangeEdfiInterchangeBriefTo(mergedInterchange);
+    });
   });
 
   return {

@@ -16,7 +16,7 @@ import {
   newIntegerType,
   newStringType,
 } from 'metaed-core';
-import type { MetaEdEnvironment, SemVer } from 'metaed-core';
+import type { MetaEdEnvironment, SemVer, Namespace } from 'metaed-core';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { newComplexType, NoComplexType } from '../../../src/model/schema/ComplexType';
 import { newEnumerationSimpleType, NoEnumerationSimpleType } from '../../../src/model/schema/EnumerationSimpleType';
@@ -36,7 +36,7 @@ describe('when enhancing namespace info for core', () => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace = Object.assign(newNamespace(), {
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
       data: { edfiXsd: {} },
     });
@@ -79,11 +79,11 @@ describe('when enhancing namespace info for extension', () => {
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace = Object.assign(newNamespace(), {
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
       data: { edfiXsd: {} },
     });
-    const extensionNamespace = Object.assign(newNamespace(), {
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,
@@ -252,12 +252,12 @@ describe('when enhancing namespace info for core with children', () => {
   let extensionSchema: SchemaContainer;
 
   beforeAll(() => {
-    const coreNamespace = Object.assign(newNamespace(), {
+    const coreNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName,
       data: { edfiXsd: {} },
     });
 
-    const extensionNamespace = Object.assign(newNamespace(), {
+    const extensionNamespace: Namespace = Object.assign(newNamespace(), {
       namespaceName: extensionNamespaceName,
       projectExtension,
       isExtension: true,

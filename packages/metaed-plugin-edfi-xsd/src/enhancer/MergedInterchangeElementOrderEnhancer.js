@@ -42,7 +42,7 @@ function orderExtensionElements(
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const coreNamespace: Namespace = metaEd.namespace.get('edfi');
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
   if (coreNamespace == null) return { enhancerName, success: false };
   const coreXsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
   if (coreXsdRepository == null) return { enhancerName, success: false };

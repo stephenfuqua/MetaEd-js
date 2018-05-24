@@ -154,7 +154,7 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
       if (isDataStandard(project)) {
         if (deployCore) targets.push(coreTarget(project.projectName));
       } else {
-        targets.push(extensionTarget(project.namespace, project.projectName));
+        targets.push(extensionTarget(project.namespaceName, project.projectName));
       }
     });
   }

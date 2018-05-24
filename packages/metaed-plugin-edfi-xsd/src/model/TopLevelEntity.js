@@ -42,7 +42,7 @@ export function addTopLevelEntityEdfiXsdTo(topLevelEntity: TopLevelEntity) {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllTopLevelEntitiesForNamespaces(metaEd.namespace).forEach(entity => {
+  getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())).forEach((entity: TopLevelEntity) => {
     addTopLevelEntityEdfiXsdTo(entity);
   });
 

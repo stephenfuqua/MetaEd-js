@@ -10,7 +10,7 @@ const enhancerName: string = 'MergedInterchangeEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // Build merged interchanges for all the interchanges, in any namespace
-  getAllEntitiesOfType(metaEd, 'interchange').forEach((interchange: Interchange) => {
+  ((getAllEntitiesOfType(metaEd, 'interchange'): any): Array<Interchange>).forEach((interchange: Interchange) => {
     const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchange.metaEdName,
       repositoryId: interchange.metaEdName,
@@ -26,32 +26,34 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   });
 
   // Build merged interchanges for all the extensions in the extension namespace
-  getAllEntitiesOfType(metaEd, 'interchangeExtension').forEach((interchangeExtension: InterchangeExtension) => {
-    const interchange = interchangeExtension.baseEntity;
-    if (!interchange) return;
-    const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
-      metaEdName: interchange.metaEdName,
-      repositoryId: ((interchangeExtension.data.edfiXsd: any): ModelBaseEdfiXsd).xsd_MetaEdNameWithExtension(),
-      documentation: interchange.documentation,
-      extendedDocumentation: interchange.extendedDocumentation,
-      useCaseDocumentation: interchange.useCaseDocumentation,
-      namespace: interchangeExtension.namespace,
-    });
-    Object.assign(mergedInterchange, {
-      elements: R.union(
-        interchange.elements.filter(e => mergedInterchange.elements.every(mie => mie.metaEdName !== e.metaEdName)),
-        interchangeExtension.elements,
-      ),
-      identityTemplates: R.union(
-        interchangeExtension.identityTemplates,
-        interchange.identityTemplates.filter(e =>
-          mergedInterchange.identityTemplates.every(mie => mie.metaEdName !== e.metaEdName),
+  ((getAllEntitiesOfType(metaEd, 'interchangeExtension'): any): Array<InterchangeExtension>).forEach(
+    (interchangeExtension: InterchangeExtension) => {
+      const interchange = interchangeExtension.baseEntity;
+      if (!interchange) return;
+      const mergedInterchange: MergedInterchange = Object.assign(newMergedInterchange(), {
+        metaEdName: interchange.metaEdName,
+        repositoryId: ((interchangeExtension.data.edfiXsd: any): ModelBaseEdfiXsd).xsd_MetaEdNameWithExtension(),
+        documentation: interchange.documentation,
+        extendedDocumentation: interchange.extendedDocumentation,
+        useCaseDocumentation: interchange.useCaseDocumentation,
+        namespace: interchangeExtension.namespace,
+      });
+      Object.assign(mergedInterchange, {
+        elements: R.union(
+          interchange.elements.filter(e => mergedInterchange.elements.every(mie => mie.metaEdName !== e.metaEdName)),
+          interchangeExtension.elements,
         ),
-      ),
-    });
+        identityTemplates: R.union(
+          interchangeExtension.identityTemplates,
+          interchange.identityTemplates.filter(e =>
+            mergedInterchange.identityTemplates.every(mie => mie.metaEdName !== e.metaEdName),
+          ),
+        ),
+      });
 
-    addMergedInterchangeToRepository(metaEd, mergedInterchange);
-  });
+      addMergedInterchangeToRepository(metaEd, mergedInterchange);
+    },
+  );
 
   return {
     enhancerName,

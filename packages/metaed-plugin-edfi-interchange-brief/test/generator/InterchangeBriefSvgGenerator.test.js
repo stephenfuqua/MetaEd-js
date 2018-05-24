@@ -1,6 +1,8 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
-import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
+import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem, newNamespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
+import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
+import { addEdFiXsdEntityRepositoryTo, newMergedInterchange, edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 import { generate as InterchangeBriefSvgGenerator } from '../../src/generator/InterchangeBriefSvgGenerator';
 
 jest.setTimeout(10000);
@@ -20,6 +22,11 @@ describe('When generating interchange brief with no extended references or descr
   const domainEntity4Documentation: string = 'Domain Entity 4 Documentation here';
 
   function GetBuilderResults() {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
+
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -85,14 +92,12 @@ describe('When generating interchange brief with no extended references or descr
     interchange2.elements.push(interchangeItem3);
     interchange2.elements.push(interchangeItem4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   it('Should include results', async () => {

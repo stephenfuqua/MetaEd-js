@@ -4,7 +4,7 @@ import path from 'path';
 import ffs from 'final-fs';
 import { exec } from 'child_process';
 import diff2html from 'diff2html';
-import type { GeneratedOutput, State } from 'metaed-core';
+import type { GeneratedOutput, State, Namespace } from 'metaed-core';
 import {
   buildMetaEd,
   buildParseTree,
@@ -102,7 +102,7 @@ describe('when generating ods and comparing it to data standard 2.0 authoritativ
 
     fileMapForFailure(state);
 
-    const coreNamespace: Namespace = state.metaEd.namespace.get('edfi');
+    const coreNamespace: ?Namespace = state.metaEd.namespace.get('edfi');
     if (coreNamespace == null) throw new Error();
 
     const tables: Array<Table> = orderByProp('name')([...tableEntities(state.metaEd, coreNamespace).values()]);

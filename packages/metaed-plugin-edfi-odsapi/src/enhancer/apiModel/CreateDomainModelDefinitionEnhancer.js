@@ -1,7 +1,6 @@
 // @flow
 import R from 'ramda';
 import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
-import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
@@ -13,6 +12,7 @@ import type { SchemaDefinition } from '../../model/apiModel/SchemaDefinition';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';
 import type { ApiFullName } from '../../model/apiModel/ApiFullName';
+
 const enhancerName: string = 'CreateDomainModelDefinitionEnhancer';
 
 // Schema definition is the database schema and project name for a namespace

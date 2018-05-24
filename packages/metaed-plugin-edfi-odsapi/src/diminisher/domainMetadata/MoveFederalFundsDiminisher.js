@@ -1,6 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
-import { versionSatisfies, Namespace } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import { versionSatisfies } from 'metaed-core';
 import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';
 import type { EntityTable } from '../../model/domainMetadata/EntityTable';

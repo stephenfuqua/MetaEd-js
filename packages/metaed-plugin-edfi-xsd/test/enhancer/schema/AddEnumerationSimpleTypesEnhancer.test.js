@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newEnumeration, newEnumerationItem, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, Enumeration } from 'metaed-core';
+import type { MetaEdEnvironment, Enumeration, Namespace } from 'metaed-core';
 import type { EnumerationSimpleType } from '../../../src/model/schema/EnumerationSimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddEnumerationSimpleTypesEnhancer';

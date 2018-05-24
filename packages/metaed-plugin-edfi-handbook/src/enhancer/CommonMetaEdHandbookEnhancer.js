@@ -1,8 +1,9 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment, Common } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Common, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { createDefaultHandbookEntry } from './TopLevelEntityMetaEdHandbookEnhancerBase';
-import type { HandbookEntry } from '../model/HandbookEntry';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
+import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
 const enhancerName: string = 'CommonMetaEdHandbookEnhancer';
 
@@ -11,12 +12,13 @@ function notInlineCommon(entity: Common): boolean {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const results: Array<HandbookEntry> = Array.from(metaEd.entity.common.values())
-    .filter(notInlineCommon)
-    .map(entity => createDefaultHandbookEntry(entity, 'Common', metaEd));
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
-    ...results,
-  );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const handbookRepository: ?EdfiHandbookRepository = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+    if (handbookRepository == null) return;
+    ((getEntitiesOfTypeForNamespaces([namespace], 'common'): any): Array<Common>).filter(notInlineCommon).forEach(entity => {
+      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Common', metaEd));
+    });
+  });
 
   return {
     enhancerName,

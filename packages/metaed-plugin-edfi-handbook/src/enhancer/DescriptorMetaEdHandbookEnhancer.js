@@ -1,18 +1,20 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, Descriptor, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { createDefaultHandbookEntry } from './TopLevelEntityMetaEdHandbookEnhancerBase';
-import type { HandbookEntry } from '../model/HandbookEntry';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
+import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
 const enhancerName: string = 'DescriptorMetaEdHandbookEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const results: Array<HandbookEntry> = Array.from(metaEd.entity.descriptor.values()).map(entity =>
-    createDefaultHandbookEntry(entity, 'Descriptor', metaEd),
-  );
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
-    ...results,
-  );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const handbookRepository: ?EdfiHandbookRepository = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+    if (handbookRepository == null) return;
+    ((getEntitiesOfTypeForNamespaces([namespace], 'descriptor'): any): Array<Descriptor>).forEach(entity => {
+      handbookRepository.handbookEntries.push(createDefaultHandbookEntry(entity, 'Descriptor', metaEd));
+    });
+  });
 
   return {
     enhancerName,

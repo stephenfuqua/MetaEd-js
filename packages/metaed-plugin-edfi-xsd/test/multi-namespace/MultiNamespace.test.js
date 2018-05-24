@@ -1,7 +1,7 @@
 // @flow
 import path from 'path';
 import { executePipeline, newMetaEdConfiguration, newPipelineOptions, newState } from 'metaed-core';
-import type { State } from 'metaed-core';
+import type { State, Namespace } from 'metaed-core';
 
 jest.unmock('final-fs');
 jest.setTimeout(30000);

@@ -1,14 +1,24 @@
 // @flow
 import path from 'path';
 import fs from 'fs';
-import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, PluginEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Namespace } from 'metaed-core';
+import { edfiHandbookRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import type { HandbookEntry, HandbookEntityReferenceProperty } from '../model/HandbookEntry';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
 
-export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  const handbookEntries: Array<HandbookEntry> = (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment)
-    .entity: EdfiHandbookRepository).handbookEntries;
+function handbookEntriesForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): Array<HandbookEntry> {
+  const handbookRepository: ?EdfiHandbookRepository = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+  if (handbookRepository == null) return [];
+  return handbookRepository.handbookEntries;
+}
 
+export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
+  const handbookEntries: Array<HandbookEntry> = [];
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    handbookEntries.push(...handbookEntriesForNamespace(metaEd, namespace));
+  });
+
+  // unclear why this needs to be a map operation rather than forEach, as it's just mutating a part of x
   const updateHandbookEntries = handbookEntries.map(x => {
     const referringProperties: Array<HandbookEntityReferenceProperty> = handbookEntries
       .filter(

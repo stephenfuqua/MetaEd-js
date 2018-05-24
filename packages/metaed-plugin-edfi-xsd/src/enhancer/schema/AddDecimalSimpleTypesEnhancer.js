@@ -36,7 +36,7 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'decimalType').forEach(decimalType => {
+  ((getAllEntitiesOfType(metaEd, 'decimalType'): any): Array<DecimalType>).forEach((decimalType: DecimalType) => {
     ((decimalType.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType = createSchemaSimpleType(decimalType);
   });
 

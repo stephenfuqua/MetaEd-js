@@ -96,7 +96,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const allComplexTypes: Array<ComplexType> = [];
   const allSimpleTypes: Array<AnySimpleType> = [];
 
-  metaEd.entity.namespace.forEach(namespace => {
+  metaEd.namespace.forEach(namespace => {
     const schemaContainer: SchemaContainer = ((namespace.data.edfiXsd: any): NamespaceEdfiXsd).xsd_Schema;
     schemaContainer.sections.forEach((section: SchemaSection) => {
       allComplexTypes.push(...section.complexTypes);

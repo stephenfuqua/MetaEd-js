@@ -1,5 +1,6 @@
 // @flow
-import type { MetaEdEnvironment, PluginEnvironment } from 'metaed-core';
+import type { MetaEdEnvironment, PluginEnvironment, Namespace } from 'metaed-core';
+import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 export function pluginEnvironment(metaEd: MetaEdEnvironment): ?PluginEnvironment {
   return ((metaEd.plugin.get('edfiXsd'): any): ?PluginEnvironment);

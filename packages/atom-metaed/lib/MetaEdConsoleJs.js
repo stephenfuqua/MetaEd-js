@@ -174,6 +174,7 @@ async function executeBuild(
 
     setImmediate(() => atom.notifications.addNotification(startNotification));
 
+    // const taskParams = ['/s', '/c', `node  --inspect-brk "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
     const taskParams = ['/s', '/c', `node "${metaEdConsolePath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
     console.log(`[MetaEdConsoleJS] Executing Build '${cmdExePath}' with parameters:`, taskParams);

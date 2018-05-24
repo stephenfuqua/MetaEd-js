@@ -1,16 +1,19 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult, MergedInterchange, InterchangeItem } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, InterchangeItem, Namespace } from 'metaed-core';
 import { edfiXsdRepositoryForNamespace } from './EnhancerHelper';
 import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 import type { InterchangeItemEdfiXsd } from '../model/InterchangeItem';
 import type { DescriptorEdfiXsd } from '../model/Descriptor';
 import type { ModelBaseEdfiXsd } from '../model/ModelBase';
+import type { MergedInterchange } from '../model/MergedInterchange';
 
 const enhancerName: string = 'InterchangeItemEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const edFiXsdEntityRepository: EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    const edFiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (edFiXsdEntityRepository == null) return;
+
     Array.from(edFiXsdEntityRepository.mergedInterchange.values()).forEach((interchange: MergedInterchange) => {
       interchange.elements.forEach((elementItem: InterchangeItem) => {
         const interchangeItemEdfiXsd = ((elementItem.data.edfiXsd: any): InterchangeItemEdfiXsd);

@@ -17,7 +17,7 @@ const educationOrganizationEntityName: string = 'EducationOrganization';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // If no Education Organization domain entity or if for some reason it
   // has more than one identity property, generating this metadata doesn't make any sense
-  const coreNamespace: Namespace = metaEd.namespace.get('edfi');
+  const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
   if (coreNamespace == null) return { enhancerName, success: false };
 
   const educationOrganizationAbstractEntity: ?DomainEntity = coreNamespace.entity.domainEntity.get(
@@ -27,26 +27,28 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     return { enhancerName, success: true };
 
   metaEd.namespace.forEach((namespace: Namespace) => {
-    getAllEntitiesOfType(metaEd, 'domainEntitySubclass').forEach((subclass: DomainEntitySubclass) => {
-      if (
-        subclass.namespace.namespaceName !== namespace.namespaceName ||
-        subclass.baseEntityName !== educationOrganizationEntityName
-      )
-        return;
+    ((getAllEntitiesOfType(metaEd, 'domainEntitySubclass'): any): Array<DomainEntitySubclass>).forEach(
+      (subclass: DomainEntitySubclass) => {
+        if (
+          subclass.namespace.namespaceName !== namespace.namespaceName ||
+          subclass.baseEntityName !== educationOrganizationEntityName
+        )
+          return;
 
-      // Should only be one identity rename if any
-      const identityProperty: EntityProperty =
-        subclass.identityProperties.find((property: EntityProperty) => property.isIdentityRename) ||
-        educationOrganizationAbstractEntity.identityProperties[0];
+        // Should only be one identity rename if any
+        const identityProperty: EntityProperty =
+          subclass.identityProperties.find((property: EntityProperty) => property.isIdentityRename) ||
+          educationOrganizationAbstractEntity.identityProperties[0];
 
-      const educationOrganizationReference: EducationOrganizationReference = {
-        ...newEducationOrganizationReference(),
-        name: subclass.metaEdName,
-        identityPropertyName: identityProperty.data.edfiXsd.xsd_Name,
-      };
+        const educationOrganizationReference: EducationOrganizationReference = {
+          ...newEducationOrganizationReference(),
+          name: subclass.metaEdName,
+          identityPropertyName: identityProperty.data.edfiXsd.xsd_Name,
+        };
 
-      namespace.data.edfiOdsApi.api_EducationOrganizationReferences.push(educationOrganizationReference);
-    });
+        namespace.data.edfiOdsApi.api_EducationOrganizationReferences.push(educationOrganizationReference);
+      },
+    );
   });
 
   return {

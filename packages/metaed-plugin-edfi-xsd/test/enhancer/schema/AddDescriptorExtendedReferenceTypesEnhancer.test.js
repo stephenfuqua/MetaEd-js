@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newDescriptor, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, Descriptor } from 'metaed-core';
+import type { MetaEdEnvironment, Descriptor, Namespace } from 'metaed-core';
 import type { StringSimpleType } from '../../../src/model/schema/StringSimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLevelEntity';

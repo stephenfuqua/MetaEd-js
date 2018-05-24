@@ -6,7 +6,7 @@ import {
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/AbstractEntity/AbstractEntityMustNotBeExtended';
 
 describe('when validating domain entity additions', () => {
@@ -39,8 +39,8 @@ describe('when validating domain entity additions', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get(coreNamespaceName);
-    extensionNamespace = metaEd.namespace.get(extensionNamespaceName);
+    coreNamespace = (metaEd.namespace.get(coreNamespaceName): any);
+    extensionNamespace = (metaEd.namespace.get(extensionNamespaceName): any);
     extensionNamespace.dependencies = [coreNamespace];
 
     failures = validate(metaEd);
@@ -86,8 +86,8 @@ describe('when validating abstract entity additions', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get(coreNamespaceName);
-    extensionNamespace = metaEd.namespace.get(extensionNamespaceName);
+    coreNamespace = (metaEd.namespace.get(coreNamespaceName): any);
+    extensionNamespace = (metaEd.namespace.get(extensionNamespaceName): any);
     extensionNamespace.dependencies = [coreNamespace];
 
     failures = validate(metaEd);
@@ -139,8 +139,8 @@ describe('when validating abstract entity additions in extension namespace', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get(coreNamespaceName);
-    extensionNamespace = metaEd.namespace.get(extensionNamespaceName);
+    coreNamespace = (metaEd.namespace.get(coreNamespaceName): any);
+    extensionNamespace = (metaEd.namespace.get(extensionNamespaceName): any);
     extensionNamespace.dependencies = [coreNamespace];
 
     failures = validate(metaEd);

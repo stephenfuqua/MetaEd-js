@@ -15,7 +15,6 @@ import type { IntegerType } from '../src/model/IntegerType';
 import type { Interchange } from '../src/model/Interchange';
 import type { InterchangeExtension } from '../src/model/InterchangeExtension';
 import type { MapTypeEnumeration } from '../src/model/MapTypeEnumeration';
-import type { Namespace } from '../src/model/Namespace';
 import type { SchoolYearEnumeration } from '../src/model/SchoolYearEnumeration';
 import type { SharedDecimal } from '../src/model/SharedDecimal';
 import type { SharedInteger } from '../src/model/SharedInteger';

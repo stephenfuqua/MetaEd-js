@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { Namespace } from 'metaed-core';
+import type { Namespace, MetaEdEnvironment } from 'metaed-core';
 import type { Table, Column, ForeignKey, ColumnNamePair } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import type { Aggregate } from '../../model/domainMetadata/Aggregate';

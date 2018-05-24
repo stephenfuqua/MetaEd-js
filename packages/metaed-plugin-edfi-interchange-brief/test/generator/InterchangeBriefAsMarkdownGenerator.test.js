@@ -1,7 +1,8 @@
 // @flow
-import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem } from 'metaed-core';
-import { addEdFiXsdEntityRepositoryTo, newMergedInterchange } from 'metaed-plugin-edfi-xsd';
-import type { GeneratedOutput } from 'metaed-core';
+import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem, newNamespace } from 'metaed-core';
+import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
+import { addEdFiXsdEntityRepositoryTo, newMergedInterchange, edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
+import type { GeneratedOutput, Namespace, MetaEdEnvironment } from 'metaed-core';
 import { addMergedInterchangeEdfiInterchangeBriefTo } from '../../src/model/MergedInterchange';
 import { generate as InterchangeBriefAsMarkdownGenerator } from '../../src/generator/InterchangeBriefAsMarkdownGenerator';
 import type { ReferenceUsageInfo } from '../../src/model/ReferenceUsageInfo';
@@ -22,8 +23,12 @@ describe('When generating interchange brief with no extended references or descr
   const domainEntity4Documentation: string = 'Domain Entity 4 Documentation here';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -79,14 +84,12 @@ describe('When generating interchange brief with no extended references or descr
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {
@@ -133,8 +136,12 @@ describe('When generating interchange brief with extended documentation', () => 
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -203,14 +210,12 @@ describe('When generating interchange brief with extended documentation', () => 
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {
@@ -258,8 +263,12 @@ describe('When generating interchange brief with use case documentation', () => 
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -316,14 +325,12 @@ describe('When generating interchange brief with use case documentation', () => 
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {
@@ -372,8 +379,12 @@ describe('When generating interchange brief with extended and use case documenta
   const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -431,14 +442,12 @@ describe('When generating interchange brief with extended and use case documenta
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefEntities.push(interchangeItem4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {
@@ -495,8 +504,12 @@ describe('When generating interchange brief with extended references', () => {
   const referenceUsage4Description = 'Reference Usage 4 Description';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -575,14 +588,12 @@ describe('When generating interchange brief with extended references', () => {
     interchange2.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefExtendedReferences.push(referenceUsage4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {
@@ -643,8 +654,12 @@ describe('When generating interchange brief with descriptors', () => {
   const referenceUsage4Description = 'Reference Usage 4 Description';
 
   let generatedResults: Array<GeneratedOutput>;
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  addEdFiXsdEntityRepositoryTo(metaEd);
 
-  function GetBuilderResults() {
+  function GetBuilderResults(): MetaEdEnvironment {
     const domainEntity1 = Object.assign(newDomainEntity(), {
       metaEdName: 'domainEntity1',
       documentation: domainEntity1Documentation,
@@ -723,14 +738,12 @@ describe('When generating interchange brief with descriptors', () => {
     interchange2.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage3);
     interchange2.data.edfiInterchangeBrief.interchangeBriefDescriptorReferences.push(referenceUsage4);
 
-    const builderResult = Object.assign(newMetaEdEnvironment(), {
-      // dataStandardVersion: '2.1.0',
-      plugin: new Map(),
-    });
-    addEdFiXsdEntityRepositoryTo(builderResult);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange1.interchangeName, interchange1);
-    (builderResult.plugin.get('edfiXsd'): any).entity.mergedInterchange.set(interchange2.interchangeName, interchange2);
-    return builderResult;
+    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    if (xsdRepository == null) throw new Error();
+
+    xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
+    xsdRepository.mergedInterchange.set(interchange2.interchangeName, interchange2);
+    return metaEd;
   }
 
   beforeAll(async () => {

@@ -28,7 +28,7 @@ function createSchemaSimpleType(stringType: StringType): SimpleType {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'stringType').forEach(stringType => {
+  ((getAllEntitiesOfType(metaEd, 'stringType'): any): Array<StringType>).forEach((stringType: StringType) => {
     ((stringType.data.edfiXsd: any): SimpleTypeBaseEdfiXsd).xsd_SimpleType = createSchemaSimpleType(stringType);
   });
 

@@ -9,7 +9,7 @@ export function pluginEnvironment(metaEd: MetaEdEnvironment): ?PluginEnvironment
   return ((metaEd.plugin.get('edfiOds'): any): ?PluginEnvironment);
 }
 
-function edfiOdsRepositoryForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): ?EdFiOdsEntityRepository {
+export function edfiOdsRepositoryForNamespace(metaEd: MetaEdEnvironment, namespace: Namespace): ?EdFiOdsEntityRepository {
   const plugin: ?PluginEnvironment = pluginEnvironment(metaEd);
   // if plugin not there, something's very wrong
   if (plugin == null) return null;

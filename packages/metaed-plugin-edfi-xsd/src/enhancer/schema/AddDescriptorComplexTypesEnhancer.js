@@ -40,7 +40,7 @@ function createComplexType(descriptor: Descriptor): Array<ComplexType> {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  getAllEntitiesOfType(metaEd, 'descriptor').forEach(descriptor => {
+  ((getAllEntitiesOfType(metaEd, 'descriptor'): any): Array<Descriptor>).forEach((descriptor: Descriptor) => {
     descriptor.data.edfiXsd.xsd_ComplexTypes = createComplexType(descriptor);
   });
 

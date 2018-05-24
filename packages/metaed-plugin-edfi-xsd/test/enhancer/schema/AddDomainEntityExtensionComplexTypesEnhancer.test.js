@@ -9,7 +9,7 @@ import {
   newCommonProperty,
   newStringProperty,
 } from 'metaed-core';
-import type { MetaEdEnvironment, DomainEntityExtension } from 'metaed-core';
+import type { MetaEdEnvironment, DomainEntityExtension, Namespace } from 'metaed-core';
 import type { Element } from '../../../src/model/schema/Element';
 import type { ComplexType } from '../../../src/model/schema/ComplexType';
 import { NoComplexType } from '../../../src/model/schema/ComplexType';

@@ -2,7 +2,14 @@
 
 // 2.2.X.1 - METAED-701 - ODS-827
 import { versionSatisfies, V2Only, getAllEntitiesOfType } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity, PluginEnvironment, SemVer, AssociationExtension } from 'metaed-core';
+import type {
+  MetaEdEnvironment,
+  ValidationFailure,
+  TopLevelEntity,
+  PluginEnvironment,
+  SemVer,
+  AssociationExtension,
+} from 'metaed-core';
 
 function isStudentProgramAssociationOrSubclass(topLevelEntity: TopLevelEntity): boolean {
   if (topLevelEntity.metaEdName === 'StudentProgramAssociation') return true;
@@ -30,7 +37,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       if (!associationExtension.baseEntity) return;
       if (isStudentProgramAssociationOrSubclass(associationExtension.baseEntity)) {
         failures.push({
-        validatorName,
+          validatorName,
           category: 'warning',
           message: `[ODS-827] ${associationExtension.typeHumanizedName} ${
             associationExtension.metaEdName

@@ -1,8 +1,9 @@
 // @flow
-import type { EnhancerResult, MetaEdEnvironment, PluginEnvironment, IntegerType } from 'metaed-core';
+import type { EnhancerResult, MetaEdEnvironment, IntegerType, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import { createDefaultHandbookEntry } from './SimpleTypeMetaEdHandbookEnhancerBase';
-import type { HandbookEntry } from '../model/HandbookEntry';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
+import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
 
 const enhancerName: string = 'IntegerMetaEdHandbookEnhancer';
 
@@ -15,16 +16,18 @@ function getTypeCharacteristicsFor(entity: IntegerType): Array<string> {
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const results: Array<HandbookEntry> = Array.from(metaEd.entity.integerType.values()).map(entity =>
-    Object.assign(createDefaultHandbookEntry(entity, '', metaEd), {
-      entityType: entity.isShort ? 'ShortType' : 'IntegerType',
-      typeCharacteristics: getTypeCharacteristicsFor(entity),
-    }),
-  );
-
-  (((metaEd.plugin.get('edfiHandbook'): any): PluginEnvironment).entity: EdfiHandbookRepository).handbookEntries.push(
-    ...results,
-  );
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const handbookRepository: ?EdfiHandbookRepository = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+    if (handbookRepository == null) return;
+    ((getEntitiesOfTypeForNamespaces([namespace], 'integerType'): any): Array<IntegerType>).forEach(entity => {
+      handbookRepository.handbookEntries.push(
+        Object.assign(createDefaultHandbookEntry(entity, '', metaEd), {
+          entityType: entity.isShort ? 'ShortType' : 'IntegerType',
+          typeCharacteristics: getTypeCharacteristicsFor(entity),
+        }),
+      );
+    });
+  });
 
   return {
     enhancerName,

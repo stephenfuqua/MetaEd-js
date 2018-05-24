@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import { asDomainEntity, asAssociation } from 'metaed-core';
-import type { Namespace } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';

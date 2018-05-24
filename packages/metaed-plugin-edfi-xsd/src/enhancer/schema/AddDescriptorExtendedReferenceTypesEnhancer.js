@@ -25,7 +25,7 @@ function createExtendedReferenceType(descriptor: Descriptor): StringSimpleType {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  getAllEntitiesOfType(metaEd, 'descriptor').forEach(descriptor => {
+  ((getAllEntitiesOfType(metaEd, 'descriptor'): any): Array<Descriptor>).forEach((descriptor: Descriptor) => {
     descriptor.data.edfiXsd.xsd_DescriptorExtendedReferenceType = createExtendedReferenceType(descriptor);
   });
 

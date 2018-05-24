@@ -1,5 +1,5 @@
 // @flow
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, DomainEntitySubclass } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 import {
   typeGroupDomainEntity,
@@ -11,16 +11,18 @@ import {
 const enhancerName: string = 'AddDomainEntitySubclassComplexTypesEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  getAllEntitiesOfType(metaEd, 'domainEntitySubclass').forEach(domainEntitySubclass => {
-    if (domainEntitySubclass.baseEntity == null) return;
-    domainEntitySubclass.data.edfiXsd.xsd_ComplexTypes = createDefaultComplexType(
-      domainEntitySubclass,
-      typeGroupDomainEntity,
-      domainEntitySubclass.baseEntity.data.edfiXsd.xsd_MetaEdNameWithExtension(),
-    );
-    domainEntitySubclass.data.edfiXsd.xsd_IdentityType = createIdentityType(domainEntitySubclass);
-    domainEntitySubclass.data.edfiXsd.xsd_ReferenceType = createReferenceType(domainEntitySubclass);
-  });
+  ((getAllEntitiesOfType(metaEd, 'domainEntitySubclass'): any): Array<DomainEntitySubclass>).forEach(
+    (domainEntitySubclass: DomainEntitySubclass) => {
+      if (domainEntitySubclass.baseEntity == null) return;
+      domainEntitySubclass.data.edfiXsd.xsd_ComplexTypes = createDefaultComplexType(
+        domainEntitySubclass,
+        typeGroupDomainEntity,
+        domainEntitySubclass.baseEntity.data.edfiXsd.xsd_MetaEdNameWithExtension(),
+      );
+      domainEntitySubclass.data.edfiXsd.xsd_IdentityType = createIdentityType(domainEntitySubclass);
+      domainEntitySubclass.data.edfiXsd.xsd_ReferenceType = createReferenceType(domainEntitySubclass);
+    },
+  );
 
   return {
     enhancerName,

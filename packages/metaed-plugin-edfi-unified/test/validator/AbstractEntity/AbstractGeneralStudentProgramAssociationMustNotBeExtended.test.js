@@ -6,7 +6,7 @@ import {
   AssociationBuilder,
   AssociationExtensionBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/AbstractEntity/AbstractGeneralStudentProgramAssociationMustNotBeExtended';
 
 describe('when validating association additions', () => {
@@ -39,8 +39,8 @@ describe('when validating association additions', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get(coreNamespaceName);
-    extensionNamespace = metaEd.namespace.get(extensionNamespaceName);
+    coreNamespace = (metaEd.namespace.get(coreNamespaceName): any);
+    extensionNamespace = (metaEd.namespace.get(extensionNamespaceName): any);
     extensionNamespace.dependencies = [coreNamespace];
 
     failures = validate(metaEd);
@@ -86,8 +86,8 @@ describe('when validating abstract GeneralStudentProgramAssociation additions', 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get(coreNamespaceName);
-    extensionNamespace = metaEd.namespace.get(extensionNamespaceName);
+    coreNamespace = (metaEd.namespace.get(coreNamespaceName): any);
+    extensionNamespace = (metaEd.namespace.get(extensionNamespaceName): any);
     extensionNamespace.dependencies = [coreNamespace];
 
     failures = validate(metaEd);

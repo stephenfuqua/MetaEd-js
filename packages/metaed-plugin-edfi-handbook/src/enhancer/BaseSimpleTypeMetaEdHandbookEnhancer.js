@@ -7,8 +7,6 @@ import type { SimpleType } from 'metaed-plugin-edfi-xsd';
 import type { HandbookEntry } from '../model/HandbookEntry';
 import { newHandbookEntry } from '../model/HandbookEntry';
 
-// TODO: finish once ods is up and running.
-// eslint-disable-next-line
 function generatedTableSqlFor(name: string, columnDefinition: string): Array<string> {
   return [`${name} ${columnDefinition}`];
 }

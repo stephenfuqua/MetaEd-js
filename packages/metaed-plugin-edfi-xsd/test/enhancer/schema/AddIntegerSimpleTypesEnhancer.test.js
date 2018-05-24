@@ -1,6 +1,6 @@
 // @flow
 import { newMetaEdEnvironment, newIntegerType, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, IntegerType } from 'metaed-core';
+import type { MetaEdEnvironment, IntegerType, Namespace } from 'metaed-core';
 import type { IntegerSimpleType } from '../../../src/model/schema/IntegerSimpleType';
 import { NoSimpleType } from '../../../src/model/schema/SimpleType';
 import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';

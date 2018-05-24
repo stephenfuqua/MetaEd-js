@@ -1,8 +1,9 @@
 // @flow
-import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratorResult, GeneratedOutput, Namespace } from 'metaed-core';
 import { formatAndPrependHeader, template, formatVersionForSchema } from './XsdGeneratorBase';
 import { edfiXsdRepositoryForNamespace } from '../enhancer/EnhancerHelper';
 import type { MergedInterchange } from '../model/MergedInterchange';
+import type { EdFiXsdEntityRepository } from '../model/EdFiXsdEntityRepository';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const outputName = 'Core XSD Interchanges';

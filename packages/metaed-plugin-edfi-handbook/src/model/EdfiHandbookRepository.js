@@ -1,6 +1,6 @@
 // @flow
 import { newPluginEnvironment } from 'metaed-core';
-import type { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import type { HandbookEntry } from './HandbookEntry';
 
 export type EdfiHandbookRepository = {
@@ -15,17 +15,16 @@ export function newEdfiHandbookRepository(): EdfiHandbookRepository {
 }
 
 export function addEdfiHandbookRepositoryTo(metaEd: MetaEdEnvironment) {
-  if (metaEd.plugin.has('edfiHandbook')) {
-    Object.assign((metaEd.plugin.get('edfiHandbook'): any), {
-      entity: newEdfiHandbookRepository(),
-    });
+  const namespaces: Map<Namespace, EdfiHandbookRepository> = new Map();
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    namespaces.set(namespace, newEdfiHandbookRepository());
+  });
+
+  const edfiHandbookPlugin = metaEd.plugin.get('edfiHandbook');
+  if (edfiHandbookPlugin == null) {
+    metaEd.plugin.set('edfiHandbook', { ...newPluginEnvironment(), namespace: namespaces });
   } else {
-    metaEd.plugin.set(
-      'edfiHandbook',
-      Object.assign(newPluginEnvironment(), {
-        entity: newEdfiHandbookRepository(),
-      }),
-    );
+    edfiHandbookPlugin.namespace = namespaces;
   }
 }
 

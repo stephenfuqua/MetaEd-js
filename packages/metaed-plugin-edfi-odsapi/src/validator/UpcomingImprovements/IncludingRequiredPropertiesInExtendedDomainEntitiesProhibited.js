@@ -1,7 +1,7 @@
 // @flow
 
 // 2.1.X.2 - METAED-701
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, DomainEntityExtension } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
