@@ -6,7 +6,7 @@ import {
   DomainEntitySubclassBuilder,
   NamespaceBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyDomainEntityExceptEducationOrganizationIsUnsupported';
 
 describe('when a domain entity subclass subclasses EducationOrganization', () => {
@@ -34,8 +34,14 @@ describe('when a domain entity subclass subclasses EducationOrganization', () =>
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(baseEntityName);
-    const subclass = metaEd.entity.domainEntitySubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.domainEntity.get(baseEntityName);
+    const subclass = extensionNamespace.entity.domainEntitySubclass.get(subclassName);
 
     if (entity && subclass) subclass.baseEntity = entity;
     failures = validate(metaEd);
@@ -71,8 +77,14 @@ describe('when a domain entity subclass subclasses a non-EducationOrganization d
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.domainEntity.get(baseEntityName);
-    const subclass = metaEd.entity.domainEntitySubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.domainEntity.get(baseEntityName);
+    const subclass = extensionNamespace.entity.domainEntitySubclass.get(subclassName);
 
     if (entity && subclass) subclass.baseEntity = entity;
 

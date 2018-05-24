@@ -7,7 +7,7 @@ import {
   AssociationExtensionBuilder,
   NamespaceBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/ExtendingStudentProgramAssociationOrSubclassProhibited';
 import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
@@ -33,8 +33,11 @@ describe('when an association extension extends a non-student program associatio
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(entityName);
-    const extension = metaEd.entity.associationExtension.get(entityName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+
+    const entity = coreNamespace.entity.association.get(entityName);
+    const extension = coreNamespace.entity.associationExtension.get(entityName);
 
     if (entity && extension) extension.baseEntity = entity;
 
@@ -74,8 +77,10 @@ describe('when an association extension extends student program association', ()
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(entityName);
-    const extension = metaEd.entity.associationExtension.get(entityName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const entity = coreNamespace.entity.association.get(entityName);
+    const extension = coreNamespace.entity.associationExtension.get(entityName);
 
     if (entity && extension) extension.baseEntity = entity;
 
@@ -132,9 +137,15 @@ describe('when an association extension extends a subclass of student program as
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(entityName);
-    const coreSubclass = metaEd.entity.associationSubclass.get(coreSubclassName);
-    const extension = metaEd.entity.associationExtension.get(coreSubclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(entityName);
+    const coreSubclass = coreNamespace.entity.associationSubclass.get(coreSubclassName);
+    const extension = extensionNamespace.entity.associationExtension.get(coreSubclassName);
 
     if (entity && coreSubclass) coreSubclass.baseEntity = entity;
     if (coreSubclass && extension) extension.baseEntity = coreSubclass;

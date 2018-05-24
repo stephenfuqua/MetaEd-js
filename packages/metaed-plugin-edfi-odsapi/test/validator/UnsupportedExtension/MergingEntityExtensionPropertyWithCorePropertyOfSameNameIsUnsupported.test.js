@@ -9,6 +9,7 @@ import {
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
+import { initializeNamespaceDependencies } from '../ValidationTestHelper';
 import { validate } from '../../../src/validator/UnsupportedExtension/MergingEntityExtensionPropertyWithCorePropertyOfSameNameIsUnsupported';
 import { newPluginEnvironment } from '../../../../metaed-core/src/plugin/PluginEnvironment';
 
@@ -60,6 +61,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -131,6 +133,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -194,7 +197,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
-
+    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',

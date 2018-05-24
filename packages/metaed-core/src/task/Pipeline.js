@@ -88,7 +88,6 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
         winston.error(`Plugin ${pluginManifest.shortName} threw exception '${err.message}'`);
         winston.error(err.stack);
         failure = true;
-        break;
       }
     }
   }

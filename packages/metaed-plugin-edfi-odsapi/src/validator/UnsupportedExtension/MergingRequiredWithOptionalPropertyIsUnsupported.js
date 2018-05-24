@@ -1,7 +1,7 @@
 // @flow
 
 // 2.x - METAED-695 - ODS-1177
-import { asTopLevelEntity, getAllTopLevelEntities, versionSatisfies, V2Only } from 'metaed-core';
+import { asTopLevelEntity, getAllTopLevelEntitiesForNamespaces, versionSatisfies, V2Only } from 'metaed-core';
 import type {
   EntityProperty,
   MetaEdEnvironment,
@@ -33,7 +33,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
-  getAllTopLevelEntities(metaEd.entity)
+  getAllTopLevelEntitiesForNamespaces([...metaEd.namespace.values()])
     .map((entity: ModelBase) => asTopLevelEntity(entity))
     .forEach((entity: TopLevelEntity) => {
       const result: {

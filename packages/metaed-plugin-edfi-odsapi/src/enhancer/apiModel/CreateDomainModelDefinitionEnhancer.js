@@ -1,10 +1,11 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
-import type { EdFiOdsEntityRepository, NamespaceEdfiOdsApi } from 'metaed-plugin-edfi-ods';
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import type { EdFiOdsEntityRepository } from 'metaed-plugin-edfi-ods';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
+import type { NamespaceEdfiOdsApi } from '../../model/Namespace';
 import type { AggregateDefinition } from '../../model/apiModel/AggregateDefinition';
 import type { AggregateExtensionDefinition } from '../../model/apiModel/AggregateExtensionDefinition';
 import type { DomainModelDefinition } from '../../model/apiModel/DomainModelDefinition';
@@ -78,15 +79,6 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const odsPlugin: PluginEnvironment = ((metaEd.plugin.get('edfiOds'): any): PluginEnvironment);
-  if (odsPlugin == null || odsPlugin.namespace == null)
-    return {
-      enhancerName,
-      success: false,
-    };
-
-  const edFiOdsEntityRepository: EdFiOdsEntityRepository = ((odsPlugin.entity: any): EdFiOdsEntityRepository);
-
   metaEd.namespace.forEach((namespace: Namespace) => {
     const additionalEntityDefinitions = [];
 
@@ -95,8 +87,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       schemaDefinition: buildSchemaDefinition(namespace),
       aggregateDefinitions: buildAggregateDefinitions(namespace),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),
-      entityDefinitions: buildEntityDefinitions(edFiOdsEntityRepository.table, namespace, additionalEntityDefinitions),
-      associationDefinitions: buildAssociationDefinitions(edFiOdsEntityRepository.table, namespace),
+      entityDefinitions: buildEntityDefinitions(metaEd, namespace, additionalEntityDefinitions),
+      associationDefinitions: buildAssociationDefinitions(metaEd, namespace),
     };
 
     ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).domainModelDefinition = domainModelDefinition;

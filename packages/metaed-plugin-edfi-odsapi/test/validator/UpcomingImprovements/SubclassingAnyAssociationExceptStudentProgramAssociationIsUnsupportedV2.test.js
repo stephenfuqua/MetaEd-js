@@ -6,7 +6,7 @@ import {
   AssociationSubclassBuilder,
   NamespaceBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyAssociationExceptStudentProgramAssociationIsUnsupportedV2';
 
 describe('when an association subclass subclasses StudentProgramAssociation', () => {
@@ -34,8 +34,14 @@ describe('when an association subclass subclasses StudentProgramAssociation', ()
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(baseEntityName);
-    const subclass = metaEd.entity.associationSubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(baseEntityName);
+    const subclass = extensionNamespace.entity.associationSubclass.get(subclassName);
 
     metaEd.dataStandardVersion = '2.0.0';
 
@@ -73,8 +79,14 @@ describe('when an association subclass subclasses a non-StudentProgramAssociatio
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(baseEntityName);
-    const subclass = metaEd.entity.associationSubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(baseEntityName);
+    const subclass = extensionNamespace.entity.associationSubclass.get(subclassName);
 
     metaEd.dataStandardVersion = '2.0.0';
 

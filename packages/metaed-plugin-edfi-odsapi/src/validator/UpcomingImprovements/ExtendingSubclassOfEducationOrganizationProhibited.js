@@ -1,8 +1,8 @@
 // @flow
 
 // 2.1.X.1 - METAED-701 - ODS-827
-import { versionSatisfies, V2Only } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity, PluginEnvironment, SemVer } from 'metaed-core';
+import { versionSatisfies, V2Only, getAllEntitiesOfType } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, TopLevelEntity, PluginEnvironment, SemVer, DomainEntityExtension } from 'metaed-core';
 
 function isEducationOrganizationSubclass(topLevelEntity: TopLevelEntity): boolean {
   if (topLevelEntity.type !== 'domainEntitySubclass') return false;
@@ -25,20 +25,22 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   if (!isTargetTechnologyVersion(metaEd)) return failures;
 
-  metaEd.entity.domainEntityExtension.forEach(domainEntityExtension => {
-    if (!domainEntityExtension.baseEntity) return;
-    if (isEducationOrganizationSubclass(domainEntityExtension.baseEntity)) {
-      failures.push({
+  ((getAllEntitiesOfType(metaEd, 'domainEntityExtension'): any): Array<DomainEntityExtension>).forEach(
+    (domainEntityExtension: DomainEntityExtension) => {
+      if (!domainEntityExtension.baseEntity) return;
+      if (isEducationOrganizationSubclass(domainEntityExtension.baseEntity)) {
+        failures.push({
         validatorName,
-        category: 'warning',
-        message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${
-          domainEntityExtension.metaEdName
-        } is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
-        sourceMap: domainEntityExtension.sourceMap.type,
-        fileMap: null,
-      });
-    }
-  });
+          category: 'warning',
+          message: `[ODS-827] ${domainEntityExtension.typeHumanizedName} ${
+            domainEntityExtension.metaEdName
+          } is an extension of an EducationOrganization subclass.  The ODS/API does not currently support this pattern and will fail to build.`,
+          sourceMap: domainEntityExtension.sourceMap.type,
+          fileMap: null,
+        });
+      }
+    },
+  );
 
   return failures;
 }

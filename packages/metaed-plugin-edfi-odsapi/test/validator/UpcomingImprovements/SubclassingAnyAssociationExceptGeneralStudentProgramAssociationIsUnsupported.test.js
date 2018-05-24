@@ -4,9 +4,9 @@ import {
   MetaEdTextBuilder,
   AssociationBuilder,
   AssociationSubclassBuilder,
-  NamespaceInfoBuilder,
+  NamespaceBuilder,
 } from 'metaed-core';
-import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
 import { validate } from '../../../src/validator/UpcomingImprovements/SubclassingAnyAssociationExceptGeneralStudentProgramAssociationIsUnsupported';
 
 describe('when an association subclass subclasses GeneralStudentProgramAssociation', () => {
@@ -30,12 +30,18 @@ describe('when an association subclass subclasses GeneralStudentProgramAssociati
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(baseEntityName);
-    const subclass = metaEd.entity.associationSubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(baseEntityName);
+    const subclass = extensionNamespace.entity.associationSubclass.get(subclassName);
 
     metaEd.dataStandardVersion = '3.0.0';
 
@@ -69,12 +75,18 @@ describe('when an association subclass subclasses a non-GeneralStudentProgramAss
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(baseEntityName);
-    const subclass = metaEd.entity.associationSubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(baseEntityName);
+    const subclass = extensionNamespace.entity.associationSubclass.get(subclassName);
 
     metaEd.dataStandardVersion = '3.0.0';
 
@@ -117,12 +129,18 @@ describe('when an association subclass subclasses StudentProgramAssociation asso
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .sendToListener(new NamespaceInfoBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const entity = metaEd.entity.association.get(baseEntityName);
-    const subclass = metaEd.entity.associationSubclass.get(subclassName);
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) throw new Error();
+    const extensionNamespace: ?Namespace = metaEd.namespace.get('extension');
+    if (extensionNamespace == null) throw new Error();
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    const entity = coreNamespace.entity.association.get(baseEntityName);
+    const subclass = extensionNamespace.entity.associationSubclass.get(subclassName);
 
     metaEd.dataStandardVersion = '3.0.0';
 
