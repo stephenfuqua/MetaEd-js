@@ -41,6 +41,9 @@ async function findProjects(directories: string | Array<string>): Promise<Array<
       winston.error(`ProjectLoader: Attempted load of ${packageToTry} failed due to issue: ${err.message}`);
     }
   }
+  projects.forEach((p: MetaEdProjectPathPairs) => {
+    p.project.namespaceName = deriveNamespaceFromProjectName(p.project.projectName) || '';
+  });
 
   return projects;
 }
@@ -55,12 +58,12 @@ export function overrideProjectNameAndNamespace(
   projectNameOverrides.forEach((projectName: string, index: number) => {
     if (projects[index].project.projectName === projectName) return;
 
-    const namespace = deriveNamespaceFromProjectName(projectName) || '';
+    const namespaceName = deriveNamespaceFromProjectName(projectName) || '';
     winston.info(`Overriding projectName: ${projects[index].project.projectName} ${chalk.red('->')} ${projectName}`);
-    winston.info(`Overriding namespace: ${projects[index].project.namespaceName} ${chalk.red('->')} ${namespace}`);
+    winston.info(`Overriding namespaceName: ${projects[index].project.namespaceName} ${chalk.red('->')} ${namespaceName}`);
 
     projects[index].project.projectName = projectName;
-    projects[index].project.namespaceName = namespace;
+    projects[index].project.namespaceName = namespaceName;
   });
   return projects;
 }

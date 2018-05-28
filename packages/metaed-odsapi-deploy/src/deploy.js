@@ -54,9 +54,9 @@ const sources = (): ArtifactPaths => ({
 });
 
 // >=3.0 target directories
-const coreTarget = (namespaceName: string): DeployTargets => ({
+const coreTarget = (namespaceName: string, projectName: string): DeployTargets => ({
   namespaceName,
-  projectName: namespaceName,
+  projectName,
   apiMetadata: path.join(odsApiPaths.root, 'Standard/Metadata/'),
   databaseData: path.join(odsApiPaths.root, 'Database/Data/EdFi/'),
   databaseStructure: path.join(odsApiPaths.root, 'Database/Structure/EdFi/'),
@@ -152,7 +152,7 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
   if (versionSatisfies(dataStandardVersion, V3OrGreater)) {
     projects.forEach((project: MetaEdProject) => {
       if (isDataStandard(project)) {
-        if (deployCore) targets.push(coreTarget(project.projectName));
+        if (deployCore) targets.push(coreTarget(project.namespaceName, project.projectName));
       } else {
         targets.push(extensionTarget(project.namespaceName, project.projectName));
       }
