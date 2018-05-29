@@ -41,6 +41,8 @@ export function loadFiles(state: State): boolean {
   }
 
   const fileSets: FileSet[] = [];
+  let filenamesFoundInDirectories: boolean = false;
+
   state.inputDirectories.forEach(inputDirectory => {
     const fileSet: FileSet = {
       namespaceName: inputDirectory.namespaceName,
@@ -55,9 +57,8 @@ export function loadFiles(state: State): boolean {
         .readdirRecursiveSync(inputDirectory.path, true, inputDirectory.path)
         .filter(filename => filename.endsWith('.metaed'));
 
-      if (filenames.length === 0) {
-        winston.error(`No MetaEd files found in input directory ${inputDirectory.path}.`);
-        success = false;
+      if (filenames.length > 0) {
+        filenamesFoundInDirectories = true;
       }
 
       const filenamesToLoad: string[] = filenames.filter(filename => !state.filePathsToExclude.has(filename));
@@ -81,6 +82,11 @@ export function loadFiles(state: State): boolean {
       success = false;
     }
   });
+
+  if (!filenamesFoundInDirectories) {
+    winston.error('No MetaEd files found in any input directory.');
+    success = false;
+  }
 
   state.loadedFileSet.push(...fileSets);
   return success;

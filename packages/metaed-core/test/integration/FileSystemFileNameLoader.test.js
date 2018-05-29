@@ -52,6 +52,52 @@ describe('When a single file', () => {
   });
 });
 
+describe('When an empty project', () => {
+  beforeAll(() => {
+    const metaEdText = MetaEdTextBuilder.build()
+      .withStartDomainEntity('DomainEntity1')
+      .withDocumentation('doc1')
+      .withStringIdentity('Property1', 'doc2', '100')
+      .withEndDomainEntity()
+      .toString();
+
+    const domainEntity1 = {
+      path: '/fake/dir/Domain Entities/DomainEntity1.metaed',
+      content: metaEdText,
+    };
+    ffs.clearMockFiles();
+    ffs.addMockFile(domainEntity1);
+  });
+
+  it('Should load the file contents', () => {
+    const state: State = {
+      ...newState(),
+      metaEdConfiguration: {
+        ...newMetaEdConfiguration(),
+        projectPaths: ['/fake/dir'],
+        projects: [
+          {
+            projectName: 'Ed-Fi',
+            namespaceName: 'edfi',
+            projectVersion: '2.0.0',
+          },
+        ],
+      },
+    };
+
+    loadFiles(state);
+
+    expect(state.loadedFileSet).toHaveLength(1);
+    expect(state.loadedFileSet[0].files).toHaveLength(1);
+
+    const contents = state.loadedFileSet[0].files[0].contents;
+    expect(contents).toMatch(new RegExp('Domain Entity'));
+    expect(contents).toMatch(new RegExp('DomainEntity1'));
+    expect(contents).toMatch(new RegExp('string'));
+    expect(contents).toMatch(new RegExp('Property1'));
+  });
+});
+
 describe('When multiple files', () => {
   beforeAll(() => {
     const metaEdTextDomainEntity = MetaEdTextBuilder.build()

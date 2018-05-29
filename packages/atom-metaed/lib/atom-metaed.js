@@ -55,13 +55,12 @@ export async function activate() {
     }</b><br />MetaEd is ©2018 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.`,
     {
       dismissable: true,
-      detail: isDevEnvironment ? 'Development Environment' : null,
-      icon: isDevEnvironment ? 'repo' : 'info',
+      icon: 'info',
     },
   );
   if (allianceMode()) {
     atom.notifications.addWarning(
-      'This is an Ed-Fi Alliance only version of MetaEd and is not suitable for extension authoring.',
+      'This is an Ed-Fi Alliance only mode of MetaEd and is not suitable for extension authoring.',
       {
         dismissable: true,
         icon: 'shield',
