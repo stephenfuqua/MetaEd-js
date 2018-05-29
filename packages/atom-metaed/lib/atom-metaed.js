@@ -22,7 +22,7 @@ import { updateEditorIfCore, addCopyBackToCore } from './MakeCoreTabsReadOnly';
 import { linterConfiguration } from './LinterProvider';
 import { allianceMode } from './PackageSettings';
 import { initializeCommands } from './CommandInitializer';
-import { isDevEnvironment, atomMetaEdPackageJson } from './Utility';
+import { atomMetaEdPackageJson } from './Utility';
 
 let outputWindow: ?OutputWindow;
 let disposableTracker: ?CompositeDisposable;
