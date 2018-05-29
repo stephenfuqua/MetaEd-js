@@ -2287,17 +2287,17 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
-ed-fi-model-2.0@1.0.2:
-  version "1.0.2"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.2.tgz#e84549fd96677e7160de6d7f20cc0c1f670943bd"
+ed-fi-model-2.0@1.0.3:
+  version "1.0.3"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.3.tgz#c08c25ef91c50501b7cf72343635b678a9dbd9ef"
 
 ed-fi-model-2.0@metaed-1.0:
   version "1.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-2.0/-/ed-fi-model-2.0-1.0.0.tgz#37b56910a988f413fce420ce51b1feefc3124354"
 
-ed-fi-model-3.0@1.0.0-dev.3:
-  version "1.0.0-dev.3"
-  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0-dev.3.tgz#23a27e01904ecdce0961f2ba7564b894e7793623"
+ed-fi-model-3.0@1.0.0:
+  version "1.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/ed-fi-model-3.0/-/ed-fi-model-3.0-1.0.0.tgz#862c7bedebdfd9acd2ec0c712f23ae9e3b1b36f5"
 
 editorconfig@^0.13.2:
   version "0.13.3"
