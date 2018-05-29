@@ -3197,39 +3197,7 @@
         },
         {
           "schema": "edfi",
-          "name": "StudentAddress"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentAddressPeriod"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentCohortYear"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentElectronicMail"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentIdentificationCode"
-        },
-        {
-          "schema": "edfi",
           "name": "StudentIdentificationDocument"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentInternationalAddress"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentLanguage"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentLanguageUse"
         },
         {
           "schema": "edfi",
@@ -3238,18 +3206,6 @@
         {
           "schema": "edfi",
           "name": "StudentPersonalIdentificationDocument"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentRace"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentTelephone"
-        },
-        {
-          "schema": "edfi",
-          "name": "StudentTribalAffiliation"
         },
         {
           "schema": "edfi",
@@ -3369,7 +3325,7 @@
         },
         {
           "schema": "edfi",
-          "name": "StudentCompetencyObjectiveStudentProgramAssociation"
+          "name": "StudentCompetencyObjectiveGeneralStudentProgramAssociation"
         },
         {
           "schema": "edfi",
@@ -3425,11 +3381,39 @@
         },
         {
           "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationAddress"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationAddressPeriod"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationCohortYear"
+        },
+        {
+          "schema": "edfi",
           "name": "StudentEducationOrganizationAssociationDisability"
         },
         {
           "schema": "edfi",
           "name": "StudentEducationOrganizationAssociationDisabilityDesignation"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationElectronicMail"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationInternationalAddress"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationLanguage"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationLanguageUse"
         },
         {
           "schema": "edfi",
@@ -3441,6 +3425,10 @@
         },
         {
           "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationRace"
+        },
+        {
+          "schema": "edfi",
           "name": "StudentEducationOrganizationAssociationStudentCharacteristic"
         },
         {
@@ -3449,11 +3437,23 @@
         },
         {
           "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationStudentIdentificationCode"
+        },
+        {
+          "schema": "edfi",
           "name": "StudentEducationOrganizationAssociationStudentIndicator"
         },
         {
           "schema": "edfi",
           "name": "StudentEducationOrganizationAssociationStudentIndicatorPeriod"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationTelephone"
+        },
+        {
+          "schema": "edfi",
+          "name": "StudentEducationOrganizationAssociationTribalAffiliation"
         }
       ]
     },
@@ -3569,7 +3569,7 @@
         },
         {
           "schema": "edfi",
-          "name": "StudentLearningObjectiveStudentProgramAssociation"
+          "name": "StudentLearningObjectiveGeneralStudentProgramAssociation"
         },
         {
           "schema": "edfi",
@@ -4828,7 +4828,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "This entity represents a tool, instrument, process, or exhibition composed of a systematic sampling of behavior for measuring a student's competence, knowledge,skills, or behavior. An assessment can be used to measure differences in individuals or groups and changes in performance from one occasion to the next."
+      "description": "This entity represents a tool, instrument, process, or exhibition composed of a systematic sampling of behavior for measuring a student's competence, knowledge, skills, or behavior. An assessment can be used to measure differences in individuals or groups and changes in performance from one occasion to the next."
     },
     {
       "schema": "edfi",
@@ -8841,6 +8841,19 @@
           "isServerAssigned": false
         },
         {
+          "propertyName": "IEPPlacementMeetingIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication as to whether an offense and/or disciplinary action resulted in a meeting of a student’s Individualized Education Program (IEP) team to determine appropriate placement.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
           "propertyName": "LastModifiedDate",
           "propertyType": {
             "dbType": "DateTime",
@@ -10716,7 +10729,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The type of education plan(s) the student is following, if appropriate. For example:\r\n    Special education\r\n    Vocational."
+      "description": "The type of education plan(s) the student is following, if appropriate."
     },
     {
       "schema": "edfi",
@@ -11646,7 +11659,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "This entity is a plan outlining the required credits,credits by subject, credits by course, and other criteria required for graduation. A graduation plan may be one or more standard plans defined by an education organization and/or individual plans for some or all students."
+      "description": "This entity is a plan outlining the required credits, credits by subject, credits by course, and other criteria required for graduation. A graduation plan may be one or more standard plans defined by an education organization and/or individual plans for some or all students."
     },
     {
       "schema": "edfi",
@@ -13457,7 +13470,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "This descriptor defines the language(s) that are spoken or written. It is strongly recommended that entries use only ISO 639-3 language codes: for CodeValue, use the 3 character code; for ShortDescription and Description use the full language name."
+      "description": "This descriptor defines the language(s) that are spoken or written. It is strongly recommended that entries use only ISO 639-2 language codes: for CodeValue, use the 3 character code; for ShortDescription and Description use the full language name."
     },
     {
       "schema": "edfi",
@@ -16080,7 +16093,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-3 language codes."
+      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-2 language codes."
     },
     {
       "schema": "edfi",
@@ -20512,7 +20525,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-3 language codes."
+      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-2 language codes."
     },
     {
       "schema": "edfi",
@@ -21831,19 +21844,6 @@
           "isServerAssigned": false
         },
         {
-          "propertyName": "HispanicLatinoEthnicity",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the individual traces his or her origin or descent to Mexico, Puerto Rico, Cuba, Central, and South America, and other Spanish cultures, regardless of race. The term, \"Spanish origin,\" can be used in addition to \"Hispanic or Latino.\"",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
           "propertyName": "Id",
           "propertyType": {
             "dbType": "Guid",
@@ -21879,19 +21879,6 @@
             "isNullable": false
           },
           "description": "The name borne in common by members of a family.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "LoginId",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The login ID for the user; used for security access control interface.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -21944,19 +21931,6 @@
             "isNullable": true
           },
           "description": "A prefix used to denote the title, degree, position, or seniority of the person.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProfileThumbnail",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 255,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "Locator reference for the student photo. The specification for that reference is left to local definition.",
           "isIdentifying": false,
           "isServerAssigned": false
         },
@@ -22941,227 +22915,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentAddress",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "ApartmentRoomSuiteNumber",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 50,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The apartment, room, or suite number of an address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "BuildingSiteNumber",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 20,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The number of the building on the site, if more than one building shares the same address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "City",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 30,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The name of the city in which an address is located.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "CountyFIPSCode",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 5,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The Federal Information Processing Standards (FIPS) numeric code for the county issued by the National Institute of Standards and Technology (NIST). Counties are considered to be the \"first-order subdivisions\" of each State and statistically equivalent entity, regardless of their local designations (county, parish, borough, etc.) Counties in different States will have the same code. A unique county number is created when combined with the 2-digit FIPS State Code.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "DoNotPublishIndicator",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the address should not be published.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "Latitude",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 20,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The geographic latitude of the physical address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "Longitude",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 20,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The geographic longitude of the physical address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "NameOfCounty",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 30,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "PostalCode",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 17,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The five or nine digit zip code or overseas postal code portion of an address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StreetNumberName",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 150,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The street number and street name or post office box number of an address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentAddress_PK",
-          "identifyingPropertyNames": [
-            "AddressTypeDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The set of elements that describes an address, including the street address, city, state, and ZIP code."
-    },
-    {
-      "schema": "edfi",
-      "name": "StudentAddressPeriod",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The month, day, and year for the start of the period.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EndDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The month, day, and year for the end of the period.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentAddressPeriod_PK",
-          "identifyingPropertyNames": [
-            "AddressTypeDescriptorId",
-            "BeginDate",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The time periods for which the address is valid. For physical addresses, the periods in which the person lived at that address."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentAssessment",
       "locallyDefinedProperties": [
         {
@@ -23801,39 +23554,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentCohortYear",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentCohortYear_PK",
-          "identifyingPropertyNames": [
-            "CohortYearTypeDescriptorId",
-            "SchoolYear",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The type and year of a cohort (e.g., 9th grade) the student belongs to as determined by the year that student entered a specific grade."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentCompetencyObjective",
       "locallyDefinedProperties": [
         {
@@ -23919,7 +23639,7 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentCompetencyObjectiveStudentProgramAssociation",
+      "name": "StudentCompetencyObjectiveGeneralStudentProgramAssociation",
       "locallyDefinedProperties": [
         {
           "propertyName": "CreateDate",
@@ -23937,7 +23657,7 @@
       ],
       "identifiers": [
         {
-          "identifierName": "StudentCompetencyObjectiveStudentProgramAssociation_PK",
+          "identifierName": "StudentCompetencyObjectiveGeneralStudentProgramAssociation_PK",
           "identifyingPropertyNames": [
             "BeginDate",
             "EducationOrganizationId",
@@ -24337,6 +24057,19 @@
           "isServerAssigned": false
         },
         {
+          "propertyName": "HispanicLatinoEthnicity",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the individual traces his or her origin or descent to Mexico, Puerto Rico, Cuba, Central, and South America, and other Spanish cultures, regardless of race. The term, \"Spanish origin,\" can be used in addition to \"Hispanic or Latino.\"",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
           "propertyName": "Id",
           "propertyType": {
             "dbType": "Guid",
@@ -24359,6 +24092,32 @@
             "isNullable": false
           },
           "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LoginId",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The login ID for the user; used for security access control interface.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProfileThumbnail",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 255,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "Locator reference for the student photo. The specification for that reference is left to local definition.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -24384,6 +24143,263 @@
       ],
       "isAbstract": false,
       "description": "This association represents student information that is specific to a student's relationship with an EducationOrganization. Enrollment relationship semantics are covered by StudentSchoolAssociation."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationAddress",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "ApartmentRoomSuiteNumber",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The apartment, room, or suite number of an address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "BuildingSiteNumber",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The number of the building on the site, if more than one building shares the same address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "City",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 30,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name of the city in which an address is located.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "CountyFIPSCode",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 5,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The Federal Information Processing Standards (FIPS) numeric code for the county issued by the National Institute of Standards and Technology (NIST). Counties are considered to be the \"first-order subdivisions\" of each State and statistically equivalent entity, regardless of their local designations (county, parish, borough, etc.) Counties in different States will have the same code. A unique county number is created when combined with the 2-digit FIPS State Code.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "DoNotPublishIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the address should not be published.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Latitude",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The geographic latitude of the physical address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Longitude",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The geographic longitude of the physical address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "NameOfCounty",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 30,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The name of the county, parish, borough, or comparable unit (within a state) in\r\n                      'which an address is located.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "PostalCode",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 17,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The five or nine digit zip code or overseas postal code portion of an address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StreetNumberName",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 150,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The street number and street name or post office box number of an address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationAddress_PK",
+          "identifyingPropertyNames": [
+            "AddressTypeDescriptorId",
+            "EducationOrganizationId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The set of elements that describes an address, including the street address, city, state, and ZIP code."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationAddressPeriod",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The month, day, and year for the start of the period.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EndDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The month, day, and year for the end of the period.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationAddressPeriod_PK",
+          "identifyingPropertyNames": [
+            "AddressTypeDescriptorId",
+            "BeginDate",
+            "EducationOrganizationId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The time periods for which the address is valid. For physical addresses, the periods in which the person lived at that address."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationCohortYear",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationCohortYear_PK",
+          "identifyingPropertyNames": [
+            "CohortYearTypeDescriptorId",
+            "EducationOrganizationId",
+            "SchoolYear",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The type and year of a cohort (e.g., 9th grade) the student belongs to as determined by the year that student entered a specific grade."
     },
     {
       "schema": "edfi",
@@ -24477,6 +24493,282 @@
       ],
       "isAbstract": false,
       "description": "Whether the disability is IDEA, Section 504, or other disability designation."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationElectronicMail",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "DoNotPublishIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the electronic email address should not be published.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ElectronicMailAddress",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 128,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The electronic mail (e-mail) address listed for an individual or organization.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "PrimaryEmailAddressIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the electronic mail address should be used as the principal electronic mail address for an individual or organization.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationElectronicMail_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "ElectronicMailTypeDescriptorId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The numbers, letters, and symbols used to identify an electronic mail (e-mail) user within the network to which the individual or organization belongs."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationInternationalAddress",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "AddressLine1",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 150,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The first line of the address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "AddressLine2",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 150,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The second line of the address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "AddressLine3",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 150,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The third line of the address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "AddressLine4",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 150,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The fourth line of the address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The first date the address is valid. For physical addresses, the date the person moved to that address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EndDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The last date the address is valid. For physical addresses, this would be the date the person moved from that address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Latitude",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The geographic latitude of the physical address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "Longitude",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 20,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The geographic longitude of the physical address.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationInternationalAddress_PK",
+          "identifyingPropertyNames": [
+            "AddressTypeDescriptorId",
+            "EducationOrganizationId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The set of elements that describes an international address."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationLanguage",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationLanguage_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "LanguageDescriptorId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-3 language codes."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationLanguageUse",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationLanguageUse_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "LanguageDescriptorId",
+            "LanguageUseDescriptorId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language)."
     },
     {
       "schema": "edfi",
@@ -24586,6 +24878,39 @@
     },
     {
       "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationRace",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationRace_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "RaceDescriptorId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The general racial category which most clearly reflects the individual's recognition of his or her community or with which the individual most identifies. The data model allows for multiple entries so that each individual can specify all appropriate races."
+    },
+    {
+      "schema": "edfi",
       "name": "StudentEducationOrganizationAssociationStudentCharacteristic",
       "locallyDefinedProperties": [
         {
@@ -24689,6 +25014,66 @@
       ],
       "isAbstract": false,
       "description": "The time periods for which characteristic was effective."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationStudentIdentificationCode",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "AssigningOrganizationIdentificationCode",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The organization code or name assigning the StudentIdentificationCode.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "IdentificationCode",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique number or alphanumeric code assigned to a student by a school, school system, a state, or other agency or entity.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationStudentIdentificationCode_PK",
+          "identifyingPropertyNames": [
+            "AssigningOrganizationIdentificationCode",
+            "EducationOrganizationId",
+            "StudentIdentificationSystemDescriptorId",
+            "StudentUSI"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student."
     },
     {
       "schema": "edfi",
@@ -24837,6 +25222,124 @@
     },
     {
       "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationTelephone",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "DoNotPublishIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the telephone number should not be published.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "OrderOfPriority",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "The order of priority assigned to telephone numbers to define which number to attempt first, second, etc.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "TelephoneNumber",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 24,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The telephone number including the area code, and extension, if applicable.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "TextMessageCapabilityIndicator",
+          "propertyType": {
+            "dbType": "Boolean",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "An indication that the telephone number is technically capable of sending and receiving Short Message Service (SMS) text messages.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationTelephone_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "StudentUSI",
+            "TelephoneNumberTypeDescriptorId"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "The 10-digit telephone number, including the area code, for the person."
+    },
+    {
+      "schema": "edfi",
+      "name": "StudentEducationOrganizationAssociationTribalAffiliation",
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "identifiers": [
+        {
+          "identifierName": "StudentEducationOrganizationAssociationTribalAffiliation_PK",
+          "identifyingPropertyNames": [
+            "EducationOrganizationId",
+            "StudentUSI",
+            "TribalAffiliationDescriptorId"
+          ],
+          "isPrimary": true,
+          "isUpdatable": false
+        }
+      ],
+      "isAbstract": false,
+      "description": "An American Indian tribe with which the student is affiliated."
+    },
+    {
+      "schema": "edfi",
       "name": "StudentEducationOrganizationResponsibilityAssociation",
       "locallyDefinedProperties": [
         {
@@ -24928,77 +25431,6 @@
       ],
       "isAbstract": false,
       "description": "This association indicates any relationship between a student and an education organization other than how the state views enrollment. Enrollment relationship semantics are covered by StudentSchoolAssociation."
-    },
-    {
-      "schema": "edfi",
-      "name": "StudentElectronicMail",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "DoNotPublishIndicator",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the electronic email address should not be published.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ElectronicMailAddress",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 128,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The electronic mail (e-mail) address listed for an individual or organization.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "PrimaryEmailAddressIndicator",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the electronic mail address should be used as the principal electronic mail address for an individual or organization.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentElectronicMail_PK",
-          "identifyingPropertyNames": [
-            "ElectronicMailTypeDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The numbers, letters, and symbols used to identify an electronic mail (e-mail) user within the network to which the individual or organization belongs."
     },
     {
       "schema": "edfi",
@@ -25252,65 +25684,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentIdentificationCode",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "AssigningOrganizationIdentificationCode",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The organization code or name assigning the StudentIdentificationCode.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "IdentificationCode",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique number or alphanumeric code assigned to a student by a school, school system, a state, or other agency or entity.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentIdentificationCode_PK",
-          "identifyingPropertyNames": [
-            "AssigningOrganizationIdentificationCode",
-            "StudentIdentificationSystemDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentIdentificationDocument",
       "locallyDefinedProperties": [
         {
@@ -25410,142 +25783,6 @@
       ],
       "isAbstract": false,
       "description": "This descriptor defines the originating record system and code that is used for record-keeping purposes of the student."
-    },
-    {
-      "schema": "edfi",
-      "name": "StudentInternationalAddress",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "AddressLine1",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 150,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The first line of the address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "AddressLine2",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 150,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The second line of the address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "AddressLine3",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 150,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The third line of the address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "AddressLine4",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 150,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The fourth line of the address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The first date the address is valid. For physical addresses, the date the person moved to that address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EndDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The last date the address is valid. For physical addresses, this would be the date the person moved from that address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "Latitude",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 20,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The geographic latitude of the physical address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "Longitude",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 20,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The geographic longitude of the physical address.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentInternationalAddress_PK",
-          "identifyingPropertyNames": [
-            "AddressTypeDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The set of elements that describes an international address."
     },
     {
       "schema": "edfi",
@@ -25812,38 +26049,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentLanguage",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentLanguage_PK",
-          "identifyingPropertyNames": [
-            "LanguageDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The language(s) the individual uses to communicate. It is strongly recommended that entries use only ISO 639-3 language codes."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentLanguageInstructionProgramAssociation",
       "locallyDefinedProperties": [
         {
@@ -25993,39 +26198,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentLanguageUse",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentLanguageUse_PK",
-          "identifyingPropertyNames": [
-            "LanguageDescriptorId",
-            "LanguageUseDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language)."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentLearningObjective",
       "locallyDefinedProperties": [
         {
@@ -26111,7 +26283,7 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentLearningObjectiveStudentProgramAssociation",
+      "name": "StudentLearningObjectiveGeneralStudentProgramAssociation",
       "locallyDefinedProperties": [
         {
           "propertyName": "CreateDate",
@@ -26129,7 +26301,7 @@
       ],
       "identifiers": [
         {
-          "identifierName": "StudentLearningObjectiveStudentProgramAssociation_PK",
+          "identifierName": "StudentLearningObjectiveGeneralStudentProgramAssociation_PK",
           "identifyingPropertyNames": [
             "AcademicSubjectDescriptorId",
             "BeginDate",
@@ -27037,38 +27209,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentRace",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentRace_PK",
-          "identifyingPropertyNames": [
-            "RaceDescriptorId",
-            "StudentUSI"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The general racial category which most clearly reflects the individual's recognition of his or her community or with which the individual most identifies. The data model allows for multiple entries so that each individual can specify all appropriate races."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentSchoolAssociation",
       "locallyDefinedProperties": [
         {
@@ -27244,7 +27384,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The type of EducationPlan(s) the student is following, if appropriate. For example:\r\n        Special education IEP\r\n        Vocational."
+      "description": "The type of education plan(s) the student is following, if appropriate."
     },
     {
       "schema": "edfi",
@@ -28070,90 +28210,6 @@
     },
     {
       "schema": "edfi",
-      "name": "StudentTelephone",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "DoNotPublishIndicator",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the telephone number should not be published.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "OrderOfPriority",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "The order of priority assigned to telephone numbers to define which number to attempt first, second, etc.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "TelephoneNumber",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 24,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The telephone number including the area code, and extension, if applicable.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "TextMessageCapabilityIndicator",
-          "propertyType": {
-            "dbType": "Boolean",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "An indication that the telephone number is technically capable of sending and receiving Short Message Service (SMS) text messages.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentTelephone_PK",
-          "identifyingPropertyNames": [
-            "StudentUSI",
-            "TelephoneNumberTypeDescriptorId"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "The 10-digit telephone number, including the area code, for the person."
-    },
-    {
-      "schema": "edfi",
       "name": "StudentTitleIPartAProgramAssociation",
       "locallyDefinedProperties": [],
       "identifiers": [
@@ -28249,38 +28305,6 @@
       ],
       "isAbstract": false,
       "description": "Indicates the Service(s) being provided to the Student by the Program."
-    },
-    {
-      "schema": "edfi",
-      "name": "StudentTribalAffiliation",
-      "locallyDefinedProperties": [
-        {
-          "propertyName": "CreateDate",
-          "propertyType": {
-            "dbType": "DateTime",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "identifiers": [
-        {
-          "identifierName": "StudentTribalAffiliation_PK",
-          "identifyingPropertyNames": [
-            "StudentUSI",
-            "TribalAffiliationDescriptorId"
-          ],
-          "isPrimary": true,
-          "isUpdatable": false
-        }
-      ],
-      "isAbstract": false,
-      "description": "An American Indian tribe with which the student is affiliated."
     },
     {
       "schema": "edfi",
@@ -31253,7 +31277,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The datatype of the result. The results can be expressed as a number, percentile,range, level, etc.",
+          "description": "The datatype of the result. The results can be expressed as a number, percentile, range, level, etc.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -45788,7 +45812,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The datatype of the result. The results can be expressed as a number, percentile,range, level, etc.",
+          "description": "The datatype of the result. The results can be expressed as a number, percentile, range, level, etc.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -53812,7 +53836,7 @@
             "scale": 0,
             "isNullable": true
           },
-          "description": "The datatype of the result. The results can be expressed as a number, percentile,range, level, etc.",
+          "description": "The datatype of the result. The results can be expressed as a number, percentile, range, level, etc.",
           "isIdentifying": false,
           "isServerAssigned": false
         }
@@ -68885,101 +68909,7 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_Student_OldEthnicityDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "OldEthnicityDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "OldEthnicityDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "OldEthnicityDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": true
-          },
-          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:\r\n        1 - American Indian or Alaskan Native\r\n        2 - Asian or Pacific Islander\r\n        3 - Black, not of Hispanic origin\r\n        4 - Hispanic\r\n        5 - White, not of Hispanic origin.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": false,
-      "isRequired": false
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_Student_SexDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "SexDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "SexDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "SexDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A person's gender.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": false,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_Student_SexDescriptor1"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
@@ -70570,220 +70500,6 @@
             "isNullable": false
           },
           "description": "The term for the session during the school year.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentAddress_AddressTypeDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "AddressTypeDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentAddress_StateAbbreviationDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StateAbbreviationDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StateAbbreviationDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StateAbbreviationDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The abbreviation for the state (within the United States) or outlying area in which an address is located.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": false,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentAddress_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentAddressPeriod_StudentAddress"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentAddress"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentAddressPeriod"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -73848,147 +73564,6 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentCohortYear_CohortYearTypeDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "CohortYearTypeDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "CohortYearTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentCohortYear"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "CohortYearTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of cohort year (9th grade, graduation).",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentCohortYear_SchoolYearType"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "SchoolYearType"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "SchoolYear",
-          "propertyType": {
-            "dbType": "Int16",
-            "maxLength": 0,
-            "precision": 5,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "Key for School Year",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentCohortYear"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "SchoolYear",
-          "propertyType": {
-            "dbType": "Int16",
-            "maxLength": 0,
-            "precision": 5,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The value of the  school year for the Cohort.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentCohortYear_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentCohortYear"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_StudentCompetencyObjective_CompetencyLevelDescriptor"
       },
       "cardinality": "OneToZeroOrMore",
@@ -74307,7 +73882,184 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentCompetencyObjectiveStudentProgramAssociation_StudentCompetencyObjective"
+        "name": "FK_StudentCompetencyObjectiveGeneralStudentProgramAssociation_GeneralStudentProgramAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "GeneralStudentProgramAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The month, day, and year on which the Student first received services.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramEducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramName",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of program.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentCompetencyObjectiveGeneralStudentProgramAssociation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The month, day, and year on which the Student first received services.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramEducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramName",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of program.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentCompetencyObjectiveGeneralStudentProgramAssociation_StudentCompetencyObjective"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
@@ -74422,7 +74174,7 @@
       ],
       "secondaryEntityFullName": {
         "schema": "edfi",
-        "name": "StudentCompetencyObjectiveStudentProgramAssociation"
+        "name": "StudentCompetencyObjectiveGeneralStudentProgramAssociation"
       },
       "secondaryEntityProperties": [
         {
@@ -74513,183 +74265,6 @@
             "isNullable": false
           },
           "description": "The grade level for which the CompetencyObjective is targeted.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentCompetencyObjectiveStudentProgramAssociation_StudentProgramAssociation"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentProgramAssociation"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The month, day, and year on which the Student first received services.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramEducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramName",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of program.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentCompetencyObjectiveStudentProgramAssociation"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The month, day, and year on which the Student first received services.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramEducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramName",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of program.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -76224,6 +75799,100 @@
     {
       "fullName": {
         "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociation_OldEthnicityDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "OldEthnicityDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "OldEthnicityDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "OldEthnicityDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": true
+          },
+          "description": "Previous definition of Ethnicity combining Hispanic/Latino and race:\r\n        1 - American Indian or Alaskan Native\r\n        2 - Asian or Pacific Islander\r\n        3 - Black, not of Hispanic origin\r\n        4 - Hispanic\r\n        5 - White, not of Hispanic origin.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": false,
+      "isRequired": false
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociation_SexDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "SexDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SexDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SexDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A person's gender.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": false,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
         "name": "FK_StudentEducationOrganizationAssociation_Student"
       },
       "cardinality": "OneToZeroOrMore",
@@ -76251,6 +75920,439 @@
         "name": "StudentEducationOrganizationAssociation"
       },
       "secondaryEntityProperties": [
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationAddress_AddressTypeDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "AddressTypeDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationAddress_StateAbbreviationDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StateAbbreviationDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StateAbbreviationDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StateAbbreviationDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The abbreviation for the state (within the United States) or outlying area in which an address is located.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": false,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationAddress_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationAddressPeriod_StudentEducationOrganizationAssociationAddress"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationAddress"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationAddressPeriod"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of address listed for an individual or organization.    For example:  Physical Address, Mailing Address, Home Address, etc.)",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationCohortYear_CohortYearTypeDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "CohortYearTypeDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "CohortYearTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationCohortYear"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "CohortYearTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of cohort year (9th grade, graduation).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationCohortYear_SchoolYearType"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "SchoolYearType"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "Key for School Year",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationCohortYear"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "SchoolYear",
+          "propertyType": {
+            "dbType": "Int16",
+            "maxLength": 0,
+            "precision": 5,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The value of the  school year for the Cohort.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationCohortYear_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationCohortYear"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
         {
           "propertyName": "StudentUSI",
           "propertyType": {
@@ -76584,6 +76686,559 @@
     {
       "fullName": {
         "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationElectronicMail_ElectronicMailTypeDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "ElectronicMailTypeDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "ElectronicMailTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationElectronicMail"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "ElectronicMailTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of email listed for an individual or organization. For example: Home/Personal, Work, etc.)",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationElectronicMail_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationElectronicMail"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationInternationalAddress_AddressTypeDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "AddressTypeDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationInternationalAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "AddressTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of address listed for an individual or organization. For example:  Physical Address, Mailing Address, Home Address, etc.)",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationInternationalAddress_CountryDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "CountryDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "CountryDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationInternationalAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "CountryDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The name of the country. It is strongly recommended that entries use only ISO 3166 2-letter country codes.",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": false,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationInternationalAddress_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationInternationalAddress"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationLanguage_LanguageDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "LanguageDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "LanguageDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationLanguage"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "LanguageDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A specification of which written or spoken communication is being used.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationLanguage_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationLanguage"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationLanguageUse_LanguageUseDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "LanguageUseDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "LanguageUseDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationLanguageUse"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "LanguageUseDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language).",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationLanguageUse_StudentEducationOrganizationAssociationLanguage"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationLanguage"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LanguageDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A specification of which written or spoken communication is being used.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationLanguageUse"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "LanguageDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A specification of which written or spoken communication is being used.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
         "name": "FK_StudentEducationOrganizationAssociationProgramParticipation_ProgramTypeDescriptor"
       },
       "cardinality": "OneToZeroOrMore",
@@ -76850,6 +77505,126 @@
     {
       "fullName": {
         "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationRace_RaceDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "RaceDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "RaceDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationRace"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "RaceDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The general racial category which most clearly reflects the individual's recognition of his or her community or with which the individual most identifies. The data model allows for multiple entries so that each individual can specify all appropriate races.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationRace_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationRace"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
         "name": "FK_StudentEducationOrganizationAssociationStudentCharacteristic_StudentCharacteristicDescriptor"
       },
       "cardinality": "OneToZeroOrMore",
@@ -77069,6 +77844,126 @@
     {
       "fullName": {
         "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationStudentIdentificationCode_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationStudentIdentificationCode"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationStudentIdentificationCode_StudentIdentificationSystemDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentIdentificationSystemDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "StudentIdentificationSystemDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationStudentIdentificationCode"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "StudentIdentificationSystemDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
         "name": "FK_StudentEducationOrganizationAssociationStudentIndicator_StudentEducationOrganizationAssociation"
       },
       "cardinality": "OneToZeroOrMore",
@@ -77241,6 +78136,246 @@
     {
       "fullName": {
         "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationTelephone_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationTelephone"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationTelephone_TelephoneNumberTypeDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "TelephoneNumberTypeDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "TelephoneNumberTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationTelephone"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "TelephoneNumberTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of communication number listed for an individual or organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationTribalAffiliation_StudentEducationOrganizationAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationTribalAffiliation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentEducationOrganizationAssociationTribalAffiliation_TribalAffiliationDescriptor"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "TribalAffiliationDescriptor"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "TribalAffiliationDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentEducationOrganizationAssociationTribalAffiliation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "TribalAffiliationDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "An American Indian tribe with which the student is affiliated.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
         "name": "FK_StudentEducationOrganizationResponsibilityAssociation_EducationOrganization"
       },
       "cardinality": "OneToZeroOrMore",
@@ -77360,100 +78495,6 @@
       "secondaryEntityFullName": {
         "schema": "edfi",
         "name": "StudentEducationOrganizationResponsibilityAssociation"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentElectronicMail_ElectronicMailTypeDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "ElectronicMailTypeDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "ElectronicMailTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentElectronicMail"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "ElectronicMailTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of email listed for an individual or organization. For example: Home/Personal, Work, etc.)",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentElectronicMail_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentElectronicMail"
       },
       "secondaryEntityProperties": [
         {
@@ -78377,100 +79418,6 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentIdentificationCode_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentIdentificationCode"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentIdentificationCode_StudentIdentificationSystemDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentIdentificationSystemDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentIdentificationSystemDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentIdentificationCode"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentIdentificationSystemDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_StudentIdentificationDocument_CountryDescriptor"
       },
       "cardinality": "OneToZeroOrMore",
@@ -78698,147 +79645,6 @@
           "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
           "isIdentifying": true,
           "isServerAssigned": true
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentInternationalAddress_AddressTypeDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "AddressTypeDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentInternationalAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "AddressTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of address listed for an individual or organization. For example:  Physical Address, Mailing Address, Home Address, etc.)",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentInternationalAddress_CountryDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "CountryDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "CountryDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentInternationalAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "CountryDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The name of the country. It is strongly recommended that entries use only ISO 3166 2-letter country codes.",
-          "isIdentifying": false,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": false,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentInternationalAddress_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentInternationalAddress"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
         }
       ],
       "isIdentifying": true,
@@ -79519,100 +80325,6 @@
       "secondaryEntityFullName": {
         "schema": "edfi",
         "name": "StudentInterventionAttendanceEvent"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentLanguage_LanguageDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "LanguageDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "LanguageDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLanguage"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "LanguageDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A specification of which written or spoken communication is being used.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentLanguage_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLanguage"
       },
       "secondaryEntityProperties": [
         {
@@ -80448,126 +81160,6 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentLanguageUse_LanguageUseDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "LanguageUseDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "LanguageUseDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLanguageUse"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "LanguageUseDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A description of how the language is used (e.g. Home Language, Native Language, Spoken Language).",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentLanguageUse_StudentLanguage"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLanguage"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "LanguageDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A specification of which written or spoken communication is being used.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLanguageUse"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "LanguageDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A specification of which written or spoken communication is being used.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_StudentLearningObjective_CompetencyLevelDescriptor"
       },
       "cardinality": "OneToZeroOrMore",
@@ -80886,7 +81478,184 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentLearningObjectiveStudentProgramAssociation_StudentLearningObjective"
+        "name": "FK_StudentLearningObjectiveGeneralStudentProgramAssociation_GeneralStudentProgramAssociation"
+      },
+      "cardinality": "OneToZeroOrMore",
+      "primaryEntityFullName": {
+        "schema": "edfi",
+        "name": "GeneralStudentProgramAssociation"
+      },
+      "primaryEntityProperties": [
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The month, day, and year on which the Student first received services.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramEducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramName",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of program.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "secondaryEntityFullName": {
+        "schema": "edfi",
+        "name": "StudentLearningObjectiveGeneralStudentProgramAssociation"
+      },
+      "secondaryEntityProperties": [
+        {
+          "propertyName": "BeginDate",
+          "propertyType": {
+            "dbType": "Date",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The month, day, and year on which the Student first received services.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "EducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramEducationOrganizationId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The identifier assigned to an education organization.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramName",
+          "propertyType": {
+            "dbType": "String",
+            "maxLength": 60,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "ProgramTypeDescriptorId",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "The type of program.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        },
+        {
+          "propertyName": "StudentUSI",
+          "propertyType": {
+            "dbType": "Int32",
+            "maxLength": 0,
+            "precision": 10,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "A unique alphanumeric code assigned to a student.",
+          "isIdentifying": true,
+          "isServerAssigned": false
+        }
+      ],
+      "isIdentifying": true,
+      "isRequired": true
+    },
+    {
+      "fullName": {
+        "schema": "edfi",
+        "name": "FK_StudentLearningObjectiveGeneralStudentProgramAssociation_StudentLearningObjective"
       },
       "cardinality": "OneToZeroOrMore",
       "primaryEntityFullName": {
@@ -81001,7 +81770,7 @@
       ],
       "secondaryEntityFullName": {
         "schema": "edfi",
-        "name": "StudentLearningObjectiveStudentProgramAssociation"
+        "name": "StudentLearningObjectiveGeneralStudentProgramAssociation"
       },
       "secondaryEntityProperties": [
         {
@@ -81092,183 +81861,6 @@
             "isNullable": false
           },
           "description": "The grade level for which the LearningObjective is targeted.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentLearningObjectiveStudentProgramAssociation_StudentProgramAssociation"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentProgramAssociation"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The month, day, and year on which the Student first received services.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramEducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramName",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of program.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentLearningObjectiveStudentProgramAssociation"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "BeginDate",
-          "propertyType": {
-            "dbType": "Date",
-            "maxLength": 0,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The month, day, and year on which the Student first received services.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "EducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramEducationOrganizationId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The identifier assigned to an education organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramName",
-          "propertyType": {
-            "dbType": "String",
-            "maxLength": 60,
-            "precision": 0,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The formal name of the Program of instruction, training, services, or benefits available through federal, state, or local agencies.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        },
-        {
-          "propertyName": "ProgramTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of program.",
           "isIdentifying": true,
           "isServerAssigned": false
         },
@@ -83872,100 +84464,6 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentRace_RaceDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "RaceDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "RaceDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentRace"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "RaceDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The general racial category which most clearly reflects the individual's recognition of his or her community or with which the individual most identifies. The data model allows for multiple entries so that each individual can specify all appropriate races.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentRace_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentRace"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_StudentSchoolAssociation_Calendar"
       },
       "cardinality": "OneToZeroOrMore",
@@ -84623,7 +85121,7 @@
             "scale": 0,
             "isNullable": false
           },
-          "description": "The type of EducationPlan(s) the student is following, if appropriate. For example:\r\n        Special education IEP\r\n        Vocational.",
+          "description": "The type of education plan(s) the student is following, if appropriate.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
@@ -87198,100 +87696,6 @@
     {
       "fullName": {
         "schema": "edfi",
-        "name": "FK_StudentTelephone_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentTelephone"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentTelephone_TelephoneNumberTypeDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "TelephoneNumberTypeDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "TelephoneNumberTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentTelephone"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "TelephoneNumberTypeDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "The type of communication number listed for an individual or organization.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
         "name": "FK_StudentTitleIPartAProgramAssociation_GeneralStudentProgramAssociation"
       },
       "cardinality": "OneToOneInheritance",
@@ -87730,100 +88134,6 @@
             "isNullable": false
           },
           "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentTribalAffiliation_Student"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "Student"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": true
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentTribalAffiliation"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "StudentUSI",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique alphanumeric code assigned to a student.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "isIdentifying": true,
-      "isRequired": true
-    },
-    {
-      "fullName": {
-        "schema": "edfi",
-        "name": "FK_StudentTribalAffiliation_TribalAffiliationDescriptor"
-      },
-      "cardinality": "OneToZeroOrMore",
-      "primaryEntityFullName": {
-        "schema": "edfi",
-        "name": "TribalAffiliationDescriptor"
-      },
-      "primaryEntityProperties": [
-        {
-          "propertyName": "TribalAffiliationDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "A unique identifier used as Primary Key, not derived from business logic, when acting as Foreign Key, references the parent table.",
-          "isIdentifying": true,
-          "isServerAssigned": false
-        }
-      ],
-      "secondaryEntityFullName": {
-        "schema": "edfi",
-        "name": "StudentTribalAffiliation"
-      },
-      "secondaryEntityProperties": [
-        {
-          "propertyName": "TribalAffiliationDescriptorId",
-          "propertyType": {
-            "dbType": "Int32",
-            "maxLength": 0,
-            "precision": 10,
-            "scale": 0,
-            "isNullable": false
-          },
-          "description": "An American Indian tribe with which the student is affiliated.",
           "isIdentifying": true,
           "isServerAssigned": false
         }
