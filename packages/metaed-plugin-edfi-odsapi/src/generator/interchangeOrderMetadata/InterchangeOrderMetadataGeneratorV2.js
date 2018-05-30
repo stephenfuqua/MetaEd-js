@@ -8,7 +8,7 @@ import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } f
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
-const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
+const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGeneratorV2';
 const targetVersions: string = V2Only;
 const outputName: string = 'Interchange Order Metadata';
 
@@ -46,42 +46,55 @@ type InterchangeMetadata = {
   elements: Array<ElementMetadata>,
 };
 
+function getInterchangeMetadataFor(interchange: MergedInterchange): InterchangeMetadata {
+  const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
+    (element: { name: string, globalDependencyOrder: number }) => ({
+      name: element.name,
+    }),
+  );
+  return { name: interchange.metaEdName, order: interchange.data.edfiOdsApi.apiOrder, elements };
+}
+
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions))
-    return {
-      generatorName,
-      generatedOutput: [],
-    };
+  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { generatorName, generatedOutput: [] };
+
   const results: Array<GeneratedOutput> = [];
 
   if (metaEd.namespace.size > 0) {
-    let coreInterchanges: Array<InterchangeMetadata> = [];
+    const coreNamespace: ?Namespace = metaEd.namespace.get('edfi');
+    if (coreNamespace == null) return { generatorName, generatedOutput: [] };
+
+    const coreEdfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
+    if (coreEdfiXsdEntityRepository == null) return { generatorName, generatedOutput: [] };
+
+    const coreInterchangeMetadata: Array<InterchangeMetadata> = [];
+    coreEdfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
+      if (interchange.namespace.namespaceName !== 'edfi') return;
+
+      coreInterchangeMetadata.push(getInterchangeMetadataFor(interchange));
+    });
 
     metaEd.namespace.forEach((namespace: Namespace) => {
       const edfiXsdEntityRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
       if (edfiXsdEntityRepository == null) return;
 
-      let interchanges: Array<InterchangeMetadata> = [];
+      const interchangeMetadata: Array<InterchangeMetadata> = [];
       edfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
         if (interchange.namespace.namespaceName !== namespace.namespaceName) return;
 
-        const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
-          (element: { name: string, globalDependencyOrder: number }) => ({
-            name: element.name,
-          }),
-        );
-
-        interchanges.push({ name: interchange.metaEdName, order: interchange.data.edfiOdsApi.apiOrder, elements });
+        interchangeMetadata.push(getInterchangeMetadataFor(interchange));
       });
-      if (interchanges.length === 0) return;
 
-      interchanges = R.sortBy(R.prop('order'))(interchanges);
-      // Extension interchanges must also include their core interchanges
-      if (!namespace.isExtension) {
-        coreInterchanges = interchanges;
-      } else {
-        interchanges = R.union(coreInterchanges, interchanges);
+      if (interchangeMetadata.length === 0) return;
+
+      if (namespace.isExtension && coreInterchangeMetadata != null) {
+        coreInterchangeMetadata.forEach((coreInterchange: InterchangeMetadata) => {
+          if (interchangeMetadata.every(interchange => interchange.name !== coreInterchange.name))
+            interchangeMetadata.push(coreInterchange);
+        });
       }
+
+      const interchanges = R.sortBy(R.prop('order'))(interchangeMetadata);
 
       results.push(generateFile({ interchanges }, namespace));
     });
