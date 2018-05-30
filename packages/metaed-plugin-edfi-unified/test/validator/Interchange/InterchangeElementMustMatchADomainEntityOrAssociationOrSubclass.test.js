@@ -95,6 +95,54 @@ describe('when validating interchange element is a domain entity', () => {
   });
 });
 
+describe('when validating interchange element is a domain entity across namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainEntityName: string = 'DomainEntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('DomainEntityDocumentation')
+      .withStringIdentity('StringName', 'StringDocumentation', '100')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartInterchange('InterchangeName')
+      .withDocumentation('EntityDocumentation')
+      .withDomainEntityElement(domainEntityName)
+      .withEndInterchange()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new InterchangeBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one interchange', () => {
+    expect(extensionNamespace.entity.interchange.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when validating interchange element is a domain entity subclass', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName: string = 'DomainEntityName';
