@@ -16,6 +16,7 @@ import {
   initializePackageSettings,
   ensureLinterUiSettings,
   ensureWarningsOnDsAndOdsApiMismatch,
+  switchCoreDsProjectOnDsChange,
 } from './ManageConfiguration';
 import { MetaEdAboutModel, metaEdAboutView } from './MetaEdAbout';
 import { updateEditorIfCore, addCopyBackToCore } from './MakeCoreTabsReadOnly';
@@ -72,6 +73,7 @@ export async function activate() {
   await initializePackageSettings();
   await ensureLinterUiSettings();
   ensureWarningsOnDsAndOdsApiMismatch(disposableTracker);
+  switchCoreDsProjectOnDsChange(disposableTracker);
 
   if (!allianceMode()) hideTreeViewContextMenuOperationsWhenCore();
 

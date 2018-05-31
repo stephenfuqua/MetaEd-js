@@ -31,9 +31,9 @@ const odsApiVersionSupport: Map<string, Array<string>> = new Map([
 
 export function switchCoreDsProjectOnDsChange(disposableTracker: CompositeDisposable) {
   disposableTracker.add(
-    atom.config.observe('atom-metaed.targetDsVersion', (targetDsVersion: string) => {
-      if (targetDsVersion === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
-      if (targetDsVersion === '3.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
+    atom.config.onDidChange('atom-metaed.targetDsVersion', ({ newValue }: { oldValue: string, newValue: string }) => {
+      if (newValue === '2.0.1') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-2.0'));
+      if (newValue === '3.0') setCoreMetaEdSourceDirectory(devEnvironmentCorrectedPath('ed-fi-model-3.0'));
     }),
   );
 }
@@ -134,8 +134,8 @@ export function odsApiAndDsCombinationValid(odsApiVersion: string, dsVersion: st
 
 function warnOnDsAndOdsApiMismatch() {
   if (!odsApiAndDsCombinationValid(getTargetOdsApiVersion(), getTargetDsVersion())) {
-    const notification = atom.notifications.addError(
-      `The targeted Ed-Fi Data Standard version is not supported by the targeted Ed-Fi ODS/API version`,
+    const notification = atom.notifications.addWarning(
+      `The targeted Ed-Fi Data Standard version is not supported by the targeted Ed-Fi ODS/API version.  Please ensure those settings are in sync.`,
       {
         dismissable: true,
         buttons: [

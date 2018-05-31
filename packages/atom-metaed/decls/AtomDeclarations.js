@@ -28,7 +28,7 @@ declare class AtomConfig {
   get(keyPath: string): string & boolean;
   set(keyPath: string, value: string | boolean): void;
   observe(keyPath: string, callback: (value: string) => void): Disposable;
-  onDidChange(keyPath: string, callback: (value: string) => void): Disposable;
+  onDidChange(keyPath: string, callback: (event: { oldValue: string, newValue: string }) => void): Disposable;
   unset(keyPath: string): void;
 }
 
