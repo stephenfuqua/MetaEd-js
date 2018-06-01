@@ -77,7 +77,7 @@ describe('when enhancing association extensions', () => {
     extensionNamespace.entity.associationExtension.set(entity.metaEdName, entity);
 
     enhance(metaEd);
-    aggregate = entity.data.edfiOdsApi.aggregate;
+    ({ aggregate } = entity.data.edfiOdsApi);
   });
 
   it('should add aggregate to namespace', () => {

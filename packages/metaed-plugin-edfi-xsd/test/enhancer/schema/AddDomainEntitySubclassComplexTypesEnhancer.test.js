@@ -47,7 +47,7 @@ describe('when enhancing domainEntity subclass', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdLookupType = enhancedItem.data.edfiXsd.xsd_LookupType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;

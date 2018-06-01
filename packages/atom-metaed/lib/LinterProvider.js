@@ -23,7 +23,7 @@ const limitThirty = R.take(30);
 
 // eslint-disable-next-line no-unused-vars
 async function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
-  if (!await fs.exists(path.resolve(getCoreMetaEdSourceDirectory()))) {
+  if (!(await fs.exists(path.resolve(getCoreMetaEdSourceDirectory())))) {
     atom.notifications.addWarning(
       'The "Ed-Fi Data Standard core .metaed directory" in your Atom-MetaEd settings is not valid.',
     );

@@ -4787,6 +4787,31 @@ GO
 ALTER TABLE [edfi].[ObjectiveAssessmentPerformanceLevel] ADD CONSTRAINT [ObjectiveAssessmentPerformanceLevel_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
 GO
 
+-- Table [edfi].[ObjectiveAssessmentScore] --
+CREATE TABLE [edfi].[ObjectiveAssessmentScore] (
+    [AcademicSubjectDescriptorId] [INT] NOT NULL,
+    [AssessedGradeLevelDescriptorId] [INT] NOT NULL,
+    [AssessmentReportingMethodTypeId] [INT] NOT NULL,
+    [AssessmentTitle] [NVARCHAR](60) NOT NULL,
+    [IdentificationCode] [NVARCHAR](60) NOT NULL,
+    [Version] [INT] NOT NULL,
+    [MinimumScore] [NVARCHAR](35) NULL,
+    [MaximumScore] [NVARCHAR](35) NULL,
+    [ResultDatatypeTypeId] [INT] NULL,
+    [CreateDate] [DATETIME] NOT NULL,
+    CONSTRAINT [ObjectiveAssessmentScore_PK] PRIMARY KEY CLUSTERED (
+        [AcademicSubjectDescriptorId] ASC,
+        [AssessedGradeLevelDescriptorId] ASC,
+        [AssessmentReportingMethodTypeId] ASC,
+        [AssessmentTitle] ASC,
+        [IdentificationCode] ASC,
+        [Version] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [edfi].[ObjectiveAssessmentScore] ADD CONSTRAINT [ObjectiveAssessmentScore_DF_CreateDate] DEFAULT (getdate()) FOR [CreateDate]
+GO
+
 -- Table [edfi].[OldEthnicityType] --
 CREATE TABLE [edfi].[OldEthnicityType] (
     [OldEthnicityTypeId] [INT] IDENTITY(1,1) NOT NULL,
@@ -11987,6 +12012,31 @@ CREATE NONCLUSTERED INDEX [FK_ObjectiveAssessmentPerformanceLevel_ResultDatatype
 ON [edfi].[ObjectiveAssessmentPerformanceLevel] ([ResultDatatypeTypeId] ASC)
 GO
 
+ALTER TABLE [edfi].[ObjectiveAssessmentScore] WITH CHECK ADD CONSTRAINT [FK_ObjectiveAssessmentScore_AssessmentReportingMethodType] FOREIGN KEY ([AssessmentReportingMethodTypeId])
+REFERENCES [edfi].[AssessmentReportingMethodType] ([AssessmentReportingMethodTypeId])
+GO
+
+CREATE NONCLUSTERED INDEX [FK_ObjectiveAssessmentScore_AssessmentReportingMethodType]
+ON [edfi].[ObjectiveAssessmentScore] ([AssessmentReportingMethodTypeId] ASC)
+GO
+
+ALTER TABLE [edfi].[ObjectiveAssessmentScore] WITH CHECK ADD CONSTRAINT [FK_ObjectiveAssessmentScore_ObjectiveAssessment] FOREIGN KEY ([AssessmentTitle], [AcademicSubjectDescriptorId], [AssessedGradeLevelDescriptorId], [Version], [IdentificationCode])
+REFERENCES [edfi].[ObjectiveAssessment] ([AssessmentTitle], [AcademicSubjectDescriptorId], [AssessedGradeLevelDescriptorId], [Version], [IdentificationCode])
+ON DELETE CASCADE
+GO
+
+CREATE NONCLUSTERED INDEX [FK_ObjectiveAssessmentScore_ObjectiveAssessment]
+ON [edfi].[ObjectiveAssessmentScore] ([AssessmentTitle] ASC, [AcademicSubjectDescriptorId] ASC, [AssessedGradeLevelDescriptorId] ASC, [Version] ASC, [IdentificationCode] ASC)
+GO
+
+ALTER TABLE [edfi].[ObjectiveAssessmentScore] WITH CHECK ADD CONSTRAINT [FK_ObjectiveAssessmentScore_ResultDatatypeType] FOREIGN KEY ([ResultDatatypeTypeId])
+REFERENCES [edfi].[ResultDatatypeType] ([ResultDatatypeTypeId])
+GO
+
+CREATE NONCLUSTERED INDEX [FK_ObjectiveAssessmentScore_ResultDatatypeType]
+ON [edfi].[ObjectiveAssessmentScore] ([ResultDatatypeTypeId] ASC)
+GO
+
 ALTER TABLE [edfi].[OpenStaffPosition] WITH CHECK ADD CONSTRAINT [FK_OpenStaffPosition_EducationOrganization] FOREIGN KEY ([EducationOrganizationId])
 REFERENCES [edfi].[EducationOrganization] ([EducationOrganizationId])
 GO
@@ -18638,6 +18688,33 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The datatype of the result. The results can be expressed as a number, percentile,range, level, etc.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentPerformanceLevel', @level2type=N'COLUMN', @level2name=N'ResultDatatypeTypeId'
 GO
 
+-- Extended Properties [edfi].[ObjectiveAssessmentScore] --
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Definition of the scores to be expected from this objective assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The description of the content or subject area (e.g., arts, mathematics, reading, stenography, or a foreign language) of an assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'AcademicSubjectDescriptorId'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The typical grade level for which an assessment is designed. If the assessment spans a range of grades, then this attribute holds the highest grade assessed. If only one grade level is assessed then only this attribute is used. For example:
+        Adult
+        Prekindergarten
+        First grade
+        Second grade
+        ...', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'AssessedGradeLevelDescriptorId'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The method that the administrator of the assessment uses to report the performance and achievement of all students. It may be a qualitative method such as performance level descriptors or a quantitative method such as a numerical grade or cut score. More than one type of reporting method may be used.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'AssessmentReportingMethodTypeId'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The title or name of the Assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'AssessmentTitle'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'A unique number or alphanumeric code assigned to a space, room, site, building, individual, organization, program, or institution by a school, school system, a state, or other agency or entity.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'IdentificationCode'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The version identifier for the assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'Version'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The minimum score possible on the assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'MinimumScore'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The maximum score possible on the assessment.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'MaximumScore'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The datatype of the result. The results can be expressed as a number, percentile, range, level, etc.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'ObjectiveAssessmentScore', @level2type=N'COLUMN', @level2name=N'ResultDatatypeTypeId'
+GO
+
 -- Extended Properties [edfi].[OldEthnicityType] --
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Previous definition of Ethnicity combining Hispanic/Latino and Race.', @level0type=N'SCHEMA', @level0name=N'edfi', @level1type=N'TABLE', @level1name=N'OldEthnicityType'
 GO
@@ -24722,4 +24799,44 @@ GO
 INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2028', '2028-2029', 'false')
 GO
 INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2029', '2029-2030', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2030', '2030-2031', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2031', '2031-2032', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2032', '2032-2033', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2033', '2033-2034', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2034', '2034-2035', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2035', '2035-2036', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2036', '2036-2037', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2037', '2037-2038', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2038', '2038-2039', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2039', '2039-2040', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2040', '2040-2041', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2041', '2041-2042', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2042', '2042-2043', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2043', '2043-2044', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2044', '2044-2045', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2045', '2045-2046', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2046', '2046-2047', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2047', '2047-2048', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2048', '2048-2049', 'false')
+GO
+INSERT INTO [edfi].[SchoolYearType] ([SchoolYear], [SchoolYearDescription], [CurrentSchoolYear]) VALUES ('2049', '2049-2050', 'false')
 GO

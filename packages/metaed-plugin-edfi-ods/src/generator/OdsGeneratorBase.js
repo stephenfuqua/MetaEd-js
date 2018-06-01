@@ -28,7 +28,7 @@ export function templateNamed(templateName: string) {
   return odsHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => ({
+export const template = R.memoizeWith(R.identity, () => ({
   coreSchema: templateNamed('coreSchema'),
   table: templateNamed('table'),
   foreignKey: templateNamed('foreignKey'),

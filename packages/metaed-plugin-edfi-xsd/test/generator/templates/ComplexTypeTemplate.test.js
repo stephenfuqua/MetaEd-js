@@ -40,21 +40,71 @@ describe('when generating complex type', () => {
   });
 
   it('should have element complex type name', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeName), result)).toBe(complexTypeName);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeName);
   });
 
   it('should not have abstract', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeAbstract), result)).not.toBeDefined();
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeAbstract,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 
   it('should have annotation only', () => {
-    expect(R.view(R.compose(complexType, nextLength), result)).toBe(1);
-    expect(R.view(R.compose(complexType, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexType, nextHead, nextHead, nextHeadText), result)).toBe(documentation);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(1);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(documentation);
   });
 
   it('should not have attribute', () => {
-    expect(R.view(R.compose(complexType, elementsArray), result).filter(element => element.attribute)).toHaveLength(0);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          elementsArray,
+        ),
+        result,
+      ).filter(element => element.attribute),
+    ).toHaveLength(0);
   });
 });
 
@@ -83,18 +133,68 @@ describe('when generating complex type with attribute', () => {
   });
 
   it('should have element complex type name', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeName), result)).toBe(complexTypeName);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeName);
   });
 
   it('should not have abstract', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeAbstract), result)).not.toBeDefined();
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeAbstract,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 
   it('should have annotation and attribute only', () => {
-    expect(R.view(R.compose(complexType, nextLength), result)).toBe(2);
-    expect(R.view(R.compose(complexType, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexType, nextHead, nextHead, nextHeadText), result)).toBe(documentation);
-    expect(R.view(R.compose(complexType, nextSecondName), result)).toBe('xs:attribute');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(2);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(documentation);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:attribute');
   });
 });
 
@@ -118,30 +218,118 @@ describe('when generating complex type with base type', () => {
   });
 
   it('should have element complex type name', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeName), result)).toBe(complexTypeName);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeName);
   });
 
   it('should not have abstract', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeAbstract), result)).not.toBeDefined();
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeAbstract,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 
   it('should not have attribute', () => {
-    expect(R.view(R.compose(complexType, elementsArray), result).filter(element => element.attribute)).toHaveLength(0);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          elementsArray,
+        ),
+        result,
+      ).filter(element => element.attribute),
+    ).toHaveLength(0);
   });
 
   it('should have annotation and complex content only', () => {
-    expect(R.view(R.compose(complexType, nextLength), result)).toBe(2);
-    expect(R.view(R.compose(complexType, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexType, nextHead, nextHead, nextHeadText), result)).toBe(documentation);
-    expect(R.view(R.compose(complexType, nextSecondName), result)).toBe('xs:complexContent');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(2);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(documentation);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:complexContent');
   });
 
   it('should have complex content with base attribute and no child elements', () => {
-    const complexContentElement = R.compose(complexType, nextSecond);
-    expect(R.view(R.compose(complexContentElement, nextHeadName), result)).toBe('xs:extension');
-    const extensionElement = R.compose(complexContentElement, nextHead);
-    expect(R.view(R.compose(extensionElement, xsdAttributeBase), result)).toBe(baseType);
-    expect(R.view(R.compose(extensionElement, elementsArray), result)).not.toBeDefined();
+    const complexContentElement = R.compose(
+      complexType,
+      nextSecond,
+    );
+    expect(
+      R.view(
+        R.compose(
+          complexContentElement,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:extension');
+    const extensionElement = R.compose(
+      complexContentElement,
+      nextHead,
+    );
+    expect(
+      R.view(
+        R.compose(
+          extensionElement,
+          xsdAttributeBase,
+        ),
+        result,
+      ),
+    ).toBe(baseType);
+    expect(
+      R.view(
+        R.compose(
+          extensionElement,
+          elementsArray,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 });
 
@@ -170,27 +358,96 @@ describe('when generating complex type with item', () => {
   });
 
   it('should have element complex type name', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeName), result)).toBe(complexTypeName);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeName);
   });
 
   it('should not have abstract', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeAbstract), result)).not.toBeDefined();
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeAbstract,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 
   it('should have attribute', () => {
-    expect(R.view(R.compose(complexType, elementsArray), result).filter(element => element.attribute)).toHaveLength(0);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          elementsArray,
+        ),
+        result,
+      ).filter(element => element.attribute),
+    ).toHaveLength(0);
   });
 
   it('should have annotation and sequence only', () => {
-    expect(R.view(R.compose(complexType, nextLength), result)).toBe(2);
-    expect(R.view(R.compose(complexType, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexType, nextHead, nextHead, nextHeadText), result)).toBe(documentation);
-    expect(R.view(R.compose(complexType, nextSecondName), result)).toBe('xs:sequence');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(2);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(documentation);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:sequence');
   });
 
   it('should have sequence with complex item', () => {
-    const sequenceElement = R.compose(complexType, nextSecond);
-    expect(R.view(R.compose(sequenceElement, nextHeadName), result)).toBe('xs:element');
+    const sequenceElement = R.compose(
+      complexType,
+      nextSecond,
+    );
+    expect(
+      R.view(
+        R.compose(
+          sequenceElement,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:element');
   });
 });
 
@@ -226,38 +483,194 @@ describe('when generating complex type with everything', () => {
   });
 
   it('should have element complex type name', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeName), result)).toBe(complexTypeName);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeName);
   });
 
   it('should not have abstract', () => {
-    expect(R.view(R.compose(complexType, xsdAttributeAbstract), result)).not.toBeDefined();
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          xsdAttributeAbstract,
+        ),
+        result,
+      ),
+    ).not.toBeDefined();
   });
 
   it('should have annotation and attribute and complex content only', () => {
-    expect(R.view(R.compose(complexType, nextLength), result)).toBe(3);
-    expect(R.view(R.compose(complexType, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexType, nextHead, nextHead, nextHeadText), result)).toBe(documentation);
-    expect(R.view(R.compose(complexType, nextSecondName), result)).toBe('xs:attribute');
-    expect(R.view(R.compose(complexType, nextThirdName), result)).toBe('xs:complexContent');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(3);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(documentation);
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:attribute');
+    expect(
+      R.view(
+        R.compose(
+          complexType,
+          nextThirdName,
+        ),
+        result,
+      ),
+    ).toBe('xs:complexContent');
   });
 
   it('should have attribute with annotation documentation', () => {
-    const attribute = R.compose(complexType, nextSecond);
-    expect(R.view(R.compose(attribute, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(attribute, nextHead, nextHead, nextHeadText), result)).toBe(attributeDocumentation);
+    const attribute = R.compose(
+      complexType,
+      nextSecond,
+    );
+    expect(
+      R.view(
+        R.compose(
+          attribute,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          attribute,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(attributeDocumentation);
   });
 
   it('should have complex content with base attribute and sequence with complex item', () => {
-    const complexContentElement = R.compose(complexType, nextThird);
-    expect(R.view(R.compose(complexContentElement, nextHeadName), result)).toBe('xs:extension');
-    const extensionElement = R.compose(complexContentElement, nextHead);
-    expect(R.view(R.compose(extensionElement, xsdAttributeBase), result)).toBe(baseType);
-    expect(R.view(R.compose(extensionElement, nextHeadName), result)).toBe('xs:sequence');
-    expect(R.view(R.compose(extensionElement, nextHead, nextHeadName), result)).toBe('xs:element');
-    const complexTypeItem = R.compose(extensionElement, nextHead, nextHead);
-    expect(R.view(R.compose(complexTypeItem, xsdAttributeName), result)).toBe(itemName);
-    expect(R.view(R.compose(complexTypeItem, xsdAttributeType), result)).toBe(itemType);
-    expect(R.view(R.compose(complexTypeItem, nextHeadName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(complexTypeItem, nextHead, nextHead, nextHeadText), result)).toBe(itemDocumentation);
+    const complexContentElement = R.compose(
+      complexType,
+      nextThird,
+    );
+    expect(
+      R.view(
+        R.compose(
+          complexContentElement,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:extension');
+    const extensionElement = R.compose(
+      complexContentElement,
+      nextHead,
+    );
+    expect(
+      R.view(
+        R.compose(
+          extensionElement,
+          xsdAttributeBase,
+        ),
+        result,
+      ),
+    ).toBe(baseType);
+    expect(
+      R.view(
+        R.compose(
+          extensionElement,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:sequence');
+    expect(
+      R.view(
+        R.compose(
+          extensionElement,
+          nextHead,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:element');
+    const complexTypeItem = R.compose(
+      extensionElement,
+      nextHead,
+      nextHead,
+    );
+    expect(
+      R.view(
+        R.compose(
+          complexTypeItem,
+          xsdAttributeName,
+        ),
+        result,
+      ),
+    ).toBe(itemName);
+    expect(
+      R.view(
+        R.compose(
+          complexTypeItem,
+          xsdAttributeType,
+        ),
+        result,
+      ),
+    ).toBe(itemType);
+    expect(
+      R.view(
+        R.compose(
+          complexTypeItem,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          complexTypeItem,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(itemDocumentation);
   });
 });

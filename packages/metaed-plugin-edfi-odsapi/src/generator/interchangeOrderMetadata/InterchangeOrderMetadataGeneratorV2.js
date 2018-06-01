@@ -22,7 +22,7 @@ export function templateNamed(templateName: string) {
   return interchangeOrderMetadataHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => templateNamed('InterchangeOrderMetadata'))();
+export const template = R.memoizeWith(R.identity, () => templateNamed('InterchangeOrderMetadata'))();
 
 function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   return {

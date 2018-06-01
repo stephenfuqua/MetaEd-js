@@ -55,7 +55,13 @@ export function identifiersFrom(
     });
   }
 
-  return R.sortBy(R.compose(R.toLower, R.prop('identifierName')), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.prop('identifierName'),
+    ),
+    result,
+  );
 }
 
 // locally defined "properties" are the columns on a table minus the columns there to provide a FK reference
@@ -115,7 +121,13 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     });
   }
 
-  return R.sortBy(R.compose(R.toLower, R.prop('propertyName')), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.prop('propertyName'),
+    ),
+    result,
+  );
 }
 
 function buildSingleEntityDefinitionFrom(table: Table, options: BuildSingleEntityDefinitionOptions): EntityDefinition {
@@ -163,5 +175,11 @@ export function buildEntityDefinitions(
   });
 
   result.push(...additionalEntityDefinitions);
-  return R.sortBy(R.compose(R.toLower, R.prop('name')), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.prop('name'),
+    ),
+    result,
+  );
 }

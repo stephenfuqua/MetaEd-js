@@ -51,7 +51,7 @@ describe('when generating schema annotation for a single descriptor', () => {
     addEntityForNamespace(descriptor);
 
     const rawXsd = (await generate(metaEd)).generatedOutput[0].resultString;
-    descriptorElement = xmlParser.xml2js(rawXsd).elements[1].elements[1];
+    [, descriptorElement] = xmlParser.xml2js(rawXsd).elements[1].elements;
   });
 
   it('should be simple type for descriptor list', () => {

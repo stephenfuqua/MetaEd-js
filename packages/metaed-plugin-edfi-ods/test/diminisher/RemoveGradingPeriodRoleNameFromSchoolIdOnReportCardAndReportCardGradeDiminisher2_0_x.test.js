@@ -57,7 +57,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should remove GradingPeriodSchoolId column', () => {
     // $FlowIgnore - null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentCompetencyObjective).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(studentCompetencyObjective);
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).not.toBe(gradingPeriodSchoolId);
   });
@@ -122,7 +122,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should remove GradingPeriodSchoolId column', () => {
     // $FlowIgnore - null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(studentLearningObjective).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).not.toBe(gradingPeriodSchoolId);
   });

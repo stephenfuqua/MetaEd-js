@@ -48,7 +48,7 @@ describe('when enhancing enumerations', () => {
     namespace.entity.enumeration.set(enumeration.metaEdName, enumeration);
 
     enhance(metaEd);
-    aggregate = enumeration.data.edfiOdsApi.aggregate;
+    ({ aggregate } = enumeration.data.edfiOdsApi);
   });
 
   it('should create aggregate', () => {

@@ -24,41 +24,23 @@
     "js-beautify": "^1.7.4",
     "metaed-core": "1.2.0",
     "metaed-plugin-edfi-unified": "1.2.0",
-    "ramda": "^0.24.1",
+    "ramda": "^0.25.0",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "winston": "^2.4.0",
     "xml-js": "^1.4.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
     "diff2html": "^2.3.1",
-    "ed-fi-model-2.0": "metaed-1.0",
-    "eslint": "3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-flowtype": "^2.34.0",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-prettier": "^2.3.1",
+    "ed-fi-model-2.0": "1.0.3",
     "final-fs": "^1.6.1",
-    "flow-typed": "^2.1.5",
-    "jest": "^22.0.0",
-    "jest-teamcity-reporter": "^0.9.0",
-    "prettier": "^1.9.2",
-    "rimraf": "^2.6.1",
     "xmldom": "^0.1.27",
-    "xpath": "^0.0.24"
-  },
+    "xpath": "^0.0.27"
+   },
   "scripts": {
     "build": "yarn build:clean && yarn build:dist && yarn build:flow",
     "build:clean": "rimraf dist",
     "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files",
-    "test:single": "jest"
+    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files"
   }
 }

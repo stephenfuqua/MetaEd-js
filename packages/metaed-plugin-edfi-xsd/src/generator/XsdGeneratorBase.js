@@ -18,7 +18,7 @@ export function templateNamed(templateName: string) {
   return xsdHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => ({
+export const template = R.memoizeWith(R.identity, () => ({
   interchange: templateNamed('interchange'),
   schema: templateNamed('schema'),
   schemaAnnotation: templateNamed('schemaAnnotation'),
@@ -44,7 +44,11 @@ const beautify = R.flip(Beautify)({
 });
 const removeDoubleQuotes = R.replace(new RegExp(/""/g), '"');
 const removeEmptyLines = R.replace(new RegExp(`${EOL}${EOL}+`, 'g'), EOL);
-export const formatXml = R.compose(removeEmptyLines, removeDoubleQuotes, beautify);
+export const formatXml = R.compose(
+  removeEmptyLines,
+  removeDoubleQuotes,
+  beautify,
+);
 
 export function formatAndPrependHeader(xsdBody: string): string {
   const completeXsd = template().xsdWithHeader({

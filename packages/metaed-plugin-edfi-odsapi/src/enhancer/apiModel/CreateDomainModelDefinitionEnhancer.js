@@ -42,11 +42,23 @@ export function buildAggregateDefinitions(namespace: Namespace): Array<Aggregate
           name: entityTable.table,
         });
       });
-      aggregateDefinition.aggregateEntityNames = R.sortBy(R.compose(R.toLower, R.prop('name')), aggregateEntityNames);
+      aggregateDefinition.aggregateEntityNames = R.sortBy(
+        R.compose(
+          R.toLower,
+          R.prop('name'),
+        ),
+        aggregateEntityNames,
+      );
       result.push(aggregateDefinition);
     });
 
-  return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.path(['aggregateRootEntityName', 'name']),
+    ),
+    result,
+  );
 }
 
 export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<AggregateExtensionDefinition> {
@@ -69,13 +81,22 @@ export function buildAggregateExtensionDefinitions(namespace: Namespace): Array<
         });
       });
       aggregateExtensionDefinition.extensionEntityNames = R.sortBy(
-        R.compose(R.toLower, R.prop('name')),
+        R.compose(
+          R.toLower,
+          R.prop('name'),
+        ),
         extensionEntityNames,
       );
       result.push(aggregateExtensionDefinition);
     });
 
-  return R.sortBy(R.compose(R.toLower, R.path(['aggregateRootEntityName', 'name'])), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.path(['aggregateRootEntityName', 'name']),
+    ),
+    result,
+  );
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {

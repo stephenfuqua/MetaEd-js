@@ -44,7 +44,7 @@ describe('When a single file', () => {
     expect(state.loadedFileSet).toHaveLength(1);
     expect(state.loadedFileSet[0].files).toHaveLength(1);
 
-    const contents = state.loadedFileSet[0].files[0].contents;
+    const { contents } = state.loadedFileSet[0].files[0];
     expect(contents).toMatch(new RegExp('Domain Entity'));
     expect(contents).toMatch(new RegExp('DomainEntity1'));
     expect(contents).toMatch(new RegExp('string'));
@@ -90,7 +90,7 @@ describe('When an empty project', () => {
     expect(state.loadedFileSet).toHaveLength(1);
     expect(state.loadedFileSet[0].files).toHaveLength(1);
 
-    const contents = state.loadedFileSet[0].files[0].contents;
+    const { contents } = state.loadedFileSet[0].files[0];
     expect(contents).toMatch(new RegExp('Domain Entity'));
     expect(contents).toMatch(new RegExp('DomainEntity1'));
     expect(contents).toMatch(new RegExp('string'));

@@ -21,7 +21,13 @@ export function prependIndefiniteArticle(phrase: string): string {
   return `a ${phrase}`;
 }
 
-export const orderByProp = (prop: string) => R.sortBy(R.compose(R.toLower, R.prop(prop)));
+export const orderByProp = (prop: string) =>
+  R.sortBy(
+    R.compose(
+      R.toLower,
+      R.prop(prop),
+    ),
+  );
 
 export const V2Only: SemVer = '^2.x';
 export const V3OrGreater: SemVer = '>=3.x';

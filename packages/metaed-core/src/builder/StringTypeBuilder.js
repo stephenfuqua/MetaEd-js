@@ -134,7 +134,7 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     if (this.currentStringType === NoStringType) return;
 
     // Another example of why StringType belongs in XSD specific, repository key partitions by namespace
-    const projectExtension = this.currentNamespace.projectExtension;
+    const { projectExtension } = this.currentNamespace;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentStringType.metaEdName}`
       : this.currentStringType.metaEdName;

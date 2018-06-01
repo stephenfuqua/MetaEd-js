@@ -48,7 +48,7 @@ describe('when enhancing schoolYearEnumerations', () => {
     namespace.entity.schoolYearEnumeration.set(schoolYearEnumeration.metaEdName, schoolYearEnumeration);
 
     enhance(metaEd);
-    aggregate = schoolYearEnumeration.data.edfiOdsApi.aggregate;
+    ({ aggregate } = schoolYearEnumeration.data.edfiOdsApi);
   });
 
   it('should create aggregate', () => {

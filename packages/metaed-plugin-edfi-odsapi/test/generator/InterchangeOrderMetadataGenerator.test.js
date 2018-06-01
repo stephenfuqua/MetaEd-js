@@ -40,7 +40,7 @@ describe('when generating core interchange', () => {
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
-    result = (await generate(metaEd)).generatedOutput[0];
+    [result] = (await generate(metaEd)).generatedOutput;
   });
 
   it('should generate correct filename', () => {
@@ -95,7 +95,7 @@ describe('when generating extension interchange', () => {
     });
     addMergedInterchangeToRepository(metaEd, mergedInterchange);
 
-    result = (await generate(metaEd)).generatedOutput[0];
+    [result] = (await generate(metaEd)).generatedOutput;
   });
 
   it('should generate correct filename', () => {

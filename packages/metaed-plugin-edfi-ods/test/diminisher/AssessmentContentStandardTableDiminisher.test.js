@@ -52,7 +52,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
   it('should add AssessmentVersion column', () => {
     // $FlowIgnore null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandard).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandard);
     expect(columns).toHaveLength(2);
     expect(R.head(columns).name).toBe(version);
     expect(R.last(columns).name).toBe(assessmentVersion);
@@ -114,7 +114,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
   it('should rename Version column to AssessmentVersion', () => {
     // $FlowIgnore null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor);
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(assessmentVersion);
   });
@@ -167,7 +167,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
   it('should not add additional columns', () => {
     // $FlowIgnore null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandard).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandard);
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(assessmentVersion);
   });
@@ -220,7 +220,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 
   it('should have AssessmentVersion column', () => {
     // $FlowIgnore null check
-    const columns: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor).columns;
+    const { columns }: Array<Column> = tableEntities(metaEd, namespace).get(assessmentContentStandardAuthor);
     expect(columns).toHaveLength(1);
     expect(R.head(columns).name).toBe(assessmentVersion);
   });

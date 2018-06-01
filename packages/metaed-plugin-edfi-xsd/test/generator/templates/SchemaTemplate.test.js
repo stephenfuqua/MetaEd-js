@@ -54,36 +54,142 @@ describe('when generating core schema', () => {
   });
 
   it('should have schema version', () => {
-    expect(R.view(R.compose(schema, R.lensPath(['attributes', 'xmlns'])), result)).toContain(schemaVersion);
-    expect(R.view(R.compose(schema, R.lensPath(['attributes', 'targetNamespace'])), result)).toContain(schemaVersion);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          R.lensPath(['attributes', 'xmlns']),
+        ),
+        result,
+      ),
+    ).toContain(schemaVersion);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          R.lensPath(['attributes', 'targetNamespace']),
+        ),
+        result,
+      ),
+    ).toContain(schemaVersion);
   });
 
   it('should have five sections', () => {
-    expect(R.view(R.compose(schema, nextLength), result)).toBe(5);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(5);
   });
 
   it('should have annotation import', () => {
-    expect(R.view(R.compose(schema, nextHeadName), result)).toBe('xs:import');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:import');
   });
 
   it('should have annotation', () => {
-    expect(R.view(R.compose(schema, nextSecondName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(schema, nextSecond, nextHead, nextHeadText), result)).toBe(schemaDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextSecond,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(schemaDocumentation);
   });
 
   it('should have section annotation', () => {
-    expect(R.view(R.compose(schema, nextThirdName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(schema, nextThird, nextHead, nextHeadText), result)).toBe(schemaSectionDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextThirdName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextThird,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(schemaSectionDocumentation);
   });
 
   it('should have complex type', () => {
-    expect(R.view(R.compose(schema, nextFourthName), result)).toBe('xs:complexType');
-    expect(R.view(R.compose(schema, nextFourth, nextHead, nextHead, nextHeadText), result)).toBe(complexTypeDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFourthName,
+        ),
+        result,
+      ),
+    ).toBe('xs:complexType');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFourth,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeDocumentation);
   });
 
   it('should have simple type', () => {
-    expect(R.view(R.compose(schema, nextFifthName), result)).toBe('xs:simpleType');
-    expect(R.view(R.compose(schema, nextFifth, nextHead, nextHead, nextHeadText), result)).toBe(simpleTypeDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFifthName,
+        ),
+        result,
+      ),
+    ).toBe('xs:simpleType');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFifth,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(simpleTypeDocumentation);
   });
 });
 
@@ -109,35 +215,141 @@ describe('when generating extension schema', () => {
   });
 
   it('should have schema version', () => {
-    expect(R.view(R.compose(schema, R.lensPath(['attributes', 'xmlns'])), result)).toContain(schemaVersion);
-    expect(R.view(R.compose(schema, R.lensPath(['attributes', 'targetNamespace'])), result)).toContain(schemaVersion);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          R.lensPath(['attributes', 'xmlns']),
+        ),
+        result,
+      ),
+    ).toContain(schemaVersion);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          R.lensPath(['attributes', 'targetNamespace']),
+        ),
+        result,
+      ),
+    ).toContain(schemaVersion);
   });
 
   it('should have five sections', () => {
-    expect(R.view(R.compose(schema, nextLength), result)).toBe(5);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextLength,
+        ),
+        result,
+      ),
+    ).toBe(5);
   });
 
   it('should have include', () => {
-    expect(R.view(R.compose(schema, nextHeadName), result)).toBe('xs:include');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextHeadName,
+        ),
+        result,
+      ),
+    ).toBe('xs:include');
   });
 
   it('should have annotation', () => {
-    expect(R.view(R.compose(schema, nextSecondName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(schema, nextSecond, nextHead, nextHeadText), result)).toBe(schemaDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextSecondName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextSecond,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(schemaDocumentation);
   });
 
   it('should have section annotation', () => {
-    expect(R.view(R.compose(schema, nextThirdName), result)).toBe('xs:annotation');
-    expect(R.view(R.compose(schema, nextThird, nextHead, nextHeadText), result)).toBe(schemaSectionDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextThirdName,
+        ),
+        result,
+      ),
+    ).toBe('xs:annotation');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextThird,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(schemaSectionDocumentation);
   });
 
   it('should have complex type', () => {
-    expect(R.view(R.compose(schema, nextFourthName), result)).toBe('xs:complexType');
-    expect(R.view(R.compose(schema, nextFourth, nextHead, nextHead, nextHeadText), result)).toBe(complexTypeDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFourthName,
+        ),
+        result,
+      ),
+    ).toBe('xs:complexType');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFourth,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(complexTypeDocumentation);
   });
 
   it('should have simple type', () => {
-    expect(R.view(R.compose(schema, nextFifthName), result)).toBe('xs:simpleType');
-    expect(R.view(R.compose(schema, nextFifth, nextHead, nextHead, nextHeadText), result)).toBe(simpleTypeDocumentation);
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFifthName,
+        ),
+        result,
+      ),
+    ).toBe('xs:simpleType');
+    expect(
+      R.view(
+        R.compose(
+          schema,
+          nextFifth,
+          nextHead,
+          nextHead,
+          nextHeadText,
+        ),
+        result,
+      ),
+    ).toBe(simpleTypeDocumentation);
   });
 });

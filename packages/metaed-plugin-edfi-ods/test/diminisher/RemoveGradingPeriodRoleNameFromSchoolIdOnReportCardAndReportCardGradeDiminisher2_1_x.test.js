@@ -58,7 +58,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should rename foreign key columns', () => {
     // $FlowIgnore - null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(studentLearningObjective).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(studentLearningObjective);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -109,7 +109,7 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
 
   it('should rename foreign key columns', () => {
     // $FlowIgnore - null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(studentCompetencyObjective).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(studentCompetencyObjective);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(schoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -148,10 +148,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      studentCompetencyObjectiveStudentProgramAssociation,
-      // $FlowIgnore - null check
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(studentCompetencyObjectiveStudentProgramAssociation);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -190,10 +188,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      studentCompetencyObjectiveStudentSectionAssociation,
-      // $FlowIgnore - null check
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(studentCompetencyObjectiveStudentSectionAssociation);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -232,10 +228,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      studentLearningObjectiveStudentStudentProgramAssociation,
-      // $FlowIgnore - null check
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(studentLearningObjectiveStudentStudentProgramAssociation);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });
@@ -274,10 +268,8 @@ describe('when RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardG
   });
 
   it('should rename foreign key columns', () => {
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      studentLearningObjectiveStudentStudentSectionAssociation,
-      // $FlowIgnore - null check
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(studentLearningObjectiveStudentStudentSectionAssociation);
     expect(R.head(R.head(foreignKeys).columnNames).parentTableColumnName).toBe(gradingPeriodSchoolId);
     expect(R.head(R.head(foreignKeys).columnNames).foreignTableColumnName).toBe(schoolId);
   });

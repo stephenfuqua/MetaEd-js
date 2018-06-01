@@ -78,7 +78,12 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     multipleCascadePathVertices.forEach((multipleCascadeTopLevelEntity: TopLevelEntity) => {
       const edgesToPrune: Array<Edge<TopLevelEntity>> = R.compose(
         R.tail,
-        R.sortBy(R.compose(R.toLower, R.path(['source', 'data', 'edfiOds', 'ods_TableName']))),
+        R.sortBy(
+          R.compose(
+            R.toLower,
+            R.path(['source', 'data', 'edfiOds', 'ods_TableName']),
+          ),
+        ),
       )(inEdges(cascadeGraph, multipleCascadeTopLevelEntity));
 
       edgesToPrune.forEach((edge: Edge<TopLevelEntity>) => {

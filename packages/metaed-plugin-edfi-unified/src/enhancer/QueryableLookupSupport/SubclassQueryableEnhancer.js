@@ -8,7 +8,7 @@ function includeBaseClassQueryableFields(
   entity: TopLevelEntity,
   queryableProperties: Array<EntityProperty>,
 ): Array<EntityProperty> {
-  const baseEntity = entity.baseEntity;
+  const { baseEntity }: TopLevelEntity = entity;
   if (!baseEntity) return queryableProperties;
   const entityIdentityRenames = entity.identityProperties.filter(x => x.isIdentityRename).map(x => x.baseKeyName);
   queryableProperties.push(...baseEntity.queryableFields.filter(x => !entityIdentityRenames.includes(x.metaEdName)));

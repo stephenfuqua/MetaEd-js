@@ -40,7 +40,7 @@ type BuildPaths = {
 // collapse directory path in tree-view if exists (workaround for Atom GitHub issue #3365)
 async function collapseTreeViewDirectory(pathString: string): Promise<void> {
   const treeViewPackage = await atom.packages.activatePackage('tree-view');
-  const treeView = treeViewPackage.mainModule.treeView;
+  const { treeView } = treeViewPackage.mainModule;
   const directoryEntry = treeView.selectEntryForPath(pathString);
   if (directoryEntry) {
     treeView.collapseDirectory(directoryEntry);
@@ -101,7 +101,7 @@ async function cleanUpMetaEdArtifacts(artifactDirectory: string, outputWindow: O
 async function verifyBuildPaths(outputWindow: OutputWindow): Promise<?BuildPaths> {
   // cmdExePath is for Windows
   const cmdExePath = getCmdFullPath();
-  if (!await fs.exists(cmdExePath) && os.platform() === 'win32') {
+  if (!(await fs.exists(cmdExePath)) && os.platform() === 'win32') {
     outputWindow.addMessage(`Unable to find cmd.exe at configured path "${cmdExePath}".`);
     outputWindow.addMessage(
       'Please configure "Full Path to Cmd.exe" under the atom-metaed package to target the command prompt for Windows (Usually found at C:\\Windows\\System32\\cmd.exe).',
@@ -110,7 +110,7 @@ async function verifyBuildPaths(outputWindow: OutputWindow): Promise<?BuildPaths
   }
 
   const metaEdConsoleDirectory = getMetaEdJsConsoleSourceDirectory();
-  if (!await fs.exists(path.join(metaEdConsoleDirectory, 'package.json'))) {
+  if (!(await fs.exists(path.join(metaEdConsoleDirectory, 'package.json')))) {
     outputWindow.addMessage(
       `Unable to find package.json file in metaed-console at configured path "${metaEdConsoleDirectory}".`,
     );
@@ -121,9 +121,9 @@ async function verifyBuildPaths(outputWindow: OutputWindow): Promise<?BuildPaths
   }
 
   let metaEdConsolePath = path.resolve(metaEdConsoleDirectory, '../metaed-console/dist/index.js');
-  if (!await fs.exists(metaEdConsolePath)) {
+  if (!(await fs.exists(metaEdConsolePath))) {
     metaEdConsolePath = path.resolve(__dirname, '../node_modules/metaed-console/dist/index.js');
-    if (!await fs.exists(metaEdConsolePath)) {
+    if (!(await fs.exists(metaEdConsolePath))) {
       outputWindow.addMessage(metaEdConsolePath);
       outputWindow.addMessage(
         `Unable to find the index.js executable for metaed-console in the Core MetaEd Source Directory at configured path "${metaEdConsoleDirectory}" or its parent.`,
@@ -133,9 +133,9 @@ async function verifyBuildPaths(outputWindow: OutputWindow): Promise<?BuildPaths
   }
 
   let metaEdDeployPath = path.resolve(metaEdConsoleDirectory, '../metaed-odsapi-deploy/dist/index.js');
-  if (!await fs.exists(metaEdDeployPath)) {
+  if (!(await fs.exists(metaEdDeployPath))) {
     metaEdDeployPath = path.resolve(__dirname, '../node_modules/metaed-odsapi-deploy/dist/index.js');
-    if (!await fs.exists(metaEdDeployPath)) {
+    if (!(await fs.exists(metaEdDeployPath))) {
       outputWindow.addMessage(metaEdDeployPath);
       outputWindow.addMessage(
         `Unable to find the index.js executable for metaed-odsapi-deploy in the Core MetaEd Source Directory at configured path "${metaEdDeployPath}" or its parent.`,
@@ -305,7 +305,7 @@ export async function build(outputWindow: OutputWindow): Promise<boolean> {
 
     console.log('[MetaEdConsoleJS] build() using config: ', metaEdConfiguration);
 
-    if (!await cleanUpMetaEdArtifacts(artifactDirectory, outputWindow)) return false;
+    if (!(await cleanUpMetaEdArtifacts(artifactDirectory, outputWindow))) return false;
 
     tmp.setGracefulCleanup();
     const tempConfigurationPath = await tmp.tmpName({ prefix: 'MetaEdConfig-', postfix: '.json' });

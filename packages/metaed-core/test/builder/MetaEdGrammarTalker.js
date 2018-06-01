@@ -13,14 +13,16 @@ type ListenerMethodCall = {
 
 const emptyContext = () => ({});
 
-const appendToContext = R.curry((functionName: string, result: string, originalContext: any): TestContext =>
-  Object.assign({}, originalContext, { [functionName]: () => result }),
+const appendToContext = R.curry(
+  (functionName: string, result: string, originalContext: any): TestContext =>
+    Object.assign({}, originalContext, { [functionName]: () => result }),
 );
 
 const newContext = appendToContext(R.__, R.__, emptyContext());
 
-const appendTextContext = R.curry((tokenName: string, textToReturn: string, originalContext: any): TestContext =>
-  Object.assign({}, originalContext, { [tokenName]: () => ({ getText: () => textToReturn }) }),
+const appendTextContext = R.curry(
+  (tokenName: string, textToReturn: string, originalContext: any): TestContext =>
+    Object.assign({}, originalContext, { [tokenName]: () => ({ getText: () => textToReturn }) }),
 );
 
 const textContext = appendTextContext(R.__, R.__, emptyContext());

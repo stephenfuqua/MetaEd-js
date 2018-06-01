@@ -11,7 +11,7 @@ winston.cli();
 const chalk = new Chalk.constructor({ level: 3 });
 
 export async function metaEdConsole() {
-  const argv = Yargs.usage('Usage: $0 [options]')
+  const { argv } = Yargs.usage('Usage: $0 [options]')
     .config('config', configPath => JSON.parse(fs.readFileSync(path.resolve(__dirname, configPath), 'utf-8')))
     .option('config', {
       alias: 'c',
@@ -19,7 +19,7 @@ export async function metaEdConsole() {
     .help()
     .alias('help', 'h')
     .version()
-    .alias('version', 'v').argv;
+    .alias('version', 'v');
 
   const startTime = Date.now();
 
@@ -43,6 +43,7 @@ export async function metaEdConsole() {
     winston.error('Multiple data standard projects found.  Aborting.');
     process.exitCode = 1;
   } else {
+    // eslint-disable-next-line prefer-destructuring
     state.metaEd.dataStandardVersion = dataStandardVersions[0];
     try {
       const { failure } = await executePipeline(state);

@@ -67,8 +67,9 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
 
   it('should update foreign key parent table name', () => {
     // $FlowIgnore - null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(domainEntityName + identificationDocument)
-      .foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(
+      domainEntityName + identificationDocument,
+    );
     expect(foreignKeys.every(fk => fk.parentTableName === domainEntityName + identificationDocument)).toBe(true);
   });
 });

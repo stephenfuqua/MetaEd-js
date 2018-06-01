@@ -122,7 +122,7 @@ function getReferenceUniqueIdentifier(allEntities: Array<ModelBase>, property: E
   // Search to see if we find one in top level entities.
   const referentialProperty: ReferentialProperty = ((property: any): ReferentialProperty);
   if (referentialProperty.referencedEntity) {
-    const referencedEntity = referentialProperty.referencedEntity;
+    const { referencedEntity } = referentialProperty;
     const uniqueIdReferenced: string = referencedEntity.metaEdName + referencedEntity.metaEdId;
     if (findEntityByUniqueId(allEntities, uniqueIdReferenced)) return uniqueIdReferenced;
   }

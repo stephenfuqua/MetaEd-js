@@ -110,7 +110,9 @@ function buildNotificationJSON(error) {
 function getAtomReleaseChannel(version) {
   return version.indexOf('beta') > -1 // eslint-disable-line no-nested-ternary
     ? 'beta'
-    : version.indexOf('dev') > -1 ? 'dev' : 'stable';
+    : version.indexOf('dev') > -1
+      ? 'dev'
+      : 'stable';
 }
 
 function performRequest(json) {

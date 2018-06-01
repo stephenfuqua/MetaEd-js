@@ -82,7 +82,7 @@ export default class MetaEdConsole {
     // last project is where output goes
     const lastProject: MetaEdProjectMetadata = R.last(metaEdProjectMetadata);
     const artifactPath: string = path.join(lastProject.projectPath, 'MetaEdOutput');
-    const projectPath = coreProjectMetadata.projectPath;
+    const { projectPath } = coreProjectMetadata;
 
     let gulpPath = path.resolve(metaEdConsoleSourceDirectory, '../.bin/gulp.cmd');
     if (!fs.existsSync(gulpPath)) {

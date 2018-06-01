@@ -23,7 +23,7 @@ export function templateNamed(templateName: string) {
   return markdownHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => ({
+export const template = R.memoizeWith(R.identity, () => ({
   interchangeBrief: templateNamed('InterchangeBriefAsMarkdown'),
 }));
 

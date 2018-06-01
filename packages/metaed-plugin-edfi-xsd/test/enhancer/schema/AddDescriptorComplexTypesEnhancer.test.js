@@ -50,7 +50,7 @@ describe('when enhancing descriptor', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdLookupType = enhancedItem.data.edfiXsd.xsd_LookupType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;
@@ -152,7 +152,7 @@ describe('when enhancing descriptor with required map type', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdLookupType = enhancedItem.data.edfiXsd.xsd_LookupType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;
@@ -257,7 +257,7 @@ describe('when enhancing descriptor with optional map type', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdLookupType = enhancedItem.data.edfiXsd.xsd_LookupType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;
@@ -354,7 +354,7 @@ describe('when enhancing descriptor with property', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
   });
 
   it('should have items', () => {
@@ -435,7 +435,7 @@ describe('when enhancing descriptor with property and map type', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
   });
 
   it('should have two items', () => {
@@ -524,7 +524,7 @@ describe('when enhancing descriptor with descriptor property', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
   });
 
   it('should have items', () => {
@@ -608,7 +608,7 @@ describe('when enhancing descriptor with both queryable and identity property', 
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdLookupType = enhancedItem.data.edfiXsd.xsd_LookupType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;

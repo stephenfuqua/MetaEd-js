@@ -57,13 +57,13 @@ export async function initializePackageSettings() {
   if (!getTargetDsVersion()) {
     await setCoreToTwoDotX();
   }
-  if (!getCoreMetaEdSourceDirectory() || !await fs.exists(path.resolve(getCoreMetaEdSourceDirectory()))) {
+  if (!getCoreMetaEdSourceDirectory() || !(await fs.exists(path.resolve(getCoreMetaEdSourceDirectory())))) {
     await setCoreToTwoDotX();
   }
-  if (!getMetaEdConsoleSourceDirectory() || !await fs.exists(path.resolve(getMetaEdConsoleSourceDirectory()))) {
+  if (!getMetaEdConsoleSourceDirectory() || !(await fs.exists(path.resolve(getMetaEdConsoleSourceDirectory())))) {
     setMetaEdConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-csharp'));
   }
-  if (!getMetaEdJsConsoleSourceDirectory() || !await fs.exists(path.resolve(getMetaEdJsConsoleSourceDirectory()))) {
+  if (!getMetaEdJsConsoleSourceDirectory() || !(await fs.exists(path.resolve(getMetaEdJsConsoleSourceDirectory())))) {
     setMetaEdJsConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-console'));
   }
 

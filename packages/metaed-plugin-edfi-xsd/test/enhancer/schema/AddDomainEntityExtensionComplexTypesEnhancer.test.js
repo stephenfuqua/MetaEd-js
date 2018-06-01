@@ -58,7 +58,7 @@ describe('when enhancing domainEntity extension', () => {
     enhance(metaEd);
 
     expect(enhancedItem.data.edfiXsd.xsd_ComplexTypes.length).toBe(1);
-    createdComplexType = enhancedItem.data.edfiXsd.xsd_ComplexTypes[0];
+    [createdComplexType] = enhancedItem.data.edfiXsd.xsd_ComplexTypes;
     createdReferenceType = enhancedItem.data.edfiXsd.xsd_ReferenceType;
     createdIdentityType = enhancedItem.data.edfiXsd.xsd_IdentityType;
   });
@@ -207,8 +207,7 @@ describe('when enhancing domainEntity extension with common type override', () =
     enhance(metaEd);
 
     expect(domainEntityExtension.data.edfiXsd.xsd_ComplexTypes.length).toBe(2);
-    createdRestrictionComplexType = domainEntityExtension.data.edfiXsd.xsd_ComplexTypes[0];
-    createdExtensionComplexType = domainEntityExtension.data.edfiXsd.xsd_ComplexTypes[1];
+    [createdRestrictionComplexType, createdExtensionComplexType] = domainEntityExtension.data.edfiXsd.xsd_ComplexTypes;
   });
 
   it('should have annotation documentation assigned on extension complex type', () => {

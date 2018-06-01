@@ -15,7 +15,7 @@ export function templateNamed(templateName: string) {
   return domainMetadataHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => ({
+export const template = R.memoizeWith(R.identity, () => ({
   domainMetadata: templateNamed('domainMetadata'),
   domainMetadataExtension: templateNamed('domainMetadataExtension'),
 }));

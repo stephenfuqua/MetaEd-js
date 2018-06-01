@@ -196,8 +196,7 @@ describe('when generating api model with simple extensions and comparing it to d
       state.generatorResults.filter(x => x.generatorName === 'edfiOdsApi.ApiModelGenerator'),
     );
 
-    generatedCoreOutput = generatorResult.generatedOutput[0];
-    generatedExtensionOutput = generatorResult.generatedOutput[1];
+    [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
     await ffs.writeFile(path.resolve(artifactPath, generatedCoreFilename), generatedCoreOutput.resultString, 'utf-8');
     await ffs.writeFile(
@@ -313,8 +312,7 @@ describe('when generating api model with student transcript extensions and compa
       state.generatorResults.filter(x => x.generatorName === 'edfiOdsApi.ApiModelGenerator'),
     );
 
-    generatedCoreOutput = generatorResult.generatedOutput[0];
-    generatedExtensionOutput = generatorResult.generatedOutput[1];
+    [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
 
     await ffs.writeFile(path.resolve(artifactPath, generatedCoreFilename), generatedCoreOutput.resultString, 'utf-8');
 

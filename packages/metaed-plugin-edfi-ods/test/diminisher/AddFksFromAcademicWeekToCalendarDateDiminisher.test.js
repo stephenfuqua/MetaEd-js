@@ -36,13 +36,13 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 
   it('should add two foreign keys', () => {
     // $FlowIgnore null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek);
     expect(foreignKeys).toHaveLength(2);
   });
 
   it('should have sourceReference on each foreign key', () => {
     // $FlowIgnore null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek);
     expect(foreignKeys[0].sourceReference.isSyntheticRelationship).toBe(true);
     expect(foreignKeys[1].sourceReference.isSyntheticRelationship).toBe(true);
   });
@@ -132,7 +132,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 
   it('should not modify existing foreign keys', () => {
     // $FlowIgnore null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(academicWeek);
     expect(foreignKeys).toHaveLength(2);
     expect(R.head(foreignKeys).name).toBe('');
     expect(R.last(foreignKeys).name).toBe('');

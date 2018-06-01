@@ -74,7 +74,7 @@ export async function findMetaEdProjectMetadata(createProjectJson: boolean = fal
   const result: Array<MetaEdProjectMetadata> = await Promise.all(
     atom.project.getPaths().map(async (projectPath: string) => {
       const projectJsonFilePath = path.join(projectPath, PROJECT_SETTINGS_FILE_NAME);
-      if (!await fs.exists(projectJsonFilePath)) {
+      if (!(await fs.exists(projectJsonFilePath))) {
         if (createProjectJson) {
           await newProjectJson(projectPath);
         } else

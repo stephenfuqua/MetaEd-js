@@ -47,7 +47,7 @@ describe('when enhancing associations', () => {
     namespace.entity.association.set(association.metaEdName, association);
 
     enhance(metaEd);
-    aggregate = association.data.edfiOdsApi.aggregate;
+    ({ aggregate } = association.data.edfiOdsApi);
   });
 
   it('should create aggregate', () => {

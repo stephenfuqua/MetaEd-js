@@ -17,7 +17,7 @@ export type InputDirectory = {
 
 export function loadFiles(state: State): boolean {
   let success: boolean = true;
-  const metaEdConfiguration: MetaEdConfiguration = state.metaEdConfiguration;
+  const { metaEdConfiguration }: { metaEdConfiguration: MetaEdConfiguration } = state;
 
   if (metaEdConfiguration.projects.length !== metaEdConfiguration.projectPaths.length) {
     winston.error('FileSystemFilenameLoader: project metadata must be same length as project paths');

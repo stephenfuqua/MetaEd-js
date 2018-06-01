@@ -48,7 +48,7 @@ describe('when enhancing a domain entity', () => {
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
-    aggregate = domainEntity.data.edfiOdsApi.aggregate;
+    ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
   it('should add aggregate to namespace', () => {
@@ -113,7 +113,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
-    aggregate = domainEntity.data.edfiOdsApi.aggregate;
+    ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
   it('should create aggregate', () => {
@@ -172,7 +172,7 @@ describe('when enhancing a domain entity that has a required collection table', 
     namespace.entity.domainEntity.set(domainEntity.metaEdName, domainEntity);
 
     enhance(metaEd);
-    aggregate = domainEntity.data.edfiOdsApi.aggregate;
+    ({ aggregate } = domainEntity.data.edfiOdsApi);
   });
 
   it('should add aggregate to namespace', () => {

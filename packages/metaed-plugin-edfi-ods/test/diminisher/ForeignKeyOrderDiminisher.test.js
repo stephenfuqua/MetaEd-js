@@ -93,7 +93,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 
   it('should have correct foreign key order', () => {
     // $FlowIgnore - null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName);
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyOrder);
   });
@@ -173,7 +173,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
 
   it('should have correct foreign key order', () => {
     // $FlowIgnore - null check
-    const foreignKeys: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName).foreignKeys;
+    const { foreignKeys }: Array<ForeignKey> = tableEntities(metaEd, namespace).get(parentTableName);
     expect(foreignKeys).toBeDefined();
     expect(R.chain((fk: ForeignKey) => fk.foreignTableColumnNames)(foreignKeys)).toEqual(primaryKeyNames);
   });

@@ -161,7 +161,7 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
   exitingIntegerType() {
     if (this.currentIntegerType === NoIntegerType) return;
 
-    const projectExtension = this.currentNamespace.projectExtension;
+    const { projectExtension } = this.currentNamespace;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentIntegerType.metaEdName}`
       : this.currentIntegerType.metaEdName;

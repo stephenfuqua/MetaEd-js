@@ -20,7 +20,7 @@ export function templateNamed(templateName: string) {
   return educationOrganizationReferenceHandlebars.compile(templateString(templateName));
 }
 
-export const template = R.memoize(() => templateNamed('educationOrganizationReferenceMetadata'))();
+export const template = R.memoizeWith(R.identity, () => templateNamed('educationOrganizationReferenceMetadata'))();
 
 function generateFile(input: any, namespace: Namespace): GeneratedOutput {
   return {

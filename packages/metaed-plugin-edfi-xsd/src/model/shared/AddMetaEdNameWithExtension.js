@@ -3,7 +3,7 @@ import type { ModelBase, TopLevelEntity } from 'metaed-core';
 
 export function metaEdNameWithExtension(extensionEntity: ModelBase): () => string {
   return () => {
-    const projectExtension = extensionEntity.namespace.projectExtension;
+    const { projectExtension }: { projectExtension: string } = extensionEntity.namespace;
     return projectExtension ? `${projectExtension}-${extensionEntity.metaEdName}` : extensionEntity.metaEdName;
   };
 }
@@ -11,7 +11,7 @@ export function metaEdNameWithExtension(extensionEntity: ModelBase): () => strin
 export function metaEdNameWithExtensionIncludingSuffix(extensionEntity: TopLevelEntity): () => string {
   return () => {
     const baseName = extensionEntity.metaEdName + extensionEntity.namespace.extensionEntitySuffix;
-    const projectExtension = extensionEntity.namespace.projectExtension;
+    const { projectExtension }: { projectExtension: string } = extensionEntity.namespace;
     return projectExtension ? `${projectExtension}-${baseName}` : baseName;
   };
 }

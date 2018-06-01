@@ -9,7 +9,13 @@ import type { Table } from '../model/database/Table';
 
 const enhancerName: string = 'AddSchemaContainerEnhancer';
 
-export const orderRows = R.sortBy(R.compose(R.toLower, R.join(''), R.props(['name', 'description'])));
+export const orderRows = R.sortBy(
+  R.compose(
+    R.toLower,
+    R.join(''),
+    R.props(['name', 'description']),
+  ),
+);
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {

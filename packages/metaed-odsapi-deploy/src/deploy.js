@@ -144,7 +144,7 @@ export function dataStandardVersionFor(projects: Array<MetaEdProject>): SemVer {
 }
 
 export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deployCore: boolean): Array<DeployTargets> {
-  const projects: Array<MetaEdProject> = metaEdConfiguration.projects;
+  const { projects }: { projects: Array<MetaEdProject> } = metaEdConfiguration;
   const dataStandardVersion: SemVer = dataStandardVersionFor(projects);
 
   const targets: Array<DeployTargets> = [];
@@ -174,7 +174,7 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
 }
 
 async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
-  const projectName: string = target.projectName;
+  const { projectName }: { projectName: string } = target;
   if (target.namespaceName === 'edfi') return true;
   if (versionSatisfies(dataStandardVersionFor(metaEdConfiguration.projects), V2Only)) return true;
 
@@ -191,7 +191,7 @@ async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: D
 }
 
 async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
-  const projectName: string = target.projectName;
+  const { projectName }: { projectName: string } = target;
   if (target.namespaceName === 'edfi') return true;
 
   const targetPath: string = path.resolve(
@@ -203,7 +203,7 @@ async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguratio
   );
 
   try {
-    if (!await fs.pathExists(targetPath)) return true;
+    if (!(await fs.pathExists(targetPath))) return true;
 
     await fs.remove(targetPath);
     winston.info(`deploy: ${chalk.gray(`Remove ${projectName} artifacts`)} ${chalk.red('x')} ${targetPath}`);
@@ -215,7 +215,7 @@ async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguratio
 }
 
 async function refreshProjectFile(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
-  const projectName: string = target.projectName;
+  const { projectName }: { projectName: string } = target;
   if (target.namespaceName === 'edfi') return true;
 
   const csproj: string = '.csproj';
@@ -228,7 +228,7 @@ async function refreshProjectFile(metaEdConfiguration: MetaEdConfiguration, targ
   );
 
   try {
-    if (!await fs.pathExists(targetPath)) return true;
+    if (!(await fs.pathExists(targetPath))) return true;
 
     await touch(targetPath, { nocreate: true });
     winston.info(
@@ -255,8 +255,7 @@ function coreApiModelDeployPathFor(metaEdConfiguration: MetaEdConfiguration): st
 
 async function deployArtifactSources(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets) {
   const source: ArtifactPaths = sources();
-  const artifactDirectory: string = metaEdConfiguration.artifactDirectory;
-  const deployDirectory: string = metaEdConfiguration.deployDirectory;
+  const { artifactDirectory, deployDirectory }: { artifactDirectory: string, deployDirectory: string } = metaEdConfiguration;
 
   // eslint-disable-next-line no-restricted-syntax
   for (const artifactName of Object.keys(source)) {
@@ -302,8 +301,8 @@ export async function executeDeploy(metaEdConfiguration: MetaEdConfiguration, de
   let result: boolean = false;
   // eslint-disable-next-line no-restricted-syntax
   for (const target of targets) {
-    if (!await projectExists(metaEdConfiguration, target)) return false;
-    if (!await removeSupportingArtifacts(metaEdConfiguration, target)) return false;
+    if (!(await projectExists(metaEdConfiguration, target))) return false;
+    if (!(await removeSupportingArtifacts(metaEdConfiguration, target))) return false;
     result = await deployArtifactSources(metaEdConfiguration, target);
     await refreshProjectFile(metaEdConfiguration, target);
   }

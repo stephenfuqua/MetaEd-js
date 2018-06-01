@@ -58,8 +58,7 @@ describe('when enhancing descriptor with no map type', () => {
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
     enhance(metaEd);
-    aggregate = descriptor.data.edfiOdsApi.aggregate;
-    typeAggregate = descriptor.data.edfiOdsApi.typeAggregate;
+    ({ aggregate, typeAggregate } = descriptor.data.edfiOdsApi);
   });
 
   it('should add aggregate to namespace', () => {
@@ -142,8 +141,7 @@ describe('when enhancing descriptor with map type', () => {
     namespace.entity.descriptor.set(descriptor.metaEdName, descriptor);
 
     enhance(metaEd);
-    aggregate = descriptor.data.edfiOdsApi.aggregate;
-    typeAggregate = descriptor.data.edfiOdsApi.typeAggregate;
+    ({ aggregate, typeAggregate } = descriptor.data.edfiOdsApi);
   });
 
   it('should add aggregate to namespace', () => {

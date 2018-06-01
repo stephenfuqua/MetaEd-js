@@ -247,5 +247,11 @@ export function buildAssociationDefinitions(metaEd: MetaEdEnvironment, namespace
     });
   });
 
-  return R.sortBy(R.compose(R.toLower, R.path(['fullName', 'name'])), result);
+  return R.sortBy(
+    R.compose(
+      R.toLower,
+      R.path(['fullName', 'name']),
+    ),
+    result,
+  );
 }

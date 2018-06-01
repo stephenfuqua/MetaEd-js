@@ -961,9 +961,10 @@ function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
     const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('name'), primaryKeys);
     const primaryKeyFor: (primaryKeyName: string) => Column = R.prop(R.__, primaryKeyLookup);
 
-    table.primaryKeys = R.compose(R.union(R.__, primaryKeys), R.chain((pkName: string) => primaryKeyFor(pkName)))(
-      primaryKeyOrder,
-    );
+    table.primaryKeys = R.compose(
+      R.union(R.__, primaryKeys),
+      R.chain((pkName: string) => primaryKeyFor(pkName)),
+    )(primaryKeyOrder);
   });
 }
 

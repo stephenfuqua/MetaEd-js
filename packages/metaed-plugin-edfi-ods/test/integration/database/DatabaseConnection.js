@@ -82,7 +82,10 @@ export async function connect(databaseName: string = 'master', retry: number = r
       RegExp('TCP Provider: An existing connection was forcibly closed by the remote host.').test(error.message)
     ) {
       await new Promise(resolve => setTimeout(resolve, 500));
-      pool = await connect(databaseName, retry - 1);
+      pool = await connect(
+        databaseName,
+        retry - 1,
+      );
     } else {
       throw error;
     }

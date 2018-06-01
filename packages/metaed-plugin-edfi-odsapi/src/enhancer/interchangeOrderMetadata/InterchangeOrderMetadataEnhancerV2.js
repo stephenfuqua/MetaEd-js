@@ -154,16 +154,18 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
                 ),
               ),
           )
-          .map((interchange: MergedInterchange): Edge => ({
-            target: interchange.metaEdName,
-            isRequired: interchange.elements.some((element: InterchangeItem) =>
-              elementDependencies.some((dependency: Dependency) =>
-                dependency.edges.some(
-                  (edge: Edge) => edge.target === element.referencedEntity.metaEdName && edge.isRequired,
+          .map(
+            (interchange: MergedInterchange): Edge => ({
+              target: interchange.metaEdName,
+              isRequired: interchange.elements.some((element: InterchangeItem) =>
+                elementDependencies.some((dependency: Dependency) =>
+                  dependency.edges.some(
+                    (edge: Edge) => edge.target === element.referencedEntity.metaEdName && edge.isRequired,
+                  ),
                 ),
               ),
-            ),
-          })),
+            }),
+          ),
       };
       addDependenciesToGraph(interchangeGraph, [interchangeDependencies]);
     });

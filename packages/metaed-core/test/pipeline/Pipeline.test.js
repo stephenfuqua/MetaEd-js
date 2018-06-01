@@ -82,7 +82,7 @@ describe('when building a DE with a common property but no common declaration', 
     const entity = coreNamespace.entity.domainEntity.get('EntityName');
     if (entity == null) throw new Error();
     expect(entity.properties[1].type).toBe('common');
-    const referencedEntity = ((entity.properties[1]: any): CommonProperty).referencedEntity;
+    const { referencedEntity } = ((entity.properties[1]: any): CommonProperty);
     if (referencedEntity == null) throw new Error();
     expect(referencedEntity.type).toBe('unknown');
   });

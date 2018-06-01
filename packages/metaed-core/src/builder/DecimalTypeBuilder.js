@@ -159,7 +159,7 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   exitingDecimalType() {
     if (this.currentDecimalType === NoDecimalType) return;
 
-    const projectExtension = this.currentNamespace.projectExtension;
+    const { projectExtension } = this.currentNamespace;
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentDecimalType.metaEdName}`
       : this.currentDecimalType.metaEdName;

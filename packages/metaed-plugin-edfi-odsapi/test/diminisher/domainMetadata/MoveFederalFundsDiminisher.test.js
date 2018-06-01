@@ -53,7 +53,7 @@ describe('when diminishing with no matching entity tables', () => {
   });
 
   it('should not change aggregates in namespace', () => {
-    const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
+    const { aggregates } = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi);
     expect(aggregates).toHaveLength(1);
     expect(aggregates[0]).toBe(aggregate);
   });
@@ -152,7 +152,7 @@ describe('when diminishing with matching entity tables', () => {
   });
 
   it('should add fake aggregates', () => {
-    const aggregates = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi).aggregates;
+    const { aggregates } = ((namespace.data.edfiOdsApi: any): NamespaceEdfiOdsApi);
     expect(aggregates).toHaveLength(4);
 
     const localEducationAgencyFederalFundsAggregate: Aggregate = R.head(

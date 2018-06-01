@@ -6,7 +6,6 @@ import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/Ed
 import { newForeignKey } from '../../src/model/database/ForeignKey';
 import { newTable } from '../../src/model/database/Table';
 import { tableEntities } from '../../src/enhancer/EnhancerHelper';
-import type { ForeignKey } from '../../src/model/database/ForeignKey';
 import type { Table } from '../../src/model/database/Table';
 
 describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher diminishes GraduationPlanRequiredAssessmentPerformanceLevel table', () => {
@@ -51,10 +50,8 @@ describe('when GraduationPlanRequiredAssessmentPerformanceLevelDiminisher dimini
   });
 
   it('should update foreign key parent table name', () => {
-    const foreignKeys: ?Array<ForeignKey> = tableEntities(metaEd, namespace).get(
-      graduationPlanRequiredAssessmentAssessmentPerformanceLevel,
-      // $FlowIgnore - null check
-    ).foreignKeys;
+    // $FlowIgnore - null check
+    const { foreignKeys } = tableEntities(metaEd, namespace).get(graduationPlanRequiredAssessmentAssessmentPerformanceLevel);
     // $FlowIgnore - null check
     expect(foreignKeys.every(fk => fk.parentTableName === graduationPlanRequiredAssessmentAssessmentPerformanceLevel)).toBe(
       true,

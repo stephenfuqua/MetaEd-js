@@ -65,7 +65,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table', () => {
 
   it('should have correct primary key order', () => {
     // $FlowIgnore - null check
-    const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective).primaryKeys;
+    const { primaryKeys }: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective);
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
@@ -146,7 +146,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
 
   it('should have correct primary key order', () => {
     // $FlowIgnore - null check
-    const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective).primaryKeys;
+    const { primaryKeys }: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective);
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);
   });
 });
@@ -189,7 +189,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes non matching table', () => {
 
   it('should have correct primary key order', () => {
     // $FlowIgnore - null check
-    const primaryKeys: Array<Column> = tableEntities(metaEd, namespace).get(TableName).primaryKeys;
+    const { primaryKeys }: Array<Column> = tableEntities(metaEd, namespace).get(TableName);
     expect(primaryKeys).toEqual([]);
   });
 });
