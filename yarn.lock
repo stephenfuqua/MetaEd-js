@@ -8545,7 +8545,7 @@ xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
 
-xlsx@^0.11.8:
+xlsx@0.11.19, xlsx@^0.11.8:
   version "0.11.19"
   resolved "https://www.myget.org/F/ed-fi/npm/xlsx/-/xlsx-0.11.19.tgz#2f019d9df756f6345aac5bc1af2442cf22a025e3"
   dependencies:
