@@ -14,7 +14,8 @@
       "metaEdVersion": "1.x",
       "technologyVersion": "1.x",
       "dependencies": [
-        "metaed-plugin-edfi-xsd"
+        "metaed-plugin-edfi-xsd",
+        "metaed-plugin-edfi-ods"
       ]
     }
   },
@@ -27,7 +28,8 @@
     "metaed-plugin-edfi-xsd": "1.2.0",
     "ramda": "^0.25.0",
     "sort-array": "^2.0.0",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "xlsx": "0.11.19"
   },
   "devDependencies": {},
   "scripts": {

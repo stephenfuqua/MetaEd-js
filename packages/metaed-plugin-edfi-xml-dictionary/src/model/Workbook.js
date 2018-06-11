@@ -37,9 +37,9 @@ export function readWorkbook(input: any, type: string): Workbook {
   const workbook: Workbook = newWorkbook();
   Object.values(wb.Sheets).forEach((sheet, i) => {
     const worksheet: Worksheet = newWorksheet(wb.SheetNames[i]);
-    const parcedWorksheet: any = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-    const headers: Array<string> = parcedWorksheet.shift();
-    parcedWorksheet.forEach(row => {
+    const parsedWorksheet: any = xlsx.utils.sheet_to_json(sheet, { header: 1 });
+    const headers: Array<string> = parsedWorksheet.shift();
+    parsedWorksheet.forEach(row => {
       worksheet.rows.push(Object.assign((newRow(): any), { headers, values: row }));
     });
     workbook.sheets.push(worksheet);

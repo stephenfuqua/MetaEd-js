@@ -21,6 +21,7 @@ import { enhance as TimeIntervalEnhancer } from './enhancer/TimeIntervalMetaEdHa
 import { enhance as TimeEnhancer } from './enhancer/TimeMetaEdHandbookEnhancer';
 import { enhance as YearEnhancer } from './enhancer/YearMetaEdHandbookEnhancer';
 import { generate as htmlGenerator } from './generator/MetaEdHandbookAsHtmlIndexGenerator';
+import { generate as excelGenerator } from './generator/MetaEdHandbookAsExcelGenerator';
 
 export function initialize(): MetaEdPlugin {
   return {
@@ -47,6 +48,6 @@ export function initialize(): MetaEdPlugin {
       TimeEnhancer,
       YearEnhancer,
     ],
-    generator: [htmlGenerator],
+    generator: [htmlGenerator, excelGenerator],
   };
 }
