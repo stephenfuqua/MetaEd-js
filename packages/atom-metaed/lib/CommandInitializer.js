@@ -84,8 +84,8 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
       'atom-metaed:build': async () => {
         if (metaEdConsole != null)
           if (outputWindow != null) {
-            const success: boolean = await build(outputWindow); // MetaEdJsConsole
-            if (success) await metaEdConsole.build();
+            await build(outputWindow); // MetaEdJsConsole
+            // if (success) await metaEdConsole.build(); -- old C# console
           }
       },
     }),
@@ -104,8 +104,8 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
         });
         if (result !== 0) return;
 
-        let success: boolean = await build(outputWindow); // MetaEdJsConsole
-        if (success) success = await metaEdConsole.build();
+        const success: boolean = await build(outputWindow); // MetaEdJsConsole
+        // if (success) success = await metaEdConsole.build();
         if (success) await deploy(outputWindow, allianceMode());
       },
     }),
