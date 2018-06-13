@@ -2,6 +2,7 @@
 // @flow
 
 import semver from 'semver';
+import { devEnvironmentCorrectedPath } from './Utility';
 
 export function getCoreMetaEdSourceDirectory(): string {
   return atom.config.get('atom-metaed.coreMetaEdSourceDirectory') || '';
@@ -11,20 +12,8 @@ export function setCoreMetaEdSourceDirectory(directory: string) {
   return atom.config.set('atom-metaed.coreMetaEdSourceDirectory', directory);
 }
 
-export function getMetaEdConsoleSourceDirectory(): string {
-  return atom.config.get('atom-metaed.metaEdConsoleSourceDirectory') || '';
-}
-
-export function setMetaEdConsoleSourceDirectory(directory: string) {
-  return atom.config.set('atom-metaed.metaEdConsoleSourceDirectory', directory);
-}
-
 export function getMetaEdJsConsoleSourceDirectory(): string {
-  return atom.config.get('atom-metaed.metaEdJsConsoleSourceDirectory') || '';
-}
-
-export function setMetaEdJsConsoleSourceDirectory(directory: string) {
-  return atom.config.set('atom-metaed.metaEdJsConsoleSourceDirectory', directory);
+  return devEnvironmentCorrectedPath('metaed-console');
 }
 
 export function getEdfiOdsApiSourceDirectory(): string {

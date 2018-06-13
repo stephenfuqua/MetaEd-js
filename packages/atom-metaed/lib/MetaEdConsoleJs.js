@@ -381,7 +381,6 @@ async function executeDeploy(
   });
 }
 
-// initialConfiguration is temporary until full multi-project support
 export async function deploy(outputWindow: OutputWindow, shouldDeployCore: boolean = false): Promise<boolean> {
   try {
     outputWindow.addMessage(`Beginning MetaEd JS Deploy...`);

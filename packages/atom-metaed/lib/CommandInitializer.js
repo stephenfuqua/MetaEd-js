@@ -3,7 +3,6 @@
 
 // eslint-disable-next-line
 import { CompositeDisposable } from 'atom';
-import MetaEdConsole from './MetaEdConsole';
 import { build, deploy } from './MetaEdConsoleJs';
 import {
   createFromTemplate,
@@ -23,8 +22,6 @@ import {
 import { isCoreMetaEdFile } from './MakeCoreTabsReadOnly';
 import { allianceMode } from './PackageSettings';
 import type OutputWindow from './OutputWindow';
-
-let metaEdConsole: ?MetaEdConsole;
 
 function getContextPaths(commandTarget: any) {
   // console.log(commandTarget.classList);
@@ -61,8 +58,6 @@ const fileFromTemplateEvent = (commandEvent: any, filename: string, template: ()
 };
 
 export function initializeCommands(disposableTracker: CompositeDisposable, outputWindow: OutputWindow): void {
-  metaEdConsole = new MetaEdConsole(outputWindow);
-
   disposableTracker.add(
     atom.commands.add('atom-workspace', {
       'atom-metaed:about': () => {
@@ -82,11 +77,9 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
   disposableTracker.add(
     atom.commands.add('atom-workspace', {
       'atom-metaed:build': async () => {
-        if (metaEdConsole != null)
-          if (outputWindow != null) {
-            await build(outputWindow); // MetaEdJsConsole
-            // if (success) await metaEdConsole.build(); -- old C# console
-          }
+        if (outputWindow != null) {
+          await build(outputWindow);
+        }
       },
     }),
   );
@@ -94,7 +87,6 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
     atom.commands.add('atom-workspace', {
       'atom-metaed:deploy': async () => {
         if (outputWindow == null) return;
-        if (metaEdConsole == null) return;
 
         const result = atom.confirm({
           message: 'Are you sure you want to deploy MetaEd artifacts?',
@@ -104,25 +96,16 @@ export function initializeCommands(disposableTracker: CompositeDisposable, outpu
         });
         if (result !== 0) return;
 
-        const success: boolean = await build(outputWindow); // MetaEdJsConsole
-        // if (success) success = await metaEdConsole.build();
+        const success: boolean = await build(outputWindow);
         if (success) await deploy(outputWindow, allianceMode());
       },
     }),
   );
   disposableTracker.add(
     atom.commands.add('atom-workspace', {
-      'atom-metaed:build-js': async () => {
-        if (outputWindow != null) {
-          await build(outputWindow); // MetaEdJsConsole
-        }
-      },
-    }),
-  );
-  disposableTracker.add(
-    atom.commands.add('atom-workspace', {
       'atom-metaed:crash': () => {
-        this.subscriptions.add(null); // force a crash -- this.subscriptions is undefined
+        // force a crash -- this.subscriptions is undefined
+        this.subscriptions.add(null);
       },
     }),
   );

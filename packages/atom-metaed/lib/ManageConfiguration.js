@@ -8,10 +8,6 @@ import { CompositeDisposable } from 'atom';
 import {
   getCoreMetaEdSourceDirectory,
   setCoreMetaEdSourceDirectory,
-  getMetaEdConsoleSourceDirectory,
-  setMetaEdConsoleSourceDirectory,
-  getMetaEdJsConsoleSourceDirectory,
-  setMetaEdJsConsoleSourceDirectory,
   getTargetDsVersion,
   setTargetDsVersion,
   getTargetOdsApiVersion,
@@ -60,13 +56,6 @@ export async function initializePackageSettings() {
   if (!getCoreMetaEdSourceDirectory() || !(await fs.exists(path.resolve(getCoreMetaEdSourceDirectory())))) {
     await setCoreToTwoDotX();
   }
-  if (!getMetaEdConsoleSourceDirectory() || !(await fs.exists(path.resolve(getMetaEdConsoleSourceDirectory())))) {
-    setMetaEdConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-csharp'));
-  }
-  if (!getMetaEdJsConsoleSourceDirectory() || !(await fs.exists(path.resolve(getMetaEdJsConsoleSourceDirectory())))) {
-    setMetaEdJsConsoleSourceDirectory(devEnvironmentCorrectedPath('metaed-console'));
-  }
-
   if (!atom.config.get('metaed-exception-report.user')) {
     atom.config.set('metaed-exception-report.user', newUuid());
   }
@@ -109,6 +98,16 @@ export function manageLegacyIssues(disposableTracker: CompositeDisposable) {
   if (atom.config.get('atom-metaed.useTechPreview')) {
     atom.config.unset('atom-metaed.useTechPreview');
     setCoreToThreeDotX();
+  }
+
+  // remove obsolete path to C# console
+  if (atom.config.get('atom-metaed.metaEdConsoleSourceDirectory')) {
+    atom.config.unset('atom-metaed.metaEdConsoleSourceDirectory');
+  }
+
+  // remove obsolete path to JS console - it's hardcoded now
+  if (atom.config.get('atom-metaed.metaEdJsConsoleSourceDirectory')) {
+    atom.config.unset('atom-metaed.metaEdJsConsoleSourceDirectory');
   }
 
   // warn that MetaEdOutput-Experimental folder from 1.1.x versions is no longer used

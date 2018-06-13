@@ -9,11 +9,9 @@ import path from 'path';
 import stackTrace from 'stack-trace';
 import {
   getCoreMetaEdSourceDirectory,
-  getMetaEdConsoleSourceDirectory,
   getEdfiOdsApiSourceDirectory,
   getCmdFullPath,
   validateOnTheFly,
-  getMetaEdJsConsoleSourceDirectory,
   telemetryConsent,
   setTelemetryConsent,
   allianceMode,
@@ -24,8 +22,6 @@ import { devEnvironmentCorrectedPath } from './Utility';
 const atomMetaEdPackageJson = require(path.resolve(__dirname, '../package.json'));
 // $FlowIgnore
 const metaEdJsPackageJson = require(devEnvironmentCorrectedPath('metaed-core/package.json'));
-// $FlowIgnore
-const metaCsharpPackageJson = require(devEnvironmentCorrectedPath('metaed-csharp/package.json'));
 // $FlowIgnore
 const edFiModel20PackageJson = require(devEnvironmentCorrectedPath('ed-fi-model-2.0/package.json'));
 // $FlowIgnore
@@ -167,9 +163,6 @@ function addMetaEdIdeMetadata(error) {
     'metaed-core': {
       version: metaEdJsPackageJson.version,
     },
-    'metaed-csharp': {
-      version: metaCsharpPackageJson.version,
-    },
     'ed-fi-model-2.0': {
       version: edFiModel20PackageJson.version,
     },
@@ -180,8 +173,6 @@ function addMetaEdIdeMetadata(error) {
 
   error.metadata.metaedsettings = {
     'Core-MetaEd-Directory': getCoreMetaEdSourceDirectory(),
-    'MetaEd-Console-Directory': getMetaEdConsoleSourceDirectory(),
-    'MetaEd-JS-Console-Directory': getMetaEdJsConsoleSourceDirectory(),
     'Ods-Api-Directory': getEdfiOdsApiSourceDirectory(),
     'Windows-Command-Prompt': getCmdFullPath(),
     validateOnTheFly: validateOnTheFly(),

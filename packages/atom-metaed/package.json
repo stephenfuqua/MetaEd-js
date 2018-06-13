@@ -9,43 +9,8 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "configSchema": {
-    "coreMetaEdSourceDirectory": {
-      "order": 1,
-      "title": "Ed-Fi Data Standard core .metaed directory",
-      "description": "Full path to the set of core MetaEd files for the Ed-Fi Data Standard.",
-      "type": "string",
-      "default": ""
-    },
-    "metaEdConsoleSourceDirectory": {
-      "order": 2,
-      "title": "MetaEd Console executable directory",
-      "description": "Full path to the MetaEd Console directory.",
-      "type": "string",
-      "default": ""
-    },
-    "edfiOdsApiSourceDirectory": {
-      "order": 3,
-      "title": "Ed-Fi ODS / API source directory",
-      "description": "Full path to root folder for the Ed-Fi ODS / API source code.  The folder this points to should contain Ed-Fi-ODS and Ed-Fi-ODS-Implementation folders.",
-      "type": "string",
-      "default": ""
-    },
-    "cmdFullPath": {
-      "order": 5,
-      "title": "Full path to Windows command prompt (cmd.exe)",
-      "description": "Full path to cmd.exe, used to spawn the MetaEd Console and provide highlighted output.",
-      "type": "string",
-      "default": "C:\\Windows\\System32\\cmd.exe"
-    },
-    "validateOnTheFly": {
-      "order": 6,
-      "title": "Enable validation as you type (experimental)",
-      "description": "Performs validation on the fly (instead of on save).  May introduce a delay in the editor UI.  Requires Atom restart after changing.",
-      "type": "boolean",
-      "default": true
-    },
     "targetDsVersion": {
-      "order": 7,
+      "order": 1,
       "title": "Target Ed-Fi Data Standard Version",
       "description": "Select the target Ed-Fi Data Standard version.",
       "type": "string",
@@ -62,7 +27,7 @@
       ]
     },
     "targetOdsApiVersion": {
-      "order": 8,
+      "order": 2,
       "title": "Target Ed-Fi ODS/API Version",
       "description": "Select the target Ed-Fi ODS/API version.",
       "type": "string",
@@ -94,8 +59,15 @@
         }
       ]
     },
+    "edfiOdsApiSourceDirectory": {
+      "order": 3,
+      "title": "Ed-Fi ODS / API source directory",
+      "description": "Full path to root folder for the Ed-Fi ODS / API source code.  The folder this points to should contain Ed-Fi-ODS and Ed-Fi-ODS-Implementation folders.",
+      "type": "string",
+      "default": ""
+    },
     "telemetryConsent": {
-      "order": 9,
+      "order": 4,
       "title": "Consent to anonymous usage reporting",
       "description": "Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions.",
       "type": "string",
@@ -115,14 +87,35 @@
         }
       ]
     },
+    "validateOnTheFly": {
+      "order": 5,
+      "title": "Enable validation as you type (experimental)",
+      "description": "Performs validation on the fly (instead of on save).  May introduce a delay in the editor UI.  Requires Atom restart after changing.",
+      "type": "boolean",
+      "default": true
+    },
+    "coreMetaEdSourceDirectory": {
+      "order": 6,
+      "title": "Ed-Fi Data Standard core .metaed directory",
+      "description": "Full path to the set of core MetaEd files for the Ed-Fi Data Standard.",
+      "type": "string",
+      "default": ""
+    },
+    "cmdFullPath": {
+      "order": 7,
+      "title": "Full path to Windows command prompt (cmd.exe)",
+      "description": "Full path to cmd.exe, used to spawn the MetaEd Console and provide highlighted output.",
+      "type": "string",
+      "default": "C:\\Windows\\System32\\cmd.exe"
+    },
     "alliance": {
-      "order": 10,
+      "order": 9,
       "title": "",
       "type": "object",
       "collapsed": true,
       "properties": {
         "allianceMode": {
-          "order": 9,
+          "order": 8,
           "title": "Alliance only",
           "description": "For Alliance users only.  Requires Atom restart.",
           "type": "boolean",
@@ -157,12 +150,12 @@
     "klaw-sync": "^3.0.2",
     "metaed-console": "1.2.0",
     "metaed-core": "1.2.0",
-    "metaed-csharp": "1.1.3",
     "metaed-odsapi-deploy": "1.2.0",
     "metaed-plugin-edfi-handbook": "1.2.0",
     "metaed-plugin-edfi-interchange-brief": "1.2.0",
     "metaed-plugin-edfi-ods": "1.2.0",
     "metaed-plugin-edfi-odsapi": "1.2.0",
+    "metaed-plugin-edfi-udm": "1.2.0",
     "metaed-plugin-edfi-unified": "1.2.0",
     "metaed-plugin-edfi-xml-dictionary": "1.2.0",
     "metaed-plugin-edfi-xsd": "1.2.0",
