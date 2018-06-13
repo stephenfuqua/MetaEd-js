@@ -1,7 +1,7 @@
 {
   "name": "metaed-plugin-edfi-unified",
   "main": "dist/index.js",
-  "version": "1.2.0",
+  "version": "1.2.1-dev.0",
   "description": "Ed-Fi Alliance unified plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -17,11 +17,10 @@
     }
   },
   "dependencies": {
-    "metaed-core": "1.2.0",
+    "metaed-core": "1.2.1-dev.0",
     "ramda": "^0.25.0",
     "winston": "^2.4.0"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "yarn build:clean && yarn build:dist && yarn build:flow",
     "build:clean": "rimraf dist",
