@@ -155,6 +155,7 @@
     "metaed-plugin-edfi-interchange-brief": "1.2.1-dev.0",
     "metaed-plugin-edfi-ods": "1.2.1-dev.0",
     "metaed-plugin-edfi-odsapi": "1.2.1-dev.0",
+    "metaed-plugin-edfi-sql-dictionary": "1.2.1-dev.0",
     "metaed-plugin-edfi-udm": "1.2.1-dev.0",
     "metaed-plugin-edfi-unified": "1.2.1-dev.0",
     "metaed-plugin-edfi-xml-dictionary": "1.2.1-dev.0",
