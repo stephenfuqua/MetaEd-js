@@ -12,7 +12,7 @@ import type { ColumnTransform } from './ColumnTransform';
 import type { ForeignKey, ForeignKeySourceReference } from './ForeignKey';
 import type { ForeignKeyStrategy } from './ForeignKeyStrategy';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 const maxSqlServerIdentifierLength = R.take(128);
 

@@ -21,7 +21,7 @@ import type {
 } from 'metaed-core';
 import { executeDeploy, dataStandardVersionFor } from './deploy';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 const chalk = new Chalk.constructor({ level: 3 });
 
 export async function metaEdDeploy() {

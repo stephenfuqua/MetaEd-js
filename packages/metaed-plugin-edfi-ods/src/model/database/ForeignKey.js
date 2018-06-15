@@ -9,7 +9,7 @@ import type { ColumnNamePair } from './ColumnNamePair';
 import type { Table } from './Table';
 import type { Column } from './Column';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export type ForeignKeySourceReference = {
   isPartOfIdentity: boolean,

@@ -7,7 +7,7 @@ import Yargs from 'yargs';
 import { executePipeline, newState, newMetaEdConfiguration, findDataStandardVersions } from 'metaed-core';
 import type { State, SemVer } from 'metaed-core';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 const chalk = new Chalk.constructor({ level: 3 });
 
 export async function metaEdConsole() {

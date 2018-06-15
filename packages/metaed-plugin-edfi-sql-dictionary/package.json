@@ -24,7 +24,7 @@
     "metaed-core": "1.2.1-dev.0",
     "metaed-plugin-edfi-ods": "1.2.1-dev.0",
     "metaed-plugin-edfi-unified": "1.2.1-dev.0",
-    "winston": "^2.4.0",
+    "winston": "3.0.0",
     "xlsx": "0.11.19"
   },
   "scripts": {

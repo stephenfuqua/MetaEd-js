@@ -27,7 +27,7 @@
     "ramda": "^0.25.0",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
-    "winston": "^2.4.0",
+    "winston": "3.0.0",
     "xml-js": "^1.4.2"
   },
   "devDependencies": {

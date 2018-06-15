@@ -3,7 +3,7 @@ import winston from 'winston';
 import { Connection, ConnectionPool, Request, Transaction } from 'mssql/msnodesqlv8';
 import { highlight } from 'cli-highlight';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 if (process.env.TEAMCITY_VERSION != null) {
   winston.level = 'debug';
 } else {

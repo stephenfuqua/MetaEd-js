@@ -17,7 +17,7 @@ import { loadPlugins } from './LoadPlugins';
 import { initializeNamespaces } from './InitializeNamespaces';
 import type { State } from '../State';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export async function executePipeline(state: State): Promise<{ state: State, failure: boolean }> {
   // winston.info('Validating configuration...');

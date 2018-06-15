@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import winston from 'winston';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 const atomChannel: string = process.env.ATOM_CHANNEL || 'stable';
 const rootDirectory: string = path.resolve(`${__dirname}/../../../../../`);

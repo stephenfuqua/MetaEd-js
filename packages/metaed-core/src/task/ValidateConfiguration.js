@@ -9,7 +9,7 @@ import type { MetaEdConfiguration } from '../MetaEdConfiguration';
 import type { SemVer } from '../MetaEdEnvironment';
 import type { State } from '../State';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export const validateVersion = (version: SemVer, message: string) => {
   const cleaned = semver.clean(version);

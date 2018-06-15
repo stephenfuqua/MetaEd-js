@@ -9,7 +9,7 @@ import R from 'ramda';
 import { isDataStandard, findDataStandardVersions, versionSatisfies, V2Only, V3OrGreater } from 'metaed-core';
 import type { MetaEdProject, SemVer, MetaEdConfiguration } from 'metaed-core';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 const chalk = new Chalk.constructor({ level: 3 });
 
 type ArtifactPaths = {

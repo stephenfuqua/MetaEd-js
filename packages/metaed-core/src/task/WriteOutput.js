@@ -7,7 +7,7 @@ import winston from 'winston';
 import type { State } from '../State';
 import type { GeneratorResult } from '../generator/GeneratorResult';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 const chalk = new Chalk.constructor({ level: 3 });
 export const METAED_OUTPUT: string = 'MetaEdOutput';
 

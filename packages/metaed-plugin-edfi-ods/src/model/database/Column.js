@@ -7,7 +7,7 @@ import { ColumnDataTypes } from './ColumnDataTypes';
 import type { ColumnType } from './ColumnType';
 import type { ColumnNamer } from './ColumnNamer';
 
-winston.cli();
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export type Column = {
   name: string,

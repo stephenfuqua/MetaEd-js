@@ -20,7 +20,7 @@
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
     "topo": "2.0.2",
-    "winston": "^2.4.0"
+    "winston": "3.0.0"
   },
   "devDependencies": {
     "normalize-path": "^2.1.1"
