@@ -1,18 +1,25 @@
 // @flow
+import type { Namespace, MetaEdEnvironment } from 'metaed-core';
+import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newBooleanColumn, newShortColumn, newStringColumn } from '../../model/database/Column';
 import type { Table } from '../../model/database/Table';
 
-export const schoolYearEnumerationTableCreator: { build(namespaceName: string, documentation: string): Table } = {
-  build(namespaceName: string, documentation: string): Table {
+export const schoolYearEnumerationTableCreator: {
+  build(metaEd: MetaEdEnvironment, namespace: Namespace, documentation: string): Table,
+} = {
+  build(metaEd: MetaEdEnvironment, namespace: Namespace, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: 'SchoolYearType',
-      schema: namespaceName,
+      schema: namespace.namespaceName,
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
     });
+    if (changeEventIndicated(metaEd, namespace)) {
+      table.includeAggregateHashValueColumn = true;
+    }
     addColumns(
       table,
       [

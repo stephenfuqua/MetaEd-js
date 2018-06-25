@@ -1,6 +1,7 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { changeEventIndicated } from '../enhancer/ChangeEventIndicator';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Table } from '../model/database/Table';
 
@@ -15,18 +16,24 @@ const stateEducationAgencyFederalFunds: string = 'StateEducationAgencyFederalFun
 
 function addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(
   tablesForCoreNamespace: Map<string, Table>,
+  { includeAggregateHashValueColumn }: { includeAggregateHashValueColumn: boolean },
 ): void {
   const table: ?Table = tablesForCoreNamespace.get(localEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
+  if (includeAggregateHashValueColumn) table.includeAggregateHashValueColumn = true;
 }
 
-function addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace: Map<string, Table>): void {
+function addApiTopLevelResourceColumnsToStateFederalFundsTable(
+  tablesForCoreNamespace: Map<string, Table>,
+  { includeAggregateHashValueColumn }: { includeAggregateHashValueColumn: boolean },
+): void {
   const table: ?Table = tablesForCoreNamespace.get(stateEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
+  if (includeAggregateHashValueColumn) table.includeAggregateHashValueColumn = true;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -35,8 +42,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (coreNamespace == null) return { enhancerName, success: false };
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace);
-  addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace);
+  const includeAggregateHashValueColumn: boolean = changeEventIndicated(metaEd, coreNamespace);
+
+  addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace, {
+    includeAggregateHashValueColumn,
+  });
+  addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace, {
+    includeAggregateHashValueColumn,
+  });
 
   return {
     enhancerName,

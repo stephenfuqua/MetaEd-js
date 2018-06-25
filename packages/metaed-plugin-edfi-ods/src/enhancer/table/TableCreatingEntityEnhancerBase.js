@@ -1,5 +1,6 @@
 // @flow
 import type { EntityProperty, MetaEdEnvironment, TopLevelEntity, Namespace } from 'metaed-core';
+import { changeEventIndicated } from '../ChangeEventIndicator';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -25,7 +26,7 @@ export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Tab
   });
 }
 
-export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean): Table {
+export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity, aggregateRootTable: boolean): Table {
   const mainTable: Table = Object.assign(newTable(), {
     schema: entity.namespace.namespaceName,
     name: entity.data.edfiOds.ods_TableName,
@@ -34,9 +35,12 @@ export function buildMainTable(entity: TopLevelEntity, withTimestamps: boolean):
     isEntityMainTable: true,
   });
 
-  if (withTimestamps) {
+  if (aggregateRootTable) {
     mainTable.includeCreateDateColumn = true;
     mainTable.includeLastModifiedDateAndIdColumn = true;
+    if (changeEventIndicated(metaEd, entity.namespace)) {
+      mainTable.includeAggregateHashValueColumn = true;
+    }
   }
 
   entity.data.edfiOds.ods_EntityTable = mainTable;

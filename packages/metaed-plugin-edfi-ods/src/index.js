@@ -16,12 +16,15 @@ export type { EnumerationRow } from './model/database/EnumerationRow';
 export type { ForeignKey, ForeignKeySourceReference } from './model/database/ForeignKey';
 export type { SchoolYearEnumerationRow } from './model/database/SchoolYearEnumerationRow';
 export type { Table } from './model/database/Table';
-export type { EdFiOdsEntityRepository } from './model/EdFiOdsEntityRepository';
 export type { TopLevelEntityEdfiOds } from './model/TopLevelEntity';
 export type { DescriptorEdfiOds } from './model/Descriptor';
 export type { AssociationExtensionEdfiOds } from './model/AssociationExtension';
 export type { DomainEntityExtensionEdfiOds } from './model/DomainEntityExtension';
 export type { ReferencePropertyEdfiOds } from './model/property/ReferenceProperty';
+
+// ODS Repository
+export type { EdFiOdsEntityRepository } from './model/EdFiOdsEntityRepository';
+export { newEdFiOdsEntityRepository, addEdFiOdsEntityRepositoryTo } from './model/EdFiOdsEntityRepository';
 
 // Factories
 export {
@@ -41,6 +44,11 @@ export { newTable } from './model/database/Table';
 
 // Utilities
 export { edfiOdsRepositoryForNamespace, tableEntities, rowEntities } from './enhancer/EnhancerHelper';
+export { getPrimaryKeys } from './model/database/Table';
+export { newForeignKey, newForeignKeySourceReference } from './model/database/ForeignKey';
+
+// Enhancer for testing
+export { enhance as baseDescriptorTableCreatingEnhancer } from './enhancer/table/BaseDescriptorTableCreatingEnhancer';
 
 function validatorList(): Array<Validator> {
   return [];

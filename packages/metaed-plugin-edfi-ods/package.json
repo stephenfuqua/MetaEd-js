@@ -31,6 +31,7 @@
   "devDependencies": {
     "cli-highlight": "^1.2.3",
     "ed-fi-model-2.0": "1.0.3",
+    "ed-fi-model-3.0": "1.0.0",
     "final-fs": "^1.6.1",
     "msnodesqlv8": "^0.4.7",
     "mssql": "^4.1.0"

@@ -22,11 +22,28 @@ dist/
 /packages/metaed-plugin-edfi-xsd/test/integration/artifact/
 !/packages/metaed-plugin-edfi-xsd/test/integration/artifact/*-Authoritative.xsd
 
-/packages/metaed-plugin-edfi-ods/test/integration/artifact/
-!/packages/metaed-plugin-edfi-ods/test/integration/artifact/*-Authoritative.sql
+0004-Tables.diff
+0004-Tables.sql
+0004-Tables.html
+
+0020-Tables.diff
+0020-Tables.sql
+0020-Tables.html
 
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json
+
+DeleteTrackingTable-v2.4.sql
+DeleteTrackingTable-v3.1.sql
+sample-DeleteTrackingTable-v3.1.sql
+
+DeleteTrackingTrigger-v2.4.sql
+DeleteTrackingTrigger-v3.1.sql
+sample-DeleteTrackingTrigger-v3.1.sql
+
+EnableChangeTracking-v2.4.sql
+EnableChangeTracking-v3.1.sql
+sample-EnableChangeTracking-v3.1.sql
 
 MetaEdOutput-Experimental/
 MetaEdOutput/

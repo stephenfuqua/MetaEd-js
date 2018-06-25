@@ -1,0 +1,21 @@
+{{#triggers}}
+CREATE TRIGGER [{{{triggerSchema}}}].[{{{triggerName}}}] ON [{{{targetTableSchema}}}].[{{{targetTableName}}}] AFTER DELETE AS
+BEGIN
+    IF @@rowcount = 0 
+        RETURN
+
+    SET NOCOUNT ON
+
+    INSERT INTO {{{deleteTrackingTableSchema}}}.{{{deleteTrackingTableName}}}({{#primaryKeyColumnNames}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, SystemChangeVersion)
+    SELECT  {{#primaryKeyColumnNames}}{{#if ../targetTableIsSubclass}}d.{{/if}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, CHANGE_TRACKING_CURRENT_VERSION()
+    FROM    deleted d{{#if targetTableIsSubclass}}{{#foreignKeyToSuperclass}}
+            INNER JOIN {{{foreignTableSchema}}}.{{{foreignTableName}}} b ON {{#columnNames}}d.{{{parentTableColumnName}}} = b.{{{foreignTableColumnName}}}{{#unless @last}} AND {{/unless}}{{/columnNames}}{{/foreignKeyToSuperclass}}{{/if}}
+    WHERE NOT EXISTS (SELECT * FROM {{{deleteTrackingTableSchema}}}.{{{deleteTrackingTableName}}} d2 WHERE {{#primaryKeyColumnNames}}d2.{{{this}}} = d.{{{this}}}{{#unless @last}} AND {{/unless}}{{/primaryKeyColumnNames}})
+END
+GO
+
+ALTER TABLE [{{{targetTableSchema}}}].[{{{targetTableName}}}] ENABLE TRIGGER [{{{triggerName}}}]
+GO
+
+
+{{/triggers}}

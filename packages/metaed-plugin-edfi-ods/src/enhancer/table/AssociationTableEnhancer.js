@@ -11,7 +11,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .map((x: ModelBase) => asTopLevelEntity(x))
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
-      const mainTable: Table = buildMainTable(entity, true);
+      const mainTable: Table = buildMainTable(metaEd, entity, true);
       tables.push(mainTable);
       buildTablesFromProperties(entity, mainTable, tables);
       entity.data.edfiOds.ods_Tables = tables;

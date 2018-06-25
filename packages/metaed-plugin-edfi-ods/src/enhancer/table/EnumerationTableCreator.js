@@ -1,6 +1,8 @@
 // @flow
 import R from 'ramda';
+import type { Namespace, MetaEdEnvironment } from 'metaed-core';
 import { normalizeEnumerationSuffix } from 'metaed-core';
+import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newIntegerColumn, newStringColumn } from '../../model/database/Column';
@@ -8,15 +10,20 @@ import type { Table } from '../../model/database/Table';
 
 const removeTypeSuffix = R.when(R.endsWith('Type'), R.dropLast(4));
 
-export const enumerationTableCreator: { build(name: string, namespaceName: string, documentation: string): Table } = {
-  build(name: string, namespaceName: string, documentation: string): Table {
+export const enumerationTableCreator: {
+  build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table,
+} = {
+  build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: normalizeEnumerationSuffix(name),
-      schema: namespaceName,
+      schema: namespace.namespaceName,
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
     });
+    if (changeEventIndicated(metaEd, namespace)) {
+      table.includeAggregateHashValueColumn = true;
+    }
     addColumns(
       table,
       [

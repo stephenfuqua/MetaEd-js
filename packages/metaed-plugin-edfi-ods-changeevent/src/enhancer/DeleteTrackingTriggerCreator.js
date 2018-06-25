@@ -1,0 +1,47 @@
+// @flow
+import type { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
+import type { Table, Column, ForeignKey, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import { getPrimaryKeys } from 'metaed-plugin-edfi-ods';
+import { twoDotXIndicated, changeEventIndicated } from './ChangeEventIndicator';
+import { deleteTrackingTriggerEntities } from './EnhancerHelper';
+import type { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
+
+export type SuperclassForeignKeyFinder = (mainTable: Table) => ?ForeignKey;
+
+// eslint-disable-next-line no-unused-vars
+function defaultSuperclassForeignKeyFinder(mainTable: Table): ?ForeignKey {
+  return null;
+}
+
+export function createDeleteTrackingTriggerFromTable(
+  metaEd: MetaEdEnvironment,
+  namespace: Namespace,
+  mainTable: Table,
+  foreignKeyToSuperclass: ?ForeignKey = null,
+) {
+  const deleteTrackingTrigger: DeleteTrackingTrigger = {
+    triggerSchema: mainTable.schema,
+    triggerName: `${mainTable.name}DeletedForTracking`,
+    targetTableSchema: mainTable.schema,
+    targetTableName: mainTable.name,
+    deleteTrackingTableSchema: twoDotXIndicated(metaEd, namespace) ? 'dbo' : 'changes',
+    deleteTrackingTableName: `${mainTable.schema}_${mainTable.name}_TrackedDelete`,
+    primaryKeyColumnNames: getPrimaryKeys(mainTable).map((column: Column) => column.name),
+    targetTableIsSubclass: foreignKeyToSuperclass != null,
+    foreignKeyToSuperclass,
+  };
+
+  deleteTrackingTriggerEntities(metaEd, namespace).push(deleteTrackingTrigger);
+}
+
+export function createDeleteTrackingTrigger(
+  metaEd: MetaEdEnvironment,
+  modelBase: ModelBase,
+  superclassForeignKeyFinder: SuperclassForeignKeyFinder = defaultSuperclassForeignKeyFinder,
+) {
+  if (!changeEventIndicated(metaEd, modelBase.namespace)) return;
+  const mainTable: Table = ((modelBase.data.edfiOds: any): TopLevelEntityEdfiOds).ods_EntityTable;
+  if (mainTable == null) return;
+
+  createDeleteTrackingTriggerFromTable(metaEd, modelBase.namespace, mainTable, superclassForeignKeyFinder(mainTable));
+}

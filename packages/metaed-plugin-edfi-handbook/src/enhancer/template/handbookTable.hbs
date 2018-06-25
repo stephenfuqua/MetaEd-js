@@ -4,8 +4,13 @@
 {{/each}}{{#if includeCreateDateColumn}}CreateDate [DATETIME] NOT NULL
 {{/if}}{{#if includeLastModifiedDateAndIdColumn}}LastModifiedDate [DATETIME] NOT NULL
 Id [UNIQUEIDENTIFIER] NOT NULL
+{{/if}}{{#if includeAggregateHashValueColumn}}AggregateHashValue [BIGINT] NULL
 {{/if}}
 
 Primary Keys:
 {{#each primaryKeys}}{{{name}}}
 {{/each}}{{/table}}
+
+{{#if includeAggregateHashValueColumn}}
+    [AggregateHashValue] [BIGINT] NULL,
+{{/if}}

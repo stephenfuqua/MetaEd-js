@@ -1,5 +1,6 @@
 // @flow
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newDateColumn, newIntegerColumn, newStringColumn } from '../../model/database/Column';
@@ -10,13 +11,20 @@ import type { Table } from '../../model/database/Table';
 const enhancerName: string = 'BaseDescriptorTableCreatingEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  const edfiNamespace: ?Namespace = metaEd.namespace.get('edfi');
+  if (edfiNamespace == null) return { enhancerName, success: false };
+
   const descriptorTable: Table = Object.assign(newTable(), {
     name: 'Descriptor',
-    schema: 'edfi',
+    schema: edfiNamespace.namespaceName,
     description: 'This is the base entity for the descriptor pattern.',
     includeCreateDateColumn: true,
     includeLastModifiedDateAndIdColumn: true,
   });
+
+  if (changeEventIndicated(metaEd, edfiNamespace)) {
+    descriptorTable.includeAggregateHashValueColumn = true;
+  }
 
   addColumns(
     descriptorTable,
@@ -80,8 +88,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     ColumnTransformUnchanged,
   );
 
-  const edfiNamespace: ?Namespace = metaEd.namespace.get('edfi');
-  if (edfiNamespace == null) return { enhancerName, success: false };
   tableEntities(metaEd, edfiNamespace).set(descriptorTable.name, descriptorTable);
 
   return {

@@ -1,0 +1,10 @@
+{{#tables}}
+CREATE TABLE {{{schema}}}.{{{tableName}}}
+(
+{{#columns}}
+       {{{name}}} {{{dataType}}} NOT NULL,
+{{/columns}}
+       CONSTRAINT {{{primaryKeyName}}} PRIMARY KEY CLUSTERED ({{#primaryKeyColumns}}{{{name}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumns}})
+)
+
+{{/tables}}

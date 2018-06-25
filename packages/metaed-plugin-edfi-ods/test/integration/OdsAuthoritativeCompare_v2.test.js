@@ -29,7 +29,7 @@ jest.unmock('final-fs');
 jest.setTimeout(40000);
 
 describe('when generating ods and comparing it to data standard 2.0 authoritative artifacts', () => {
-  const artifactPath: string = path.resolve(__dirname, './artifact');
+  const artifactPath: string = path.resolve(__dirname, './artifact/v2/');
   const projectRootPath: string = path.resolve(__dirname, '../../../../');
   const nodeModulesPath: string = `${projectRootPath}/node_modules`;
   const outputDirectory: string = `${artifactPath}`;
