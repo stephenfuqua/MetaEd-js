@@ -33,29 +33,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
-        edfiUnified: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOds: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOdsApi: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXsd: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiHandbook: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiInterchangeBrief: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXmlDictionary: {
-          targetTechnologyVersion: '3.0.0',
-        },
-      },
+      defaultPluginTechVersion: '3.0.0',
       projectPaths: ['./node_modules/ed-fi-model-3.0/'],
       projects: [
         {
@@ -126,29 +104,7 @@ describe('when generating api model with simple extensions and comparing it to d
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
-        edfiUnified: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOds: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOdsApi: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXsd: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiHandbook: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiInterchangeBrief: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXmlDictionary: {
-          targetTechnologyVersion: '3.0.0',
-        },
-      },
+      defaultPluginTechVersion: '3.0.0',
       projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
       projects: [
         {
@@ -242,29 +198,7 @@ describe('when generating api model with student transcript extensions and compa
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
-        edfiUnified: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOds: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiOdsApi: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXsd: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiHandbook: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiInterchangeBrief: {
-          targetTechnologyVersion: '3.0.0',
-        },
-        edfiXmlDictionary: {
-          targetTechnologyVersion: '3.0.0',
-        },
-      },
+      defaultPluginTechVersion: '3.0.0',
       projectPaths: ['./node_modules/ed-fi-model-3.0/', sampleExtensionPath],
       projects: [
         {

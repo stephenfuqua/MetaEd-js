@@ -12,6 +12,7 @@ export type MetaEdConfiguration = {
   pluginConfig: {
     [shortName: string]: PluginConfiguration,
   },
+  defaultPluginTechVersion: string,
   projects: Array<MetaEdProject>,
   // projectPaths is meant to parallel projects
   projectPaths: Array<string>,
@@ -27,4 +28,5 @@ export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   pluginConfig: {},
   projects: [],
   projectPaths: [],
+  defaultPluginTechVersion: '2.0.0',
 });

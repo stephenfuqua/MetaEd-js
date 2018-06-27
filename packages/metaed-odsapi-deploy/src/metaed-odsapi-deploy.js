@@ -56,6 +56,11 @@ export async function metaEdDeploy() {
       array: true,
       requiresArg: ['source', 'target'],
     })
+    .option('defaultPluginTechVersion', {
+      alias: 'tv',
+      describe: 'The default technology version for all plugins, in semver format',
+      type: 'string',
+    })
     .option('core', {
       describe: 'Deploy core in addition to any extensions',
       type: 'boolean',
@@ -80,6 +85,7 @@ export async function metaEdDeploy() {
       deployDirectory: yargs.argv.target,
       projectPaths: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.path),
       projects: resolvedProjects.map((projectPair: MetaEdProjectPathPairs) => projectPair.project),
+      defaultPluginTechVersion: yargs.argv.defaultPluginTechVersion || '2.0.0',
     };
     const pipelineOptions: PipelineOptions = {
       ...newPipelineOptions(),

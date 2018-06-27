@@ -53,7 +53,7 @@ export function loadPlugins(state: State): void {
   state.pluginManifest.forEach((pluginManifest: PluginManifest) => {
     const targetTechnologyVersion = pluginConfigExists(state, pluginManifest)
       ? state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion
-      : '2.0.0';
+      : state.metaEdConfiguration.defaultPluginTechVersion;
 
     state.metaEd.plugin.set(
       pluginManifest.shortName,

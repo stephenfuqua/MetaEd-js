@@ -24,6 +24,7 @@ describe('when deploying 3.0 artifacts', () => {
           projectVersion: '3.0.0',
         },
       ],
+      defaultPluginTechVersion: '3.0.0',
     };
     result = await deployTargetsFor(metaEdConfiguration, true);
   });
@@ -79,6 +80,7 @@ describe('when deploying 2.0 artifacts', () => {
           projectVersion: '2.0.0',
         },
       ],
+      defaultPluginTechVersion: '2.0.0',
     };
     result = await deployTargetsFor(metaEdConfiguration, true);
   });

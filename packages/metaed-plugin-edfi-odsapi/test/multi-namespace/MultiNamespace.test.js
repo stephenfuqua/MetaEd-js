@@ -9,29 +9,7 @@ jest.setTimeout(30000);
 const metaEdConfiguration = {
   ...newMetaEdConfiguration(),
   artifactDirectory: './MetaEdOutput/',
-  pluginConfig: {
-    edfiUnified: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiOds: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiOdsApi: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiXsd: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiHandbook: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiInterchangeBrief: {
-      targetTechnologyVersion: '3.0.0',
-    },
-    edfiXmlDictionary: {
-      targetTechnologyVersion: '3.0.0',
-    },
-  },
+  defaultPluginTechVersion: '3.0.0',
   projectPaths: [
     path.resolve(__dirname, 'projects', 'edfi'),
     path.resolve(__dirname, 'projects', 'gb'),
