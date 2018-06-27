@@ -1,7 +1,10 @@
 // @flow
+import winston from 'winston';
 import { versionSatisfies } from 'metaed-core';
 import type { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
 import { dataPath, fileNameFor, registerPartials, structurePath, template } from './OdsGeneratorBase';
+
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 export async function generateTables(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];

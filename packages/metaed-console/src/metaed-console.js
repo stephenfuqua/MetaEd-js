@@ -17,7 +17,7 @@ export async function metaEdConsole() {
       alias: 'c',
     })
     .option('defaultPluginTechVersion', {
-      alias: 'tv',
+      alias: 'x',
       describe: 'The default technology version for all plugins, in semver format',
       type: 'string',
     })
@@ -31,7 +31,6 @@ export async function metaEdConsole() {
   const state: State = Object.assign(newState(), {
     metaEdConfiguration: Object.assign(newMetaEdConfiguration(), {
       ...argv.metaEdConfiguration,
-      defaultPluginTechVersion: argv.defaultPluginTechVersion || '2.0.0',
     }),
     pipelineOptions: {
       runValidators: true,
@@ -40,6 +39,9 @@ export async function metaEdConsole() {
       stopOnValidationFailure: true,
     },
   });
+
+  if (argv.defaultPluginTechVersion != null)
+    state.metaEdConfiguration.defaultPluginTechVersion = argv.defaultPluginTechVersion;
 
   const dataStandardVersions: Array<SemVer> = findDataStandardVersions(state.metaEdConfiguration.projects);
 

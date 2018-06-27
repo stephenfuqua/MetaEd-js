@@ -7,6 +7,8 @@ import type { PluginManifest } from '../plugin/PluginTypes';
 import { NoMetaEdPlugin } from '../plugin/PluginTypes';
 import { newPluginEnvironment } from '../plugin/PluginEnvironment';
 
+winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
+
 const cachedPlugins: Map<string, Array<PluginManifest>> = new Map();
 
 export function scanForPlugins(state: State): Array<PluginManifest> {
@@ -31,7 +33,6 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
       return;
     }
 
-    winston.info(`  ${pluginManifest.shortName} - v${pluginManifest.version}`);
     foundPlugins.push(pluginManifest);
   });
 
@@ -54,6 +55,10 @@ export function loadPlugins(state: State): void {
     const targetTechnologyVersion = pluginConfigExists(state, pluginManifest)
       ? state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion
       : state.metaEdConfiguration.defaultPluginTechVersion;
+
+    winston.info(
+      `  ${pluginManifest.shortName} version ${pluginManifest.version} targeting tech version ${targetTechnologyVersion}`,
+    );
 
     state.metaEd.plugin.set(
       pluginManifest.shortName,
