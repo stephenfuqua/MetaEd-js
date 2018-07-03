@@ -369,6 +369,7 @@ property
     | commonProperty
     | currencyProperty
     | dateProperty
+    | datetimeProperty
     | decimalProperty
     | descriptorProperty
     | domainEntityProperty
@@ -392,6 +393,8 @@ booleanProperty : BOOLEAN propertyName metaEdId? propertyComponents;
 currencyProperty : CURRENCY propertyName metaEdId? propertyComponents;
 
 dateProperty : DATE propertyName metaEdId? propertyComponents;
+
+datetimeProperty : DATETIME propertyName metaEdId? propertyComponents;
 
 decimalProperty : DECIMAL propertyName metaEdId? propertyComponents totalDigits decimalPlaces minValueDecimal? maxValueDecimal? ;
 

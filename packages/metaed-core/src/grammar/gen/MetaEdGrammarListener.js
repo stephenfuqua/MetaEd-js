@@ -1,4 +1,4 @@
-// Generated from C:\work\metaed\MetaEd\src\MetaEd\Grammar\Antlr\Language\MetaEdGrammar.g4 by ANTLR 4.6
+// Generated from MetaEdGrammar.g4 by ANTLR 4.6
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 
@@ -665,6 +665,15 @@ MetaEdGrammarListener.prototype.enterDateProperty = function(ctx) {
 
 // Exit a parse tree produced by MetaEdGrammar#dateProperty.
 MetaEdGrammarListener.prototype.exitDateProperty = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#datetimeProperty.
+MetaEdGrammarListener.prototype.enterDatetimeProperty = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#datetimeProperty.
+MetaEdGrammarListener.prototype.exitDatetimeProperty = function(ctx) {
 };
 
 

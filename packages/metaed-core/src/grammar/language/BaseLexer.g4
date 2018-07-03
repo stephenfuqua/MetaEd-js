@@ -28,6 +28,7 @@ COMMON_KEYWORD :            'common';
 COMMON_EXTENSION :          'common extension';
 CURRENCY :                  'currency';
 DATE :                      'date';
+DATETIME :                  'datetime';
 DECIMAL :                   'decimal';
 DESCRIPTOR_KEYWORD :        'descriptor';
 DOMAIN_ENTITY_KEYWORD :     'domain entity';

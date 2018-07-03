@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when parsing full MetaEd and another example: when parsing full MetaEd and another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing full MetaEd and another example: when parsing full MetaEd and another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing full MetaEd and another example: when parsing full MetaEd and another example - sourceMap 1`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when parsing full MetaEd another example: when parsing full MetaEd another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing full MetaEd another example: when parsing full MetaEd another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing full MetaEd another example: when parsing full MetaEd another example - sourceMap 1`] = `
 Object {
@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`when parsing full MetaEd one more example: when parsing full MetaEd one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
+exports[`when parsing full MetaEd one more example: when parsing full MetaEd one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
 
 exports[`when parsing full MetaEd one more example: when parsing full MetaEd one more example - sourceMap 1`] = `
 Object {
@@ -40,9 +40,9 @@ Object {
 }
 `;
 
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap 1`] = `
 Object {
@@ -60,7 +60,7 @@ Object {
 }
 `;
 
-exports[`when parsing top level entities and another example: when parsing top level entities and another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing top level entities and another example: when parsing top level entities and another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing top level entities and another example: when parsing top level entities and another example - sourceMap 1`] = `
 Object {
@@ -70,7 +70,7 @@ Object {
 }
 `;
 
-exports[`when parsing top level entities another example: when parsing top level entities another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing top level entities another example: when parsing top level entities another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing top level entities another example: when parsing top level entities another example - sourceMap 1`] = `
 Object {
@@ -80,7 +80,7 @@ Object {
 }
 `;
 
-exports[`when parsing top level entities one more example: when parsing top level entities one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
+exports[`when parsing top level entities one more example: when parsing top level entities one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
 
 exports[`when parsing top level entities one more example: when parsing top level entities one more example - sourceMap 1`] = `
 Object {
@@ -100,9 +100,9 @@ Object {
 }
 `;
 
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
+exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
 
 exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap 1`] = `
 Object {
