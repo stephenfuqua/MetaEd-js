@@ -1,6 +1,9 @@
 // @flow
 import type { MetaEdPlugin } from 'metaed-core';
 import { newMetaEdPlugin } from 'metaed-core';
+
+import { validate as NamespaceMustNotBeNamedChanges } from './validator/NamespaceMustNotBeNamedChanges';
+
 import { generate as DeleteTrackingTableGenerator } from './generator/DeleteTrackingTableGenerator';
 import { generate as DeleteTrackingTriggerGenerator } from './generator/DeleteTrackingTriggerGenerator';
 import { generate as EnableChangeTrackingGenerator } from './generator/EnableChangeTrackingGenerator';
@@ -18,7 +21,7 @@ import { enhance as schoolYearEnumerationChangeEventEnhancer } from './enhancer/
 
 export function initialize(): MetaEdPlugin {
   return Object.assign(newMetaEdPlugin(), {
-    validator: [],
+    validator: [NamespaceMustNotBeNamedChanges],
     enhancer: [
       edFiOdsChangeEventEntityRepository,
       associationChangeEventEnhancer,

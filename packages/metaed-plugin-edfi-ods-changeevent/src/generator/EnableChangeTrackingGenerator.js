@@ -29,7 +29,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         name: 'ODS Enable Change Tracking',
         namespace: namespace.namespaceName,
         folderName: changeEventPath,
-        fileName: `${namespace.namespaceName}-EnableChangeTracking.sql`,
+        fileName: '0030-EnableTableChangeTracking.sql',
         resultString: generatedResult,
         resultStream: null,
       });

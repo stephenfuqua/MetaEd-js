@@ -4,8 +4,7 @@ import handlebars from 'handlebars';
 import path from 'path';
 import R from 'ramda';
 
-const odsPath: string = '/Database/SQLServer/ODS/';
-export const changeEventPath: string = `${odsPath}Changes/`;
+export const changeEventPath: string = '/Database/SQLServer/ODS/Structure/Changes/';
 
 // Handlebars instance scoped for this plugin
 export const odsHandlebars = handlebars.create();
