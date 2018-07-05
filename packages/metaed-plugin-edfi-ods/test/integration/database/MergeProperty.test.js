@@ -18,6 +18,8 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when domain entity merges references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';

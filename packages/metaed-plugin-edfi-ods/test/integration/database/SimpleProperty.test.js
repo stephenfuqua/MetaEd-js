@@ -16,6 +16,8 @@ import { tableExists, tablePrimaryKeys, tableColumnCount } from './DatabaseTable
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when entity has identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';
@@ -819,6 +821,177 @@ describe('when entity has collection date properties', () => {
 
     const foreignKey2: DatabaseForeignKey = foreignKey(
       [column(namespaceName, domainEntityName + requiredDateName, identityPropertyName)],
+      [column(namespaceName, domainEntityName, identityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey2)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey2)).toBe(true);
+  });
+});
+
+describe('when entity has datetime properties', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName: string = 'namespace';
+  const contextName: string = 'ContextName';
+  const domainEntityName: string = 'DomainEntityName';
+  const optionalDatetimeDocumentation: string = 'OptionalDatetimeDocumentation';
+  const optionalDatetimeName: string = 'OptionalDatetimeName';
+  const requiredDatetimeDocumentation: string = 'RequiredDatetimeDocumentation';
+  const requiredDatetimeName: string = 'RequiredDatetimeName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity('IdentityPropertyName', 'Documentation')
+      .withDatetimeProperty(optionalDatetimeName, optionalDatetimeDocumentation, false, false, contextName)
+      .withDatetimeProperty(requiredDatetimeName, requiredDatetimeDocumentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have entity table', async () => {
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
+  });
+
+  it('should have correct columns', async () => {
+    const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, contextName + optionalDatetimeName);
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(true);
+    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnMSDescription(optionalColumn)).toBe(optionalDatetimeDocumentation);
+
+    const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, requiredDatetimeName);
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnMSDescription(requiredColumn)).toBe(requiredDatetimeDocumentation);
+  });
+});
+
+describe('when entity has collection datetime properties', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName: string = 'namespace';
+  const contextName: string = 'ContextName';
+  const domainEntityName: string = 'DomainEntityName';
+  const identityPropertyName: string = 'IdentityPropertyName';
+  const optionalDatetimeDocumentation: string = 'OptionalDatetimeDocumentation';
+  const optionalDatetimeName: string = 'OptionalDatetimeName';
+  const requiredDatetimeDocumentation: string = 'RequiredDatetimeDocumentation';
+  const requiredDatetimeName: string = 'RequiredDatetimeName';
+
+  beforeAll(async () => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('Documentation')
+      .withIntegerIdentity(identityPropertyName, 'Documentation')
+      .withDatetimeProperty(optionalDatetimeName, optionalDatetimeDocumentation, false, true, contextName)
+      .withDatetimeProperty(requiredDatetimeName, requiredDatetimeDocumentation, true, true)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    return enhanceGenerateAndExecuteSql(metaEd);
+  });
+
+  afterAll(async () => testTearDown());
+
+  it('should have entity table', async () => {
+    expect(await tableExists(table(namespaceName, domainEntityName))).toBe(true);
+    expect(await tableColumnCount(table(namespaceName, domainEntityName))).toBe(4);
+  });
+
+  it('should have identity column', async () => {
+    const identityColumn: DatabaseColumn = column(namespaceName, domainEntityName, identityPropertyName);
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+    expect(await columnDataType(identityColumn)).toBe(columnDataTypes.integer);
+  });
+
+  it('should have optional collection table', async () => {
+    expect(await tableExists(table(namespaceName, domainEntityName + contextName + optionalDatetimeName))).toBe(true);
+  });
+
+  it('should have correct columns', async () => {
+    const identityColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + contextName + optionalDatetimeName,
+      identityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+    expect(await columnDataType(identityColumn)).toBe(columnDataTypes.integer);
+
+    const optionalColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + contextName + optionalDatetimeName,
+      optionalDatetimeName,
+    );
+    expect(await columnExists(optionalColumn)).toBe(true);
+    expect(await columnIsNullable(optionalColumn)).toBe(false);
+    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnMSDescription(optionalColumn)).toBe(optionalDatetimeDocumentation);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + contextName + optionalDatetimeName))).toEqual([
+      identityPropertyName,
+      optionalDatetimeName,
+    ]);
+  });
+
+  it('should have required collection table', async () => {
+    expect(await tableExists(table(namespaceName, domainEntityName + requiredDatetimeName))).toBe(true);
+  });
+
+  it('should have correct columns', async () => {
+    const identityColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + requiredDatetimeName,
+      identityPropertyName,
+    );
+    expect(await columnExists(identityColumn)).toBe(true);
+    expect(await columnIsNullable(identityColumn)).toBe(false);
+    expect(await columnDataType(identityColumn)).toBe(columnDataTypes.integer);
+
+    const requiredColumn: DatabaseColumn = column(
+      namespaceName,
+      domainEntityName + requiredDatetimeName,
+      requiredDatetimeName,
+    );
+    expect(await columnExists(requiredColumn)).toBe(true);
+    expect(await columnIsNullable(requiredColumn)).toBe(false);
+    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnMSDescription(requiredColumn)).toBe(requiredDatetimeDocumentation);
+  });
+
+  it('should have correct primary keys', async () => {
+    expect(await tablePrimaryKeys(table(namespaceName, domainEntityName + requiredDatetimeName))).toEqual([
+      identityPropertyName,
+      requiredDatetimeName,
+    ]);
+  });
+
+  it('should have correct foreign key relationship', async () => {
+    const foreignKey1: DatabaseForeignKey = foreignKey(
+      [column(namespaceName, domainEntityName + contextName + optionalDatetimeName, identityPropertyName)],
+      [column(namespaceName, domainEntityName, identityPropertyName)],
+    );
+    expect(await foreignKeyExists(foreignKey1)).toBe(true);
+    expect(await foreignKeyDeleteCascades(foreignKey1)).toBe(true);
+
+    const foreignKey2: DatabaseForeignKey = foreignKey(
+      [column(namespaceName, domainEntityName + requiredDatetimeName, identityPropertyName)],
       [column(namespaceName, domainEntityName, identityPropertyName)],
     );
     expect(await foreignKeyExists(foreignKey2)).toBe(true);

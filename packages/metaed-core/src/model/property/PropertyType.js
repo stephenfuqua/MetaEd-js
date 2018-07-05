@@ -9,6 +9,7 @@ export type PropertyType =
   | 'common'
   | 'currency'
   | 'date'
+  | 'datetime'
   | 'decimal'
   | 'descriptor'
   | 'domainEntity'
@@ -40,6 +41,7 @@ export const allPropertyTypes: Array<PropertyType> = [
   'common',
   'currency',
   'date',
+  'datetime',
   'decimal',
   'descriptor',
   'domainEntity',

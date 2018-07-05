@@ -3,6 +3,7 @@ import {
   newBooleanProperty,
   newCurrencyProperty,
   newDateProperty,
+  newDatetimeProperty,
   newDecimalProperty,
   newDomainEntity,
   newDurationProperty,
@@ -21,6 +22,7 @@ import type {
   BooleanProperty,
   CurrencyProperty,
   DateProperty,
+  DatetimeProperty,
   DecimalProperty,
   DurationProperty,
   IntegerProperty,
@@ -155,6 +157,48 @@ describe('when converting date property to column', () => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('date');
     expect(columns[0].dataType).toBe('[DATE]');
+    expect(columns[0].name).toBe(contextName + propertyName);
+    expect(columns[0].description).toBe(propertyDocumentation);
+    expect(columns[0].isIdentityDatabaseType).toBe(true);
+    expect(columns[0].isNullable).toBe(true);
+    expect(columns[0].isPartOfPrimaryKey).toBe(true);
+    expect(columns[0].originalContextPrefix).toBe(contextName);
+    expect(columns[0].sourceEntityProperties[0]).toBe(property);
+  });
+});
+
+describe('when converting datetime property to column', () => {
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+  const contextName: string = 'ContextName';
+  let property: DatetimeProperty;
+  let columns: Array<Column>;
+
+  beforeAll(() => {
+    property = Object.assign(newDatetimeProperty(), {
+      metaEdName: propertyName,
+      documentation: propertyDocumentation,
+      parentEntity: newDomainEntity(),
+      isPartOfIdentity: true,
+      isOptional: true,
+      data: {
+        edfiOds: {
+          ods_Name: propertyName,
+          ods_ContextPrefix: contextName,
+          ods_IsIdentityDatabaseType: true,
+          ods_IsUniqueIndex: true,
+        },
+      },
+    });
+
+    const columnCreator: ColumnCreator = columnCreatorFactory.columnCreatorFor(property);
+    columns = columnCreator.createColumns(property, BuildStrategyDefault);
+  });
+
+  it('should return converted column', () => {
+    expect(columns).toHaveLength(1);
+    expect(columns[0].type).toBe('datetime');
+    expect(columns[0].dataType).toBe('[DATETIMEOFFSET](7)');
     expect(columns[0].name).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);

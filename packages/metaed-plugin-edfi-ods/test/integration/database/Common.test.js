@@ -17,6 +17,8 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when common is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';
@@ -95,7 +97,7 @@ describe('when common is a required property', () => {
     const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -145,7 +147,7 @@ describe('when common is a required property', () => {
     );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -253,7 +255,7 @@ describe('when common is a required property with context', () => {
     );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -308,7 +310,7 @@ describe('when common is a required property with context', () => {
     );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -1711,7 +1713,7 @@ describe('when core common is referenced from extension entity as a required pro
     const createDateColumn: DatabaseColumn = column(extension, domainEntityName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -1761,7 +1763,7 @@ describe('when core common is referenced from extension entity as a required pro
     );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -1876,7 +1878,7 @@ describe('when extension common is referenced from extension entity as a require
     const createDateColumn: DatabaseColumn = column(extension, domainEntityName2 + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -1926,7 +1928,7 @@ describe('when extension common is referenced from extension entity as a require
     );
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 

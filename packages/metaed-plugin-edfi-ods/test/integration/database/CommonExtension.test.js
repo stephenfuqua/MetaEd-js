@@ -18,6 +18,8 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when common extension is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';
@@ -100,7 +102,7 @@ describe('when common extension is a required property', () => {
     const createDateColumn: DatabaseColumn = column(extension, domainEntityName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -249,7 +251,7 @@ describe('when common extension is a required property on association', () => {
     const createDateColumn: DatabaseColumn = column(extension, associationName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -399,7 +401,7 @@ describe('when common extension is a required property on association', () => {
     const createDateColumn: DatabaseColumn = column(extension, associationName + commonName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 

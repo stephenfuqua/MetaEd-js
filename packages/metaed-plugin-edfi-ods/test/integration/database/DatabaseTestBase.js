@@ -69,7 +69,8 @@ export function index(primaryColumn: DatabaseColumn): DatabaseIndex {
 export const columnDataTypes = {
   bit: 'bit',
   date: 'date',
-  dateTime: 'datetime',
+  datetime: 'datetime',
+  datetimeoffset: 'datetimeoffset',
   decimal: 'decimal',
   integer: 'int',
   money: 'money',

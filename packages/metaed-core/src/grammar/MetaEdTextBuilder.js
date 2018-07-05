@@ -714,6 +714,17 @@ export class MetaEdTextBuilder {
     return this._withProperty('date', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  withDatetimeProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ): MetaEdTextBuilder {
+    return this._withProperty('datetime', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
   withDescriptorProperty(
     descriptorName: string,
     documentation: string,
@@ -1116,6 +1127,15 @@ export class MetaEdTextBuilder {
     metaEdId: ?string = null,
   ): MetaEdTextBuilder {
     return this._withIdentityProperty('date', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  withDatetimeIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ): MetaEdTextBuilder {
+    return this._withIdentityProperty('datetime', propertyIdentifier, documentation, context, metaEdId);
   }
 
   withDurationIdentity(

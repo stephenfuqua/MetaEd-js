@@ -50,6 +50,16 @@ Object {
 }
 `;
 
+exports[`when validating datetime property is missing metaEdId should have validation failures 1`] = `"Datetime Property DatetimeName on Domain Entity DomainEntityName is missing a MetaEdId value."`;
+
+exports[`when validating datetime property is missing metaEdId should have validation failures: when validating datetime property is missing metaEdId should have validation failures -> sourceMap 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "datetime",
+}
+`;
+
 exports[`when validating decimal property is missing metaEdId should have validation failures 1`] = `"Decimal Property DecimalName on Domain Entity DomainEntityName is missing a MetaEdId value."`;
 
 exports[`when validating decimal property is missing metaEdId should have validation failures 2`] = `

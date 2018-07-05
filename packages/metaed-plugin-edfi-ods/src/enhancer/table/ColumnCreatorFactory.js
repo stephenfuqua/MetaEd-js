@@ -30,6 +30,7 @@ export const columnCreatorFactory: ColumnCreatorFactory = {
       boolean: () => simplePropertyColumnCreator(),
       currency: () => simplePropertyColumnCreator(),
       date: () => simplePropertyColumnCreator(),
+      datetime: () => simplePropertyColumnCreator(),
       decimal: () => simplePropertyColumnCreator(),
       duration: () => simplePropertyColumnCreator(),
       integer: () => simplePropertyColumnCreator(),

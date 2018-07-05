@@ -84,6 +84,7 @@ function xsdTypeFor(property: EntityProperty): string {
     boolean: () => 'xs:boolean',
     currency: () => 'Currency',
     date: () => 'xs:date',
+    datetime: () => 'xs:dateTime',
     duration: () => 'TimeInterval',
     percent: () => 'Percent',
     time: () => 'xs:time',

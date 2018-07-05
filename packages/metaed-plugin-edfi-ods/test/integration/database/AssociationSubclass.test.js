@@ -15,6 +15,8 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when association subclass has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';
@@ -101,13 +103,13 @@ describe('when association subclass has a single property', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -213,13 +215,13 @@ describe('when extension association subclasses core association', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -322,13 +324,13 @@ describe('when extension association subclasses extension association', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(extension, associationName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(extension, associationName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 

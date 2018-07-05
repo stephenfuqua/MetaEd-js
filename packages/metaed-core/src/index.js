@@ -98,6 +98,7 @@ export type { ChoiceProperty, ChoicePropertySourceMap } from './model/property/C
 export type { CommonProperty, CommonPropertySourceMap } from './model/property/CommonProperty';
 export type { CurrencyProperty, CurrencyPropertySourceMap } from './model/property/CurrencyProperty';
 export type { DateProperty, DatePropertySourceMap } from './model/property/DateProperty';
+export type { DatetimeProperty, DatetimePropertySourceMap } from './model/property/DatetimeProperty';
 export type { DecimalProperty, DecimalPropertySourceMap } from './model/property/DecimalProperty';
 export type { DescriptorProperty, DescriptorPropertySourceMap } from './model/property/DescriptorProperty';
 export type { DomainEntityProperty, DomainEntityPropertySourceMap } from './model/property/DomainEntityProperty';
@@ -181,6 +182,7 @@ export { asChoiceProperty, newChoiceProperty } from './model/property/ChoiceProp
 export { asCommonProperty, newCommonProperty } from './model/property/CommonProperty';
 export { asCurrencyProperty, newCurrencyProperty } from './model/property/CurrencyProperty';
 export { asDateProperty, newDateProperty } from './model/property/DateProperty';
+export { asDatetimeProperty, newDatetimeProperty } from './model/property/DatetimeProperty';
 export { asDecimalProperty, newDecimalProperty } from './model/property/DecimalProperty';
 export { asDescriptorProperty, newDescriptorProperty } from './model/property/DescriptorProperty';
 export { asDomainEntityProperty, newDomainEntityProperty } from './model/property/DomainEntityProperty';

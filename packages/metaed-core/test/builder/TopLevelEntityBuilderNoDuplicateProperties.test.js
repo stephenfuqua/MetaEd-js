@@ -544,6 +544,47 @@ describe('when building entities with a time property that duplicates name of an
     expect(validationFailures[1].category).toBe('error');
   });
 });
+
+describe('when building entities with a datetime property that duplicates name of another property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespaceName: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+  const documentation = 'doc';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(documentation)
+      .withCommonProperty(propertyName, documentation, true, false)
+      .withDatetimeProperty(propertyName, documentation, true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
+  });
+
+  it('should build one common, zero datetimes', () => {
+    expect(metaEd.propertyIndex.common.length).toBe(1);
+    expect(metaEd.propertyIndex.datetime.length).toBe(0);
+  });
+
+  it('should have validation failures', () => {
+    expect(validationFailures).toHaveLength(2);
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[0].category).toBe('error');
+
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].category).toBe('error');
+  });
+});
+
 describe('when building entities with a year property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];

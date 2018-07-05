@@ -691,6 +691,19 @@ export class MetaEdGrammarTalker {
     return this;
   }
 
+  withDatetimeProperty(
+    identifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    metaEdId: ?string = null,
+  ) {
+    this.addPropertyEnter('Datetime');
+    this.addPropertyNameAndComponents(identifier, metaEdId, documentation, isRequired, isCollection);
+    this.addPropertyExit('Datetime');
+    return this;
+  }
+
   withDecimalProperty(
     identifier: string,
     documentation: string,

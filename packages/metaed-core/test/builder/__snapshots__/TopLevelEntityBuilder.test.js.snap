@@ -80,6 +80,14 @@ Object {
 }
 `;
 
+exports[`when building datetime property should have source map for type with line, column, text 1`] = `
+Object {
+  "column": 4,
+  "line": 5,
+  "tokenText": "datetime",
+}
+`;
+
 exports[`when building decimal property should have source map with line, column, text 1`] = `
 Object {
   "baseKeyName": Object {

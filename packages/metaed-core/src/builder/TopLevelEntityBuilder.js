@@ -19,6 +19,7 @@ import { extractDocumentation, isErrorText, squareBracketRemoval } from './Build
 import { newBooleanProperty } from '../model/property/BooleanProperty';
 import { newCurrencyProperty } from '../model/property/CurrencyProperty';
 import { newDateProperty } from '../model/property/DateProperty';
+import { newDatetimeProperty } from '../model/property/DatetimeProperty';
 import { newDecimalProperty } from '../model/property/DecimalProperty';
 import type { DecimalProperty, DecimalPropertySourceMap } from '../model/property/DecimalProperty';
 import { newDescriptorProperty } from '../model/property/DescriptorProperty';
@@ -169,6 +170,12 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterDateProperty(context: MetaEdGrammar.DatePropertyContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentProperty = newDateProperty();
+    this.currentProperty.sourceMap.type = sourceMapFrom(context);
+  }
+
+  enterDatetimeProperty(context: MetaEdGrammar.DatetimePropertyContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
+    this.currentProperty = newDatetimeProperty();
     this.currentProperty.sourceMap.type = sourceMapFrom(context);
   }
 

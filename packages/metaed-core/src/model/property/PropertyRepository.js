@@ -5,6 +5,7 @@ import type { ChoiceProperty } from './ChoiceProperty';
 import type { CommonProperty } from './CommonProperty';
 import type { CurrencyProperty } from './CurrencyProperty';
 import type { DateProperty } from './DateProperty';
+import type { DatetimeProperty } from './DatetimeProperty';
 import type { DecimalProperty } from './DecimalProperty';
 import type { DescriptorProperty } from './DescriptorProperty';
 import type { DomainEntityProperty } from './DomainEntityProperty';
@@ -33,7 +34,8 @@ export class PropertyIndex {
   choice: Array<ChoiceProperty>;
   common: Array<CommonProperty>;
   currency: Array<CurrencyProperty>;
-  date: Array<DateProperty>;
+  date: Array<DatetimeProperty>;
+  datetime: Array<DateProperty>;
   decimal: Array<DecimalProperty>;
   descriptor: Array<DescriptorProperty>;
   domainEntity: Array<DomainEntityProperty>;
@@ -61,6 +63,7 @@ export function newPropertyIndex(): PropertyIndex {
     common: [],
     currency: [],
     date: [],
+    datetime: [],
     decimal: [],
     descriptor: [],
     domainEntity: [],

@@ -5,6 +5,7 @@ export type DbType =
   | 'Currency'
   | 'Date'
   | 'DateTime'
+  | 'DateTimeOffset'
   | 'Decimal'
   | 'Guid'
   | 'Int16'

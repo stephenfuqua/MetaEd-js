@@ -201,6 +201,46 @@ describe('when validating date property is missing metaEdId', () => {
   });
 });
 
+describe('when validating datetime property is missing metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName')
+      .withDocumentation('DomainEntityDocumentation')
+      .withDatetimeProperty('DatetimeName', 'DatetimeDocumentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one datetime property', () => {
+    expect(metaEd.propertyIndex.datetime).toHaveLength(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('MetaEdIdIsRequiredForProperties');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot(
+      'when validating datetime property is missing metaEdId should have validation failures -> sourceMap',
+    );
+  });
+});
+
 describe('when validating decimal property is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;

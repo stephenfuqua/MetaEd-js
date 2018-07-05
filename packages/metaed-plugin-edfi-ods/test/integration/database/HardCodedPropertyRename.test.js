@@ -759,13 +759,13 @@ describe('when enumeration is school year', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 

@@ -29,6 +29,7 @@ export const tableBuilderFactory: TableBuilderFactory = {
       boolean: () => simplePropertyTableBuilder(columnCreatorFactory),
       currency: () => simplePropertyTableBuilder(columnCreatorFactory),
       date: () => simplePropertyTableBuilder(columnCreatorFactory),
+      datetime: () => simplePropertyTableBuilder(columnCreatorFactory),
       decimal: () => simplePropertyTableBuilder(columnCreatorFactory),
       duration: () => simplePropertyTableBuilder(columnCreatorFactory),
       integer: () => simplePropertyTableBuilder(columnCreatorFactory),

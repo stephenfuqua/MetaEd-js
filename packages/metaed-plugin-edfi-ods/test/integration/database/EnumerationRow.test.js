@@ -6,6 +6,8 @@ import { columnExists, columnFirstRowValue, columnMSDescription, columnNthRowVal
 import { tableExists } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 
+jest.setTimeout(40000);
+
 describe('when enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';

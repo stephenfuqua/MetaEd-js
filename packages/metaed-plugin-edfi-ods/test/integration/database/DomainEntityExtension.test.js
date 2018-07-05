@@ -15,6 +15,8 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 import type { DatabaseForeignKey } from './DatabaseForeignKey';
 
+jest.setTimeout(40000);
+
 describe('when domain entity extension has multiple properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';
@@ -79,13 +81,13 @@ describe('when domain entity extension has multiple properties', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -259,13 +261,13 @@ describe('when domain entity extension has optional collection property', () => 
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -371,13 +373,13 @@ describe('when domain entity extension has required collection property', () => 
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 
@@ -499,13 +501,13 @@ describe('when domain entity extension has multiple common properties', () => {
     const lastModifiedDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'LastModifiedDate');
     expect(await columnExists(lastModifiedDateColumn)).toBe(true);
     expect(await columnIsNullable(lastModifiedDateColumn)).toBe(false);
-    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(lastModifiedDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(lastModifiedDateColumn)).toBe('(getdate())');
 
     const createDateColumn: DatabaseColumn = column(namespaceName, domainEntityName, 'CreateDate');
     expect(await columnExists(createDateColumn)).toBe(true);
     expect(await columnIsNullable(createDateColumn)).toBe(false);
-    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.dateTime);
+    expect(await columnDataType(createDateColumn)).toBe(columnDataTypes.datetime);
     expect(await columnDefaultConstraint(createDateColumn)).toBe('(getdate())');
   });
 

@@ -21,6 +21,8 @@ import {
 import { tableExists } from './DatabaseTable';
 import type { DatabaseColumn } from './DatabaseColumn';
 
+jest.setTimeout(40000);
+
 describe('when entity has shared decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespaceName: string = 'namespace';

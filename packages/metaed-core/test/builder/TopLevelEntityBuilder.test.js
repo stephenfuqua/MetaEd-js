@@ -410,6 +410,50 @@ describe('when building date property', () => {
   });
 });
 
+// Datetime Property
+describe('when building datetime property', () => {
+  const validationFailures: Array<ValidationFailure> = [];
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName: string = 'namespace';
+
+  const entityName: string = 'EntityName';
+  const entityDocumentation: string = 'Documentation';
+  const propertyType: string = 'datetime';
+  const propertyName: string = 'PropertyName';
+  const propertyDocumentation: string = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation(entityDocumentation)
+      .withDatetimeProperty(propertyName, propertyDocumentation, false, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have datetime property in entity properties', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties).toHaveLength(1);
+  });
+
+  it('should have type', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
+  });
+
+  it('should have source map for type with line, column, text', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toMatchSnapshot();
+  });
+});
+
 // DecimalProperty
 describe('when building decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

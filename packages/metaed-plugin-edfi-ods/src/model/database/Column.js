@@ -159,6 +159,13 @@ export function newDateColumn(): Column {
   });
 }
 
+export function newDatetimeColumn(): Column {
+  return Object.assign({}, newColumn(), {
+    type: 'datetime',
+    dataType: ColumnDataTypes.datetime,
+  });
+}
+
 export function newDecimalColumn(precision: string, scale: string): DecimalColumn {
   return Object.assign({}, newColumn(), {
     type: 'decimal',

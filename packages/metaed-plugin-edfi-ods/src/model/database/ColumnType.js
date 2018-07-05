@@ -4,6 +4,7 @@ export type ColumnType =
   | 'boolean'
   | 'currency'
   | 'date'
+  | 'datetime'
   | 'decimal'
   | 'duration'
   | 'integer'
