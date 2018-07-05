@@ -2,8 +2,8 @@
 import type { SimpleProperty, SimplePropertySourceMap } from './SimpleProperty';
 import { newSimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityProperty } from './EntityProperty';
-import type { SourceMap } from './../SourceMap';
-import { NoSourceMap } from './../SourceMap';
+import type { SourceMap } from '../SourceMap';
+import { NoSourceMap } from '../SourceMap';
 
 export type DecimalPropertySourceMap = {
   ...$Exact<SimplePropertySourceMap>,

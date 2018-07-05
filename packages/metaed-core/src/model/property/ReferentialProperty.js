@@ -1,10 +1,10 @@
 // @flow
 import type { EntityProperty, EntityPropertySourceMap } from './EntityProperty';
 import { newEntityPropertySourceMap, newEntityProperty } from './EntityProperty';
-import type { SourceMap } from './../SourceMap';
-import { NoSourceMap } from './../SourceMap';
-import type { TopLevelEntity } from './../TopLevelEntity';
-import { NoTopLevelEntity } from './../TopLevelEntity';
+import type { SourceMap } from '../SourceMap';
+import { NoSourceMap } from '../SourceMap';
+import type { TopLevelEntity } from '../TopLevelEntity';
+import { NoTopLevelEntity } from '../TopLevelEntity';
 import type { MergedProperty } from './MergedProperty';
 
 export type ReferentialPropertySourceMap = {

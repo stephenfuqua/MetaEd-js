@@ -1,7 +1,7 @@
 // @flow
 import { InterchangeBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
+import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForInterchangeItems';
 
 describe('when validating interchange element is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

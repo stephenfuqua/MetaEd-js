@@ -8,7 +8,7 @@ import type {
   ModelBase,
   TopLevelEntity,
 } from 'metaed-core';
-import { addTables } from '../table/TableCreatingEntityEnhancerBase';
+import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { columnCreatorFactory } from './ColumnCreatorFactory';

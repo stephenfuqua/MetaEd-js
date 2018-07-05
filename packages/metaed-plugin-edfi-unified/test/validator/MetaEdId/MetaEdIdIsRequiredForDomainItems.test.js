@@ -1,7 +1,7 @@
 // @flow
 import { DomainBuilder, newMetaEdEnvironment, MetaEdTextBuilder, NamespaceBuilder } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
+import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
 
 describe('when validating domain item is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

@@ -2,8 +2,8 @@
 import deepFreeze from 'deep-freeze';
 import type { EntityProperty } from './EntityProperty';
 import { NoEntityProperty } from './EntityProperty';
-import type { SourceMap } from './../SourceMap';
-import { NoSourceMap } from './../SourceMap';
+import type { SourceMap } from '../SourceMap';
+import { NoSourceMap } from '../SourceMap';
 
 export type MergedPropertySourceMap = {
   type: SourceMap,

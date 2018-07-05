@@ -7,7 +7,7 @@ import {
   NamespaceBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForProperties';
+import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForProperties';
 
 describe('when validating association property is missing metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

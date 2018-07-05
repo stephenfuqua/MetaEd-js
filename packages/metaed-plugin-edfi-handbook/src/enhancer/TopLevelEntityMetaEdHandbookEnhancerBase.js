@@ -51,7 +51,8 @@ function getEnumerationItemsFor(enumeration: Enumeration): Array<string> {
 function enumerationShortDescriptionsFor(entity: TopLevelEntity): Array<string> {
   if (entity.type === 'enumeration' || entity.type === 'mapTypeEnumeration' || entity.type === 'schoolYearEnumeration') {
     return getEnumerationItemsFor(((entity: any): Enumeration));
-  } else if (entity.type === 'descriptor') return getEnumerationItemsFor(((entity: any): Descriptor).mapTypeEnumeration);
+  }
+  if (entity.type === 'descriptor') return getEnumerationItemsFor(((entity: any): Descriptor).mapTypeEnumeration);
   return [];
 }
 

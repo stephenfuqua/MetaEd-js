@@ -6,7 +6,7 @@ import {
   matchAll,
   matchAllButFirstAsIdentityProperties,
   matchAllIdentityReferenceProperties,
-} from '../ValidatorShared/FindReferencedProperty';
+} from './FindReferencedProperty';
 
 export function failReferencedPropertyDoesNotExist(
   validatorName: string,

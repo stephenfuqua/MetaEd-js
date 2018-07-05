@@ -1,8 +1,8 @@
 // @flow
 import type { ReferentialProperty, ReferentialPropertySourceMap } from './ReferentialProperty';
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
-import type { SourceMap } from './../SourceMap';
-import { NoSourceMap } from './../SourceMap';
+import type { SourceMap } from '../SourceMap';
+import { NoSourceMap } from '../SourceMap';
 import type { EntityProperty } from './EntityProperty';
 
 export type DomainEntityPropertySourceMap = {

@@ -15,7 +15,9 @@
     "no-await-in-loop": "off",
     "no-underscore-dangle": "off",
     "no-duplicate-imports": "off",
+    "lines-between-class-members": "off",
     "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
     "no-param-reassign": [2, {
       "props": false
     }],

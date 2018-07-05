@@ -1,7 +1,7 @@
 // @flow
 import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
-import { addTables } from '../table/TableCreatingEntityEnhancerBase';
+import { addTables } from './TableCreatingEntityEnhancerBase';
 import { schoolYearEnumerationTableCreator } from './SchoolYearEnumerationTableCreator';
 import type { Table } from '../../model/database/Table';
 

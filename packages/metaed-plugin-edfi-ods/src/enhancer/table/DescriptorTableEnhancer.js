@@ -9,7 +9,7 @@ import {
   getPrimaryKeys,
   newTable,
 } from '../../model/database/Table';
-import { addTables } from '../table/TableCreatingEntityEnhancerBase';
+import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
 import { columnCreatorFactory } from './ColumnCreatorFactory';

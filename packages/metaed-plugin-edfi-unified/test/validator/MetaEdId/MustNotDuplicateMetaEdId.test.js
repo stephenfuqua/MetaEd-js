@@ -10,7 +10,7 @@ import {
   MetaEdTextBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MustNotDuplicateMetaEdId';
+import { validate } from '../../../src/validator/MetaEdId/MustNotDuplicateMetaEdId';
 
 describe('when validating two entities have different metaEdId', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

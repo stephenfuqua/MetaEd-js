@@ -21,7 +21,7 @@ import {
   MetaEdTextBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../../metaed-plugin-edfi-unified/src/validator/MetaEdId/MetaEdIdIsRequiredForEntities';
+import { validate } from '../../../src/validator/MetaEdId/MetaEdIdIsRequiredForEntities';
 
 describe('when validating abstract entity is missing metaEdId for entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

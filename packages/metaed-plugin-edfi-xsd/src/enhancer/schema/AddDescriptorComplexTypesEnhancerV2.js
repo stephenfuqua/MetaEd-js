@@ -6,7 +6,7 @@ import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
-import { createSchemaComplexTypeItems } from '../../enhancer/schema/XsdElementFromPropertyCreator';
+import { createSchemaComplexTypeItems } from './XsdElementFromPropertyCreator';
 import {
   typeGroupDescriptorExtendedReference,
   baseTypeDescriptorReference,

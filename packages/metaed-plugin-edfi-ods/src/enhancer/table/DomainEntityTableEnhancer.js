@@ -1,7 +1,7 @@
 // @flow
 import { asTopLevelEntity, getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { TopLevelEntity, EnhancerResult, MetaEdEnvironment, ModelBase } from 'metaed-core';
-import { addTables, buildMainTable, buildTablesFromProperties } from '../table/TableCreatingEntityEnhancerBase';
+import { addTables, buildMainTable, buildTablesFromProperties } from './TableCreatingEntityEnhancerBase';
 import type { Table } from '../../model/database/Table';
 
 const enhancerName: string = 'DomainEntityTableEnhancer';

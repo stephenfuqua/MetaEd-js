@@ -6,7 +6,7 @@ import type { ComplexType } from '../../model/schema/ComplexType';
 import { newComplexType, NoComplexType } from '../../model/schema/ComplexType';
 import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
-import { createSchemaComplexTypeItems } from '../../enhancer/schema/XsdElementFromPropertyCreator';
+import { createSchemaComplexTypeItems } from './XsdElementFromPropertyCreator';
 
 export const restrictionSuffix = 'Restriction';
 export const typeGroupDomainEntity = 'Domain Entity';

@@ -3,7 +3,7 @@ import R from 'ramda';
 import { asTopLevelEntity, getEntitiesOfTypeForNamespaces } from 'metaed-core';
 import type { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from 'metaed-core';
 import { addForeignKey } from '../../model/database/Table';
-import { addTables, buildMainTable, buildTablesFromProperties } from '../table/TableCreatingEntityEnhancerBase';
+import { addTables, buildMainTable, buildTablesFromProperties } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { newColumnNamePair } from '../../model/database/ColumnNamePair';

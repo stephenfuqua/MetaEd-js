@@ -1,6 +1,6 @@
 // @flow
 import type { Descriptor, Enumeration, EnumerationItem, ValidationFailure } from 'metaed-core';
-import { findDuplicates } from '../ValidatorShared/FindDuplicates';
+import { findDuplicates } from './FindDuplicates';
 
 export function failEnumerationItemRedeclarations(
   validatorName: string,

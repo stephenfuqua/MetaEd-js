@@ -2,7 +2,7 @@
 import R from 'ramda';
 import { orderByProp } from 'metaed-core';
 import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
-import { tableEntities, rowEntities } from '../enhancer/EnhancerHelper';
+import { tableEntities, rowEntities } from './EnhancerHelper';
 import type { EnumerationRowBase } from '../model/database/EnumerationRowBase';
 import type { ForeignKey } from '../model/database/ForeignKey';
 import type { Table } from '../model/database/Table';
