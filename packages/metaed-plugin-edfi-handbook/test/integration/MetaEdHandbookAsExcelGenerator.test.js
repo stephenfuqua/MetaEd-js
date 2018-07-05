@@ -165,6 +165,8 @@ Id [UNIQUEIDENTIFIER] NOT NULL
 Primary Keys:
 Entity1Integer
 
+
+
 edfi.Entity1DateCollection
 
 Entity1DateCollection [DATE] NOT NULL
@@ -174,6 +176,8 @@ CreateDate [DATETIME] NOT NULL
 Primary Keys:
 Entity1DateCollection
 Entity1Integer
+
+
 `,
     );
     expect(workbook.sheets[0].rows[4].values.reduce(rowToString)).toBe(
@@ -222,6 +226,8 @@ Id [UNIQUEIDENTIFIER] NOT NULL
 Primary Keys:
 Entity2Integer
 
+
+
 edfi.Entity2DateCollection
 
 Entity2DateCollection [DATE] NOT NULL
@@ -231,6 +237,8 @@ CreateDate [DATETIME] NOT NULL
 Primary Keys:
 Entity2DateCollection
 Entity2Integer
+
+
 `,
     );
   });

@@ -40,11 +40,13 @@
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:lint": "yarn lint",
     "test:flow": "yarn flow check",
-    "test:unit": "yarn build:clean && yarn test:unit:workaround-memory-leak",
-    "test:unit:workaround-memory-leak": "jest packages/metaed-core/ && jest packages/metaed-plugin-edfi-interchange-brief/ && jest packages/metaed-plugin-edfi-unified/ && jest packages/metaed-plugin-edfi-xml-dictionary/ && jest packages/metaed-plugin-edfi-xsd/ && jest packages/metaed-plugin-edfi-odsapi/ && jest packages/metaed-plugin-edfi-ods-changeevent/ && jest packages/metaed-plugin-edfi-ods/ -i",
+    "test:unit": "yarn build:clean && yarn test:unit:non-ods && yarn test:unit:ods-non-db",
+    "test:unit:non-ods": "yarn jest packages/(?!metaed-plugin-edfi-ods)",
+    "test:unit:ods-non-db": "yarn jest packages/metaed-plugin-edfi-ods/test/(?!database)",
+    "test:unit:ods-db": "yarn jest packages/metaed-plugin-edfi-ods/test/database -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
-    "prep-for-publish": "yarn build:clean && yarn test && yarn build",
+    "prep-for-publish": "yarn build:clean && yarn test && yarn test:unit:ods-db && yarn build",
     "publish-dev": "yarn lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=* --npm-client=npm"
   }
 }
