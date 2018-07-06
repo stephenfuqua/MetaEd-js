@@ -36,17 +36,17 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build --parallel",
     "build:clean": "lerna run build:clean --parallel",
-    "test": "yarn test:flow && yarn test:lint && yarn test:unit && yarn test:atom",
+    "test": "yarn build:clean && yarn test:flow && yarn test:lint && yarn test:unit && yarn test:atom",
     "test:coverage": "rimraf coverage/ && jest --coverage",
     "test:lint": "yarn lint",
     "test:flow": "yarn flow check",
-    "test:unit": "yarn build:clean && yarn test:unit:non-ods && yarn test:unit:ods-non-db",
+    "test:unit": "yarn jest \"packages/(?!metaed-plugin-edfi-ods)\" \"packages/metaed-plugin-edfi-ods/test/(?!database)\"",
     "test:unit:non-ods": "yarn jest \"packages/(?!metaed-plugin-edfi-ods)\"",
     "test:unit:ods-non-db": "yarn jest \"packages/metaed-plugin-edfi-ods/test/(?!database)\"",
     "test:unit:ods-db": "yarn jest packages/metaed-plugin-edfi-ods/test/database -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
-    "prep-for-publish": "yarn build:clean && yarn test && yarn test:unit:ods-db && yarn build",
+    "prep-for-publish": "yarn test && yarn test:unit:ods-db && yarn build",
     "publish-dev": "yarn lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=* --npm-client=npm"
   }
 }
