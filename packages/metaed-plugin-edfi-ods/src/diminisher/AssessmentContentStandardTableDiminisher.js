@@ -14,7 +14,7 @@ import type { Table } from '../model/database/Table';
 // Assessment.Version collides with AssessmentContentStandard.Version
 // Rename ContentStandard.Version to ContentStandard.AssessmentVersion when ContentStandard hangs off of Assessment
 const enhancerName: string = 'AssessmentContentStandardTableDiminisher';
-const targetVersions: string = '*';
+const targetVersions: string = '2.0.0 || 2.0.1 || 3.0.0';
 
 const assessmentContentStandard: string = 'AssessmentContentStandard';
 const assessmentVersion: string = 'AssessmentVersion';
@@ -26,6 +26,17 @@ function renameVersionColumnOnAssessmentContentStandardTable(tablesForCoreNamesp
   const table: ?Table = tablesForCoreNamespace.get(assessmentContentStandard);
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
+
+  const column: ?Column = table.columns.find((x: Column) => x.name === version);
+  if (column == null) return;
+
+  const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === assessment);
+  if (foreignKey == null) return;
+
+  const columnNamePair: ?ColumnNamePair = foreignKey.columnNames.find(
+    (x: ColumnNamePair) => x.parentTableColumnName === version && x.foreignTableColumnName === version,
+  );
+  if (columnNamePair == null) return;
 
   addColumn(
     table,
@@ -45,17 +56,8 @@ function renameVersionColumnOnAssessmentContentStandardTable(tablesForCoreNamesp
     ),
   );
 
-  const column: ?Column = table.columns.find((x: Column) => x.name === version);
-  if (column == null) return;
   column.isNullable = true;
   column.isPartOfPrimaryKey = false;
-
-  const foreignKey: ?ForeignKey = getForeignKeys(table).find((x: ForeignKey) => x.foreignTableName === assessment);
-  if (foreignKey == null) return;
-  const columnNamePair: ?ColumnNamePair = foreignKey.columnNames.find(
-    (x: ColumnNamePair) => x.parentTableColumnName === version && x.foreignTableColumnName === version,
-  );
-  if (columnNamePair == null) return;
   columnNamePair.parentTableColumnName = assessmentVersion;
 }
 
@@ -64,16 +66,18 @@ function renameVersionColumnOnAssessmentContentStandardAuthorTable(tablesForCore
   if (table == null) return;
   if (table.columns.find((column: Column) => column.name === assessmentVersion) != null) return;
 
-  renameColumn(table, version, assessmentVersion);
-
   const foreignKey: ?ForeignKey = getForeignKeys(table).find(
     (x: ForeignKey) => x.foreignTableName === assessmentContentStandard,
   );
   if (foreignKey == null) return;
+
   const columnNamePair: ?ColumnNamePair = foreignKey.columnNames.find(
     (x: ColumnNamePair) => x.parentTableColumnName === version && x.foreignTableColumnName === version,
   );
   if (columnNamePair == null) return;
+
+  renameColumn(table, version, assessmentVersion);
+
   columnNamePair.parentTableColumnName = assessmentVersion;
   columnNamePair.foreignTableColumnName = assessmentVersion;
 }

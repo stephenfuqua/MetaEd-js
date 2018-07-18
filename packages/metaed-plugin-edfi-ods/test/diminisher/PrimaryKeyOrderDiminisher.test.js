@@ -100,31 +100,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
     'UniqueSectionCode',
     'PrimaryKeyNameI',
   ];
-  const expectedPrimaryKeyOrder: Array<string> = [
-    'SchoolId',
-    'ClassPeriodName',
-    'ClassroomIdentificationCode',
-    'GradebookEntryTitle',
-    'DateAssigned',
-    'Objective',
-    'AcademicSubjectDescriptorId',
-    'ObjectiveGradeLevelDescriptorId',
-    'SchoolYear',
-    'LocalCourseCode',
-    'TermDescriptorId',
-    'UniqueSectionCode',
-    'SequenceOfCourse',
-    'PrimaryKeyNameA',
-    'PrimaryKeyNameB',
-    'PrimaryKeyNameC',
-    'PrimaryKeyNameD',
-    'PrimaryKeyNameE',
-    'PrimaryKeyNameF',
-    'PrimaryKeyNameG',
-    'PrimaryKeyNameH',
-    'PrimaryKeyNameI',
-    'PrimaryKeyNameJ',
-  ];
+  const expectedPrimaryKeyOrder: Array<string> = [];
 
   beforeAll(() => {
     initializeEdFiOdsEntityRepository(metaEd);
@@ -144,7 +120,7 @@ describe('when PrimaryKeyOrderDiminisher diminishes matching table with extraneo
     enhance(metaEd);
   });
 
-  it('should have correct primary key order', () => {
+  it('should have ignored primary key ordering for this table', () => {
     // $FlowIgnore - null check
     const { primaryKeys }: Array<Column> = tableEntities(metaEd, namespace).get(gradebookEntryLearningObjective);
     expect(primaryKeys.map((pk: Column) => pk.name)).toEqual(expectedPrimaryKeyOrder);

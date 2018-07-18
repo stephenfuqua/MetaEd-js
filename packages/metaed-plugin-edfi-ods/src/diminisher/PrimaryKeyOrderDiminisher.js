@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import { orderByProp, versionSatisfies } from 'metaed-core';
+import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { getPrimaryKeys } from '../model/database/Table';
 import { tableEntities } from '../enhancer/EnhancerHelper';
@@ -949,7 +949,7 @@ function primaryKeyOrderFor(table: Table): Array<string> {
     ],
   };
 
-  return R.propOr([], table.name)(primaryKeysFor);
+  return R.propOr([], table.name, primaryKeysFor);
 }
 
 function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
@@ -957,14 +957,12 @@ function modifyPrimaryKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
     const primaryKeyOrder: Array<string> = primaryKeyOrderFor(table);
     if (primaryKeyOrder.length === 0) return;
 
-    const primaryKeys: Array<Column> = orderByProp('name')(getPrimaryKeys(table));
-    const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('name'), primaryKeys);
-    const primaryKeyFor: (primaryKeyName: string) => Column = R.prop(R.__, primaryKeyLookup);
+    // ignore table if primary keys have been modified
+    const primaryKeys: Array<Column> = getPrimaryKeys(table);
+    if (R.symmetricDifference(primaryKeyOrder, primaryKeys.map(x => x.name)).length > 0) return;
 
-    table.primaryKeys = R.compose(
-      R.union(R.__, primaryKeys),
-      R.chain((pkName: string) => primaryKeyFor(pkName)),
-    )(primaryKeyOrder);
+    const primaryKeyLookup: { [primaryKeyName: string]: Column } = R.groupBy(R.prop('name'), primaryKeys);
+    table.primaryKeys = R.chain((pkName: string) => primaryKeyLookup[pkName], primaryKeyOrder);
   });
 }
 
