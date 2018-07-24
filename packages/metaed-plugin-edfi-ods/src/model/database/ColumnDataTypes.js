@@ -19,7 +19,7 @@ export const ColumnDataTypes: ColumnData = {
   boolean: '[BIT]',
   currency: '[MONEY]',
   date: '[DATE]',
-  datetime: '[DATETIMEOFFSET](7)',
+  datetime: '[DATETIME2](7)',
   decimal: (precision, scale) => `[DECIMAL](${precision}, ${scale})`,
   duration: '[NVARCHAR](30)',
   integer: '[INT]',

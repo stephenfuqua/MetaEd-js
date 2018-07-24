@@ -70,7 +70,7 @@ export const columnDataTypes = {
   bit: 'bit',
   date: 'date',
   datetime: 'datetime',
-  datetimeoffset: 'datetimeoffset',
+  datetime2: 'datetime2',
   decimal: 'decimal',
   integer: 'int',
   money: 'money',

@@ -198,7 +198,7 @@ describe('when converting datetime property to column', () => {
   it('should return converted column', () => {
     expect(columns).toHaveLength(1);
     expect(columns[0].type).toBe('datetime');
-    expect(columns[0].dataType).toBe('[DATETIMEOFFSET](7)');
+    expect(columns[0].dataType).toBe('[DATETIME2](7)');
     expect(columns[0].name).toBe(contextName + propertyName);
     expect(columns[0].description).toBe(propertyDocumentation);
     expect(columns[0].isIdentityDatabaseType).toBe(true);

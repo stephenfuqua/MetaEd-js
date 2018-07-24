@@ -865,13 +865,13 @@ describe('when entity has datetime properties', () => {
     const optionalColumn: DatabaseColumn = column(namespaceName, domainEntityName, contextName + optionalDatetimeName);
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(true);
-    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetime2);
     expect(await columnMSDescription(optionalColumn)).toBe(optionalDatetimeDocumentation);
 
     const requiredColumn: DatabaseColumn = column(namespaceName, domainEntityName, requiredDatetimeName);
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
-    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetime2);
     expect(await columnMSDescription(requiredColumn)).toBe(requiredDatetimeDocumentation);
   });
 });
@@ -939,7 +939,7 @@ describe('when entity has collection datetime properties', () => {
     );
     expect(await columnExists(optionalColumn)).toBe(true);
     expect(await columnIsNullable(optionalColumn)).toBe(false);
-    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnDataType(optionalColumn)).toBe(columnDataTypes.datetime2);
     expect(await columnMSDescription(optionalColumn)).toBe(optionalDatetimeDocumentation);
   });
 
@@ -971,7 +971,7 @@ describe('when entity has collection datetime properties', () => {
     );
     expect(await columnExists(requiredColumn)).toBe(true);
     expect(await columnIsNullable(requiredColumn)).toBe(false);
-    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetimeoffset);
+    expect(await columnDataType(requiredColumn)).toBe(columnDataTypes.datetime2);
     expect(await columnMSDescription(requiredColumn)).toBe(requiredDatetimeDocumentation);
   });
 
