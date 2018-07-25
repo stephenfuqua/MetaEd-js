@@ -4,9 +4,10 @@ import { newMetaEdPlugin } from 'metaed-core';
 
 import { validate as NamespaceMustNotBeNamedChanges } from './validator/NamespaceMustNotBeNamedChanges';
 
-import { generate as DeleteTrackingTableGenerator } from './generator/DeleteTrackingTableGenerator';
-import { generate as DeleteTrackingTriggerGenerator } from './generator/DeleteTrackingTriggerGenerator';
-import { generate as EnableChangeTrackingGenerator } from './generator/EnableChangeTrackingGenerator';
+import { generate as CreateTrackedDeleteTablesGenerator } from './generator/CreateTrackedDeleteTablesGenerator';
+import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
+import { generate as EnableDatabaseChangeTrackingGenerator } from './generator/EnableDatabaseChangeTrackingGenerator';
+import { generate as EnableTableChangeTrackingGenerator } from './generator/EnableTableChangeTrackingGenerator';
 
 import { enhance as edFiOdsChangeEventEntityRepository } from './model/EdFiOdsChangeEventEntityRepository';
 
@@ -33,6 +34,11 @@ export function initialize(): MetaEdPlugin {
       enumerationChangeEventEnhancer,
       schoolYearEnumerationChangeEventEnhancer,
     ],
-    generator: [DeleteTrackingTableGenerator, DeleteTrackingTriggerGenerator, EnableChangeTrackingGenerator],
+    generator: [
+      CreateTrackedDeleteTablesGenerator,
+      CreateDeletedForTrackingTriggersGenerator,
+      EnableDatabaseChangeTrackingGenerator,
+      EnableTableChangeTrackingGenerator,
+    ],
   });
 }

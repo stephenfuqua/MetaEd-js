@@ -26,10 +26,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const generatedResult: string = template().deleteTrackingTable({ tables });
 
       results.push({
-        name: 'ODS Delete Tracking Tables',
+        name: 'ODS Change Event: CreateTrackedDeleteTables',
         namespace: namespace.namespaceName,
         folderName: changeEventPath,
-        fileName: `0010-CreateTrackedDeleteTables.sql`,
+        fileName: `0020-CreateTrackedDeleteTables.sql`,
         resultString: generatedResult,
         resultStream: null,
       });
@@ -37,7 +37,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   return {
-    generatorName: 'edfiOdsChangeEvent.DeleteTrackingTableGenerator',
+    generatorName: 'edfiOdsChangeEvent.CreateTrackedDeleteTablesGenerator',
     generatedOutput: results,
   };
 }

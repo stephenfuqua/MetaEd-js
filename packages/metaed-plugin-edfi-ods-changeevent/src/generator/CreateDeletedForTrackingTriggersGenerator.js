@@ -26,10 +26,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const generatedResult: string = template().deleteTrackingTrigger({ triggers });
 
       results.push({
-        name: 'ODS Delete Tracking Triggers',
+        name: 'ODS Change Event: CreateDeletedForTrackingTriggers',
         namespace: namespace.namespaceName,
         folderName: changeEventPath,
-        fileName: '0020-CreateDeletedForTrackingTriggers.sql',
+        fileName: '0030-CreateDeletedForTrackingTriggers.sql',
         resultString: generatedResult,
         resultStream: null,
       });
@@ -37,7 +37,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   return {
-    generatorName: 'edfiOdsChangeEvent.DeleteTrackingTriggerGenerator',
+    generatorName: 'edfiOdsChangeEvent.CreateDeletedForTrackingTriggersGenerator',
     generatedOutput: results,
   };
 }

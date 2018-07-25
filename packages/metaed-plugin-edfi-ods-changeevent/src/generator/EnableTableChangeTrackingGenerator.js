@@ -26,10 +26,10 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
       const generatedResult: string = template().enableChangeTracking({ tables });
 
       results.push({
-        name: 'ODS Enable Change Tracking',
+        name: 'ODS Change Event: EnableTableChangeTracking',
         namespace: namespace.namespaceName,
         folderName: changeEventPath,
-        fileName: '0030-EnableTableChangeTracking.sql',
+        fileName: '0040-EnableTableChangeTracking.sql',
         resultString: generatedResult,
         resultStream: null,
       });
@@ -37,7 +37,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   return {
-    generatorName: 'edfiOdsChangeEvent.EnableChangeTrackingGenerator',
+    generatorName: 'edfiOdsChangeEvent.EnableTableChangeTrackingGenerator',
     generatedOutput: results,
   };
 }
