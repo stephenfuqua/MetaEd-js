@@ -18,7 +18,7 @@ import type { Table } from '../model/database/Table';
 // ODS 2.0.x missing SchoolId with GradingPeriod context on ReportCard and ReportCardGrade
 // This is due to "key unification" in the ODS schema model
 const enhancerName: string = 'RemoveGradingPeriodRoleNameFromSchoolIdOnReportCardAndReportCardGradeDiminisher2_0_x';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.0.x || >=2.2.0 <3.0.0';
 
 function makeColumnNonNullablePrimaryKey(table: Table, columnName: string): void {
   const column: ?Column = table.columns.find((x: Column) => x.name === columnName);
