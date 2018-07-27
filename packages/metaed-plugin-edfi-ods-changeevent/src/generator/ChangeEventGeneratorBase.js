@@ -18,7 +18,8 @@ export function templateNamed(templateName: string) {
 }
 
 export const template = R.memoizeWith(R.identity, () => ({
+  addColumnAggregateHashValue: templateNamed('addColumnAggregateHashValue'),
   deleteTrackingTable: templateNamed('deleteTrackingTable'),
   deleteTrackingTrigger: templateNamed('deleteTrackingTrigger'),
-  enableChangeTracking: templateNamed('enableChangeTracking'),
+  enableTableChangeTracking: templateNamed('enableTableChangeTracking'),
 }));

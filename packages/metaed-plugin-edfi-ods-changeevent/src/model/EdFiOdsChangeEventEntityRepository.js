@@ -3,12 +3,14 @@ import { newPluginEnvironment } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import type { DeleteTrackingTable } from './DeleteTrackingTable';
 import type { DeleteTrackingTrigger } from './DeleteTrackingTrigger';
+import type { AddColumnAggregateHashValueForTable } from './AddColumnAggregateHashValueForTable';
 import type { EnableChangeTracking } from './EnableChangeTracking';
 
 export type EdFiOdsChangeEventEntityRepository = {
   deleteTrackingTable: Array<DeleteTrackingTable>,
   deleteTrackingTrigger: Array<DeleteTrackingTrigger>,
   enableChangeTracking: Array<EnableChangeTracking>,
+  addColumnAggregateHashValueForTable: Array<AddColumnAggregateHashValueForTable>,
 };
 
 const enhancerName: string = 'EdFiOdsChangeEventEntityRepositorySetupEnhancer';
@@ -18,6 +20,7 @@ export function newEdFiOdsChangeEventEntityRepository(): EdFiOdsChangeEventEntit
     deleteTrackingTable: [],
     deleteTrackingTrigger: [],
     enableChangeTracking: [],
+    addColumnAggregateHashValueForTable: [],
   };
 }
 

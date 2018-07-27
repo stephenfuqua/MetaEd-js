@@ -8,6 +8,7 @@ import { generate as CreateTrackedDeleteTablesGenerator } from './generator/Crea
 import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
 import { generate as EnableDatabaseChangeTrackingGenerator } from './generator/EnableDatabaseChangeTrackingGenerator';
 import { generate as EnableTableChangeTrackingGenerator } from './generator/EnableTableChangeTrackingGenerator';
+import { generate as AddColumnAggregateHashValueForTableGenerator } from './generator/AddColumnAggregateHashValueForTableGenerator';
 
 import { enhance as edFiOdsChangeEventEntityRepository } from './model/EdFiOdsChangeEventEntityRepository';
 
@@ -19,6 +20,7 @@ import { enhance as domainEntityChangeEventEnhancer } from './enhancer/DomainEnt
 import { enhance as domainEntitySubclassChangeEventEnhancer } from './enhancer/DomainEntitySubclassChangeEventEnhancer';
 import { enhance as enumerationChangeEventEnhancer } from './enhancer/EnumerationChangeEventEnhancer';
 import { enhance as schoolYearEnumerationChangeEventEnhancer } from './enhancer/SchoolYearEnumerationChangeEventEnhancer';
+import { enhance as addColumnAggregateHashValueForTableEnhancer } from './enhancer/AddColumnAggregateHashValueForTableEnhancer';
 
 export function initialize(): MetaEdPlugin {
   return Object.assign(newMetaEdPlugin(), {
@@ -33,12 +35,14 @@ export function initialize(): MetaEdPlugin {
       domainEntitySubclassChangeEventEnhancer,
       enumerationChangeEventEnhancer,
       schoolYearEnumerationChangeEventEnhancer,
+      addColumnAggregateHashValueForTableEnhancer,
     ],
     generator: [
       CreateTrackedDeleteTablesGenerator,
       CreateDeletedForTrackingTriggersGenerator,
       EnableDatabaseChangeTrackingGenerator,
       EnableTableChangeTrackingGenerator,
+      AddColumnAggregateHashValueForTableGenerator,
     ],
   });
 }

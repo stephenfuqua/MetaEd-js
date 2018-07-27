@@ -1,20 +1,23 @@
 // @flow
 import type { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
-import { changeEventIndicated } from '../enhancer/ChangeEventIndicator';
+import { twoDotXIndicated } from '../enhancer/ChangeEventIndicator';
 import { changeEventPath, template } from './ChangeEventGeneratorBase';
-import { enableChangeTrackingEntities } from '../enhancer/EnhancerHelper';
-import type { EnableChangeTracking } from '../model/EnableChangeTracking';
+import { addColumnAggregateHashValueForTableEntities } from '../enhancer/EnhancerHelper';
+import type { AddColumnAggregateHashValueForTable } from '../model/AddColumnAggregateHashValueForTable';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
   metaEd.namespace.forEach(namespace => {
-    if (!changeEventIndicated(metaEd, namespace)) return;
-    const tables: Array<EnableChangeTracking> = enableChangeTrackingEntities(metaEd, namespace);
+    if (!twoDotXIndicated(metaEd, namespace)) return;
+    const tables: Array<AddColumnAggregateHashValueForTable> = addColumnAggregateHashValueForTableEntities(
+      metaEd,
+      namespace,
+    );
     if (tables.length > 0) {
       tables.sort(
         // by schema then by table name
-        (a: EnableChangeTracking, b: EnableChangeTracking) => {
+        (a: AddColumnAggregateHashValueForTable, b: AddColumnAggregateHashValueForTable) => {
           if (a.schema === b.schema) {
             if (a.tableName < b.tableName) return -1;
             return a.tableName > b.tableName ? 1 : 0;
@@ -23,13 +26,13 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         },
       );
 
-      const generatedResult: string = template().enableTableChangeTracking({ tables });
+      const generatedResult: string = template().addColumnAggregateHashValue({ tables });
 
       results.push({
-        name: 'ODS Change Event: EnableTableChangeTracking',
+        name: 'ODS Change Event: AddColumnAggregateHashValueForTable',
         namespace: namespace.namespaceName,
         folderName: changeEventPath,
-        fileName: '0040-EnableTableChangeTracking.sql',
+        fileName: '0050-AddColumnAggregateHashValueForTables.sql',
         resultString: generatedResult,
         resultStream: null,
       });
@@ -37,7 +40,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   });
 
   return {
-    generatorName: 'edfiOdsChangeEvent.EnableTableChangeTrackingGenerator',
+    generatorName: 'edfiOdsChangeEvent.AddColumnAggregateHashValueForTableGenerator',
     generatedOutput: results,
   };
 }
