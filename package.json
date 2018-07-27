@@ -22,6 +22,7 @@
     "flow-typed": "^2.1.5",
     "jest": "23.3.0",
     "jest-teamcity-reporter": "^0.9.0",
+    "jsinspect": "^0.12.7",
     "lerna": "^2.9.0",
     "prettier": "1.13.7",
     "rimraf": "^2.6.1"
@@ -46,6 +47,7 @@
     "test:unit:ods-db": "yarn jest packages/metaed-plugin-edfi-ods/test/database -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
+    "test:code-duplication": "yarn jsinspect -t 50 --ignore \"test|gen|dist\" ./packages",
     "prep-for-publish": "yarn test && yarn test:unit:ods-db && yarn build",
     "publish-dev": "yarn lerna publish --exact --conventional-commits --cd-version prerelease --preid=dev --npm-tag=dev --yes --force-publish=* --npm-client=npm"
   }

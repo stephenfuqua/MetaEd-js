@@ -1003,6 +1003,10 @@ babel-types@^6.0.0, babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.24.
     lodash "^4.17.4"
     to-fast-properties "^1.0.3"
 
+babylon@6.16.1:
+  version "6.16.1"
+  resolved "https://www.myget.org/F/ed-fi/npm/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
+
 babylon@7.0.0-beta.44:
   version "7.0.0-beta.44"
   resolved "https://www.myget.org/F/ed-fi/npm/babylon/-/babylon-7.0.0-beta.44.tgz#89159e15e6e30c5096e22d738d8c0af8a0e8ca1d"
@@ -2723,6 +2727,10 @@ filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://www.myget.org/F/ed-fi/npm/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
 
+filepaths@0.3.0:
+  version "0.3.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/filepaths/-/filepaths-0.3.0.tgz#a1c9a4601b6eae7fb876fc1ac98479ceb557c177"
+
 fileset@^2.0.2:
   version "2.0.3"
   resolved "https://www.myget.org/F/ed-fi/npm/fileset/-/fileset-2.0.3.tgz#8e7548a96d3cc2327ee5e674168723a333bba2a0"
@@ -4282,6 +4290,18 @@ jshint@^2.8.0:
     minimatch "~3.0.2"
     shelljs "0.3.x"
     strip-json-comments "1.0.x"
+
+jsinspect@^0.12.7:
+  version "0.12.7"
+  resolved "https://www.myget.org/F/ed-fi/npm/jsinspect/-/jsinspect-0.12.7.tgz#a3f8eea47ca8931b94d62062089ebda099866854"
+  dependencies:
+    babylon "6.16.1"
+    chalk "^2.1.0"
+    commander "^2.11.0"
+    filepaths "0.3.0"
+    stable "^0.1.6"
+    strip-indent "^1.0.1"
+    strip-json-comments "1.0.2"
 
 json-parse-better-errors@^1.0.0, json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
@@ -6870,6 +6890,10 @@ ssri@^6.0.0:
   version "6.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/ssri/-/ssri-6.0.0.tgz#fc21bfc90e03275ac3e23d5a42e38b8a1cbc130d"
 
+stable@^0.1.6:
+  version "0.1.8"
+  resolved "https://www.myget.org/F/ed-fi/npm/stable/-/stable-0.1.8.tgz#836eb3c8382fe2936feaf544631017ce7d47a3cf"
+
 stack-trace@0.0.x, stack-trace@^0.0.10:
   version "0.0.10"
   resolved "https://www.myget.org/F/ed-fi/npm/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
@@ -6994,6 +7018,10 @@ strip-indent@^1.0.1:
 strip-indent@^2.0.0:
   version "2.0.0"
   resolved "https://www.myget.org/F/ed-fi/npm/strip-indent/-/strip-indent-2.0.0.tgz#5ef8db295d01e6ed6cbf7aab96998d7822527b68"
+
+strip-json-comments@1.0.2:
+  version "1.0.2"
+  resolved "https://www.myget.org/F/ed-fi/npm/strip-json-comments/-/strip-json-comments-1.0.2.tgz#5a48ab96023dbac1b7b8d0ffabf6f63f1677be9f"
 
 strip-json-comments@1.0.x:
   version "1.0.4"
