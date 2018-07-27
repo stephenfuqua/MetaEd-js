@@ -38,7 +38,8 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
   if (aggregateRootTable) {
     mainTable.includeCreateDateColumn = true;
     mainTable.includeLastModifiedDateAndIdColumn = true;
-    if (changeEventIndicated(metaEd, entity.namespace)) {
+    mainTable.isAggregateRootTable = true;
+    if (changeEventIndicated(metaEd)) {
       mainTable.includeAggregateHashValueColumn = true;
     }
   }

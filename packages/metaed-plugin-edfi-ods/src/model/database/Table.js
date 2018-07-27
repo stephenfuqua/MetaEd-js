@@ -38,6 +38,7 @@ export type Table = {
   // not all tables have a parentEntity
   parentEntity: TopLevelEntity,
   isEntityMainTable: boolean,
+  isAggregateRootTable: boolean,
 };
 
 export function newTable(): Table {
@@ -62,6 +63,7 @@ export function newTable(): Table {
     uniqueIndexes: [],
     parentEntity: NoTopLevelEntity,
     isEntityMainTable: false,
+    isAggregateRootTable: false,
   };
 }
 

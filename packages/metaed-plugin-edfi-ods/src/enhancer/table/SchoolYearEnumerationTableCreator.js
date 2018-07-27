@@ -16,8 +16,9 @@ export const schoolYearEnumerationTableCreator: {
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,
+      isAggregateRootTable: true,
     });
-    if (changeEventIndicated(metaEd, namespace)) {
+    if (changeEventIndicated(metaEd)) {
       table.includeAggregateHashValueColumn = true;
     }
     addColumns(

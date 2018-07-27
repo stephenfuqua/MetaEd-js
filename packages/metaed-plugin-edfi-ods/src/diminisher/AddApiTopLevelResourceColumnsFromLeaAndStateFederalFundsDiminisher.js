@@ -42,7 +42,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (coreNamespace == null) return { enhancerName, success: false };
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const includeAggregateHashValueColumn: boolean = changeEventIndicated(metaEd, coreNamespace);
+  const includeAggregateHashValueColumn: boolean = changeEventIndicated(metaEd);
 
   addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace, {
     includeAggregateHashValueColumn,

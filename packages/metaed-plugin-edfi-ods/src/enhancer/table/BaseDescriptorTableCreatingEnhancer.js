@@ -20,9 +20,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     description: 'This is the base entity for the descriptor pattern.',
     includeCreateDateColumn: true,
     includeLastModifiedDateAndIdColumn: true,
+    isAggregateRootTable: true,
   });
 
-  if (changeEventIndicated(metaEd, edfiNamespace)) {
+  if (changeEventIndicated(metaEd)) {
     descriptorTable.includeAggregateHashValueColumn = true;
   }
 
