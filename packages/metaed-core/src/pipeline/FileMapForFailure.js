@@ -1,7 +1,7 @@
 // @flow
 import * as Chalk from 'chalk';
 import winston from 'winston';
-import { getFilenameAndLineNumber } from './FileIndex';
+import { getFilenameAndLineNumber } from '../file/FileIndex';
 import type { State } from '../State';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 

@@ -1,8 +1,8 @@
 // @flow
 import type { State } from '../State';
-import type { Enhancer } from '../enhancer/Enhancer';
-import type { PluginManifest } from '../plugin/PluginTypes';
-import { nextMacroTask } from './NextMacroTask';
+import type { Enhancer } from './Enhancer';
+import type { PluginManifest } from '../plugin/PluginManifest';
+import { nextMacroTask } from '../Utility';
 
 export async function execute(pluginManifest: PluginManifest, state: State): Promise<void> {
   if (state.metaEd.namespace == null || state.metaEd.propertyIndex == null) return;

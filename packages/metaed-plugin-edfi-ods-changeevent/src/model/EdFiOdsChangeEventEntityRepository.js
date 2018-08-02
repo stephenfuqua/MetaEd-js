@@ -32,7 +32,11 @@ export function addEdFiOdsChangeEventEntityRepositoryTo(metaEd: MetaEdEnvironmen
 
   const edfiOdsChangeEventPlugin = metaEd.plugin.get('edfiOdsChangeEvent');
   if (edfiOdsChangeEventPlugin == null) {
-    metaEd.plugin.set('edfiOdsChangeEvent', { ...newPluginEnvironment(), namespace: namespaces });
+    metaEd.plugin.set('edfiOdsChangeEvent', {
+      ...newPluginEnvironment(),
+      shortName: 'edfiOdsChangeEvent',
+      namespace: namespaces,
+    });
   } else {
     edfiOdsChangeEventPlugin.namespace = namespaces;
   }

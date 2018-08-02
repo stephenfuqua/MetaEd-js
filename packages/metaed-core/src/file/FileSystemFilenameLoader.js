@@ -7,14 +7,6 @@ import type { FileSet } from './MetaEdFile';
 import type { State } from '../State';
 import type { MetaEdConfiguration } from '../MetaEdConfiguration';
 
-export type InputDirectory = {
-  path: string,
-  namespaceName: string,
-  projectExtension: string,
-  projectName: string,
-  isExtension: boolean,
-};
-
 export function loadFiles(state: State): boolean {
   let success: boolean = true;
   const { metaEdConfiguration }: { metaEdConfiguration: MetaEdConfiguration } = state;

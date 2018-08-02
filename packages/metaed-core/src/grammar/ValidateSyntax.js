@@ -3,10 +3,10 @@ import R from 'ramda';
 import winston from 'winston';
 import type { State } from '../State';
 import type { ValidationFailure } from '../validator/ValidationFailure';
-import type { MetaEdFile, FileSet } from './MetaEdFile';
-import { createFileIndex, getFilenameAndLineNumber } from './FileIndex';
-import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
-import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
+import type { MetaEdFile, FileSet } from '../file/MetaEdFile';
+import { createFileIndex, getFilenameAndLineNumber } from '../file/FileIndex';
+import { MetaEdErrorListener } from './MetaEdErrorListener';
+import type { ParseTreeBuilder } from './ParseTreeBuilder';
 
 export const validateSyntax = R.curry(
   (parseTreeBuilder: ParseTreeBuilder, state: State): void => {

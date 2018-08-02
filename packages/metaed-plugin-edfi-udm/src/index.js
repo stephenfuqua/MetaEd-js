@@ -8,5 +8,6 @@ export function initialize(): MetaEdPlugin {
     validator: [],
     enhancer: [modelBaseSetup],
     generator: [udmGenerator],
+    configurationSchemas: new Map(),
   };
 }

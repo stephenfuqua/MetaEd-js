@@ -8,17 +8,16 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "metaed-plugin": {
-    "artifact-specific": {
-      "shortName": "edfiOdsApi",
-      "authorName": "Ed-Fi Alliance",
-      "metaEdVersion": "1.x",
-      "technologyVersion": "*",
-      "dependencies": [
-        "metaed-plugin-edfi-unified",
-        "metaed-plugin-edfi-ods",
-        "metaed-plugin-edfi-xsd"
-      ]
-    }
+    "pluginType": "artifact-specific",
+    "shortName": "edfiOdsApi",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "1.x",
+    "technologyVersion": "*",
+    "dependencies": [
+      "metaed-plugin-edfi-unified",
+      "metaed-plugin-edfi-ods",
+      "metaed-plugin-edfi-xsd"
+    ]
   },
   "dependencies": {
     "@dagrejs/graphlib": "^2.1.4",

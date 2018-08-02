@@ -27,7 +27,7 @@ export function addEdFiOdsEntityRepositoryTo(metaEd: MetaEdEnvironment) {
 
   const edfiOdsPlugin = metaEd.plugin.get('edfiOds');
   if (edfiOdsPlugin == null) {
-    metaEd.plugin.set('edfiOds', { ...newPluginEnvironment(), namespace: namespaces });
+    metaEd.plugin.set('edfiOds', { ...newPluginEnvironment(), shortName: 'edfiOds', namespace: namespaces });
   } else {
     edfiOdsPlugin.namespace = namespaces;
   }

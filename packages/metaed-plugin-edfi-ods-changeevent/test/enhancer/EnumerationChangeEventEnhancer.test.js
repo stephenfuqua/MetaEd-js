@@ -58,13 +58,13 @@ describe('when enhancing core enumeration targeting 2.3 ODS/API', () => {
   });
 });
 
-describe('when enhancing core enumeration targeting 2.4 ODS/API', () => {
+describe('when enhancing core enumeration targeting 2.5 ODS/API', () => {
   const namespaceName: string = 'edfi';
   const metaEdName: string = 'MetaEdName';
   const tableName: string = 'TableName';
   const pkColumnName: string = 'PkColumnName';
 
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.4.0');
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.5.0');
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeEventEntityRepositoryTo(metaEd);
@@ -126,13 +126,13 @@ describe('when enhancing core enumeration targeting 2.4 ODS/API', () => {
   });
 });
 
-describe('when enhancing extension enumeration targeting 2.4 ODS/API', () => {
+describe('when enhancing extension enumeration targeting 2.5 ODS/API', () => {
   const namespaceName: string = 'extension';
   const metaEdName: string = 'MetaEdName';
   const tableName: string = 'TableName';
   const pkColumnName: string = 'PkColumnName';
 
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.4.0');
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.5.0');
   const namespace: Namespace = newExtensionNamespace(namespaceName);
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeEventEntityRepositoryTo(metaEd);

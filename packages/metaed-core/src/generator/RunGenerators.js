@@ -1,7 +1,7 @@
 // @flow
 import type { State } from '../State';
-import type { Generator } from '../generator/Generator';
-import type { PluginManifest } from '../plugin/PluginTypes';
+import type { Generator } from './Generator';
+import type { PluginManifest } from '../plugin/PluginManifest';
 
 export async function execute(pluginManifest: PluginManifest, state: State): Promise<void> {
   if (state.metaEd.namespace == null || state.metaEd.propertyIndex == null) return;

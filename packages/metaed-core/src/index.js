@@ -2,22 +2,22 @@
 
 // Functions
 export { prependIndefiniteArticle, orderByProp, versionSatisfies, V2Only, V3OrGreater } from './Utility';
-export { executePipeline } from './task/Pipeline';
-export { createMetaEdFile } from './task/MetaEdFile';
-export { validateConfiguration } from './task/ValidateConfiguration';
-export { loadFiles } from './task/FileSystemFilenameLoader';
-export { loadPlugins, scanForPlugins } from './task/LoadPlugins';
-export { initializeNamespaces } from './task/InitializeNamespaces';
+export { executePipeline } from './pipeline/Pipeline';
+export { createMetaEdFile } from './file/MetaEdFile';
+export { validateConfiguration } from './pipeline/ValidateConfiguration';
+export { loadFiles } from './file/FileSystemFilenameLoader';
+export { loadPlugins, scanForPlugins } from './plugin/LoadPlugins';
+export { initializeNamespaces } from './pipeline/InitializeNamespaces';
 export { newState } from './State';
-export { newPipelineOptions } from './task/PipelineOptions';
-export { loadFileIndex } from './task/LoadFileIndex';
-export { buildParseTree } from './task/BuildParseTree';
+export { newPipelineOptions } from './pipeline/PipelineOptions';
+export { loadFileIndex } from './file/LoadFileIndex';
+export { buildParseTree } from './grammar/BuildParseTree';
 export { buildMetaEd } from './grammar/ParseTreeBuilder';
-export { execute as walkBuilders } from './task/WalkBuilders';
-export { execute as runValidators } from './task/RunValidators';
-export { execute as runEnhancers } from './task/RunEnhancers';
-export { execute as runGenerators } from './task/RunGenerators';
-export { fileMapForFailure } from './task/FileMapForFailure';
+export { execute as walkBuilders } from './builder/WalkBuilders';
+export { execute as runValidators } from './validator/RunValidators';
+export { execute as runEnhancers } from './enhancer/RunEnhancers';
+export { execute as runGenerators } from './generator/RunGenerators';
+export { fileMapForFailure } from './pipeline/FileMapForFailure';
 export {
   addEntity,
   getAllEntities,
@@ -74,10 +74,10 @@ export { StringTypeBuilder } from './builder/StringTypeBuilder';
 
 // Flow types
 export type { State } from './State';
-export type { InputDirectory } from './task/FileSystemFilenameLoader';
-export type { FileSet, MetaEdFile } from './task/MetaEdFile';
-export type { FileIndex } from './task/FileIndex';
-export type { PipelineOptions } from './task/PipelineOptions';
+export type { InputDirectory } from './file/InputDirectory';
+export type { FileSet, MetaEdFile } from './file/MetaEdFile';
+export type { FileIndex } from './file/FileIndex';
+export type { PipelineOptions } from './pipeline/PipelineOptions';
 export type { Validator } from './validator/Validator';
 export type { ValidationFailure } from './validator/ValidationFailure';
 export type { Enhancer } from './enhancer/Enhancer';
@@ -87,8 +87,11 @@ export type { GeneratorResult } from './generator/GeneratorResult';
 export type { GeneratedOutput } from './generator/GeneratedOutput';
 export type { MetaEdEnvironment, SemVer } from './MetaEdEnvironment';
 export type { PluginEnvironment } from './plugin/PluginEnvironment';
+export type { PluginConfiguration } from './plugin/PluginConfiguration';
+export type { ConfigurationSchema } from './plugin/ConfigurationSchema';
 export type { MetaEdConfiguration } from './MetaEdConfiguration';
-export type { MetaEdPlugin, PluginManifest } from './plugin/PluginTypes';
+export type { PluginManifest } from './plugin/PluginManifest';
+export type { MetaEdPlugin } from './plugin/MetaEdPlugin';
 export type { MetaEdProject, MetaEdProjectPathPairs } from './project/ProjectTypes';
 
 // Properties
@@ -171,9 +174,9 @@ export { NoInterchangeItem } from './model/InterchangeItem';
 
 // Factories
 export { newMetaEdEnvironment } from './MetaEdEnvironment';
-export { newMetaEdPlugin } from './plugin/PluginTypes';
+export { newMetaEdPlugin } from './plugin/MetaEdPlugin';
 export { newPluginEnvironment } from './plugin/PluginEnvironment';
-export { newMetaEdConfiguration, newPluginConfiguration } from './MetaEdConfiguration';
+export { newMetaEdConfiguration, newPluginTargetTechnologyVersion } from './MetaEdConfiguration';
 export { newMetaEdProject, deriveNamespaceFromProjectName } from './project/ProjectTypes';
 
 export { asAssociationProperty, newAssociationProperty } from './model/property/AssociationProperty';

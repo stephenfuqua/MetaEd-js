@@ -31,5 +31,6 @@ export function initialize(): MetaEdPlugin {
     validator: [],
     enhancer: [],
     generator: [],
+    configurationSchemas: new Map(),
   };
 }

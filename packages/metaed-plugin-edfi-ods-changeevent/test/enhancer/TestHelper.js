@@ -1,10 +1,10 @@
 // @flow
 import type { SemVer, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { newMetaEdEnvironment, newNamespace, newPluginEnvironment } from 'metaed-core';
 
 export function metaEdEnvironmentForApiVersion(targetTechnologyVersion: SemVer): MetaEdEnvironment {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  metaEd.plugin.set('edfiOds', { namespace: new Map(), targetTechnologyVersion });
+  metaEd.plugin.set('edfiOds', { ...newPluginEnvironment(), targetTechnologyVersion });
   return metaEd;
 }
 

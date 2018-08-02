@@ -45,7 +45,7 @@ describe('when generating ods and comparing it to data standard 3.0 authoritativ
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },

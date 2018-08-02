@@ -1,8 +1,8 @@
 // @flow
 import path from 'path';
-import { executePipeline } from '../../src/task/Pipeline';
+import { executePipeline } from '../../src/pipeline/Pipeline';
 import { newMetaEdConfiguration } from '../../src/MetaEdConfiguration';
-import { newPipelineOptions } from '../../src/task/PipelineOptions';
+import { newPipelineOptions } from '../../src/pipeline/PipelineOptions';
 import { newState } from '../../src/State';
 import type { State } from '../../src/State';
 import type { CommonProperty } from '../../src/model/property/CommonProperty';

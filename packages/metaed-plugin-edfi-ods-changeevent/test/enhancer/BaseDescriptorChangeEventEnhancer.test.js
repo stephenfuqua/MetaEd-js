@@ -38,12 +38,12 @@ describe('when enhancing base descriptor targeting 2.3 ODS/API', () => {
   });
 });
 
-describe('when enhancing base descriptor targeting 2.4 ODS/API', () => {
+describe('when enhancing base descriptor targeting 2.5 ODS/API', () => {
   const namespaceName: string = 'edfi';
   const tableName: string = 'Descriptor';
   const pkColumnName: string = 'DescriptorId';
 
-  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.4.0');
+  const metaEd: MetaEdEnvironment = metaEdEnvironmentForApiVersion('2.5.0');
   const namespace: Namespace = newCoreNamespace();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiOdsChangeEventEntityRepositoryTo(metaEd);

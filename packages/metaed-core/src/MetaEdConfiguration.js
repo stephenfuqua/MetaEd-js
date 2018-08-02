@@ -2,31 +2,35 @@
 import type { MetaEdProject } from './project/ProjectTypes';
 import type { SemVer } from './MetaEdEnvironment';
 
-export type PluginConfiguration = {
+export type PluginTargetTechnologyVersion = {
   targetTechnologyVersion: SemVer,
 };
 
 export type MetaEdConfiguration = {
   artifactDirectory: string,
   deployDirectory: string,
-  pluginConfig: {
-    [shortName: string]: PluginConfiguration,
+  pluginTechVersion: {
+    [shortName: string]: PluginTargetTechnologyVersion,
   },
   defaultPluginTechVersion: string,
   projects: Array<MetaEdProject>,
   // projectPaths is meant to parallel projects
   projectPaths: Array<string>,
+
+  // pluginConfigDirectories is an override for the directories to look for plugin configuration files
+  pluginConfigDirectories: Array<string>,
 };
 
-export const newPluginConfiguration: () => PluginConfiguration = () => ({
+export const newPluginTargetTechnologyVersion: () => PluginTargetTechnologyVersion = () => ({
   targetTechnologyVersion: '0.0.0',
 });
 
 export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   artifactDirectory: '',
   deployDirectory: '',
-  pluginConfig: {},
+  pluginTechVersion: {},
   projects: [],
   projectPaths: [],
+  pluginConfigDirectories: [],
   defaultPluginTechVersion: '2.0.0',
 });

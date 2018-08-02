@@ -1,18 +1,18 @@
 // @flow
 import { newMetaEdConfiguration } from './MetaEdConfiguration';
 import { newMetaEdEnvironment } from './MetaEdEnvironment';
-import { newPipelineOptions } from './task/PipelineOptions';
+import { newPipelineOptions } from './pipeline/PipelineOptions';
 import type { MetaEdConfiguration } from './MetaEdConfiguration';
 import type { ValidationFailure } from './validator/ValidationFailure';
 import type { EnhancerResult } from './enhancer/EnhancerResult';
 import type { GeneratorResult } from './generator/GeneratorResult';
-import type { InputDirectory } from './task/FileSystemFilenameLoader';
-import type { FileSet } from './task/MetaEdFile';
-import type { FileIndex } from './task/FileIndex';
-import type { PipelineOptions } from './task/PipelineOptions';
+import type { InputDirectory } from './file/InputDirectory';
+import type { FileSet } from './file/MetaEdFile';
+import type { FileIndex } from './file/FileIndex';
+import type { PipelineOptions } from './pipeline/PipelineOptions';
 import type { MetaEdGrammar } from './grammar/gen/MetaEdGrammar';
 import type { MetaEdEnvironment } from './MetaEdEnvironment';
-import type { PluginManifest } from './plugin/PluginTypes';
+import type { PluginManifest } from './plugin/PluginManifest';
 
 export type State = {
   // the project level configuration loaded from the metaed.json file either located at the root level of a project
@@ -73,5 +73,6 @@ export const newState: () => State = () => ({
   outputDirectory: null,
   pluginScanDirectory: null,
   pluginManifest: [],
+  pluginConfiguration: new Map(),
   pipelineOptions: newPipelineOptions(),
 });

@@ -5,7 +5,7 @@
     "dataStandardCoreSourceVersion": "2.0.0",
     "dataStandardExtensionSourceDirectory": "C:/Projects/MetaEd/MetaEd-CSharp/SampleMetaEd/extension/",
     "artifactDirectory": "./MetaEdOutput/",
-    "pluginConfig": {
+    "pluginTechVersion": {
       "edfiUnified": {
         "targetTechnologyVersion": "2.0.0"
       },

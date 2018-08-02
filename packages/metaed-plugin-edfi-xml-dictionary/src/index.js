@@ -7,5 +7,6 @@ export function initialize(): MetaEdPlugin {
     validator: [],
     enhancer: [],
     generator: [xmlDataDictionaryGenerator],
+    configurationSchemas: new Map(),
   };
 }

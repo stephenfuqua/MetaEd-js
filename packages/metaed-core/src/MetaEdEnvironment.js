@@ -14,7 +14,7 @@ export type MetaEdEnvironment = {
   // the property index, provided for convenience (a little hesitant here, as it should be dependent on entityRepository)
   propertyIndex: PropertyIndex,
 
-  // plugin environment by plugin name
+  // plugin environment by plugin shortName
   plugin: Map<string, PluginEnvironment>,
 
   // the current MetaEd Version

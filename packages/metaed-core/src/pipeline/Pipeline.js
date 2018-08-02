@@ -1,19 +1,20 @@
 // @flow
 import winston from 'winston';
-import { loadFiles } from './FileSystemFilenameLoader';
-import { validateSyntax } from './ValidateSyntax';
+import { loadFiles } from '../file/FileSystemFilenameLoader';
+import { validateSyntax } from '../grammar/ValidateSyntax';
 import { buildTopLevelEntity, buildMetaEd } from '../grammar/ParseTreeBuilder';
-import { loadFileIndex } from './LoadFileIndex';
-import { buildParseTree } from './BuildParseTree';
-import { execute as walkBuilders } from './WalkBuilders';
+import { loadFileIndex } from '../file/LoadFileIndex';
+import { buildParseTree } from '../grammar/BuildParseTree';
+import { execute as walkBuilders } from '../builder/WalkBuilders';
+import { loadPluginConfiguration } from '../plugin/LoadPluginConfiguration';
 import { fileMapForFailure } from './FileMapForFailure';
-import { nextMacroTask } from './NextMacroTask';
+import { nextMacroTask } from '../Utility';
 // import { validateConfiguration } from './ValidateConfiguration';
-import { execute as runValidators } from './RunValidators';
-import { execute as runEnhancers } from './RunEnhancers';
-import { execute as runGenerators } from './RunGenerators';
+import { execute as runValidators } from '../validator/RunValidators';
+import { execute as runEnhancers } from '../enhancer/RunEnhancers';
+import { execute as runGenerators } from '../generator/RunGenerators';
 import { execute as writeOutput } from './WriteOutput';
-import { loadPlugins } from './LoadPlugins';
+import { loadPlugins } from '../plugin/LoadPlugins';
 import { initializeNamespaces } from './InitializeNamespaces';
 import type { State } from '../State';
 
@@ -26,11 +27,11 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
 
   let failure: boolean = false;
 
-  winston.info('Loading plugins:');
+  winston.info('Loading plugins...');
   loadPlugins(state);
   await nextMacroTask();
 
-  winston.info('Loading source files:');
+  winston.info('Loading source files...');
   if (!loadFiles(state)) return { state, failure: true };
   await nextMacroTask();
 
@@ -51,6 +52,9 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
 
   initializeNamespaces(state);
   await nextMacroTask();
+
+  winston.info('Loading plugin configuration files...');
+  await loadPluginConfiguration(state);
 
   // eslint-disable-next-line no-restricted-syntax
   for (const pluginManifest of state.pluginManifest) {

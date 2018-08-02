@@ -3,13 +3,10 @@ import fs from 'final-fs';
 import path from 'path';
 import Topo from 'topo';
 import winston from 'winston';
-import { NoMetaEdPlugin } from './PluginTypes';
-import type { PluginConfiguration } from '../MetaEdConfiguration';
-import type { PluginManifest, MetaEdPlugin } from './PluginTypes';
-
-export type PluginOptions = {
-  pluginType: string,
-};
+import { NoMetaEdPlugin } from './MetaEdPlugin';
+import type { PluginTargetTechnologyVersion } from '../MetaEdConfiguration';
+import type { PluginManifest } from './PluginManifest';
+import type { MetaEdPlugin } from './MetaEdPlugin';
 
 // Resolve roughly like require.resolve() does (https://nodejs.org/api/modules.html#modules_all_together)
 function mainModuleResolver(directory: string, packageJson: any): string {
@@ -24,7 +21,7 @@ function mainModuleResolver(directory: string, packageJson: any): string {
   return '';
 }
 
-function loadPluginManifest(directory: string, options: PluginOptions): ?PluginManifest {
+function loadPluginManifest(directory: string): ?PluginManifest {
   let packageJson;
   try {
     packageJson = JSON.parse(fs.readFileSync(path.join(directory, 'package.json')));
@@ -33,11 +30,11 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
     return null;
   }
 
-  if (!packageJson['metaed-plugin'] || !packageJson['metaed-plugin'][options.pluginType]) return null;
-
-  const packageMetadata = packageJson['metaed-plugin'][options.pluginType];
+  if (!packageJson['metaed-plugin']) return null;
+  const packageMetadata = packageJson['metaed-plugin'];
 
   return {
+    pluginType: packageMetadata.pluginType,
     npmName: packageJson.name,
     description: packageJson.description,
     version: packageJson.version,
@@ -53,7 +50,7 @@ function loadPluginManifest(directory: string, options: PluginOptions): ?PluginM
 }
 
 // Scans the immediate subdirectories for plugins, and return manifests in dependency order. Requires absolute path.
-export function scanDirectories(directories: string | Array<string>, options: PluginOptions): Array<PluginManifest> {
+export function scanDirectories(directories: string | Array<string>): Array<PluginManifest> {
   // eslint-disable-next-line no-param-reassign
   if (!Array.isArray(directories)) directories = [directories];
 
@@ -73,7 +70,7 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
     subdirectories.forEach(subdirectory => {
       if (!subdirectory.startsWith('metaed-plugin-')) return;
       const directoryToTry: string = path.join(directory, subdirectory);
-      const manifest: ?PluginManifest = loadPluginManifest(directoryToTry, options);
+      const manifest: ?PluginManifest = loadPluginManifest(directoryToTry);
       if (manifest) {
         try {
           pluginOrdering.add(manifest, {
@@ -95,10 +92,9 @@ export function scanDirectories(directories: string | Array<string>, options: Pl
 }
 
 export function materializePlugin(
-  pluginData: any,
   pluginManifest: PluginManifest,
   // eslint-disable-next-line
-  pluginConfig: { [shortName: string]: PluginConfiguration },
+  pluginTechVersion: { [shortName: string]: PluginTargetTechnologyVersion },
 ) {
   try {
     if (!pluginManifest.mainModule) {
@@ -118,7 +114,7 @@ export function materializePlugin(
     // Plugins must have an "initialize" method?
     const pluginFactory: any => MetaEdPlugin = pluginFactoryCandidate.initialize;
     if (pluginFactory) {
-      pluginManifest.metaEdPlugin = pluginFactory(pluginData);
+      pluginManifest.metaEdPlugin = pluginFactory();
     } else {
       winston.error(
         `PluginLoader: Attempted load of npm package ${pluginManifest.npmName} plugin '${pluginManifest.description}' at '${

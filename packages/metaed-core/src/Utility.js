@@ -3,6 +3,8 @@ import R from 'ramda';
 import semver from 'semver';
 import type { SemVer } from './MetaEdEnvironment';
 
+export const nextMacroTask = (): Promise<void> => new Promise(resolve => setImmediate(resolve));
+
 export function lowercaseAndNumericOnly(aString: string): ?string {
   const alphanumericMatches: ?Array<string> = aString.match(/[a-zA-Z0-9]+/g);
   if (alphanumericMatches == null) return null;

@@ -48,5 +48,6 @@ export function initialize(): MetaEdPlugin {
     validator: [],
     enhancer: enhancerList(),
     generator: [generateXsd, generateSchemaAnnotation, generateInterchange],
+    configurationSchemas: new Map(),
   };
 }

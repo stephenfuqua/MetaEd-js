@@ -3,7 +3,7 @@ import { newState } from '../../src/State';
 import type { State } from '../../src/State';
 import { newNamespace } from '../../src/model/Namespace';
 import type { Namespace } from '../../src/model/Namespace';
-import { initializeNamespaces } from '../../src/task/InitializeNamespaces';
+import { initializeNamespaces } from '../../src/pipeline/InitializeNamespaces';
 
 describe('when enhancing core namespace only', () => {
   const state: State = newState();

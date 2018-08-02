@@ -49,5 +49,6 @@ export function initialize(): MetaEdPlugin {
       YearEnhancer,
     ],
     generator: [htmlGenerator, excelGenerator],
+    configurationSchemas: new Map(),
   };
 }

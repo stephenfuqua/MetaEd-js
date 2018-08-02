@@ -1,10 +1,10 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { MetaEdErrorListener } from '../grammar/MetaEdErrorListener';
+import { MetaEdErrorListener } from './MetaEdErrorListener';
 import type { State } from '../State';
-import { getAllContents, getFilenameAndLineNumber } from './FileIndex';
-import type { ParseTreeBuilder } from '../grammar/ParseTreeBuilder';
+import { getAllContents, getFilenameAndLineNumber } from '../file/FileIndex';
+import type { ParseTreeBuilder } from './ParseTreeBuilder';
 
 export const buildParseTree = R.curry(
   (parseTreeBuilder: ParseTreeBuilder, state: State): void => {

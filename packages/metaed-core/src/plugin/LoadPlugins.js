@@ -1,11 +1,11 @@
 // @flow
 import path from 'path';
 import winston from 'winston';
-import { scanDirectories, materializePlugin } from '../plugin/PluginLoader';
+import { scanDirectories, materializePlugin } from './PluginLoader';
 import type { State } from '../State';
-import type { PluginManifest } from '../plugin/PluginTypes';
-import { NoMetaEdPlugin } from '../plugin/PluginTypes';
-import { newPluginEnvironment } from '../plugin/PluginEnvironment';
+import type { PluginManifest } from './PluginManifest';
+import { NoMetaEdPlugin } from './MetaEdPlugin';
+import { newPluginEnvironment } from './PluginEnvironment';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
@@ -18,16 +18,11 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
   const cache = cachedPlugins.get(directory);
   if (cache && cache.length > 0) return cache;
 
-  const pluginManifests: Array<PluginManifest> = scanDirectories(directory, { pluginType: 'artifact-specific' });
-
-  // This is a placeholder for artifact-specific configuration - in real implementation,
-  // Artifact-specific configuration files would be loaded and the data provided from that
-  // configuration, but targeted to specific plugins
-  const pluginData = { name: 'xyz', annotation: 'pdq' };
+  const pluginManifests: Array<PluginManifest> = scanDirectories(directory);
 
   const foundPlugins: Array<PluginManifest> = [];
   pluginManifests.forEach((pluginManifest: PluginManifest) => {
-    materializePlugin(pluginData, pluginManifest, state.metaEdConfiguration.pluginConfig);
+    materializePlugin(pluginManifest, state.metaEdConfiguration.pluginTechVersion);
     if (pluginManifest.metaEdPlugin === NoMetaEdPlugin) {
       winston.info(`  Could not load plugin ${pluginManifest.shortName}`);
       return;
@@ -43,8 +38,8 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
 function pluginConfigExists(state: State, pluginManifest: PluginManifest): boolean {
   return (
     state.metaEdConfiguration &&
-    state.metaEdConfiguration.pluginConfig &&
-    !!state.metaEdConfiguration.pluginConfig[pluginManifest.shortName]
+    state.metaEdConfiguration.pluginTechVersion &&
+    !!state.metaEdConfiguration.pluginTechVersion[pluginManifest.shortName]
   );
 }
 
@@ -53,18 +48,17 @@ export function loadPlugins(state: State): void {
 
   state.pluginManifest.forEach((pluginManifest: PluginManifest) => {
     const targetTechnologyVersion = pluginConfigExists(state, pluginManifest)
-      ? state.metaEdConfiguration.pluginConfig[pluginManifest.shortName].targetTechnologyVersion
+      ? state.metaEdConfiguration.pluginTechVersion[pluginManifest.shortName].targetTechnologyVersion
       : state.metaEdConfiguration.defaultPluginTechVersion;
 
     winston.info(
       `  ${pluginManifest.shortName} version ${pluginManifest.version} targeting tech version ${targetTechnologyVersion}`,
     );
 
-    state.metaEd.plugin.set(
-      pluginManifest.shortName,
-      Object.assign(newPluginEnvironment(), {
-        targetTechnologyVersion,
-      }),
-    );
+    state.metaEd.plugin.set(pluginManifest.shortName, {
+      ...newPluginEnvironment(),
+      shortName: pluginManifest.shortName,
+      targetTechnologyVersion,
+    });
   });
 }

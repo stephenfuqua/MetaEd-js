@@ -33,7 +33,7 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
@@ -96,8 +96,11 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     }
 
     generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTriggerGenerator'))
-        .generatedOutput,
+      R.head(
+        state.generatorResults.filter(
+          x => x.generatorName === 'edfiOdsChangeEvent.CreateDeletedForTrackingTriggersGenerator',
+        ),
+      ).generatedOutput,
     );
 
     await ffs.writeFile(path.resolve(artifactPath, generatedFilename), generatedOutput.resultString, 'utf-8');
@@ -129,7 +132,7 @@ describe('when generating change event scripts with simple extensions and compar
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
@@ -198,7 +201,7 @@ describe('when generating change event scripts with simple extensions and compar
     }
 
     const generatorResult: GeneratorResult = R.head(
-      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTriggerGenerator'),
+      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.CreateDeletedForTrackingTriggersGenerator'),
     );
 
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
@@ -232,10 +235,10 @@ describe('when generating change event scripts with simple extensions and compar
   });
 });
 
-describe('when generating change event scripts and comparing to ODS/API 2.4 authoritative artifacts', () => {
+describe('when generating change event scripts and comparing to ODS/API 2.5 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-trigger');
-  const authoritativeFilename: string = 'DeleteTrackingTrigger-v2.4-Authoritative.sql';
-  const generatedFilename: string = 'DeleteTrackingTrigger-v2.4.sql';
+  const authoritativeFilename: string = 'DeleteTrackingTrigger-v2.5-Authoritative.sql';
+  const generatedFilename: string = 'DeleteTrackingTrigger-v2.5.sql';
 
   let generatedOutput: GeneratedOutput;
 
@@ -243,30 +246,30 @@ describe('when generating change event scripts and comparing to ODS/API 2.4 auth
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOds: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOdsApi: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOdsChangeEvent: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiXsd: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiHandbook: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiInterchangeBrief: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiXmlDictionary: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
       },
       projectPaths: ['./node_modules/ed-fi-model-2.0/'],
@@ -306,8 +309,11 @@ describe('when generating change event scripts and comparing to ODS/API 2.4 auth
     }
 
     generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTriggerGenerator'))
-        .generatedOutput,
+      R.head(
+        state.generatorResults.filter(
+          x => x.generatorName === 'edfiOdsChangeEvent.CreateDeletedForTrackingTriggersGenerator',
+        ),
+      ).generatedOutput,
     );
 
     await ffs.writeFile(path.resolve(artifactPath, generatedFilename), generatedOutput.resultString, 'utf-8');

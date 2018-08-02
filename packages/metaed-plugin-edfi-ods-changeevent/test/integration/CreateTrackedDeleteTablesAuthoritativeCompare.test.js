@@ -33,7 +33,7 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
@@ -96,7 +96,7 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     }
 
     generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTableGenerator'))
+      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.CreateTrackedDeleteTablesGenerator'))
         .generatedOutput,
     );
 
@@ -117,10 +117,10 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
 describe('when generating change event scripts with simple extensions and comparing to ODS/API 3.1 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-table');
   const sampleExtensionPath: string = path.resolve(__dirname, './student-transcript-extension-project');
-  const authoritativeCoreFilename: string = 'DeleteTrackingTable-v3.1-Authoritative.sql';
-  const authoritativeExtensionFilename: string = 'sample-DeleteTrackingTable-v3.1-Authoritative.sql';
-  const generatedCoreFilename: string = 'DeleteTrackingTable-v3.1.sql';
-  const generatedExtensionFilename: string = 'sample-DeleteTrackingTable-v3.1.sql';
+  const authoritativeCoreFilename: string = 'TrackedDeleteTables-v3.1-Authoritative.sql';
+  const authoritativeExtensionFilename: string = 'sample-TrackedDeleteTables-v3.1-Authoritative.sql';
+  const generatedCoreFilename: string = 'TrackedDeleteTables-v3.1.sql';
+  const generatedExtensionFilename: string = 'sample-TrackedDeleteTables-v3.1.sql';
 
   let generatedCoreOutput: GeneratedOutput;
   let generatedExtensionOutput: GeneratedOutput;
@@ -129,7 +129,7 @@ describe('when generating change event scripts with simple extensions and compar
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
           targetTechnologyVersion: '3.1.0',
         },
@@ -198,7 +198,7 @@ describe('when generating change event scripts with simple extensions and compar
     }
 
     const generatorResult: GeneratorResult = R.head(
-      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTableGenerator'),
+      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.CreateTrackedDeleteTablesGenerator'),
     );
 
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
@@ -232,10 +232,10 @@ describe('when generating change event scripts with simple extensions and compar
   });
 });
 
-describe('when generating change event scripts and comparing to ODS/API 2.4 authoritative artifacts', () => {
+describe('when generating change event scripts and comparing to ODS/API 2.5 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-table');
-  const authoritativeFilename: string = 'DeleteTrackingTable-v2.4-Authoritative.sql';
-  const generatedFilename: string = 'DeleteTrackingTable-v2.4.sql';
+  const authoritativeFilename: string = 'TrackedDeleteTables-v2.5-Authoritative.sql';
+  const generatedFilename: string = 'TrackedDeleteTables-v2.5.sql';
 
   let generatedOutput: GeneratedOutput;
 
@@ -243,30 +243,30 @@ describe('when generating change event scripts and comparing to ODS/API 2.4 auth
     const metaEdConfiguration = {
       ...newMetaEdConfiguration(),
       artifactDirectory: './MetaEdOutput/',
-      pluginConfig: {
+      pluginTechVersion: {
         edfiUnified: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOds: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOdsApi: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiOdsChangeEvent: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiXsd: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiHandbook: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiInterchangeBrief: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
         edfiXmlDictionary: {
-          targetTechnologyVersion: '2.4.0',
+          targetTechnologyVersion: '2.5.0',
         },
       },
       projectPaths: ['./node_modules/ed-fi-model-2.0/'],
@@ -306,7 +306,7 @@ describe('when generating change event scripts and comparing to ODS/API 2.4 auth
     }
 
     generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.DeleteTrackingTableGenerator'))
+      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeEvent.CreateTrackedDeleteTablesGenerator'))
         .generatedOutput,
     );
 

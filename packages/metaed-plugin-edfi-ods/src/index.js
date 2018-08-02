@@ -59,5 +59,6 @@ export function initialize(): MetaEdPlugin {
     validator: validatorList(),
     enhancer: enhancerList(),
     generator: [SchemaGenerator, OdsGenerator, IdIndexesGenerator],
+    configurationSchemas: new Map(),
   };
 }

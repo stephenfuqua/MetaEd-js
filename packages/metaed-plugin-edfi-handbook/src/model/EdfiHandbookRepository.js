@@ -22,7 +22,7 @@ export function addEdfiHandbookRepositoryTo(metaEd: MetaEdEnvironment) {
 
   const edfiHandbookPlugin = metaEd.plugin.get('edfiHandbook');
   if (edfiHandbookPlugin == null) {
-    metaEd.plugin.set('edfiHandbook', { ...newPluginEnvironment(), namespace: namespaces });
+    metaEd.plugin.set('edfiHandbook', { ...newPluginEnvironment(), shortName: 'edfiHandbook', namespace: namespaces });
   } else {
     edfiHandbookPlugin.namespace = namespaces;
   }

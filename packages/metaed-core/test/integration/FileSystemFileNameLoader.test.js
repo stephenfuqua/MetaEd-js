@@ -3,7 +3,7 @@ import ffs from 'final-fs';
 import { MetaEdTextBuilder } from '../../src/grammar/MetaEdTextBuilder';
 import type { State } from '../../src/State';
 import { newState } from '../../src/State';
-import { loadFiles } from '../../src/task/FileSystemFilenameLoader';
+import { loadFiles } from '../../src/file/FileSystemFilenameLoader';
 import { newMetaEdConfiguration } from '../../src/MetaEdConfiguration';
 
 describe('When a single file', () => {

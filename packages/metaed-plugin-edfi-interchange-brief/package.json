@@ -8,15 +8,14 @@
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
   "metaed-plugin": {
-    "artifact-specific": {
-      "shortName": "edfiInterchangeBrief",
-      "authorName": "Ed-Fi Alliance",
-      "metaEdVersion": "1.x",
-      "technologyVersion": "*",
-      "dependencies": [
-        "metaed-plugin-edfi-xsd"
-      ]
-    }
+    "pluginType": "artifact-specific",
+    "shortName": "edfiInterchangeBrief",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "1.x",
+    "technologyVersion": "*",
+    "dependencies": [
+      "metaed-plugin-edfi-xsd"
+    ]
   },
   "dependencies": {
     "handlebars": "^4.0.10",
