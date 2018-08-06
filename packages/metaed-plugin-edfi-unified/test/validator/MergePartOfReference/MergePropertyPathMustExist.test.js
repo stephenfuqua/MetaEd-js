@@ -12,6 +12,7 @@ import {
   DomainEntitySubclassBuilder,
   EnumerationBuilder,
   NamespaceBuilder,
+  SharedStringBuilder,
 } from 'metaed-core';
 import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
@@ -719,6 +720,65 @@ describe('when validating domain entity has merge property across namespaces and
   it('should build two domain entities', () => {
     expect(coreNamespace.entity.domainEntity.size).toBe(1);
     expect(extensionNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should have one validation failure', () => {
+    expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});
+
+// METAED-881 demonstration
+describe('when validating domain entity has simple property as merge property', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const learningObjectiveName = 'LearningObjective';
+  const objectiveAssessmentName = 'ObjectiveAssessment';
+  const assessmentName = 'Assessment';
+  const uriName = 'URI';
+  const namespaceRename = 'Namespace';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartSharedString('URI')
+      .withDocumentation('doc')
+      .withMinLength('5')
+      .withMaxLength('255')
+      .withEndSharedString()
+
+      .withStartDomainEntity(learningObjectiveName)
+      .withDocumentation('doc')
+      .withSharedStringIdentity(uriName, namespaceRename, 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(assessmentName)
+      .withDocumentation('doc')
+      .withSharedStringIdentity(uriName, namespaceRename, 'doc')
+      .withEndDomainEntity()
+
+      .withStartDomainEntity(objectiveAssessmentName)
+      .withDocumentation('doc')
+      .withDomainEntityIdentity(assessmentName, 'doc')
+      .withDomainEntityProperty(learningObjectiveName, 'doc', false, true)
+      .withMergePartOfReference(`${learningObjectiveName}.${namespaceRename}`, `${assessmentName}.${namespaceRename}`)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new SharedStringBuilder(metaEd, []))
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, failures));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build three domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
   it('should have one validation failure', () => {

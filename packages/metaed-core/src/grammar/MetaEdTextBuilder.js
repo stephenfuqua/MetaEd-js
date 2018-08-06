@@ -1111,6 +1111,21 @@ export class MetaEdTextBuilder {
     );
   }
 
+  withSharedStringIdentity(
+    propertyIdentifier: string,
+    named: ?string,
+    documentation: string,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ): MetaEdTextBuilder {
+    this._withStartSharedProperty('string', propertyIdentifier, named, metaEdId);
+    this.withDocumentation(documentation);
+    this.withIdentityIndicator();
+    this.withContext(context);
+    this.withEndProperty();
+    return this;
+  }
+
   withBooleanIdentity(
     propertyIdentifier: string,
     documentation: string,

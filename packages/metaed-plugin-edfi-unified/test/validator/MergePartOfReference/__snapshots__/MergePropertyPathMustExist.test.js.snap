@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating domain entity has merge property across namespaces and entity is wrong should have one validation failure 1`] = `"Merge statement UnknownEntity.PropertyName1 must be a valid path. No Property PropertyName1 was found"`;
+exports[`when validating domain entity has merge property across namespaces and entity is wrong should have one validation failure 1`] = `"Merge statement UnknownEntity.PropertyName1 must be a valid path. Either the path is not to a mergeable type, or no property 'PropertyName1' was found"`;
 
 exports[`when validating domain entity has merge property across namespaces and entity is wrong should have one validation failure 2`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> message 1`] = `"Merge statement UnknowEntity.PropertyName1 must be a valid path. No Property PropertyName1 was found"`;
+exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> message 1`] = `"Merge statement UnknowEntity.PropertyName1 must be a valid path. Either the path is not to a mergeable type, or no property 'PropertyName1' was found"`;
 
 exports[`when validating domain entity has merge property and entity is wrong should have one validation failure: when validating domain entity has merge property and entity is wrong -> sourceMap 1`] = `
 Object {
@@ -20,12 +20,22 @@ Object {
 }
 `;
 
-exports[`when validating domain entity has merge property and property is wrong should have one validation failure: when validating domain entity has merge property and property is wrong -> message 1`] = `"Merge statement DomainEntityName1.UnknownProperty must be a valid path. No Property UnknownProperty was found"`;
+exports[`when validating domain entity has merge property and property is wrong should have one validation failure: when validating domain entity has merge property and property is wrong -> message 1`] = `"Merge statement DomainEntityName1.UnknownProperty must be a valid path. Either the path is not to a mergeable type, or no property 'UnknownProperty' was found"`;
 
 exports[`when validating domain entity has merge property and property is wrong should have one validation failure: when validating domain entity has merge property and property is wrong -> sourceMap 1`] = `
 Object {
   "column": 10,
   "line": 20,
   "tokenText": "DomainEntityName1",
+}
+`;
+
+exports[`when validating domain entity has simple property as merge property should have one validation failure 1`] = `"Merge statement LearningObjective.Namespace must be a valid path. Either the path is not to a mergeable type, or no property 'Namespace' was found"`;
+
+exports[`when validating domain entity has simple property as merge property should have one validation failure 2`] = `
+Object {
+  "column": 10,
+  "line": 32,
+  "tokenText": "LearningObjective",
 }
 `;
