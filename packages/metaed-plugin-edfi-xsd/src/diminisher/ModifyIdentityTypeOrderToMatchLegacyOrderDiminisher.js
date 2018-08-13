@@ -7,8 +7,9 @@ import { asElement } from '../model/schema/Element';
 
 // Workaround for METAED-451: Force Data Type to Positive Integer in Xsd for Order of Priority
 // This problem is resolved for the 2.1 Data Standard through ticket DATASTD-866
+// However, the problem is back for the 2.2 Data Standard
 const enhancerName: string = 'ModifyIdentityTypeOrderToMatchLegacyOrderDiminisher';
-const targetVersions: string = '2.0.x';
+const targetVersions: string = '2.0.x || >=2.2.0 <3.0.0';
 
 function reorderIdentityType(
   namespace: Namespace,
