@@ -121,6 +121,22 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     });
   }
 
+  if (table.includeAggregateHashValueColumn) {
+    result.push({
+      propertyName: 'AggregateHashValue',
+      propertyType: {
+        dbType: 'Int64',
+        maxLength: 0,
+        precision: 0,
+        scale: 0,
+        isNullable: true,
+      },
+      description: '',
+      isIdentifying: false,
+      isServerAssigned: false,
+    });
+  }
+
   return R.sortBy(
     R.compose(
       R.toLower,

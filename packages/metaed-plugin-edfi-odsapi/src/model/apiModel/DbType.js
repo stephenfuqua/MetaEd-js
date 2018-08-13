@@ -9,6 +9,7 @@ export type DbType =
   | 'Guid'
   | 'Int16'
   | 'Int32'
+  | 'Int64'
   | 'String'
   | 'Time'
   | 'Unknown';
