@@ -94,7 +94,7 @@ async function lint(textEditor: AtomTextEditor): ?Promise<?(any[])> {
 export function linterConfiguration() {
   return {
     name: 'MetaEd',
-    grammarScopes: ['source.metaed'],
+    grammarScopes: ['source.metaed', 'source.json'],
     scope: 'project',
     lintsOnChange: validateOnTheFly(),
     lintOnChangeInterval: 500,
