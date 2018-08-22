@@ -3560,24 +3560,6 @@ ALTER TABLE [edfi].[SchoolTypeDescriptor] ENABLE TRIGGER [SchoolTypeDescriptorDe
 GO
 
 
-CREATE TRIGGER [edfi].[SchoolYearTypeDeletedForTracking] ON [edfi].[SchoolYearType] AFTER DELETE AS
-BEGIN
-    IF @@rowcount = 0 
-        RETURN
-
-    SET NOCOUNT ON
-
-    INSERT INTO changes.edfi_SchoolYearType_TrackedDelete(SchoolYear, Id, SystemChangeVersion)
-    SELECT  SchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
-    FROM    deleted d
-    WHERE NOT EXISTS (SELECT * FROM changes.edfi_SchoolYearType_TrackedDelete d2 WHERE d2.SchoolYear = d.SchoolYear)
-END
-GO
-
-ALTER TABLE [edfi].[SchoolYearType] ENABLE TRIGGER [SchoolYearTypeDeletedForTracking]
-GO
-
-
 CREATE TRIGGER [edfi].[SectionAttendanceTakenEventDeletedForTracking] ON [edfi].[SectionAttendanceTakenEvent] AFTER DELETE AS
 BEGIN
     IF @@rowcount = 0 

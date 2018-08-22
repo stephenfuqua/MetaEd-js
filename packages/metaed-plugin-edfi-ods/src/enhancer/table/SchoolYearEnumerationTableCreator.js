@@ -1,6 +1,5 @@
 // @flow
 import type { Namespace, MetaEdEnvironment } from 'metaed-core';
-import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newBooleanColumn, newShortColumn, newStringColumn } from '../../model/database/Column';
@@ -18,9 +17,7 @@ export const schoolYearEnumerationTableCreator: {
       includeLastModifiedDateAndIdColumn: true,
       isAggregateRootTable: true,
     });
-    if (changeEventIndicated(metaEd)) {
-      table.includeAggregateHashValueColumn = true;
-    }
+
     addColumns(
       table,
       [

@@ -165,7 +165,6 @@ ALTER TABLE [edfi].[SchoolCategoryType] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[SchoolChoiceImplementStatusType] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[SchoolFoodServicesEligibilityDescriptor] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[SchoolType] ENABLE CHANGE_TRACKING;
-ALTER TABLE [edfi].[SchoolYearType] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[Section] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[SectionAttendanceTakenEvent] ENABLE CHANGE_TRACKING;
 ALTER TABLE [edfi].[SectionCharacteristicDescriptor] ENABLE CHANGE_TRACKING;

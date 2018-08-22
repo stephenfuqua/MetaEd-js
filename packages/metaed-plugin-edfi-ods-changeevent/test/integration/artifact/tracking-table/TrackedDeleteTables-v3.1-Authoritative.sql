@@ -1619,14 +1619,6 @@ CREATE TABLE changes.edfi_SchoolTypeDescriptor_TrackedDelete
        CONSTRAINT PK_edfi_SchoolTypeDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (SchoolTypeDescriptorId)
 )
 
-CREATE TABLE changes.edfi_SchoolYearType_TrackedDelete
-(
-       SchoolYear [SMALLINT] NOT NULL,
-       Id uniqueidentifier NOT NULL,
-       SystemChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_edfi_SchoolYearType_TrackedDelete PRIMARY KEY CLUSTERED (SchoolYear)
-)
-
 CREATE TABLE changes.edfi_School_TrackedDelete
 (
        SchoolId [INT] NOT NULL,

@@ -19,7 +19,6 @@ import { enhance as descriptorChangeEventEnhancer } from './enhancer/DescriptorC
 import { enhance as domainEntityChangeEventEnhancer } from './enhancer/DomainEntityChangeEventEnhancer';
 import { enhance as domainEntitySubclassChangeEventEnhancer } from './enhancer/DomainEntitySubclassChangeEventEnhancer';
 import { enhance as enumerationChangeEventEnhancer } from './enhancer/EnumerationChangeEventEnhancer';
-import { enhance as schoolYearEnumerationChangeEventEnhancer } from './enhancer/SchoolYearEnumerationChangeEventEnhancer';
 import { enhance as addColumnAggregateHashValueForTableEnhancer } from './enhancer/AddColumnAggregateHashValueForTableEnhancer';
 
 export function initialize(): MetaEdPlugin {
@@ -34,7 +33,6 @@ export function initialize(): MetaEdPlugin {
       domainEntityChangeEventEnhancer,
       domainEntitySubclassChangeEventEnhancer,
       enumerationChangeEventEnhancer,
-      schoolYearEnumerationChangeEventEnhancer,
       addColumnAggregateHashValueForTableEnhancer,
     ],
     generator: [

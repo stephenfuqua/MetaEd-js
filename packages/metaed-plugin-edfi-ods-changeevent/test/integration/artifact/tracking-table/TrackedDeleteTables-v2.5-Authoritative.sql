@@ -1431,14 +1431,6 @@ CREATE TABLE dbo.edfi_SchoolType_TrackedDelete
        CONSTRAINT PK_edfi_SchoolType_TrackedDelete PRIMARY KEY CLUSTERED (SchoolTypeId)
 )
 
-CREATE TABLE dbo.edfi_SchoolYearType_TrackedDelete
-(
-       SchoolYear [SMALLINT] NOT NULL,
-       Id uniqueidentifier NOT NULL,
-       SystemChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_edfi_SchoolYearType_TrackedDelete PRIMARY KEY CLUSTERED (SchoolYear)
-)
-
 CREATE TABLE dbo.edfi_School_TrackedDelete
 (
        SchoolId [INT] NOT NULL,

@@ -24,8 +24,8 @@ jest.setTimeout(40000);
 
 describe('when generating change event scripts and comparing to ODS/API 3.1 authoritative artifacts', () => {
   const artifactPath: string = path.resolve(__dirname, './artifact/tracking-table');
-  const authoritativeFilename: string = 'DeleteTrackingTable-v3.1-Authoritative.sql';
-  const generatedFilename: string = 'DeleteTrackingTable-v3.1.sql';
+  const authoritativeFilename: string = 'TrackedDeleteTables-v3.1-Authoritative.sql';
+  const generatedFilename: string = 'TrackedDeleteTables-v3.1.sql';
 
   let generatedOutput: GeneratedOutput;
 
