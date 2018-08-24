@@ -12,7 +12,7 @@
     "shortName": "edfiOdsChangeEvent",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "1.x",
-    "technologyVersion": "*",
+    "technologyVersion": ">=3.0.0",
     "dependencies": [
       "metaed-plugin-edfi-unified",
       "metaed-plugin-edfi-ods"

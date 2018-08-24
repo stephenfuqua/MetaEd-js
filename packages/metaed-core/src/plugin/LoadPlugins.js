@@ -22,7 +22,7 @@ export function scanForPlugins(state: State): Array<PluginManifest> {
 
   const foundPlugins: Array<PluginManifest> = [];
   pluginManifests.forEach((pluginManifest: PluginManifest) => {
-    materializePlugin(pluginManifest, state.metaEdConfiguration.pluginTechVersion);
+    materializePlugin(pluginManifest);
     if (pluginManifest.metaEdPlugin === NoMetaEdPlugin) {
       winston.info(`  Could not load plugin ${pluginManifest.shortName}`);
       return;

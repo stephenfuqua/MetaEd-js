@@ -12,7 +12,7 @@
     "shortName": "edfiUdm",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "1.x",
-    "technologyVersion": "1.x",
+    "technologyVersion": "*",
     "dependencies": [
       "metaed-core",
       "metaed-plugin-edfi-unified"

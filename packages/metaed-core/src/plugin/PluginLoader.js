@@ -4,7 +4,6 @@ import path from 'path';
 import Topo from 'topo';
 import winston from 'winston';
 import { NoMetaEdPlugin } from './MetaEdPlugin';
-import type { PluginTargetTechnologyVersion } from '../MetaEdConfiguration';
 import type { PluginManifest } from './PluginManifest';
 import type { MetaEdPlugin } from './MetaEdPlugin';
 
@@ -91,11 +90,7 @@ export function scanDirectories(directories: string | Array<string>): Array<Plug
   return pluginOrdering.nodes;
 }
 
-export function materializePlugin(
-  pluginManifest: PluginManifest,
-  // eslint-disable-next-line
-  pluginTechVersion: { [shortName: string]: PluginTargetTechnologyVersion },
-) {
+export function materializePlugin(pluginManifest: PluginManifest) {
   try {
     if (!pluginManifest.mainModule) {
       winston.error(
@@ -111,7 +106,7 @@ export function materializePlugin(
     const pluginFactoryCandidate = require(pluginManifest.mainModule);
     /* eslint-enable */
 
-    // Plugins must have an "initialize" method?
+    // Plugins must have an "initialize" method
     const pluginFactory: any => MetaEdPlugin = pluginFactoryCandidate.initialize;
     if (pluginFactory) {
       pluginManifest.metaEdPlugin = pluginFactory();

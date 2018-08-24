@@ -12,7 +12,7 @@
     "shortName": "edfiSqlDictionary",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "1.x",
-    "technologyVersion": "2.x",
+    "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-unified",
       "metaed-plugin-edfi-xsd"

@@ -12,7 +12,7 @@
     "shortName": "edfiHandbook",
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "1.x",
-    "technologyVersion": "1.x",
+    "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-xsd",
       "metaed-plugin-edfi-ods"

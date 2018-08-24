@@ -8,7 +8,7 @@ import { buildParseTree } from '../grammar/BuildParseTree';
 import { execute as walkBuilders } from '../builder/WalkBuilders';
 import { loadPluginConfiguration } from '../plugin/LoadPluginConfiguration';
 import { fileMapForFailure } from './FileMapForFailure';
-import { nextMacroTask } from '../Utility';
+import { nextMacroTask, versionSatisfies } from '../Utility';
 // import { validateConfiguration } from './ValidateConfiguration';
 import { execute as runValidators } from '../validator/RunValidators';
 import { execute as runEnhancers } from '../enhancer/RunEnhancers';
@@ -17,6 +17,7 @@ import { execute as writeOutput } from './WriteOutput';
 import { loadPlugins } from '../plugin/LoadPlugins';
 import { initializeNamespaces } from './InitializeNamespaces';
 import type { State } from '../State';
+import type { PluginEnvironment } from '../plugin/PluginEnvironment';
 
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
@@ -58,7 +59,12 @@ export async function executePipeline(state: State): Promise<{ state: State, fai
 
   // eslint-disable-next-line no-restricted-syntax
   for (const pluginManifest of state.pluginManifest) {
-    if (pluginManifest.enabled) {
+    const pluginEnvironment: ?PluginEnvironment = state.metaEd.plugin.get(pluginManifest.shortName);
+    if (
+      pluginManifest.enabled &&
+      pluginEnvironment != null &&
+      versionSatisfies(pluginEnvironment.targetTechnologyVersion, pluginManifest.technologyVersion)
+    ) {
       try {
         winston.info(`${pluginManifest.shortName} plugin:`);
         if (state.pipelineOptions.runValidators) {
