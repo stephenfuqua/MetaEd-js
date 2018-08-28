@@ -139,7 +139,6 @@ import { enhance as commonExtensionBaseClassEnhancer } from './enhancer/CommonEx
 import { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/DomainEntityExtensionBaseClassEnhancer';
 import { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
 import { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
-import { enhance as commonExtenderEnhancer } from './enhancer/CommonExtenderEnhancer';
 import { enhance as subclassQueryableEnhancer } from './enhancer/QueryableLookupSupport/SubclassQueryableEnhancer';
 
 import { enhance as interchangeBaseItemEnhancer } from './enhancer/InterchangeBaseItemEnhancer';
@@ -315,8 +314,7 @@ function enhancerList(): Array<Enhancer> {
     domainEntityExtensionBaseClassEnhancer,
     domainEntitySubclassBaseClassEnhancer,
     interchangeExtensionBaseClassEnhancer,
-    // enhance :: (baseEntity) => baseEntity.extender
-    commonExtenderEnhancer,
+
     // enhance :: (baseEntity) => queryableFields
     subclassQueryableEnhancer,
 

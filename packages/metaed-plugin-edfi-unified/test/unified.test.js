@@ -337,15 +337,6 @@ describe('when building and enhancing common extension', () => {
     expect(extensionEntity.baseEntity).toBe(baseEntity);
   });
 
-  it('should enhance base entity with extender', () => {
-    const baseEntity = namespace.entity.common.get(commonName1);
-    const extensionEntity = namespace.entity.commonExtension.get(commonName1);
-    expect(baseEntity).toBeDefined();
-    expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - baseEntity could be null
-    expect(baseEntity.extender).toBe(extensionEntity);
-  });
-
   it('should enhance extension with queryable fields', () => {
     const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(extensionEntity).toBeDefined();

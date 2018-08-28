@@ -302,8 +302,6 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
     commonExtension.data.edfiOds.ods_Properties.push(commonExtensionRequiredProperty);
     addEntityForNamespace(commonExtension);
 
-    common.extender = commonExtension;
-
     const domainEntityExtension: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
       namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
@@ -372,15 +370,17 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
   });
 
   it('should create a table', () => {
-    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create table only for domain entity extension', () => {
+  it('should create table for domain entity extension', () => {
     expect(tableEntities(metaEd, extensionNamespace).get(domainEntityExtensionName)).toBeDefined();
   });
 
-  it('should not create common extension override join table', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(domainEntityName + commonExtensionName)).toBeUndefined();
+  it('should create common extension override join table', () => {
+    expect(
+      tableEntities(metaEd, extensionNamespace).get(`${domainEntityName + commonExtensionName}Extension`),
+    ).toBeDefined();
   });
 });
 

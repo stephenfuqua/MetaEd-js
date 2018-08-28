@@ -1,13 +1,6 @@
 // @flow
 import { asReferentialProperty, asTopLevelEntity, getEntitiesOfTypeForNamespaces, versionSatisfies } from 'metaed-core';
-import type {
-  CommonProperty,
-  EnhancerResult,
-  EntityProperty,
-  MetaEdEnvironment,
-  ModelBase,
-  TopLevelEntity,
-} from 'metaed-core';
+import type { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from 'metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -35,7 +28,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         name: entity.data.edfiOds.ods_ExtensionName,
         description: entity.documentation,
         parentEntity: entity,
-        // METAED-763: API requires extension tables to have CreateDate column
+        // METAED-764: API requires extension tables to have CreateDate column
         includeCreateDateColumn: true,
       });
 
@@ -54,9 +47,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const primaryKeys: Array<Column> = collectPrimaryKeys(entity, BuildStrategyDefault, columnCreatorFactory);
 
       entity.data.edfiOds.ods_Properties.forEach((property: EntityProperty) => {
-        // Let common extension overrides be built by the parent entity
-        if (property.type === 'common' && ((property: any): CommonProperty).isExtensionOverride) return;
-
         const tableStrategy: TableStrategy = TableStrategy.extension(
           mainTable,
           entity.baseEntity != null ? entity.baseEntity.namespace.namespaceName : '',

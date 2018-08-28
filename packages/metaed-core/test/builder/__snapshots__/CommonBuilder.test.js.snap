@@ -22,11 +22,6 @@ Object {
     "line": 3,
     "tokenText": "documentation",
   },
-  "extender": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
   "identityProperties": Array [],
   "inlineInOds": Object {
     "column": 0,
@@ -129,11 +124,6 @@ Object {
     "column": 4,
     "line": 3,
     "tokenText": "documentation",
-  },
-  "extender": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
   "identityProperties": Array [],
   "inlineInOds": Object {

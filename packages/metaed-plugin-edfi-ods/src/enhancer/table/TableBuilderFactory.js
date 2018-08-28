@@ -1,7 +1,9 @@
 // @flow
 import type { EntityProperty, PropertyType } from 'metaed-core';
+import { asCommonProperty } from 'metaed-core';
 import { columnCreatorFactory } from './ColumnCreatorFactory';
 import { choicePropertyTableBuilder } from './ChoicePropertyTableBuilder';
+import { commonExtensionPropertyTableBuilder } from './CommonExtensionPropertyTableBuilder';
 import { commonPropertyTableBuilder } from './CommonPropertyTableBuilder';
 import { descriptorPropertyTableBuilder } from './DescriptorPropertyTableBuilder';
 import { enumerationPropertyTableBuilder } from './EnumerationPropertyTableBuilder';
@@ -19,7 +21,10 @@ export const tableBuilderFactory: TableBuilderFactory = {
     const tableBuilder: { [PropertyType]: () => TableBuilder } = {
       association: () => referencePropertyTableBuilder(columnCreatorFactory),
       choice: () => choicePropertyTableBuilder(tableBuilderFactory),
-      common: () => commonPropertyTableBuilder(tableBuilderFactory, columnCreatorFactory),
+      common: () =>
+        asCommonProperty(property).isExtensionOverride
+          ? commonExtensionPropertyTableBuilder(tableBuilderFactory, columnCreatorFactory)
+          : commonPropertyTableBuilder(tableBuilderFactory, columnCreatorFactory),
       descriptor: () => descriptorPropertyTableBuilder(columnCreatorFactory),
       domainEntity: () => referencePropertyTableBuilder(columnCreatorFactory),
       enumeration: () => enumerationPropertyTableBuilder(columnCreatorFactory),

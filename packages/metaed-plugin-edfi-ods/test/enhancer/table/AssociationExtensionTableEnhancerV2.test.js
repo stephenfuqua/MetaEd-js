@@ -305,8 +305,6 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     commonExtension.data.edfiOds.ods_Properties.push(commonExtensionRequiredProperty);
     addEntityForNamespace(commonExtension);
 
-    common.extender = commonExtension;
-
     const associationExtension: AssociationExtension = Object.assign(newAssociationExtension(), {
       namespace: extensionNamespace,
       metaEdName: associationExtensionName,
@@ -375,15 +373,15 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
   });
 
   it('should create a table', () => {
-    expect(tableEntities(metaEd, extensionNamespace).size).toBe(1);
+    expect(tableEntities(metaEd, extensionNamespace).size).toBe(2);
   });
 
-  it('should create table only for association extension', () => {
+  it('should create table for association extension', () => {
     expect(tableEntities(metaEd, extensionNamespace).get(associationExtensionName)).toBeDefined();
   });
 
-  it('should not create common extension override join table', () => {
-    expect(tableEntities(metaEd, extensionNamespace).get(associationName + commonExtensionName)).toBeUndefined();
+  it('should create common extension override join table', () => {
+    expect(tableEntities(metaEd, extensionNamespace).get(`${associationName + commonExtensionName}Extension`)).toBeDefined();
   });
 });
 
