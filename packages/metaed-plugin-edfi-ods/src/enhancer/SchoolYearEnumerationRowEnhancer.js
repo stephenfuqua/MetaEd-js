@@ -13,7 +13,7 @@ const enhancerName: string = 'SchoolYearEnumerationRowEnhancer';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'schoolYearEnumeration').forEach((entity: ModelBase) => {
     R.prop('enumerationItems')(entity).forEach((item: EnumerationItem) => {
-      const name: string = R.take(4)(item.shortDescription);
+      const name: string = R.takeLast(4)(item.shortDescription);
 
       const row: SchoolYearEnumerationRow = Object.assign(newSchoolYearEnumerationRow(), {
         name,

@@ -772,14 +772,14 @@ describe('when enumeration is school year', () => {
   it('should have correct inserted values', async () => {
     const schoolYearColumn: DatabaseColumn = column(namespaceName, schoolYearTableName, schoolYear);
     expect(await columnExists(schoolYearColumn)).toBe(true);
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '1')).toBe(parseInt(year1, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '2')).toBe(parseInt(year2, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '3')).toBe(parseInt(year3, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '4')).toBe(parseInt(year4, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '5')).toBe(parseInt(year5, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '6')).toBe(parseInt(year6, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '7')).toBe(parseInt(year7, 10));
-    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '8')).toBe(parseInt(year8, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '1')).toBe(parseInt(year2, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '2')).toBe(parseInt(year3, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '3')).toBe(parseInt(year4, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '4')).toBe(parseInt(year5, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '5')).toBe(parseInt(year6, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '6')).toBe(parseInt(year7, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '7')).toBe(parseInt(year8, 10));
+    expect(await columnNthRowValue(schoolYearColumn, schoolYear, '8')).toBe(parseInt(year9, 10));
 
     const schoolYearDescriptionColumn: DatabaseColumn = column(
       namespaceName,

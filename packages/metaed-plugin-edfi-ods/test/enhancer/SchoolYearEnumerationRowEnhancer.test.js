@@ -19,8 +19,8 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
   const entityName: string = 'EntityName';
   const itemDocumentation1: string = 'ItemDocumentation1';
   const itemDocumentation2: string = 'ItemDocumentation2';
-  const shortDescription1: string = '2017ShortDescription1';
-  const shortDescription2: string = '2018ShortDescription2';
+  const shortDescription1: string = '2017-2018';
+  const shortDescription2: string = '2018-2019';
 
   beforeAll(() => {
     const entity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
@@ -50,33 +50,33 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
 
   it('should create two rows', () => {
     expect(rowEntities(metaEd, namespace).size).toBe(2);
-    expect(rowEntities(metaEd, namespace).get(`2017${shortDescription1}`)).toBeDefined();
-    expect(rowEntities(metaEd, namespace).get(`2018${shortDescription2}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).get(`2018${shortDescription1}`)).toBeDefined();
+    expect(rowEntities(metaEd, namespace).get(`2019${shortDescription2}`)).toBeDefined();
   });
 
   it('should have correct first enumeration row', () => {
     // $FlowIgnore - null check
-    const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2017${shortDescription1}`);
-    expect(row.type).toBe('schoolYearEnumerationRow');
-    expect(row.name).toBe('2017');
-    expect(row.namespace).toBe('edfi');
-    expect(row.schemaName).toBe('edfi');
-    expect(row.tableName).toBe('SchoolYearType');
-    expect(row.documentation).toBe(itemDocumentation1);
-    expect(row.schoolYear).toBe(2017);
-    expect(row.schoolYearDescription).toBe(shortDescription1);
-  });
-
-  it('should have correct second enumeration row', () => {
-    // $FlowIgnore - null check
-    const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2018${shortDescription2}`);
+    const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2018${shortDescription1}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2018');
     expect(row.namespace).toBe('edfi');
     expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe('SchoolYearType');
-    expect(row.documentation).toBe(itemDocumentation2);
+    expect(row.documentation).toBe(itemDocumentation1);
     expect(row.schoolYear).toBe(2018);
+    expect(row.schoolYearDescription).toBe(shortDescription1);
+  });
+
+  it('should have correct second enumeration row', () => {
+    // $FlowIgnore - null check
+    const row: SchoolYearEnumerationRow = rowEntities(metaEd, namespace).get(`2019${shortDescription2}`);
+    expect(row.type).toBe('schoolYearEnumerationRow');
+    expect(row.name).toBe('2019');
+    expect(row.namespace).toBe('edfi');
+    expect(row.schemaName).toBe('edfi');
+    expect(row.tableName).toBe('SchoolYearType');
+    expect(row.documentation).toBe(itemDocumentation2);
+    expect(row.schoolYear).toBe(2019);
     expect(row.schoolYearDescription).toBe(shortDescription2);
   });
 });
