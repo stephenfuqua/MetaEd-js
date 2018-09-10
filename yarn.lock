@@ -3844,10 +3844,6 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://www.myget.org/F/ed-fi/npm/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoek@5.x.x:
-  version "5.0.4"
-  resolved "https://www.myget.org/F/ed-fi/npm/hoek/-/hoek-5.0.4.tgz#0f7fa270a1cafeb364a4b2ddfaa33f864e4157da"
-
 hogan.js@^3.0.2:
   version "3.0.2"
   resolved "https://www.myget.org/F/ed-fi/npm/hogan.js/-/hogan.js-3.0.2.tgz#4cd9e1abd4294146e7679e41d7898732b02c7bfd"
@@ -4705,13 +4701,13 @@ jest@^23.5.0:
     import-local "^1.0.0"
     jest-cli "^23.5.0"
 
-joi@^13.5.2:
-  version "13.6.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/joi/-/joi-13.6.0.tgz#877d820e3ad688a49c32421ffefc746bfbe2d0a0"
+joi@12.0.0:
+  version "12.0.0"
+  resolved "https://www.myget.org/F/ed-fi/npm/joi/-/joi-12.0.0.tgz#46f55e68f4d9628f01bbb695902c8b307ad8d33a"
   dependencies:
-    hoek "5.x.x"
+    hoek "4.x.x"
     isemail "3.x.x"
-    topo "3.x.x"
+    topo "2.x.x"
 
 jquery@2.1.4:
   version "2.1.4"
@@ -7768,17 +7764,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-topo@2.0.2:
+topo@2.0.2, topo@2.x.x:
   version "2.0.2"
   resolved "https://www.myget.org/F/ed-fi/npm/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
   dependencies:
     hoek "4.x.x"
-
-topo@3.x.x:
-  version "3.0.0"
-  resolved "https://www.myget.org/F/ed-fi/npm/topo/-/topo-3.0.0.tgz#37e48c330efeac784538e0acd3e62ca5e231fe7a"
-  dependencies:
-    hoek "5.x.x"
 
 touch@^3.1.0:
   version "3.1.0"
