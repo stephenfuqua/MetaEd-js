@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when subdomains in separate dependency-linked namespaces have identical names should have validation failures for each entity 1`] = `"Subdomain named ValidName1 is a duplicate declaration of that name."`;
+
+exports[`when subdomains in separate dependency-linked namespaces have identical names should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 8,
+  "tokenText": "Subdomain",
+}
+`;
+
+exports[`when subdomains in separate dependency-linked namespaces have identical names should have validation failures for each entity 3`] = `"Subdomain named ValidName1 is a duplicate declaration of that name."`;
+
+exports[`when subdomains in separate dependency-linked namespaces have identical names should have validation failures for each entity 4`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Subdomain",
+}
+`;

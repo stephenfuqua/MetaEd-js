@@ -1,0 +1,185 @@
+// @flow
+import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityExtensionBuilder, NamespaceBuilder } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { validate } from '../../../src/validator/DomainEntityExtension/DomainEntityExtensionNamesMustBeUnique';
+
+describe('when entities in same namespace have different names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntityExtension('ValidName1')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+
+      .withStartDomainEntityExtension('ValidName2')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build two domainEntityExtension', () => {
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when entities in same namespace have identical names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one domainEntityExtension because TopLevelEntityBuilder will not let it get that far', () => {
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should have no validation failures because of TopLevelEntityBuilder', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when domainEntityExtensions in separate dependency-linked namespaces have identical names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'Extension')
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one domainEntityExtension in core namespace', () => {
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should build one domainEntityExtension in extension namespace', () => {
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(failures).toHaveLength(2);
+
+    expect(failures[0].validatorName).toBe('DomainEntityExtensionNamesMustBeUnique');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+
+    expect(failures[1].validatorName).toBe('DomainEntityExtensionNamesMustBeUnique');
+    expect(failures[1].category).toBe('error');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when domainEntityExtensions in non-dependency-linked namespaces have identical names', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespacea: any = null;
+  let extensionNamespaceb: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntityExtension('NotADuplicate')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .withBeginNamespace('extensiona', 'Extensiona')
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .withBeginNamespace('extensionb', 'Extensionb')
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespacea = metaEd.namespace.get('extensiona');
+    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    // $FlowIgnore - null check
+    extensionNamespacea.dependencies.push(coreNamespace);
+    // $FlowIgnore - null check
+    extensionNamespaceb.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one core domainEntityExtension', () => {
+    expect(coreNamespace.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should build one extension1 domainEntityExtension', () => {
+    expect(extensionNamespacea.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should build one extension2 domainEntityExtension', () => {
+    expect(extensionNamespaceb.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});

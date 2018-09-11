@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when domainEntityExtensions in separate dependency-linked namespaces have identical names should have validation failures for each entity 1`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+
+exports[`when domainEntityExtensions in separate dependency-linked namespaces have identical names should have validation failures for each entity 2`] = `
+Object {
+  "column": 2,
+  "line": 9,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`when domainEntityExtensions in separate dependency-linked namespaces have identical names should have validation failures for each entity 3`] = `"Domain Entity Extension named EntityName is a duplicate declaration of that name."`;
+
+exports[`when domainEntityExtensions in separate dependency-linked namespaces have identical names should have validation failures for each entity 4`] = `
+Object {
+  "column": 2,
+  "line": 2,
+  "tokenText": "Domain Entity",
+}
+`;
