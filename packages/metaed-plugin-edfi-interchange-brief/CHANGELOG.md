@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.2-dev.4"></a>
+## [1.2.2-dev.4](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.2.2-dev.3...v1.2.2-dev.4) (2018-09-11)
+
+**Note:** Version bump only for package metaed-plugin-edfi-interchange-brief
+
+
+
+
+
 <a name="1.2.2-dev.3"></a>
 ## [1.2.2-dev.3](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.2.2-dev.2...v1.2.2-dev.3) (2018-09-06)
 
