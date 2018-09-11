@@ -25,12 +25,22 @@ function parentEntityProperty(namespaces: Array<Namespace>, overrideProperty: En
   if (!validEntityTypes.includes(overrideProperty.parentEntity.type)) return undefined;
   // parent type is base type being extended - sketchy string manipulation here
   const parentType: ModelType = ((overrideProperty.parentEntity.type.replace('Extension', ''): any): ModelType);
-  const parentEntity: ?TopLevelEntity = ((getEntityForNamespaces(
+  const parentTypeSubclassOption: ModelType = ((`${parentType}Subclass`: any): ModelType);
+  let parentEntity: ?TopLevelEntity = ((getEntityForNamespaces(
     overrideProperty.parentEntityName,
     namespaces,
-    parentType,
+    parentTypeSubclassOption,
   ): any): ?TopLevelEntity);
-  if (parentEntity == null) return null;
+
+  if (parentEntity == null) {
+    parentEntity = ((getEntityForNamespaces(
+      overrideProperty.parentEntityName,
+      namespaces,
+      parentType,
+    ): any): ?TopLevelEntity);
+    if (parentEntity == null) return null;
+  }
+
   return parentEntity.properties.find(
     property => property.metaEdName === overrideProperty.metaEdName && property.type === overrideProperty.type,
   );
