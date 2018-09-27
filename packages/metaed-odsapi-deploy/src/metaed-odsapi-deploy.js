@@ -66,6 +66,11 @@ export async function metaEdDeploy() {
       type: 'boolean',
       default: false,
     })
+    .option('suppressDelete', {
+      describe: 'Suppress deletion of the SupportingArtifacts deployment folder',
+      type: 'boolean',
+      default: false,
+    })
     .help()
     .alias('help', 'h')
     .version()
@@ -115,7 +120,7 @@ export async function metaEdDeploy() {
   }
 
   try {
-    const success: boolean = await executeDeploy(metaEdConfiguration, yargs.argv.core);
+    const success: boolean = await executeDeploy(metaEdConfiguration, yargs.argv.core, yargs.argv.suppressDelete);
     if (!success) process.exitCode = 1;
   } catch (error) {
     winston.error(error);

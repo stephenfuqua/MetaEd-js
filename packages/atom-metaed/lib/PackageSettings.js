@@ -20,6 +20,10 @@ export function getEdfiOdsApiSourceDirectory(): string {
   return atom.config.get('atom-metaed.edfiOdsApiSourceDirectory') || '';
 }
 
+export function suppressDeleteOnDeploy(): boolean {
+  return atom.config.get('atom-metaed.suppressDeleteOnDeploy') || false;
+}
+
 export function getCmdFullPath(): string {
   return atom.config.get('atom-metaed.cmdFullPath') || '';
 }

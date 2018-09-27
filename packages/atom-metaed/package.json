@@ -78,8 +78,15 @@
       "type": "string",
       "default": ""
     },
-    "telemetryConsent": {
+    "suppressDeleteOnDeploy": {
       "order": 4,
+      "title": "Suppress deletion of the SupportingArtifacts deployment folder",
+      "description": "Stop deployment from deleting the SupportingArtifacts API folder.  For advanced users only.",
+      "type": "boolean",
+      "default": false
+    },
+    "telemetryConsent": {
+      "order": 5,
       "title": "Consent to anonymous usage reporting",
       "description": "Select whether you are willing to submit anonymous usage information to the Ed-Fi Alliance server. Broadly, we send things like performance metrics and exceptions.",
       "type": "string",
@@ -100,21 +107,21 @@
       ]
     },
     "validateOnTheFly": {
-      "order": 5,
+      "order": 6,
       "title": "Enable validation as you type (experimental)",
       "description": "Performs validation on the fly (instead of on save).  May introduce a delay in the editor UI.  Requires Atom restart after changing.",
       "type": "boolean",
       "default": true
     },
     "coreMetaEdSourceDirectory": {
-      "order": 6,
+      "order": 7,
       "title": "Ed-Fi Data Standard core .metaed directory",
       "description": "Full path to the set of core MetaEd files for the Ed-Fi Data Standard.",
       "type": "string",
       "default": ""
     },
     "cmdFullPath": {
-      "order": 7,
+      "order": 8,
       "title": "Full path to Windows command prompt (cmd.exe)",
       "description": "Full path to cmd.exe, used to spawn the MetaEd Console and provide highlighted output.",
       "type": "string",

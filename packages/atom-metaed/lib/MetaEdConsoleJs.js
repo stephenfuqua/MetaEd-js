@@ -24,6 +24,7 @@ import {
   getMetaEdJsConsoleSourceDirectory,
   getEdfiOdsApiSourceDirectory,
   getCmdFullPath,
+  suppressDeleteOnDeploy,
   allianceMode,
   getTargetOdsApiVersionSemver,
   getTargetDsVersionSemver,
@@ -348,6 +349,7 @@ async function executeDeploy(
     const taskParams = ['/s', '/c', `node "${metaEdDeployPath}"`, '--config', `"${metaEdConfigurationPath}"`];
 
     if (shouldDeployCore) taskParams.push('--core');
+    if (suppressDeleteOnDeploy()) taskParams.push('--suppressDelete');
 
     console.log(`[MetaEdConsoleJS] Executing Deploy '${cmdExePath}' with parameters:`, taskParams);
 

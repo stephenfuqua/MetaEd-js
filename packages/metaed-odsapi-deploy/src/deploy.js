@@ -190,8 +190,13 @@ async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: D
   return false;
 }
 
-async function removeSupportingArtifacts(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
+async function removeSupportingArtifacts(
+  metaEdConfiguration: MetaEdConfiguration,
+  target: DeployTargets,
+  suppressDelete: boolean,
+): Promise<boolean> {
   const { projectName }: { projectName: string } = target;
+  if (suppressDelete) return true;
   if (target.namespaceName === 'edfi') return true;
 
   const targetPath: string = path.resolve(
@@ -292,7 +297,11 @@ async function deployArtifactSources(metaEdConfiguration: MetaEdConfiguration, t
   return true;
 }
 
-export async function executeDeploy(metaEdConfiguration: MetaEdConfiguration, deployCore: boolean): Promise<boolean> {
+export async function executeDeploy(
+  metaEdConfiguration: MetaEdConfiguration,
+  deployCore: boolean,
+  suppressDelete: boolean,
+): Promise<boolean> {
   if (metaEdConfiguration.deployDirectory === '') return true;
 
   const targets: Array<DeployTargets> = deployTargetsFor(metaEdConfiguration, deployCore);
@@ -302,7 +311,7 @@ export async function executeDeploy(metaEdConfiguration: MetaEdConfiguration, de
   // eslint-disable-next-line no-restricted-syntax
   for (const target of targets) {
     if (!(await projectExists(metaEdConfiguration, target))) return false;
-    if (!(await removeSupportingArtifacts(metaEdConfiguration, target))) return false;
+    if (!(await removeSupportingArtifacts(metaEdConfiguration, target, suppressDelete))) return false;
     result = await deployArtifactSources(metaEdConfiguration, target);
     await refreshProjectFile(metaEdConfiguration, target);
   }
