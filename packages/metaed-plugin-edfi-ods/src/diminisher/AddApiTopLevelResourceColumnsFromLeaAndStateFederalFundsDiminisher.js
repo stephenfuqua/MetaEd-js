@@ -16,24 +16,24 @@ const stateEducationAgencyFederalFunds: string = 'StateEducationAgencyFederalFun
 
 function addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(
   tablesForCoreNamespace: Map<string, Table>,
-  { includeAggregateHashValueColumn }: { includeAggregateHashValueColumn: boolean },
+  { includeChangeVersionColumn }: { includeChangeVersionColumn: boolean },
 ): void {
   const table: ?Table = tablesForCoreNamespace.get(localEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
-  if (includeAggregateHashValueColumn) table.includeAggregateHashValueColumn = true;
+  if (includeChangeVersionColumn) table.includeChangeVersionColumn = true;
 }
 
 function addApiTopLevelResourceColumnsToStateFederalFundsTable(
   tablesForCoreNamespace: Map<string, Table>,
-  { includeAggregateHashValueColumn }: { includeAggregateHashValueColumn: boolean },
+  { includeChangeVersionColumn }: { includeChangeVersionColumn: boolean },
 ): void {
   const table: ?Table = tablesForCoreNamespace.get(stateEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
-  if (includeAggregateHashValueColumn) table.includeAggregateHashValueColumn = true;
+  if (includeChangeVersionColumn) table.includeChangeVersionColumn = true;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -42,13 +42,13 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (coreNamespace == null) return { enhancerName, success: false };
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const includeAggregateHashValueColumn: boolean = changeEventIndicated(metaEd);
+  const includeChangeVersionColumn: boolean = changeEventIndicated(metaEd);
 
   addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace, {
-    includeAggregateHashValueColumn,
+    includeChangeVersionColumn,
   });
   addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace, {
-    includeAggregateHashValueColumn,
+    includeChangeVersionColumn,
   });
 
   return {

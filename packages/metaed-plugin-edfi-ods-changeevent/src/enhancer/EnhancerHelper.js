@@ -3,7 +3,7 @@ import type { MetaEdEnvironment, PluginEnvironment, Namespace } from 'metaed-cor
 import type { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 import type { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 import type { EnableChangeTracking } from '../model/EnableChangeTracking';
-import type { AddColumnAggregateHashValueForTable } from '../model/AddColumnAggregateHashValueForTable';
+import type { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
 import type { EdFiOdsChangeEventEntityRepository } from '../model/EdFiOdsChangeEventEntityRepository';
 
 export function pluginEnvironment(metaEd: MetaEdEnvironment): ?PluginEnvironment {
@@ -40,10 +40,10 @@ export function enableChangeTrackingEntities(metaEd: MetaEdEnvironment, namespac
   return repository == null ? [] : repository.enableChangeTracking;
 }
 
-export function addColumnAggregateHashValueForTableEntities(
+export function addColumnChangeVersionForTableEntities(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
-): Array<AddColumnAggregateHashValueForTable> {
+): Array<AddColumnChangeVersionForTable> {
   const repository: ?EdFiOdsChangeEventEntityRepository = edfiOdsChangeEventRepositoryForNamespace(metaEd, namespace);
-  return repository == null ? [] : repository.addColumnAggregateHashValueForTable;
+  return repository == null ? [] : repository.addColumnChangeVersionForTable;
 }

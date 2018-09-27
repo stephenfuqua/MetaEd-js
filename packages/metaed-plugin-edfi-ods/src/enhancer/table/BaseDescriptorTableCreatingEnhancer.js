@@ -24,7 +24,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   });
 
   if (changeEventIndicated(metaEd)) {
-    descriptorTable.includeAggregateHashValueColumn = true;
+    descriptorTable.includeChangeVersionColumn = true;
   }
 
   addColumns(

@@ -23,7 +23,7 @@ export const enumerationTableCreator: {
       isAggregateRootTable: true,
     });
     if (changeEventIndicated(metaEd)) {
-      table.includeAggregateHashValueColumn = true;
+      table.includeChangeVersionColumn = true;
     }
     addColumns(
       table,

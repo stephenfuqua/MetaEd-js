@@ -3,22 +3,22 @@
 import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
-import { addColumnAggregateHashValueForTableEntities } from './EnhancerHelper';
+import { addColumnChangeVersionForTableEntities } from './EnhancerHelper';
 import { twoDotXIndicated } from './ChangeEventIndicator';
-import type { AddColumnAggregateHashValueForTable } from '../model/AddColumnAggregateHashValueForTable';
+import type { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
 
-const enhancerName: string = 'AddColumnAggregateHashValueForTableEnhancer';
+const enhancerName: string = 'AddColumnChangeVersionForTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
     if (twoDotXIndicated(metaEd, namespace)) {
       tableEntities(metaEd, namespace).forEach((table: Table) => {
         if (table.isAggregateRootTable) {
-          const addColumnAggregateHashValueForTable: AddColumnAggregateHashValueForTable = {
+          const addColumnChangeVersionForTable: AddColumnChangeVersionForTable = {
             schema: table.schema,
             tableName: table.name,
           };
-          addColumnAggregateHashValueForTableEntities(metaEd, namespace).push(addColumnAggregateHashValueForTable);
+          addColumnChangeVersionForTableEntities(metaEd, namespace).push(addColumnChangeVersionForTable);
         }
       });
     }

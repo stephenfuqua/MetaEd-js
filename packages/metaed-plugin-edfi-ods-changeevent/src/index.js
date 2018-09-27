@@ -8,7 +8,7 @@ import { generate as CreateTrackedDeleteTablesGenerator } from './generator/Crea
 import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
 import { generate as EnableDatabaseChangeTrackingGenerator } from './generator/EnableDatabaseChangeTrackingGenerator';
 import { generate as EnableTableChangeTrackingGenerator } from './generator/EnableTableChangeTrackingGenerator';
-import { generate as AddColumnAggregateHashValueForTableGenerator } from './generator/AddColumnAggregateHashValueForTableGenerator';
+import { generate as AddColumnChangeVersionForTableGenerator } from './generator/AddColumnChangeVersionForTableGenerator';
 
 import { enhance as edFiOdsChangeEventEntityRepository } from './model/EdFiOdsChangeEventEntityRepository';
 
@@ -19,7 +19,7 @@ import { enhance as descriptorChangeEventEnhancer } from './enhancer/DescriptorC
 import { enhance as domainEntityChangeEventEnhancer } from './enhancer/DomainEntityChangeEventEnhancer';
 import { enhance as domainEntitySubclassChangeEventEnhancer } from './enhancer/DomainEntitySubclassChangeEventEnhancer';
 import { enhance as enumerationChangeEventEnhancer } from './enhancer/EnumerationChangeEventEnhancer';
-import { enhance as addColumnAggregateHashValueForTableEnhancer } from './enhancer/AddColumnAggregateHashValueForTableEnhancer';
+import { enhance as addColumnChangeVersionForTableEnhancer } from './enhancer/AddColumnChangeVersionForTableEnhancer';
 
 export function initialize(): MetaEdPlugin {
   return Object.assign(newMetaEdPlugin(), {
@@ -33,14 +33,14 @@ export function initialize(): MetaEdPlugin {
       domainEntityChangeEventEnhancer,
       domainEntitySubclassChangeEventEnhancer,
       enumerationChangeEventEnhancer,
-      addColumnAggregateHashValueForTableEnhancer,
+      addColumnChangeVersionForTableEnhancer,
     ],
     generator: [
       CreateTrackedDeleteTablesGenerator,
       CreateDeletedForTrackingTriggersGenerator,
       EnableDatabaseChangeTrackingGenerator,
       EnableTableChangeTrackingGenerator,
-      AddColumnAggregateHashValueForTableGenerator,
+      AddColumnChangeVersionForTableGenerator,
     ],
   });
 }

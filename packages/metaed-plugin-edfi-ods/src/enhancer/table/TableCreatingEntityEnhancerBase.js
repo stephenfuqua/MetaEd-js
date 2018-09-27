@@ -40,7 +40,7 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
     mainTable.includeLastModifiedDateAndIdColumn = true;
     mainTable.isAggregateRootTable = true;
     if (changeEventIndicated(metaEd)) {
-      mainTable.includeAggregateHashValueColumn = true;
+      mainTable.includeChangeVersionColumn = true;
     }
   }
 

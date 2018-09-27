@@ -2,5 +2,10 @@
   "parser": "flow",
   "singleQuote": true,
   "printWidth": 125,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.js"
+    }
+  ]
 }

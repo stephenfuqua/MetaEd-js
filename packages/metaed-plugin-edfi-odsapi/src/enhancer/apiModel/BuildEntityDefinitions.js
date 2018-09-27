@@ -121,9 +121,9 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     });
   }
 
-  if (table.includeAggregateHashValueColumn) {
+  if (table.includeChangeVersionColumn) {
     result.push({
-      propertyName: 'AggregateHashValue',
+      propertyName: 'ChangeVersion',
       propertyType: {
         dbType: 'Int64',
         maxLength: 0,
