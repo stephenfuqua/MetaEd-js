@@ -35,7 +35,6 @@ CREATE TABLE [edfi].[AcademicWeek] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [AcademicWeek_PK] PRIMARY KEY CLUSTERED (
         [SchoolId] ASC,
         [WeekIdentifier] ASC
@@ -67,7 +66,6 @@ CREATE TABLE [edfi].[Account] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Account_PK] PRIMARY KEY CLUSTERED (
         [AccountIdentifier] ASC,
         [EducationOrganizationId] ASC,
@@ -94,7 +92,6 @@ CREATE TABLE [edfi].[AccountabilityRating] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [AccountabilityRating_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [RatingTitle] ASC,
@@ -148,7 +145,6 @@ CREATE TABLE [edfi].[AccountCode] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [AccountCode_PK] PRIMARY KEY CLUSTERED (
         [AccountClassificationDescriptorId] ASC,
         [AccountCodeNumber] ASC,
@@ -183,7 +179,6 @@ CREATE TABLE [edfi].[Actual] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Actual_PK] PRIMARY KEY CLUSTERED (
         [AccountIdentifier] ASC,
         [AsOfDate] ASC,
@@ -252,7 +247,6 @@ CREATE TABLE [edfi].[Assessment] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Assessment_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [AssessedGradeLevelDescriptorId] ASC,
@@ -371,7 +365,6 @@ CREATE TABLE [edfi].[AssessmentItem] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [AssessmentItem_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [AssessedGradeLevelDescriptorId] ASC,
@@ -622,7 +615,6 @@ CREATE TABLE [edfi].[BellSchedule] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [BellSchedule_PK] PRIMARY KEY CLUSTERED (
         [BellScheduleName] ASC,
         [SchoolId] ASC
@@ -694,7 +686,6 @@ CREATE TABLE [edfi].[Budget] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Budget_PK] PRIMARY KEY CLUSTERED (
         [AccountIdentifier] ASC,
         [AsOfDate] ASC,
@@ -719,7 +710,6 @@ CREATE TABLE [edfi].[Calendar] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Calendar_PK] PRIMARY KEY CLUSTERED (
         [CalendarCode] ASC,
         [SchoolId] ASC,
@@ -743,7 +733,6 @@ CREATE TABLE [edfi].[CalendarDate] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [CalendarDate_PK] PRIMARY KEY CLUSTERED (
         [CalendarCode] ASC,
         [Date] ASC,
@@ -859,7 +848,6 @@ CREATE TABLE [edfi].[ClassPeriod] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [ClassPeriod_PK] PRIMARY KEY CLUSTERED (
         [ClassPeriodName] ASC,
         [SchoolId] ASC
@@ -911,7 +899,6 @@ CREATE TABLE [edfi].[Cohort] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Cohort_PK] PRIMARY KEY CLUSTERED (
         [CohortIdentifier] ASC,
         [EducationOrganizationId] ASC
@@ -1012,7 +999,6 @@ CREATE TABLE [edfi].[CommunityProviderLicense] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [CommunityProviderLicense_PK] PRIMARY KEY CLUSTERED (
         [CommunityProviderId] ASC,
         [LicenseIdentifier] ASC,
@@ -1047,7 +1033,6 @@ CREATE TABLE [edfi].[CompetencyObjective] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [CompetencyObjective_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [Objective] ASC,
@@ -1100,7 +1085,6 @@ CREATE TABLE [edfi].[ContractedStaff] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [ContractedStaff_PK] PRIMARY KEY CLUSTERED (
         [AccountIdentifier] ASC,
         [AsOfDate] ASC,
@@ -1159,7 +1143,6 @@ CREATE TABLE [edfi].[Course] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Course_PK] PRIMARY KEY CLUSTERED (
         [CourseCode] ASC,
         [EducationOrganizationId] ASC
@@ -1333,7 +1316,6 @@ CREATE TABLE [edfi].[CourseOffering] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [CourseOffering_PK] PRIMARY KEY CLUSTERED (
         [LocalCourseCode] ASC,
         [SchoolId] ASC,
@@ -1405,7 +1387,6 @@ CREATE TABLE [edfi].[CourseTranscript] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [CourseTranscript_PK] PRIMARY KEY CLUSTERED (
         [CourseAttemptResultDescriptorId] ASC,
         [CourseCode] ASC,
@@ -1466,7 +1447,6 @@ CREATE TABLE [edfi].[Credential] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Credential_PK] PRIMARY KEY CLUSTERED (
         [CredentialIdentifier] ASC,
         [StateOfIssueStateAbbreviationDescriptorId] ASC
@@ -1586,7 +1566,6 @@ CREATE TABLE [edfi].[Descriptor] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Descriptor_PK] PRIMARY KEY CLUSTERED (
         [DescriptorId] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
@@ -1673,7 +1652,6 @@ CREATE TABLE [edfi].[DisciplineAction] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [DisciplineAction_PK] PRIMARY KEY CLUSTERED (
         [DisciplineActionIdentifier] ASC,
         [DisciplineDate] ASC,
@@ -1779,7 +1757,6 @@ CREATE TABLE [edfi].[DisciplineIncident] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [DisciplineIncident_PK] PRIMARY KEY CLUSTERED (
         [IncidentIdentifier] ASC,
         [SchoolId] ASC
@@ -1857,7 +1834,6 @@ CREATE TABLE [edfi].[EducationContent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [EducationContent_PK] PRIMARY KEY CLUSTERED (
         [ContentIdentifier] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1978,7 +1954,6 @@ CREATE TABLE [edfi].[EducationOrganization] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [EducationOrganization_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2128,7 +2103,6 @@ CREATE TABLE [edfi].[EducationOrganizationInterventionPrescriptionAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [EducationOrganizationInterventionPrescriptionAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [InterventionPrescriptionEducationOrganizationId] ASC,
@@ -2162,7 +2136,6 @@ CREATE TABLE [edfi].[EducationOrganizationNetworkAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [EducationOrganizationNetworkAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationNetworkId] ASC,
         [MemberEducationOrganizationId] ASC
@@ -2183,7 +2156,6 @@ CREATE TABLE [edfi].[EducationOrganizationPeerAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [EducationOrganizationPeerAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [PeerEducationOrganizationId] ASC
@@ -2280,7 +2252,6 @@ CREATE TABLE [edfi].[FeederSchoolAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [FeederSchoolAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [FeederSchoolId] ASC,
@@ -2309,7 +2280,6 @@ CREATE TABLE [edfi].[GeneralStudentProgramAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [GeneralStudentProgramAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [EducationOrganizationId] ASC,
@@ -2347,7 +2317,6 @@ CREATE TABLE [edfi].[Grade] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Grade_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [GradeTypeDescriptorId] ASC,
@@ -2386,7 +2355,6 @@ CREATE TABLE [edfi].[GradebookEntry] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [GradebookEntry_PK] PRIMARY KEY CLUSTERED (
         [DateAssigned] ASC,
         [GradebookEntryTitle] ASC,
@@ -2500,7 +2468,6 @@ CREATE TABLE [edfi].[GradingPeriod] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [GradingPeriod_PK] PRIMARY KEY CLUSTERED (
         [GradingPeriodDescriptorId] ASC,
         [PeriodSequence] ASC,
@@ -2537,7 +2504,6 @@ CREATE TABLE [edfi].[GraduationPlan] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [GraduationPlan_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [GraduationPlanTypeDescriptorId] ASC,
@@ -2793,7 +2759,6 @@ CREATE TABLE [edfi].[Intervention] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Intervention_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [InterventionIdentificationCode] ASC
@@ -2968,7 +2933,6 @@ CREATE TABLE [edfi].[InterventionPrescription] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [InterventionPrescription_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [InterventionPrescriptionIdentificationCode] ASC
@@ -3122,7 +3086,6 @@ CREATE TABLE [edfi].[InterventionStudy] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [InterventionStudy_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [InterventionStudyIdentificationCode] ASC
@@ -3329,7 +3292,6 @@ CREATE TABLE [edfi].[LearningObjective] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [LearningObjective_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [Objective] ASC,
@@ -3420,7 +3382,6 @@ CREATE TABLE [edfi].[LearningStandard] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [LearningStandard_PK] PRIMARY KEY CLUSTERED (
         [LearningStandardId] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -3627,7 +3588,6 @@ CREATE TABLE [edfi].[Location] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Location_PK] PRIMARY KEY CLUSTERED (
         [ClassroomIdentificationCode] ASC,
         [SchoolId] ASC
@@ -3728,7 +3688,6 @@ CREATE TABLE [edfi].[ObjectiveAssessment] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [ObjectiveAssessment_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [AssessedGradeLevelDescriptorId] ASC,
@@ -3886,7 +3845,6 @@ CREATE TABLE [edfi].[OpenStaffPosition] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [OpenStaffPosition_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [RequisitionNumber] ASC
@@ -3965,7 +3923,6 @@ CREATE TABLE [edfi].[Parent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Parent_PK] PRIMARY KEY CLUSTERED (
         [ParentUSI] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -4172,7 +4129,6 @@ CREATE TABLE [edfi].[Payroll] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Payroll_PK] PRIMARY KEY CLUSTERED (
         [AccountIdentifier] ASC,
         [AsOfDate] ASC,
@@ -4243,7 +4199,6 @@ CREATE TABLE [edfi].[PostSecondaryEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [PostSecondaryEvent_PK] PRIMARY KEY CLUSTERED (
         [EventDate] ASC,
         [PostSecondaryEventCategoryDescriptorId] ASC,
@@ -4319,7 +4274,6 @@ CREATE TABLE [edfi].[Program] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Program_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [ProgramName] ASC,
@@ -4588,7 +4542,6 @@ CREATE TABLE [edfi].[ReportCard] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [ReportCard_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [GradingPeriodDescriptorId] ASC,
@@ -4744,7 +4697,6 @@ CREATE TABLE [edfi].[RestraintEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [RestraintEvent_PK] PRIMARY KEY CLUSTERED (
         [RestraintEventIdentifier] ASC,
         [SchoolId] ASC,
@@ -4948,7 +4900,6 @@ CREATE TABLE [edfi].[Section] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Section_PK] PRIMARY KEY CLUSTERED (
         [LocalCourseCode] ASC,
         [SchoolId] ASC,
@@ -4979,7 +4930,6 @@ CREATE TABLE [edfi].[SectionAttendanceTakenEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [SectionAttendanceTakenEvent_PK] PRIMARY KEY CLUSTERED (
         [CalendarCode] ASC,
         [Date] ASC,
@@ -5116,7 +5066,6 @@ CREATE TABLE [edfi].[Session] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Session_PK] PRIMARY KEY CLUSTERED (
         [SchoolId] ASC,
         [SchoolYear] ASC,
@@ -5219,7 +5168,6 @@ CREATE TABLE [edfi].[Staff] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Staff_PK] PRIMARY KEY CLUSTERED (
         [StaffUSI] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -5246,7 +5194,6 @@ CREATE TABLE [edfi].[StaffAbsenceEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffAbsenceEvent_PK] PRIMARY KEY CLUSTERED (
         [AbsenceEventCategoryDescriptorId] ASC,
         [EventDate] ASC,
@@ -5323,7 +5270,6 @@ CREATE TABLE [edfi].[StaffCohortAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffCohortAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [CohortIdentifier] ASC,
@@ -5372,7 +5318,6 @@ CREATE TABLE [edfi].[StaffEducationOrganizationAssignmentAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffEducationOrganizationAssignmentAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [EducationOrganizationId] ASC,
@@ -5398,7 +5343,6 @@ CREATE TABLE [edfi].[StaffEducationOrganizationContactAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffEducationOrganizationContactAssociation_PK] PRIMARY KEY CLUSTERED (
         [ContactTitle] ASC,
         [EducationOrganizationId] ASC,
@@ -5500,7 +5444,6 @@ CREATE TABLE [edfi].[StaffEducationOrganizationEmploymentAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffEducationOrganizationEmploymentAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [EmploymentStatusDescriptorId] ASC,
@@ -5643,7 +5586,6 @@ CREATE TABLE [edfi].[StaffLeave] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffLeave_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [StaffLeaveEventCategoryDescriptorId] ASC,
@@ -5719,7 +5661,6 @@ CREATE TABLE [edfi].[StaffProgramAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffProgramAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [ProgramEducationOrganizationId] ASC,
@@ -5786,7 +5727,6 @@ CREATE TABLE [edfi].[StaffSchoolAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffSchoolAssociation_PK] PRIMARY KEY CLUSTERED (
         [ProgramAssignmentDescriptorId] ASC,
         [SchoolId] ASC,
@@ -5854,7 +5794,6 @@ CREATE TABLE [edfi].[StaffSectionAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StaffSectionAssociation_PK] PRIMARY KEY CLUSTERED (
         [LocalCourseCode] ASC,
         [SchoolId] ASC,
@@ -5988,7 +5927,6 @@ CREATE TABLE [edfi].[Student] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [Student_PK] PRIMARY KEY CLUSTERED (
         [StudentUSI] ASC
     ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -6032,7 +5970,6 @@ CREATE TABLE [edfi].[StudentAcademicRecord] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentAcademicRecord_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [SchoolYear] ASC,
@@ -6217,7 +6154,6 @@ CREATE TABLE [edfi].[StudentAssessment] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentAssessment_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [AdministrationDate] ASC,
@@ -6442,7 +6378,6 @@ CREATE TABLE [edfi].[StudentCohortAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentCohortAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [CohortIdentifier] ASC,
@@ -6501,7 +6436,6 @@ CREATE TABLE [edfi].[StudentCompetencyObjective] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentCompetencyObjective_PK] PRIMARY KEY CLUSTERED (
         [GradingPeriodDescriptorId] ASC,
         [GradingPeriodSchoolId] ASC,
@@ -6680,7 +6614,6 @@ CREATE TABLE [edfi].[StudentDisciplineIncidentAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentDisciplineIncidentAssociation_PK] PRIMARY KEY CLUSTERED (
         [IncidentIdentifier] ASC,
         [SchoolId] ASC,
@@ -6727,7 +6660,6 @@ CREATE TABLE [edfi].[StudentEducationOrganizationAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentEducationOrganizationAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [StudentUSI] ASC
@@ -7112,7 +7044,6 @@ CREATE TABLE [edfi].[StudentEducationOrganizationResponsibilityAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentEducationOrganizationResponsibilityAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [EducationOrganizationId] ASC,
@@ -7147,7 +7078,6 @@ CREATE TABLE [edfi].[StudentGradebookEntry] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentGradebookEntry_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [DateAssigned] ASC,
@@ -7259,7 +7189,6 @@ CREATE TABLE [edfi].[StudentInterventionAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentInterventionAssociation_PK] PRIMARY KEY CLUSTERED (
         [EducationOrganizationId] ASC,
         [InterventionIdentificationCode] ASC,
@@ -7312,7 +7241,6 @@ CREATE TABLE [edfi].[StudentInterventionAttendanceEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentInterventionAttendanceEvent_PK] PRIMARY KEY CLUSTERED (
         [AttendanceEventCategoryDescriptorId] ASC,
         [EducationOrganizationId] ASC,
@@ -7419,7 +7347,6 @@ CREATE TABLE [edfi].[StudentLearningObjective] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentLearningObjective_PK] PRIMARY KEY CLUSTERED (
         [AcademicSubjectDescriptorId] ASC,
         [GradingPeriodDescriptorId] ASC,
@@ -7649,7 +7576,6 @@ CREATE TABLE [edfi].[StudentParentAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentParentAssociation_PK] PRIMARY KEY CLUSTERED (
         [ParentUSI] ASC,
         [StudentUSI] ASC
@@ -7754,7 +7680,6 @@ CREATE TABLE [edfi].[StudentProgramAttendanceEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentProgramAttendanceEvent_PK] PRIMARY KEY CLUSTERED (
         [AttendanceEventCategoryDescriptorId] ASC,
         [EducationOrganizationId] ASC,
@@ -7797,7 +7722,6 @@ CREATE TABLE [edfi].[StudentSchoolAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentSchoolAssociation_PK] PRIMARY KEY CLUSTERED (
         [EntryDate] ASC,
         [SchoolId] ASC,
@@ -7844,7 +7768,6 @@ CREATE TABLE [edfi].[StudentSchoolAttendanceEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentSchoolAttendanceEvent_PK] PRIMARY KEY CLUSTERED (
         [AttendanceEventCategoryDescriptorId] ASC,
         [EventDate] ASC,
@@ -7926,7 +7849,6 @@ CREATE TABLE [edfi].[StudentSectionAssociation] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentSectionAssociation_PK] PRIMARY KEY CLUSTERED (
         [BeginDate] ASC,
         [LocalCourseCode] ASC,
@@ -7961,7 +7883,6 @@ CREATE TABLE [edfi].[StudentSectionAttendanceEvent] (
     [CreateDate] [DATETIME] NOT NULL,
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
-    [ChangeVersion] [BIGINT] NULL,
     CONSTRAINT [StudentSectionAttendanceEvent_PK] PRIMARY KEY CLUSTERED (
         [AttendanceEventCategoryDescriptorId] ASC,
         [EventDate] ASC,

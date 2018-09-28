@@ -1,6 +1,5 @@
 // @flow
 import type { EntityProperty, MetaEdEnvironment, TopLevelEntity, Namespace } from 'metaed-core';
-import { changeEventIndicated } from '../ChangeEventIndicator';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -39,9 +38,6 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
     mainTable.includeCreateDateColumn = true;
     mainTable.includeLastModifiedDateAndIdColumn = true;
     mainTable.isAggregateRootTable = true;
-    if (changeEventIndicated(metaEd)) {
-      mainTable.includeChangeVersionColumn = true;
-    }
   }
 
   entity.data.edfiOds.ods_EntityTable = mainTable;

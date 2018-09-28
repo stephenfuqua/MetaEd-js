@@ -1,7 +1,6 @@
 // @flow
 import { versionSatisfies } from 'metaed-core';
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { changeEventIndicated } from '../enhancer/ChangeEventIndicator';
 import { tableEntities } from '../enhancer/EnhancerHelper';
 import type { Table } from '../model/database/Table';
 
@@ -16,24 +15,18 @@ const stateEducationAgencyFederalFunds: string = 'StateEducationAgencyFederalFun
 
 function addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(
   tablesForCoreNamespace: Map<string, Table>,
-  { includeChangeVersionColumn }: { includeChangeVersionColumn: boolean },
 ): void {
   const table: ?Table = tablesForCoreNamespace.get(localEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
-  if (includeChangeVersionColumn) table.includeChangeVersionColumn = true;
 }
 
-function addApiTopLevelResourceColumnsToStateFederalFundsTable(
-  tablesForCoreNamespace: Map<string, Table>,
-  { includeChangeVersionColumn }: { includeChangeVersionColumn: boolean },
-): void {
+function addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace: Map<string, Table>): void {
   const table: ?Table = tablesForCoreNamespace.get(stateEducationAgencyFederalFunds);
   if (table == null) return;
 
   table.includeLastModifiedDateAndIdColumn = true;
-  if (includeChangeVersionColumn) table.includeChangeVersionColumn = true;
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -42,14 +35,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (coreNamespace == null) return { enhancerName, success: false };
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
-  const includeChangeVersionColumn: boolean = changeEventIndicated(metaEd);
-
-  addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace, {
-    includeChangeVersionColumn,
-  });
-  addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace, {
-    includeChangeVersionColumn,
-  });
+  addApiTopLevelResourceColumnsToLocalEducationAgencyFederalFundsTable(tablesForCoreNamespace);
+  addApiTopLevelResourceColumnsToStateFederalFundsTable(tablesForCoreNamespace);
 
   return {
     enhancerName,

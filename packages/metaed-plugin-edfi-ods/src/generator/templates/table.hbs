@@ -11,9 +11,6 @@ CREATE TABLE [{{{schema}}}].[{{{name}}}] (
     [LastModifiedDate] [DATETIME] NOT NULL,
     [Id] [UNIQUEIDENTIFIER] NOT NULL,
 {{/if}}
-{{#if includeChangeVersionColumn}}
-    [ChangeVersion] [BIGINT] NULL,
-{{/if}}
     CONSTRAINT [{{{name}}}_PK] PRIMARY KEY CLUSTERED (
 {{#primaryKeys}}
         [{{{name}}}] ASC{{#unless @last}},{{/unless}}

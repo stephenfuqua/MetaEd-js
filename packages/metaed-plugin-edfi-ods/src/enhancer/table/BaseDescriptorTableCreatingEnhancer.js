@@ -1,6 +1,5 @@
 // @flow
 import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
-import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newDateColumn, newIntegerColumn, newStringColumn } from '../../model/database/Column';
@@ -22,10 +21,6 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     includeLastModifiedDateAndIdColumn: true,
     isAggregateRootTable: true,
   });
-
-  if (changeEventIndicated(metaEd)) {
-    descriptorTable.includeChangeVersionColumn = true;
-  }
 
   addColumns(
     descriptorTable,

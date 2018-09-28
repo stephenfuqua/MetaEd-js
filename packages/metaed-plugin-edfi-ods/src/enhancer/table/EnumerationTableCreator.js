@@ -2,7 +2,6 @@
 import R from 'ramda';
 import type { Namespace, MetaEdEnvironment } from 'metaed-core';
 import { normalizeEnumerationSuffix } from 'metaed-core';
-import { changeEventIndicated } from '../ChangeEventIndicator';
 import { addColumns, newTable } from '../../model/database/Table';
 import { ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
 import { newIntegerColumn, newStringColumn } from '../../model/database/Column';
@@ -22,9 +21,6 @@ export const enumerationTableCreator: {
       includeLastModifiedDateAndIdColumn: true,
       isAggregateRootTable: true,
     });
-    if (changeEventIndicated(metaEd)) {
-      table.includeChangeVersionColumn = true;
-    }
     addColumns(
       table,
       [

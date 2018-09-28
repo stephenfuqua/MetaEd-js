@@ -4,13 +4,9 @@
 {{/each}}{{#if includeCreateDateColumn}}CreateDate [DATETIME] NOT NULL
 {{/if}}{{#if includeLastModifiedDateAndIdColumn}}LastModifiedDate [DATETIME] NOT NULL
 Id [UNIQUEIDENTIFIER] NOT NULL
-{{/if}}{{#if includeChangeVersionColumn}}ChangeVersion [BIGINT] NULL
 {{/if}}
 
 Primary Keys:
 {{#each primaryKeys}}{{{name}}}
 {{/each}}{{/table}}
 
-{{#if includeChangeVersionColumn}}
-[ChangeVersion] [BIGINT] NULL,
-{{/if}}
