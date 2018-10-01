@@ -4,14 +4,14 @@ import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
 import type { Table } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { addColumnChangeVersionForTableEntities } from './EnhancerHelper';
-import { twoDotXIndicated } from './ChangeEventIndicator';
+import { changeEventIndicated } from './ChangeEventIndicator';
 import type { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
 
 const enhancerName: string = 'AddColumnChangeVersionForTableEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  metaEd.namespace.forEach((namespace: Namespace) => {
-    if (twoDotXIndicated(metaEd, namespace)) {
+  if (changeEventIndicated(metaEd)) {
+    metaEd.namespace.forEach((namespace: Namespace) => {
       tableEntities(metaEd, namespace).forEach((table: Table) => {
         if (table.isAggregateRootTable) {
           const addColumnChangeVersionForTable: AddColumnChangeVersionForTable = {
@@ -21,9 +21,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           addColumnChangeVersionForTableEntities(metaEd, namespace).push(addColumnChangeVersionForTable);
         }
       });
-    }
-  });
-
+    });
+  }
   return {
     enhancerName,
     success: true,

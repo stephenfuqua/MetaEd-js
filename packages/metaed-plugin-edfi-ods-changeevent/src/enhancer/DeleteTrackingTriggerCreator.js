@@ -2,7 +2,7 @@
 import type { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import { getPrimaryKeys } from 'metaed-plugin-edfi-ods';
-import { twoDotXIndicated, changeEventIndicated } from './ChangeEventIndicator';
+import { changeEventIndicated } from './ChangeEventIndicator';
 import { deleteTrackingTriggerEntities } from './EnhancerHelper';
 import type { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
 
@@ -24,7 +24,7 @@ export function createDeleteTrackingTriggerFromTable(
     triggerName: `${mainTable.name}DeletedForTracking`,
     targetTableSchema: mainTable.schema,
     targetTableName: mainTable.name,
-    deleteTrackingTableSchema: twoDotXIndicated(metaEd, namespace) ? 'dbo' : 'changes',
+    deleteTrackingTableSchema: 'changes',
     deleteTrackingTableName: `${mainTable.schema}_${mainTable.name}_TrackedDelete`,
     primaryKeyColumnNames: getPrimaryKeys(mainTable).map((column: Column) => column.name),
     targetTableIsSubclass: foreignKeyToSuperclass != null,
@@ -39,7 +39,7 @@ export function createDeleteTrackingTrigger(
   modelBase: ModelBase,
   superclassForeignKeyFinder: SuperclassForeignKeyFinder = defaultSuperclassForeignKeyFinder,
 ) {
-  if (!changeEventIndicated(metaEd, modelBase.namespace)) return;
+  if (!changeEventIndicated(metaEd)) return;
   const mainTable: Table = ((modelBase.data.edfiOds: any): TopLevelEntityEdfiOds).ods_EntityTable;
   if (mainTable == null) return;
 

@@ -1,3 +1,3 @@
 {{#tables}}
-ALTER TABLE [{{{schema}}}].[{{{tableName}}}] ADD [ChangeVersion] [BIGINT] NULL;
+ALTER TABLE [{{{schema}}}].[{{{tableName}}}] ADD [ChangeVersion] [BIGINT] NOT NULL DEFAULT 0;
 {{/tables}}

@@ -186,7 +186,7 @@ export function buildEntityDefinitions(
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
-  const changeEventsEnabled = changeEventIndicated(metaEd);
+  const changeEventsEnabled: boolean = changeEventIndicated(metaEd);
   tableEntities(metaEd, namespace).forEach((table: Table) => {
     result.push(
       buildSingleEntityDefinitionFrom(table, {

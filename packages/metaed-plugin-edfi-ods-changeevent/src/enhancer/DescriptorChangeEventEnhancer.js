@@ -3,7 +3,7 @@
 import type { MetaEdEnvironment, ModelBase, EnhancerResult } from 'metaed-core';
 import { getAllEntitiesOfType } from 'metaed-core';
 import type { Table, ForeignKey } from 'metaed-plugin-edfi-ods';
-import { changeEventPossible } from './ChangeEventIndicator';
+import { changeEventIndicated } from './ChangeEventIndicator';
 import { createDeleteTrackingTable } from './DeleteTrackingTableCreator';
 import { createDeleteTrackingTrigger } from './DeleteTrackingTriggerCreator';
 
@@ -14,12 +14,12 @@ function descriptorBaseDescriptorForeignKeyFinder(mainTable: Table): ?ForeignKey
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (!changeEventPossible(metaEd)) return { enhancerName, success: true };
-  getAllEntitiesOfType(metaEd, 'descriptor').forEach((modelBase: ModelBase) => {
-    createDeleteTrackingTable(metaEd, modelBase);
-    createDeleteTrackingTrigger(metaEd, modelBase, descriptorBaseDescriptorForeignKeyFinder);
-  });
-
+  if (changeEventIndicated(metaEd)) {
+    getAllEntitiesOfType(metaEd, 'descriptor').forEach((modelBase: ModelBase) => {
+      createDeleteTrackingTable(metaEd, modelBase);
+      createDeleteTrackingTrigger(metaEd, modelBase, descriptorBaseDescriptorForeignKeyFinder);
+    });
+  }
   return {
     enhancerName,
     success: true,
