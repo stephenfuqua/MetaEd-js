@@ -7,7 +7,7 @@ import { validate as NamespaceMustNotBeNamedChanges } from './validator/Namespac
 import { generate as CreateTrackedDeleteTablesGenerator } from './generator/CreateTrackedDeleteTablesGenerator';
 import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
 import { generate as CreateChangeVersionSequenceGenerator } from './generator/CreateChangeVersionSequenceGenerator';
-import { generate as EnableTableChangeTrackingGenerator } from './generator/EnableTableChangeTrackingGenerator';
+import { generate as CreateTriggerUpdateChangeVersionGenerator } from './generator/CreateTriggerUpdateChangeVersionGenerator';
 import { generate as AddColumnChangeVersionForTableGenerator } from './generator/AddColumnChangeVersionForTableGenerator';
 
 import { enhance as edFiOdsChangeEventEntityRepository } from './model/EdFiOdsChangeEventEntityRepository';
@@ -20,6 +20,7 @@ import { enhance as domainEntityChangeEventEnhancer } from './enhancer/DomainEnt
 import { enhance as domainEntitySubclassChangeEventEnhancer } from './enhancer/DomainEntitySubclassChangeEventEnhancer';
 import { enhance as enumerationChangeEventEnhancer } from './enhancer/EnumerationChangeEventEnhancer';
 import { enhance as addColumnChangeVersionForTableEnhancer } from './enhancer/AddColumnChangeVersionForTableEnhancer';
+import { enhance as createTriggerUpdateChangeVersionEnhancer } from './enhancer/CreateTriggerUpdateChangeVersionEnhancer';
 
 export function initialize(): MetaEdPlugin {
   return Object.assign(newMetaEdPlugin(), {
@@ -34,12 +35,13 @@ export function initialize(): MetaEdPlugin {
       domainEntitySubclassChangeEventEnhancer,
       enumerationChangeEventEnhancer,
       addColumnChangeVersionForTableEnhancer,
+      createTriggerUpdateChangeVersionEnhancer,
     ],
     generator: [
       CreateTrackedDeleteTablesGenerator,
       CreateDeletedForTrackingTriggersGenerator,
       CreateChangeVersionSequenceGenerator,
-      EnableTableChangeTrackingGenerator,
+      CreateTriggerUpdateChangeVersionGenerator,
       AddColumnChangeVersionForTableGenerator,
     ],
   });

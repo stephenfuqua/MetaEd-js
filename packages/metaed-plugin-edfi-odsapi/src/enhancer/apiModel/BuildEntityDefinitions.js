@@ -5,7 +5,6 @@ import type { MetaEdEnvironment, Namespace } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
-import { changeEventIndicated } from '../ChangeEventIndicator';
 import type { EntityDefinition } from '../../model/apiModel/EntityDefinition';
 import type { EntityIdentifier } from '../../model/apiModel/EntityIdentifier';
 import type { ApiProperty } from '../../model/apiModel/ApiProperty';
@@ -13,7 +12,6 @@ import type { ApiProperty } from '../../model/apiModel/ApiProperty';
 type BuildSingleEntityDefinitionOptions = {
   includeAlternateKeys: boolean,
   isAbstract: boolean,
-  changeEventsEnabled: boolean,
 };
 
 function isUpdatable(table: Table): boolean {
@@ -70,7 +68,7 @@ export function identifiersFrom(
 }
 
 // locally defined "properties" are the columns on a table minus the columns there to provide a FK reference
-function locallyDefinedPropertiesFrom(table: Table, changeEventsEnabled: boolean): Array<ApiProperty> {
+function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
   const foreignKeyColumnNamesOnTable: Array<string> = R.chain(
     (foreignKey: ForeignKey) => foreignKey.parentTableColumnNames,
     table.foreignKeys,
@@ -126,22 +124,6 @@ function locallyDefinedPropertiesFrom(table: Table, changeEventsEnabled: boolean
     });
   }
 
-  if (table.isAggregateRootTable && changeEventsEnabled) {
-    result.push({
-      propertyName: 'ChangeVersion',
-      propertyType: {
-        dbType: 'Int64',
-        maxLength: 0,
-        precision: 0,
-        scale: 0,
-        isNullable: true,
-      },
-      description: '',
-      isIdentifying: false,
-      isServerAssigned: false,
-    });
-  }
-
   return R.sortBy(
     R.compose(
       R.toLower,
@@ -155,7 +137,7 @@ function buildSingleEntityDefinitionFrom(table: Table, options: BuildSingleEntit
   return {
     schema: table.schema,
     name: table.name,
-    locallyDefinedProperties: locallyDefinedPropertiesFrom(table, options.changeEventsEnabled),
+    locallyDefinedProperties: locallyDefinedPropertiesFrom(table),
     identifiers: identifiersFrom(table, options),
     isAbstract: options.isAbstract,
     description: table.description,
@@ -186,13 +168,11 @@ export function buildEntityDefinitions(
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
   const result: Array<EntityDefinition> = [];
-  const changeEventsEnabled: boolean = changeEventIndicated(metaEd);
   tableEntities(metaEd, namespace).forEach((table: Table) => {
     result.push(
       buildSingleEntityDefinitionFrom(table, {
         isAbstract: isAbstract(table),
         includeAlternateKeys: shouldIncludeAlternateKeys(table),
-        changeEventsEnabled,
       }),
     );
   });

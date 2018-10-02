@@ -5,11 +5,7 @@ import { newTable, newColumn } from 'metaed-plugin-edfi-ods';
 import { addEdFiOdsChangeEventEntityRepositoryTo } from '../../src/model/EdFiOdsChangeEventEntityRepository';
 import { enhance } from '../../src/enhancer/DomainEntityChangeEventEnhancer';
 import { metaEdEnvironmentForApiVersion, newCoreNamespace, newExtensionNamespace } from './TestHelper';
-import {
-  deleteTrackingTableEntities,
-  deleteTrackingTriggerEntities,
-  enableChangeTrackingEntities,
-} from '../../src/enhancer/EnhancerHelper';
+import { deleteTrackingTableEntities, deleteTrackingTriggerEntities } from '../../src/enhancer/EnhancerHelper';
 
 describe('when enhancing core domainEntity targeting 2.3 ODS/API', () => {
   const namespaceName: string = 'edfi';
@@ -50,11 +46,6 @@ describe('when enhancing core domainEntity targeting 2.3 ODS/API', () => {
   it('should not create delete tracking trigger', () => {
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(metaEd, namespace);
     expect(deleteTrackingTriggers).toHaveLength(0);
-  });
-
-  it('should not create enable change tracking', () => {
-    const enableChangeTracking = enableChangeTrackingEntities(metaEd, namespace);
-    expect(enableChangeTracking).toHaveLength(0);
   });
 });
 
@@ -117,13 +108,6 @@ describe('when enhancing core domainEntity targeting 2.5 ODS/API', () => {
     expect(deleteTrackingTriggers[0].targetTableIsSubclass).toBe(false);
     expect(deleteTrackingTriggers[0].foreignKeyToSuperclass).toBeNull();
   });
-
-  it('should create enable change tracking', () => {
-    const enableChangeTracking = enableChangeTrackingEntities(metaEd, namespace);
-    expect(enableChangeTracking).toHaveLength(1);
-    expect(enableChangeTracking[0].schema).toBe(namespaceName);
-    expect(enableChangeTracking[0].tableName).toBe(tableName);
-  });
 });
 
 describe('when enhancing extension domainEntity targeting 2.5 ODS/API', () => {
@@ -165,11 +149,6 @@ describe('when enhancing extension domainEntity targeting 2.5 ODS/API', () => {
   it('should not create delete tracking trigger', () => {
     const deleteTrackingTriggers = deleteTrackingTriggerEntities(metaEd, namespace);
     expect(deleteTrackingTriggers).toHaveLength(0);
-  });
-
-  it('should not create enable change tracking', () => {
-    const enableChangeTracking = enableChangeTrackingEntities(metaEd, namespace);
-    expect(enableChangeTracking).toHaveLength(0);
   });
 });
 
@@ -232,13 +211,6 @@ describe('when enhancing core domainEntity targeting 3.1 ODS/API', () => {
     expect(deleteTrackingTriggers[0].targetTableIsSubclass).toBe(false);
     expect(deleteTrackingTriggers[0].foreignKeyToSuperclass).toBeNull();
   });
-
-  it('should create enable change tracking', () => {
-    const enableChangeTracking = enableChangeTrackingEntities(metaEd, namespace);
-    expect(enableChangeTracking).toHaveLength(1);
-    expect(enableChangeTracking[0].schema).toBe(namespaceName);
-    expect(enableChangeTracking[0].tableName).toBe(tableName);
-  });
 });
 
 describe('when enhancing extension domainEntity targeting 3.1 ODS/API', () => {
@@ -299,12 +271,5 @@ describe('when enhancing extension domainEntity targeting 3.1 ODS/API', () => {
     expect(deleteTrackingTriggers[0].primaryKeyColumnNames[0]).toBe(pkColumnName);
     expect(deleteTrackingTriggers[0].targetTableIsSubclass).toBe(false);
     expect(deleteTrackingTriggers[0].foreignKeyToSuperclass).toBeNull();
-  });
-
-  it('should create enable change tracking', () => {
-    const enableChangeTracking = enableChangeTrackingEntities(metaEd, namespace);
-    expect(enableChangeTracking).toHaveLength(1);
-    expect(enableChangeTracking[0].schema).toBe(namespaceName);
-    expect(enableChangeTracking[0].tableName).toBe(tableName);
   });
 });

@@ -3,9 +3,8 @@ import type { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import type { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import { getPrimaryKeys, newColumn } from 'metaed-plugin-edfi-ods';
 import { changeEventIndicated } from './ChangeEventIndicator';
-import { deleteTrackingTableEntities, enableChangeTrackingEntities } from './EnhancerHelper';
+import { deleteTrackingTableEntities } from './EnhancerHelper';
 import type { DeleteTrackingTable } from '../model/DeleteTrackingTable';
-import type { EnableChangeTracking } from '../model/EnableChangeTracking';
 
 export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, namespace: Namespace, mainTable: Table) {
   const tableName = `${mainTable.schema}_${mainTable.name}_TrackedDelete`;
@@ -32,10 +31,7 @@ export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, na
     isNullable: false,
   });
 
-  const enableChangeTracking: EnableChangeTracking = { schema: mainTable.schema, tableName: mainTable.name };
-
   deleteTrackingTableEntities(metaEd, namespace).push(deleteTrackingTable);
-  enableChangeTrackingEntities(metaEd, namespace).push(enableChangeTracking);
 }
 
 export function createDeleteTrackingTable(metaEd: MetaEdEnvironment, modelBase: ModelBase) {

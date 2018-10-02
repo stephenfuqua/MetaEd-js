@@ -21,5 +21,5 @@ export const template = R.memoizeWith(R.identity, () => ({
   addColumnChangeVersion: templateNamed('addColumnChangeVersion'),
   deleteTrackingTable: templateNamed('deleteTrackingTable'),
   deleteTrackingTrigger: templateNamed('deleteTrackingTrigger'),
-  enableTableChangeTracking: templateNamed('enableTableChangeTracking'),
+  createTriggerUpdateChangeVersion: templateNamed('createTriggerUpdateChangeVersion'),
 }));

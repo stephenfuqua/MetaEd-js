@@ -1,0 +1,10 @@
+{{#triggers}}
+CREATE TRIGGER [{{{schema}}}].[{{{triggerName}}}] ON [{{{schema}}}].[{{{tableName}}}] AFTER UPDATE AS
+BEGIN 
+    UPDATE [{{{schema}}}].[{{{tableName}}}]
+    SET ChangeVersion = (NEXT VALUE FOR dbo.ChangeVersionSequence)
+    FROM [{{{schema}}}].[{{{tableName}}}] u
+    WHERE EXISTS (SELECT 1 FROM inserted i WHERE i.id = u.id);
+END	
+
+{{/triggers}}

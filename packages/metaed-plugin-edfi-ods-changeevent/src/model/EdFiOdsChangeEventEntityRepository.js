@@ -4,13 +4,13 @@ import type { EnhancerResult, MetaEdEnvironment, Namespace } from 'metaed-core';
 import type { DeleteTrackingTable } from './DeleteTrackingTable';
 import type { DeleteTrackingTrigger } from './DeleteTrackingTrigger';
 import type { AddColumnChangeVersionForTable } from './AddColumnChangeVersionForTable';
-import type { EnableChangeTracking } from './EnableChangeTracking';
+import type { CreateTriggerUpdateChangeVersion } from './CreateTriggerUpdateChangeVersion';
 
 export type EdFiOdsChangeEventEntityRepository = {
   deleteTrackingTable: Array<DeleteTrackingTable>,
   deleteTrackingTrigger: Array<DeleteTrackingTrigger>,
-  enableChangeTracking: Array<EnableChangeTracking>,
   addColumnChangeVersionForTable: Array<AddColumnChangeVersionForTable>,
+  createTriggerUpdateChangeVersion: Array<CreateTriggerUpdateChangeVersion>,
 };
 
 const enhancerName: string = 'EdFiOdsChangeEventEntityRepositorySetupEnhancer';
@@ -19,8 +19,8 @@ export function newEdFiOdsChangeEventEntityRepository(): EdFiOdsChangeEventEntit
   return {
     deleteTrackingTable: [],
     deleteTrackingTrigger: [],
-    enableChangeTracking: [],
     addColumnChangeVersionForTable: [],
+    createTriggerUpdateChangeVersion: [],
   };
 }
 

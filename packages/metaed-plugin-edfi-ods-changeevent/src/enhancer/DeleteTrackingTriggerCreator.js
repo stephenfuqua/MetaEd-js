@@ -21,7 +21,7 @@ export function createDeleteTrackingTriggerFromTable(
 ) {
   const deleteTrackingTrigger: DeleteTrackingTrigger = {
     triggerSchema: mainTable.schema,
-    triggerName: `${mainTable.name}DeletedForTracking`,
+    triggerName: `${mainTable.schema}_${mainTable.name}_TR_DeleteTracking`,
     targetTableSchema: mainTable.schema,
     targetTableName: mainTable.name,
     deleteTrackingTableSchema: 'changes',

@@ -2,8 +2,8 @@
 import type { MetaEdEnvironment, PluginEnvironment, Namespace } from 'metaed-core';
 import type { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 import type { DeleteTrackingTrigger } from '../model/DeleteTrackingTrigger';
-import type { EnableChangeTracking } from '../model/EnableChangeTracking';
 import type { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
+import type { CreateTriggerUpdateChangeVersion } from '../model/CreateTriggerUpdateChangeVersion';
 import type { EdFiOdsChangeEventEntityRepository } from '../model/EdFiOdsChangeEventEntityRepository';
 
 export function pluginEnvironment(metaEd: MetaEdEnvironment): ?PluginEnvironment {
@@ -35,15 +35,18 @@ export function deleteTrackingTriggerEntities(
   return repository == null ? [] : repository.deleteTrackingTrigger;
 }
 
-export function enableChangeTrackingEntities(metaEd: MetaEdEnvironment, namespace: Namespace): Array<EnableChangeTracking> {
-  const repository: ?EdFiOdsChangeEventEntityRepository = edfiOdsChangeEventRepositoryForNamespace(metaEd, namespace);
-  return repository == null ? [] : repository.enableChangeTracking;
-}
-
 export function addColumnChangeVersionForTableEntities(
   metaEd: MetaEdEnvironment,
   namespace: Namespace,
 ): Array<AddColumnChangeVersionForTable> {
   const repository: ?EdFiOdsChangeEventEntityRepository = edfiOdsChangeEventRepositoryForNamespace(metaEd, namespace);
   return repository == null ? [] : repository.addColumnChangeVersionForTable;
+}
+
+export function createTriggerUpdateChangeVersionEntities(
+  metaEd: MetaEdEnvironment,
+  namespace: Namespace,
+): Array<CreateTriggerUpdateChangeVersion> {
+  const repository: ?EdFiOdsChangeEventEntityRepository = edfiOdsChangeEventRepositoryForNamespace(metaEd, namespace);
+  return repository == null ? [] : repository.createTriggerUpdateChangeVersion;
 }

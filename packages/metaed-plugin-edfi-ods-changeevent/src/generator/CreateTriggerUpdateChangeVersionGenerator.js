@@ -2,19 +2,21 @@
 import type { GeneratedOutput, GeneratorResult, MetaEdEnvironment } from 'metaed-core';
 import { changeEventIndicated } from '../enhancer/ChangeEventIndicator';
 import { changeEventPath, template } from './ChangeEventGeneratorBase';
-import { enableChangeTrackingEntities } from '../enhancer/EnhancerHelper';
-import type { EnableChangeTracking } from '../model/EnableChangeTracking';
+import { createTriggerUpdateChangeVersionEntities } from '../enhancer/EnhancerHelper';
+import type { CreateTriggerUpdateChangeVersion } from '../model/CreateTriggerUpdateChangeVersion';
+
+const generatorName: string = 'edfiOdsChangeEvent.CreateTriggerUpdateChangeVersionGenerator';
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
   const results: Array<GeneratedOutput> = [];
 
   if (changeEventIndicated(metaEd)) {
     metaEd.namespace.forEach(namespace => {
-      const tables: Array<EnableChangeTracking> = enableChangeTrackingEntities(metaEd, namespace);
-      if (tables.length > 0) {
-        tables.sort(
+      const triggers: Array<CreateTriggerUpdateChangeVersion> = createTriggerUpdateChangeVersionEntities(metaEd, namespace);
+      if (triggers.length > 0) {
+        triggers.sort(
           // by schema then by table name
-          (a: EnableChangeTracking, b: EnableChangeTracking) => {
+          (a: CreateTriggerUpdateChangeVersion, b: CreateTriggerUpdateChangeVersion) => {
             if (a.schema === b.schema) {
               if (a.tableName < b.tableName) return -1;
               return a.tableName > b.tableName ? 1 : 0;
@@ -23,13 +25,13 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
           },
         );
 
-        const generatedResult: string = template().enableTableChangeTracking({ tables });
+        const generatedResult: string = template().createTriggerUpdateChangeVersion({ triggers });
 
         results.push({
-          name: 'ODS Change Event: EnableTableChangeTracking',
+          name: 'ODS Change Event: CreateTriggerUpdateChangeVersion',
           namespace: namespace.namespaceName,
           folderName: changeEventPath,
-          fileName: '0040-EnableTableChangeTracking.sql',
+          fileName: '0030-CreateTriggerUpdateChangeVersionGenerator.sql',
           resultString: generatedResult,
           resultStream: null,
         });
@@ -38,7 +40,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   }
 
   return {
-    generatorName: 'edfiOdsChangeEvent.EnableTableChangeTrackingGenerator',
+    generatorName,
     generatedOutput: results,
   };
 }
