@@ -228,7 +228,7 @@
         }
       ],
       "isAbstract": false,
-      "description": "The academic rank information of a student in relation to his or her graduating class."
+      "description": "Class Ranking Extension"
     },
     {
       "schema": "exttwo",

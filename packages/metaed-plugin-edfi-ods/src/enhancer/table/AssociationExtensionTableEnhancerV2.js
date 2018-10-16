@@ -28,6 +28,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         name: entity.data.edfiOds.ods_ExtensionName,
         description: entity.documentation,
         parentEntity: entity,
+        hideFromApiMetadata: true,
       });
 
       // don't add table unless the extension table will have columns that are not just the fk to the base table

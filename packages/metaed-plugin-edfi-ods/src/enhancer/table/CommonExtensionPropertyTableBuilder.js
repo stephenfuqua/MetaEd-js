@@ -42,6 +42,7 @@ function buildExtensionTables(
     ),
     description: property.documentation,
     parentEntity: property.parentEntity,
+    hideFromApiMetadata: true,
   });
 
   // don't add table unless the extension table will have columns that are not just the fk to the base table

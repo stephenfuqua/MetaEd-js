@@ -38,6 +38,7 @@ export type Table = {
   parentEntity: TopLevelEntity,
   isEntityMainTable: boolean,
   isAggregateRootTable: boolean,
+  hideFromApiMetadata: boolean,
 };
 
 export function newTable(): Table {
@@ -62,6 +63,7 @@ export function newTable(): Table {
     parentEntity: NoTopLevelEntity,
     isEntityMainTable: false,
     isAggregateRootTable: false,
+    hideFromApiMetadata: false,
   };
 }
 

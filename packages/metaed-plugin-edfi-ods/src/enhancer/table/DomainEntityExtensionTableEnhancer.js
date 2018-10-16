@@ -30,6 +30,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         parentEntity: entity,
         // METAED-764: API requires extension tables to have CreateDate column
         includeCreateDateColumn: true,
+        hideFromApiMetadata: true,
       });
 
       // don't add table unless the extension table will have columns that are not just the fk to the base table

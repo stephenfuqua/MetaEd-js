@@ -34,7 +34,9 @@ function generateAggregate(
   namespace: Namespace,
   { enhanceEntityTable, isAggregateExtension, orderedAndUniqueTablesFor }: EnhanceSingleEntityOptions,
 ): ?Aggregate {
-  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespace);
+  const tables: Array<Table> = orderedAndUniqueTablesFor(entity, namespace).filter(
+    (table: Table) => !table.hideFromApiMetadata,
+  );
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: ((entity.data.edfiOds: any): TopLevelEntityEdfiOds).ods_TableName,
