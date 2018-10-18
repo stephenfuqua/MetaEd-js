@@ -39,6 +39,7 @@ export type Table = {
   isEntityMainTable: boolean,
   isAggregateRootTable: boolean,
   hideFromApiMetadata: boolean,
+  hasDiscriminatorColumn: boolean,
 };
 
 export function newTable(): Table {
@@ -64,6 +65,7 @@ export function newTable(): Table {
     isEntityMainTable: false,
     isAggregateRootTable: false,
     hideFromApiMetadata: false,
+    hasDiscriminatorColumn: false,
   };
 }
 
