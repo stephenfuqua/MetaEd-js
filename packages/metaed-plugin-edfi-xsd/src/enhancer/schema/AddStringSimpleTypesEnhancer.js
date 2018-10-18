@@ -7,6 +7,7 @@ import { NoSimpleType } from '../../model/schema/SimpleType';
 import type { SimpleType } from '../../model/schema/SimpleType';
 import { newStringSimpleType } from '../../model/schema/StringSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
+import { typeGroupSimple } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddStringSimpleTypesEnhancer';
 
@@ -19,7 +20,7 @@ function createSchemaSimpleType(stringType: StringType): SimpleType {
     name: ((stringType.data.edfiXsd: any): ModelBaseEdfiXsd).xsd_MetaEdNameWithExtension(),
     annotation: Object.assign(newAnnotation(), {
       documentation: stringType.documentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:string',
     minLength: stringType.minLength,

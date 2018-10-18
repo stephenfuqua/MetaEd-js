@@ -25,7 +25,7 @@ import {
   createPercentSimpleType,
   createDescriptorReferenceSimpleType,
 } from './BaseSimpleTypeCreator';
-import { baseTypeDescriptorReference } from './AddComplexTypesBaseEnhancer';
+import { baseTypeDescriptorReference, typeGroupBase } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddSchemaContainerEnhancer';
 const targetVersions: SemVer = V3OrGreater;
@@ -62,7 +62,7 @@ function baseSchemaSection() {
     isAbstract: true,
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base type from which all entity elements are extended.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     attributes: [
       Object.assign(newAttribute(), {
@@ -82,7 +82,7 @@ function baseSchemaSection() {
     isAbstract: true,
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base for the Descriptor type.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     items: [
       Object.assign(newElement(), {
@@ -147,7 +147,7 @@ function baseSchemaSection() {
     name: 'ReferenceType',
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base type for association references.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     attributes: [
       Object.assign(newAttribute(), {

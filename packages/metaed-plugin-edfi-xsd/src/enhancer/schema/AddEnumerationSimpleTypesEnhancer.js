@@ -5,6 +5,7 @@ import type { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/Enumer
 import { newEnumerationToken } from '../../model/schema/EnumerationToken';
 import { newEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
+import { typeGroupEnumeration } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddEnumerationSimpleTypesEnhancer';
 
@@ -16,7 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       name: enumerationBaseEdfiXsd.xsd_EnumerationNameWithExtension,
       annotation: Object.assign(newAnnotation(), {
         documentation: enumerationBase.documentation,
-        typeGroup: 'Enumeration',
+        typeGroup: typeGroupEnumeration,
       }),
       baseType: 'xs:token',
       enumerationTokens: enumerationBase.enumerationItems.map(item =>

@@ -22,6 +22,7 @@ import {
   createCurrencySimpleType,
   createPercentSimpleType,
 } from './BaseSimpleTypeCreator';
+import { typeGroupBase } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddSchemaContainerEnhancerV2';
 const targetVersions: SemVer = V2Only;
@@ -55,7 +56,7 @@ function baseSchemaSection() {
     isAbstract: true,
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base type from which all entity elements are extended.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     attributes: [
       Object.assign(newAttribute(), {
@@ -75,7 +76,7 @@ function baseSchemaSection() {
     annotation: Object.assign(newAnnotation(), {
       documentation:
         'Provides references for descriptors during interchange. Use XML IDREF to reference a descriptor record that is included in the interchange. To lookup when already loaded, specify the full URI or the final segment of the URI.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     items: [
       Object.assign(newElement(), {
@@ -104,7 +105,7 @@ function baseSchemaSection() {
     isAbstract: true,
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base for the Descriptor type.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     items: [
       Object.assign(newElement(), {
@@ -169,7 +170,7 @@ function baseSchemaSection() {
     name: 'ReferenceType',
     annotation: Object.assign(newAnnotation(), {
       documentation: 'This is the base type for association references.',
-      typeGroup: 'Base',
+      typeGroup: typeGroupBase,
     }),
     attributes: [
       Object.assign(newAttribute(), {

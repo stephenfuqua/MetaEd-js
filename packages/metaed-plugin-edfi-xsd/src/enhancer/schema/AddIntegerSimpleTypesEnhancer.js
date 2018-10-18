@@ -7,6 +7,7 @@ import { NoSimpleType } from '../../model/schema/SimpleType';
 import type { SimpleType } from '../../model/schema/SimpleType';
 import { newIntegerSimpleType } from '../../model/schema/IntegerSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
+import { typeGroupSimple } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddIntegerSimpleTypesEnhancer';
 
@@ -19,7 +20,7 @@ function createSchemaSimpleType(integerType: IntegerType): SimpleType {
     name: ((integerType.data.edfiXsd: any): ModelBaseEdfiXsd).xsd_MetaEdNameWithExtension(),
     annotation: Object.assign(newAnnotation(), {
       documentation: integerType.documentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: integerType.isShort ? 'xs:short' : 'xs:int',
     minValue: integerType.minValue,

@@ -2,7 +2,7 @@
 import { newStringSimpleType } from '../../model/schema/StringSimpleType';
 import { newDecimalSimpleType } from '../../model/schema/DecimalSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
-import { baseTypeDescriptorReference } from './AddComplexTypesBaseEnhancer';
+import { baseTypeDescriptorReference, typeGroupSimple } from './AddComplexTypesBaseEnhancer';
 
 const codeValueName: string = 'CodeValue';
 const codeValueDocumentation: string = 'A code or abbreviation for an element.';
@@ -12,7 +12,7 @@ export const createCodeValueSimpleType = () =>
     name: codeValueName,
     annotation: Object.assign(newAnnotation(), {
       documentation: codeValueDocumentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:string',
     minLength: '1',
@@ -28,7 +28,7 @@ export const createTimeIntervalSimpleType = () =>
     name: timeIntervalName,
     annotation: Object.assign(newAnnotation(), {
       documentation: timeIntervalDocumentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:duration',
   });
@@ -42,7 +42,7 @@ export const createPercentSimpleType = () =>
     name: percentName,
     annotation: Object.assign(newAnnotation(), {
       documentation: percentDocumentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:decimal',
     minValue: '0',
@@ -60,7 +60,7 @@ export const createCurrencySimpleType = () =>
     name: currencyName,
     annotation: Object.assign(newAnnotation(), {
       documentation: currencyDocumentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:decimal',
   });
@@ -73,7 +73,7 @@ export const createDescriptorReferenceSimpleType = () =>
     name: descriptorReferenceName,
     annotation: Object.assign(newAnnotation(), {
       documentation: descriptorReferenceDocumentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:string',
     minLength: '1',

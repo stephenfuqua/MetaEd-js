@@ -8,18 +8,29 @@ import { newAnnotation } from '../../model/schema/Annotation';
 import { newElement } from '../../model/schema/Element';
 import { createSchemaComplexTypeItems } from './XsdElementFromPropertyCreator';
 
+export const descriptorReferenceTypeSuffix = 'DescriptorReferenceType';
+export const identityTypeSuffix = 'IdentityType';
+export const lookupTypeSuffix = 'LookupType';
+export const referenceTypeSuffix = 'ReferenceType';
+export const mapTypeSuffix = 'MapType';
 export const restrictionSuffix = 'Restriction';
-export const typeGroupDomainEntity = 'Domain Entity';
+
 export const typeGroupAssociation = 'Association';
+export const typeGroupBase = 'Base';
 export const typeGroupCommon = 'Common';
 export const typeGroupDescriptor = 'Descriptor';
-export const typeGroupExtendedReference = 'Extended Reference';
 export const typeGroupDescriptorExtendedReference = 'Extended Descriptor Reference';
+export const typeGroupDomainEntity = 'Domain Entity';
+export const typeGroupEnumeration = 'Enumeration';
+export const typeGroupExtendedReference = 'Extended Reference';
 export const typeGroupIdentity = 'Identity';
-export const baseTypeTopLevelEntity = 'ComplexObjectType';
+export const typeGroupLookup = 'Lookup';
+export const typeGroupSimple = 'Simple';
+
 export const baseTypeDescriptor = 'DescriptorType';
-export const baseTypeReference = 'ReferenceType';
 export const baseTypeDescriptorReference = 'DescriptorReferenceType';
+export const baseTypeReference = 'ReferenceType';
+export const baseTypeTopLevelEntity = 'ComplexObjectType';
 
 function parentPropertyNotInExtensionOverridePropertyList(
   parentProperty: EntityProperty,
@@ -105,7 +116,7 @@ export function createIdentityType(topLevelEntity: TopLevelEntity): ComplexType 
       documentation,
       typeGroup: typeGroupIdentity,
     }),
-    name: `${topLevelEntity.data.edfiXsd.xsd_MetaEdNameWithExtension()}IdentityType`,
+    name: `${topLevelEntity.data.edfiXsd.xsd_MetaEdNameWithExtension()}${identityTypeSuffix}`,
   });
 
   identityType.items.push(...createSchemaComplexTypeItems(topLevelEntity.data.edfiXsd.xsd_IdentityProperties, ''));
@@ -121,7 +132,7 @@ export function createReferenceType(topLevelEntity: TopLevelEntity): ComplexType
       typeGroup: typeGroupExtendedReference,
     }),
     baseType: baseTypeReference,
-    name: `${topLevelEntity.data.edfiXsd.xsd_MetaEdNameWithExtension()}ReferenceType`,
+    name: `${topLevelEntity.data.edfiXsd.xsd_MetaEdNameWithExtension()}${referenceTypeSuffix}`,
   });
 
   if (topLevelEntity.data.edfiXsd.xsd_IdentityType !== '') {

@@ -7,6 +7,7 @@ import { NoSimpleType } from '../../model/schema/SimpleType';
 import type { SimpleType } from '../../model/schema/SimpleType';
 import { newDecimalSimpleType } from '../../model/schema/DecimalSimpleType';
 import { newAnnotation } from '../../model/schema/Annotation';
+import { typeGroupSimple } from './AddComplexTypesBaseEnhancer';
 
 const enhancerName: string = 'AddDecimalSimpleTypesEnhancer';
 
@@ -25,7 +26,7 @@ function createSchemaSimpleType(decimalType: DecimalType): SimpleType {
     name: ((decimalType.data.edfiXsd: any): ModelBaseEdfiXsd).xsd_MetaEdNameWithExtension(),
     annotation: Object.assign(newAnnotation(), {
       documentation: decimalType.documentation,
-      typeGroup: 'Simple',
+      typeGroup: typeGroupSimple,
     }),
     baseType: 'xs:decimal',
     minValue: decimalType.minValue,
