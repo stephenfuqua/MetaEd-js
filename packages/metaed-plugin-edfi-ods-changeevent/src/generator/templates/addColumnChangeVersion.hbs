@@ -1,6 +1,6 @@
 {{#tables}}
 ALTER TABLE [{{{schema}}}].[{{{tableName}}}] ADD [ChangeVersion] [BIGINT] CONSTRAINT InitializeToZero DEFAULT 0 NOT NULL;
 ALTER TABLE [{{{schema}}}].[{{{tableName}}}] DROP CONSTRAINT InitializeToZero;
-ALTER TABLE [{{{schema}}}].[{{{tableName}}}] ADD CONSTRAINT [{{{schema}}}_{{{tableName}}}_DF_ChangeVersion] DEFAULT (NEXT VALUE FOR dbo.ChangeVersionSequence) FOR [ChangeVersion];
+ALTER TABLE [{{{schema}}}].[{{{tableName}}}] ADD CONSTRAINT [{{{schema}}}_{{{tableName}}}_DF_ChangeVersion] DEFAULT (NEXT VALUE FOR [changes].[ChangeVersionSequence]) FOR [ChangeVersion];
 
 {{/tables}}

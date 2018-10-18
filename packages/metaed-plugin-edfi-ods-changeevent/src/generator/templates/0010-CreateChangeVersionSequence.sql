@@ -1,1 +1,1 @@
-CREATE SEQUENCE [dbo].[ChangeVersionSequence] START WITH 0
+CREATE SEQUENCE [changes].[ChangeVersionSequence] START WITH 0
