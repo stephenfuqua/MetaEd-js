@@ -20,8 +20,9 @@ import { enhance as associationSubclassTableEnhancer } from './table/Association
 import { enhance as associationTableEnhancer } from './table/AssociationTableEnhancer';
 import { enhance as baseDescriptorTableCreatingEnhancer } from './table/BaseDescriptorTableCreatingEnhancer';
 import { enhance as descriptorTableEnhancer } from './table/DescriptorTableEnhancer';
-import { enhance as DomainEntityExtensionTableEnhancerV2 } from './table/DomainEntityExtensionTableEnhancerV2';
-import { enhance as DomainEntityExtensionTableEnhancer } from './table/DomainEntityExtensionTableEnhancer';
+import { enhance as discriminatorColumnFlaggingEnhancer } from './table/DiscriminatorColumnFlaggingEnhancer';
+import { enhance as domainEntityExtensionTableEnhancerV2 } from './table/DomainEntityExtensionTableEnhancerV2';
+import { enhance as domainEntityExtensionTableEnhancer } from './table/DomainEntityExtensionTableEnhancer';
 import { enhance as domainEntitySubclassTableEnhancer } from './table/DomainEntitySubclassTableEnhancer';
 import { enhance as domainEntityTableEnhancer } from './table/DomainEntityTableEnhancer';
 import { enhance as enumerationTableEnhancer } from './table/EnumerationTableEnhancer';
@@ -97,8 +98,8 @@ export function enhancerList(): Array<Enhancer> {
     associationSubclassTableEnhancer,
     associationTableEnhancer,
     descriptorTableEnhancer,
-    DomainEntityExtensionTableEnhancerV2,
-    DomainEntityExtensionTableEnhancer,
+    domainEntityExtensionTableEnhancerV2,
+    domainEntityExtensionTableEnhancer,
     domainEntitySubclassTableEnhancer,
     domainEntityTableEnhancer,
     enumerationTableEnhancer,
@@ -138,6 +139,7 @@ export function enhancerList(): Array<Enhancer> {
     primaryKeyOrderDiminisher,
     templateSpecificTablePropertyEnhancerV2,
     templateSpecificTablePropertyEnhancer,
+    discriminatorColumnFlaggingEnhancer,
 
     namespace,
     addSchemaContainerEnhancer,
