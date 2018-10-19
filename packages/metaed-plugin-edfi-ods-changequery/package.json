@@ -1,0 +1,38 @@
+{
+  "name": "metaed-plugin-edfi-ods-changequery",
+  "main": "dist/index.js",
+  "version": "1.3.1-dev.6",
+  "description": "Ed-Fi Alliance ODS/API Change Event plugin for MetaEd",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "metaed-plugin": {
+    "pluginType": "artifact-specific",
+    "shortName": "edfiOdsChangeQuery",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "1.x",
+    "technologyVersion": ">=3.0.0",
+    "dependencies": [
+      "metaed-plugin-edfi-unified",
+      "metaed-plugin-edfi-ods"
+    ]
+  },
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "metaed-core": "1.3.1-dev.6",
+    "metaed-plugin-edfi-ods": "1.3.1-dev.6",
+    "metaed-plugin-edfi-unified": "1.3.1-dev.6",
+    "ramda": "^0.25.0",
+    "winston": "3.0.0"
+  },
+  "devDependencies": {
+    "final-fs": "^1.6.1"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build:clean": "rimraf dist",
+    "build:flow": "flow-copy-source -v src dist",
+    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files"
+  }
+}

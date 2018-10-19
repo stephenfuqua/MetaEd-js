@@ -183,7 +183,7 @@
     "metaed-plugin-edfi-handbook": "1.3.1-dev.6",
     "metaed-plugin-edfi-interchange-brief": "1.3.1-dev.6",
     "metaed-plugin-edfi-ods": "1.3.1-dev.6",
-    "metaed-plugin-edfi-ods-changeevent": "1.3.1-dev.6",
+    "metaed-plugin-edfi-ods-changequery": "1.3.1-dev.6",
     "metaed-plugin-edfi-odsapi": "1.3.1-dev.6",
     "metaed-plugin-edfi-sql-dictionary": "1.3.1-dev.6",
     "metaed-plugin-edfi-udm": "1.3.1-dev.6",

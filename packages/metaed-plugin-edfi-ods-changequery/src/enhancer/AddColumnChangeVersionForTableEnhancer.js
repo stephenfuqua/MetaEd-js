@@ -1,0 +1,30 @@
+// @flow
+
+import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import type { Table } from 'metaed-plugin-edfi-ods';
+import { tableEntities } from 'metaed-plugin-edfi-ods';
+import { addColumnChangeVersionForTableEntities } from './EnhancerHelper';
+import { changeQueryIndicated } from './ChangeQueryIndicator';
+import type { AddColumnChangeVersionForTable } from '../model/AddColumnChangeVersionForTable';
+
+const enhancerName: string = 'AddColumnChangeVersionForTableEnhancer';
+
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  if (changeQueryIndicated(metaEd)) {
+    metaEd.namespace.forEach((namespace: Namespace) => {
+      tableEntities(metaEd, namespace).forEach((table: Table) => {
+        if (table.isAggregateRootTable) {
+          const addColumnChangeVersionForTable: AddColumnChangeVersionForTable = {
+            schema: table.schema,
+            tableName: table.name,
+          };
+          addColumnChangeVersionForTableEntities(metaEd, namespace).push(addColumnChangeVersionForTable);
+        }
+      });
+    });
+  }
+  return {
+    enhancerName,
+    success: true,
+  };
+}
