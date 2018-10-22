@@ -5,7 +5,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.sample_InstitutionControlDescriptor_TrackedDelete(InstitutionControlDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.sample_InstitutionControlDescriptor_TrackedDelete(InstitutionControlDescriptorId, Id, ChangeVersion)
     SELECT  d.InstitutionControlDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InstitutionControlDescriptorId = b.DescriptorId
@@ -24,7 +24,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.sample_InstitutionLevelDescriptor_TrackedDelete(InstitutionLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.sample_InstitutionLevelDescriptor_TrackedDelete(InstitutionLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.InstitutionLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InstitutionLevelDescriptorId = b.DescriptorId
@@ -43,7 +43,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.sample_PostSecondaryOrganization_TrackedDelete(NameOfInstitution, Id, SystemChangeVersion)
+    INSERT INTO changes.sample_PostSecondaryOrganization_TrackedDelete(NameOfInstitution, Id, ChangeVersion)
     SELECT  NameOfInstitution, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.sample_PostSecondaryOrganization_TrackedDelete d2 WHERE d2.NameOfInstitution = d.NameOfInstitution)
@@ -61,7 +61,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete(SpecialEducationGraduationStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete(SpecialEducationGraduationStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.SpecialEducationGraduationStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SpecialEducationGraduationStatusDescriptorId = b.DescriptorId
@@ -80,7 +80,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.sample_SubmissionCertificationDescriptor_TrackedDelete(SubmissionCertificationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.sample_SubmissionCertificationDescriptor_TrackedDelete(SubmissionCertificationDescriptorId, Id, ChangeVersion)
     SELECT  d.SubmissionCertificationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SubmissionCertificationDescriptorId = b.DescriptorId

@@ -88,7 +88,7 @@ describe('when enhancing core domainEntity targeting 2.5 ODS/API', () => {
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
     expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('SystemChangeVersion');
+    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
     expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe(pkColumnName);
@@ -191,7 +191,7 @@ describe('when enhancing core domainEntity targeting 3.1 ODS/API', () => {
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
     expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('SystemChangeVersion');
+    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
     expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe(pkColumnName);
@@ -252,7 +252,7 @@ describe('when enhancing extension domainEntity targeting 3.1 ODS/API', () => {
     expect(deleteTrackingTables[0].columns).toHaveLength(3);
     expect(deleteTrackingTables[0].columns[0].name).toBe(pkColumnName);
     expect(deleteTrackingTables[0].columns[1].name).toBe('Id');
-    expect(deleteTrackingTables[0].columns[2].name).toBe('SystemChangeVersion');
+    expect(deleteTrackingTables[0].columns[2].name).toBe('ChangeVersion');
     expect(deleteTrackingTables[0].primaryKeyName).toBe(`PK_${namespaceName}_${tableName}_TrackedDelete`);
     expect(deleteTrackingTables[0].primaryKeyColumns).toHaveLength(1);
     expect(deleteTrackingTables[0].primaryKeyColumns[0].name).toBe(pkColumnName);

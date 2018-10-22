@@ -26,7 +26,7 @@ export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, na
 
   deleteTrackingTable.columns.push({
     ...newColumn(),
-    name: 'SystemChangeVersion',
+    name: 'ChangeVersion',
     dataType: 'bigint',
     isNullable: false,
   });

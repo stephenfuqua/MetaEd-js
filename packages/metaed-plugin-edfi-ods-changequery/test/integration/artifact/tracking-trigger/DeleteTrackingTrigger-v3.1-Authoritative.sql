@@ -5,7 +5,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AbsenceEventCategoryDescriptor_TrackedDelete(AbsenceEventCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AbsenceEventCategoryDescriptor_TrackedDelete(AbsenceEventCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AbsenceEventCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AbsenceEventCategoryDescriptorId = b.DescriptorId
@@ -24,7 +24,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AcademicHonorCategoryDescriptor_TrackedDelete(AcademicHonorCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AcademicHonorCategoryDescriptor_TrackedDelete(AcademicHonorCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AcademicHonorCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AcademicHonorCategoryDescriptorId = b.DescriptorId
@@ -43,7 +43,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AcademicSubjectDescriptor_TrackedDelete(AcademicSubjectDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AcademicSubjectDescriptor_TrackedDelete(AcademicSubjectDescriptorId, Id, ChangeVersion)
     SELECT  d.AcademicSubjectDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AcademicSubjectDescriptorId = b.DescriptorId
@@ -62,7 +62,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AcademicWeek_TrackedDelete(SchoolId, WeekIdentifier, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AcademicWeek_TrackedDelete(SchoolId, WeekIdentifier, Id, ChangeVersion)
     SELECT  SchoolId, WeekIdentifier, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_AcademicWeek_TrackedDelete d2 WHERE d2.SchoolId = d.SchoolId AND d2.WeekIdentifier = d.WeekIdentifier)
@@ -80,7 +80,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AccommodationDescriptor_TrackedDelete(AccommodationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AccommodationDescriptor_TrackedDelete(AccommodationDescriptorId, Id, ChangeVersion)
     SELECT  d.AccommodationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AccommodationDescriptorId = b.DescriptorId
@@ -99,7 +99,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AccountClassificationDescriptor_TrackedDelete(AccountClassificationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AccountClassificationDescriptor_TrackedDelete(AccountClassificationDescriptorId, Id, ChangeVersion)
     SELECT  d.AccountClassificationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AccountClassificationDescriptorId = b.DescriptorId
@@ -118,7 +118,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AccountCode_TrackedDelete(AccountClassificationDescriptorId, AccountCodeNumber, EducationOrganizationId, FiscalYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AccountCode_TrackedDelete(AccountClassificationDescriptorId, AccountCodeNumber, EducationOrganizationId, FiscalYear, Id, ChangeVersion)
     SELECT  AccountClassificationDescriptorId, AccountCodeNumber, EducationOrganizationId, FiscalYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_AccountCode_TrackedDelete d2 WHERE d2.AccountClassificationDescriptorId = d.AccountClassificationDescriptorId AND d2.AccountCodeNumber = d.AccountCodeNumber AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear)
@@ -136,7 +136,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Account_TrackedDelete(AccountIdentifier, EducationOrganizationId, FiscalYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Account_TrackedDelete(AccountIdentifier, EducationOrganizationId, FiscalYear, Id, ChangeVersion)
     SELECT  AccountIdentifier, EducationOrganizationId, FiscalYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Account_TrackedDelete d2 WHERE d2.AccountIdentifier = d.AccountIdentifier AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear)
@@ -154,7 +154,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AccountabilityRating_TrackedDelete(EducationOrganizationId, RatingTitle, SchoolYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AccountabilityRating_TrackedDelete(EducationOrganizationId, RatingTitle, SchoolYear, Id, ChangeVersion)
     SELECT  EducationOrganizationId, RatingTitle, SchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_AccountabilityRating_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.RatingTitle = d.RatingTitle AND d2.SchoolYear = d.SchoolYear)
@@ -172,7 +172,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AchievementCategoryDescriptor_TrackedDelete(AchievementCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AchievementCategoryDescriptor_TrackedDelete(AchievementCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AchievementCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AchievementCategoryDescriptorId = b.DescriptorId
@@ -191,7 +191,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Actual_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Actual_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, ChangeVersion)
     SELECT  AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Actual_TrackedDelete d2 WHERE d2.AccountIdentifier = d.AccountIdentifier AND d2.AsOfDate = d.AsOfDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear)
@@ -209,7 +209,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AdditionalCreditTypeDescriptor_TrackedDelete(AdditionalCreditTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AdditionalCreditTypeDescriptor_TrackedDelete(AdditionalCreditTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.AdditionalCreditTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AdditionalCreditTypeDescriptorId = b.DescriptorId
@@ -228,7 +228,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AddressTypeDescriptor_TrackedDelete(AddressTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AddressTypeDescriptor_TrackedDelete(AddressTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.AddressTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AddressTypeDescriptorId = b.DescriptorId
@@ -247,7 +247,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AdministrationEnvironmentDescriptor_TrackedDelete(AdministrationEnvironmentDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AdministrationEnvironmentDescriptor_TrackedDelete(AdministrationEnvironmentDescriptorId, Id, ChangeVersion)
     SELECT  d.AdministrationEnvironmentDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AdministrationEnvironmentDescriptorId = b.DescriptorId
@@ -266,7 +266,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AdministrativeFundingControlDescriptor_TrackedDelete(AdministrativeFundingControlDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AdministrativeFundingControlDescriptor_TrackedDelete(AdministrativeFundingControlDescriptorId, Id, ChangeVersion)
     SELECT  d.AdministrativeFundingControlDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AdministrativeFundingControlDescriptorId = b.DescriptorId
@@ -285,7 +285,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentCategoryDescriptor_TrackedDelete(AssessmentCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentCategoryDescriptor_TrackedDelete(AssessmentCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentCategoryDescriptorId = b.DescriptorId
@@ -304,7 +304,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Assessment_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Assessment_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Assessment_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.AssessedGradeLevelDescriptorId = d.AssessedGradeLevelDescriptorId AND d2.AssessmentTitle = d.AssessmentTitle AND d2.AssessmentVersion = d.AssessmentVersion)
@@ -322,7 +322,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentIdentificationSystemDescriptor_TrackedDelete(AssessmentIdentificationSystemDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentIdentificationSystemDescriptor_TrackedDelete(AssessmentIdentificationSystemDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentIdentificationSystemDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentIdentificationSystemDescriptorId = b.DescriptorId
@@ -341,7 +341,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentItemCategoryDescriptor_TrackedDelete(AssessmentItemCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentItemCategoryDescriptor_TrackedDelete(AssessmentItemCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentItemCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentItemCategoryDescriptorId = b.DescriptorId
@@ -360,7 +360,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentItem_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentItem_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_AssessmentItem_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.AssessedGradeLevelDescriptorId = d.AssessedGradeLevelDescriptorId AND d2.AssessmentTitle = d.AssessmentTitle AND d2.AssessmentVersion = d.AssessmentVersion AND d2.IdentificationCode = d.IdentificationCode)
@@ -378,7 +378,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentItemResultDescriptor_TrackedDelete(AssessmentItemResultDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentItemResultDescriptor_TrackedDelete(AssessmentItemResultDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentItemResultDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentItemResultDescriptorId = b.DescriptorId
@@ -397,7 +397,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentPeriodDescriptor_TrackedDelete(AssessmentPeriodDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentPeriodDescriptor_TrackedDelete(AssessmentPeriodDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentPeriodDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentPeriodDescriptorId = b.DescriptorId
@@ -416,7 +416,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AssessmentReportingMethodDescriptor_TrackedDelete(AssessmentReportingMethodDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AssessmentReportingMethodDescriptor_TrackedDelete(AssessmentReportingMethodDescriptorId, Id, ChangeVersion)
     SELECT  d.AssessmentReportingMethodDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AssessmentReportingMethodDescriptorId = b.DescriptorId
@@ -435,7 +435,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AttemptStatusDescriptor_TrackedDelete(AttemptStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AttemptStatusDescriptor_TrackedDelete(AttemptStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.AttemptStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AttemptStatusDescriptorId = b.DescriptorId
@@ -454,7 +454,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_AttendanceEventCategoryDescriptor_TrackedDelete(AttendanceEventCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_AttendanceEventCategoryDescriptor_TrackedDelete(AttendanceEventCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.AttendanceEventCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.AttendanceEventCategoryDescriptorId = b.DescriptorId
@@ -473,7 +473,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_BehaviorDescriptor_TrackedDelete(BehaviorDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_BehaviorDescriptor_TrackedDelete(BehaviorDescriptorId, Id, ChangeVersion)
     SELECT  d.BehaviorDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.BehaviorDescriptorId = b.DescriptorId
@@ -492,7 +492,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_BellSchedule_TrackedDelete(BellScheduleName, SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_BellSchedule_TrackedDelete(BellScheduleName, SchoolId, Id, ChangeVersion)
     SELECT  BellScheduleName, SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_BellSchedule_TrackedDelete d2 WHERE d2.BellScheduleName = d.BellScheduleName AND d2.SchoolId = d.SchoolId)
@@ -510,7 +510,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Budget_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Budget_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, ChangeVersion)
     SELECT  AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Budget_TrackedDelete d2 WHERE d2.AccountIdentifier = d.AccountIdentifier AND d2.AsOfDate = d.AsOfDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear)
@@ -528,7 +528,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CalendarDate_TrackedDelete(CalendarCode, Date, SchoolId, SchoolYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CalendarDate_TrackedDelete(CalendarCode, Date, SchoolId, SchoolYear, Id, ChangeVersion)
     SELECT  CalendarCode, Date, SchoolId, SchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_CalendarDate_TrackedDelete d2 WHERE d2.CalendarCode = d.CalendarCode AND d2.Date = d.Date AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear)
@@ -546,7 +546,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Calendar_TrackedDelete(CalendarCode, SchoolId, SchoolYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Calendar_TrackedDelete(CalendarCode, SchoolId, SchoolYear, Id, ChangeVersion)
     SELECT  CalendarCode, SchoolId, SchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Calendar_TrackedDelete d2 WHERE d2.CalendarCode = d.CalendarCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear)
@@ -564,7 +564,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CalendarEventDescriptor_TrackedDelete(CalendarEventDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CalendarEventDescriptor_TrackedDelete(CalendarEventDescriptorId, Id, ChangeVersion)
     SELECT  d.CalendarEventDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CalendarEventDescriptorId = b.DescriptorId
@@ -583,7 +583,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CalendarTypeDescriptor_TrackedDelete(CalendarTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CalendarTypeDescriptor_TrackedDelete(CalendarTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CalendarTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CalendarTypeDescriptorId = b.DescriptorId
@@ -602,7 +602,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CareerPathwayDescriptor_TrackedDelete(CareerPathwayDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CareerPathwayDescriptor_TrackedDelete(CareerPathwayDescriptorId, Id, ChangeVersion)
     SELECT  d.CareerPathwayDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CareerPathwayDescriptorId = b.DescriptorId
@@ -621,7 +621,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CharterApprovalAgencyTypeDescriptor_TrackedDelete(CharterApprovalAgencyTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CharterApprovalAgencyTypeDescriptor_TrackedDelete(CharterApprovalAgencyTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CharterApprovalAgencyTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CharterApprovalAgencyTypeDescriptorId = b.DescriptorId
@@ -640,7 +640,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CharterStatusDescriptor_TrackedDelete(CharterStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CharterStatusDescriptor_TrackedDelete(CharterStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.CharterStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CharterStatusDescriptorId = b.DescriptorId
@@ -659,7 +659,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CitizenshipStatusDescriptor_TrackedDelete(CitizenshipStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CitizenshipStatusDescriptor_TrackedDelete(CitizenshipStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.CitizenshipStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CitizenshipStatusDescriptorId = b.DescriptorId
@@ -678,7 +678,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ClassPeriod_TrackedDelete(ClassPeriodName, SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ClassPeriod_TrackedDelete(ClassPeriodName, SchoolId, Id, ChangeVersion)
     SELECT  ClassPeriodName, SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_ClassPeriod_TrackedDelete d2 WHERE d2.ClassPeriodName = d.ClassPeriodName AND d2.SchoolId = d.SchoolId)
@@ -696,7 +696,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ClassroomPositionDescriptor_TrackedDelete(ClassroomPositionDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ClassroomPositionDescriptor_TrackedDelete(ClassroomPositionDescriptorId, Id, ChangeVersion)
     SELECT  d.ClassroomPositionDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ClassroomPositionDescriptorId = b.DescriptorId
@@ -715,7 +715,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Cohort_TrackedDelete(CohortIdentifier, EducationOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Cohort_TrackedDelete(CohortIdentifier, EducationOrganizationId, Id, ChangeVersion)
     SELECT  CohortIdentifier, EducationOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Cohort_TrackedDelete d2 WHERE d2.CohortIdentifier = d.CohortIdentifier AND d2.EducationOrganizationId = d.EducationOrganizationId)
@@ -733,7 +733,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CohortScopeDescriptor_TrackedDelete(CohortScopeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CohortScopeDescriptor_TrackedDelete(CohortScopeDescriptorId, Id, ChangeVersion)
     SELECT  d.CohortScopeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CohortScopeDescriptorId = b.DescriptorId
@@ -752,7 +752,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CohortTypeDescriptor_TrackedDelete(CohortTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CohortTypeDescriptor_TrackedDelete(CohortTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CohortTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CohortTypeDescriptorId = b.DescriptorId
@@ -771,7 +771,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CohortYearTypeDescriptor_TrackedDelete(CohortYearTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CohortYearTypeDescriptor_TrackedDelete(CohortYearTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CohortYearTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CohortYearTypeDescriptorId = b.DescriptorId
@@ -790,7 +790,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CommunityOrganization_TrackedDelete(CommunityOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CommunityOrganization_TrackedDelete(CommunityOrganizationId, Id, ChangeVersion)
     SELECT  d.CommunityOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.CommunityOrganizationId = b.EducationOrganizationId
@@ -809,7 +809,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CommunityProvider_TrackedDelete(CommunityProviderId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CommunityProvider_TrackedDelete(CommunityProviderId, Id, ChangeVersion)
     SELECT  d.CommunityProviderId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.CommunityProviderId = b.EducationOrganizationId
@@ -828,7 +828,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CommunityProviderLicense_TrackedDelete(CommunityProviderId, LicenseIdentifier, LicensingOrganization, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CommunityProviderLicense_TrackedDelete(CommunityProviderId, LicenseIdentifier, LicensingOrganization, Id, ChangeVersion)
     SELECT  CommunityProviderId, LicenseIdentifier, LicensingOrganization, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_CommunityProviderLicense_TrackedDelete d2 WHERE d2.CommunityProviderId = d.CommunityProviderId AND d2.LicenseIdentifier = d.LicenseIdentifier AND d2.LicensingOrganization = d.LicensingOrganization)
@@ -846,7 +846,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CompetencyLevelDescriptor_TrackedDelete(CompetencyLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CompetencyLevelDescriptor_TrackedDelete(CompetencyLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.CompetencyLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CompetencyLevelDescriptorId = b.DescriptorId
@@ -865,7 +865,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CompetencyObjective_TrackedDelete(EducationOrganizationId, Objective, ObjectiveGradeLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CompetencyObjective_TrackedDelete(EducationOrganizationId, Objective, ObjectiveGradeLevelDescriptorId, Id, ChangeVersion)
     SELECT  EducationOrganizationId, Objective, ObjectiveGradeLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_CompetencyObjective_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.Objective = d.Objective AND d2.ObjectiveGradeLevelDescriptorId = d.ObjectiveGradeLevelDescriptorId)
@@ -883,7 +883,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ContactTypeDescriptor_TrackedDelete(ContactTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ContactTypeDescriptor_TrackedDelete(ContactTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.ContactTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ContactTypeDescriptorId = b.DescriptorId
@@ -902,7 +902,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ContentClassDescriptor_TrackedDelete(ContentClassDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ContentClassDescriptor_TrackedDelete(ContentClassDescriptorId, Id, ChangeVersion)
     SELECT  d.ContentClassDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ContentClassDescriptorId = b.DescriptorId
@@ -921,7 +921,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ContinuationOfServicesReasonDescriptor_TrackedDelete(ContinuationOfServicesReasonDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ContinuationOfServicesReasonDescriptor_TrackedDelete(ContinuationOfServicesReasonDescriptorId, Id, ChangeVersion)
     SELECT  d.ContinuationOfServicesReasonDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ContinuationOfServicesReasonDescriptorId = b.DescriptorId
@@ -940,7 +940,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ContractedStaff_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ContractedStaff_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, ChangeVersion)
     SELECT  AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_ContractedStaff_TrackedDelete d2 WHERE d2.AccountIdentifier = d.AccountIdentifier AND d2.AsOfDate = d.AsOfDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear AND d2.StaffUSI = d.StaffUSI)
@@ -958,7 +958,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CostRateDescriptor_TrackedDelete(CostRateDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CostRateDescriptor_TrackedDelete(CostRateDescriptorId, Id, ChangeVersion)
     SELECT  d.CostRateDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CostRateDescriptorId = b.DescriptorId
@@ -977,7 +977,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CountryDescriptor_TrackedDelete(CountryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CountryDescriptor_TrackedDelete(CountryDescriptorId, Id, ChangeVersion)
     SELECT  d.CountryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CountryDescriptorId = b.DescriptorId
@@ -996,7 +996,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseAttemptResultDescriptor_TrackedDelete(CourseAttemptResultDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseAttemptResultDescriptor_TrackedDelete(CourseAttemptResultDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseAttemptResultDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseAttemptResultDescriptorId = b.DescriptorId
@@ -1015,7 +1015,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseDefinedByDescriptor_TrackedDelete(CourseDefinedByDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseDefinedByDescriptor_TrackedDelete(CourseDefinedByDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseDefinedByDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseDefinedByDescriptorId = b.DescriptorId
@@ -1034,7 +1034,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Course_TrackedDelete(CourseCode, EducationOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Course_TrackedDelete(CourseCode, EducationOrganizationId, Id, ChangeVersion)
     SELECT  CourseCode, EducationOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Course_TrackedDelete d2 WHERE d2.CourseCode = d.CourseCode AND d2.EducationOrganizationId = d.EducationOrganizationId)
@@ -1052,7 +1052,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseGPAApplicabilityDescriptor_TrackedDelete(CourseGPAApplicabilityDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseGPAApplicabilityDescriptor_TrackedDelete(CourseGPAApplicabilityDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseGPAApplicabilityDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseGPAApplicabilityDescriptorId = b.DescriptorId
@@ -1071,7 +1071,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseIdentificationSystemDescriptor_TrackedDelete(CourseIdentificationSystemDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseIdentificationSystemDescriptor_TrackedDelete(CourseIdentificationSystemDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseIdentificationSystemDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseIdentificationSystemDescriptorId = b.DescriptorId
@@ -1090,7 +1090,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseLevelCharacteristicDescriptor_TrackedDelete(CourseLevelCharacteristicDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseLevelCharacteristicDescriptor_TrackedDelete(CourseLevelCharacteristicDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseLevelCharacteristicDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseLevelCharacteristicDescriptorId = b.DescriptorId
@@ -1109,7 +1109,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseOffering_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SessionName, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseOffering_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SessionName, Id, ChangeVersion)
     SELECT  LocalCourseCode, SchoolId, SchoolYear, SessionName, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_CourseOffering_TrackedDelete d2 WHERE d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SessionName = d.SessionName)
@@ -1127,7 +1127,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseRepeatCodeDescriptor_TrackedDelete(CourseRepeatCodeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseRepeatCodeDescriptor_TrackedDelete(CourseRepeatCodeDescriptorId, Id, ChangeVersion)
     SELECT  d.CourseRepeatCodeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CourseRepeatCodeDescriptorId = b.DescriptorId
@@ -1146,7 +1146,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CourseTranscript_TrackedDelete(CourseAttemptResultDescriptorId, CourseCode, CourseEducationOrganizationId, EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CourseTranscript_TrackedDelete(CourseAttemptResultDescriptorId, CourseCode, CourseEducationOrganizationId, EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, ChangeVersion)
     SELECT  CourseAttemptResultDescriptorId, CourseCode, CourseEducationOrganizationId, EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_CourseTranscript_TrackedDelete d2 WHERE d2.CourseAttemptResultDescriptorId = d.CourseAttemptResultDescriptorId AND d2.CourseCode = d.CourseCode AND d2.CourseEducationOrganizationId = d.CourseEducationOrganizationId AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.SchoolYear = d.SchoolYear AND d2.StudentUSI = d.StudentUSI AND d2.TermDescriptorId = d.TermDescriptorId)
@@ -1164,7 +1164,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Credential_TrackedDelete(CredentialIdentifier, StateOfIssueStateAbbreviationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Credential_TrackedDelete(CredentialIdentifier, StateOfIssueStateAbbreviationDescriptorId, Id, ChangeVersion)
     SELECT  CredentialIdentifier, StateOfIssueStateAbbreviationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Credential_TrackedDelete d2 WHERE d2.CredentialIdentifier = d.CredentialIdentifier AND d2.StateOfIssueStateAbbreviationDescriptorId = d.StateOfIssueStateAbbreviationDescriptorId)
@@ -1182,7 +1182,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CredentialFieldDescriptor_TrackedDelete(CredentialFieldDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CredentialFieldDescriptor_TrackedDelete(CredentialFieldDescriptorId, Id, ChangeVersion)
     SELECT  d.CredentialFieldDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CredentialFieldDescriptorId = b.DescriptorId
@@ -1201,7 +1201,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CredentialTypeDescriptor_TrackedDelete(CredentialTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CredentialTypeDescriptor_TrackedDelete(CredentialTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CredentialTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CredentialTypeDescriptorId = b.DescriptorId
@@ -1220,7 +1220,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CreditTypeDescriptor_TrackedDelete(CreditTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CreditTypeDescriptor_TrackedDelete(CreditTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.CreditTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CreditTypeDescriptorId = b.DescriptorId
@@ -1239,7 +1239,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_CurriculumUsedDescriptor_TrackedDelete(CurriculumUsedDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_CurriculumUsedDescriptor_TrackedDelete(CurriculumUsedDescriptorId, Id, ChangeVersion)
     SELECT  d.CurriculumUsedDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.CurriculumUsedDescriptorId = b.DescriptorId
@@ -1258,7 +1258,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DeliveryMethodDescriptor_TrackedDelete(DeliveryMethodDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DeliveryMethodDescriptor_TrackedDelete(DeliveryMethodDescriptorId, Id, ChangeVersion)
     SELECT  d.DeliveryMethodDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DeliveryMethodDescriptorId = b.DescriptorId
@@ -1277,7 +1277,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Descriptor_TrackedDelete(DescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Descriptor_TrackedDelete(DescriptorId, Id, ChangeVersion)
     SELECT  DescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Descriptor_TrackedDelete d2 WHERE d2.DescriptorId = d.DescriptorId)
@@ -1295,7 +1295,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DiagnosisDescriptor_TrackedDelete(DiagnosisDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DiagnosisDescriptor_TrackedDelete(DiagnosisDescriptorId, Id, ChangeVersion)
     SELECT  d.DiagnosisDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DiagnosisDescriptorId = b.DescriptorId
@@ -1314,7 +1314,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DiplomaLevelDescriptor_TrackedDelete(DiplomaLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DiplomaLevelDescriptor_TrackedDelete(DiplomaLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.DiplomaLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DiplomaLevelDescriptorId = b.DescriptorId
@@ -1333,7 +1333,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DiplomaTypeDescriptor_TrackedDelete(DiplomaTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DiplomaTypeDescriptor_TrackedDelete(DiplomaTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.DiplomaTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DiplomaTypeDescriptorId = b.DescriptorId
@@ -1352,7 +1352,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisabilityDescriptor_TrackedDelete(DisabilityDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisabilityDescriptor_TrackedDelete(DisabilityDescriptorId, Id, ChangeVersion)
     SELECT  d.DisabilityDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DisabilityDescriptorId = b.DescriptorId
@@ -1371,7 +1371,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisabilityDesignationDescriptor_TrackedDelete(DisabilityDesignationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisabilityDesignationDescriptor_TrackedDelete(DisabilityDesignationDescriptorId, Id, ChangeVersion)
     SELECT  d.DisabilityDesignationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DisabilityDesignationDescriptorId = b.DescriptorId
@@ -1390,7 +1390,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisabilityDeterminationSourceTypeDescriptor_TrackedDelete(DisabilityDeterminationSourceTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisabilityDeterminationSourceTypeDescriptor_TrackedDelete(DisabilityDeterminationSourceTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.DisabilityDeterminationSourceTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DisabilityDeterminationSourceTypeDescriptorId = b.DescriptorId
@@ -1409,7 +1409,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisciplineAction_TrackedDelete(DisciplineActionIdentifier, DisciplineDate, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisciplineAction_TrackedDelete(DisciplineActionIdentifier, DisciplineDate, StudentUSI, Id, ChangeVersion)
     SELECT  DisciplineActionIdentifier, DisciplineDate, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_DisciplineAction_TrackedDelete d2 WHERE d2.DisciplineActionIdentifier = d.DisciplineActionIdentifier AND d2.DisciplineDate = d.DisciplineDate AND d2.StudentUSI = d.StudentUSI)
@@ -1427,7 +1427,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisciplineActionLengthDifferenceReasonDescriptor_TrackedDelete(DisciplineActionLengthDifferenceReasonDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisciplineActionLengthDifferenceReasonDescriptor_TrackedDelete(DisciplineActionLengthDifferenceReasonDescriptorId, Id, ChangeVersion)
     SELECT  d.DisciplineActionLengthDifferenceReasonDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DisciplineActionLengthDifferenceReasonDescriptorId = b.DescriptorId
@@ -1446,7 +1446,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisciplineDescriptor_TrackedDelete(DisciplineDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisciplineDescriptor_TrackedDelete(DisciplineDescriptorId, Id, ChangeVersion)
     SELECT  d.DisciplineDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.DisciplineDescriptorId = b.DescriptorId
@@ -1465,7 +1465,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_DisciplineIncident_TrackedDelete(IncidentIdentifier, SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_DisciplineIncident_TrackedDelete(IncidentIdentifier, SchoolId, Id, ChangeVersion)
     SELECT  IncidentIdentifier, SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_DisciplineIncident_TrackedDelete d2 WHERE d2.IncidentIdentifier = d.IncidentIdentifier AND d2.SchoolId = d.SchoolId)
@@ -1483,7 +1483,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationContent_TrackedDelete(ContentIdentifier, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationContent_TrackedDelete(ContentIdentifier, Id, ChangeVersion)
     SELECT  ContentIdentifier, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_EducationContent_TrackedDelete d2 WHERE d2.ContentIdentifier = d.ContentIdentifier)
@@ -1501,7 +1501,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationCategoryDescriptor_TrackedDelete(EducationOrganizationCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationCategoryDescriptor_TrackedDelete(EducationOrganizationCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.EducationOrganizationCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EducationOrganizationCategoryDescriptorId = b.DescriptorId
@@ -1520,7 +1520,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganization_TrackedDelete(EducationOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganization_TrackedDelete(EducationOrganizationId, Id, ChangeVersion)
     SELECT  EducationOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_EducationOrganization_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId)
@@ -1538,7 +1538,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationIdentificationSystemDescriptor_TrackedDelete(EducationOrganizationIdentificationSystemDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationIdentificationSystemDescriptor_TrackedDelete(EducationOrganizationIdentificationSystemDescriptorId, Id, ChangeVersion)
     SELECT  d.EducationOrganizationIdentificationSystemDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EducationOrganizationIdentificationSystemDescriptorId = b.DescriptorId
@@ -1557,7 +1557,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationInterventionPrescriptionAssociation_TrackedDelete(EducationOrganizationId, InterventionPrescriptionEducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationInterventionPrescriptionAssociation_TrackedDelete(EducationOrganizationId, InterventionPrescriptionEducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, ChangeVersion)
     SELECT  EducationOrganizationId, InterventionPrescriptionEducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_EducationOrganizationInterventionPrescriptionAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.InterventionPrescriptionEducationOrganizationId = d.InterventionPrescriptionEducationOrganizationId AND d2.InterventionPrescriptionIdentificationCode = d.InterventionPrescriptionIdentificationCode)
@@ -1575,7 +1575,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationNetworkAssociation_TrackedDelete(EducationOrganizationNetworkId, MemberEducationOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationNetworkAssociation_TrackedDelete(EducationOrganizationNetworkId, MemberEducationOrganizationId, Id, ChangeVersion)
     SELECT  EducationOrganizationNetworkId, MemberEducationOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_EducationOrganizationNetworkAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationNetworkId = d.EducationOrganizationNetworkId AND d2.MemberEducationOrganizationId = d.MemberEducationOrganizationId)
@@ -1593,7 +1593,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationNetwork_TrackedDelete(EducationOrganizationNetworkId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationNetwork_TrackedDelete(EducationOrganizationNetworkId, Id, ChangeVersion)
     SELECT  d.EducationOrganizationNetworkId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.EducationOrganizationNetworkId = b.EducationOrganizationId
@@ -1612,7 +1612,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationOrganizationPeerAssociation_TrackedDelete(EducationOrganizationId, PeerEducationOrganizationId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationOrganizationPeerAssociation_TrackedDelete(EducationOrganizationId, PeerEducationOrganizationId, Id, ChangeVersion)
     SELECT  EducationOrganizationId, PeerEducationOrganizationId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_EducationOrganizationPeerAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.PeerEducationOrganizationId = d.PeerEducationOrganizationId)
@@ -1630,7 +1630,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationPlanDescriptor_TrackedDelete(EducationPlanDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationPlanDescriptor_TrackedDelete(EducationPlanDescriptorId, Id, ChangeVersion)
     SELECT  d.EducationPlanDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EducationPlanDescriptorId = b.DescriptorId
@@ -1649,7 +1649,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationServiceCenter_TrackedDelete(EducationServiceCenterId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationServiceCenter_TrackedDelete(EducationServiceCenterId, Id, ChangeVersion)
     SELECT  d.EducationServiceCenterId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.EducationServiceCenterId = b.EducationOrganizationId
@@ -1668,7 +1668,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EducationalEnvironmentDescriptor_TrackedDelete(EducationalEnvironmentDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EducationalEnvironmentDescriptor_TrackedDelete(EducationalEnvironmentDescriptorId, Id, ChangeVersion)
     SELECT  d.EducationalEnvironmentDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EducationalEnvironmentDescriptorId = b.DescriptorId
@@ -1687,7 +1687,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ElectronicMailTypeDescriptor_TrackedDelete(ElectronicMailTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ElectronicMailTypeDescriptor_TrackedDelete(ElectronicMailTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.ElectronicMailTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ElectronicMailTypeDescriptorId = b.DescriptorId
@@ -1706,7 +1706,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EmploymentStatusDescriptor_TrackedDelete(EmploymentStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EmploymentStatusDescriptor_TrackedDelete(EmploymentStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.EmploymentStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EmploymentStatusDescriptorId = b.DescriptorId
@@ -1725,7 +1725,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EntryGradeLevelReasonDescriptor_TrackedDelete(EntryGradeLevelReasonDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EntryGradeLevelReasonDescriptor_TrackedDelete(EntryGradeLevelReasonDescriptorId, Id, ChangeVersion)
     SELECT  d.EntryGradeLevelReasonDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EntryGradeLevelReasonDescriptorId = b.DescriptorId
@@ -1744,7 +1744,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EntryTypeDescriptor_TrackedDelete(EntryTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EntryTypeDescriptor_TrackedDelete(EntryTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.EntryTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EntryTypeDescriptorId = b.DescriptorId
@@ -1763,7 +1763,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_EventCircumstanceDescriptor_TrackedDelete(EventCircumstanceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_EventCircumstanceDescriptor_TrackedDelete(EventCircumstanceDescriptorId, Id, ChangeVersion)
     SELECT  d.EventCircumstanceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.EventCircumstanceDescriptorId = b.DescriptorId
@@ -1782,7 +1782,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ExitWithdrawTypeDescriptor_TrackedDelete(ExitWithdrawTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ExitWithdrawTypeDescriptor_TrackedDelete(ExitWithdrawTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.ExitWithdrawTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ExitWithdrawTypeDescriptorId = b.DescriptorId
@@ -1801,7 +1801,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_FeederSchoolAssociation_TrackedDelete(BeginDate, FeederSchoolId, SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_FeederSchoolAssociation_TrackedDelete(BeginDate, FeederSchoolId, SchoolId, Id, ChangeVersion)
     SELECT  BeginDate, FeederSchoolId, SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_FeederSchoolAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.FeederSchoolId = d.FeederSchoolId AND d2.SchoolId = d.SchoolId)
@@ -1819,7 +1819,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GeneralStudentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GeneralStudentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_GeneralStudentProgramAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.ProgramEducationOrganizationId = d.ProgramEducationOrganizationId AND d2.ProgramName = d.ProgramName AND d2.ProgramTypeDescriptorId = d.ProgramTypeDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -1837,7 +1837,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Grade_TrackedDelete(BeginDate, GradeTypeDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolYear, GradingPeriodSequence, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Grade_TrackedDelete(BeginDate, GradeTypeDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolYear, GradingPeriodSequence, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, GradeTypeDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolYear, GradingPeriodSequence, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Grade_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.GradeTypeDescriptorId = d.GradeTypeDescriptorId AND d2.GradingPeriodDescriptorId = d.GradingPeriodDescriptorId AND d2.GradingPeriodSchoolYear = d.GradingPeriodSchoolYear AND d2.GradingPeriodSequence = d.GradingPeriodSequence AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName AND d2.StudentUSI = d.StudentUSI)
@@ -1855,7 +1855,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradeLevelDescriptor_TrackedDelete(GradeLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradeLevelDescriptor_TrackedDelete(GradeLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.GradeLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GradeLevelDescriptorId = b.DescriptorId
@@ -1874,7 +1874,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradeTypeDescriptor_TrackedDelete(GradeTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradeTypeDescriptor_TrackedDelete(GradeTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.GradeTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GradeTypeDescriptorId = b.DescriptorId
@@ -1893,7 +1893,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradebookEntry_TrackedDelete(DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradebookEntry_TrackedDelete(DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, ChangeVersion)
     SELECT  DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_GradebookEntry_TrackedDelete d2 WHERE d2.DateAssigned = d.DateAssigned AND d2.GradebookEntryTitle = d.GradebookEntryTitle AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName)
@@ -1911,7 +1911,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradebookEntryTypeDescriptor_TrackedDelete(GradebookEntryTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradebookEntryTypeDescriptor_TrackedDelete(GradebookEntryTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.GradebookEntryTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GradebookEntryTypeDescriptorId = b.DescriptorId
@@ -1930,7 +1930,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradingPeriod_TrackedDelete(GradingPeriodDescriptorId, PeriodSequence, SchoolId, SchoolYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradingPeriod_TrackedDelete(GradingPeriodDescriptorId, PeriodSequence, SchoolId, SchoolYear, Id, ChangeVersion)
     SELECT  GradingPeriodDescriptorId, PeriodSequence, SchoolId, SchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_GradingPeriod_TrackedDelete d2 WHERE d2.GradingPeriodDescriptorId = d.GradingPeriodDescriptorId AND d2.PeriodSequence = d.PeriodSequence AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear)
@@ -1948,7 +1948,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GradingPeriodDescriptor_TrackedDelete(GradingPeriodDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GradingPeriodDescriptor_TrackedDelete(GradingPeriodDescriptorId, Id, ChangeVersion)
     SELECT  d.GradingPeriodDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GradingPeriodDescriptorId = b.DescriptorId
@@ -1967,7 +1967,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GraduationPlan_TrackedDelete(EducationOrganizationId, GraduationPlanTypeDescriptorId, GraduationSchoolYear, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GraduationPlan_TrackedDelete(EducationOrganizationId, GraduationPlanTypeDescriptorId, GraduationSchoolYear, Id, ChangeVersion)
     SELECT  EducationOrganizationId, GraduationPlanTypeDescriptorId, GraduationSchoolYear, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_GraduationPlan_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.GraduationPlanTypeDescriptorId = d.GraduationPlanTypeDescriptorId AND d2.GraduationSchoolYear = d.GraduationSchoolYear)
@@ -1985,7 +1985,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GraduationPlanTypeDescriptor_TrackedDelete(GraduationPlanTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GraduationPlanTypeDescriptor_TrackedDelete(GraduationPlanTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.GraduationPlanTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GraduationPlanTypeDescriptorId = b.DescriptorId
@@ -2004,7 +2004,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_GunFreeSchoolsActReportingStatusDescriptor_TrackedDelete(GunFreeSchoolsActReportingStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_GunFreeSchoolsActReportingStatusDescriptor_TrackedDelete(GunFreeSchoolsActReportingStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.GunFreeSchoolsActReportingStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.GunFreeSchoolsActReportingStatusDescriptorId = b.DescriptorId
@@ -2023,7 +2023,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_HomelessPrimaryNighttimeResidenceDescriptor_TrackedDelete(HomelessPrimaryNighttimeResidenceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_HomelessPrimaryNighttimeResidenceDescriptor_TrackedDelete(HomelessPrimaryNighttimeResidenceDescriptorId, Id, ChangeVersion)
     SELECT  d.HomelessPrimaryNighttimeResidenceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.HomelessPrimaryNighttimeResidenceDescriptorId = b.DescriptorId
@@ -2042,7 +2042,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_HomelessProgramServiceDescriptor_TrackedDelete(HomelessProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_HomelessProgramServiceDescriptor_TrackedDelete(HomelessProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.HomelessProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.HomelessProgramServiceDescriptorId = b.DescriptorId
@@ -2061,7 +2061,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_IdentificationDocumentUseDescriptor_TrackedDelete(IdentificationDocumentUseDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_IdentificationDocumentUseDescriptor_TrackedDelete(IdentificationDocumentUseDescriptorId, Id, ChangeVersion)
     SELECT  d.IdentificationDocumentUseDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.IdentificationDocumentUseDescriptorId = b.DescriptorId
@@ -2080,7 +2080,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_IncidentLocationDescriptor_TrackedDelete(IncidentLocationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_IncidentLocationDescriptor_TrackedDelete(IncidentLocationDescriptorId, Id, ChangeVersion)
     SELECT  d.IncidentLocationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.IncidentLocationDescriptorId = b.DescriptorId
@@ -2099,7 +2099,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InstitutionTelephoneNumberTypeDescriptor_TrackedDelete(InstitutionTelephoneNumberTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InstitutionTelephoneNumberTypeDescriptor_TrackedDelete(InstitutionTelephoneNumberTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.InstitutionTelephoneNumberTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InstitutionTelephoneNumberTypeDescriptorId = b.DescriptorId
@@ -2118,7 +2118,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InteractivityStyleDescriptor_TrackedDelete(InteractivityStyleDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InteractivityStyleDescriptor_TrackedDelete(InteractivityStyleDescriptorId, Id, ChangeVersion)
     SELECT  d.InteractivityStyleDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InteractivityStyleDescriptorId = b.DescriptorId
@@ -2137,7 +2137,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InternetAccessDescriptor_TrackedDelete(InternetAccessDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InternetAccessDescriptor_TrackedDelete(InternetAccessDescriptorId, Id, ChangeVersion)
     SELECT  d.InternetAccessDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InternetAccessDescriptorId = b.DescriptorId
@@ -2156,7 +2156,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InterventionClassDescriptor_TrackedDelete(InterventionClassDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InterventionClassDescriptor_TrackedDelete(InterventionClassDescriptorId, Id, ChangeVersion)
     SELECT  d.InterventionClassDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InterventionClassDescriptorId = b.DescriptorId
@@ -2175,7 +2175,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Intervention_TrackedDelete(EducationOrganizationId, InterventionIdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Intervention_TrackedDelete(EducationOrganizationId, InterventionIdentificationCode, Id, ChangeVersion)
     SELECT  EducationOrganizationId, InterventionIdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Intervention_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.InterventionIdentificationCode = d.InterventionIdentificationCode)
@@ -2193,7 +2193,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InterventionEffectivenessRatingDescriptor_TrackedDelete(InterventionEffectivenessRatingDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InterventionEffectivenessRatingDescriptor_TrackedDelete(InterventionEffectivenessRatingDescriptorId, Id, ChangeVersion)
     SELECT  d.InterventionEffectivenessRatingDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.InterventionEffectivenessRatingDescriptorId = b.DescriptorId
@@ -2212,7 +2212,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InterventionPrescription_TrackedDelete(EducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InterventionPrescription_TrackedDelete(EducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, ChangeVersion)
     SELECT  EducationOrganizationId, InterventionPrescriptionIdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_InterventionPrescription_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.InterventionPrescriptionIdentificationCode = d.InterventionPrescriptionIdentificationCode)
@@ -2230,7 +2230,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_InterventionStudy_TrackedDelete(EducationOrganizationId, InterventionStudyIdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_InterventionStudy_TrackedDelete(EducationOrganizationId, InterventionStudyIdentificationCode, Id, ChangeVersion)
     SELECT  EducationOrganizationId, InterventionStudyIdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_InterventionStudy_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.InterventionStudyIdentificationCode = d.InterventionStudyIdentificationCode)
@@ -2248,7 +2248,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LanguageDescriptor_TrackedDelete(LanguageDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LanguageDescriptor_TrackedDelete(LanguageDescriptorId, Id, ChangeVersion)
     SELECT  d.LanguageDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LanguageDescriptorId = b.DescriptorId
@@ -2267,7 +2267,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LanguageInstructionProgramServiceDescriptor_TrackedDelete(LanguageInstructionProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LanguageInstructionProgramServiceDescriptor_TrackedDelete(LanguageInstructionProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.LanguageInstructionProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LanguageInstructionProgramServiceDescriptorId = b.DescriptorId
@@ -2286,7 +2286,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LanguageUseDescriptor_TrackedDelete(LanguageUseDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LanguageUseDescriptor_TrackedDelete(LanguageUseDescriptorId, Id, ChangeVersion)
     SELECT  d.LanguageUseDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LanguageUseDescriptorId = b.DescriptorId
@@ -2305,7 +2305,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LearningObjective_TrackedDelete(AcademicSubjectDescriptorId, Objective, ObjectiveGradeLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LearningObjective_TrackedDelete(AcademicSubjectDescriptorId, Objective, ObjectiveGradeLevelDescriptorId, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, Objective, ObjectiveGradeLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_LearningObjective_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.Objective = d.Objective AND d2.ObjectiveGradeLevelDescriptorId = d.ObjectiveGradeLevelDescriptorId)
@@ -2323,7 +2323,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LearningStandardCategoryDescriptor_TrackedDelete(LearningStandardCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LearningStandardCategoryDescriptor_TrackedDelete(LearningStandardCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.LearningStandardCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LearningStandardCategoryDescriptorId = b.DescriptorId
@@ -2342,7 +2342,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LearningStandard_TrackedDelete(LearningStandardId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LearningStandard_TrackedDelete(LearningStandardId, Id, ChangeVersion)
     SELECT  LearningStandardId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_LearningStandard_TrackedDelete d2 WHERE d2.LearningStandardId = d.LearningStandardId)
@@ -2360,7 +2360,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LevelOfEducationDescriptor_TrackedDelete(LevelOfEducationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LevelOfEducationDescriptor_TrackedDelete(LevelOfEducationDescriptorId, Id, ChangeVersion)
     SELECT  d.LevelOfEducationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LevelOfEducationDescriptorId = b.DescriptorId
@@ -2379,7 +2379,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LicenseStatusDescriptor_TrackedDelete(LicenseStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LicenseStatusDescriptor_TrackedDelete(LicenseStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.LicenseStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LicenseStatusDescriptorId = b.DescriptorId
@@ -2398,7 +2398,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LicenseTypeDescriptor_TrackedDelete(LicenseTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LicenseTypeDescriptor_TrackedDelete(LicenseTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.LicenseTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LicenseTypeDescriptorId = b.DescriptorId
@@ -2417,7 +2417,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LimitedEnglishProficiencyDescriptor_TrackedDelete(LimitedEnglishProficiencyDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LimitedEnglishProficiencyDescriptor_TrackedDelete(LimitedEnglishProficiencyDescriptorId, Id, ChangeVersion)
     SELECT  d.LimitedEnglishProficiencyDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LimitedEnglishProficiencyDescriptorId = b.DescriptorId
@@ -2436,7 +2436,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LocalEducationAgencyCategoryDescriptor_TrackedDelete(LocalEducationAgencyCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LocalEducationAgencyCategoryDescriptor_TrackedDelete(LocalEducationAgencyCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.LocalEducationAgencyCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.LocalEducationAgencyCategoryDescriptorId = b.DescriptorId
@@ -2455,7 +2455,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_LocalEducationAgency_TrackedDelete(LocalEducationAgencyId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_LocalEducationAgency_TrackedDelete(LocalEducationAgencyId, Id, ChangeVersion)
     SELECT  d.LocalEducationAgencyId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.LocalEducationAgencyId = b.EducationOrganizationId
@@ -2474,7 +2474,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Location_TrackedDelete(ClassroomIdentificationCode, SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Location_TrackedDelete(ClassroomIdentificationCode, SchoolId, Id, ChangeVersion)
     SELECT  ClassroomIdentificationCode, SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Location_TrackedDelete d2 WHERE d2.ClassroomIdentificationCode = d.ClassroomIdentificationCode AND d2.SchoolId = d.SchoolId)
@@ -2492,7 +2492,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_MagnetSpecialProgramEmphasisSchoolDescriptor_TrackedDelete(MagnetSpecialProgramEmphasisSchoolDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_MagnetSpecialProgramEmphasisSchoolDescriptor_TrackedDelete(MagnetSpecialProgramEmphasisSchoolDescriptorId, Id, ChangeVersion)
     SELECT  d.MagnetSpecialProgramEmphasisSchoolDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.MagnetSpecialProgramEmphasisSchoolDescriptorId = b.DescriptorId
@@ -2511,7 +2511,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_MediumOfInstructionDescriptor_TrackedDelete(MediumOfInstructionDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_MediumOfInstructionDescriptor_TrackedDelete(MediumOfInstructionDescriptorId, Id, ChangeVersion)
     SELECT  d.MediumOfInstructionDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.MediumOfInstructionDescriptorId = b.DescriptorId
@@ -2530,7 +2530,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_MethodCreditEarnedDescriptor_TrackedDelete(MethodCreditEarnedDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_MethodCreditEarnedDescriptor_TrackedDelete(MethodCreditEarnedDescriptorId, Id, ChangeVersion)
     SELECT  d.MethodCreditEarnedDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.MethodCreditEarnedDescriptorId = b.DescriptorId
@@ -2549,7 +2549,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_MigrantEducationProgramServiceDescriptor_TrackedDelete(MigrantEducationProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_MigrantEducationProgramServiceDescriptor_TrackedDelete(MigrantEducationProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.MigrantEducationProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.MigrantEducationProgramServiceDescriptorId = b.DescriptorId
@@ -2568,7 +2568,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_MonitoredDescriptor_TrackedDelete(MonitoredDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_MonitoredDescriptor_TrackedDelete(MonitoredDescriptorId, Id, ChangeVersion)
     SELECT  d.MonitoredDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.MonitoredDescriptorId = b.DescriptorId
@@ -2587,7 +2587,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_NeglectedOrDelinquentProgramDescriptor_TrackedDelete(NeglectedOrDelinquentProgramDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_NeglectedOrDelinquentProgramDescriptor_TrackedDelete(NeglectedOrDelinquentProgramDescriptorId, Id, ChangeVersion)
     SELECT  d.NeglectedOrDelinquentProgramDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.NeglectedOrDelinquentProgramDescriptorId = b.DescriptorId
@@ -2606,7 +2606,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_NeglectedOrDelinquentProgramServiceDescriptor_TrackedDelete(NeglectedOrDelinquentProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_NeglectedOrDelinquentProgramServiceDescriptor_TrackedDelete(NeglectedOrDelinquentProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.NeglectedOrDelinquentProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.NeglectedOrDelinquentProgramServiceDescriptorId = b.DescriptorId
@@ -2625,7 +2625,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_NetworkPurposeDescriptor_TrackedDelete(NetworkPurposeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_NetworkPurposeDescriptor_TrackedDelete(NetworkPurposeDescriptorId, Id, ChangeVersion)
     SELECT  d.NetworkPurposeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.NetworkPurposeDescriptorId = b.DescriptorId
@@ -2644,7 +2644,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ObjectiveAssessment_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ObjectiveAssessment_TrackedDelete(AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, IdentificationCode, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_ObjectiveAssessment_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.AssessedGradeLevelDescriptorId = d.AssessedGradeLevelDescriptorId AND d2.AssessmentTitle = d.AssessmentTitle AND d2.AssessmentVersion = d.AssessmentVersion AND d2.IdentificationCode = d.IdentificationCode)
@@ -2662,7 +2662,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_OldEthnicityDescriptor_TrackedDelete(OldEthnicityDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_OldEthnicityDescriptor_TrackedDelete(OldEthnicityDescriptorId, Id, ChangeVersion)
     SELECT  d.OldEthnicityDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.OldEthnicityDescriptorId = b.DescriptorId
@@ -2681,7 +2681,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_OpenStaffPosition_TrackedDelete(EducationOrganizationId, RequisitionNumber, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_OpenStaffPosition_TrackedDelete(EducationOrganizationId, RequisitionNumber, Id, ChangeVersion)
     SELECT  EducationOrganizationId, RequisitionNumber, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_OpenStaffPosition_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.RequisitionNumber = d.RequisitionNumber)
@@ -2699,7 +2699,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_OperationalStatusDescriptor_TrackedDelete(OperationalStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_OperationalStatusDescriptor_TrackedDelete(OperationalStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.OperationalStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.OperationalStatusDescriptorId = b.DescriptorId
@@ -2718,7 +2718,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_OtherNameTypeDescriptor_TrackedDelete(OtherNameTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_OtherNameTypeDescriptor_TrackedDelete(OtherNameTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.OtherNameTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.OtherNameTypeDescriptorId = b.DescriptorId
@@ -2737,7 +2737,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Parent_TrackedDelete(ParentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Parent_TrackedDelete(ParentUSI, Id, ChangeVersion)
     SELECT  ParentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Parent_TrackedDelete d2 WHERE d2.ParentUSI = d.ParentUSI)
@@ -2755,7 +2755,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ParticipationDescriptor_TrackedDelete(ParticipationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ParticipationDescriptor_TrackedDelete(ParticipationDescriptorId, Id, ChangeVersion)
     SELECT  d.ParticipationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ParticipationDescriptorId = b.DescriptorId
@@ -2774,7 +2774,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Payroll_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Payroll_TrackedDelete(AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, ChangeVersion)
     SELECT  AccountIdentifier, AsOfDate, EducationOrganizationId, FiscalYear, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Payroll_TrackedDelete d2 WHERE d2.AccountIdentifier = d.AccountIdentifier AND d2.AsOfDate = d.AsOfDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.FiscalYear = d.FiscalYear AND d2.StaffUSI = d.StaffUSI)
@@ -2792,7 +2792,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PerformanceBaseConversionDescriptor_TrackedDelete(PerformanceBaseConversionDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PerformanceBaseConversionDescriptor_TrackedDelete(PerformanceBaseConversionDescriptorId, Id, ChangeVersion)
     SELECT  d.PerformanceBaseConversionDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PerformanceBaseConversionDescriptorId = b.DescriptorId
@@ -2811,7 +2811,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PerformanceLevelDescriptor_TrackedDelete(PerformanceLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PerformanceLevelDescriptor_TrackedDelete(PerformanceLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.PerformanceLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PerformanceLevelDescriptorId = b.DescriptorId
@@ -2830,7 +2830,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PersonalInformationVerificationDescriptor_TrackedDelete(PersonalInformationVerificationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PersonalInformationVerificationDescriptor_TrackedDelete(PersonalInformationVerificationDescriptorId, Id, ChangeVersion)
     SELECT  d.PersonalInformationVerificationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PersonalInformationVerificationDescriptorId = b.DescriptorId
@@ -2849,7 +2849,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PopulationServedDescriptor_TrackedDelete(PopulationServedDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PopulationServedDescriptor_TrackedDelete(PopulationServedDescriptorId, Id, ChangeVersion)
     SELECT  d.PopulationServedDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PopulationServedDescriptorId = b.DescriptorId
@@ -2868,7 +2868,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PostSecondaryEventCategoryDescriptor_TrackedDelete(PostSecondaryEventCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PostSecondaryEventCategoryDescriptor_TrackedDelete(PostSecondaryEventCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.PostSecondaryEventCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PostSecondaryEventCategoryDescriptorId = b.DescriptorId
@@ -2887,7 +2887,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PostSecondaryEvent_TrackedDelete(EventDate, PostSecondaryEventCategoryDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PostSecondaryEvent_TrackedDelete(EventDate, PostSecondaryEventCategoryDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  EventDate, PostSecondaryEventCategoryDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_PostSecondaryEvent_TrackedDelete d2 WHERE d2.EventDate = d.EventDate AND d2.PostSecondaryEventCategoryDescriptorId = d.PostSecondaryEventCategoryDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -2905,7 +2905,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PostSecondaryInstitution_TrackedDelete(PostSecondaryInstitutionId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PostSecondaryInstitution_TrackedDelete(PostSecondaryInstitutionId, Id, ChangeVersion)
     SELECT  d.PostSecondaryInstitutionId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.PostSecondaryInstitutionId = b.EducationOrganizationId
@@ -2924,7 +2924,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PostSecondaryInstitutionLevelDescriptor_TrackedDelete(PostSecondaryInstitutionLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PostSecondaryInstitutionLevelDescriptor_TrackedDelete(PostSecondaryInstitutionLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.PostSecondaryInstitutionLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PostSecondaryInstitutionLevelDescriptorId = b.DescriptorId
@@ -2943,7 +2943,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PostingResultDescriptor_TrackedDelete(PostingResultDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PostingResultDescriptor_TrackedDelete(PostingResultDescriptorId, Id, ChangeVersion)
     SELECT  d.PostingResultDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PostingResultDescriptorId = b.DescriptorId
@@ -2962,7 +2962,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProficiencyDescriptor_TrackedDelete(ProficiencyDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProficiencyDescriptor_TrackedDelete(ProficiencyDescriptorId, Id, ChangeVersion)
     SELECT  d.ProficiencyDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProficiencyDescriptorId = b.DescriptorId
@@ -2981,7 +2981,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgramAssignmentDescriptor_TrackedDelete(ProgramAssignmentDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgramAssignmentDescriptor_TrackedDelete(ProgramAssignmentDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgramAssignmentDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgramAssignmentDescriptorId = b.DescriptorId
@@ -3000,7 +3000,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgramCharacteristicDescriptor_TrackedDelete(ProgramCharacteristicDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgramCharacteristicDescriptor_TrackedDelete(ProgramCharacteristicDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgramCharacteristicDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgramCharacteristicDescriptorId = b.DescriptorId
@@ -3019,7 +3019,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Program_TrackedDelete(EducationOrganizationId, ProgramName, ProgramTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Program_TrackedDelete(EducationOrganizationId, ProgramName, ProgramTypeDescriptorId, Id, ChangeVersion)
     SELECT  EducationOrganizationId, ProgramName, ProgramTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Program_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.ProgramName = d.ProgramName AND d2.ProgramTypeDescriptorId = d.ProgramTypeDescriptorId)
@@ -3037,7 +3037,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgramSponsorDescriptor_TrackedDelete(ProgramSponsorDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgramSponsorDescriptor_TrackedDelete(ProgramSponsorDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgramSponsorDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgramSponsorDescriptorId = b.DescriptorId
@@ -3056,7 +3056,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgramTypeDescriptor_TrackedDelete(ProgramTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgramTypeDescriptor_TrackedDelete(ProgramTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgramTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgramTypeDescriptorId = b.DescriptorId
@@ -3075,7 +3075,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgressDescriptor_TrackedDelete(ProgressDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgressDescriptor_TrackedDelete(ProgressDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgressDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgressDescriptorId = b.DescriptorId
@@ -3094,7 +3094,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProgressLevelDescriptor_TrackedDelete(ProgressLevelDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProgressLevelDescriptor_TrackedDelete(ProgressLevelDescriptorId, Id, ChangeVersion)
     SELECT  d.ProgressLevelDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProgressLevelDescriptorId = b.DescriptorId
@@ -3113,7 +3113,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProviderCategoryDescriptor_TrackedDelete(ProviderCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProviderCategoryDescriptor_TrackedDelete(ProviderCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.ProviderCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProviderCategoryDescriptorId = b.DescriptorId
@@ -3132,7 +3132,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProviderProfitabilityDescriptor_TrackedDelete(ProviderProfitabilityDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProviderProfitabilityDescriptor_TrackedDelete(ProviderProfitabilityDescriptorId, Id, ChangeVersion)
     SELECT  d.ProviderProfitabilityDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProviderProfitabilityDescriptorId = b.DescriptorId
@@ -3151,7 +3151,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ProviderStatusDescriptor_TrackedDelete(ProviderStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ProviderStatusDescriptor_TrackedDelete(ProviderStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.ProviderStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ProviderStatusDescriptorId = b.DescriptorId
@@ -3170,7 +3170,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_PublicationStatusDescriptor_TrackedDelete(PublicationStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_PublicationStatusDescriptor_TrackedDelete(PublicationStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.PublicationStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.PublicationStatusDescriptorId = b.DescriptorId
@@ -3189,7 +3189,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RaceDescriptor_TrackedDelete(RaceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RaceDescriptor_TrackedDelete(RaceDescriptorId, Id, ChangeVersion)
     SELECT  d.RaceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RaceDescriptorId = b.DescriptorId
@@ -3208,7 +3208,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ReasonExitedDescriptor_TrackedDelete(ReasonExitedDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ReasonExitedDescriptor_TrackedDelete(ReasonExitedDescriptorId, Id, ChangeVersion)
     SELECT  d.ReasonExitedDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ReasonExitedDescriptorId = b.DescriptorId
@@ -3227,7 +3227,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ReasonNotTestedDescriptor_TrackedDelete(ReasonNotTestedDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ReasonNotTestedDescriptor_TrackedDelete(ReasonNotTestedDescriptorId, Id, ChangeVersion)
     SELECT  d.ReasonNotTestedDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ReasonNotTestedDescriptorId = b.DescriptorId
@@ -3246,7 +3246,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RecognitionTypeDescriptor_TrackedDelete(RecognitionTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RecognitionTypeDescriptor_TrackedDelete(RecognitionTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.RecognitionTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RecognitionTypeDescriptorId = b.DescriptorId
@@ -3265,7 +3265,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RelationDescriptor_TrackedDelete(RelationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RelationDescriptor_TrackedDelete(RelationDescriptorId, Id, ChangeVersion)
     SELECT  d.RelationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RelationDescriptorId = b.DescriptorId
@@ -3284,7 +3284,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RepeatIdentifierDescriptor_TrackedDelete(RepeatIdentifierDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RepeatIdentifierDescriptor_TrackedDelete(RepeatIdentifierDescriptorId, Id, ChangeVersion)
     SELECT  d.RepeatIdentifierDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RepeatIdentifierDescriptorId = b.DescriptorId
@@ -3303,7 +3303,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ReportCard_TrackedDelete(EducationOrganizationId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ReportCard_TrackedDelete(EducationOrganizationId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, StudentUSI, Id, ChangeVersion)
     SELECT  EducationOrganizationId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_ReportCard_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.GradingPeriodDescriptorId = d.GradingPeriodDescriptorId AND d2.GradingPeriodSchoolId = d.GradingPeriodSchoolId AND d2.GradingPeriodSchoolYear = d.GradingPeriodSchoolYear AND d2.GradingPeriodSequence = d.GradingPeriodSequence AND d2.StudentUSI = d.StudentUSI)
@@ -3321,7 +3321,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ReporterDescriptionDescriptor_TrackedDelete(ReporterDescriptionDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ReporterDescriptionDescriptor_TrackedDelete(ReporterDescriptionDescriptorId, Id, ChangeVersion)
     SELECT  d.ReporterDescriptionDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ReporterDescriptionDescriptorId = b.DescriptorId
@@ -3340,7 +3340,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ResidencyStatusDescriptor_TrackedDelete(ResidencyStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ResidencyStatusDescriptor_TrackedDelete(ResidencyStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.ResidencyStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ResidencyStatusDescriptorId = b.DescriptorId
@@ -3359,7 +3359,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ResponseIndicatorDescriptor_TrackedDelete(ResponseIndicatorDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ResponseIndicatorDescriptor_TrackedDelete(ResponseIndicatorDescriptorId, Id, ChangeVersion)
     SELECT  d.ResponseIndicatorDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ResponseIndicatorDescriptorId = b.DescriptorId
@@ -3378,7 +3378,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ResponsibilityDescriptor_TrackedDelete(ResponsibilityDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ResponsibilityDescriptor_TrackedDelete(ResponsibilityDescriptorId, Id, ChangeVersion)
     SELECT  d.ResponsibilityDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ResponsibilityDescriptorId = b.DescriptorId
@@ -3397,7 +3397,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RestraintEvent_TrackedDelete(RestraintEventIdentifier, SchoolId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RestraintEvent_TrackedDelete(RestraintEventIdentifier, SchoolId, StudentUSI, Id, ChangeVersion)
     SELECT  RestraintEventIdentifier, SchoolId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_RestraintEvent_TrackedDelete d2 WHERE d2.RestraintEventIdentifier = d.RestraintEventIdentifier AND d2.SchoolId = d.SchoolId AND d2.StudentUSI = d.StudentUSI)
@@ -3415,7 +3415,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RestraintEventReasonDescriptor_TrackedDelete(RestraintEventReasonDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RestraintEventReasonDescriptor_TrackedDelete(RestraintEventReasonDescriptorId, Id, ChangeVersion)
     SELECT  d.RestraintEventReasonDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RestraintEventReasonDescriptorId = b.DescriptorId
@@ -3434,7 +3434,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ResultDatatypeTypeDescriptor_TrackedDelete(ResultDatatypeTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ResultDatatypeTypeDescriptor_TrackedDelete(ResultDatatypeTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.ResultDatatypeTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ResultDatatypeTypeDescriptorId = b.DescriptorId
@@ -3453,7 +3453,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_RetestIndicatorDescriptor_TrackedDelete(RetestIndicatorDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_RetestIndicatorDescriptor_TrackedDelete(RetestIndicatorDescriptorId, Id, ChangeVersion)
     SELECT  d.RetestIndicatorDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.RetestIndicatorDescriptorId = b.DescriptorId
@@ -3472,7 +3472,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SchoolCategoryDescriptor_TrackedDelete(SchoolCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SchoolCategoryDescriptor_TrackedDelete(SchoolCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.SchoolCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SchoolCategoryDescriptorId = b.DescriptorId
@@ -3491,7 +3491,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SchoolChoiceImplementStatusDescriptor_TrackedDelete(SchoolChoiceImplementStatusDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SchoolChoiceImplementStatusDescriptor_TrackedDelete(SchoolChoiceImplementStatusDescriptorId, Id, ChangeVersion)
     SELECT  d.SchoolChoiceImplementStatusDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SchoolChoiceImplementStatusDescriptorId = b.DescriptorId
@@ -3510,7 +3510,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_School_TrackedDelete(SchoolId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_School_TrackedDelete(SchoolId, Id, ChangeVersion)
     SELECT  d.SchoolId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.SchoolId = b.EducationOrganizationId
@@ -3529,7 +3529,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SchoolFoodServiceProgramServiceDescriptor_TrackedDelete(SchoolFoodServiceProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SchoolFoodServiceProgramServiceDescriptor_TrackedDelete(SchoolFoodServiceProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.SchoolFoodServiceProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SchoolFoodServiceProgramServiceDescriptorId = b.DescriptorId
@@ -3548,7 +3548,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SchoolTypeDescriptor_TrackedDelete(SchoolTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SchoolTypeDescriptor_TrackedDelete(SchoolTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.SchoolTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SchoolTypeDescriptorId = b.DescriptorId
@@ -3567,7 +3567,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SectionAttendanceTakenEvent_TrackedDelete(CalendarCode, Date, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SectionAttendanceTakenEvent_TrackedDelete(CalendarCode, Date, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, ChangeVersion)
     SELECT  CalendarCode, Date, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_SectionAttendanceTakenEvent_TrackedDelete d2 WHERE d2.CalendarCode = d.CalendarCode AND d2.Date = d.Date AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName)
@@ -3585,7 +3585,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SectionCharacteristicDescriptor_TrackedDelete(SectionCharacteristicDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SectionCharacteristicDescriptor_TrackedDelete(SectionCharacteristicDescriptorId, Id, ChangeVersion)
     SELECT  d.SectionCharacteristicDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SectionCharacteristicDescriptorId = b.DescriptorId
@@ -3604,7 +3604,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Section_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Section_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, ChangeVersion)
     SELECT  LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Section_TrackedDelete d2 WHERE d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName)
@@ -3622,7 +3622,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SeparationDescriptor_TrackedDelete(SeparationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SeparationDescriptor_TrackedDelete(SeparationDescriptorId, Id, ChangeVersion)
     SELECT  d.SeparationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SeparationDescriptorId = b.DescriptorId
@@ -3641,7 +3641,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SeparationReasonDescriptor_TrackedDelete(SeparationReasonDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SeparationReasonDescriptor_TrackedDelete(SeparationReasonDescriptorId, Id, ChangeVersion)
     SELECT  d.SeparationReasonDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SeparationReasonDescriptorId = b.DescriptorId
@@ -3660,7 +3660,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_ServiceDescriptor_TrackedDelete(ServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_ServiceDescriptor_TrackedDelete(ServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.ServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.ServiceDescriptorId = b.DescriptorId
@@ -3679,7 +3679,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Session_TrackedDelete(SchoolId, SchoolYear, SessionName, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Session_TrackedDelete(SchoolId, SchoolYear, SessionName, Id, ChangeVersion)
     SELECT  SchoolId, SchoolYear, SessionName, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Session_TrackedDelete d2 WHERE d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SessionName = d.SessionName)
@@ -3697,7 +3697,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SexDescriptor_TrackedDelete(SexDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SexDescriptor_TrackedDelete(SexDescriptorId, Id, ChangeVersion)
     SELECT  d.SexDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SexDescriptorId = b.DescriptorId
@@ -3716,7 +3716,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SpecialEducationProgramServiceDescriptor_TrackedDelete(SpecialEducationProgramServiceDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SpecialEducationProgramServiceDescriptor_TrackedDelete(SpecialEducationProgramServiceDescriptorId, Id, ChangeVersion)
     SELECT  d.SpecialEducationProgramServiceDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SpecialEducationProgramServiceDescriptorId = b.DescriptorId
@@ -3735,7 +3735,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_SpecialEducationSettingDescriptor_TrackedDelete(SpecialEducationSettingDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_SpecialEducationSettingDescriptor_TrackedDelete(SpecialEducationSettingDescriptorId, Id, ChangeVersion)
     SELECT  d.SpecialEducationSettingDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.SpecialEducationSettingDescriptorId = b.DescriptorId
@@ -3754,7 +3754,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffAbsenceEvent_TrackedDelete(AbsenceEventCategoryDescriptorId, EventDate, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffAbsenceEvent_TrackedDelete(AbsenceEventCategoryDescriptorId, EventDate, StaffUSI, Id, ChangeVersion)
     SELECT  AbsenceEventCategoryDescriptorId, EventDate, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffAbsenceEvent_TrackedDelete d2 WHERE d2.AbsenceEventCategoryDescriptorId = d.AbsenceEventCategoryDescriptorId AND d2.EventDate = d.EventDate AND d2.StaffUSI = d.StaffUSI)
@@ -3772,7 +3772,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffClassificationDescriptor_TrackedDelete(StaffClassificationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffClassificationDescriptor_TrackedDelete(StaffClassificationDescriptorId, Id, ChangeVersion)
     SELECT  d.StaffClassificationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StaffClassificationDescriptorId = b.DescriptorId
@@ -3791,7 +3791,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffCohortAssociation_TrackedDelete(BeginDate, CohortIdentifier, EducationOrganizationId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffCohortAssociation_TrackedDelete(BeginDate, CohortIdentifier, EducationOrganizationId, StaffUSI, Id, ChangeVersion)
     SELECT  BeginDate, CohortIdentifier, EducationOrganizationId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffCohortAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.CohortIdentifier = d.CohortIdentifier AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.StaffUSI = d.StaffUSI)
@@ -3809,7 +3809,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Staff_TrackedDelete(StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Staff_TrackedDelete(StaffUSI, Id, ChangeVersion)
     SELECT  StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Staff_TrackedDelete d2 WHERE d2.StaffUSI = d.StaffUSI)
@@ -3827,7 +3827,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffEducationOrganizationAssignmentAssociation_TrackedDelete(BeginDate, EducationOrganizationId, StaffClassificationDescriptorId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffEducationOrganizationAssignmentAssociation_TrackedDelete(BeginDate, EducationOrganizationId, StaffClassificationDescriptorId, StaffUSI, Id, ChangeVersion)
     SELECT  BeginDate, EducationOrganizationId, StaffClassificationDescriptorId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffEducationOrganizationAssignmentAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.StaffClassificationDescriptorId = d.StaffClassificationDescriptorId AND d2.StaffUSI = d.StaffUSI)
@@ -3845,7 +3845,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffEducationOrganizationContactAssociation_TrackedDelete(ContactTitle, EducationOrganizationId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffEducationOrganizationContactAssociation_TrackedDelete(ContactTitle, EducationOrganizationId, StaffUSI, Id, ChangeVersion)
     SELECT  ContactTitle, EducationOrganizationId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffEducationOrganizationContactAssociation_TrackedDelete d2 WHERE d2.ContactTitle = d.ContactTitle AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.StaffUSI = d.StaffUSI)
@@ -3863,7 +3863,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffEducationOrganizationEmploymentAssociation_TrackedDelete(EducationOrganizationId, EmploymentStatusDescriptorId, HireDate, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffEducationOrganizationEmploymentAssociation_TrackedDelete(EducationOrganizationId, EmploymentStatusDescriptorId, HireDate, StaffUSI, Id, ChangeVersion)
     SELECT  EducationOrganizationId, EmploymentStatusDescriptorId, HireDate, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffEducationOrganizationEmploymentAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.EmploymentStatusDescriptorId = d.EmploymentStatusDescriptorId AND d2.HireDate = d.HireDate AND d2.StaffUSI = d.StaffUSI)
@@ -3881,7 +3881,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffIdentificationSystemDescriptor_TrackedDelete(StaffIdentificationSystemDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffIdentificationSystemDescriptor_TrackedDelete(StaffIdentificationSystemDescriptorId, Id, ChangeVersion)
     SELECT  d.StaffIdentificationSystemDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StaffIdentificationSystemDescriptorId = b.DescriptorId
@@ -3900,7 +3900,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffLeave_TrackedDelete(BeginDate, StaffLeaveEventCategoryDescriptorId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffLeave_TrackedDelete(BeginDate, StaffLeaveEventCategoryDescriptorId, StaffUSI, Id, ChangeVersion)
     SELECT  BeginDate, StaffLeaveEventCategoryDescriptorId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffLeave_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.StaffLeaveEventCategoryDescriptorId = d.StaffLeaveEventCategoryDescriptorId AND d2.StaffUSI = d.StaffUSI)
@@ -3918,7 +3918,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffLeaveEventCategoryDescriptor_TrackedDelete(StaffLeaveEventCategoryDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffLeaveEventCategoryDescriptor_TrackedDelete(StaffLeaveEventCategoryDescriptorId, Id, ChangeVersion)
     SELECT  d.StaffLeaveEventCategoryDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StaffLeaveEventCategoryDescriptorId = b.DescriptorId
@@ -3937,7 +3937,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffProgramAssociation_TrackedDelete(BeginDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffProgramAssociation_TrackedDelete(BeginDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StaffUSI, Id, ChangeVersion)
     SELECT  BeginDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffProgramAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.ProgramEducationOrganizationId = d.ProgramEducationOrganizationId AND d2.ProgramName = d.ProgramName AND d2.ProgramTypeDescriptorId = d.ProgramTypeDescriptorId AND d2.StaffUSI = d.StaffUSI)
@@ -3955,7 +3955,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffSchoolAssociation_TrackedDelete(ProgramAssignmentDescriptorId, SchoolId, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffSchoolAssociation_TrackedDelete(ProgramAssignmentDescriptorId, SchoolId, StaffUSI, Id, ChangeVersion)
     SELECT  ProgramAssignmentDescriptorId, SchoolId, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffSchoolAssociation_TrackedDelete d2 WHERE d2.ProgramAssignmentDescriptorId = d.ProgramAssignmentDescriptorId AND d2.SchoolId = d.SchoolId AND d2.StaffUSI = d.StaffUSI)
@@ -3973,7 +3973,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StaffSectionAssociation_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StaffUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StaffSectionAssociation_TrackedDelete(LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StaffUSI, Id, ChangeVersion)
     SELECT  LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StaffUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StaffSectionAssociation_TrackedDelete d2 WHERE d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName AND d2.StaffUSI = d.StaffUSI)
@@ -3991,7 +3991,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StateAbbreviationDescriptor_TrackedDelete(StateAbbreviationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StateAbbreviationDescriptor_TrackedDelete(StateAbbreviationDescriptorId, Id, ChangeVersion)
     SELECT  d.StateAbbreviationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StateAbbreviationDescriptorId = b.DescriptorId
@@ -4010,7 +4010,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StateEducationAgency_TrackedDelete(StateEducationAgencyId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StateEducationAgency_TrackedDelete(StateEducationAgencyId, Id, ChangeVersion)
     SELECT  d.StateEducationAgencyId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.EducationOrganization b ON d.StateEducationAgencyId = b.EducationOrganizationId
@@ -4029,7 +4029,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentAcademicRecord_TrackedDelete(EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentAcademicRecord_TrackedDelete(EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, ChangeVersion)
     SELECT  EducationOrganizationId, SchoolYear, StudentUSI, TermDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentAcademicRecord_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.SchoolYear = d.SchoolYear AND d2.StudentUSI = d.StudentUSI AND d2.TermDescriptorId = d.TermDescriptorId)
@@ -4047,7 +4047,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentAssessment_TrackedDelete(AcademicSubjectDescriptorId, AdministrationDate, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentAssessment_TrackedDelete(AcademicSubjectDescriptorId, AdministrationDate, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, StudentUSI, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, AdministrationDate, AssessedGradeLevelDescriptorId, AssessmentTitle, AssessmentVersion, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentAssessment_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.AdministrationDate = d.AdministrationDate AND d2.AssessedGradeLevelDescriptorId = d.AssessedGradeLevelDescriptorId AND d2.AssessmentTitle = d.AssessmentTitle AND d2.AssessmentVersion = d.AssessmentVersion AND d2.StudentUSI = d.StudentUSI)
@@ -4065,7 +4065,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentCTEProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentCTEProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4084,7 +4084,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentCharacteristicDescriptor_TrackedDelete(StudentCharacteristicDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentCharacteristicDescriptor_TrackedDelete(StudentCharacteristicDescriptorId, Id, ChangeVersion)
     SELECT  d.StudentCharacteristicDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StudentCharacteristicDescriptorId = b.DescriptorId
@@ -4103,7 +4103,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentCohortAssociation_TrackedDelete(BeginDate, CohortIdentifier, EducationOrganizationId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentCohortAssociation_TrackedDelete(BeginDate, CohortIdentifier, EducationOrganizationId, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, CohortIdentifier, EducationOrganizationId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentCohortAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.CohortIdentifier = d.CohortIdentifier AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.StudentUSI = d.StudentUSI)
@@ -4121,7 +4121,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentCompetencyObjective_TrackedDelete(GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveEducationOrganizationId, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentCompetencyObjective_TrackedDelete(GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveEducationOrganizationId, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveEducationOrganizationId, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentCompetencyObjective_TrackedDelete d2 WHERE d2.GradingPeriodDescriptorId = d.GradingPeriodDescriptorId AND d2.GradingPeriodSchoolId = d.GradingPeriodSchoolId AND d2.GradingPeriodSchoolYear = d.GradingPeriodSchoolYear AND d2.GradingPeriodSequence = d.GradingPeriodSequence AND d2.Objective = d.Objective AND d2.ObjectiveEducationOrganizationId = d.ObjectiveEducationOrganizationId AND d2.ObjectiveGradeLevelDescriptorId = d.ObjectiveGradeLevelDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -4139,7 +4139,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_Student_TrackedDelete(StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_Student_TrackedDelete(StudentUSI, Id, ChangeVersion)
     SELECT  StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_Student_TrackedDelete d2 WHERE d2.StudentUSI = d.StudentUSI)
@@ -4157,7 +4157,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentDisciplineIncidentAssociation_TrackedDelete(IncidentIdentifier, SchoolId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentDisciplineIncidentAssociation_TrackedDelete(IncidentIdentifier, SchoolId, StudentUSI, Id, ChangeVersion)
     SELECT  IncidentIdentifier, SchoolId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentDisciplineIncidentAssociation_TrackedDelete d2 WHERE d2.IncidentIdentifier = d.IncidentIdentifier AND d2.SchoolId = d.SchoolId AND d2.StudentUSI = d.StudentUSI)
@@ -4175,7 +4175,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentEducationOrganizationAssociation_TrackedDelete(EducationOrganizationId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentEducationOrganizationAssociation_TrackedDelete(EducationOrganizationId, StudentUSI, Id, ChangeVersion)
     SELECT  EducationOrganizationId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentEducationOrganizationAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.StudentUSI = d.StudentUSI)
@@ -4193,7 +4193,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentEducationOrganizationResponsibilityAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ResponsibilityDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentEducationOrganizationResponsibilityAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ResponsibilityDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, EducationOrganizationId, ResponsibilityDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentEducationOrganizationResponsibilityAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.ResponsibilityDescriptorId = d.ResponsibilityDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -4211,7 +4211,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentGradebookEntry_TrackedDelete(BeginDate, DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentGradebookEntry_TrackedDelete(BeginDate, DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, DateAssigned, GradebookEntryTitle, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentGradebookEntry_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.DateAssigned = d.DateAssigned AND d2.GradebookEntryTitle = d.GradebookEntryTitle AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName AND d2.StudentUSI = d.StudentUSI)
@@ -4229,7 +4229,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentHomelessProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentHomelessProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4248,7 +4248,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentIdentificationSystemDescriptor_TrackedDelete(StudentIdentificationSystemDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentIdentificationSystemDescriptor_TrackedDelete(StudentIdentificationSystemDescriptorId, Id, ChangeVersion)
     SELECT  d.StudentIdentificationSystemDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StudentIdentificationSystemDescriptorId = b.DescriptorId
@@ -4267,7 +4267,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentInterventionAssociation_TrackedDelete(EducationOrganizationId, InterventionIdentificationCode, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentInterventionAssociation_TrackedDelete(EducationOrganizationId, InterventionIdentificationCode, StudentUSI, Id, ChangeVersion)
     SELECT  EducationOrganizationId, InterventionIdentificationCode, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentInterventionAssociation_TrackedDelete d2 WHERE d2.EducationOrganizationId = d.EducationOrganizationId AND d2.InterventionIdentificationCode = d.InterventionIdentificationCode AND d2.StudentUSI = d.StudentUSI)
@@ -4285,7 +4285,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentInterventionAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, InterventionIdentificationCode, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentInterventionAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, InterventionIdentificationCode, StudentUSI, Id, ChangeVersion)
     SELECT  AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, InterventionIdentificationCode, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentInterventionAttendanceEvent_TrackedDelete d2 WHERE d2.AttendanceEventCategoryDescriptorId = d.AttendanceEventCategoryDescriptorId AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.EventDate = d.EventDate AND d2.InterventionIdentificationCode = d.InterventionIdentificationCode AND d2.StudentUSI = d.StudentUSI)
@@ -4303,7 +4303,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentLanguageInstructionProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentLanguageInstructionProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4322,7 +4322,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentLearningObjective_TrackedDelete(AcademicSubjectDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentLearningObjective_TrackedDelete(AcademicSubjectDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  AcademicSubjectDescriptorId, GradingPeriodDescriptorId, GradingPeriodSchoolId, GradingPeriodSchoolYear, GradingPeriodSequence, Objective, ObjectiveGradeLevelDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentLearningObjective_TrackedDelete d2 WHERE d2.AcademicSubjectDescriptorId = d.AcademicSubjectDescriptorId AND d2.GradingPeriodDescriptorId = d.GradingPeriodDescriptorId AND d2.GradingPeriodSchoolId = d.GradingPeriodSchoolId AND d2.GradingPeriodSchoolYear = d.GradingPeriodSchoolYear AND d2.GradingPeriodSequence = d.GradingPeriodSequence AND d2.Objective = d.Objective AND d2.ObjectiveGradeLevelDescriptorId = d.ObjectiveGradeLevelDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -4340,7 +4340,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentMigrantEducationProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentMigrantEducationProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4359,7 +4359,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentNeglectedOrDelinquentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentNeglectedOrDelinquentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4378,7 +4378,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentParentAssociation_TrackedDelete(ParentUSI, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentParentAssociation_TrackedDelete(ParentUSI, StudentUSI, Id, ChangeVersion)
     SELECT  ParentUSI, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentParentAssociation_TrackedDelete d2 WHERE d2.ParentUSI = d.ParentUSI AND d2.StudentUSI = d.StudentUSI)
@@ -4396,7 +4396,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentParticipationCodeDescriptor_TrackedDelete(StudentParticipationCodeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentParticipationCodeDescriptor_TrackedDelete(StudentParticipationCodeDescriptorId, Id, ChangeVersion)
     SELECT  d.StudentParticipationCodeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.StudentParticipationCodeDescriptorId = b.DescriptorId
@@ -4415,7 +4415,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4434,7 +4434,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentProgramAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentProgramAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  AttendanceEventCategoryDescriptorId, EducationOrganizationId, EventDate, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentProgramAttendanceEvent_TrackedDelete d2 WHERE d2.AttendanceEventCategoryDescriptorId = d.AttendanceEventCategoryDescriptorId AND d2.EducationOrganizationId = d.EducationOrganizationId AND d2.EventDate = d.EventDate AND d2.ProgramEducationOrganizationId = d.ProgramEducationOrganizationId AND d2.ProgramName = d.ProgramName AND d2.ProgramTypeDescriptorId = d.ProgramTypeDescriptorId AND d2.StudentUSI = d.StudentUSI)
@@ -4452,7 +4452,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSchoolAssociation_TrackedDelete(EntryDate, SchoolId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSchoolAssociation_TrackedDelete(EntryDate, SchoolId, StudentUSI, Id, ChangeVersion)
     SELECT  EntryDate, SchoolId, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentSchoolAssociation_TrackedDelete d2 WHERE d2.EntryDate = d.EntryDate AND d2.SchoolId = d.SchoolId AND d2.StudentUSI = d.StudentUSI)
@@ -4470,7 +4470,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSchoolAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EventDate, SchoolId, SchoolYear, SessionName, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSchoolAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EventDate, SchoolId, SchoolYear, SessionName, StudentUSI, Id, ChangeVersion)
     SELECT  AttendanceEventCategoryDescriptorId, EventDate, SchoolId, SchoolYear, SessionName, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentSchoolAttendanceEvent_TrackedDelete d2 WHERE d2.AttendanceEventCategoryDescriptorId = d.AttendanceEventCategoryDescriptorId AND d2.EventDate = d.EventDate AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SessionName = d.SessionName AND d2.StudentUSI = d.StudentUSI)
@@ -4488,7 +4488,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSchoolFoodServiceProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSchoolFoodServiceProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4507,7 +4507,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSectionAssociation_TrackedDelete(BeginDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSectionAssociation_TrackedDelete(BeginDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, ChangeVersion)
     SELECT  BeginDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentSectionAssociation_TrackedDelete d2 WHERE d2.BeginDate = d.BeginDate AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName AND d2.StudentUSI = d.StudentUSI)
@@ -4525,7 +4525,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSectionAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EventDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSectionAttendanceEvent_TrackedDelete(AttendanceEventCategoryDescriptorId, EventDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, ChangeVersion)
     SELECT  AttendanceEventCategoryDescriptorId, EventDate, LocalCourseCode, SchoolId, SchoolYear, SectionIdentifier, SessionName, StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
     WHERE NOT EXISTS (SELECT * FROM changes.edfi_StudentSectionAttendanceEvent_TrackedDelete d2 WHERE d2.AttendanceEventCategoryDescriptorId = d.AttendanceEventCategoryDescriptorId AND d2.EventDate = d.EventDate AND d2.LocalCourseCode = d.LocalCourseCode AND d2.SchoolId = d.SchoolId AND d2.SchoolYear = d.SchoolYear AND d2.SectionIdentifier = d.SectionIdentifier AND d2.SessionName = d.SessionName AND d2.StudentUSI = d.StudentUSI)
@@ -4543,7 +4543,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentSpecialEducationProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentSpecialEducationProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4562,7 +4562,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_StudentTitleIPartAProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_StudentTitleIPartAProgramAssociation_TrackedDelete(BeginDate, EducationOrganizationId, ProgramEducationOrganizationId, ProgramName, ProgramTypeDescriptorId, StudentUSI, Id, ChangeVersion)
     SELECT  d.BeginDate, d.EducationOrganizationId, d.ProgramEducationOrganizationId, d.ProgramName, d.ProgramTypeDescriptorId, d.StudentUSI, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.GeneralStudentProgramAssociation b ON d.BeginDate = b.BeginDate AND d.EducationOrganizationId = b.EducationOrganizationId AND d.ProgramEducationOrganizationId = b.ProgramEducationOrganizationId AND d.ProgramName = b.ProgramName AND d.ProgramTypeDescriptorId = b.ProgramTypeDescriptorId AND d.StudentUSI = b.StudentUSI
@@ -4581,7 +4581,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TeachingCredentialBasisDescriptor_TrackedDelete(TeachingCredentialBasisDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TeachingCredentialBasisDescriptor_TrackedDelete(TeachingCredentialBasisDescriptorId, Id, ChangeVersion)
     SELECT  d.TeachingCredentialBasisDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TeachingCredentialBasisDescriptorId = b.DescriptorId
@@ -4600,7 +4600,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TeachingCredentialDescriptor_TrackedDelete(TeachingCredentialDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TeachingCredentialDescriptor_TrackedDelete(TeachingCredentialDescriptorId, Id, ChangeVersion)
     SELECT  d.TeachingCredentialDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TeachingCredentialDescriptorId = b.DescriptorId
@@ -4619,7 +4619,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TechnicalSkillsAssessmentDescriptor_TrackedDelete(TechnicalSkillsAssessmentDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TechnicalSkillsAssessmentDescriptor_TrackedDelete(TechnicalSkillsAssessmentDescriptorId, Id, ChangeVersion)
     SELECT  d.TechnicalSkillsAssessmentDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TechnicalSkillsAssessmentDescriptorId = b.DescriptorId
@@ -4638,7 +4638,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TelephoneNumberTypeDescriptor_TrackedDelete(TelephoneNumberTypeDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TelephoneNumberTypeDescriptor_TrackedDelete(TelephoneNumberTypeDescriptorId, Id, ChangeVersion)
     SELECT  d.TelephoneNumberTypeDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TelephoneNumberTypeDescriptorId = b.DescriptorId
@@ -4657,7 +4657,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TermDescriptor_TrackedDelete(TermDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TermDescriptor_TrackedDelete(TermDescriptorId, Id, ChangeVersion)
     SELECT  d.TermDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TermDescriptorId = b.DescriptorId
@@ -4676,7 +4676,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TitleIPartAParticipantDescriptor_TrackedDelete(TitleIPartAParticipantDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TitleIPartAParticipantDescriptor_TrackedDelete(TitleIPartAParticipantDescriptorId, Id, ChangeVersion)
     SELECT  d.TitleIPartAParticipantDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TitleIPartAParticipantDescriptorId = b.DescriptorId
@@ -4695,7 +4695,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TitleIPartASchoolDesignationDescriptor_TrackedDelete(TitleIPartASchoolDesignationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TitleIPartASchoolDesignationDescriptor_TrackedDelete(TitleIPartASchoolDesignationDescriptorId, Id, ChangeVersion)
     SELECT  d.TitleIPartASchoolDesignationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TitleIPartASchoolDesignationDescriptorId = b.DescriptorId
@@ -4714,7 +4714,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_TribalAffiliationDescriptor_TrackedDelete(TribalAffiliationDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_TribalAffiliationDescriptor_TrackedDelete(TribalAffiliationDescriptorId, Id, ChangeVersion)
     SELECT  d.TribalAffiliationDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.TribalAffiliationDescriptorId = b.DescriptorId
@@ -4733,7 +4733,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_VisaDescriptor_TrackedDelete(VisaDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_VisaDescriptor_TrackedDelete(VisaDescriptorId, Id, ChangeVersion)
     SELECT  d.VisaDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.VisaDescriptorId = b.DescriptorId
@@ -4752,7 +4752,7 @@ BEGIN
 
     SET NOCOUNT ON
 
-    INSERT INTO changes.edfi_WeaponDescriptor_TrackedDelete(WeaponDescriptorId, Id, SystemChangeVersion)
+    INSERT INTO changes.edfi_WeaponDescriptor_TrackedDelete(WeaponDescriptorId, Id, ChangeVersion)
     SELECT  d.WeaponDescriptorId, Id, CHANGE_TRACKING_CURRENT_VERSION()
     FROM    deleted d
             INNER JOIN edfi.Descriptor b ON d.WeaponDescriptorId = b.DescriptorId
