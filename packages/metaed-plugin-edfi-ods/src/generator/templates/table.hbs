@@ -4,6 +4,9 @@ CREATE TABLE [{{{schema}}}].[{{{name}}}] (
 {{#columns}}
     {{> column}}
 {{/columns}}
+{{#if hasDiscriminatorColumn}}
+    [Discriminator] [NVARCHAR](128) NULL,
+{{/if}}
 {{#if includeCreateDateColumn}}
     [CreateDate] [DATETIME] NOT NULL,
 {{/if}}
