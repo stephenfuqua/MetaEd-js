@@ -78,6 +78,22 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     .filter((column: Column) => !foreignKeyColumnNamesOnTable.includes(column.name))
     .map((column: Column) => buildApiProperty(column));
 
+  if (table.hasDiscriminatorColumn) {
+    result.push({
+      propertyName: 'Discriminator',
+      propertyType: {
+        dbType: 'String',
+        maxLength: 128,
+        precision: 0,
+        scale: 0,
+        isNullable: true,
+      },
+      description: '',
+      isIdentifying: false,
+      isServerAssigned: false,
+    });
+  }
+
   if (table.includeCreateDateColumn) {
     result.push({
       propertyName: 'CreateDate',

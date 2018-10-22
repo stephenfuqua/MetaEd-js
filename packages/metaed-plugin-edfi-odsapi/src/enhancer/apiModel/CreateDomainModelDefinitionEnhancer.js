@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { MetaEdEnvironment, EnhancerResult, Namespace } from 'metaed-core';
+import type { MetaEdEnvironment, EnhancerResult, Namespace, PluginEnvironment } from 'metaed-core';
 import { buildEntityDefinitions } from './BuildEntityDefinitions';
 import { buildAssociationDefinitions } from './BuildAssociationDefinitions';
 import { deriveLogicalNameFromProjectName } from '../../model/apiModel/SchemaDefinition';
@@ -103,8 +103,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.namespace.forEach((namespace: Namespace) => {
     const additionalEntityDefinitions = [];
 
+    const odsApiVersion: string =
+      ((metaEd.plugin.get('edfiOds'): any): PluginEnvironment).targetTechnologyVersion || '3.0.0';
+
     const domainModelDefinition: DomainModelDefinition = {
-      odsApiVersion: '3.0.0',
+      odsApiVersion,
       schemaDefinition: buildSchemaDefinition(namespace),
       aggregateDefinitions: buildAggregateDefinitions(namespace),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),
