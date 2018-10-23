@@ -42,6 +42,7 @@ function buildExtensionTables(
     ),
     description: property.documentation,
     parentEntity: property.parentEntity,
+    includeCreateDateColumn: true,
     hideFromApiMetadata: true,
   });
 

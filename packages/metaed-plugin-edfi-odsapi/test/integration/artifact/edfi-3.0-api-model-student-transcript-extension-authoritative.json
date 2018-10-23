@@ -213,7 +213,21 @@
     {
       "schema": "exttwo",
       "name": "StudentAcademicRecordClassRankingExtension",
-      "locallyDefinedProperties": [],
+      "locallyDefinedProperties": [
+        {
+          "propertyName": "CreateDate",
+          "propertyType": {
+            "dbType": "DateTime",
+            "maxLength": 0,
+            "precision": 0,
+            "scale": 0,
+            "isNullable": false
+          },
+          "description": "",
+          "isIdentifying": false,
+          "isServerAssigned": false
+        }
+      ],
       "identifiers": [
         {
           "identifierName": "StudentAcademicRecordClassRankingExtension_PK",
