@@ -27,7 +27,6 @@ import { validate as commonPropertyMustMatchACommon } from './validator/CommonPr
 import { validate as commonPropertyMustNotContainIdentity } from './validator/CommonProperty/CommonPropertyMustNotContainIdentity';
 import { validate as commonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension } from './validator/CommonProperty/CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension';
 import { validate as commonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality } from './validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
-
 import { validate as mostEntitiesCannotHaveSameName } from './validator/CrossEntity/MostEntitiesCannotHaveSameName';
 
 import { validate as decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
