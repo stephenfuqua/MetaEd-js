@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.3.1-dev.11...v1.3.1) (2018-10-25)
+
+**Note:** Version bump only for package metaed-console
+
+
+
+
+
 <a name="1.3.1-dev.11"></a>
 ## [1.3.1-dev.11](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.3.1-dev.10...v1.3.1-dev.11) (2018-10-23)
 
