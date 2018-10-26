@@ -1,6 +1,7 @@
 // @flow
 import {
   newMetaEdEnvironment,
+  newPluginEnvironment,
   MetaEdTextBuilder,
   AssociationBuilder,
   AssociationExtensionBuilder,
@@ -11,6 +12,12 @@ import { validate } from '../../../src/validator/UpcomingImprovements/IncludingR
 
 describe('when an association extension extends an association with no required properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.0.0',
+    }),
+  );
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -42,6 +49,12 @@ describe('when an association extension extends an association with no required 
 
 describe('when an association extension extends an association with a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.0.0',
+    }),
+  );
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -75,5 +88,42 @@ describe('when an association extension extends an association with a required p
     expect(failures[0].sourceMap).toMatchSnapshot(
       'when an association extension extends an association with a required property should have validation failure -> sourceMap',
     );
+  });
+});
+
+describe('when an association extension extends an association with a required property for ODS/API >3.0', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.1.0',
+    }),
+  );
+
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartAssociation(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName1', 'doc', true, false)
+      .withEndAssociation()
+
+      .withStartAssociationExtension(entityName)
+      .withBooleanProperty('RequiredProperty', 'doc', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });

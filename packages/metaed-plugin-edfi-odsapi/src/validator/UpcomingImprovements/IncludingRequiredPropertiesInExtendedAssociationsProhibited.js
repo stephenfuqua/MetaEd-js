@@ -1,11 +1,21 @@
 // @flow
 
 // 2.2.X.2 - METAED-701
-import type { MetaEdEnvironment, ValidationFailure, AssociationExtension } from 'metaed-core';
-import { getAllEntitiesOfType } from 'metaed-core';
+import type { MetaEdEnvironment, ValidationFailure, AssociationExtension, SemVer, PluginEnvironment } from 'metaed-core';
+import { getAllEntitiesOfType, versionSatisfies } from 'metaed-core';
+
+const targetTechnologyVersion: SemVer = '<3.1';
+
+function isTargetTechnologyVersion(metaEd: MetaEdEnvironment): boolean {
+  return versionSatisfies(
+    ((metaEd.plugin.get('edfiOdsApi'): any): PluginEnvironment).targetTechnologyVersion,
+    targetTechnologyVersion,
+  );
+}
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
+  if (!isTargetTechnologyVersion(metaEd)) return failures;
 
   ((getAllEntitiesOfType(metaEd, 'associationExtension'): any): Array<AssociationExtension>).forEach(
     (associationExtension: AssociationExtension) => {

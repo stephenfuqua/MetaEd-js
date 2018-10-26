@@ -1,6 +1,7 @@
 // @flow
 import {
   newMetaEdEnvironment,
+  newPluginEnvironment,
   MetaEdTextBuilder,
   DomainEntityBuilder,
   DomainEntityExtensionBuilder,
@@ -11,6 +12,12 @@ import { validate } from '../../../src/validator/UpcomingImprovements/IncludingR
 
 describe('when a domain entity extension extends a domain entity with no required properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.0.0',
+    }),
+  );
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -42,6 +49,12 @@ describe('when a domain entity extension extends a domain entity with no require
 
 describe('when a domain entity extension extends a domain entity with a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.0.0',
+    }),
+  );
   const entityName: string = 'EntityName';
   let failures: Array<ValidationFailure>;
 
@@ -75,5 +88,41 @@ describe('when a domain entity extension extends a domain entity with a required
     expect(failures[0].sourceMap).toMatchSnapshot(
       'when a domain entity extension extends a domain entity with a required property should have validation failure -> sourceMap',
     );
+  });
+});
+
+describe('when a domain entity extension extends a domain entity with a required property for ODS/API >3.0', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.plugin.set(
+    'edfiOdsApi',
+    Object.assign(newPluginEnvironment(), {
+      targetTechnologyVersion: '3.1.0',
+    }),
+  );
+  const entityName: string = 'EntityName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName1', 'doc', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntityExtension(entityName)
+      .withBooleanProperty('RequiredProperty', 'doc', true, false)
+      .withEndDomainEntitySubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });
