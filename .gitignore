@@ -26,9 +26,15 @@ dist/
 0004-Tables.sql
 0004-Tables.html
 
+Simple-0004-Extension-extension-Tables.sql
+Transcript-0004-Extension-extension-Tables.sql
+
 0020-Tables.diff
 0020-Tables.sql
 0020-Tables.html
+
+Simple-0020-Extension-extension-Tables.sql
+Transcript-0020-Extension-extension-Tables.sql
 
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json

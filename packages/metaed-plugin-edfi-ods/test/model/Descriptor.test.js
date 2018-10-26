@@ -8,7 +8,7 @@ import {
 } from 'metaed-core';
 import type { MetaEdEnvironment } from 'metaed-core';
 import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unified';
-import { initialize as initializeOdsPlugin } from '../../../index';
+import { initialize as initializeOdsPlugin } from '../../index';
 
 describe('when descriptor is required property of domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
