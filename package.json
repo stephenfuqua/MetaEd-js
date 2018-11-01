@@ -49,7 +49,7 @@
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
     "test:code-duplication": "yarn jsinspect -t 50 --ignore \"test|gen|dist\" ./packages",
-    "prep-for-publish": "yarn test && yarn test:unit:ods-db && yarn build",
+    "prep-for-publish": "yarn test && yarn build",
     "publish-dev": "yarn lerna publish prerelease --exact --conventional-commits --preid=dev --npm-tag=dev --yes --force-publish=* --npm-client=npm"
   }
 }
