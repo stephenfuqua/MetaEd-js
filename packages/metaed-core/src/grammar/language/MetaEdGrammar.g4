@@ -431,16 +431,20 @@ domainEntityProperty : DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
             mergePartOfReference* ;
 
 sharedDecimalProperty : SHARED_DECIMAL_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
-            propertyComponents ;
+            propertyComponents
+            mergePartOfReference* ;
 
 sharedIntegerProperty : SHARED_INTEGER_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
-            propertyComponents ;
+            propertyComponents
+            mergePartOfReference* ;
 
 sharedShortProperty : SHARED_SHORT_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
-            propertyComponents ;
+            propertyComponents
+            mergePartOfReference* ;
 
 sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
-            propertyComponents ;
+            propertyComponents
+            mergePartOfReference* ;
 
 shortProperty : SHORT propertyName metaEdId?
             propertyComponents

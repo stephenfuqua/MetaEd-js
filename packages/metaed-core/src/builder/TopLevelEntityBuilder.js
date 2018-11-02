@@ -643,6 +643,8 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   exitMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
     if (this.currentProperty === NoEntityProperty || this.currentMergedProperty === NoMergedProperty) return;
+    // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
+    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
     ((this.currentProperty: any): ReferentialProperty).mergedProperties.push(this.currentMergedProperty);
     ((this.currentProperty.sourceMap: any): ReferentialPropertySourceMap).mergedProperties.push(sourceMapFrom(context));
     this.currentMergedProperty = NoMergedProperty;

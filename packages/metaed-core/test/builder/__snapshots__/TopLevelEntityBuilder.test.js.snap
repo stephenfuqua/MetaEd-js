@@ -466,6 +466,74 @@ Array [
 ]
 `;
 
+exports[`when building multiple merge property references for a shared simple type should have source map for first merged property 1`] = `
+Object {
+  "mergeProperty": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "mergePropertyPath": Array [
+    Object {
+      "column": 10,
+      "line": 9,
+      "tokenText": "MergePropertyPath0",
+    },
+  ],
+  "targetProperty": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPath": Array [
+    Object {
+      "column": 34,
+      "line": 9,
+      "tokenText": "TargetPropertyPath0",
+    },
+  ],
+  "type": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+}
+`;
+
+exports[`when building multiple merge property references for a shared simple type should have source map for second merged property 1`] = `
+Object {
+  "mergeProperty": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "mergePropertyPath": Array [
+    Object {
+      "column": 10,
+      "line": 10,
+      "tokenText": "MergePropertyPath1",
+    },
+  ],
+  "targetProperty": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPath": Array [
+    Object {
+      "column": 34,
+      "line": 10,
+      "tokenText": "TargetPropertyPath1",
+    },
+  ],
+  "type": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+}
+`;
+
 exports[`when building multiple merge property references should have source map for first merged property 1`] = `
 Object {
   "mergeProperty": Object {

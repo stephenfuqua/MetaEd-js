@@ -237,6 +237,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "mergedProperties": Array [],
   "metaEdId": Object {
     "column": 0,
     "line": 0,
@@ -362,6 +363,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "mergedProperties": Array [],
   "metaEdId": Object {
     "column": 0,
     "line": 0,

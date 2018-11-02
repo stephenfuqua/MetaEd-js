@@ -1,4 +1,4 @@
-// Generated from BaseLexer.g4 by ANTLR 4.6
+// Generated from ./packages/metaed-core/src/grammar/language/BaseLexer.g4 by ANTLR 4.6
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 

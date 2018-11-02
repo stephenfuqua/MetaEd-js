@@ -11,6 +11,7 @@ import { asDecimalProperty } from '../../src/model/property/DecimalProperty';
 import { asDomainEntityProperty } from '../../src/model/property/DomainEntityProperty';
 import { asIntegerProperty } from '../../src/model/property/IntegerProperty';
 import { asReferentialProperty } from '../../src/model/property/ReferentialProperty';
+import { asSharedStringProperty } from '../../src/model/property/SharedStringProperty';
 import { asShortProperty } from '../../src/model/property/ShortProperty';
 import { asStringProperty } from '../../src/model/property/StringProperty';
 import type { AssociationPropertySourceMap } from '../../src/model/property/AssociationProperty';
@@ -1689,6 +1690,125 @@ describe('when building multiple merge property references', () => {
     ).not.toBe(NoSourceMap);
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap,
+    ).toMatchSnapshot();
+  });
+});
+
+describe('when building multiple merge property references for a shared simple type', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespaceName: string = 'namespace';
+  const entityName: string = 'EntityName';
+  const propertyName: string = 'PropertyName';
+
+  const mergePropertyPath0: string = 'MergePropertyPath0';
+  const targetPropertyPath0: string = 'TargetPropertyPath0';
+  const mergePropertyPath1: string = 'MergePropertyPath1';
+  const targetPropertyPath1: string = 'TargetPropertyPath1';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntityBuilder(metaEd, []);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withSharedStringProperty(propertyName, propertyName, 'doc', true, false)
+      .withMergePartOfReference(mergePropertyPath0, targetPropertyPath0)
+      .withMergePartOfReference(mergePropertyPath1, targetPropertyPath1)
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have multiple properties in merged properties', () => {
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties,
+    ).toHaveLength(2);
+  });
+
+  it('should have mergedPropertyPath and targetPropertyPath for first merged property', () => {
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0]
+        .mergePropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0]
+        .targetPropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0]
+        .mergePropertyPath[0],
+    ).toBe(mergePropertyPath0);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0]
+        .targetPropertyPath[0],
+    ).toBe(targetPropertyPath0);
+  });
+
+  it('should have source map for first merged property', () => {
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .mergePropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0].sourceMap
+        .targetPropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[0].sourceMap,
+    ).toMatchSnapshot();
+  });
+
+  it('should have mergedPropertyPath and targetPropertyPath for second merged property', () => {
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1]
+        .mergePropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1]
+        .targetPropertyPath,
+    ).toHaveLength(1);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1]
+        .mergePropertyPath[0],
+    ).toBe(mergePropertyPath1);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1]
+        .targetPropertyPath[0],
+    ).toBe(targetPropertyPath1);
+  });
+
+  it('should have source map for second merged property', () => {
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .mergePropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .mergePropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .targetPropertyPath[0],
+    ).toBeDefined();
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap
+        .targetPropertyPath[0],
+    ).not.toBe(NoSourceMap);
+    expect(
+      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergedProperties[1].sourceMap,
     ).toMatchSnapshot();
   });
 });

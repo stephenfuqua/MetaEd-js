@@ -1,14 +1,23 @@
 // @flow
-import { newIntegerProperty } from './IntegerProperty';
+import { newIntegerProperty, newIntegerPropertySourceMap } from './IntegerProperty';
 import type { IntegerProperty, IntegerPropertySourceMap } from './IntegerProperty';
 import type { EntityProperty } from './EntityProperty';
 import type { MergedProperty } from './MergedProperty';
 import type { SourceMap } from '../SourceMap';
+import { NoSourceMap } from '../SourceMap';
 
 export type SharedIntegerPropertySourceMap = {
   ...$Exact<IntegerPropertySourceMap>,
   mergedProperties: Array<SourceMap>,
 };
+
+export function newSharedIntegerPropertySourceMap(): SharedIntegerPropertySourceMap {
+  return {
+    ...newIntegerPropertySourceMap(),
+    referencedEntity: NoSourceMap,
+    mergedProperties: [],
+  };
+}
 
 export type SharedIntegerProperty = {
   sourceMap: SharedIntegerPropertySourceMap,
@@ -22,6 +31,7 @@ export function newSharedIntegerProperty(): SharedIntegerProperty {
     type: 'sharedInteger',
     typeHumanizedName: 'Shared Integer Property',
     mergedProperties: [],
+    sourceMap: newSharedIntegerPropertySourceMap(),
   };
 }
 
