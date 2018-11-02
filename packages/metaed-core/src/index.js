@@ -42,7 +42,7 @@ export {
   getPropertiesOfType,
   newPropertyIndex,
 } from './model/property/PropertyRepository';
-export { isReferenceProperty, isSharedProperty, allPropertyTypes } from './model/property/PropertyType';
+export { isReferentialProperty, isSharedProperty, allPropertyTypes } from './model/property/PropertyType';
 export {
   allEntityModelTypes,
   allEntityModelTypesNoSimpleTypes,
@@ -195,7 +195,7 @@ export { asInlineCommonProperty, newInlineCommonProperty } from './model/propert
 export { asIntegerProperty, newIntegerProperty } from './model/property/IntegerProperty';
 export { asMergedProperty, newMergedProperty } from './model/property/MergedProperty';
 export { asPercentProperty, newPercentProperty } from './model/property/PercentProperty';
-export { asReferentialProperty, newReferentialProperty, isReferentialProperty } from './model/property/ReferentialProperty';
+export { asReferentialProperty, newReferentialProperty } from './model/property/ReferentialProperty';
 export {
   asSchoolYearEnumerationProperty,
   newSchoolYearEnumerationProperty,

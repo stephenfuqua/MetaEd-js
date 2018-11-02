@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, isReferenceProperty, asCommonProperty } from 'metaed-core';
+import { orderByProp, asCommonProperty } from 'metaed-core';
 import type { EntityProperty, PropertyType } from 'metaed-core';
 import type { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
 import { NoTable, getPrimaryKeys } from './Table';
@@ -53,6 +53,9 @@ export function newForeignKeySourceReference(): ForeignKeySourceReference {
     propertyType: 'unknown',
   };
 }
+
+const referenceProperty: Array<PropertyType> = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
+const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
 
 function isSubclassRelationship(property: EntityProperty): boolean {
   if (isReferenceProperty(property)) {

@@ -28,10 +28,6 @@ export type ReferentialProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
-export function isReferentialProperty(property: EntityProperty) {
-  return Object.keys(property).includes('mergedProperties');
-}
-
 export function newReferentialProperty(): ReferentialProperty {
   return {
     ...newEntityProperty(),

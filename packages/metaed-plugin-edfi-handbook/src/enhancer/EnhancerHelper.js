@@ -1,7 +1,17 @@
 // @flow
-import type { MetaEdEnvironment, EntityProperty, ReferentialProperty, PluginEnvironment, Namespace } from 'metaed-core';
-import { isReferenceProperty, getAllProperties } from 'metaed-core';
+import type {
+  MetaEdEnvironment,
+  EntityProperty,
+  ReferentialProperty,
+  PluginEnvironment,
+  Namespace,
+  PropertyType,
+} from 'metaed-core';
+import { getAllProperties } from 'metaed-core';
 import type { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
+
+const referenceProperty: Array<PropertyType> = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
+const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
 
 export function getAllReferentialProperties(metaEd: MetaEdEnvironment): Array<ReferentialProperty> {
   const allProperties: Array<EntityProperty> = getAllProperties(metaEd.propertyIndex);

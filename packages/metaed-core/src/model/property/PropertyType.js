@@ -31,8 +31,17 @@ export type PropertyType =
 const sharedProperty: Array<PropertyType> = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
 export const isSharedProperty = (property: EntityProperty): boolean => sharedProperty.includes(property.type);
 
-const referenceProperty: Array<PropertyType> = ['choice', 'common', 'descriptor', 'association', 'domainEntity'];
-export const isReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
+const referentialProperty: Array<PropertyType> = [
+  'association',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'enumeration',
+  'inlineCommon',
+  'schoolYearEnumeration',
+];
+export const isReferentialProperty = (property: EntityProperty): boolean => referentialProperty.includes(property.type);
 
 export const allPropertyTypes: Array<PropertyType> = [
   'association',
