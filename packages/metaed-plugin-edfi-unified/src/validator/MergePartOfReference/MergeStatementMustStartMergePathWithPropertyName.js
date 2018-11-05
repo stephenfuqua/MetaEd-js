@@ -1,13 +1,26 @@
 // @flow
 import type { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { getPropertiesOfType, asReferentialProperty, isReferentialProperty } from 'metaed-core';
+import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 
-const validTypes: Array<PropertyType> = ['common', 'inlineCommon', 'choice', 'association', 'domainEntity'];
-
+const validPropertyTypes: Array<PropertyType> = [
+  'association',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'enumeration',
+  'inlineCommon',
+  'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedShort',
+  'sharedString',
+];
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  getPropertiesOfType(metaEd.propertyIndex, ...validTypes).forEach(property => {
-    if (!isReferentialProperty(property)) return;
+  getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
+    // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
+    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
     const referentialProperty = asReferentialProperty(property);
     referentialProperty.mergedProperties.forEach(mergedProperty => {
       const prefix: string =

@@ -1126,6 +1126,21 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  withSharedIntegerIdentity(
+    propertyIdentifier: string,
+    named: ?string,
+    documentation: string,
+    context: ?string = null,
+    metaEdId: ?string = null,
+  ): MetaEdTextBuilder {
+    this._withStartSharedProperty('integer', propertyIdentifier, named, metaEdId);
+    this.withDocumentation(documentation);
+    this.withIdentityIndicator();
+    this.withContext(context);
+    this.withEndProperty();
+    return this;
+  }
+
   withBooleanIdentity(
     propertyIdentifier: string,
     documentation: string,

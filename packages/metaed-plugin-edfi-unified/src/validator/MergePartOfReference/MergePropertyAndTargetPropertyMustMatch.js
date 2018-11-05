@@ -15,7 +15,20 @@ import {
   matchAllIdentityReferenceProperties,
 } from '../ValidatorShared/FindReferencedProperty';
 
-const validPropertyTypes: Array<PropertyType> = ['association', 'choice', 'common', 'domainEntity', 'inlineCommon'];
+const validPropertyTypes: Array<PropertyType> = [
+  'association',
+  'choice',
+  'common',
+  'descriptor',
+  'domainEntity',
+  'enumeration',
+  'inlineCommon',
+  'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedShort',
+  'sharedString',
+];
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];

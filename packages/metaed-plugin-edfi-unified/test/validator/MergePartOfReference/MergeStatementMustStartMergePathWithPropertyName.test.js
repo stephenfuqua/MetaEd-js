@@ -184,3 +184,36 @@ describe('when validating reference property starts merge path with property nam
     );
   });
 });
+
+describe('when validating reference property starts merge path with matching property name for simple type', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const propertyName: string = 'PropertyName';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName')
+      .withDocumentation('DomainEntityDocumentation')
+      .withSharedStringIdentity(propertyName, propertyName, 'doc')
+      .withMergePartOfReference(`${propertyName}.Property`, 'TargetPropertyName')
+      .withDomainEntityProperty('DomainEntityPropertyName', 'DomainEntityPropertyDocumentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
