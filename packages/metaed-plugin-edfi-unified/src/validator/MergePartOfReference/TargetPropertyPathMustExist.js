@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { PropertyType, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
-import { getPropertiesOfType, asReferentialProperty, isReferentialProperty } from 'metaed-core';
+import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
 
 const validPropertyTypes: Array<PropertyType> = [
@@ -13,13 +13,18 @@ const validPropertyTypes: Array<PropertyType> = [
   'enumeration',
   'inlineCommon',
   'schoolYearEnumeration',
+  'sharedDecimal',
+  'sharedInteger',
+  'sharedShort',
+  'sharedString',
 ];
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
-    if (!isReferentialProperty(property)) return;
+    // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
+    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
     const referentialProperty = asReferentialProperty(property);
     const namespaces: Array<Namespace> = [referentialProperty.namespace, ...referentialProperty.namespace.dependencies];
     referentialProperty.mergedProperties.forEach(mergedProperty => {

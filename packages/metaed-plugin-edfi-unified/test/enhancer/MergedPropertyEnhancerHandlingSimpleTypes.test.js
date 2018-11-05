@@ -10,7 +10,7 @@ import {
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
-import type { DomainEntityProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
+import type { SharedIntegerProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/MergedPropertyEnhancer';
 
 describe('when enhancing top level entity with nested reference to top level reference', () => {
@@ -24,8 +24,8 @@ describe('when enhancing top level entity with nested reference to top level ref
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3: string = 'DomainEntityName3';
-  let domainEntity1Property1: DomainEntityProperty;
-  let domainEntity3Property1: DomainEntityProperty;
+  let domainEntity1Property1: SharedIntegerProperty;
+  let domainEntity3Property1: SharedIntegerProperty;
   beforeAll(() => {
     const SharedIntegerName2: string = 'SharedIntegerName2';
 
@@ -94,8 +94,8 @@ describe('when enhancing top level entity with top level reference to nested ref
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const sharedIntegerName3: string = 'SharedIntegerName3';
-  let domainEntity1Property2: DomainEntityProperty;
-  let domainEntity2Property1: DomainEntityProperty;
+  let domainEntity1Property2: SharedIntegerProperty;
+  let domainEntity2Property1: SharedIntegerProperty;
   beforeAll(() => {
     const domainEntityName2: string = 'DomainEntityName2';
     const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
@@ -163,8 +163,8 @@ describe('when enhancing top level entity with nested reference to nested refere
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3: string = 'DomainEntityName3';
-  let domainEntity2Property1: DomainEntityProperty;
-  let domainEntity3Property1: DomainEntityProperty;
+  let domainEntity2Property1: SharedIntegerProperty;
+  let domainEntity3Property1: SharedIntegerProperty;
   beforeAll(() => {
     const sharedIntegerName4: string = 'SharedIntegerName4';
     const domainEntityName2: string = 'DomainEntityName2';
@@ -245,8 +245,8 @@ describe('when enhancing top level entity with deep nested reference to deep nes
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3: string = 'DomainEntityName3';
-  let domainEntity4Property1: DomainEntityProperty;
-  let domainEntity5Property1: DomainEntityProperty;
+  let domainEntity4Property1: SharedIntegerProperty;
+  let domainEntity5Property1: SharedIntegerProperty;
   beforeAll(() => {
     const sharedIntegerName6: string = 'SharedIntegerName6';
 

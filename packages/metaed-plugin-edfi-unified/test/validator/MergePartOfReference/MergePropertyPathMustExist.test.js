@@ -731,7 +731,6 @@ describe('when validating domain entity has merge property across namespaces and
   });
 });
 
-// METAED-881 demonstration
 describe('when validating domain entity has simple property as merge property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const learningObjectiveName = 'LearningObjective';
@@ -781,11 +780,7 @@ describe('when validating domain entity has simple property as merge property', 
     expect(coreNamespace.entity.domainEntity.size).toBe(3);
   });
 
-  it('should have one validation failure', () => {
-    expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
+  it('should have no validation failure', () => {
+    expect(failures).toHaveLength(0);
   });
 });
