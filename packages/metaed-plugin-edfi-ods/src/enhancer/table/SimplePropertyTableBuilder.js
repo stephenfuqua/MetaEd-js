@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
-import type { EntityProperty } from 'metaed-core';
+import type { EntityProperty, MergedProperty } from 'metaed-core';
+import { isSharedProperty, asReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
 import { baseNameCollapsingJoinTableNamer } from './JoinTableNamer';
 import { ColumnTransform, ColumnTransformPrimaryKey, ColumnTransformUnchanged } from '../../model/database/ColumnTransform';
@@ -26,10 +27,20 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
     ): void {
       const columnCreator: ColumnCreator = factory.columnCreatorFor(property);
 
+      let strategy: BuildStrategy = buildStrategy;
+
+      // TODO: As of METAED-881, the property here could be a shared simple property, which
+      // is not currently an extension of ReferentialProperty but has an equivalent mergedProperties field
+      if (isSharedProperty(property) && asReferentialProperty(property).mergedProperties.length > 0) {
+        strategy = strategy.skipPath(
+          asReferentialProperty(property).mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
+        );
+      }
+
       if (property.data.edfiOds.ods_IsCollection) {
         const joinTable: Table = Object.assign(newTable(), {
           schema: parentTableStrategy.table.schema,
-          name: baseNameCollapsingJoinTableNamer(property, parentTableStrategy.name, buildStrategy.parentContext()),
+          name: baseNameCollapsingJoinTableNamer(property, parentTableStrategy.name, strategy.parentContext()),
           description: property.documentation,
           isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
           includeCreateDateColumn: true,
@@ -52,7 +63,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
         );
         addColumns(
           joinTable,
-          columnCreator.createColumns(property, buildStrategy.columnNamerIgnoresWithContext()),
+          columnCreator.createColumns(property, strategy.columnNamerIgnoresWithContext()),
           ColumnTransformPrimaryKey,
         );
 
@@ -60,8 +71,8 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
       } else {
         addColumns(
           parentTableStrategy.table,
-          columnCreator.createColumns(property, buildStrategy),
-          buildStrategy.leafColumns(ColumnTransformUnchanged),
+          columnCreator.createColumns(property, strategy),
+          strategy.leafColumns(ColumnTransformUnchanged),
         );
       }
     },
