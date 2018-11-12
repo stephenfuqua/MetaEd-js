@@ -130,7 +130,7 @@ export function addSourceEntityProperty(column: Column, property: EntityProperty
 }
 
 export function addMergedReferenceContext(column: Column, referenceContext: string): void {
-  const existingProperty = column.mergedReferenceContexts.find(x => x === referenceContext);
+  const existingProperty: ?string = column.mergedReferenceContexts.find(x => x === referenceContext);
   if (existingProperty == null) {
     column.mergedReferenceContexts.push(referenceContext);
   } else {

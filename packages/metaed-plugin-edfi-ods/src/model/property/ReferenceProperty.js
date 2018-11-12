@@ -1,5 +1,5 @@
 // @flow
-import type { EnhancerResult, EntityProperty, MetaEdEnvironment, PropertyType } from 'metaed-core';
+import type { EnhancerResult, EntityProperty, MetaEdEnvironment } from 'metaed-core';
 import { getPropertiesOfType } from 'metaed-core';
 
 export type ReferencePropertyEdfiOds = {
@@ -34,5 +34,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   };
 }
 
-const referenceProperty: Array<PropertyType> = ['association', 'domainEntity'];
-export const isOdsReferenceProperty = (property: EntityProperty): boolean => referenceProperty.includes(property.type);
+export const isOdsReferenceProperty = (property: EntityProperty): boolean =>
+  ['association', 'domainEntity'].includes(property.type);
+
+export const isOdsMergeableProperty = (property: EntityProperty): boolean =>
+  ['association', 'domainEntity', 'sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'].includes(property.type);

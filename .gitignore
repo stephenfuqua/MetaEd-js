@@ -32,9 +32,12 @@ Transcript-0004-Extension-extension-Tables.sql
 0020-Tables.diff
 0020-Tables.sql
 0020-Tables.html
+0030-ForeignKeys.sql
 
 Simple-0020-Extension-extension-Tables.sql
+SimpleType-0020-Extension-extension-Tables.sql
 Transcript-0020-Extension-extension-Tables.sql
+SimpleType-0030-Extension-extension-ForeignKeys.sql
 
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json

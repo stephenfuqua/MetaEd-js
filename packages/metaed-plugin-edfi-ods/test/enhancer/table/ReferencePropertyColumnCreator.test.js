@@ -65,6 +65,7 @@ describe('when creating columns for identity reference property', () => {
       isPartOfIdentity: true,
       data: {
         edfiOds: {
+          ods_Name: propertyName,
           ods_ContextPrefix: '',
           ods_IsIdentityDatabaseType: false,
           ods_IsUniqueIndex: false,
@@ -105,7 +106,7 @@ describe('when creating columns for identity reference property', () => {
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
-    expect(columns[0].referenceContext).toBe(domainEntityPropertyName);
+    expect(columns[0].referenceContext).toBe(domainEntityPropertyName + propertyName);
   });
 });
 
@@ -125,6 +126,7 @@ describe('when creating columns for identity reference properties with composite
       isPartOfIdentity: true,
       data: {
         edfiOds: {
+          ods_Name: propertyName1,
           ods_ContextPrefix: '',
           ods_IsIdentityDatabaseType: false,
           ods_IsUniqueIndex: false,
@@ -138,6 +140,7 @@ describe('when creating columns for identity reference properties with composite
       isPartOfIdentity: true,
       data: {
         edfiOds: {
+          ods_Name: propertyName2,
           ods_ContextPrefix: '',
           ods_IsIdentityDatabaseType: false,
           ods_IsUniqueIndex: false,
@@ -181,7 +184,7 @@ describe('when creating columns for identity reference properties with composite
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property1);
-    expect(columns[0].referenceContext).toBe(domainEntityPropertyName);
+    expect(columns[0].referenceContext).toBe(domainEntityPropertyName + propertyName1);
   });
 
   it('should return a primary key column for second property', () => {
@@ -192,7 +195,7 @@ describe('when creating columns for identity reference properties with composite
     expect(columns[1].isNullable).toBe(false);
     expect(columns[1].isPartOfPrimaryKey).toBe(true);
     expect(columns[1].sourceEntityProperties[0]).toBe(property2);
-    expect(columns[0].referenceContext).toBe(domainEntityPropertyName);
+    expect(columns[1].referenceContext).toBe(domainEntityPropertyName + propertyName2);
   });
 });
 
@@ -211,6 +214,7 @@ describe('when creating columns for identity reference property that references 
       isPartOfIdentity: true,
       data: {
         edfiOds: {
+          ods_Name: propertyName1,
           ods_ContextPrefix: '',
           ods_IsIdentityDatabaseType: false,
           ods_IsUniqueIndex: false,
@@ -271,6 +275,6 @@ describe('when creating columns for identity reference property that references 
     expect(columns[0].isNullable).toBe(false);
     expect(columns[0].isPartOfPrimaryKey).toBe(true);
     expect(columns[0].sourceEntityProperties[0]).toBe(property);
-    expect(columns[0].referenceContext).toBe(domainEntityPropertyName2 + domainEntityPropertyName1);
+    expect(columns[0].referenceContext).toBe(domainEntityPropertyName2 + domainEntityPropertyName1 + propertyName1);
   });
 });

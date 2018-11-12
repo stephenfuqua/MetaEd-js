@@ -51,6 +51,8 @@ export function getMatchingColumnFromSourceEntityProperties(columnToMatch: Colum
 
 export function getMergePropertyColumn(table: Table, column: Column, property: EntityProperty): ?Column {
   let result: ?Column;
+  // TODO: As of METAED-881, the property here could be a shared simple property, which
+  // is not currently an extension of ReferentialProperty but has an equivalent mergedProperties field
   asReferentialProperty(property).mergedProperties.forEach((mergedProperty: MergedProperty) => {
     if (
       mergedProperty.mergeProperty != null &&
@@ -64,6 +66,7 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
     const expandedTargetProperties: Array<EntityProperty> = [];
     if (mergedProperty.targetProperty != null) {
       if (isOdsReferenceProperty(mergedProperty.targetProperty)) {
+        // if (isOdsMergeableProperty(mergedProperty.targetProperty)) {
         expandedTargetProperties.push(
           ...R.chain((x: Column) => x.sourceEntityProperties)(
             R.compose(

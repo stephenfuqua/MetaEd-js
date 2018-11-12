@@ -1,0 +1,15 @@
+Domain Entity FunctionDimension
+    documentation "NCES Function Dimension"
+    shared string Code named FunctionCode
+        documentation "The code representation of the account dimension."
+        is part of identity
+    shared short MyFiscalYear
+        documentation "The fiscal year for which the account dimension is valid."
+        is part of identity
+    shared string CodeName
+        documentation "A description of the account dimension."
+        is optional
+    //Optional Collection
+    descriptor ReportingTag
+        documentation "Optional tag for accountability reporting (e.g. ESSA)."
+        is optional collection

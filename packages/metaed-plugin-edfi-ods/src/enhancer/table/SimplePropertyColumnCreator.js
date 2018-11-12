@@ -54,6 +54,10 @@ export function simplePropertyColumnCreator(): ColumnCreator {
       if (!strategy.buildColumns(property)) return [];
 
       const column: Column = createNewColumnFor(((property: any): SimpleProperty));
+      Object.assign(column, {
+        referenceContext: property.data.edfiOds.ods_Name,
+        mergedReferenceContexts: [property.data.edfiOds.ods_Name],
+      });
       const columnNamer: ColumnNamer = strategy.columnNamer(
         strategy.parentContext(),
         property.data.edfiOds.ods_ContextPrefix,

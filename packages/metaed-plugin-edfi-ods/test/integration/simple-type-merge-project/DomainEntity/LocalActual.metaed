@@ -1,0 +1,15 @@
+Domain Entity LocalActual
+    documentation "Expense/Revenue amounts"
+    domain entity LocalAccount
+      documentation "Local account to which this amount is applied."
+      is part of identity
+    date AsOfDate
+      documentation "The date that the amount is applied to."
+      is part of identity
+      is queryable field
+    currency Amount
+      documentation "Currency value applied to the account."
+      is required
+    descriptor FinancialCollection
+      documentation "The accounting period or grouping for which the amount is collected."
+      is optional

@@ -1,0 +1,4 @@
+Shared String Code
+    documentation "A code value."
+    min length 1
+    max length 16
