@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.2-dev.4"></a>
+## [1.3.2-dev.4](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.3.2-dev.3...v1.3.2-dev.4) (2018-11-14)
+
+**Note:** Version bump only for package metaed-plugin-edfi-ods
+
+
+
+
+
 <a name="1.3.2-dev.3"></a>
 ## [1.3.2-dev.3](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.3.2-dev.2...v1.3.2-dev.3) (2018-11-14)
 
