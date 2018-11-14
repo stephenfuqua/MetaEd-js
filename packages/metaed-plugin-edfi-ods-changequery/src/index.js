@@ -7,6 +7,7 @@ import { validate as NamespaceMustNotBeNamedChanges } from './validator/Namespac
 import { generate as CreateTrackedDeleteTablesGenerator } from './generator/CreateTrackedDeleteTablesGenerator';
 import { generate as CreateDeletedForTrackingTriggersGenerator } from './generator/CreateDeletedForTrackingTriggersGenerator';
 import { generate as CreateChangeVersionSequenceGenerator } from './generator/CreateChangeVersionSequenceGenerator';
+import { generate as CreateChangesSchemaGenerator } from './generator/CreateChangesSchemaGenerator';
 import { generate as CreateTriggerUpdateChangeVersionGenerator } from './generator/CreateTriggerUpdateChangeVersionGenerator';
 import { generate as AddColumnChangeVersionForTableGenerator } from './generator/AddColumnChangeVersionForTableGenerator';
 
@@ -41,6 +42,7 @@ export function initialize(): MetaEdPlugin {
       CreateTrackedDeleteTablesGenerator,
       CreateDeletedForTrackingTriggersGenerator,
       CreateChangeVersionSequenceGenerator,
+      CreateChangesSchemaGenerator,
       CreateTriggerUpdateChangeVersionGenerator,
       AddColumnChangeVersionForTableGenerator,
     ],

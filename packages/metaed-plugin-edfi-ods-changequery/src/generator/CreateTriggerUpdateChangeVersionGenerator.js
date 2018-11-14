@@ -31,7 +31,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
           name: 'ODS Change Event: CreateTriggerUpdateChangeVersion',
           namespace: namespace.namespaceName,
           folderName: changeQueryPath,
-          fileName: '0030-CreateTriggerUpdateChangeVersionGenerator.sql',
+          fileName: '0040-CreateTriggerUpdateChangeVersionGenerator.sql',
           resultString: generatedResult,
           resultStream: null,
         });

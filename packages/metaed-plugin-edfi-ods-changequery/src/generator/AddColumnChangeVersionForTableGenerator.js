@@ -31,7 +31,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
           name: 'ODS Change Event: AddColumnChangeVersionForTable',
           namespace: namespace.namespaceName,
           folderName: changeQueryPath,
-          fileName: '0020-AddColumnChangeVersionForTables.sql',
+          fileName: '0030-AddColumnChangeVersionForTables.sql',
           resultString: generatedResult,
           resultStream: null,
         });

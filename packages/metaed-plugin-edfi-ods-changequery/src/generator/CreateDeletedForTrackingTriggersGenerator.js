@@ -29,7 +29,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
           name: 'ODS Change Event: CreateDeletedForTrackingTriggers',
           namespace: namespace.namespaceName,
           folderName: changeQueryPath,
-          fileName: '0050-CreateDeletedForTrackingTriggers.sql',
+          fileName: '0060-CreateDeletedForTrackingTriggers.sql',
           resultString: generatedResult,
           resultStream: null,
         });
