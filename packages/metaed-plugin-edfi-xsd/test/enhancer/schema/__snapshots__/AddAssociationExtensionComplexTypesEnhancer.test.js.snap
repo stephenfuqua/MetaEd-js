@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`when enhancing association extension of a association subclass with common type override should have annotation documentation assigned on restriction complex type 1`] = `"Restriction to Association Subclass Name for replacement of common type with common type extension"`;
+
 exports[`when enhancing association extension with common type override should have annotation documentation assigned on restriction complex type 1`] = `"Restriction to Base Association Name for replacement of common type with common type extension"`;

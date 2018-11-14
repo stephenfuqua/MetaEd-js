@@ -3,6 +3,7 @@ import {
   newMetaEdEnvironment,
   newDomainEntity,
   newDomainEntityExtension,
+  newDomainEntitySubclass,
   newNamespace,
   newCommon,
   newCommonExtension,
@@ -253,5 +254,188 @@ describe('when enhancing domainEntity extension with common type override', () =
   it('should have items on restriction complex type', () => {
     expect(createdRestrictionComplexType.items.length).toBe(1);
     expect(((createdRestrictionComplexType.items[0]: any): Element).name).toBe(otherPropertyOnDomainEntityName);
+  });
+});
+
+describe('when enhancing domainEntity extension of a domain entity subclass with common type override', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const projectExtension: string = 'EXTENSION';
+  const domainEntitySubclassName: string = 'DomainEntitySubclassName';
+  const baseDomainEntityName: string = 'BaseDomainEntityName';
+  const basePropertyOnDomainEntityName: string = 'BasePropertyOnDomainEntityName';
+  const domainEntityExtensionName: string = 'DomainEntityExtensionName';
+  const baseCommonTypeName: string = 'BaseCommonTypeName';
+  const commonTypeExtensionName: string = 'CommonTypeExtensionName';
+  const otherPropertyOnExtensionName: string = 'OtherPropertyOnExtensionName';
+  const otherPropertyOnDomainEntityName: string = 'OtherPropertyOnDomainEntityName';
+
+  const documentation: string = 'Documentation';
+  let createdRestrictionComplexType: ComplexType;
+  let createdExtensionComplexType: ComplexType;
+
+  beforeAll(() => {
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
+      projectExtension,
+      isExtension: true,
+    });
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+
+    const baseCommon = Object.assign(newCommon(), {
+      namespace,
+      metaEdName: baseCommonTypeName,
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(baseCommon);
+    namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
+
+    const commonExtension = Object.assign(newCommonExtension(), {
+      metaEdName: commonTypeExtensionName,
+      baseEntityName: baseCommonTypeName,
+      baseEntity: baseCommon,
+      namespace: extensionNamespace,
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(commonExtension);
+    namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
+
+    const baseDomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
+      metaEdName: baseDomainEntityName,
+      properties: [
+        Object.assign(newStringProperty(), {
+          metaEdName: basePropertyOnDomainEntityName,
+          data: {
+            edfiXsd: {
+              xsd_Name: basePropertyOnDomainEntityName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(baseDomainEntity);
+    namespace.entity.domainEntity.set(baseDomainEntity.metaEdName, baseDomainEntity);
+
+    const domainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+      namespace,
+      metaEdName: domainEntitySubclassName,
+      baseEntity: baseDomainEntity,
+      properties: [
+        Object.assign(newCommonProperty(), {
+          metaEdName: baseCommonTypeName,
+          isExtensionOverride: false,
+          data: {
+            edfiXsd: {
+              xsd_Name: baseCommonTypeName,
+            },
+          },
+        }),
+        Object.assign(newStringProperty(), {
+          metaEdName: otherPropertyOnDomainEntityName,
+          data: {
+            edfiXsd: {
+              xsd_Name: otherPropertyOnDomainEntityName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(domainEntitySubclass);
+    namespace.entity.domainEntitySubclass.set(domainEntitySubclass.metaEdName, domainEntitySubclass);
+
+    const domainEntityExtension = Object.assign(newDomainEntityExtension(), {
+      metaEdName: domainEntityExtensionName,
+      documentation,
+      baseEntity: domainEntitySubclass,
+      namespace: extensionNamespace,
+      properties: [
+        Object.assign(newCommonProperty(), {
+          metaEdName: baseCommonTypeName,
+          isExtensionOverride: true,
+          data: {
+            edfiXsd: {
+              xsd_Name: baseCommonTypeName,
+            },
+          },
+        }),
+        Object.assign(newStringProperty(), {
+          metaEdName: otherPropertyOnExtensionName,
+          data: {
+            edfiXsd: {
+              xsd_Name: otherPropertyOnExtensionName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(domainEntityExtension);
+    namespace.entity.domainEntityExtension.set(domainEntityExtension.metaEdName, domainEntityExtension);
+
+    initializeTopLevelEntities(metaEd);
+    enhance(metaEd);
+
+    expect(domainEntityExtension.data.edfiXsd.xsd_ComplexTypes.length).toBe(2);
+    [createdRestrictionComplexType, createdExtensionComplexType] = domainEntityExtension.data.edfiXsd.xsd_ComplexTypes;
+  });
+
+  it('should have annotation documentation assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.annotation).toBeDefined();
+    expect(createdExtensionComplexType.annotation.documentation).toBe(documentation);
+  });
+
+  it('should have annotation type group assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.annotation.typeGroup).toBe('Domain Entity');
+  });
+
+  it('should have base type assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.baseType).toBe(`${projectExtension}-${domainEntitySubclassName}${restrictionSuffix}`);
+  });
+
+  it('should have name assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.name).toBe(`${projectExtension}-${domainEntityExtensionName}`);
+  });
+
+  it('should have items on extension complex type', () => {
+    expect(createdExtensionComplexType.items.length).toBe(2);
+    expect(((createdExtensionComplexType.items[0]: any): Element).name).toBe(baseCommonTypeName);
+    expect(((createdExtensionComplexType.items[1]: any): Element).name).toBe(otherPropertyOnExtensionName);
+  });
+
+  it('should have annotation documentation assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.annotation).toBeDefined();
+    expect(createdRestrictionComplexType.annotation.documentation).toMatchSnapshot();
+  });
+
+  it('should not have annotation type group assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.annotation.typeGroup).toBe('');
+  });
+
+  it('should have base type assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.baseType).toBe(domainEntitySubclassName);
+  });
+
+  it('should have name assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.name).toBe(`${projectExtension}-${domainEntitySubclassName}${restrictionSuffix}`);
+  });
+
+  it('should have items on restriction complex type from both base and subclass', () => {
+    expect(createdRestrictionComplexType.items.length).toBe(2);
+    expect(((createdRestrictionComplexType.items[0]: any): Element).name).toBe(basePropertyOnDomainEntityName);
+    expect(((createdRestrictionComplexType.items[1]: any): Element).name).toBe(otherPropertyOnDomainEntityName);
   });
 });

@@ -3,6 +3,7 @@ import {
   newMetaEdEnvironment,
   newAssociation,
   newAssociationExtension,
+  newAssociationSubclass,
   newNamespace,
   newCommon,
   newCommonExtension,
@@ -253,5 +254,188 @@ describe('when enhancing association extension with common type override', () =>
   it('should have items on restriction complex type', () => {
     expect(createdRestrictionComplexType.items.length).toBe(1);
     expect(((createdRestrictionComplexType.items[0]: any): Element).name).toBe(otherPropertyOnAssociationName);
+  });
+});
+
+describe('when enhancing association extension of a association subclass with common type override', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const projectExtension: string = 'EXTENSION';
+  const associationSubclassName: string = 'AssociationSubclassName';
+  const baseAssociationName: string = 'BaseAssociationName';
+  const basePropertyOnAssociationName: string = 'BasePropertyOnAssociationName';
+  const associationExtensionName: string = 'AssociationExtensionName';
+  const baseCommonTypeName: string = 'BaseCommonTypeName';
+  const commonTypeExtensionName: string = 'CommonTypeExtensionName';
+  const otherPropertyOnExtensionName: string = 'OtherPropertyOnExtensionName';
+  const otherPropertyOnAssociationName: string = 'OtherPropertyOnAssociationName';
+
+  const documentation: string = 'Documentation';
+  let createdRestrictionComplexType: ComplexType;
+  let createdExtensionComplexType: ComplexType;
+
+  beforeAll(() => {
+    const extensionNamespace = Object.assign(newNamespace(), {
+      namespaceName: 'extension',
+      projectExtension,
+      isExtension: true,
+    });
+    metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+
+    const baseCommon = Object.assign(newCommon(), {
+      namespace,
+      metaEdName: baseCommonTypeName,
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(baseCommon);
+    namespace.entity.common.set(baseCommon.metaEdName, baseCommon);
+
+    const commonExtension = Object.assign(newCommonExtension(), {
+      metaEdName: commonTypeExtensionName,
+      baseEntityName: baseCommonTypeName,
+      baseEntity: baseCommon,
+      namespace: extensionNamespace,
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(commonExtension);
+    namespace.entity.commonExtension.set(commonExtension.metaEdName, commonExtension);
+
+    const baseAssociation = Object.assign(newAssociation(), {
+      namespace,
+      metaEdName: baseAssociationName,
+      properties: [
+        Object.assign(newStringProperty(), {
+          metaEdName: basePropertyOnAssociationName,
+          data: {
+            edfiXsd: {
+              xsd_Name: basePropertyOnAssociationName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(baseAssociation);
+    namespace.entity.association.set(baseAssociation.metaEdName, baseAssociation);
+
+    const associationSubclass = Object.assign(newAssociationSubclass(), {
+      namespace,
+      metaEdName: associationSubclassName,
+      baseEntity: baseAssociation,
+      properties: [
+        Object.assign(newCommonProperty(), {
+          metaEdName: baseCommonTypeName,
+          isExtensionOverride: false,
+          data: {
+            edfiXsd: {
+              xsd_Name: baseCommonTypeName,
+            },
+          },
+        }),
+        Object.assign(newStringProperty(), {
+          metaEdName: otherPropertyOnAssociationName,
+          data: {
+            edfiXsd: {
+              xsd_Name: otherPropertyOnAssociationName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(associationSubclass);
+    namespace.entity.associationSubclass.set(associationSubclass.metaEdName, associationSubclass);
+
+    const associationExtension = Object.assign(newAssociationExtension(), {
+      metaEdName: associationExtensionName,
+      documentation,
+      baseEntity: associationSubclass,
+      namespace: extensionNamespace,
+      properties: [
+        Object.assign(newCommonProperty(), {
+          metaEdName: baseCommonTypeName,
+          isExtensionOverride: true,
+          data: {
+            edfiXsd: {
+              xsd_Name: baseCommonTypeName,
+            },
+          },
+        }),
+        Object.assign(newStringProperty(), {
+          metaEdName: otherPropertyOnExtensionName,
+          data: {
+            edfiXsd: {
+              xsd_Name: otherPropertyOnExtensionName,
+            },
+          },
+        }),
+      ],
+      data: {
+        edfiXsd: {},
+      },
+    });
+    addModelBaseEdfiXsdTo(associationExtension);
+    namespace.entity.associationExtension.set(associationExtension.metaEdName, associationExtension);
+
+    initializeTopLevelEntities(metaEd);
+    enhance(metaEd);
+
+    expect(associationExtension.data.edfiXsd.xsd_ComplexTypes.length).toBe(2);
+    [createdRestrictionComplexType, createdExtensionComplexType] = associationExtension.data.edfiXsd.xsd_ComplexTypes;
+  });
+
+  it('should have annotation documentation assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.annotation).toBeDefined();
+    expect(createdExtensionComplexType.annotation.documentation).toBe(documentation);
+  });
+
+  it('should have annotation type group assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.annotation.typeGroup).toBe('Association');
+  });
+
+  it('should have base type assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.baseType).toBe(`${projectExtension}-${associationSubclassName}${restrictionSuffix}`);
+  });
+
+  it('should have name assigned on extension complex type', () => {
+    expect(createdExtensionComplexType.name).toBe(`${projectExtension}-${associationExtensionName}`);
+  });
+
+  it('should have items on extension complex type', () => {
+    expect(createdExtensionComplexType.items.length).toBe(2);
+    expect(((createdExtensionComplexType.items[0]: any): Element).name).toBe(baseCommonTypeName);
+    expect(((createdExtensionComplexType.items[1]: any): Element).name).toBe(otherPropertyOnExtensionName);
+  });
+
+  it('should have annotation documentation assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.annotation).toBeDefined();
+    expect(createdRestrictionComplexType.annotation.documentation).toMatchSnapshot();
+  });
+
+  it('should not have annotation type group assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.annotation.typeGroup).toBe('');
+  });
+
+  it('should have base type assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.baseType).toBe(associationSubclassName);
+  });
+
+  it('should have name assigned on restriction complex type', () => {
+    expect(createdRestrictionComplexType.name).toBe(`${projectExtension}-${associationSubclassName}${restrictionSuffix}`);
+  });
+
+  it('should have items on restriction complex type from both base and subclass', () => {
+    expect(createdRestrictionComplexType.items.length).toBe(2);
+    expect(((createdRestrictionComplexType.items[0]: any): Element).name).toBe(basePropertyOnAssociationName);
+    expect(((createdRestrictionComplexType.items[1]: any): Element).name).toBe(otherPropertyOnAssociationName);
   });
 });

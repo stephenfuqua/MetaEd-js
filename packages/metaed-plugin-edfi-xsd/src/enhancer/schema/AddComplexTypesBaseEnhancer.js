@@ -95,6 +95,12 @@ export function createCoreRestrictionForExtensionParent(topLevelEntity: TopLevel
     name: restrictionName(topLevelEntity),
   });
 
+  if (['associationSubclass', 'domainEntitySubclass'].includes(parentEntity.type) && parentEntity.baseEntity != null) {
+    restrictionComplexType.items.push(
+      ...createSchemaComplexTypeItems(parentEntity.baseEntity.data.edfiXsd.xsd_Properties()),
+    );
+  }
+
   restrictionComplexType.items.push(
     ...createSchemaComplexTypeItems(parentPropertiesWithOverriddenPropertiesFilteredOut(topLevelEntity)),
   );
