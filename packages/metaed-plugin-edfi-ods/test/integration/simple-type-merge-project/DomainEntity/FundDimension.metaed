@@ -3,7 +3,7 @@ Domain Entity FundDimension
     shared string Code named FundCode
         documentation "The code representation of the account dimension."
         is part of identity
-    shared short MyFiscalYear
+    shared short MyFiscalYear named FiscalYear
         documentation "The fiscal year for which the account dimension is valid."
         is part of identity
     shared string CodeName

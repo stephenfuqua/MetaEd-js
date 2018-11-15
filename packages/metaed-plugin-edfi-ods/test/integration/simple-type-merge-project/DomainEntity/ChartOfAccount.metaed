@@ -4,7 +4,7 @@ Domain Entity ChartOfAccount
         documentation "Code value for the valid combination of account dimensions under which financials are reported."
         is part of identity
         is queryable field
-    shared short MyFiscalYear
+    shared short MyFiscalYear named FiscalYear
         documentation "Fiscal year for the account"
         is part of identity
         is queryable field
@@ -24,35 +24,35 @@ Domain Entity ChartOfAccount
     domain entity BalanceSheetDimension
         documentation "NCES Balance Sheet"
         is optional
-        merge BalanceSheetDimension.MyFiscalYear with MyFiscalYear
+        merge BalanceSheetDimension.FiscalYear with FiscalYear
     domain entity FunctionDimension
         documentation "NCES Function"
         is optional
-        merge FunctionDimension.MyFiscalYear with MyFiscalYear
+        merge FunctionDimension.FiscalYear with FiscalYear
     domain entity FundDimension
         documentation "NCES Fund"
         is optional
-        merge FundDimension.MyFiscalYear with MyFiscalYear
+        merge FundDimension.FiscalYear with FiscalYear
     domain entity ObjectDimension
         documentation "NCES Object"
         is optional
-        merge ObjectDimension.MyFiscalYear with MyFiscalYear
+        merge ObjectDimension.FiscalYear with FiscalYear
     domain entity OperationalUnitDimension
         documentation "NCES Operational Unit"
         is optional
-        merge OperationalUnitDimension.MyFiscalYear with MyFiscalYear
+        merge OperationalUnitDimension.FiscalYear with FiscalYear
     domain entity ProgramDimension
         documentation "NCES Program"
         is optional
-        merge ProgramDimension.MyFiscalYear with MyFiscalYear
+        merge ProgramDimension.FiscalYear with FiscalYear
     domain entity ProjectDimension
         documentation "NCES Project"
         is optional
-        merge ProjectDimension.MyFiscalYear with MyFiscalYear
+        merge ProjectDimension.FiscalYear with FiscalYear
     domain entity SourceDimension
         documentation "NCES Source"
         is optional
-        merge SourceDimension.MyFiscalYear with MyFiscalYear
+        merge SourceDimension.FiscalYear with FiscalYear
 
     //Optional Collection
     descriptor ReportingTag
