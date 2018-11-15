@@ -3,13 +3,11 @@ import fs from 'fs';
 import R from 'ramda';
 import path from 'path';
 import handlebars from 'handlebars';
-import { V3OrGreater, versionSatisfies } from 'metaed-core';
-import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, InterchangeItem, Namespace } from 'metaed-core';
+import type { MetaEdEnvironment, GeneratedOutput, GeneratorResult, Namespace } from 'metaed-core';
 import type { EdFiXsdEntityRepository, MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
 
-const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGenerator';
-const targetVersions: string = V3OrGreater;
+const generatorName: string = 'edfiOdsApi.InterchangeOrderMetadataGeneratorV2';
 const outputName: string = 'Interchange Order Metadata';
 
 export const interchangeOrderMetadataHandlebars = handlebars.create();
@@ -37,24 +35,25 @@ function generateFile(input: any, namespace: Namespace): GeneratedOutput {
 
 type ElementMetadata = {
   name: string,
+  order: number,
 };
 
 type InterchangeMetadata = {
   name: string,
+  order: number,
   elements: Array<ElementMetadata>,
 };
 
 function getInterchangeMetadataFor(interchange: MergedInterchange): InterchangeMetadata {
-  const elements: Array<ElementMetadata> = interchange.orderedElements.map((element: InterchangeItem) => ({
-    name: element.metaEdName,
-  }));
-
-  return { name: interchange.metaEdName, elements };
+  const elements: Array<ElementMetadata> = interchange.data.edfiOdsApi.apiOrderedElements.map(
+    (element: { name: string, globalDependencyOrder: number }) => ({
+      name: element.name,
+    }),
+  );
+  return { name: interchange.metaEdName, order: interchange.data.edfiOdsApi.apiOrder, elements };
 }
 
 export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResult> {
-  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { generatorName, generatedOutput: [] };
-
   const results: Array<GeneratedOutput> = [];
 
   if (metaEd.namespace.size > 0) {
@@ -91,7 +90,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
         });
       }
 
-      const interchanges = R.sortBy(R.prop('name'))(interchangeMetadata);
+      const interchanges = R.sortBy(R.prop('order'))(interchangeMetadata);
 
       results.push(generateFile({ interchanges }, namespace));
     });

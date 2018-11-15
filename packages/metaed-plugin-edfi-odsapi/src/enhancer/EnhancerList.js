@@ -11,7 +11,7 @@ import { enhance as domainEntityExtensionAggregateEnhancer } from './domainMetad
 import { enhance as domainEntitySubclassAggregateEnhancer } from './domainMetadata/DomainEntitySubclassAggregateEnhancer';
 import { enhance as educationOrganizationReferenceEnhancer } from './educationOrganizationReferenceMetadata/EducationOrganizationReferenceEnhancer';
 import { enhance as enumerationAggregateEnhancer } from './domainMetadata/EnumerationAggregateEnhancer';
-import { enhance as interchangeOrderMetadataEnhancerV2 } from './interchangeOrderMetadata/InterchangeOrderMetadataEnhancerV2';
+import { enhance as interchangeOrderMetadataEnhancer } from './interchangeOrderMetadata/InterchangeOrderMetadataEnhancer';
 import { enhance as schoolYearEnumerationAggregateEnhancer } from './domainMetadata/SchoolYearEnumerationAggregateEnhancer';
 
 import { enhance as descriptorSetupEnhancer } from '../model/Descriptor';
@@ -46,7 +46,7 @@ export function enhancerList(): Array<Enhancer> {
     domainEntityExtensionAggregateEnhancer,
     domainEntitySubclassAggregateEnhancer,
     enumerationAggregateEnhancer,
-    interchangeOrderMetadataEnhancerV2,
+    interchangeOrderMetadataEnhancer,
     schoolYearEnumerationAggregateEnhancer,
 
     educationOrganizationReferenceEnhancer,

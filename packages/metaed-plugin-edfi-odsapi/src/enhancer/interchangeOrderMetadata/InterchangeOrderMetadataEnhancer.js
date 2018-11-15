@@ -7,8 +7,6 @@ import {
   asChoiceProperty,
   asReferentialProperty,
   NoInterchangeItem,
-  versionSatisfies,
-  V2Only,
 } from 'metaed-core';
 import type {
   ChoiceProperty,
@@ -28,7 +26,6 @@ import graphlib, { Graph } from '@dagrejs/graphlib';
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 
 const enhancerName: string = 'InterchangeOrderMetadataEnhancer';
-const targetVersions: string = V2Only;
 
 type Edge = {
   target: string,
@@ -123,8 +120,6 @@ export function sortGraph(graph: Graph, removeRequiredCycles: boolean = false): 
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
-
   metaEd.namespace.forEach((namespace: Namespace) => {
     const entityGraph: Graph = new Graph();
     const interchangeGraph: Graph = new Graph();

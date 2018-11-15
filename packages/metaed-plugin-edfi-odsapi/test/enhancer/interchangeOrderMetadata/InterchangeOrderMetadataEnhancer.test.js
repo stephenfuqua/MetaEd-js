@@ -18,7 +18,7 @@ import {
 import type { MergedInterchange } from 'metaed-plugin-edfi-xsd';
 import { addMergedInterchangeEdfiOdsApiTo } from '../../../src/model/MergedInterchange';
 import { addInterchangeItemEdfiOdsApiTo } from '../../../src/model/InterchangeItem';
-import { enhance, sortGraph } from '../../../src/enhancer/interchangeOrderMetadata/InterchangeOrderMetadataEnhancerV2';
+import { enhance, sortGraph } from '../../../src/enhancer/interchangeOrderMetadata/InterchangeOrderMetadataEnhancer';
 
 describe('when sorting graph with no cycles', () => {
   const graph = new Graph();
@@ -152,6 +152,44 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    addEdFiXsdEntityRepositoryTo(metaEd);
+    const referencedEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+      namespace,
+      metaEdName: domainEntityName,
+    });
+    const interchangeItem1: InterchangeItem = Object.assign(newInterchangeItem(), {
+      namespace,
+      metaEdName: domainEntityName,
+      referencedEntity: referencedEntity1,
+    });
+    mergedInterchange = Object.assign(newMergedInterchange(), {
+      namespace,
+      elements: [interchangeItem1],
+    });
+    addMergedInterchangeToRepository(metaEd, mergedInterchange);
+    addMergedInterchangeEdfiOdsApiTo(mergedInterchange);
+    addInterchangeItemEdfiOdsApiTo(interchangeItem1);
+
+    enhance(metaEd);
+  });
+
+  it('should have interchange order properties', () => {
+    expect(mergedInterchange.data.edfiOdsApi.apiOrder).toBe(10);
+    expect(mergedInterchange.data.edfiOdsApi.apiOrderedElements).toEqual([
+      { globalDependencyOrder: 1, name: domainEntityName },
+    ]);
+  });
+});
+
+describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0', () => {
+  let mergedInterchange: MergedInterchange;
+  const namespaceName: string = 'edfi';
+  const domainEntityName: string = 'DomainEntityName';
+
+  beforeAll(() => {
+    const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
     const namespace: Namespace = Object.assign(newNamespace(), { namespaceName });
     metaEd.namespace.set(namespace.namespaceName, namespace);
     addEdFiXsdEntityRepositoryTo(metaEd);
