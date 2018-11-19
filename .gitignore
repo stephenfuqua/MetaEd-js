@@ -42,17 +42,14 @@ SimpleType-0030-Extension-extension-ForeignKeys.sql
 /packages/metaed-plugin-edfi-odsapi/test/integration/artifact/
 !/packages/metaed-plugin-edfi-odsapi/test/integration/artifact/*-authoritative.json
 
-DeleteTrackingTable-v2.4.sql
 DeleteTrackingTable-v3.1.sql
 sample-DeleteTrackingTable-v3.1.sql
 
-DeleteTrackingTrigger-v2.4.sql
 DeleteTrackingTrigger-v3.1.sql
 sample-DeleteTrackingTrigger-v3.1.sql
 
-EnableChangeTracking-v2.4.sql
-EnableChangeTracking-v3.1.sql
-sample-EnableChangeTracking-v3.1.sql
+TriggerUpdateChangeVersion-v3.1.sql
+sample-TriggerUpdateChangeVersion-v3.1.sql
 
 MetaEdOutput-Experimental/
 MetaEdOutput/

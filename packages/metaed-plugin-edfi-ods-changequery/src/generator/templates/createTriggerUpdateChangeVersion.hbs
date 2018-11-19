@@ -8,4 +8,5 @@ BEGIN
     WHERE EXISTS (SELECT 1 FROM inserted i WHERE i.id = u.id);
 END	
 GO
+
 {{/triggers}}

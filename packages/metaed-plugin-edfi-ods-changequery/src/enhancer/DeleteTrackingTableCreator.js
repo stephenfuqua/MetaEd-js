@@ -1,6 +1,6 @@
 // @flow
 import type { MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
-import type { Table, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
+import type { Table, Column, TopLevelEntityEdfiOds } from 'metaed-plugin-edfi-ods';
 import { getPrimaryKeys, newColumn } from 'metaed-plugin-edfi-ods';
 import { changeQueryIndicated } from './ChangeQueryIndicator';
 import { deleteTrackingTableEntities } from './EnhancerHelper';
@@ -9,12 +9,19 @@ import type { DeleteTrackingTable } from '../model/DeleteTrackingTable';
 export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, namespace: Namespace, mainTable: Table) {
   const tableName = `${mainTable.schema}_${mainTable.name}_TrackedDelete`;
   const mainTablePrimaryKeys = getPrimaryKeys(mainTable);
+  const changeVersionColumn: Column = {
+    ...newColumn(),
+    name: 'ChangeVersion',
+    dataType: 'bigint',
+    isNullable: false,
+  };
+
   const deleteTrackingTable: DeleteTrackingTable = {
     schema: 'changes',
     tableName,
     primaryKeyName: `PK_${tableName}`,
     columns: [...mainTablePrimaryKeys],
-    primaryKeyColumns: [...mainTablePrimaryKeys],
+    primaryKeyColumns: [changeVersionColumn],
   };
 
   deleteTrackingTable.columns.push({
@@ -24,12 +31,7 @@ export function createDeleteTrackingTableFromTable(metaEd: MetaEdEnvironment, na
     isNullable: false,
   });
 
-  deleteTrackingTable.columns.push({
-    ...newColumn(),
-    name: 'ChangeVersion',
-    dataType: 'bigint',
-    isNullable: false,
-  });
+  deleteTrackingTable.columns.push(changeVersionColumn);
 
   deleteTrackingTableEntities(metaEd, namespace).push(deleteTrackingTable);
 }

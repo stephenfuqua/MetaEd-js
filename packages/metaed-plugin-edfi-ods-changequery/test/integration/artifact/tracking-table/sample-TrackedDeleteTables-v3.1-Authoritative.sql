@@ -1,40 +1,40 @@
-CREATE TABLE changes.sample_InstitutionControlDescriptor_TrackedDelete
+CREATE TABLE [changes].[sample_InstitutionControlDescriptor_TrackedDelete]
 (
        InstitutionControlDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
        ChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_sample_InstitutionControlDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (InstitutionControlDescriptorId)
+       CONSTRAINT PK_sample_InstitutionControlDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE changes.sample_InstitutionLevelDescriptor_TrackedDelete
+CREATE TABLE [changes].[sample_InstitutionLevelDescriptor_TrackedDelete]
 (
        InstitutionLevelDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
        ChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_sample_InstitutionLevelDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (InstitutionLevelDescriptorId)
+       CONSTRAINT PK_sample_InstitutionLevelDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE changes.sample_PostSecondaryOrganization_TrackedDelete
+CREATE TABLE [changes].[sample_PostSecondaryOrganization_TrackedDelete]
 (
        NameOfInstitution [NVARCHAR](75) NOT NULL,
        Id uniqueidentifier NOT NULL,
        ChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_sample_PostSecondaryOrganization_TrackedDelete PRIMARY KEY CLUSTERED (NameOfInstitution)
+       CONSTRAINT PK_sample_PostSecondaryOrganization_TrackedDelete PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE changes.sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete
+CREATE TABLE [changes].[sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete]
 (
        SpecialEducationGraduationStatusDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
        ChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (SpecialEducationGraduationStatusDescriptorId)
+       CONSTRAINT PK_sample_SpecialEducationGraduationStatusDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 
-CREATE TABLE changes.sample_SubmissionCertificationDescriptor_TrackedDelete
+CREATE TABLE [changes].[sample_SubmissionCertificationDescriptor_TrackedDelete]
 (
        SubmissionCertificationDescriptorId [INT] NOT NULL,
        Id uniqueidentifier NOT NULL,
        ChangeVersion bigint NOT NULL,
-       CONSTRAINT PK_sample_SubmissionCertificationDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (SubmissionCertificationDescriptorId)
+       CONSTRAINT PK_sample_SubmissionCertificationDescriptor_TrackedDelete PRIMARY KEY CLUSTERED (ChangeVersion)
 )
 

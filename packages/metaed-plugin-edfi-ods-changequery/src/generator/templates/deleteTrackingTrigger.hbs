@@ -10,7 +10,6 @@ BEGIN
     SELECT  {{#primaryKeyColumnNames}}{{#if ../targetTableIsSubclass}}d.{{/if}}{{{this}}}{{#unless @last}}, {{/unless}}{{/primaryKeyColumnNames}}, Id, (NEXT VALUE FOR [changes].[ChangeVersionSequence])
     FROM    deleted d{{#if targetTableIsSubclass}}{{#foreignKeyToSuperclass}}
             INNER JOIN {{{foreignTableSchema}}}.{{{foreignTableName}}} b ON {{#columnNames}}d.{{{parentTableColumnName}}} = b.{{{foreignTableColumnName}}}{{#unless @last}} AND {{/unless}}{{/columnNames}}{{/foreignKeyToSuperclass}}{{/if}}
-    WHERE NOT EXISTS (SELECT * FROM [{{{deleteTrackingTableSchema}}}].[{{{deleteTrackingTableName}}}] d2 WHERE {{#primaryKeyColumnNames}}d2.{{{this}}} = d.{{{this}}}{{#unless @last}} AND {{/unless}}{{/primaryKeyColumnNames}})
 END
 GO
 

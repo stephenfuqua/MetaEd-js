@@ -23,9 +23,9 @@ jest.unmock('final-fs');
 jest.setTimeout(40000);
 
 describe('when generating change event scripts and comparing to ODS/API 3.1 authoritative artifacts', () => {
-  const artifactPath: string = path.resolve(__dirname, './artifact/enable-tracking');
-  const authoritativeFilename: string = 'EnableChangeTracking-v3.1-Authoritative.sql';
-  const generatedFilename: string = 'EnableChangeTracking-v3.1.sql';
+  const artifactPath: string = path.resolve(__dirname, './artifact/update-trigger');
+  const authoritativeFilename: string = 'TriggerUpdateChangeVersion-v3.1-Authoritative.sql';
+  const generatedFilename: string = 'TriggerUpdateChangeVersion-v3.1.sql';
 
   let generatedOutput: GeneratedOutput;
 
@@ -96,8 +96,11 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
     }
 
     generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeQuery.EnableTableChangeTrackingGenerator'))
-        .generatedOutput,
+      R.head(
+        state.generatorResults.filter(
+          x => x.generatorName === 'edfiOdsChangeQuery.CreateTriggerUpdateChangeVersionGenerator',
+        ),
+      ).generatedOutput,
     );
 
     await ffs.writeFile(path.resolve(artifactPath, generatedFilename), generatedOutput.resultString, 'utf-8');
@@ -115,12 +118,12 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
 });
 
 describe('when generating change event scripts with simple extensions and comparing to ODS/API 3.1 authoritative artifacts', () => {
-  const artifactPath: string = path.resolve(__dirname, './artifact/enable-tracking');
+  const artifactPath: string = path.resolve(__dirname, './artifact/update-trigger');
   const sampleExtensionPath: string = path.resolve(__dirname, './student-transcript-extension-project');
-  const authoritativeCoreFilename: string = 'EnableChangeTracking-v3.1-Authoritative.sql';
-  const authoritativeExtensionFilename: string = 'sample-EnableChangeTracking-v3.1-Authoritative.sql';
-  const generatedCoreFilename: string = 'EnableChangeTracking-v3.1.sql';
-  const generatedExtensionFilename: string = 'sample-EnableChangeTracking-v3.1.sql';
+  const authoritativeCoreFilename: string = 'TriggerUpdateChangeVersion-v3.1-Authoritative.sql';
+  const authoritativeExtensionFilename: string = 'sample-TriggerUpdateChangeVersion-v3.1-Authoritative.sql';
+  const generatedCoreFilename: string = 'TriggerUpdateChangeVersion-v3.1.sql';
+  const generatedExtensionFilename: string = 'sample-TriggerUpdateChangeVersion-v3.1.sql';
 
   let generatedCoreOutput: GeneratedOutput;
   let generatedExtensionOutput: GeneratedOutput;
@@ -198,7 +201,7 @@ describe('when generating change event scripts with simple extensions and compar
     }
 
     const generatorResult: GeneratorResult = R.head(
-      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeQuery.EnableTableChangeTrackingGenerator'),
+      state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeQuery.CreateTriggerUpdateChangeVersionGenerator'),
     );
 
     [generatedCoreOutput, generatedExtensionOutput] = generatorResult.generatedOutput;
@@ -225,98 +228,6 @@ describe('when generating change event scripts with simple extensions and compar
     const authoritativeExtension: string = path.resolve(artifactPath, authoritativeExtensionFilename);
     const generatedExtension: string = path.resolve(artifactPath, generatedExtensionFilename);
     const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritativeExtension} ${generatedExtension}`;
-    const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
-    // two different ways to show no difference, depending on platform line endings
-    const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
-    expect(expectOneOf).toContain(result);
-  });
-});
-
-describe('when generating change event scripts and comparing to ODS/API 2.5 authoritative artifacts', () => {
-  const artifactPath: string = path.resolve(__dirname, './artifact/enable-tracking');
-  const authoritativeFilename: string = 'EnableChangeTracking-v2.5-Authoritative.sql';
-  const generatedFilename: string = 'EnableChangeTracking-v2.5.sql';
-
-  let generatedOutput: GeneratedOutput;
-
-  beforeAll(async () => {
-    const metaEdConfiguration = {
-      ...newMetaEdConfiguration(),
-      artifactDirectory: './MetaEdOutput/',
-      pluginTechVersion: {
-        edfiUnified: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiOds: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiOdsApi: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiOdsChangeQuery: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiXsd: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiHandbook: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiInterchangeBrief: {
-          targetTechnologyVersion: '2.5.0',
-        },
-        edfiXmlDictionary: {
-          targetTechnologyVersion: '2.5.0',
-        },
-      },
-      projectPaths: ['./node_modules/ed-fi-model-2.0/'],
-      projects: [
-        {
-          projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
-          projectExtension: '',
-          projectVersion: '2.0.1',
-        },
-      ],
-    };
-
-    const state: State = {
-      ...newState(),
-      metaEdConfiguration,
-    };
-    state.metaEd.dataStandardVersion = '2.0.1';
-
-    validateConfiguration(state);
-    loadPlugins(state);
-    state.pluginManifest = state.pluginManifest.filter(
-      manifest =>
-        manifest.shortName === 'edfiUnified' ||
-        manifest.shortName === 'edfiOds' ||
-        manifest.shortName === 'edfiOdsChangeQuery',
-    );
-    loadFiles(state);
-    loadFileIndex(state);
-    buildParseTree(buildMetaEd, state);
-    await walkBuilders(state);
-    initializeNamespaces(state);
-    // eslint-disable-next-line no-restricted-syntax
-    for (const pluginManifest of state.pluginManifest) {
-      await runEnhancers(pluginManifest, state);
-      await runGenerators(pluginManifest, state);
-    }
-
-    generatedOutput = R.head(
-      R.head(state.generatorResults.filter(x => x.generatorName === 'edfiOdsChangeQuery.EnableTableChangeTrackingGenerator'))
-        .generatedOutput,
-    );
-
-    await ffs.writeFile(path.resolve(artifactPath, generatedFilename), generatedOutput.resultString, 'utf-8');
-  });
-
-  it('should have no differences', async () => {
-    const authoritative: string = path.resolve(artifactPath, authoritativeFilename);
-    const generated: string = path.resolve(artifactPath, generatedFilename);
-    const gitCommand: string = `git diff --shortstat --no-index --ignore-space-at-eol -- ${authoritative} ${generated}`;
     const result: string = await new Promise(resolve => exec(gitCommand, (error, stdout) => resolve(stdout)));
     // two different ways to show no difference, depending on platform line endings
     const expectOneOf: Array<string> = ['', ' 1 file changed, 0 insertions(+), 0 deletions(-)\n'];
