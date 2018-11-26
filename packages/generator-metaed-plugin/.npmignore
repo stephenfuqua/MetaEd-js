@@ -1,7 +1,6 @@
 coverage
 src
 test
-docs
 test-integration
 .babelrc
 .eslintignore

@@ -1,0 +1,11 @@
+{
+  "parser": "flow",
+  "singleQuote": true,
+  "printWidth": 125,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.js"
+    }
+  ]
+}

@@ -9,6 +9,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "documentation": "^8.1.2",
     "eslint": "5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.0.1",
@@ -32,6 +33,7 @@
   ],
   "scripts": {
     "antlr-gen": "java -jar ./antlr/antlr-4.6-complete.jar -Dlanguage=JavaScript -o ./packages/metaed-core/src/grammar/gen ./packages/metaed-core/src/grammar/language/BaseLexer.g4 ./packages/metaed-core/src/grammar/language/MetaEdGrammar.g4",
+    "doc-gen": "yarn documentation build packages/metaed-core/src/** -f html -o docs",
     "metaed:build": "node ./packages/metaed-console/dist/index.js",
     "metaed:deploy": "node ./packages/metaed-odsapi-deploy/dist/index.js",
     "lint": "eslint .",

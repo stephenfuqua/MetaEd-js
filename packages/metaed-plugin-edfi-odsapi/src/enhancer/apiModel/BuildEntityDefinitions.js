@@ -72,7 +72,7 @@ export function identifiersFrom(
 // key unification merges put a spin on this because some foreign key reference columns
 // may actually be defined by simple properties as well and thus "locally defined",
 // for example when they are the target of a merge then a column can be there both because of the foreign key
-// and because of the local definition 
+// and because of the local definition
 function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTable: Array<string>): boolean {
   // automatically include if not an FK column
   if (!foreignKeyColumnNamesOnTable.includes(column.name)) return true;

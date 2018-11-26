@@ -1,0 +1,11 @@
+node_modules/
+
+## VSCode user config
+.vscode/
+
+## Babel target directory
+dist/
+
+## Installer error log files
+yarn-error.log
+npm-debug.log

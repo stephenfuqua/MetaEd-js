@@ -210,7 +210,7 @@ export { asStringProperty, newStringProperty } from './model/property/StringProp
 export { asTimeProperty, newTimeProperty } from './model/property/TimeProperty';
 export { asYearProperty, newYearProperty } from './model/property/YearProperty';
 
-export { asAssociation, newAssociation } from './model/Association';
+export { asAssociation, newAssociation, NoAssociation } from './model/Association';
 export { asAssociationExtension, newAssociationExtension } from './model/AssociationExtension';
 export { asAssociationSubclass, newAssociationSubclass } from './model/AssociationSubclass';
 export { asChoice, newChoice } from './model/Choice';
@@ -219,7 +219,7 @@ export { asCommonExtension, newCommonExtension } from './model/CommonExtension';
 export { asDecimalType, newDecimalType } from './model/DecimalType';
 export { asDescriptor, newDescriptor } from './model/Descriptor';
 export { asDomain, asDomainBase, newDomain } from './model/Domain';
-export { asDomainEntity, newDomainEntity } from './model/DomainEntity';
+export { asDomainEntity, newDomainEntity, NoDomainEntity } from './model/DomainEntity';
 export { asDomainEntityExtension, newDomainEntityExtension } from './model/DomainEntityExtension';
 export { asDomainEntitySubclass, newDomainEntitySubclass } from './model/DomainEntitySubclass';
 export { asDomainItem, newDomainItem } from './model/DomainItem';

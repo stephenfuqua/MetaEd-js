@@ -24,6 +24,9 @@ export type DomainEntity = {
   isAbstract: boolean,
 };
 
+/**
+ * Create a new Domain Entity.
+ */
 export function newDomainEntity(): DomainEntity {
   return {
     ...newTopLevelEntity(),

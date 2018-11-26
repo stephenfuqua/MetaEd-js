@@ -1,8 +1,7 @@
 module.exports = {
-  testResultsProcessor: 'jest-teamcity-reporter',
   testEnvironment: 'node',
   transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*metaed-.*).*$'],
-  collectCoverageFrom: ['packages/**/src/**/*.js'],
+  collectCoverageFrom: ['src/**/*.js'],
   coverageThreshold: {
     global: {
       branches: 10,
@@ -11,5 +10,5 @@ module.exports = {
       statements: 10,
     },
   },
-  modulePathIgnorePatterns: ['dist*', 'docs*'],
+  modulePathIgnorePatterns: ['dist*'],
 };

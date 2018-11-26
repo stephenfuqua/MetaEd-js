@@ -1,4 +1,5 @@
 // @flow
+import deepFreeze from 'deep-freeze';
 import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
@@ -34,3 +35,8 @@ export function newAssociation(): Association {
 }
 
 export const asAssociation = (x: ModelBase): Association => ((x: any): Association);
+
+export const NoAssociation: Association = deepFreeze({
+  ...newAssociation(),
+  metaEdName: 'NoAssociation',
+});
