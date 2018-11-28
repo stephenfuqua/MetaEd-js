@@ -1,0 +1,60 @@
+Domain Entity ChartOfAccount
+    documentation "A valid combination of account dimensions under which financials are reported."
+    shared string AccountIdentifier
+        documentation "Code value for the valid combination of account dimensions under which financials are reported."
+        is part of identity
+        is queryable field
+    shared short MyFiscalYear named FiscalYear
+        documentation "Fiscal year for the account"
+        is part of identity
+        is queryable field
+    domain entity EducationOrganization
+        documentation "A reference to the education organization managing the chart of accounts."
+        is part of identity
+        is queryable field
+
+    descriptor AccountType
+        documentation "Type of Account such as Revenue, Expenditure, or Balance Sheet."
+        is required
+    shared string AccountName
+        documentation "A descriptive name for the account"
+        is optional
+
+    //Optional NCES Account Dimensions
+    domain entity BalanceSheetDimension
+        documentation "NCES Balance Sheet"
+        is optional
+        merge BalanceSheetDimension.FiscalYear with FiscalYear
+    domain entity FunctionDimension
+        documentation "NCES Function"
+        is optional
+        merge FunctionDimension.FiscalYear with FiscalYear
+    domain entity FundDimension
+        documentation "NCES Fund"
+        is optional
+        merge FundDimension.FiscalYear with FiscalYear
+    domain entity ObjectDimension
+        documentation "NCES Object"
+        is optional
+        merge ObjectDimension.FiscalYear with FiscalYear
+    domain entity OperationalUnitDimension
+        documentation "NCES Operational Unit"
+        is optional
+        merge OperationalUnitDimension.FiscalYear with FiscalYear
+    domain entity ProgramDimension
+        documentation "NCES Program"
+        is optional
+        merge ProgramDimension.FiscalYear with FiscalYear
+    domain entity ProjectDimension
+        documentation "NCES Project"
+        is optional
+        merge ProjectDimension.FiscalYear with FiscalYear
+    domain entity SourceDimension
+        documentation "NCES Source"
+        is optional
+        merge SourceDimension.FiscalYear with FiscalYear
+
+    //Optional Collection
+    descriptor ReportingTag
+        documentation "Optional tag for accountability reporting (e.g. ESSA)."
+        is optional collection

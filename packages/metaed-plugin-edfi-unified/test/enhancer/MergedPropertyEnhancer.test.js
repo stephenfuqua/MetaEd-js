@@ -57,6 +57,7 @@ describe('when enhancing top level entity with nested reference to top level ref
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3: string = 'DomainEntityName3';
   let domainEntity1Property1: DomainEntityProperty;
+  let domainEntity1Property2: DomainEntityProperty;
   let domainEntity3Property1: DomainEntityProperty;
   beforeAll(() => {
     const domainEntityName2: string = 'DomainEntityName2';
@@ -86,7 +87,7 @@ describe('when enhancing top level entity with nested reference to top level ref
       namespace,
     });
     domainEntity1.properties.push(domainEntity1Property1);
-    const domainEntity1Property2 = Object.assign(newDomainEntityProperty(), {
+    domainEntity1Property2 = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName3,
       propertyPathName: domainEntityName3,
       parentEntityName: domainEntityName1,
@@ -116,6 +117,11 @@ describe('when enhancing top level entity with nested reference to top level ref
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3));
     expect(property).toBeDefined();
     expect(R.head(property.mergedProperties).targetProperty).toBe(domainEntity1Property1);
+  });
+
+  it('should have correct merge targeted by property', () => {
+    expect(domainEntity1Property1.mergeTargetedBy).toHaveLength(1);
+    expect(domainEntity1Property1.mergeTargetedBy[0]).toBe(domainEntity1Property2);
   });
 });
 

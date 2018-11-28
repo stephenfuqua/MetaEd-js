@@ -59,6 +59,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
     withContext: NoSourceMap,
     hasRestriction: NoSourceMap,
     referencedType: NoSourceMap,
+    mergeTargetedBy: NoSourceMap,
   };
 }
 
@@ -85,6 +86,7 @@ export type EntityProperty = {
   withContext: string,
   hasRestriction: boolean,
   referencedType: string,
+  mergeTargetedBy: Array<EntityProperty>,
   sourceMap: EntityPropertySourceMap,
   data: any,
 };
@@ -113,6 +115,7 @@ export function newEntityProperty(): EntityProperty {
     withContext: '',
     hasRestriction: false,
     referencedType: '',
+    mergeTargetedBy: [],
     sourceMap: newEntityPropertySourceMap(),
     data: {},
   };

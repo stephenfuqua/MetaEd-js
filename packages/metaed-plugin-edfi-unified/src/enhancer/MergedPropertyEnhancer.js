@@ -38,6 +38,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.mergedProperties.forEach(mergedProperty => {
         mergedProperty.mergeProperty = findProperty(property.parentEntity, R.reverse(mergedProperty.mergePropertyPath));
         mergedProperty.targetProperty = findProperty(property.parentEntity, R.reverse(mergedProperty.targetPropertyPath));
+        if (mergedProperty.targetProperty) mergedProperty.targetProperty.mergeTargetedBy.push(property);
       });
     });
 
