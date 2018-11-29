@@ -237,6 +237,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "mergeTargetedBy": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "mergedProperties": Array [],
   "metaEdId": Object {
     "column": 0,
@@ -359,6 +364,11 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "maxValue": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "mergeTargetedBy": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",

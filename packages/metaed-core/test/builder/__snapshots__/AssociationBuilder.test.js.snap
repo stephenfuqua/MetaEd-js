@@ -121,6 +121,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "mergeTargetedBy": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "mergedProperties": Array [],
   "metaEdId": Object {
     "column": 40,
@@ -238,6 +243,11 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "isWeak": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "mergeTargetedBy": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",

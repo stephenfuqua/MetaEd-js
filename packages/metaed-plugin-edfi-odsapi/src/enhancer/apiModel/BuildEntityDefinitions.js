@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
-import { asDomainEntity, asAssociation } from 'metaed-core';
-import type { MetaEdEnvironment, Namespace } from 'metaed-core';
+import { asDomainEntity, asAssociation, isSharedProperty } from 'metaed-core';
+import type { MetaEdEnvironment, Namespace, EntityProperty } from 'metaed-core';
 import type { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
@@ -67,7 +67,26 @@ export function identifiersFrom(
   );
 }
 
-// locally defined "properties" are the columns on a table minus the columns there to provide a FK reference
+// heuristic on whether a column is "locally defined" according to the API:
+// non-locally defined are typically only columns that exist to be foreign key references, but
+// key unification merges put a spin on this because some foreign key reference columns
+// may actually be defined by simple properties as well and thus "locally defined",
+// for example when they are the target of a merge then a column can be there both because of the foreign key
+// and because of the local definition 
+function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTable: Array<string>): boolean {
+  // automatically include if not an FK column
+  if (!foreignKeyColumnNamesOnTable.includes(column.name)) return true;
+
+  // otherwise, include the FK column if a source property of that column is on the same DE
+  // as the table that this FK column is on -- shared simple properties only
+  return column.sourceEntityProperties.some(
+    (property: EntityProperty) =>
+      isSharedProperty(property) &&
+      property.mergeTargetedBy.length > 0 &&
+      property.parentEntity.data.edfiOds.ods_EntityTable === table,
+  );
+}
+
 function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
   const foreignKeyColumnNamesOnTable: Array<string> = R.chain(
     (foreignKey: ForeignKey) => foreignKey.parentTableColumnNames,
@@ -75,7 +94,7 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
   );
 
   const result: Array<ApiProperty> = table.columns
-    .filter((column: Column) => !foreignKeyColumnNamesOnTable.includes(column.name))
+    .filter((column: Column) => includeColumn(column, table, foreignKeyColumnNamesOnTable))
     .map((column: Column) => buildApiProperty(column));
 
   if (table.includeCreateDateColumn) {
