@@ -1,8 +1,0 @@
-/test
-/.eslintrc
-/.npmignore
-/.npmrc
-package-lock.json
-npm-debug.log
-lerna-debug.log
-yarn-debug.log

@@ -97,6 +97,7 @@ module.exports = class extends Generator {
       name: this.props.packageJsonName,
       main: 'dist/index.js',
       version: this.props.packageJsonVersion,
+      files: ['/dist'],
       'metaed-plugin': {
         pluginType: 'artifact-specific',
         shortName: this.props.shortName,
