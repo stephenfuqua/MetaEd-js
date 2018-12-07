@@ -15,7 +15,7 @@ export type TopLevelEntityEdfiOdsApi = {
 const enhancerName: string = 'TopLevelEntitySetupEnhancer';
 
 // exampleName is defined as not null, so intitalize TopLevelEntity with an empty string,
-// creating the artifact-specfic slot on the "data" sub-object if not already there
+// creating the plugin-specfic slot "orgExample" (the plugin shortname) on the "data" sub-object, if not already there
 export function addTopLevelEntityOrgExampleTo(topLevelEntity: TopLevelEntity) {
   if (topLevelEntity.data.orgExample == null) topLevelEntity.data.orgExample = {};
 

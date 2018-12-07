@@ -15,7 +15,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
   // Loop over all DomainEntities in all namespaces
   getAllEntitiesOfType(metaEd, 'domainEntity').forEach(entity => {
-    // Set plugin-specfic exampleName (initialized in the model code) to metaEdName with 'Example' prefix
+    // Set plugin-specific exampleName (initialized in the model code) to metaEdName with 'Example' prefix
     entity.data.orgExample.exampleName = `Example${entity.metaEdName}`;
   });
 
