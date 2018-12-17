@@ -3,8 +3,14 @@ import type { ReferentialProperty, ReferentialPropertySourceMap } from './Refere
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type InlineCommonPropertySourceMap = ReferentialPropertySourceMap;
 
+/**
+ *
+ */
 export function newInlineCommonPropertySourceMap(): InlineCommonPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -16,6 +22,9 @@ export type InlineCommonProperty = {
   ...$Exact<ReferentialProperty>,
 };
 
+/**
+ *
+ */
 export function newInlineCommonProperty(): InlineCommonProperty {
   return {
     ...newReferentialProperty(),
@@ -25,4 +34,7 @@ export function newInlineCommonProperty(): InlineCommonProperty {
   };
 }
 
+/**
+ *
+ */
 export const asInlineCommonProperty = (x: EntityProperty): InlineCommonProperty => ((x: any): InlineCommonProperty);

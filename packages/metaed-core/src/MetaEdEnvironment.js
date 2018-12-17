@@ -4,9 +4,14 @@ import type { Namespace } from './model/Namespace';
 import type { PluginEnvironment } from './plugin/PluginEnvironment';
 import type { PropertyIndex } from './model/property/PropertyRepository';
 
+/**
+ *
+ */
 export type SemVer = string;
 
-// provided to validators and enhancers
+/**
+ * Provided to validators and enhancers
+ */
 export type MetaEdEnvironment = {
   // namespaces
   namespace: Map<string, Namespace>,
@@ -24,6 +29,9 @@ export type MetaEdEnvironment = {
   dataStandardVersion: SemVer,
 };
 
+/**
+ *
+ */
 export const newMetaEdEnvironment: () => MetaEdEnvironment = () => ({
   namespace: new Map(),
   propertyIndex: newPropertyIndex(),

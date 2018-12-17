@@ -4,9 +4,14 @@ import { allTopLevelEntityModelTypes } from '../model/ModelType';
 import type { ModelType } from '../model/ModelType';
 import type { JoiSchema } from './JoiTypes';
 
-// key is configuration rule name, value is a schema for validation of the rule
+/**
+ * Key is configuration rule name, value is a schema for validation of the rule
+ */
 export type ConfigurationSchema = Map<string, JoiSchema>;
 
+/**
+ *
+ */
 export type ConfigurationMatches = {
   entity: Array<ModelType> | ModelType,
   namespace?: Array<string> | string,
@@ -15,6 +20,9 @@ export type ConfigurationMatches = {
   entityName?: Array<string> | string,
 };
 
+/**
+ *
+ */
 export type ConfigurationRule = {
   rule: string,
   matches?: Array<ConfigurationMatches> | ConfigurationMatches,

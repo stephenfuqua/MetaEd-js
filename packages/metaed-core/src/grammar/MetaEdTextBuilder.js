@@ -5,6 +5,9 @@ import { MetaEdGrammar } from './gen/MetaEdGrammar';
 import type { MetaEdGrammarListener } from './gen/MetaEdGrammarListener';
 import { BaseLexer } from './gen/BaseLexer';
 
+/**
+ * ErrorListener is an ANTLR4 ErrorListener used in unit testing to collect syntax errors from the ANTLR parser.
+ */
 class ErrorListener {
   errorMessages: string[];
 
@@ -38,21 +41,46 @@ function listen(metaEdText: string, listener: MetaEdGrammarListener): string[] {
   return result;
 }
 
+/**
+ * MetaEdTextBuilder is a fluent generator of MetaEd language text useful for setting up unit testing scenarios.
+ * Language text can be described with chained functions and the resulting text can be sent to one or more Builders (ANTLR4
+ * parse listeners) to create an EntityRepository representation.
+ *
+ * @example
+ * MetaEdTextBuilder.build()
+ * .withBeginNamespace(namespaceName)
+ * .withStartDomainEntity(entityName, metaEdId)
+ * .withDocumentation('doc')
+ * .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+ * .withEndDomainEntity()
+ * .withEndNamespace()
+ * .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+ * .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
+ */
 export class MetaEdTextBuilder {
   textLines: string[];
   indentationLevel: number;
   errorMessages: string[];
 
+  /**
+   * @hideconstructor
+   */
   constructor() {
     this.textLines = [];
     this.indentationLevel = 0;
     this.errorMessages = [];
   }
 
+  /**
+   * A static convenience method for getting a new MetaEdTextBuilder.
+   */
   static build() {
     return new MetaEdTextBuilder();
   }
 
+  /**
+   * Chainable method to fire parse events to a Builder (ANTLR4 parse listener)
+   */
   sendToListener(listener: MetaEdGrammarListener): MetaEdTextBuilder {
     const metaEdText = this.toString();
     this.errorMessages.push(...listen(metaEdText, listener));
@@ -100,6 +128,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withBeginNamespace(identifier: string, projectExtension: ?string = null): MetaEdTextBuilder {
     if (projectExtension == null) {
       this._addLine(`Begin Namespace ${identifier} core`);
@@ -110,6 +141,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withEndNamespace(): MetaEdTextBuilder {
     this._decreaseIndentation();
     this._addLine('End Namespace');
@@ -121,6 +155,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withDocumentation(documentation: string): MetaEdTextBuilder {
     const documentationToken = 'documentation';
     this._addLine(documentationToken);
@@ -205,142 +242,244 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withCascadeUpdate(): MetaEdTextBuilder {
     this._addLine('allow primary key updates');
     return this;
   }
 
+  /**
+   *
+   */
   withStartMapType(isRequired: boolean = true): MetaEdTextBuilder {
     this._addLine(isRequired ? 'with map type' : 'with optional map type');
     this._increaseIndentation();
     return this;
   }
 
+  /**
+   *
+   */
   withEndMapType(): MetaEdTextBuilder {
     this._decreaseIndentation();
     return this;
   }
 
+  /**
+   *
+   */
   withStartEnumeration(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Enumeration', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndEnumeration(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartDescriptor(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Descriptor', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndDescriptor(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartDomainEntity(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Domain Entity', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndDomainEntity(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartAssociationExtension(extensionName: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevelExtension('Association', extensionName, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndAssociationExtension(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartDomainEntityExtension(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevelExtension('Domain Entity', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndDomainEntityExtension(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartAbstractEntity(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Abstract Entity', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndAbstractEntity(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartChoice(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Choice', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndChoice(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartSharedDecimal(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Shared Decimal', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndSharedDecimal(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartSharedInteger(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Shared Integer', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndSharedInteger(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartSharedShort(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Shared Short', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndSharedShort(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartSharedString(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Shared String', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndSharedString(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartCommon(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Common', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndCommon(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartCommonExtension(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevelExtension('Common', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndCommonExtension(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartInlineCommon(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Inline Common', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndInlineCommon(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartAssociation(identifier: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevel('Association', identifier, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndAssociation(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartAssociationSubclass(
     associationName: string,
     baseAssociationName: string,
@@ -349,14 +488,23 @@ export class MetaEdTextBuilder {
     return this._withStartTopLevelSubclass('Association', associationName, baseAssociationName, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndAssociationSubclass(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
 
+  /**
+   *
+   */
   withStartDomainEntitySubclass(entityName: string, baseEntityName: string, metaEdId: ?string = null): MetaEdTextBuilder {
     return this._withStartTopLevelSubclass('Domain Entity', entityName, baseEntityName, metaEdId);
   }
 
+  /**
+   *
+   */
   withEndDomainEntitySubclass(): MetaEdTextBuilder {
     return this._withEndTopLevel();
   }
@@ -497,6 +645,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withContext(context: ?string, shortenTo: ?string = null): MetaEdTextBuilder {
     if (context == null) return this;
 
@@ -510,6 +661,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withMergePartOfReference(mergePropertyPath: string, targetPropertyPath: string): MetaEdTextBuilder {
     this._addLine(`merge ${mergePropertyPath} with ${targetPropertyPath}`);
     return this;
@@ -634,6 +788,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withAssociationDomainEntityProperty(
     identifier: string,
     documentation: string,
@@ -647,6 +804,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withBooleanProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -658,6 +818,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('bool', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withChoiceProperty(
     choiceName: string,
     documentation: string,
@@ -670,6 +833,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('choice', choiceName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
   }
 
+  /**
+   *
+   */
   withCommonProperty(
     commonName: string,
     documentation: string,
@@ -682,6 +848,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('common', commonName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
   }
 
+  /**
+   *
+   */
   withCommonExtensionOverrideProperty(
     commonTypeName: string,
     documentation: string,
@@ -703,6 +872,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withDateProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -714,6 +886,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('date', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDatetimeProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -725,6 +900,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('datetime', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDescriptorProperty(
     descriptorName: string,
     documentation: string,
@@ -736,6 +914,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('descriptor', descriptorName, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDurationProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -747,6 +928,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('duration', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withEnumerationProperty(
     enumerationName: string,
     documentation: string,
@@ -758,6 +942,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('enumeration', enumerationName, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withInlineCommonProperty(
     inlineCommonName: string,
     documentation: string,
@@ -779,6 +966,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withPercentProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -790,6 +980,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('percent', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withTimeProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -801,6 +994,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('time', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withYearProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -900,6 +1096,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withStringProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -932,6 +1131,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withCurrencyProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -943,6 +1145,9 @@ export class MetaEdTextBuilder {
     return this._withProperty('currency', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withIntegerProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -958,6 +1163,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withShortProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -973,6 +1181,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withDecimalProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -990,6 +1201,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withAssociationProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -1004,6 +1218,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withDomainEntityProperty(
     propertyIdentifier: string,
     documentation: string,
@@ -1027,6 +1244,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withSharedDecimalProperty(
     propertyIdentifier: string,
     named: ?string,
@@ -1048,6 +1268,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withSharedIntegerProperty(
     propertyIdentifier: string,
     named: ?string,
@@ -1069,6 +1292,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withSharedShortProperty(
     propertyIdentifier: string,
     named: ?string,
@@ -1090,6 +1316,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withSharedStringProperty(
     propertyIdentifier: string,
     named: ?string,
@@ -1111,6 +1340,9 @@ export class MetaEdTextBuilder {
     );
   }
 
+  /**
+   *
+   */
   withSharedStringIdentity(
     propertyIdentifier: string,
     named: ?string,
@@ -1126,6 +1358,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withSharedIntegerIdentity(
     propertyIdentifier: string,
     named: ?string,
@@ -1141,6 +1376,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withBooleanIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1150,6 +1388,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('bool', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDateIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1159,6 +1400,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('date', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDatetimeIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1168,6 +1412,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('datetime', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDurationIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1177,6 +1424,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('duration', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withEnumerationIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1186,6 +1436,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('enumeration', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withTimeIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1195,6 +1448,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('time', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withYearIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1204,6 +1460,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('year', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withChoiceIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1213,6 +1472,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('choice', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withCommonIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1222,6 +1484,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('common', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withDomainEntityIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1231,6 +1496,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('domain entity', propertyIdentifier, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withStringIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1244,6 +1512,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withIntegerIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1257,6 +1528,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withShortIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1270,6 +1544,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withDecimalIdentity(
     propertyIdentifier: string,
     documentation: string,
@@ -1285,6 +1562,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withDescriptorIdentity(
     descriptorName: string,
     documentation: string,
@@ -1294,6 +1574,9 @@ export class MetaEdTextBuilder {
     return this._withIdentityProperty('descriptor', descriptorName, documentation, context, metaEdId);
   }
 
+  /**
+   *
+   */
   withStringIdentityRename(
     propertyIdentifier: string,
     basePropertyIdentifier: string,
@@ -1308,6 +1591,9 @@ export class MetaEdTextBuilder {
     return this;
   }
 
+  /**
+   *
+   */
   withIntegerIdentityRename(
     propertyIdentifier: string,
     basePropertyIdentifier: string,

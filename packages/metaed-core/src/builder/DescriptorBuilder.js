@@ -14,6 +14,9 @@ import type { MetaEdEnvironment } from '../MetaEdEnvironment';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 
+/**
+ * An ANTLR4 listener that creates Descriptor entities.
+ */
 export class DescriptorBuilder extends TopLevelEntityBuilder {
   currentMapTypeEnumeration: MapTypeEnumeration;
   currentEnumerationItem: EnumerationItem;

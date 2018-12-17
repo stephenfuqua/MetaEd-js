@@ -3,8 +3,14 @@ import type { SimpleProperty, SimplePropertySourceMap } from './SimpleProperty';
 import { newSimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type BooleanPropertySourceMap = SimplePropertySourceMap;
 
+/**
+ *
+ */
 export function newBooleanPropertySourceMap(): BooleanPropertySourceMap {
   return newSimplePropertySourceMap();
 }
@@ -14,6 +20,9 @@ export type BooleanProperty = {
   ...$Exact<SimpleProperty>,
 };
 
+/**
+ *
+ */
 export function newBooleanProperty(): BooleanProperty {
   return {
     ...newSimpleProperty(),
@@ -23,4 +32,7 @@ export function newBooleanProperty(): BooleanProperty {
   };
 }
 
+/**
+ *
+ */
 export const asBooleanProperty = (x: EntityProperty): BooleanProperty => ((x: any): BooleanProperty);

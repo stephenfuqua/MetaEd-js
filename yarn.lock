@@ -3035,7 +3035,7 @@ doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
-documentation@^8.1.2:
+documentation@8.1.2:
   version "8.1.2"
   resolved "https://www.myget.org/F/ed-fi/npm/documentation/-/documentation-8.1.2.tgz#b449f1d19e96f9bfaa12c58a3845cdf07e0b79d8"
   dependencies:

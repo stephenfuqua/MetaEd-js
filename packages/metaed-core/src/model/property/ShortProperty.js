@@ -11,6 +11,9 @@ export type ShortPropertySourceMap = {
   maxValue: SourceMap,
 };
 
+/**
+ *
+ */
 export function newShortPropertySourceMap(): ShortPropertySourceMap {
   return {
     ...newSimplePropertySourceMap(),
@@ -26,6 +29,9 @@ export type ShortProperty = {
   maxValue: ?string,
 };
 
+/**
+ *
+ */
 export function newShortProperty(): ShortProperty {
   return {
     ...newSimpleProperty(),
@@ -37,4 +43,7 @@ export function newShortProperty(): ShortProperty {
   };
 }
 
+/**
+ *
+ */
 export const asShortProperty = (x: EntityProperty): ShortProperty => ((x: any): ShortProperty);

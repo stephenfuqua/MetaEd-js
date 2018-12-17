@@ -6,6 +6,9 @@ import { isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 
+/**
+ * An ANTLR4 listener that creates Choice entities.
+ */
 export class ChoiceBuilder extends TopLevelEntityBuilder {
   enterChoice(context: MetaEdGrammar.ChoiceContext) {
     this.enteringEntity(newChoice);

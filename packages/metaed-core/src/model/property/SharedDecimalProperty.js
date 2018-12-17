@@ -11,6 +11,9 @@ export type SharedDecimalPropertySourceMap = {
   mergedProperties: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newSharedDecimalPropertySourceMap(): SharedDecimalPropertySourceMap {
   return {
     ...newDecimalPropertySourceMap(),
@@ -25,6 +28,9 @@ export type SharedDecimalProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
+/**
+ *
+ */
 export function newSharedDecimalProperty(): SharedDecimalProperty {
   return {
     ...newDecimalProperty(),
@@ -35,4 +41,7 @@ export function newSharedDecimalProperty(): SharedDecimalProperty {
   };
 }
 
+/**
+ *
+ */
 export const asSharedDecimalProperty = (x: EntityProperty): SharedDecimalProperty => ((x: any): SharedDecimalProperty);

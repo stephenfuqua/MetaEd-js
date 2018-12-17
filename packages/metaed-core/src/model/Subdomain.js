@@ -17,6 +17,9 @@ export type SubdomainSourceMap = {
   position: ?SourceMap,
 };
 
+/**
+ *
+ */
 export function newSubdomainSourceMap(): SubdomainSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -38,6 +41,9 @@ export type Subdomain = {
   position: number,
 };
 
+/**
+ *
+ */
 export function newSubdomain(): Subdomain {
   return {
     ...newTopLevelEntity(),
@@ -52,4 +58,7 @@ export function newSubdomain(): Subdomain {
   };
 }
 
+/**
+ *
+ */
 export const asSubdomain = (x: ModelBase): Subdomain => ((x: any): Subdomain);

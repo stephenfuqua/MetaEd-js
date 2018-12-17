@@ -14,6 +14,9 @@ import type { MetaEdGrammar } from './grammar/gen/MetaEdGrammar';
 import type { MetaEdEnvironment } from './MetaEdEnvironment';
 import type { PluginManifest } from './plugin/PluginManifest';
 
+/**
+ *
+ */
 export type State = {
   // the project level configuration loaded from the metaed.json file either located at the root level of a project
   // or referenced by the console's --config argument
@@ -59,6 +62,9 @@ export type State = {
   pipelineOptions: PipelineOptions,
 };
 
+/**
+ *
+ */
 export const newState: () => State = () => ({
   metaEdConfiguration: newMetaEdConfiguration(),
   validationFailure: [],

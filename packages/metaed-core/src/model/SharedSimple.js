@@ -5,6 +5,9 @@ import type { ModelBase } from './ModelBase';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 
+/**
+ *
+ */
 export type SharedSimpleSourceMap = {
   type: SourceMap,
   documentation: SourceMap,
@@ -12,6 +15,9 @@ export type SharedSimpleSourceMap = {
   metaEdId: SourceMap,
 };
 
+/**
+ *
+ */
 export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
   return {
     type: NoSourceMap,
@@ -27,6 +33,9 @@ export type SharedSimple = {
   sourceMap: SharedSimpleSourceMap,
 };
 
+/**
+ *
+ */
 export function newSharedSimple(): SharedSimple {
   return {
     type: 'unknown',
@@ -41,6 +50,9 @@ export function newSharedSimple(): SharedSimple {
   };
 }
 
+/**
+ *
+ */
 export const NoSharedSimple: SharedSimple = deepFreeze({
   ...newSharedSimple(),
   metaEdName: 'NoSharedSimple',

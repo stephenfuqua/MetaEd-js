@@ -18,6 +18,9 @@ import type { ValidationFailure } from '../validator/ValidationFailure';
 import { sourceMapFrom } from '../model/SourceMap';
 import type { TopLevelEntity } from '../model/TopLevelEntity';
 
+/**
+ * An ANTLR4 listener that creates Domain (not DomainEntity!) entities.
+ */
 export class DomainBuilder extends MetaEdGrammarListener {
   metaEd: MetaEdEnvironment;
   currentNamespace: Namespace;

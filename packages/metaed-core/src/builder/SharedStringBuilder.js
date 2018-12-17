@@ -7,6 +7,9 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
+/**
+ * An ANTLR4 listener that creates SharedString entities.
+ */
 export class SharedStringBuilder extends SharedSimpleBuilder {
   enterSharedString(context: MetaEdGrammar.SharedStringContext) {
     this.enteringSharedSimple(newSharedString);

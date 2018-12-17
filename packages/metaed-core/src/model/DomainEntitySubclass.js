@@ -3,8 +3,14 @@ import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
+/**
+ *
+ */
 export type DomainEntitySubclassSourceMap = TopLevelEntitySourceMap;
 
+/**
+ *
+ */
 export function newDomainEntitySubclassSourceMap(): DomainEntitySubclassSourceMap {
   return newTopLevelEntitySourceMap();
 }
@@ -14,6 +20,9 @@ export type DomainEntitySubclass = {
   ...$Exact<TopLevelEntity>,
 };
 
+/**
+ *
+ */
 export function newDomainEntitySubclass(): DomainEntitySubclass {
   return {
     ...newTopLevelEntity(),
@@ -23,4 +32,7 @@ export function newDomainEntitySubclass(): DomainEntitySubclass {
   };
 }
 
+/**
+ *
+ */
 export const asDomainEntitySubclass = (x: ModelBase): DomainEntitySubclass => ((x: any): DomainEntitySubclass);

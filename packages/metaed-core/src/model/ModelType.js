@@ -1,5 +1,8 @@
 // @flow
 
+/**
+ *
+ */
 export type ModelType =
   | 'unknown'
   | 'association'
@@ -31,6 +34,9 @@ export type ModelType =
   | 'stringType'
   | 'subdomain';
 
+/**
+ *
+ */
 export const allEntityModelTypes: Array<ModelType> = [
   'unknown',
   'association',
@@ -58,6 +64,9 @@ export const allEntityModelTypes: Array<ModelType> = [
   'subdomain',
 ];
 
+/**
+ *
+ */
 export const allEntityModelTypesNoSimpleTypes: Array<ModelType> = [
   'unknown',
   'association',
@@ -82,6 +91,9 @@ export const allEntityModelTypesNoSimpleTypes: Array<ModelType> = [
   'subdomain',
 ];
 
+/**
+ *
+ */
 export const allTopLevelEntityModelTypes: Array<ModelType> = [
   'unknown',
   'association',
@@ -98,6 +110,9 @@ export const allTopLevelEntityModelTypes: Array<ModelType> = [
   'schoolYearEnumeration',
 ];
 
+/**
+ *
+ */
 export const topLevelCoreEntityModelTypes: Array<ModelType> = [
   'association',
   'associationSubclass',
@@ -111,4 +126,7 @@ export const topLevelCoreEntityModelTypes: Array<ModelType> = [
   'schoolYearEnumeration',
 ];
 
+/**
+ *
+ */
 export const asModelType = (x: string): ModelType => ((x: any): ModelType);

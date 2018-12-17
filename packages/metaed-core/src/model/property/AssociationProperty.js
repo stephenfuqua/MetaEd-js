@@ -10,6 +10,9 @@ export type AssociationPropertySourceMap = {
   isWeak: SourceMap,
 };
 
+/**
+ *
+ */
 export function newAssociationPropertySourceMap(): AssociationPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -23,6 +26,9 @@ export type AssociationProperty = {
   isWeak: boolean,
 };
 
+/**
+ *
+ */
 export function newAssociationProperty(): AssociationProperty {
   return {
     ...newReferentialProperty(),
@@ -33,4 +39,7 @@ export function newAssociationProperty(): AssociationProperty {
   };
 }
 
+/**
+ *
+ */
 export const asAssociationProperty = (x: EntityProperty): AssociationProperty => ((x: any): AssociationProperty);

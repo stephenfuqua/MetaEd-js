@@ -3,8 +3,14 @@ import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
+/**
+ *
+ */
 export type ChoiceSourceMap = TopLevelEntitySourceMap;
 
+/**
+ *
+ */
 export function newChoiceSourceMap(): ChoiceSourceMap {
   return newTopLevelEntitySourceMap();
 }
@@ -14,6 +20,9 @@ export type Choice = {
   ...$Exact<TopLevelEntity>,
 };
 
+/**
+ *
+ */
 export function newChoice(): Choice {
   return {
     ...newTopLevelEntity(),
@@ -23,4 +32,7 @@ export function newChoice(): Choice {
   };
 }
 
+/**
+ *
+ */
 export const asChoice = (x: ModelBase): Choice => ((x: any): Choice);

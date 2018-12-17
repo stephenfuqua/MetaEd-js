@@ -11,6 +11,9 @@ export type SharedShortPropertySourceMap = {
   mergedProperties: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newSharedShortPropertySourceMap(): SharedShortPropertySourceMap {
   return {
     ...newShortPropertySourceMap(),
@@ -25,6 +28,9 @@ export type SharedShortProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
+/**
+ *
+ */
 export function newSharedShortProperty(): SharedShortProperty {
   return {
     ...newShortProperty(),
@@ -35,4 +41,7 @@ export function newSharedShortProperty(): SharedShortProperty {
   };
 }
 
+/**
+ *
+ */
 export const asSharedShortProperty = (x: EntityProperty): SharedShortProperty => ((x: any): SharedShortProperty);

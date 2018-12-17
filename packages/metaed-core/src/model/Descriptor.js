@@ -14,6 +14,9 @@ export type DescriptorSourceMap = {
   mapTypeEnumeration: SourceMap,
 };
 
+/**
+ *
+ */
 export function newDescriptorSourceMap(): DescriptorSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -31,6 +34,9 @@ export type Descriptor = {
   mapTypeEnumeration: MapTypeEnumeration,
 };
 
+/**
+ *
+ */
 export function newDescriptor(): Descriptor {
   return {
     ...newTopLevelEntity(),
@@ -43,4 +49,7 @@ export function newDescriptor(): Descriptor {
   };
 }
 
+/**
+ *
+ */
 export const asDescriptor = (x: ModelBase): Descriptor => ((x: any): Descriptor);

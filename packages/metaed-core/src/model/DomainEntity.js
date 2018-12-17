@@ -11,6 +11,9 @@ export type DomainEntitySourceMap = {
   isAbstract: SourceMap,
 };
 
+/**
+ *
+ */
 export function newDomainEntitySourceMap(): DomainEntitySourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -25,7 +28,7 @@ export type DomainEntity = {
 };
 
 /**
- * Create a new Domain Entity.
+ *
  */
 export function newDomainEntity(): DomainEntity {
   return {
@@ -37,6 +40,9 @@ export function newDomainEntity(): DomainEntity {
   };
 }
 
+/**
+ *
+ */
 export function newAbstractEntity(): DomainEntity {
   return {
     ...newDomainEntity(),
@@ -45,9 +51,15 @@ export function newAbstractEntity(): DomainEntity {
   };
 }
 
+/**
+ *
+ */
 export const NoDomainEntity: DomainEntity = deepFreeze({
   ...newDomainEntity(),
   metaEdName: 'NoDomainEntity',
 });
 
+/**
+ *
+ */
 export const asDomainEntity = (x: ModelBase): DomainEntity => ((x: any): DomainEntity);

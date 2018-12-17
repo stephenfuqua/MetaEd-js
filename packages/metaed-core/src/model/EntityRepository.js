@@ -35,6 +35,9 @@ import {
   allEntityModelTypesNoSimpleTypes,
 } from './ModelType';
 
+/**
+ *
+ */
 export type EntityRepository = {
   unknown: Map<string, any>,
   association: Map<string, Association>,
@@ -62,6 +65,9 @@ export type EntityRepository = {
   subdomain: Map<string, Subdomain>,
 };
 
+/**
+ *
+ */
 export function newEntityRepository(): EntityRepository {
   return {
     unknown: new Map(),
@@ -91,6 +97,9 @@ export function newEntityRepository(): EntityRepository {
   };
 }
 
+/**
+ *
+ */
 export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
@@ -98,6 +107,9 @@ export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
   return result;
 }
 
+/**
+ *
+ */
 export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
   const result: Array<ModelBase> = [];
   namespaces.forEach((namespace: Namespace) => {
@@ -106,6 +118,9 @@ export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array
   return result;
 }
 
+/**
+ *
+ */
 export function getAllTopLevelEntities(repository: EntityRepository): Array<TopLevelEntity> {
   const result: Array<TopLevelEntity> = [];
   // $FlowIgnore - using model type repository lookup
@@ -113,6 +128,9 @@ export function getAllTopLevelEntities(repository: EntityRepository): Array<TopL
   return result;
 }
 
+/**
+ *
+ */
 export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>): Array<TopLevelEntity> {
   const result: Array<TopLevelEntity> = [];
   namespaces.forEach((namespace: Namespace) => {
@@ -122,6 +140,9 @@ export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>
   return result;
 }
 
+/**
+ *
+ */
 export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
@@ -129,6 +150,9 @@ export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array
   return result;
 }
 
+/**
+ *
+ */
 export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Namespace>): Array<ModelBase> {
   const result: Array<ModelBase> = [];
   namespaces.forEach((namespace: Namespace) => {
@@ -137,6 +161,9 @@ export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Names
   return result;
 }
 
+/**
+ *
+ */
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result = [];
   // $FlowIgnore - using model type repository lookup
@@ -144,6 +171,9 @@ export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: A
   return ((result: any): Array<ModelBase>);
 }
 
+/**
+ *
+ */
 export function getEntitiesOfTypeForNamespaces(
   namespaces: Array<Namespace>,
   ...modelTypes: Array<ModelType>
@@ -155,10 +185,16 @@ export function getEntitiesOfTypeForNamespaces(
   return result;
 }
 
+/**
+ *
+ */
 export function getAllEntitiesOfType(metaEd: MetaEdEnvironment, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   return getEntitiesOfTypeForNamespaces(Array.from(metaEd.namespace.values()), ...modelTypes);
 }
 
+/**
+ *
+ */
 export function getEntity(repository: EntityRepository, entityName: string, ...modelTypes: Array<ModelType>): ?ModelBase {
   let result: ?ModelBase = null;
   modelTypes.forEach(modelType => {
@@ -168,6 +204,9 @@ export function getEntity(repository: EntityRepository, entityName: string, ...m
   return result;
 }
 
+/**
+ *
+ */
 export function getEntityForNamespaces(
   entityName: string,
   namespaces: Array<Namespace>,
@@ -188,15 +227,24 @@ export function getEntityForNamespaces(
   return null;
 }
 
+/**
+ *
+ */
 export function addEntity(repository: EntityRepository, entity: ModelBase) {
   // $FlowIgnore - indexing with type
   repository[entity.type].set(entity.metaEdName, entity);
 }
 
+/**
+ *
+ */
 export function addEntityForNamespace(entity: ModelBase) {
   addEntity(entity.namespace.entity, entity);
 }
 
+/**
+ *
+ */
 export function getTopLevelCoreEntity(repository: EntityRepository, entityName: string): ?TopLevelEntity {
   let result: ?TopLevelEntity = null;
   topLevelCoreEntityModelTypes.forEach(modelType => {
@@ -206,6 +254,9 @@ export function getTopLevelCoreEntity(repository: EntityRepository, entityName: 
   return result;
 }
 
+/**
+ *
+ */
 export function getTopLevelCoreEntityForNamespaces(namespaces: Array<Namespace>, entityName: string): ?TopLevelEntity {
   const result: ?ModelBase = getEntityForNamespaces(entityName, namespaces, ...topLevelCoreEntityModelTypes);
   if (result == null) return null;

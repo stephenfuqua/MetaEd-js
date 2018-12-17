@@ -11,6 +11,9 @@ export type SimplePropertySourceMap = {
   referencedEntity: SourceMap,
 };
 
+/**
+ *
+ */
 export function newSimplePropertySourceMap(): SimplePropertySourceMap {
   return {
     ...newEntityPropertySourceMap(),
@@ -23,6 +26,9 @@ export type SimpleProperty = {
   referencedEntity: SharedSimple,
 };
 
+/**
+ *
+ */
 export function newSimpleProperty() {
   return {
     ...newEntityProperty(),
@@ -30,4 +36,7 @@ export function newSimpleProperty() {
   };
 }
 
+/**
+ *
+ */
 export const asSimpleProperty = (x: EntityProperty): SimpleProperty => ((x: any): SimpleProperty);

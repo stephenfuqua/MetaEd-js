@@ -11,6 +11,9 @@ export type SharedIntegerPropertySourceMap = {
   mergedProperties: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newSharedIntegerPropertySourceMap(): SharedIntegerPropertySourceMap {
   return {
     ...newIntegerPropertySourceMap(),
@@ -25,6 +28,9 @@ export type SharedIntegerProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
+/**
+ *
+ */
 export function newSharedIntegerProperty(): SharedIntegerProperty {
   return {
     ...newIntegerProperty(),
@@ -35,4 +41,7 @@ export function newSharedIntegerProperty(): SharedIntegerProperty {
   };
 }
 
+/**
+ *
+ */
 export const asSharedIntegerProperty = (x: EntityProperty): SharedIntegerProperty => ((x: any): SharedIntegerProperty);

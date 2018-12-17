@@ -3,8 +3,14 @@ import type { SimpleProperty, SimplePropertySourceMap } from './SimpleProperty';
 import { newSimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type CurrencyPropertySourceMap = SimplePropertySourceMap;
 
+/**
+ *
+ */
 export function newCurrencyPropertySourceMap(): CurrencyPropertySourceMap {
   return newSimplePropertySourceMap();
 }
@@ -14,6 +20,9 @@ export type CurrencyProperty = {
   ...$Exact<SimpleProperty>,
 };
 
+/**
+ *
+ */
 export function newCurrencyProperty(): CurrencyProperty {
   return {
     ...newSimpleProperty(),
@@ -23,4 +32,7 @@ export function newCurrencyProperty(): CurrencyProperty {
   };
 }
 
+/**
+ *
+ */
 export const asCurrencyProperty = (x: EntityProperty): CurrencyProperty => ((x: any): CurrencyProperty);

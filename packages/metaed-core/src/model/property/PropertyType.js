@@ -1,6 +1,9 @@
 // @flow
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type PropertyType =
   | 'unknown'
   | 'association'
@@ -28,9 +31,18 @@ export type PropertyType =
   | 'time'
   | 'year';
 
+/**
+ *
+ */
 const sharedProperty: Array<PropertyType> = ['sharedDecimal', 'sharedInteger', 'sharedShort', 'sharedString'];
+/**
+ *
+ */
 export const isSharedProperty = (property: EntityProperty): boolean => sharedProperty.includes(property.type);
 
+/**
+ *
+ */
 const referentialProperty: Array<PropertyType> = [
   'association',
   'choice',
@@ -41,8 +53,14 @@ const referentialProperty: Array<PropertyType> = [
   'inlineCommon',
   'schoolYearEnumeration',
 ];
+/**
+ *
+ */
 export const isReferentialProperty = (property: EntityProperty): boolean => referentialProperty.includes(property.type);
 
+/**
+ *
+ */
 export const allPropertyTypes: Array<PropertyType> = [
   'association',
   'boolean',

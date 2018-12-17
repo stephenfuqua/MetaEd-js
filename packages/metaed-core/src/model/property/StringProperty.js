@@ -11,6 +11,9 @@ export type StringPropertySourceMap = {
   maxLength: SourceMap,
 };
 
+/**
+ *
+ */
 export function newStringPropertySourceMap(): StringPropertySourceMap {
   return {
     ...newSimplePropertySourceMap(),
@@ -26,6 +29,9 @@ export type StringProperty = {
   maxLength: ?string,
 };
 
+/**
+ *
+ */
 export function newStringProperty(): StringProperty {
   return {
     ...newSimpleProperty(),
@@ -37,4 +43,7 @@ export function newStringProperty(): StringProperty {
   };
 }
 
+/**
+ *
+ */
 export const asStringProperty = (x: EntityProperty): StringProperty => ((x: any): StringProperty);

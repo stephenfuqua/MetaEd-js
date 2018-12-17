@@ -17,6 +17,9 @@ export type TopLevelEntitySourceMap = {
   baseEntity: SourceMap,
 };
 
+/**
+ *
+ */
 export function newTopLevelEntitySourceMap() {
   return {
     ...newModelBaseSourceMap(),
@@ -41,6 +44,9 @@ export type TopLevelEntity = {
   sourceMap: TopLevelEntitySourceMap,
 };
 
+/**
+ *
+ */
 export function newTopLevelEntity(): TopLevelEntity {
   return {
     type: 'unknown',
@@ -64,9 +70,15 @@ export function newTopLevelEntity(): TopLevelEntity {
   };
 }
 
+/**
+ *
+ */
 export const NoTopLevelEntity: TopLevelEntity = deepFreeze({
   ...newTopLevelEntity(),
   metaEdName: 'NoTopLevelEntity',
 });
 
+/**
+ *
+ */
 export const asTopLevelEntity = (x: ModelBase): TopLevelEntity => ((x: any): TopLevelEntity);

@@ -3,8 +3,14 @@ import type { ReferentialProperty, ReferentialPropertySourceMap } from './Refere
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type EnumerationPropertySourceMap = ReferentialPropertySourceMap;
 
+/**
+ *
+ */
 export function newEnumerationPropertySourceMap(): EnumerationPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -16,6 +22,9 @@ export type EnumerationProperty = {
   ...$Exact<ReferentialProperty>,
 };
 
+/**
+ *
+ */
 export function newEnumerationProperty(): EnumerationProperty {
   return {
     ...newReferentialProperty(),
@@ -25,4 +34,7 @@ export function newEnumerationProperty(): EnumerationProperty {
   };
 }
 
+/**
+ *
+ */
 export const asEnumerationProperty = (x: EntityProperty): EnumerationProperty => ((x: any): EnumerationProperty);

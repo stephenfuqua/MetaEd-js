@@ -6,6 +6,9 @@ import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 
+/**
+ * An ANTLR4 listener that creates CommonExtension entities.
+ */
 export class CommonExtensionBuilder extends TopLevelEntityBuilder {
   enterCommonExtension(context: MetaEdGrammar.CommonExtensionContext) {
     this.enteringEntity(newCommonExtension);

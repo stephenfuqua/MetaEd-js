@@ -13,6 +13,9 @@ export type DomainItemSourceMap = {
   typeHumanizedName: SourceMap,
 };
 
+/**
+ *
+ */
 export function newDomainItemSourceMap(): DomainItemSourceMap {
   return {
     ...newModelBaseSourceMap(),
@@ -28,6 +31,9 @@ export type DomainItem = {
   typeHumanizedName: string,
 };
 
+/**
+ *
+ */
 export function newDomainItem(): DomainItem {
   return {
     type: 'domainItem',
@@ -43,9 +49,15 @@ export function newDomainItem(): DomainItem {
   };
 }
 
+/**
+ *
+ */
 export const NoDomainItem: DomainItem = deepFreeze({
   ...newDomainItem(),
   metaEdName: 'NoDomainItem',
 });
 
+/**
+ *
+ */
 export const asDomainItem = (x: ModelBase): DomainItem => ((x: any): DomainItem);

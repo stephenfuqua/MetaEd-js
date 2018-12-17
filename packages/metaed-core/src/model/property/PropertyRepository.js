@@ -28,6 +28,9 @@ import type { EntityProperty } from './EntityProperty';
 import { allPropertyTypes } from './PropertyType';
 import type { Namespace } from '../Namespace';
 
+/**
+ *
+ */
 export class PropertyIndex {
   association: Array<AssociationProperty>;
   boolean: Array<BooleanProperty>;
@@ -55,6 +58,9 @@ export class PropertyIndex {
   year: Array<YearProperty>;
 }
 
+/**
+ *
+ */
 export function newPropertyIndex(): PropertyIndex {
   return Object.assign(new PropertyIndex(), {
     association: [],
@@ -84,6 +90,9 @@ export function newPropertyIndex(): PropertyIndex {
   });
 }
 
+/**
+ *
+ */
 export function getPropertiesOfType(
   propertyIndex: PropertyIndex,
   ...propertyTypes: Array<PropertyType>
@@ -94,6 +103,9 @@ export function getPropertiesOfType(
   return result;
 }
 
+/**
+ *
+ */
 export function getPropertiesOfTypeForNamespaces(
   propertyIndex: PropertyIndex,
   namespaces: Array<Namespace>,
@@ -111,10 +123,16 @@ export function getPropertiesOfTypeForNamespaces(
   return result;
 }
 
+/**
+ *
+ */
 export function getAllProperties(propertyIndex: PropertyIndex): Array<EntityProperty> {
   return getPropertiesOfType(propertyIndex, ...allPropertyTypes);
 }
 
+/**
+ *
+ */
 export function getAllPropertiesForNamespaces(
   propertyIndex: PropertyIndex,
   namespaces: Array<Namespace>,
@@ -122,6 +140,9 @@ export function getAllPropertiesForNamespaces(
   return getPropertiesOfTypeForNamespaces(propertyIndex, namespaces, ...allPropertyTypes);
 }
 
+/**
+ *
+ */
 export function addProperty(propertyIndex: PropertyIndex, property: EntityProperty) {
   // $FlowIgnore - indexing with type
   propertyIndex[property.type].push(property);

@@ -6,6 +6,9 @@ import { isErrorText } from './BuilderUtility';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { sourceMapFrom } from '../model/SourceMap';
 
+/**
+ * An ANTLR4 listener that creates Common entities.
+ */
 export class CommonBuilder extends TopLevelEntityBuilder {
   enterCommon(context: MetaEdGrammar.CommonContext) {
     this.enteringEntity(newCommon);

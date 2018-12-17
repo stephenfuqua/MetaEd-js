@@ -3,8 +3,14 @@ import type { ReferentialProperty, ReferentialPropertySourceMap } from './Refere
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type SchoolYearEnumerationPropertySourceMap = ReferentialPropertySourceMap;
 
+/**
+ *
+ */
 export function newSchoolYearEnumerationPropertySourceMap(): SchoolYearEnumerationPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -16,6 +22,9 @@ export type SchoolYearEnumerationProperty = {
   ...$Exact<ReferentialProperty>,
 };
 
+/**
+ *
+ */
 export function newSchoolYearEnumerationProperty(): SchoolYearEnumerationProperty {
   return {
     ...newReferentialProperty(),
@@ -25,5 +34,8 @@ export function newSchoolYearEnumerationProperty(): SchoolYearEnumerationPropert
   };
 }
 
+/**
+ *
+ */
 export const asSchoolYearEnumerationProperty = (x: EntityProperty): SchoolYearEnumerationProperty =>
   ((x: any): SchoolYearEnumerationProperty);

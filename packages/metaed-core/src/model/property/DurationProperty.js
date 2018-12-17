@@ -3,8 +3,14 @@ import type { SimpleProperty, SimplePropertySourceMap } from './SimpleProperty';
 import { newSimplePropertySourceMap, newSimpleProperty } from './SimpleProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type DurationPropertySourceMap = SimplePropertySourceMap;
 
+/**
+ *
+ */
 export function newDurationPropertySourceMap(): DurationPropertySourceMap {
   return newSimplePropertySourceMap();
 }
@@ -14,6 +20,9 @@ export type DurationProperty = {
   ...$Exact<SimpleProperty>,
 };
 
+/**
+ *
+ */
 export function newDurationProperty(): DurationProperty {
   return {
     ...newSimpleProperty(),
@@ -23,4 +32,7 @@ export function newDurationProperty(): DurationProperty {
   };
 }
 
+/**
+ *
+ */
 export const asDurationProperty = (x: EntityProperty): DurationProperty => ((x: any): DurationProperty);

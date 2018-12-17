@@ -4,6 +4,9 @@ import type { ModelType } from './ModelType';
 import type { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
 
+/**
+ *
+ */
 export type ModelBaseSourceMap = {
   type: SourceMap,
   documentation: SourceMap,
@@ -11,6 +14,9 @@ export type ModelBaseSourceMap = {
   metaEdId: SourceMap,
 };
 
+/**
+ *
+ */
 export function newModelBaseSourceMap() {
   return {
     type: NoSourceMap,
@@ -20,6 +26,9 @@ export function newModelBaseSourceMap() {
   };
 }
 
+/**
+ *
+ */
 export type ModelBase = {
   type: ModelType,
   documentation: string,

@@ -10,6 +10,9 @@ export type CommonPropertySourceMap = {
   isExtensionOverride: SourceMap,
 };
 
+/**
+ *
+ */
 export function newCommonPropertySourceMap(): CommonPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -23,6 +26,9 @@ export type CommonProperty = {
   isExtensionOverride: boolean,
 };
 
+/**
+ *
+ */
 export function newCommonProperty(): CommonProperty {
   return {
     ...newReferentialProperty(),
@@ -33,4 +39,7 @@ export function newCommonProperty(): CommonProperty {
   };
 }
 
+/**
+ *
+ */
 export const asCommonProperty = (x: EntityProperty): CommonProperty => ((x: any): CommonProperty);

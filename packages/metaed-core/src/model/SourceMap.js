@@ -2,12 +2,18 @@
 import deepFreeze from 'deep-freeze';
 import type { ParserRuleContext } from 'antlr4/ParserRuleContext';
 
+/**
+ *
+ */
 export type SourceMap = {
   line: number,
   column: number,
   tokenText: string,
 };
 
+/**
+ *
+ */
 export function newSourceMap(): SourceMap {
   return {
     line: 0,
@@ -16,11 +22,17 @@ export function newSourceMap(): SourceMap {
   };
 }
 
+/**
+ *
+ */
 export const NoSourceMap: SourceMap = deepFreeze({
   ...newSourceMap(),
   tokenText: 'NoSourceMap',
 });
 
+/**
+ *
+ */
 export function sourceMapFrom(context: ParserRuleContext): SourceMap {
   if (context == null || context.start == null) return NoSourceMap;
   return {

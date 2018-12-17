@@ -11,6 +11,9 @@ export type AssociationSourceMap = {
   ...$Exact<TopLevelEntitySourceMap>,
 };
 
+/**
+ *
+ */
 export function newAssociationSourceMap(): AssociationSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -24,6 +27,9 @@ export type Association = {
   isAbstract: boolean,
 };
 
+/**
+ *
+ */
 export function newAssociation(): Association {
   return {
     ...newTopLevelEntity(),
@@ -34,8 +40,14 @@ export function newAssociation(): Association {
   };
 }
 
+/**
+ *
+ */
 export const asAssociation = (x: ModelBase): Association => ((x: any): Association);
 
+/**
+ *
+ */
 export const NoAssociation: Association = deepFreeze({
   ...newAssociation(),
   metaEdName: 'NoAssociation',

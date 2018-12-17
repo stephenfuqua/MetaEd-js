@@ -12,6 +12,9 @@ export type SharedIntegerSourceMap = {
   maxValue: ?SourceMap,
 };
 
+/**
+ *
+ */
 export function newSharedIntegerSourceMap(): SharedIntegerSourceMap {
   return {
     ...newSharedSimpleSourceMap(),
@@ -29,6 +32,9 @@ export type SharedInteger = {
   maxValue: string,
 };
 
+/**
+ *
+ */
 export function newSharedInteger(): SharedInteger {
   return {
     ...newSharedSimple(),
@@ -41,4 +47,7 @@ export function newSharedInteger(): SharedInteger {
   };
 }
 
+/**
+ *
+ */
 export const asSharedInteger = (x: ModelBase): SharedInteger => ((x: any): SharedInteger);

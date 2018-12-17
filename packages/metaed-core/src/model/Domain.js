@@ -16,6 +16,9 @@ export type DomainSourceMap = {
   subdomains: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newDomainSourceMap(): DomainSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -35,6 +38,9 @@ export type Domain = {
   subdomains: Array<Subdomain>,
 };
 
+/**
+ *
+ */
 export function newDomain(): Domain {
   return {
     ...newTopLevelEntity(),
@@ -48,11 +54,20 @@ export function newDomain(): Domain {
   };
 }
 
+/**
+ *
+ */
 export const NoDomain: Domain = deepFreeze({
   ...newDomain(),
   metaEdName: 'NoDomain',
 });
 
+/**
+ *
+ */
 export const asDomain = (x: ModelBase): Domain => ((x: any): Domain);
 
+/**
+ *
+ */
 export const asDomainBase = (x: ModelBase): Domain | Subdomain => ((x: any): Domain | Subdomain);

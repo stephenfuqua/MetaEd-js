@@ -1,4 +1,7 @@
 // @flow
 import type { Namespace } from './Namespace';
 
+/**
+ *
+ */
 export type NamespaceRepository = Map<string, Namespace>;

@@ -3,6 +3,9 @@ import deepFreeze from 'deep-freeze';
 import type { EntityRepository } from './EntityRepository';
 import { newEntityRepository } from './EntityRepository';
 
+/**
+ *
+ */
 export type Namespace = {
   entity: EntityRepository,
   namespaceName: string,
@@ -20,8 +23,14 @@ export type Namespace = {
   sourceMap: boolean,
 };
 
+/**
+ *
+ */
 export const DefaultExtensionEntitySuffix: string = 'Extension';
 
+/**
+ *
+ */
 export function newNamespace(): Namespace {
   return {
     entity: newEntityRepository(),
@@ -39,6 +48,9 @@ export function newNamespace(): Namespace {
   };
 }
 
+/**
+ *
+ */
 export const NoNamespace: Namespace = deepFreeze({
   ...newNamespace(),
   namespaceName: 'nonamespace',

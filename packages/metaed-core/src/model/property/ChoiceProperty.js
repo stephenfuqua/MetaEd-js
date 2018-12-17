@@ -3,8 +3,14 @@ import type { ReferentialProperty, ReferentialPropertySourceMap } from './Refere
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type ChoicePropertySourceMap = ReferentialPropertySourceMap;
 
+/**
+ *
+ */
 export function newChoicePropertySourceMap(): ChoicePropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -16,6 +22,9 @@ export type ChoiceProperty = {
   ...$Exact<ReferentialProperty>,
 };
 
+/**
+ *
+ */
 export function newChoiceProperty(): ChoiceProperty {
   return {
     ...newReferentialProperty(),
@@ -25,4 +34,7 @@ export function newChoiceProperty(): ChoiceProperty {
   };
 }
 
+/**
+ *
+ */
 export const asChoiceProperty = (x: EntityProperty): ChoiceProperty => ((x: any): ChoiceProperty);

@@ -11,6 +11,9 @@ export type SharedStringSourceMap = {
   maxLength: SourceMap,
 };
 
+/**
+ *
+ */
 export function newSharedStringSourceMap(): SharedStringSourceMap {
   return {
     ...newSharedSimpleSourceMap(),
@@ -26,6 +29,9 @@ export type SharedString = {
   maxLength: string,
 };
 
+/**
+ *
+ */
 export function newSharedString(): SharedString {
   return {
     ...newSharedSimple(),
@@ -37,4 +43,7 @@ export function newSharedString(): SharedString {
   };
 }
 
+/**
+ *
+ */
 export const asSharedString = (x: ModelBase): SharedString => ((x: any): SharedString);

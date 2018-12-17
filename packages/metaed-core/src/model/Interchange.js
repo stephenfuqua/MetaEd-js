@@ -15,6 +15,9 @@ export type InterchangeSourceMap = {
   useCaseDocumentation: SourceMap,
 };
 
+/**
+ *
+ */
 export function newInterchangeSourceMap(): InterchangeSourceMap {
   return {
     ...newModelBaseSourceMap(),
@@ -37,6 +40,9 @@ export type Interchange = {
   sourceMap: ModelBaseSourceMap | InterchangeSourceMap,
 };
 
+/**
+ *
+ */
 export function newInterchange(): Interchange {
   return {
     type: 'interchange',
@@ -59,9 +65,15 @@ export function newInterchange(): Interchange {
   };
 }
 
+/**
+ *
+ */
 export const NoInterchange: Interchange = deepFreeze({
   ...newInterchange(),
   metaEdName: 'NoInterchange',
 });
 
+/**
+ *
+ */
 export const asInterchange = (x: ModelBase): Interchange => ((x: any): Interchange);

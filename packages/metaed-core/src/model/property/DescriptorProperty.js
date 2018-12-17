@@ -3,8 +3,14 @@ import type { ReferentialProperty, ReferentialPropertySourceMap } from './Refere
 import { newReferentialProperty, newReferentialPropertySourceMap } from './ReferentialProperty';
 import type { EntityProperty } from './EntityProperty';
 
+/**
+ *
+ */
 export type DescriptorPropertySourceMap = ReferentialPropertySourceMap;
 
+/**
+ *
+ */
 export function newDescriptorPropertySourceMap(): DescriptorPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -16,6 +22,9 @@ export type DescriptorProperty = {
   ...$Exact<ReferentialProperty>,
 };
 
+/**
+ *
+ */
 export function newDescriptorProperty(): DescriptorProperty {
   return {
     ...newReferentialProperty(),
@@ -25,4 +34,7 @@ export function newDescriptorProperty(): DescriptorProperty {
   };
 }
 
+/**
+ *
+ */
 export const asDescriptorProperty = (x: EntityProperty): DescriptorProperty => ((x: any): DescriptorProperty);

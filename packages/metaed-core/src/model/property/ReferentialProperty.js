@@ -13,6 +13,9 @@ export type ReferentialPropertySourceMap = {
   mergedProperties: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newReferentialPropertySourceMap(): ReferentialPropertySourceMap {
   return {
     ...newEntityPropertySourceMap(),
@@ -28,6 +31,9 @@ export type ReferentialProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
+/**
+ *
+ */
 export function newReferentialProperty(): ReferentialProperty {
   return {
     ...newEntityProperty(),
@@ -37,4 +43,7 @@ export function newReferentialProperty(): ReferentialProperty {
   };
 }
 
+/**
+ *
+ */
 export const asReferentialProperty = (x: EntityProperty): ReferentialProperty => ((x: any): ReferentialProperty);

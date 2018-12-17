@@ -16,6 +16,9 @@ export type InterchangeItemSourceMap = {
   typeHumanizedName: SourceMap,
 };
 
+/**
+ *
+ */
 export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
   return {
     ...newModelBaseSourceMap(),
@@ -33,6 +36,9 @@ export type InterchangeItem = {
   typeHumanizedName: string,
 };
 
+/**
+ *
+ */
 export function newInterchangeItem(): InterchangeItem {
   return {
     type: 'interchangeItem',
@@ -49,9 +55,15 @@ export function newInterchangeItem(): InterchangeItem {
   };
 }
 
+/**
+ *
+ */
 export const NoInterchangeItem: InterchangeItem = deepFreeze({
   ...newInterchangeItem(),
   metaEdName: 'NoInterchangeItem',
 });
 
+/**
+ *
+ */
 export const asInterchangeItem = (x: ModelBase): InterchangeItem => ((x: any): InterchangeItem);

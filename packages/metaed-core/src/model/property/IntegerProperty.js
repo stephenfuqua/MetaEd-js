@@ -11,6 +11,9 @@ export type IntegerPropertySourceMap = {
   maxValue: SourceMap,
 };
 
+/**
+ *
+ */
 export function newIntegerPropertySourceMap(): IntegerPropertySourceMap {
   return {
     ...newSimplePropertySourceMap(),
@@ -26,6 +29,9 @@ export type IntegerProperty = {
   maxValue: ?string,
 };
 
+/**
+ *
+ */
 export function newIntegerProperty(): IntegerProperty {
   return {
     ...newSimpleProperty(),
@@ -37,4 +43,7 @@ export function newIntegerProperty(): IntegerProperty {
   };
 }
 
+/**
+ *
+ */
 export const asIntegerProperty = (x: EntityProperty): IntegerProperty => ((x: any): IntegerProperty);

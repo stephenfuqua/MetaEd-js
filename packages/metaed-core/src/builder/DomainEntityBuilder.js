@@ -7,6 +7,9 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
+/**
+ * An ANTLR4 listener that creates DomainEntity entities.
+ */
 export class DomainEntityBuilder extends TopLevelEntityBuilder {
   enterAbstractEntity(context: MetaEdGrammar.AbstractEntityContext) {
     this.enteringEntity(newAbstractEntity);

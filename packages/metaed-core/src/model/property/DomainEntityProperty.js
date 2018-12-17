@@ -10,6 +10,9 @@ export type DomainEntityPropertySourceMap = {
   isWeak: SourceMap,
 };
 
+/**
+ *
+ */
 export function newDomainEntityPropertySourceMap(): DomainEntityPropertySourceMap {
   return {
     ...newReferentialPropertySourceMap(),
@@ -23,6 +26,9 @@ export type DomainEntityProperty = {
   isWeak: boolean,
 };
 
+/**
+ *
+ */
 export function newDomainEntityProperty(): DomainEntityProperty {
   return {
     ...newReferentialProperty(),
@@ -33,4 +39,7 @@ export function newDomainEntityProperty(): DomainEntityProperty {
   };
 }
 
+/**
+ *
+ */
 export const asDomainEntityProperty = (x: EntityProperty): DomainEntityProperty => ((x: any): DomainEntityProperty);

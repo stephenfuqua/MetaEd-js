@@ -13,6 +13,9 @@ export type DecimalPropertySourceMap = {
   decimalPlaces: SourceMap,
 };
 
+/**
+ *
+ */
 export function newDecimalPropertySourceMap(): DecimalPropertySourceMap {
   return {
     ...newSimplePropertySourceMap(),
@@ -32,6 +35,9 @@ export type DecimalProperty = {
   decimalPlaces: string,
 };
 
+/**
+ *
+ */
 export function newDecimalProperty(): DecimalProperty {
   return {
     ...newSimpleProperty(),
@@ -45,4 +51,7 @@ export function newDecimalProperty(): DecimalProperty {
   };
 }
 
+/**
+ *
+ */
 export const asDecimalProperty = (x: EntityProperty): DecimalProperty => ((x: any): DecimalProperty);

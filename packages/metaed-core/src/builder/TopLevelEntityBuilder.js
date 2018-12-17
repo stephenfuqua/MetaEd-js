@@ -56,6 +56,9 @@ function propertyPathFrom(context: MetaEdGrammar.PropertyPathContext): Array<str
   return R.map(token => token.getText())(context.ID());
 }
 
+/**
+ * The superclass of most other entity builders.  It is never constructed directly.
+ */
 export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   namespaceRepository: NamespaceRepository;
   currentNamespace: Namespace;

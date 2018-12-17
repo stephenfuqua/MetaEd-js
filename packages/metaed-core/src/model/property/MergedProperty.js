@@ -5,6 +5,9 @@ import { NoEntityProperty } from './EntityProperty';
 import type { SourceMap } from '../SourceMap';
 import { NoSourceMap } from '../SourceMap';
 
+/**
+ *
+ */
 export type MergedPropertySourceMap = {
   type: SourceMap,
   mergePropertyPath: Array<SourceMap>,
@@ -13,6 +16,9 @@ export type MergedPropertySourceMap = {
   targetProperty: SourceMap,
 };
 
+/**
+ *
+ */
 export function newMergedPropertySourceMap() {
   return {
     type: NoSourceMap,
@@ -23,6 +29,9 @@ export function newMergedPropertySourceMap() {
   };
 }
 
+/**
+ *
+ */
 export type MergedProperty = {
   mergePropertyPath: Array<string>,
   targetPropertyPath: Array<string>,
@@ -31,6 +40,9 @@ export type MergedProperty = {
   sourceMap: MergedPropertySourceMap,
 };
 
+/**
+ *
+ */
 export function newMergedProperty(): MergedProperty {
   return {
     mergePropertyPath: [],
@@ -41,10 +53,16 @@ export function newMergedProperty(): MergedProperty {
   };
 }
 
+/**
+ *
+ */
 export const NoMergedProperty: MergedProperty = deepFreeze({
   ...newMergedProperty(),
   mergeProperty: NoEntityProperty,
   targetProperty: NoEntityProperty,
 });
 
+/**
+ *
+ */
 export const asMergedProperty = (x: EntityProperty): MergedProperty => ((x: any): MergedProperty);

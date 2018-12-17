@@ -6,6 +6,9 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 
+/**
+ * An ANTLR4 listener that creates DomainEntitySubclass entities.
+ */
 export class DomainEntitySubclassBuilder extends TopLevelEntityBuilder {
   enterDomainEntitySubclass(context: MetaEdGrammar.DomainEntitySubclassContext) {
     this.enteringEntity(newDomainEntitySubclass);

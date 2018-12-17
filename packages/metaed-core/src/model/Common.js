@@ -10,6 +10,9 @@ export type CommonSourceMap = {
   inlineInOds: SourceMap,
 };
 
+/**
+ *
+ */
 export function newCommonSourceMap(): CommonSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -23,6 +26,9 @@ export type Common = {
   inlineInOds: boolean,
 };
 
+/**
+ *
+ */
 export function newCommon(): Common {
   return {
     ...newTopLevelEntity(),
@@ -34,6 +40,9 @@ export function newCommon(): Common {
   };
 }
 
+/**
+ *
+ */
 export function newInlineCommon(): Common {
   return {
     ...newCommon(),
@@ -43,6 +52,12 @@ export function newInlineCommon(): Common {
   };
 }
 
+/**
+ *
+ */
 export const asCommon = (x: ModelBase): Common => ((x: any): Common);
 
+/**
+ *
+ */
 export const asInlineCommon = (x: ModelBase): Common => ((x: any): Common);

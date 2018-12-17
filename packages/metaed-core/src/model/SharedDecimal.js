@@ -13,6 +13,9 @@ export type SharedDecimalSourceMap = {
   maxValue: SourceMap,
 };
 
+/**
+ *
+ */
 export function newSharedDecimalSourceMap(): SharedDecimalSourceMap {
   return {
     ...newSharedSimpleSourceMap(),
@@ -32,6 +35,9 @@ export type SharedDecimal = {
   maxValue: string,
 };
 
+/**
+ *
+ */
 export function newSharedDecimal(): SharedDecimal {
   return {
     ...newSharedSimple(),
@@ -45,4 +51,7 @@ export function newSharedDecimal(): SharedDecimal {
   };
 }
 
+/**
+ *
+ */
 export const asSharedDecimal = (x: ModelBase): SharedDecimal => ((x: any): SharedDecimal);

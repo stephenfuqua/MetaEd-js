@@ -2,6 +2,9 @@
 import type { SemVer } from '../MetaEdEnvironment';
 import type { Namespace } from '../model/Namespace';
 
+/**
+ *
+ */
 export type PluginEnvironment = {
   shortName: string,
 
@@ -15,6 +18,9 @@ export type PluginEnvironment = {
   config: any,
 };
 
+/**
+ *
+ */
 export const newPluginEnvironment: () => PluginEnvironment = () => ({
   shortName: '',
   namespace: new Map(),

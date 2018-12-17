@@ -59,6 +59,10 @@ function enteringNamespaceType(context: MetaEdGrammar.NamespaceTypeContext, name
   return namespace;
 }
 
+/**
+ * An ANTLR4 listener that creates Namespace entities.  All other ANTLR4 listener Builders depend on NamespaceBuilder.
+ * NamespaceBuilder must always listen first.
+ */
 export class NamespaceBuilder extends MetaEdGrammarListener {
   namespaceRepository: NamespaceRepository;
   currentNamespace: Namespace;

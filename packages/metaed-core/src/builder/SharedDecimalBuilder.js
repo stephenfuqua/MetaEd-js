@@ -7,6 +7,9 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
+/**
+ * An ANTLR4 listener that creates SharedDecimal entities.
+ */
 export class SharedDecimalBuilder extends SharedSimpleBuilder {
   enterSharedDecimal(context: MetaEdGrammar.SharedDecimalContext) {
     this.enteringSharedSimple(newSharedDecimal);

@@ -10,6 +10,9 @@ export type EnumerationSourceMap = {
   enumerationItems: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newEnumerationSourceMap(): EnumerationSourceMap {
   return {
     ...newTopLevelEntitySourceMap(),
@@ -23,6 +26,9 @@ export type Enumeration = {
   enumerationItems: Array<EnumerationItem>,
 };
 
+/**
+ *
+ */
 export function newEnumeration(): Enumeration {
   return {
     ...newTopLevelEntity(),
@@ -33,4 +39,7 @@ export function newEnumeration(): Enumeration {
   };
 }
 
+/**
+ *
+ */
 export const asEnumeration = (x: ModelBase): Enumeration => ((x: any): Enumeration);

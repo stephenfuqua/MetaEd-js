@@ -11,6 +11,9 @@ import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { sourceMapFrom } from '../model/SourceMap';
 import { NoNamespace } from '../model/Namespace';
 
+/**
+ * An ANTLR4 listener that creates SharedSimple entities.
+ */
 export class SharedSimpleBuilder extends MetaEdGrammarListener {
   currentSharedSimple: SharedSimple;
   metaEd: MetaEdEnvironment;

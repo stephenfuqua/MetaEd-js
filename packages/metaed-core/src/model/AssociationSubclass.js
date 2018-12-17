@@ -3,8 +3,14 @@ import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
+/**
+ *
+ */
 export type AssociationSubclassSourceMap = TopLevelEntitySourceMap;
 
+/**
+ *
+ */
 export function newAssociationSubclassSourceMap(): AssociationSubclassSourceMap {
   return newTopLevelEntitySourceMap();
 }
@@ -14,6 +20,9 @@ export type AssociationSubclass = {
   ...$Exact<TopLevelEntity>,
 };
 
+/**
+ *
+ */
 export function newAssociationSubclass(): AssociationSubclass {
   return {
     ...newTopLevelEntity(),
@@ -23,4 +32,7 @@ export function newAssociationSubclass(): AssociationSubclass {
   };
 }
 
+/**
+ *
+ */
 export const asAssociationSubclass = (x: ModelBase): AssociationSubclass => ((x: any): AssociationSubclass);

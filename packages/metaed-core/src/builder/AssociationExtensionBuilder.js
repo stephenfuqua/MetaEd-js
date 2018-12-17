@@ -6,6 +6,9 @@ import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
+/**
+ * An ANTLR4 listener that creates AssociationExtension entities.
+ */
 export class AssociationExtensionBuilder extends TopLevelEntityBuilder {
   enterAssociationExtension(context: MetaEdGrammar.AssociationExtensionContext) {
     this.enteringEntity(newAssociationExtension);

@@ -5,6 +5,9 @@ import type { Enhancer } from '../enhancer/Enhancer';
 import type { Generator } from '../generator/Generator';
 import type { ConfigurationSchema } from './ConfigurationSchema';
 
+/**
+ *
+ */
 export type MetaEdPlugin = {
   validator: Array<Validator>,
   enhancer: Array<Enhancer>,
@@ -12,6 +15,9 @@ export type MetaEdPlugin = {
   configurationSchemas: ConfigurationSchema,
 };
 
+/**
+ *
+ */
 export function newMetaEdPlugin(): MetaEdPlugin {
   return {
     validator: [],
@@ -21,4 +27,7 @@ export function newMetaEdPlugin(): MetaEdPlugin {
   };
 }
 
+/**
+ *
+ */
 export const NoMetaEdPlugin = deepFreeze(newMetaEdPlugin());

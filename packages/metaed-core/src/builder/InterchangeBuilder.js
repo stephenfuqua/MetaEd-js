@@ -17,6 +17,9 @@ import { extractDocumentation, squareBracketRemoval, isErrorText } from './Build
 import { sourceMapFrom } from '../model/SourceMap';
 import type { ValidationFailure } from '../validator/ValidationFailure';
 
+/**
+ * An ANTLR4 listener that creates Interchange entities.
+ */
 export class InterchangeBuilder extends MetaEdGrammarListener {
   entityRepository: EntityRepository;
   currentNamespace: Namespace;

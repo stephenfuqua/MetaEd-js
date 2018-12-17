@@ -2,10 +2,16 @@
 import type { MetaEdProject } from './project/ProjectTypes';
 import type { SemVer } from './MetaEdEnvironment';
 
+/**
+ *
+ */
 export type PluginTargetTechnologyVersion = {
   targetTechnologyVersion: SemVer,
 };
 
+/**
+ *
+ */
 export type MetaEdConfiguration = {
   artifactDirectory: string,
   deployDirectory: string,
@@ -21,10 +27,16 @@ export type MetaEdConfiguration = {
   pluginConfigDirectories: Array<string>,
 };
 
+/**
+ *
+ */
 export const newPluginTargetTechnologyVersion: () => PluginTargetTechnologyVersion = () => ({
   targetTechnologyVersion: '0.0.0',
 });
 
+/**
+ *
+ */
 export const newMetaEdConfiguration: () => MetaEdConfiguration = () => ({
   artifactDirectory: '',
   deployDirectory: '',

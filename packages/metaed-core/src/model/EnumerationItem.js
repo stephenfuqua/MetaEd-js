@@ -12,6 +12,9 @@ export type EnumerationItemSourceMap = {
   typeHumanizedName: SourceMap,
 };
 
+/**
+ *
+ */
 export function newEnumerationItemSourceMap(): EnumerationItemSourceMap {
   return {
     ...newModelBaseSourceMap(),
@@ -27,6 +30,9 @@ export type EnumerationItem = {
   typeHumanizedName: string,
 };
 
+/**
+ *
+ */
 export function newEnumerationItem(): EnumerationItem {
   return {
     type: 'enumerationItem',
@@ -42,10 +48,16 @@ export function newEnumerationItem(): EnumerationItem {
   };
 }
 
+/**
+ *
+ */
 export const NoEnumerationItem: EnumerationItem = deepFreeze({
   ...newEnumerationItem(),
   metaEdName: 'NoEnumerationItem',
   shortDescription: 'NoEnumerationItem',
 });
 
+/**
+ *
+ */
 export const asEnumerationItem = (x: ModelBase): EnumerationItem => ((x: any): EnumerationItem);

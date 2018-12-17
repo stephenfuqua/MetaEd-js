@@ -3,8 +3,14 @@ import type { TopLevelEntity, TopLevelEntitySourceMap } from './TopLevelEntity';
 import { newTopLevelEntity, newTopLevelEntitySourceMap } from './TopLevelEntity';
 import type { ModelBase } from './ModelBase';
 
+/**
+ *
+ */
 export type CommonExtensionSourceMap = TopLevelEntitySourceMap;
 
+/**
+ *
+ */
 export function newCommonExtensionSourceMap(): CommonExtensionSourceMap {
   return newTopLevelEntitySourceMap();
 }
@@ -14,6 +20,9 @@ export type CommonExtension = {
   ...$Exact<TopLevelEntity>,
 };
 
+/**
+ *
+ */
 export function newCommonExtension(): CommonExtension {
   return {
     ...newTopLevelEntity(),
@@ -23,4 +32,7 @@ export function newCommonExtension(): CommonExtension {
   };
 }
 
+/**
+ *
+ */
 export const asCommonExtension = (x: ModelBase): CommonExtension => ((x: any): CommonExtension);

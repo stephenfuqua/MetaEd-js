@@ -11,6 +11,9 @@ export type SharedStringPropertySourceMap = {
   mergedProperties: Array<SourceMap>,
 };
 
+/**
+ *
+ */
 export function newSharedStringPropertySourceMap(): SharedStringPropertySourceMap {
   return {
     ...newStringPropertySourceMap(),
@@ -25,6 +28,9 @@ export type SharedStringProperty = {
   mergedProperties: Array<MergedProperty>,
 };
 
+/**
+ *
+ */
 export function newSharedStringProperty(): SharedStringProperty {
   return {
     ...newStringProperty(),
@@ -35,4 +41,7 @@ export function newSharedStringProperty(): SharedStringProperty {
   };
 }
 
+/**
+ *
+ */
 export const asSharedStringProperty = (x: EntityProperty): SharedStringProperty => ((x: any): SharedStringProperty);

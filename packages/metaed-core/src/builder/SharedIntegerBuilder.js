@@ -7,6 +7,9 @@ import { sourceMapFrom } from '../model/SourceMap';
 import { isErrorText } from './BuilderUtility';
 import { NoSharedSimple } from '../model/SharedSimple';
 
+/**
+ * An ANTLR4 listener that creates SharedInteger entities.
+ */
 export class SharedIntegerBuilder extends SharedSimpleBuilder {
   enterSharedInteger(context: MetaEdGrammar.SharedIntegerContext) {
     this.enteringSharedSimple(newSharedInteger);
