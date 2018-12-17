@@ -53,7 +53,7 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'authorName',
-        message: 'What is the name of the organization authoring the plugin',
+        message: 'What is the name of the organization authoring the plugin?',
         default: 'My Org',
       },
       {
