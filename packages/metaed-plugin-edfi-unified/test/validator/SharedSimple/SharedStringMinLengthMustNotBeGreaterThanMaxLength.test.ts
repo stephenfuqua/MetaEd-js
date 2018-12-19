@@ -1,0 +1,69 @@
+import { newMetaEdEnvironment, MetaEdTextBuilder, SharedStringBuilder, NamespaceBuilder } from 'metaed-core';
+import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { validate } from '../../../src/validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
+
+describe('when validating shared string with max length greater than min length', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartSharedString('EntityName')
+      .withDocumentation('PropertyDocumentation')
+      .withMinLength('10')
+      .withMaxLength('100')
+      .withEndSharedString()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one shared string', () => {
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating shared string with min length greater than max length', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartSharedString('EntityName')
+      .withDocumentation('PropertyDocumentation')
+      .withMinLength('100')
+      .withMaxLength('10')
+      .withEndSharedString()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one shared string', () => {
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('SharedStringMinLengthMustNotBeGreaterThanMaxLength');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});

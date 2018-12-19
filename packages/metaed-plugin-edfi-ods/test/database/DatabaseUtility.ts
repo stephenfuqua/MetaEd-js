@@ -1,0 +1,84 @@
+import path from 'path';
+import { database, query } from './DatabaseConnection';
+
+export async function dropDatabaseIfExists(databaseName: string): Promise<void> {
+  const sql = `
+IF EXISTS (
+  SELECT *
+  FROM sys.databases
+  WHERE name = '${databaseName}'
+)
+BEGIN
+  ALTER DATABASE [${databaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+  DROP DATABASE [${databaseName}]
+END
+`;
+
+  await database(
+    'master',
+    async db => {
+      await query(db, 'DatabaseTestUtility.dropDatabaseIfExists', sql);
+    },
+    false,
+  );
+}
+
+export async function createDatabaseIfNotExists(databaseName: string): Promise<void> {
+  const sql = `
+IF NOT EXISTS (
+  SELECT *
+  FROM sys.databases
+  WHERE name = '${databaseName}'
+)
+CREATE DATABASE [${databaseName}]
+`;
+
+  await database(
+    'master',
+    async db => {
+      await query(db, 'DatabaseTestUtility.createDatabase', sql);
+    },
+    false,
+  );
+}
+
+export async function restoreDatabaseFromBackup(
+  databaseName: string,
+  backupPath: string,
+  backupName: string,
+): Promise<void> {
+  const resolvedPath = path.resolve(__dirname, backupPath);
+  const sql = `
+RESTORE DATABASE [${databaseName}]
+FROM DISK = N'${resolvedPath}/${backupName}.bak'
+WITH FILE = 1,
+MOVE N'${databaseName}'
+  TO N'${resolvedPath}/${databaseName}.mdf',
+MOVE N'${databaseName}_log'
+  TO N'${resolvedPath}/${databaseName}_log.ldf',
+NOUNLOAD, REPLACE, STATS = 5
+`;
+
+  await database(
+    'master',
+    async db => {
+      await query(db, 'DatabaseTestUtility.restoreDatabaseFromBackup', sql);
+    },
+    false,
+  );
+}
+
+export async function setCompatibilityLevel(databaseName: string, level: number): Promise<void> {
+  const sql = `
+ALTER DATABASE [${databaseName}]
+SET COMPATIBILITY_LEVEL = ${level}
+`;
+
+  await database(
+    'master',
+    async db => {
+      await query(db, 'DatabaseTestUtility.setCompatibilityLevel', sql);
+    },
+    false,
+  );
+}

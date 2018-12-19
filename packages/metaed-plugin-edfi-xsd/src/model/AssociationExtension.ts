@@ -1,0 +1,30 @@
+import { MetaEdEnvironment, EnhancerResult, AssociationExtension } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
+import { metaEdNameWithExtensionIncludingSuffix } from './shared/AddMetaEdNameWithExtension';
+
+export type AssociationExtensionEdfiXsd = {
+  xsdMetaEdNameWithExtension: () => string;
+};
+
+const enhancerName = 'AssociationExtensionSetupEnhancer';
+
+export function addAssociationExtensionEdfiXsdTo(associationExtension: AssociationExtension) {
+  if (associationExtension.data.edfiXsd == null) associationExtension.data.edfiXsd = {};
+
+  Object.assign(associationExtension.data.edfiXsd, {
+    xsdMetaEdNameWithExtension: metaEdNameWithExtensionIncludingSuffix(associationExtension),
+  });
+}
+
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  (getAllEntitiesOfType(metaEd, 'associationExtension') as Array<AssociationExtension>).forEach(
+    (associationExtension: AssociationExtension) => {
+      addAssociationExtensionEdfiXsdTo(associationExtension);
+    },
+  );
+
+  return {
+    enhancerName,
+    success: true,
+  };
+}

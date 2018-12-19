@@ -1,17 +1,23 @@
 {
   "name": "metaed-odsapi-deploy",
   "main": "dist/index.js",
-  "version": "1.4.0",
+  "version": "1.4.1-dev.1",
   "description": "MetaEd for JavaScript",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "chalk": "^2.3.0",
     "fs-extra": "^5.0.0",
-    "metaed-core": "1.4.0",
+    "metaed-core": "1.4.1-dev.1",
     "ramda": "^0.25.0",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",
@@ -20,9 +26,9 @@
     "yargs": "^8.0.2"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build": "yarn build:clean && yarn build:dist && yarn build:copy-non-ts",
     "build:clean": "rimraf dist",
-    "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps --copy-files"
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
   }
 }

@@ -1,0 +1,213 @@
+import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
+import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
+
+import { Interchange, InterchangeSourceMap } from '../model/Interchange';
+import { InterchangeItem } from '../model/InterchangeItem';
+import { EntityRepository } from '../model/EntityRepository';
+import { MetaEdEnvironment } from '../MetaEdEnvironment';
+import { Namespace } from '../model/Namespace';
+import { NoNamespace } from '../model/Namespace';
+
+import { newInterchange, NoInterchange } from '../model/Interchange';
+import { newInterchangeItem, NoInterchangeItem } from '../model/InterchangeItem';
+import { newInterchangeExtension } from '../model/InterchangeExtension';
+import { namespaceNameFrom } from './NamespaceBuilder';
+import { extractDocumentation, squareBracketRemoval, isErrorText } from './BuilderUtility';
+import { sourceMapFrom } from '../model/SourceMap';
+import { ValidationFailure } from '../validator/ValidationFailure';
+
+/**
+ * An ANTLR4 listener that creates Interchange entities.
+ */
+export class InterchangeBuilder extends MetaEdGrammarListener {
+  metaEd: MetaEdEnvironment;
+
+  entityRepository: EntityRepository;
+
+  currentNamespace: Namespace;
+
+  currentInterchange: Interchange;
+
+  currentInterchangeItem: InterchangeItem;
+
+  validationFailures: Array<ValidationFailure>;
+
+  constructor(metaEd: MetaEdEnvironment, validationFailures: Array<ValidationFailure>) {
+    super();
+    this.metaEd = metaEd;
+    this.currentNamespace = NoNamespace;
+    this.currentInterchange = NoInterchange;
+    this.currentInterchangeItem = NoInterchangeItem;
+    this.validationFailures = validationFailures;
+  }
+
+  enterNamespaceName(context: MetaEdGrammar.NamespaceNameContext) {
+    const namespace: Namespace | undefined = this.metaEd.namespace.get(namespaceNameFrom(context));
+    this.currentNamespace = namespace == null ? NoNamespace : namespace;
+  }
+
+  enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    this.currentInterchange.documentation = extractDocumentation(context);
+    this.currentInterchange.sourceMap.documentation = sourceMapFrom(context);
+  }
+
+  enterExtendedDocumentation(context: MetaEdGrammar.ExtendedDocumentationContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    this.currentInterchange.extendedDocumentation = extractDocumentation(context);
+    (this.currentInterchange.sourceMap as InterchangeSourceMap).extendedDocumentation = sourceMapFrom(context);
+  }
+
+  enterUseCaseDocumentation(context: MetaEdGrammar.UseCaseDocumentationContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    this.currentInterchange.useCaseDocumentation = extractDocumentation(context);
+    (this.currentInterchange.sourceMap as InterchangeSourceMap).useCaseDocumentation = sourceMapFrom(context);
+  }
+
+  enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    if (
+      context.exception ||
+      context.METAED_ID() == null ||
+      context.METAED_ID().exception != null ||
+      isErrorText(context.METAED_ID().getText())
+    )
+      return;
+
+    if (this.currentInterchangeItem !== NoInterchangeItem) {
+      this.currentInterchangeItem.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      this.currentInterchangeItem.sourceMap.metaEdId = sourceMapFrom(context);
+    } else {
+      this.currentInterchange.metaEdId = squareBracketRemoval(context.METAED_ID().getText());
+      this.currentInterchange.sourceMap.metaEdId = sourceMapFrom(context);
+    }
+  }
+
+  enterInterchange(context: MetaEdGrammar.InterchangeContext) {
+    this.currentInterchange = { ...newInterchange(), namespace: this.currentNamespace };
+
+    Object.assign(this.currentInterchange.sourceMap, {
+      type: sourceMapFrom(context),
+    });
+  }
+
+  enterInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
+    this.currentInterchange = { ...newInterchangeExtension(), namespace: this.currentNamespace };
+    this.currentInterchange.sourceMap.type = sourceMapFrom(context);
+  }
+
+  exitingInterchange() {
+    if (this.currentInterchange === NoInterchange) return;
+    if (this.currentInterchange.metaEdName) {
+      const extensionMessageString = this.currentInterchange.type === 'interchangeExtension' ? 'Extension ' : '';
+      // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
+      if (this.currentNamespace.entity[this.currentInterchange.type].has(this.currentInterchange.metaEdName)) {
+        this.validationFailures.push({
+          validatorName: 'InterchangeBuilder',
+          category: 'error',
+          message: `Interchange ${extensionMessageString}named ${
+            this.currentInterchange.metaEdName
+          } is a duplicate declaration of that name.`,
+          sourceMap: this.currentInterchange.sourceMap.type,
+          fileMap: null,
+        });
+        // $FlowIgnore - we ensure the key is in the map above, and allow currentInterchange.type to specify the entityRepository Map property
+        const duplicateEntity: Interchange = this.currentNamespace.entity[this.currentInterchange.type].get(
+          this.currentInterchange.metaEdName,
+        );
+        this.validationFailures.push({
+          validatorName: 'InterchangeBuilder',
+          category: 'error',
+          message: `Interchange ${extensionMessageString}named ${
+            duplicateEntity.metaEdName
+          } is a duplicate declaration of that name.`,
+          sourceMap: duplicateEntity.sourceMap.type,
+          fileMap: null,
+        });
+      } else {
+        // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
+        this.currentNamespace.entity[this.currentInterchange.type].set(
+          // $FlowIgnore
+          this.currentInterchange.metaEdName,
+          // $FlowIgnore
+          this.currentInterchange,
+        );
+      }
+    }
+    this.currentInterchange = NoInterchange;
+  }
+
+  // @ts-ignore
+  exitInterchange(context: MetaEdGrammar.InterchangeContext) {
+    this.exitingInterchange();
+  }
+
+  // @ts-ignore
+  exitInterchangeExtension(context: MetaEdGrammar.InterchangeExtensionContext) {
+    this.exitingInterchange();
+  }
+
+  enterInterchangeName(context: MetaEdGrammar.InterchangeNameContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    this.currentInterchange.metaEdName = context.ID().getText();
+    this.currentInterchange.sourceMap.metaEdName = sourceMapFrom(context);
+  }
+
+  enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    this.currentInterchange.metaEdName = context.ID().getText();
+    this.currentInterchange.baseEntityName = context.ID().getText();
+    this.currentInterchange.sourceMap.metaEdName = sourceMapFrom(context);
+  }
+
+  enterInterchangeElement(context: MetaEdGrammar.InterchangeElementContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    this.currentInterchangeItem = Object.assign(newInterchangeItem(), { metaEdName: context.ID().getText() });
+    Object.assign(this.currentInterchangeItem.sourceMap, {
+      type: sourceMapFrom(context),
+      metaEdName: sourceMapFrom(context),
+      referencedType: sourceMapFrom(context),
+    });
+
+    // mutually exclusive in language
+    if (context.ASSOCIATION_KEYWORD()) this.currentInterchangeItem.referencedType = ['association', 'associationSubclass'];
+    if (context.DOMAIN_ENTITY_KEYWORD())
+      this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
+    if (context.DESCRIPTOR_KEYWORD()) this.currentInterchangeItem.referencedType = ['descriptor'];
+    (this.currentInterchange.sourceMap as InterchangeSourceMap).elements.push(sourceMapFrom(context));
+  }
+
+  enterInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
+    if (this.currentInterchange === NoInterchange) return;
+    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
+    this.currentInterchangeItem = Object.assign(newInterchangeItem(), { metaEdName: context.ID().getText() });
+    Object.assign(this.currentInterchangeItem.sourceMap, {
+      type: sourceMapFrom(context),
+      metaEdName: sourceMapFrom(context),
+      referencedType: sourceMapFrom(context),
+    });
+
+    // mutually exclusive in language
+    if (context.ASSOCIATION_IDENTITY()) this.currentInterchangeItem.referencedType = ['association', 'associationSubclass'];
+    if (context.DOMAIN_ENTITY_IDENTITY())
+      this.currentInterchangeItem.referencedType = ['domainEntity', 'domainEntitySubclass'];
+    (this.currentInterchange.sourceMap as InterchangeSourceMap).identityTemplates.push(sourceMapFrom(context));
+  }
+
+  // @ts-ignore
+  exitInterchangeElement(context: MetaEdGrammar.InterchangeElementContext) {
+    if (this.currentInterchange === NoInterchange || this.currentInterchangeItem === NoInterchangeItem) return;
+    this.currentInterchange.elements.push(this.currentInterchangeItem);
+    this.currentInterchangeItem = NoInterchangeItem;
+  }
+
+  // @ts-ignore
+  exitInterchangeIdentity(context: MetaEdGrammar.InterchangeIdentityContext) {
+    if (this.currentInterchange === NoInterchange || this.currentInterchangeItem === NoInterchangeItem) return;
+    this.currentInterchange.identityTemplates.push(this.currentInterchangeItem);
+    this.currentInterchangeItem = NoInterchangeItem;
+  }
+}

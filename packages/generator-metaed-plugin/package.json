@@ -1,6 +1,6 @@
 {
   "name": "generator-metaed-plugin",
-  "version": "1.4.0",
+  "version": "1.4.1-dev.1",
   "description": "Yeoman generator for MetaEd plugins",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -25,9 +25,8 @@
     "yeoman-test": "^1.7.0"
   },
   "scripts": {
-    "build": "yarn build:clean",
+    "build": "yarn build:clean && yarn build:dist",
     "build:clean": "rimraf dist",
-    "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files"
+    "build:dist": "tsc"
   }
 }

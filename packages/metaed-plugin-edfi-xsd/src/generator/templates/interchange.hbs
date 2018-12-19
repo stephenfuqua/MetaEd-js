@@ -10,7 +10,7 @@
     <xs:complexType>
       <xs:choice maxOccurs="unbounded">
         {{#interchange.orderedElements}}
-          <xs:element name="{{{data.edfiXsd.xsd_Name}}}" type="{{{data.edfiXsd.xsd_Type}}}"/>
+          <xs:element name="{{{data.edfiXsd.xsdName}}}" type="{{{data.edfiXsd.xsdType}}}"/>
         {{/interchange.orderedElements}}
         </xs:choice>
     </xs:complexType>

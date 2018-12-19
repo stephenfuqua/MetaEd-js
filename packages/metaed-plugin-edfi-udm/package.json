@@ -1,12 +1,18 @@
 {
   "name": "metaed-plugin-edfi-udm",
   "main": "dist/index.js",
-  "version": "1.4.0",
+  "version": "1.4.1-dev.1",
   "description": "Ed-Fi UDM plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
   "metaed-plugin": {
     "pluginType": "artifact-specific",
     "shortName": "edfiUdm",
@@ -22,19 +28,19 @@
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.5",
     "marked": "^0.4.0",
-    "metaed-core": "1.4.0",
-    "metaed-plugin-edfi-ods": "1.4.0",
-    "metaed-plugin-edfi-unified": "1.4.0",
-    "metaed-plugin-edfi-xsd": "1.4.0",
+    "metaed-core": "1.4.1-dev.1",
+    "metaed-plugin-edfi-ods": "1.4.1-dev.1",
+    "metaed-plugin-edfi-unified": "1.4.1-dev.1",
+    "metaed-plugin-edfi-xsd": "1.4.1-dev.1",
     "ramda": "^0.25.0",
     "sort-array": "^2.0.0",
     "sugar": "^2.0.4",
     "winston": "3.0.0"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build": "yarn build:clean && yarn build:dist && yarn build:copy-non-ts",
     "build:clean": "rimraf dist",
-    "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files"
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
   }
 }

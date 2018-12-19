@@ -1,0 +1,21 @@
+import R from 'ramda';
+import { EntityProperty, TopLevelEntity } from 'metaed-core';
+import { BuildStrategy } from './BuildStrategy';
+import { Column } from '../../model/database/Column';
+import { ColumnCreator } from './ColumnCreator';
+import { ColumnCreatorFactory } from './ColumnCreatorFactory';
+
+export function collectColumns(
+  entityProperty: EntityProperty,
+  strategy: BuildStrategy,
+  factory: ColumnCreatorFactory,
+): Array<Column> {
+  const entity: TopLevelEntity = R.prop('referencedEntity', entityProperty);
+
+  return entity.data.edfiOds.odsProperties.reduce((columns: Array<Column>, property: EntityProperty): Array<Column> => {
+    if (property.data.edfiOds.odsIsCollection) return columns;
+
+    const columnCreator: ColumnCreator = factory.columnCreatorFor(property);
+    return columns.concat(columnCreator.createColumns(property, strategy));
+  }, []);
+}

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1-dev.1](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.4.1-dev.0...v1.4.1-dev.1) (2019-01-22)
+
+**Note:** Version bump only for package metaed-console
+
+
+
+
+
+## [1.4.1-dev.0](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.4.0...v1.4.1-dev.0) (2019-01-22)
+
+**Note:** Version bump only for package metaed-console
+
+
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/Ed-Fi-Alliance/MetaEd-js/compare/v1.3.2-dev.14...v1.4.0) (2018-12-17)
 

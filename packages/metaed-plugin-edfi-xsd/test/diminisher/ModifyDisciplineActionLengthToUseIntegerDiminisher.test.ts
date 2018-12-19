@@ -1,0 +1,149 @@
+import R from 'ramda';
+import { MetaEdEnvironment, DomainEntity, EnhancerResult, IntegerType, Namespace } from 'metaed-core';
+import { newDomainEntity, newIntegerType, newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { newComplexType } from '../../src/model/schema/ComplexType';
+import { newElement } from '../../src/model/schema/Element';
+import { newIntegerSimpleType } from '../../src/model/schema/IntegerSimpleType';
+import { NoSimpleType } from '../../src/model/schema/SimpleType';
+import { enhance } from '../../src/diminisher/ModifyDisciplineActionLengthToUseIntegerDiminisher';
+
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action domain entity', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const domainEntityName1 = 'DisciplineAction';
+  const integerType = 'xs:integer';
+  let entity: DomainEntity;
+
+  beforeAll(() => {
+    const elementNameType1 = 'DisciplineActionLength';
+    const elementName2 = 'ActualDisciplineActionLength';
+
+    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: domainEntityName1,
+      namespace,
+      data: {
+        edfiXsd: {
+          xsdComplexTypes: [
+            Object.assign(newComplexType(), {
+              name: domainEntityName1,
+              items: [
+                Object.assign(newElement(), {
+                  name: elementNameType1,
+                  type: elementNameType1,
+                  maxOccursIsUnbounded: true,
+                }),
+                Object.assign(newElement(), {
+                  name: elementName2,
+                  type: elementNameType1,
+                  maxOccursIsUnbounded: true,
+                }),
+              ],
+            }),
+          ],
+        },
+      },
+    });
+    namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
+    metaEd.dataStandardVersion = '2.0.0';
+
+    enhance(metaEd);
+
+    entity = namespace.entity.domainEntity.get(domainEntityName1) as DomainEntity;
+    expect(entity).toBeDefined();
+  });
+
+  it('should set type to integer type', () => {
+    expect(R.head(R.head(entity.data.edfiXsd.xsdComplexTypes).items).type).toBe(integerType);
+    expect(R.last(R.head(entity.data.edfiXsd.xsdComplexTypes).items).type).toBe(integerType);
+  });
+});
+
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes discipline action simple type', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  let entity: IntegerType;
+
+  beforeAll(() => {
+    const integerTypeName1 = 'DisciplineActionLength';
+
+    const integerType1: IntegerType = Object.assign(newIntegerType(), {
+      metaEdName: integerTypeName1,
+      namespace,
+      data: {
+        edfiXsd: {
+          xsdSimpleType: Object.assign(newIntegerSimpleType(), {
+            name: integerTypeName1,
+            minValue: '1',
+          }),
+        },
+      },
+    });
+    namespace.entity.integerType.set(integerTypeName1, integerType1);
+    metaEd.dataStandardVersion = '2.0.0';
+
+    enhance(metaEd);
+
+    entity = namespace.entity.integerType.get(integerTypeName1) as IntegerType;
+    expect(entity).toBeDefined();
+  });
+
+  it('should set simple type to NoSimpleType', () => {
+    expect(entity.data.edfiXsd.xsdSimpleType).toBe(NoSimpleType);
+  });
+});
+
+describe('when ModifyAppropriateSexOnInterventionStudyToBeMaxOccursTwoDiminisher diminishes with no discipline action', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  let result: EnhancerResult;
+
+  beforeAll(() => {
+    const domainEntityName1 = 'DomainEntityName1';
+    const elementName1 = 'ElementName1';
+    const elementType1 = 'ElementType1';
+    const integerTypeName1 = 'IntegerTypeName';
+
+    const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), {
+      metaEdName: domainEntityName1,
+      namespace,
+      data: {
+        edfiXsd: {
+          xsdComplexTypes: [
+            Object.assign(newComplexType(), {
+              name: domainEntityName1,
+              items: [
+                Object.assign(newElement(), {
+                  name: elementName1,
+                  type: elementType1,
+                  maxOccursIsUnbounded: true,
+                }),
+              ],
+            }),
+          ],
+        },
+      },
+    });
+    namespace.entity.domainEntity.set(domainEntityName1, domainEntity1);
+
+    const integerType1: IntegerType = Object.assign(newIntegerType(), {
+      metaEdName: integerTypeName1,
+      data: {
+        edfiXsd: {
+          xsdSimpleType: 'SimpleTypeName1',
+          minValue: '1',
+        },
+      },
+    });
+    namespace.entity.integerType.set(integerTypeName1, integerType1);
+    metaEd.dataStandardVersion = '2.0.0';
+
+    result = enhance(metaEd);
+  });
+
+  it('should run without error', () => {
+    expect(result.success).toBe(true);
+  });
+});

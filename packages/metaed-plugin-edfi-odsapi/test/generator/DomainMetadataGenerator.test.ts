@@ -1,0 +1,341 @@
+import { newMetaEdEnvironment, newNamespace } from 'metaed-core';
+import { MetaEdEnvironment, Namespace } from 'metaed-core';
+import { generate } from '../../src/generator/domainMetadata/DomainMetadataGenerator';
+import { Aggregate } from '../../src/model/domainMetadata/Aggregate';
+
+describe('when generating aggregate for edfi', () => {
+  const namespaceName = 'edfi';
+  const projectName = 'Ed-Fi';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: false,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity2',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: false,
+        },
+        {
+          table: 'Entity3',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: false,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: false,
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating aggregate for extensions', () => {
+  const namespaceName = 'extension';
+  const projectName = 'Extension';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: false,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity2',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: true,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: true,
+      projectExtension: 'EXTENSION',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating aggregate with subclass for edfi', () => {
+  const namespaceName = 'edfi';
+  const projectName = 'Ed-Fi';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: false,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity2',
+          isA: 'Entity4',
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: true,
+          requiresSchema: false,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: false,
+      projectExtension: '',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating aggregate extensions', () => {
+  const namespaceName = 'extension';
+  const projectName = 'Extension';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: false,
+      isExtension: true,
+      entityTables: [
+        {
+          table: 'Entity2',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: true,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: true,
+      projectExtension: 'EXTENSION',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating abstract aggregate for edfi', () => {
+  const namespaceName = 'edfi';
+  const projectName = 'Ed-Fi';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: false,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity2',
+          isA: null,
+          isAbstract: true,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: false,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: false,
+      projectExtension: '',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating aggregate with primary key update', () => {
+  const namespaceName = 'edfi';
+  const projectName = 'Ed-Fi';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: true,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity1',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: false,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: false,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: false,
+      projectExtension: '',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});
+
+describe('when generating aggregate with required collection table', () => {
+  const namespaceName = 'edfi';
+  const projectName = 'Ed-Fi';
+  let result = '';
+
+  beforeAll(async () => {
+    const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+
+    const aggregate: Aggregate = {
+      root: 'Entity1',
+      schema: namespaceName,
+      allowPrimaryKeyUpdates: true,
+      isExtension: false,
+      entityTables: [
+        {
+          table: 'Entity1',
+          isA: null,
+          isAbstract: false,
+          isRequiredCollection: true,
+          schema: namespaceName,
+          hasIsA: false,
+          requiresSchema: false,
+        },
+      ],
+    };
+
+    const namespace: Namespace = Object.assign(newNamespace(), {
+      namespaceName,
+      projectName,
+      isExtension: false,
+      projectExtension: '',
+      data: {
+        edfiOdsApi: {
+          aggregates: [aggregate],
+        },
+      },
+    });
+
+    metaEd.namespace.set(namespace.namespaceName, namespace);
+    result = (await generate(metaEd)).generatedOutput[0].resultString;
+  });
+
+  it('should generate aggregate element', () => {
+    expect(result).toMatchSnapshot();
+  });
+});

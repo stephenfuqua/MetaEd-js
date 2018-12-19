@@ -1,0 +1,472 @@
+import {
+  DescriptorBuilder,
+  DomainBuilder,
+  DomainEntityBuilder,
+  EnumerationBuilder,
+  InterchangeBuilder,
+  NamespaceBuilder,
+  newMetaEdEnvironment,
+  MetaEdTextBuilder,
+} from 'metaed-core';
+import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import { validate } from '../../../src/validator/MetaEdId/MustNotDuplicateMetaEdId';
+
+describe('when validating two entities have different metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName1', '1')
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DomainEntityName2', '2')
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating two entities have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId = '1';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName1', metaEdId)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DomainEntityName2', metaEdId)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating two domain items have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId = '1';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomain('DomainName')
+      .withDocumentation('DomainDocumentation')
+      .withDomainEntityDomainItem('DomainItemName1', metaEdId)
+      .withEndDomain()
+
+      .withStartSubdomain('SubdomainName', 'ParentDomainName')
+      .withDocumentation('SubdomainDocumentation')
+      .withDomainEntityDomainItem('DomainItemName2', metaEdId)
+
+      .withEndSubdomain()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should build one subdomain', () => {
+    expect(coreNamespace.entity.subdomain.size).toBe(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating two enumeration items have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId = '1';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartEnumeration('EnumerationName')
+      .withDocumentation('EnumerationDocumentation')
+      .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation', metaEdId)
+      .withEndEnumeration()
+
+      .withStartEnumeration('SchoolYear')
+      .withDocumentation('SchoolYearEnumerationDocumentation')
+      .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation', metaEdId)
+      .withEndEnumeration()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new EnumerationBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one enumeration', () => {
+    expect(coreNamespace.entity.enumeration.size).toBe(1);
+  });
+
+  it('should build one school year enumeration', () => {
+    expect(coreNamespace.entity.schoolYearEnumeration.size).toBe(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating two map type enumeration items have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId = '1';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDescriptor('DescriptorName1')
+      .withDocumentation('DescriptorDocumentation')
+      .withStartMapType()
+      .withDocumentation('MapTypeDocumentation')
+      .withEnumerationItem('EnumerationItemShortDescription', 'EnumerationItemDocumentation', metaEdId)
+      .withEndMapType()
+      .withEndDescriptor()
+
+      .withStartDescriptor('DescriptorName2')
+      .withDocumentation('DescriptorDocumentation')
+      .withStartMapType()
+      .withDocumentation('MapTypeDocumentation')
+      .withEnumerationItem('EnumerationItemShortDescription', 'EnumerationItemDocumentation', metaEdId)
+      .withEndMapType()
+      .withEndDescriptor()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build two map type enumerations', () => {
+    expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(2);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating interchange items have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId = '1';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartInterchange('InterchangeName')
+      .withDocumentation('InterchangeDocumentation')
+      .withDomainEntityElement('DomainEntityElementName1', metaEdId)
+      .withEndInterchange()
+
+      .withStartInterchangeExtension('InterchangeExtensionName')
+      .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName2', metaEdId)
+      .withEndInterchangeExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new InterchangeBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one interchange', () => {
+    expect(coreNamespace.entity.interchange.size).toBe(1);
+  });
+
+  it('should build one interchange extension', () => {
+    expect(coreNamespace.entity.interchangeExtension.size).toBe(1);
+  });
+
+  it('should have validation failures', () => {
+    expect(failures).toHaveLength(2);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating multiple entities, properties, and items have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId1 = '1';
+    const metaEdId2 = '2';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName1', metaEdId1)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DomainEntityName2', metaEdId2)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+
+      .withStartDescriptor('DescriptorName')
+      .withDocumentation('DescriptorDocumentation')
+      .withStartMapType()
+      .withDocumentation('MapTypeDocumentation')
+      .withEnumerationItem('EnumerationItemShortDescription', 'EnumerationItemDocumentation', metaEdId1)
+      .withEndMapType()
+      .withEndDescriptor()
+
+      .withStartDomain('DomainName')
+      .withDocumentation('DomainDocumentation')
+      .withDomainEntityDomainItem('DomainItemName1', metaEdId1)
+      .withEndDomain()
+
+      .withStartInterchange('InterchangeName')
+      .withDocumentation('InterchangeDocumentation')
+      .withDomainEntityElement('DomainEntityElementName1', metaEdId2)
+      .withEndInterchange()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new InterchangeBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should build one map type enumeration', () => {
+    expect(coreNamespace.entity.mapTypeEnumeration.size).toBe(1);
+  });
+
+  it('should build one domain', () => {
+    expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should build one interchange', () => {
+    expect(coreNamespace.entity.interchange.size).toBe(1);
+  });
+
+  it('should have five validation failures', () => {
+    expect(failures).toHaveLength(5);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+    expect(failures[2].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[2].category).toBe('warning');
+    expect(failures[2].message).toMatchSnapshot();
+    expect(failures[2].sourceMap).toMatchSnapshot();
+    expect(failures[3].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[3].category).toBe('warning');
+    expect(failures[3].message).toMatchSnapshot();
+    expect(failures[3].sourceMap).toMatchSnapshot();
+    expect(failures[4].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[4].category).toBe('warning');
+    expect(failures[4].message).toMatchSnapshot();
+    expect(failures[4].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when validating multiple entities, properties, and items across namespaces have duplicate metaEdId', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    const metaEdId1 = '1';
+    const metaEdId2 = '2';
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('edfi')
+      .withStartDomainEntity('DomainEntityName1', metaEdId1)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+
+      .withStartDomainEntity('DomainEntityName2', metaEdId2)
+      .withDocumentation('DomainEntityDocumentation')
+      .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('extension', 'ProjectExtension')
+      .withStartDescriptor('DescriptorName')
+      .withDocumentation('DescriptorDocumentation')
+      .withStartMapType()
+      .withDocumentation('MapTypeDocumentation')
+      .withEnumerationItem('EnumerationItemShortDescription', 'EnumerationItemDocumentation', metaEdId1)
+      .withEndMapType()
+      .withEndDescriptor()
+
+      .withStartDomain('DomainName')
+      .withDocumentation('DomainDocumentation')
+      .withDomainEntityDomainItem('DomainItemName1', metaEdId1)
+      .withEndDomain()
+
+      .withStartInterchange('InterchangeName')
+      .withDocumentation('InterchangeDocumentation')
+      .withDomainEntityElement('DomainEntityElementName1', metaEdId2)
+      .withEndInterchange()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DescriptorBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new InterchangeBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('edfi');
+    extensionNamespace = metaEd.namespace.get('extension');
+    // $FlowIgnore - null check
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(2);
+  });
+
+  it('should build one map type enumeration', () => {
+    expect(extensionNamespace.entity.mapTypeEnumeration.size).toBe(1);
+  });
+
+  it('should build one domain', () => {
+    expect(extensionNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should build one interchange', () => {
+    expect(extensionNamespace.entity.interchange.size).toBe(1);
+  });
+
+  it('should have five validation failures', () => {
+    expect(failures).toHaveLength(5);
+    expect(failures[0].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[0].category).toBe('warning');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+    expect(failures[1].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[1].category).toBe('warning');
+    expect(failures[1].message).toMatchSnapshot();
+    expect(failures[1].sourceMap).toMatchSnapshot();
+    expect(failures[2].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[2].category).toBe('warning');
+    expect(failures[2].message).toMatchSnapshot();
+    expect(failures[2].sourceMap).toMatchSnapshot();
+    expect(failures[3].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[3].category).toBe('warning');
+    expect(failures[3].message).toMatchSnapshot();
+    expect(failures[3].sourceMap).toMatchSnapshot();
+    expect(failures[4].validatorName).toBe('MustNotDuplicateMetaEdId');
+    expect(failures[4].category).toBe('warning');
+    expect(failures[4].message).toMatchSnapshot();
+    expect(failures[4].sourceMap).toMatchSnapshot();
+  });
+});

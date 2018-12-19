@@ -1,0 +1,54 @@
+import { SharedSimple, SharedSimpleSourceMap } from './SharedSimple';
+import { newSharedSimpleSourceMap, newSharedSimple } from './SharedSimple';
+import { ModelBase } from './ModelBase';
+import { SourceMap } from './SourceMap';
+import { NoSourceMap } from './SourceMap';
+
+export interface SharedDecimalSourceMap extends SharedSimpleSourceMap {
+  totalDigits: SourceMap;
+  decimalPlaces: SourceMap;
+  minValue: SourceMap;
+  maxValue: SourceMap;
+}
+
+/**
+ *
+ */
+export function newSharedDecimalSourceMap(): SharedDecimalSourceMap {
+  return {
+    ...newSharedSimpleSourceMap(),
+    totalDigits: NoSourceMap,
+    decimalPlaces: NoSourceMap,
+    minValue: NoSourceMap,
+    maxValue: NoSourceMap,
+  };
+}
+
+export interface SharedDecimal extends SharedSimple {
+  sourceMap: SharedDecimalSourceMap;
+  totalDigits: string;
+  decimalPlaces: string;
+  minValue: string;
+  maxValue: string;
+}
+
+/**
+ *
+ */
+export function newSharedDecimal(): SharedDecimal {
+  return {
+    ...newSharedSimple(),
+    type: 'sharedDecimal',
+    typeHumanizedName: 'Shared Decimal',
+    totalDigits: '',
+    decimalPlaces: '',
+    minValue: '',
+    maxValue: '',
+    sourceMap: newSharedDecimalSourceMap(),
+  };
+}
+
+/**
+ *
+ */
+export const asSharedDecimal = (x: ModelBase): SharedDecimal => x as SharedDecimal;

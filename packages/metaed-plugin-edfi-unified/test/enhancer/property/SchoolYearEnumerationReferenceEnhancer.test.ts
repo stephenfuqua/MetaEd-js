@@ -1,0 +1,82 @@
+import R from 'ramda';
+import { newMetaEdEnvironment, newNamespace, newSchoolYearEnumerationProperty, newSchoolYearEnumeration } from 'metaed-core';
+import { MetaEdEnvironment, SchoolYearEnumerationProperty, SchoolYearEnumeration, Namespace } from 'metaed-core';
+import { enhance } from '../../../src/enhancer/property/SchoolYearEnumerationReferenceEnhancer';
+
+describe('when enhancing schoolYearEnumeration property', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: SchoolYearEnumerationProperty = Object.assign(newSchoolYearEnumerationProperty(), {
+      metaEdName: referencedEntityName,
+      namespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.schoolYearEnumeration.push(property);
+
+    const parentEntity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
+      metaEdName: parentEntityName,
+      namespace,
+      properties: [property],
+    });
+    namespace.entity.schoolYearEnumeration.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.schoolYearEnumeration.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+  });
+});
+
+describe('when enhancing schoolYearEnumeration property across namespaces', () => {
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+  const parentEntityName = 'ParentEntityName';
+  const referencedEntityName = 'ReferencedEntityName';
+
+  beforeAll(() => {
+    const property: SchoolYearEnumerationProperty = Object.assign(newSchoolYearEnumerationProperty(), {
+      metaEdName: referencedEntityName,
+      namespace: extensionNamespace,
+      parentEntityName,
+    });
+    metaEd.propertyIndex.schoolYearEnumeration.push(property);
+
+    const parentEntity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
+      metaEdName: parentEntityName,
+      namespace: extensionNamespace,
+      properties: [property],
+    });
+    extensionNamespace.entity.schoolYearEnumeration.set(parentEntity.metaEdName, parentEntity);
+
+    const referencedEntity: SchoolYearEnumeration = Object.assign(newSchoolYearEnumeration(), {
+      metaEdName: referencedEntityName,
+      namespace,
+    });
+    namespace.entity.schoolYearEnumeration.set(referencedEntity.metaEdName, referencedEntity);
+
+    enhance(metaEd);
+  });
+
+  it('should have no validation failures()', () => {
+    const property = R.head(metaEd.propertyIndex.schoolYearEnumeration.filter(p => p.metaEdName === referencedEntityName));
+    expect(property).toBeDefined();
+    expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+  });
+});

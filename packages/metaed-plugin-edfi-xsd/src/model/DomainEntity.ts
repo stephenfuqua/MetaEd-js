@@ -1,0 +1,33 @@
+import { MetaEdEnvironment, EnhancerResult, DomainEntity, EntityProperty } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
+
+export type DomainEntityEdfiXsd = {
+  xsdProperties: () => Array<EntityProperty>;
+};
+
+const enhancerName = 'DomainEntitySetupEnhancer';
+
+// note this is an override of xsdProperties in TopLevelEntity
+function xsdProperties(domainEntity: DomainEntity): () => Array<EntityProperty> {
+  return () =>
+    domainEntity.isAbstract ? domainEntity.properties.filter(p => !p.isPartOfIdentity) : domainEntity.properties;
+}
+
+export function addDomainEntityEdfiXsdTo(domainEntity: DomainEntity) {
+  if (domainEntity.data.edfiXsd == null) domainEntity.data.edfiXsd = {};
+
+  Object.assign(domainEntity.data.edfiXsd, {
+    xsdProperties: xsdProperties(domainEntity),
+  });
+}
+
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  (getAllEntitiesOfType(metaEd, 'domainEntity') as Array<DomainEntity>).forEach((domainEntity: DomainEntity) => {
+    addDomainEntityEdfiXsdTo(domainEntity);
+  });
+
+  return {
+    enhancerName,
+    success: true,
+  };
+}

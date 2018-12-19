@@ -1,12 +1,18 @@
 {
   "name": "metaed-plugin-edfi-xml-dictionary",
   "main": "dist/index.js",
-  "version": "1.4.0",
+  "version": "1.4.1-dev.1",
   "description": "Ed-Fi Alliance XML Data Dictionary plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
   "metaed-plugin": {
     "pluginType": "artifact-specific",
     "shortName": "edfiXmlDictionary",
@@ -21,17 +27,17 @@
   "dependencies": {
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.4",
-    "metaed-core": "1.4.0",
-    "metaed-plugin-edfi-unified": "1.4.0",
-    "metaed-plugin-edfi-xsd": "1.4.0",
+    "metaed-core": "1.4.1-dev.1",
+    "metaed-plugin-edfi-unified": "1.4.1-dev.1",
+    "metaed-plugin-edfi-xsd": "1.4.1-dev.1",
     "winston": "3.0.0",
     "xlsx": "^0.11.8",
     "xmldom": "^0.1.27"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build": "yarn build:clean && yarn build:dist && yarn build:copy-non-ts",
     "build:clean": "rimraf dist",
-    "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files"
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
   }
 }

@@ -1,8 +1,11 @@
 module.exports = {
+  preset: 'ts-jest',
   testResultsProcessor: 'jest-teamcity-reporter',
   testEnvironment: 'node',
   transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*metaed-.*).*$'],
-  collectCoverageFrom: ['packages/**/src/**/*.js'],
+  testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
+  moduleFileExtensions: ['js', 'ts'],
+  collectCoverageFrom: ['packages/**/src/**/*.ts'],
   coverageThreshold: {
     global: {
       branches: 10,

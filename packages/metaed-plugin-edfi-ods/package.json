@@ -1,12 +1,18 @@
 {
   "name": "metaed-plugin-edfi-ods",
   "main": "dist/index.js",
-  "version": "1.4.0",
+  "version": "1.4.1-dev.1",
   "description": "Ed-Fi Alliance ODS plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
     "registry": "https://www.myget.org/F/ed-fi/npm/"
   },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
   "metaed-plugin": {
     "pluginType": "artifact-specific",
     "shortName": "edfiOds",
@@ -21,8 +27,8 @@
     "deep-freeze": "^0.0.1",
     "diff2html": "^2.3.2",
     "handlebars": "^4.0.11",
-    "metaed-core": "1.4.0",
-    "metaed-plugin-edfi-unified": "1.4.0",
+    "metaed-core": "1.4.1-dev.1",
+    "metaed-plugin-edfi-unified": "1.4.1-dev.1",
     "ramda": "^0.25.0",
     "sugar": "^2.0.4",
     "winston": "3.0.0"
@@ -32,14 +38,14 @@
     "ed-fi-model-2.0": "1.0.3",
     "ed-fi-model-3.0": "1.0.0",
     "final-fs": "^1.6.1",
-    "msnodesqlv8": "^0.4.7",
-    "mssql": "^4.1.0"
+    "msnodesqlv8": "0.4.18",
+    "mssql": "^4.3.0"
   },
   "scripts": {
-    "build": "yarn build:clean && yarn build:dist && yarn build:flow",
+    "build": "yarn build:clean && yarn build:dist && yarn build:copy-non-ts",
     "build:clean": "rimraf dist",
-    "build:flow": "flow-copy-source -v src dist",
-    "build:dist": "rimraf dist && babel src -d dist --source-maps inline --copy-files",
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose",
     "test:single": "jest --runInBand"
   }
 }

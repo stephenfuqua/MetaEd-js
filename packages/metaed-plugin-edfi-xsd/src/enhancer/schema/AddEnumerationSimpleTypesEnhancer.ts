@@ -1,0 +1,37 @@
+import { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
+import { getAllEntitiesOfType } from 'metaed-core';
+import { EnumerationBase, EnumerationBaseEdfiXsd } from '../../model/EnumerationBase';
+import { newEnumerationToken } from '../../model/schema/EnumerationToken';
+import { newEnumerationSimpleType } from '../../model/schema/EnumerationSimpleType';
+import { newAnnotation } from '../../model/schema/Annotation';
+import { typeGroupEnumeration } from './AddComplexTypesBaseEnhancer';
+
+const enhancerName = 'AddEnumerationSimpleTypesEnhancer';
+
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  getAllEntitiesOfType(metaEd, 'enumeration', 'mapTypeEnumeration', 'schoolYearEnumeration').forEach(enumeration => {
+    const enumerationBase = enumeration as EnumerationBase;
+    const enumerationBaseEdfiXsd = enumerationBase.data.edfiXsd as EnumerationBaseEdfiXsd;
+    enumerationBaseEdfiXsd.xsdEnumerationSimpleType = Object.assign(newEnumerationSimpleType(), {
+      name: enumerationBaseEdfiXsd.xsdEnumerationNameWithExtension,
+      annotation: Object.assign(newAnnotation(), {
+        documentation: enumerationBase.documentation,
+        typeGroup: typeGroupEnumeration,
+      }),
+      baseType: 'xs:token',
+      enumerationTokens: enumerationBase.enumerationItems.map(item =>
+        Object.assign(newEnumerationToken(), {
+          annotation: Object.assign(newAnnotation(), {
+            documentation: item.documentation,
+          }),
+          value: item.shortDescription,
+        }),
+      ),
+    });
+  });
+
+  return {
+    enhancerName,
+    success: true,
+  };
+}

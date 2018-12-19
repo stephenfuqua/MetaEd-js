@@ -1,25 +1,33 @@
-// @flow
+/*  This test suite was commented out in January 2019 - Horseman injection stopped working on move to TypeScript.
+ *  Horseman is obsolete anyway, and this plugin is completely disabled in src/index.ts
+ *  This file maintains a .js extension to prevent it from being found by the Jest test runner
+ * 
 import { newMetaEdEnvironment, newDomainEntity, newInterchangeItem, newNamespace } from 'metaed-core';
-import type { MetaEdEnvironment, Namespace } from 'metaed-core';
-import type { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
-import { addEdFiXsdEntityRepositoryTo, newMergedInterchange, edfiXsdRepositoryForNamespace } from 'metaed-plugin-edfi-xsd';
+import { MetaEdEnvironment, Namespace } from 'metaed-core';
+import { EdFiXsdEntityRepository } from 'metaed-plugin-edfi-xsd';
+import {
+  addEdFiXsdEntityRepositoryTo,
+  newMergedInterchange,
+  MergedInterchange,
+  edfiXsdRepositoryForNamespace,
+} from 'metaed-plugin-edfi-xsd';
 import { generate as InterchangeBriefSvgGenerator } from '../../src/generator/InterchangeBriefSvgGenerator';
 
 jest.setTimeout(10000);
 
 describe('When generating interchange brief with no extended references or descriptors', () => {
-  const interchange1metaEdName: string = 'Interchange1metaEdName';
-  const interchange2metaEdName: string = 'Interchange2metaEdName';
-  const interchange1InterchangeName: string = 'InterchangeInterchange1metaEdName';
-  const interchange2InterchangeName: string = 'InterchangeInterchange2metaEdName';
+  const interchange1metaEdName = 'Interchange1metaEdName';
+  const interchange2metaEdName = 'Interchange2metaEdName';
+  const interchange1InterchangeName = 'InterchangeInterchange1metaEdName';
+  const interchange2InterchangeName = 'InterchangeInterchange2metaEdName';
 
-  const interchange1Documentation: string = 'Interchange 1 Documentation here';
+  const interchange1Documentation = 'Interchange 1 Documentation here';
   const interchange2Documentation = 'Interchange 2 Documentation here';
 
-  const domainEntity1Documentation: string = 'Domain Entity 1 Documentation here';
-  const domainEntity2Documentation: string = 'Domain Entity 2 Documentation here';
-  const domainEntity3Documentation: string = 'Domain Entity 3 Documentation here';
-  const domainEntity4Documentation: string = 'Domain Entity 4 Documentation here';
+  const domainEntity1Documentation = 'Domain Entity 1 Documentation here';
+  const domainEntity2Documentation = 'Domain Entity 2 Documentation here';
+  const domainEntity3Documentation = 'Domain Entity 3 Documentation here';
+  const domainEntity4Documentation = 'Domain Entity 4 Documentation here';
 
   function GetBuilderResults() {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -44,7 +52,7 @@ describe('When generating interchange brief with no extended references or descr
       documentation: domainEntity4Documentation,
     });
 
-    const interchange1 = Object.assign(newMergedInterchange(), {
+    const interchange1: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchange1metaEdName,
       interchangeName: interchange1InterchangeName,
       documentation: interchange1Documentation,
@@ -53,7 +61,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity1.metaEdName,
       data: {
         edfiInterchangeBrief: { interchangeBriefDescription: domainEntity1Documentation },
-        edfiXsd: { xsd_Name: domainEntity1.metaEdName },
+        edfiXsd: { xsdName: domainEntity1.metaEdName },
       },
       referencedEntity: domainEntity1,
     });
@@ -61,14 +69,14 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity2.metaEdName,
       data: {
         edfiInterchangeBrief: { interchangeBriefDescription: domainEntity2Documentation },
-        edfiXsd: { xsd_Name: domainEntity2.metaEdName },
+        edfiXsd: { xsdName: domainEntity2.metaEdName },
       },
       referencedEntity: domainEntity2,
     });
     interchange1.elements.push(interchangeItem1);
     interchange1.elements.push(interchangeItem2);
 
-    const interchange2 = Object.assign(newMergedInterchange(), {
+    const interchange2: MergedInterchange = Object.assign(newMergedInterchange(), {
       metaEdName: interchange2metaEdName,
       interchangeName: interchange2InterchangeName,
       documentation: interchange2Documentation,
@@ -77,7 +85,7 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity3.metaEdName,
       data: {
         edfiInterchangeBrief: { interchangeBriefDescription: domainEntity3Documentation },
-        edfiXsd: { xsd_Name: domainEntity3.metaEdName },
+        edfiXsd: { xsdName: domainEntity3.metaEdName },
       },
       referencedEntity: domainEntity3,
     });
@@ -85,14 +93,14 @@ describe('When generating interchange brief with no extended references or descr
       metaEdName: domainEntity4.metaEdName,
       data: {
         edfiInterchangeBrief: { interchangeBriefDescription: domainEntity4Documentation },
-        edfiXsd: { xsd_Name: domainEntity4.metaEdName },
+        edfiXsd: { xsdName: domainEntity4.metaEdName },
       },
       referencedEntity: domainEntity4,
     });
     interchange2.elements.push(interchangeItem3);
     interchange2.elements.push(interchangeItem4);
 
-    const xsdRepository: ?EdFiXsdEntityRepository = edfiXsdRepositoryForNamespace(metaEd, namespace);
+    const xsdRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, namespace);
     if (xsdRepository == null) throw new Error();
 
     xsdRepository.mergedInterchange.set(interchange1.interchangeName, interchange1);
@@ -105,3 +113,5 @@ describe('When generating interchange brief with no extended references or descr
     expect(result.generatedOutput.length).toBe(2);
   });
 });
+
+*/

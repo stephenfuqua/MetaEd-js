@@ -1,0 +1,1627 @@
+import antlr4 from 'antlr4';
+import { MetaEdGrammar } from './gen/MetaEdGrammar';
+import { MetaEdGrammarListener } from './gen/MetaEdGrammarListener';
+import { BaseLexer } from './gen/BaseLexer';
+
+/**
+ * ErrorListener is an ANTLR4 ErrorListener used in unit testing to collect syntax errors from the ANTLR parser.
+ */
+class ErrorListener {
+  errorMessages: string[];
+
+  constructor() {
+    antlr4.error.ErrorListener.call(this);
+    this.errorMessages = [];
+  }
+
+  syntaxError(_1: any, offendingSymbol: any, line: number, column: number, message: string) {
+    const tokenText = offendingSymbol && offendingSymbol.text ? offendingSymbol.text : '';
+    this.errorMessages.push(`${message}, column: ${column}, line: ${line}, token: ${tokenText}`);
+  }
+}
+
+function listen(metaEdText: string, listener: MetaEdGrammarListener): string[] {
+  const errorListener = new ErrorListener();
+  const lexer = new BaseLexer(new antlr4.InputStream(metaEdText));
+  const parser = new MetaEdGrammar(new antlr4.CommonTokenStream(lexer, undefined));
+  lexer.removeErrorListeners();
+  lexer.addErrorListener(errorListener);
+  parser.removeErrorListeners();
+  parser.addErrorListener(errorListener);
+  const parserContext = parser.metaEd();
+  const parseTreeWalker = new antlr4.tree.ParseTreeWalker();
+  parseTreeWalker.walk(listener, parserContext);
+  const result = errorListener.errorMessages;
+
+  lexer.removeErrorListeners();
+  parser.removeErrorListeners();
+
+  return result;
+}
+
+/**
+ * MetaEdTextBuilder is a fluent generator of MetaEd language text useful for setting up unit testing scenarios.
+ * Language text can be described with chained functions and the resulting text can be sent to one or more Builders (ANTLR4
+ * parse listeners) to create an EntityRepository representation.
+ *
+ * @example
+ * MetaEdTextBuilder.build()
+ * .withBeginNamespace(namespaceName)
+ * .withStartDomainEntity(entityName, metaEdId)
+ * .withDocumentation('doc')
+ * .withStringProperty(stringPropertyName, 'doc', true, false, '10', '2')
+ * .withEndDomainEntity()
+ * .withEndNamespace()
+ * .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+ * .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
+ */
+export class MetaEdTextBuilder {
+  textLines: string[];
+
+  indentationLevel: number;
+
+  errorMessages: string[];
+
+  /**
+   * @hideconstructor
+   */
+  constructor() {
+    this.textLines = [];
+    this.indentationLevel = 0;
+    this.errorMessages = [];
+  }
+
+  /**
+   * A static convenience method for getting a new MetaEdTextBuilder.
+   */
+  static build() {
+    return new MetaEdTextBuilder();
+  }
+
+  /**
+   * Chainable method to fire parse events to a Builder (ANTLR4 parse listener)
+   */
+  sendToListener(listener: MetaEdGrammarListener): MetaEdTextBuilder {
+    const metaEdText = this.toString();
+    this.errorMessages.push(...listen(metaEdText, listener));
+    return this;
+  }
+
+  toString(): string {
+    return this.textLines.join('\r\n');
+  }
+
+  toConsole(): void {
+    // eslint-disable-next-line no-console
+    console.log([this.toString(), this.errorMessages.join('\r\n')].join('\r\n'));
+  }
+
+  getIndentation(): string {
+    return ' '.repeat(this.indentationLevel * 2);
+  }
+
+  increaseIndentation() {
+    this.indentationLevel += 1;
+  }
+
+  decreaseIndentation() {
+    this.indentationLevel -= 1;
+  }
+
+  addLineWithoutIndentation(line: string) {
+    this.textLines.push(line);
+  }
+
+  addLine(line: string) {
+    const indention = this.getIndentation();
+    this.textLines.push(indention + line);
+  }
+
+  withBlankLine(): MetaEdTextBuilder {
+    this.addLineWithoutIndentation('');
+    return this;
+  }
+
+  withTrailingText(text: string): MetaEdTextBuilder {
+    const idx = this.textLines.length - 1;
+    this.textLines[idx] = this.textLines[idx] + text;
+    return this;
+  }
+
+  /**
+   *
+   */
+  withBeginNamespace(identifier: string, projectExtension: string | null = null): MetaEdTextBuilder {
+    if (projectExtension == null) {
+      this.addLine(`Begin Namespace ${identifier} core`);
+    } else {
+      this.addLine(`Begin Namespace ${identifier} ${projectExtension}`);
+    }
+    this.increaseIndentation();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withEndNamespace(): MetaEdTextBuilder {
+    this.decreaseIndentation();
+    this.addLine('End Namespace');
+    return this;
+  }
+
+  withComment(comment: string): MetaEdTextBuilder {
+    this.addLine(`//${comment}`);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withDocumentation(documentation: string): MetaEdTextBuilder {
+    const documentationToken = 'documentation';
+    this.addLine(documentationToken);
+    return this.withDocumentationLine(documentation);
+  }
+
+  withExtendedDocumentation(documentation: string): MetaEdTextBuilder {
+    const documentationToken = 'extended documentation';
+    this.addLine(documentationToken);
+    return this.withDocumentationLine(documentation);
+  }
+
+  withUseCaseDocumentation(documentation: string): MetaEdTextBuilder {
+    const documentationToken = 'use case documentation';
+    this.addLine(documentationToken);
+    return this.withDocumentationLine(documentation);
+  }
+
+  withFooterDocumentation(documentation: string): MetaEdTextBuilder {
+    const documentationToken = 'footer documentation';
+    this.addLine(documentationToken);
+    return this.withDocumentationLine(documentation);
+  }
+
+  withDocumentationLine(documentation: string): MetaEdTextBuilder {
+    if (documentation === 'inherited') {
+      this.addLine(documentation);
+    } else {
+      this.addLine(`"${documentation}"`);
+    }
+    return this;
+  }
+
+  withMetaEdId(metaEdId: string | null): MetaEdTextBuilder {
+    if (metaEdId == null) return this;
+    if (this.textLines.length > 0) {
+      const lastLine = this.textLines[this.textLines.length - 1];
+      this.textLines[this.textLines.length - 1] = `${lastLine} [${metaEdId}]`;
+    } else {
+      this.addLine(`[${metaEdId}]`);
+    }
+    return this;
+  }
+
+  withChildElement(elementType: string, identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    this.addLine(`${elementType} ${identifier}`);
+    this.withMetaEdId(metaEdId);
+    return this;
+  }
+
+  withStartTopLevel(keyword: string, identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    if (metaEdId == null) {
+      this.addLine(`${keyword} ${identifier}`);
+    } else {
+      this.addLine(`${keyword} ${identifier} [${metaEdId}]`);
+    }
+    this.increaseIndentation();
+    return this;
+  }
+
+  withStartTopLevelSubclass(
+    keyword: string,
+    identifier: string,
+    baseIdentifier: string,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.addLine(`${keyword} ${identifier} based on ${baseIdentifier}`);
+    if (metaEdId != null) this.withMetaEdId(metaEdId);
+    this.increaseIndentation();
+    return this;
+  }
+
+  withStartTopLevelExtension(keyword: string, identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    this.addLine(`${keyword} ${identifier} additions`);
+    if (metaEdId != null) this.withMetaEdId(metaEdId);
+    this.increaseIndentation();
+    return this;
+  }
+
+  withEndTopLevel(): MetaEdTextBuilder {
+    this.decreaseIndentation();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withCascadeUpdate(): MetaEdTextBuilder {
+    this.addLine('allow primary key updates');
+    return this;
+  }
+
+  /**
+   *
+   */
+  withStartMapType(isRequired: boolean = true): MetaEdTextBuilder {
+    this.addLine(isRequired ? 'with map type' : 'with optional map type');
+    this.increaseIndentation();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withEndMapType(): MetaEdTextBuilder {
+    this.decreaseIndentation();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withStartEnumeration(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Enumeration', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndEnumeration(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartDescriptor(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Descriptor', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndDescriptor(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartDomainEntity(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Domain Entity', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndDomainEntity(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartAssociationExtension(extensionName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevelExtension('Association', extensionName, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndAssociationExtension(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartDomainEntityExtension(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevelExtension('Domain Entity', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndDomainEntityExtension(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartAbstractEntity(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Abstract Entity', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndAbstractEntity(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartChoice(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Choice', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndChoice(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartSharedDecimal(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Shared Decimal', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndSharedDecimal(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartSharedInteger(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Shared Integer', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndSharedInteger(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartSharedShort(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Shared Short', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndSharedShort(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartSharedString(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Shared String', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndSharedString(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartCommon(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Common', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndCommon(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartCommonExtension(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevelExtension('Common', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndCommonExtension(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartInlineCommon(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Inline Common', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndInlineCommon(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartAssociation(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Association', identifier, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndAssociation(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartAssociationSubclass(
+    associationName: string,
+    baseAssociationName: string,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withStartTopLevelSubclass('Association', associationName, baseAssociationName, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndAssociationSubclass(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  /**
+   *
+   */
+  withStartDomainEntitySubclass(
+    entityName: string,
+    baseEntityName: string,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withStartTopLevelSubclass('Domain Entity', entityName, baseEntityName, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEndDomainEntitySubclass(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  withStartInterchange(interchangeName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Interchange', interchangeName, metaEdId);
+  }
+
+  withEndInterchange(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  withStartInterchangeExtension(identifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevelExtension('Interchange', identifier, metaEdId);
+  }
+
+  withEndInterchangeExtension(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  withAssociationIdentityTemplate(identityTemplateName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('association identity', identityTemplateName, metaEdId);
+  }
+
+  withDomainEntityIdentityTemplate(identityTemplateName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('domain entity identity', identityTemplateName, metaEdId);
+  }
+
+  withAssociationElement(entityName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('association', entityName, metaEdId);
+  }
+
+  withDescriptorElement(entityName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('descriptor', entityName, metaEdId);
+  }
+
+  withDomainEntityElement(entityName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('domain entity', entityName, metaEdId);
+  }
+
+  withStartDomain(domainName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withStartTopLevel('Domain', domainName, metaEdId);
+  }
+
+  withEndDomain(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  withAssociationDomainItem(domainItemName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('association', domainItemName, metaEdId);
+  }
+
+  withCommonDomainItem(domainItemName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('common', domainItemName, metaEdId);
+  }
+
+  withInlineCommonDomainItem(domainItemName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('inline common', domainItemName, metaEdId);
+  }
+
+  withDescriptorDomainItem(domainItemName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('descriptor', domainItemName, metaEdId);
+  }
+
+  withDomainEntityDomainItem(domainItemName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    return this.withChildElement('domain entity', domainItemName, metaEdId);
+  }
+
+  withStartSubdomain(subdomainName: string, parentDomainName: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    this.addLine(`Subdomain ${subdomainName} of ${parentDomainName}`);
+    if (metaEdId != null) this.withMetaEdId(metaEdId);
+    this.increaseIndentation();
+    return this;
+  }
+
+  withSubdomainPosition(position: number): MetaEdTextBuilder {
+    this.addLine(`position ${position}`);
+    return this;
+  }
+
+  withEndSubdomain(): MetaEdTextBuilder {
+    return this.withEndTopLevel();
+  }
+
+  withIdentityIndicator(): MetaEdTextBuilder {
+    const identity = 'is part of identity';
+
+    this.addLine(identity);
+    return this;
+  }
+
+  withIdentityRenameIndicator(basePropertyIdentifier: string): MetaEdTextBuilder {
+    const identityRename = 'renames identity property';
+
+    this.addLine(`${identityRename} ${basePropertyIdentifier}`);
+    return this;
+  }
+
+  withOptionalCollectionIndicator(): MetaEdTextBuilder {
+    const optionalCollection = 'is optional collection';
+
+    this.addLine(optionalCollection);
+    return this;
+  }
+
+  withRequiredCollectionIndicator(): MetaEdTextBuilder {
+    const requiredCollection = 'is required collection';
+
+    this.addLine(requiredCollection);
+    return this;
+  }
+
+  withOptionalPropertyIndicator(): MetaEdTextBuilder {
+    const isOptional = 'is optional';
+
+    this.addLine(isOptional);
+    return this;
+  }
+
+  withRequiredPropertyIndicator(): MetaEdTextBuilder {
+    const isRequired = 'is required';
+
+    this.addLine(isRequired);
+    return this;
+  }
+
+  withQueryableOnlyPropertyIndicator(): MetaEdTextBuilder {
+    const isQueryableOnly = 'is queryable only';
+
+    this.addLine(isQueryableOnly);
+    return this;
+  }
+
+  withQueryableFieldPropertyIndicator(): MetaEdTextBuilder {
+    const isQueryableField = 'is queryable field';
+
+    this.addLine(isQueryableField);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withContext(context: string | null, shortenTo: string | null = null): MetaEdTextBuilder {
+    if (context == null) return this;
+
+    const withContext = 'with context';
+    if (shortenTo == null) {
+      this.addLine(`${withContext} ${context}`);
+    } else {
+      this.addLine(`${withContext} ${context} shorten to ${shortenTo}`);
+    }
+
+    return this;
+  }
+
+  /**
+   *
+   */
+  withMergePartOfReference(mergePropertyPath: string, targetPropertyPath: string): MetaEdTextBuilder {
+    this.addLine(`merge ${mergePropertyPath} with ${targetPropertyPath}`);
+    return this;
+  }
+
+  withStartProperty(propertyType: string, propertyIdentifier: string, metaEdId: string | null = null): MetaEdTextBuilder {
+    this.addLine(`${propertyType} ${propertyIdentifier}`);
+    this.withMetaEdId(metaEdId);
+    this.increaseIndentation();
+    return this;
+  }
+
+  withStartSharedProperty(
+    propertyType: string,
+    propertyIdentifier: string,
+    named: string | null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    if (named) {
+      this.addLine(`shared ${propertyType} ${propertyIdentifier} named ${named}`);
+    } else {
+      this.addLine(`shared ${propertyType} ${propertyIdentifier}`);
+    }
+
+    this.withMetaEdId(metaEdId);
+    this.increaseIndentation();
+    return this;
+  }
+
+  withEndProperty(): MetaEdTextBuilder {
+    this.decreaseIndentation();
+    return this;
+  }
+
+  withProperty(
+    propertyType: string,
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+    shortenTo: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartProperty(propertyType, propertyIdentifier, metaEdId);
+    this.withPropertyElements(documentation, isRequired, isCollection, context, shortenTo);
+    this.withEndProperty();
+    return this;
+  }
+
+  withSharedProperty(
+    propertyType: string,
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartSharedProperty(propertyType, propertyIdentifier, named, metaEdId);
+    this.withPropertyElements(documentation, isRequired, isCollection, context, null);
+    this.withEndProperty();
+    return this;
+  }
+
+  withIdentityProperty(
+    propertyType: string,
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartProperty(propertyType, propertyIdentifier, metaEdId);
+
+    this.withDocumentation(documentation);
+    this.withIdentityIndicator();
+    this.withContext(context);
+
+    this.withEndProperty();
+    return this;
+  }
+
+  withIdentityRenameProperty(
+    propertyType: string,
+    propertyIdentifier: string,
+    basePropertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartProperty(propertyType, propertyIdentifier, metaEdId);
+
+    this.withDocumentation(documentation);
+    this.withIdentityRenameIndicator(basePropertyIdentifier);
+    this.withContext(context);
+
+    this.withEndProperty();
+    return this;
+  }
+
+  withPropertyElements(
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null,
+    shortenTo: string | null,
+  ): MetaEdTextBuilder {
+    this.withDocumentation(documentation);
+
+    if (isRequired && isCollection) {
+      this.withRequiredCollectionIndicator();
+    } else if (isRequired && !isCollection) {
+      this.withRequiredPropertyIndicator();
+    } else if (!isRequired && isCollection) {
+      this.withOptionalCollectionIndicator();
+    } else if (!isRequired && !isCollection) {
+      this.withOptionalPropertyIndicator();
+    }
+
+    this.withContext(context, shortenTo);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withAssociationDomainEntityProperty(
+    identifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartProperty('domain entity', identifier, metaEdId);
+    this.withDocumentation(documentation);
+    this.withContext(context);
+    this.withEndProperty();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withBooleanProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('bool', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withChoiceProperty(
+    choiceName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+    shortenTo: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('choice', choiceName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
+  }
+
+  /**
+   *
+   */
+  withCommonProperty(
+    commonName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+    shortenTo: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('common', commonName, documentation, isRequired, isCollection, context, metaEdId, shortenTo);
+  }
+
+  /**
+   *
+   */
+  withCommonExtensionOverrideProperty(
+    commonTypeName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+    shortenTo: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty(
+      'common extension',
+      commonTypeName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      shortenTo,
+    );
+  }
+
+  /**
+   *
+   */
+  withDateProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('date', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDatetimeProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('datetime', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDescriptorProperty(
+    descriptorName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('descriptor', descriptorName, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDurationProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('duration', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEnumerationProperty(
+    enumerationName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('enumeration', enumerationName, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withInlineCommonProperty(
+    inlineCommonName: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+    shortenTo: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty(
+      'inline common',
+      inlineCommonName,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+      shortenTo,
+    );
+  }
+
+  /**
+   *
+   */
+  withPercentProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('percent', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withTimeProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('time', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withYearProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('year', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  withMinLength(minLength: string | null): MetaEdTextBuilder {
+    if (minLength == null) return this;
+    this.addLine(`min length ${minLength}`);
+    return this;
+  }
+
+  withMaxLength(maxLength: string | null): MetaEdTextBuilder {
+    if (maxLength == null) return this;
+    this.addLine(`max length ${maxLength}`);
+    return this;
+  }
+
+  withMinValue(minValue: string | null): MetaEdTextBuilder {
+    if (minValue == null) return this;
+    this.addLine(`min value ${minValue}`);
+    return this;
+  }
+
+  withMaxValue(maxValue: string | null): MetaEdTextBuilder {
+    if (maxValue == null) return this;
+    this.addLine(`max value ${maxValue}`);
+    return this;
+  }
+
+  withTotalDigits(totalDigits: string | null): MetaEdTextBuilder {
+    if (totalDigits == null) return this;
+    this.addLine(`total digits ${totalDigits}`);
+    return this;
+  }
+
+  withDecimalPlaces(decimalPlaces: string | null): MetaEdTextBuilder {
+    if (decimalPlaces == null) return this;
+    this.addLine(`decimal places ${decimalPlaces}`);
+    return this;
+  }
+
+  withIsWeakReference(isWeak: boolean = false): MetaEdTextBuilder {
+    if (!isWeak) return this;
+    this.addLine('is weak');
+    return this;
+  }
+
+  withStringRestrictions(minLength: string | null = null, maxLength: string | null = null): MetaEdTextBuilder {
+    this.increaseIndentation();
+
+    this.withMinLength(minLength);
+    this.withMaxLength(maxLength);
+
+    this.decreaseIndentation();
+
+    return this;
+  }
+
+  withNumericRestrictions(minValue: string | null = null, maxValue: string | null = null): MetaEdTextBuilder {
+    this.increaseIndentation();
+
+    this.withMinValue(minValue);
+    this.withMaxValue(maxValue);
+
+    this.decreaseIndentation();
+
+    return this;
+  }
+
+  withDecimalRestrictions(
+    totalDigits: string,
+    decimalPlaces: string,
+    minValue: string | null = null,
+    maxValue: string | null = null,
+  ): MetaEdTextBuilder {
+    this.increaseIndentation();
+    this.withTotalDigits(totalDigits);
+    this.withDecimalPlaces(decimalPlaces);
+    this.decreaseIndentation();
+
+    this.withNumericRestrictions(minValue, maxValue);
+
+    return this;
+  }
+
+  withReferenceAdditions(isWeak: boolean = false): MetaEdTextBuilder {
+    this.increaseIndentation();
+    this.withIsWeakReference(isWeak);
+    this.decreaseIndentation();
+
+    return this;
+  }
+
+  /**
+   *
+   */
+  withStringProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxLength: string,
+    minLength: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('string', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withStringRestrictions(minLength, maxLength);
+
+    return this;
+  }
+
+  withStringPropertyAsQueryableField(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxLength: string,
+    minLength: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('string', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.addLine('is queryable field');
+    this.withStringRestrictions(minLength, maxLength);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withCurrencyProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withProperty('currency', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withIntegerProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxValue: string | null = null,
+    minValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('integer', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withNumericRestrictions(minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withShortProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    maxValue: string | null = null,
+    minValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('short', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withNumericRestrictions(minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withDecimalProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    totalDigits: string,
+    decimalPlaces: string,
+    minValue: string | null = null,
+    maxValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('decimal', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withAssociationProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: boolean = false,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('association', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withReferenceAdditions(isWeak);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withDomainEntityProperty(
+    propertyIdentifier: string,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    isWeak: boolean = false,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withProperty('domain entity', propertyIdentifier, documentation, isRequired, isCollection, context, metaEdId);
+    this.withReferenceAdditions(isWeak);
+    return this;
+  }
+
+  withQueryableOnlyDomainEntityProperty(propertyIdentifier: string, documentation: string): MetaEdTextBuilder {
+    this.withStartProperty('domain entity', propertyIdentifier);
+    this.withDocumentation(documentation);
+    this.withQueryableOnlyPropertyIndicator();
+    this.withEndProperty();
+
+    return this;
+  }
+
+  /**
+   *
+   */
+  withSharedDecimalProperty(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withSharedProperty(
+      'decimal',
+      propertyIdentifier,
+      named,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+    );
+  }
+
+  /**
+   *
+   */
+  withSharedIntegerProperty(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withSharedProperty(
+      'integer',
+      propertyIdentifier,
+      named,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+    );
+  }
+
+  /**
+   *
+   */
+  withSharedShortProperty(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withSharedProperty(
+      'short',
+      propertyIdentifier,
+      named,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+    );
+  }
+
+  /**
+   *
+   */
+  withSharedStringProperty(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    isRequired: boolean,
+    isCollection: boolean,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withSharedProperty(
+      'string',
+      propertyIdentifier,
+      named,
+      documentation,
+      isRequired,
+      isCollection,
+      context,
+      metaEdId,
+    );
+  }
+
+  /**
+   *
+   */
+  withSharedStringIdentity(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartSharedProperty('string', propertyIdentifier, named, metaEdId);
+    this.withDocumentation(documentation);
+    this.withIdentityIndicator();
+    this.withContext(context);
+    this.withEndProperty();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withSharedIntegerIdentity(
+    propertyIdentifier: string,
+    named: string | null,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartSharedProperty('integer', propertyIdentifier, named, metaEdId);
+    this.withDocumentation(documentation);
+    this.withIdentityIndicator();
+    this.withContext(context);
+    this.withEndProperty();
+    return this;
+  }
+
+  /**
+   *
+   */
+  withBooleanIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('bool', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDateIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('date', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDatetimeIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('datetime', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDurationIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('duration', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withEnumerationIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('enumeration', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withTimeIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('time', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withYearIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('year', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withChoiceIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('choice', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withCommonIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('common', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withDomainEntityIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('domain entity', propertyIdentifier, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withStringIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    maxLength: string,
+    minLength: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityProperty('string', propertyIdentifier, documentation, context, metaEdId);
+    this.withStringRestrictions(minLength, maxLength);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withIntegerIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    maxValue: string | null = null,
+    minValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityProperty('integer', propertyIdentifier, documentation, context, metaEdId);
+    this.withNumericRestrictions(minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withShortIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    maxValue: string | null = null,
+    minValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityProperty('short', propertyIdentifier, documentation, context, metaEdId);
+    this.withNumericRestrictions(minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withDecimalIdentity(
+    propertyIdentifier: string,
+    documentation: string,
+    totalDigits: string,
+    decimalPlaces: string,
+    minValue: string | null = null,
+    maxValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityProperty('decimal', propertyIdentifier, documentation, context, metaEdId);
+    this.withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withDescriptorIdentity(
+    descriptorName: string,
+    documentation: string,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    return this.withIdentityProperty('descriptor', descriptorName, documentation, context, metaEdId);
+  }
+
+  /**
+   *
+   */
+  withStringIdentityRename(
+    propertyIdentifier: string,
+    basePropertyIdentifier: string,
+    documentation: string,
+    maxLength: string,
+    minLength: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityRenameProperty('string', propertyIdentifier, basePropertyIdentifier, documentation, context, metaEdId);
+    this.withStringRestrictions(minLength, maxLength);
+    return this;
+  }
+
+  /**
+   *
+   */
+  withIntegerIdentityRename(
+    propertyIdentifier: string,
+    basePropertyIdentifier: string,
+    documentation: string,
+    maxValue: string | null = null,
+    minValue: string | null = null,
+    context: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withIdentityRenameProperty('integer', propertyIdentifier, basePropertyIdentifier, documentation, context, metaEdId);
+    this.withNumericRestrictions(minValue, maxValue);
+    return this;
+  }
+
+  withEnumerationItem(
+    shortDescription: string,
+    documentation: string | null = null,
+    metaEdId: string | null = null,
+  ): MetaEdTextBuilder {
+    this.withStartProperty('item', `"${shortDescription}"`, metaEdId);
+    if (documentation != null) {
+      this.withDocumentation(documentation);
+    }
+    this.withEndProperty();
+    return this;
+  }
+}

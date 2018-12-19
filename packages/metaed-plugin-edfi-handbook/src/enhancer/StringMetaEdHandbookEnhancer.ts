@@ -1,0 +1,33 @@
+import { EnhancerResult, MetaEdEnvironment, StringType, Namespace } from 'metaed-core';
+import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
+import { createDefaultHandbookEntry } from './SimpleTypeMetaEdHandbookEnhancerBase';
+import { EdfiHandbookRepository } from '../model/EdfiHandbookRepository';
+import { edfiHandbookRepositoryForNamespace } from './EnhancerHelper';
+
+const enhancerName = 'StringMetaEdHandbookEnhancer';
+
+function getTypeCharacteristicsFor(entity: StringType): Array<string> {
+  const results: Array<string> = [];
+  if (entity.minLength) results.push(`min length: ${entity.minLength}`);
+  if (entity.maxLength) results.push(`max length: ${entity.maxLength}`);
+  return results;
+}
+
+export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
+  metaEd.namespace.forEach((namespace: Namespace) => {
+    const handbookRepository: EdfiHandbookRepository | null = edfiHandbookRepositoryForNamespace(metaEd, namespace);
+    if (handbookRepository == null) return;
+    (getEntitiesOfTypeForNamespaces([namespace], 'stringType') as Array<StringType>).forEach(entity => {
+      handbookRepository.handbookEntries.push(
+        Object.assign(createDefaultHandbookEntry(entity, 'String Type', metaEd), {
+          typeCharacteristics: getTypeCharacteristicsFor(entity),
+        }),
+      );
+    });
+  });
+
+  return {
+    enhancerName,
+    success: true,
+  };
+}
