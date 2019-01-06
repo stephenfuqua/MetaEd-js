@@ -53,7 +53,7 @@ export async function activate() {
   atom.notifications.addInfo(
     `<b>MetaEd ${
       packageJson != null ? `v${packageJson.version}` : ''
-    }</b><br />MetaEd is ©2018 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.`,
+    }</b><br />MetaEd is ©2019 Ed-Fi Alliance, LLC.<br />Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.`,
     {
       dismissable: true,
       icon: 'info',

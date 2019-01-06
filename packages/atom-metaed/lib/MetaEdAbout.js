@@ -22,7 +22,7 @@ export function metaEdAboutView(): () => HTMLElement {
           <img src='${metaedAboutBackground}' alt=''/>
 
           <p class='metaed-info' style='position:absolute; bottom:0; font-size:11px; font-family:"Arial"; padding:0px 37px; width:100%; height:185px; text-align:left;'>
-            MetaEd is ©2018 Ed-Fi Alliance, LLC. Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.
+            MetaEd is ©2019 Ed-Fi Alliance, LLC. Click <a href="https://techdocs.ed-fi.org/display/METAED/Getting+Started+-+Licensing">here</a> for license information.
             <br/>
             atom-metaed${version}
             <br/>
