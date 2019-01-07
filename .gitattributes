@@ -85,3 +85,6 @@
 ## EXECUTABLES
 *.exe binary
 *.pyc binary
+
+## OTHER
+*.xlsx  binary
