@@ -44,7 +44,8 @@ function loadPluginManifest(directory: string): ?PluginManifest {
     technologyVersion: packageMetadata.technologyVersion || 'none',
     dependencies: packageMetadata.dependencies || [],
     metaEdPlugin: NoMetaEdPlugin,
-    enabled: true,
+      // eslint-disable-next-line no-unneeded-ternary
+    enabled: packageMetadata.enabled === false ? false : true,
   };
 }
 

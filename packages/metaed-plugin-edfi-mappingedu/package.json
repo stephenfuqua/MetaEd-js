@@ -16,7 +16,8 @@
     "dependencies": [
       "metaed-plugin-edfi-unified",
       "metaed-plugin-edfi-xsd"
-    ]
+    ],
+    "enabled": false
   },
   "dependencies": {
     "metaed-core": "1.4.0",
