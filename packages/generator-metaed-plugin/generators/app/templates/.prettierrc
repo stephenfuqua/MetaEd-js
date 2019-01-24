@@ -1,11 +1,6 @@
 {
-  "parser": "flow",
+  "parser": "typescript",
   "singleQuote": true,
   "printWidth": 125,
-  "trailingComma": "all",
-  "overrides": [
-    {
-      "files": "*.js"
-    }
-  ]
+  "trailingComma": "all"
 }

@@ -112,36 +112,38 @@ module.exports = class extends Generator {
         'metaed-core': 'latest',
       },
       devDependencies: {
-        jest: '^23.5.0',
-        prettier: '^1.14.2',
-        rimraf: '^2.6.1',
-        'babel-cli': '^6.26.0',
-        'babel-eslint': '^8.2.6',
-        'babel-plugin-transform-flow-strip-types': '^6.18.0',
-        'babel-plugin-transform-object-rest-spread': '^6.26.0',
-        'babel-preset-env': '^1.6.1',
-        'babel-register': '^6.26.0',
+        '@types/jest': '^23.3.11',
+        '@types/node': '^10.12.18',
+        copyfiles: '^2.1.0',
+        documentation: '8.1.2',
         eslint: '5.4.0',
         'eslint-config-airbnb-base': '^13.1.0',
         'eslint-config-prettier': '^3.0.1',
-        'eslint-plugin-flowtype': '^2.50.0',
+        'eslint-config-typescript': '^1.1.0',
         'eslint-plugin-import': '^2.14.0',
         'eslint-plugin-jasmine': '^2.10.1',
-        'eslint-plugin-json': '^1.2.0',
+        'eslint-plugin-json': '^1.3.2',
         'eslint-plugin-prettier': '^2.6.2',
-        'flow-bin': '^0.79.1',
-        'flow-typed': '^2.1.5',
-        'flow-copy-source': '^2.0.2',
+        'eslint-plugin-react': '^7.12.3',
+        'eslint-plugin-typescript': '^1.0.0-rc.2',
+        jest: '^23.5.0',
+        prettier: '^1.14.2',
+        rimraf: '^2.6.1',
+        'ts-jest': '^23.10.5',
+        'ts-node': '^7.0.1',
+        typescript: '3.1.6',
+        'typescript-eslint-parser': '^21.0.2',
       },
       scripts: {
-        test: 'yarn test:lint && yarn test:flow && yarn test:unit',
-        'test:lint': 'yarn eslint .',
-        'test:flow': 'yarn flow check',
+        test: 'yarn test:lint && yarn test:unit',
+        'test:lint': 'yarn test:ts && yarn test:eslint',
+        'test:eslint': 'eslint --ext .js,.ts .',
+        'test:ts': 'tsc -p . --noEmit',
         'test:unit': 'yarn build:clean && yarn jest .',
-        build: 'yarn build:clean && yarn build:dist && yarn build:flow',
+        build: 'yarn build:clean && yarn build:copy-non-ts && yarn build:dist',
         'build:clean': 'rimraf dist',
-        'build:flow': 'flow-copy-source -v src dist',
-        'build:dist': 'rimraf dist && babel src -d dist --source-maps inline --copy-files',
+        'build:dist': 'tsc',
+        'build:copy-non-ts': 'copyfiles -u 1 -e "**/*.ts" "src/**/*" dist --verbose',
       },
     };
     this.props.dependencies.forEach(dependency => {
@@ -153,25 +155,30 @@ module.exports = class extends Generator {
     // create .eslint files from scratch -- actual ones in template folder would interfere with MetaEd-js dev environment
 
     const templateLevelEslintRc = {
-      parser: 'babel-eslint',
-      extends: ['airbnb-base', 'plugin:flowtype/recommended', 'prettier'],
-      plugins: ['flowtype', 'prettier'],
+      parser: 'typescript-eslint-parser',
+      extends: ['airbnb-base', 'prettier'],
+      plugins: ['typescript', 'prettier'],
+      settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.mjs', '.js', '.json', '.ts'],
+          },
+        },
+        'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
+      },
       rules: {
-        'arrow-parens': 'off',
+        'import/no-duplicates': 'off',
+        'no-unused-vars': 'off',
+        'typescript/no-unused-vars': 'off',
         'max-len': 'off',
         'no-await-in-loop': 'off',
-        'no-underscore-dangle': 'off',
-        'no-duplicate-imports': 'off',
-        'lines-between-class-members': 'off',
         'import/prefer-default-export': 'off',
-        'import/no-cycle': 'off',
         'no-param-reassign': [
           2,
           {
             props: false,
           },
         ],
-        'flowtype/space-after-type-colon': 'off',
         'prettier/prettier': 'warn',
       },
     };
@@ -205,10 +212,11 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log('Installing Flow type annotations for Jest');
-    this.spawnCommandSync('yarn', ['flow-typed', 'install', 'jest']);
-
-    this.log(`Demonstrating ${chalk.yellow('yarn test')} script that runs ESLint, Flow and Jest on plugin codebase.`);
+    this.log(
+      `Demonstrating ${chalk.yellow(
+        'yarn test',
+      )} script that runs Typescript type checking, ESLint, and Jest on plugin codebase.`,
+    );
     this.spawnCommandSync('yarn', ['test']);
 
     this.log(`Demonstrating ${chalk.yellow('yarn build')} script that transpiles plugin codebase.`);

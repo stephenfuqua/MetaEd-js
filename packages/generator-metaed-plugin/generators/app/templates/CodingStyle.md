@@ -2,10 +2,10 @@ Coding Style Guide
 ======
 
 * Use ES2018 language features, anything stage 4 is also fine, discuss before introducing anything stage 3.
-* Use Flow.
+* Use Typescript for type annotations and transpilation, but avoid Typescript-only constructs not found in ES.
 * Use ESLint with Airbnb presets.
-* Use Prettier.
-* Only Builders can be classes, Models are JS objects, the rest (Validators, Enhancers, etc.) are simply functions.
+* Use Prettier with 125 character max line length.
+* Only Builders can be classes, Models are plain-old JS objects, the rest (Validators, Enhancers, etc.) are simply functions.
 * No abbreviations, no truncations of variable/method/file names.
 * Validator, Enhancer and Diminisher file names must be descriptive. Be as verbose as necessary.
 * Validators, Enhancers and Diminishers must do only one thing - truly SRP.
@@ -17,7 +17,7 @@ Coding Style Guide
 * You almost never need private class methods.
 * Never ever mutate data at the module level.
 * Type annotations everywhere.
-* Never suppress Flow errors unless you can prove you know better than Flow, document why.
+* Never suppress Typescript errors unless you can prove you know better than Typescript, document why.
 * Minimize use of ESLint ignore
   * Example where it is ok is unused method parameters for methods called by third-party libraries.
 * Tests are the documentation, make sure they are clear.

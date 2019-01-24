@@ -1,7 +1,7 @@
 {
   "name": "metaed-plugin-edfi-mappingedu",
   "main": "dist/index.js",
-  "version": "1.4.1-dev.1",
+  "version": "1.4.1-dev.7",
   "description": "Ed-Fi Alliance MappingEDU plugin for MetaEd",
   "license": "SEE LICENSE IN LICENSE.md",
   "publishConfig": {
@@ -26,9 +26,9 @@
     "enabled": false
   },
   "dependencies": {
-    "metaed-core": "1.4.1-dev.1",
-    "metaed-plugin-edfi-unified": "1.4.1-dev.1",
-    "metaed-plugin-edfi-xsd": "1.4.1-dev.1",
+    "metaed-core": "1.4.1-dev.7",
+    "metaed-plugin-edfi-unified": "1.4.1-dev.7",
+    "metaed-plugin-edfi-xsd": "1.4.1-dev.7",
     "xlsx": "^0.14.0"
   },
   "devDependencies": {
@@ -45,4 +45,3 @@
     "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
   }
 }
-

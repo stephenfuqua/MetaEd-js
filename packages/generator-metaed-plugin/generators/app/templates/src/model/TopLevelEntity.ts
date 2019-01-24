@@ -6,7 +6,7 @@ import { MetaEdEnvironment, EnhancerResult, TopLevelEntity, getAllTopLevelEntiti
 
 // Definition of an additional data element for all top level entities
 export type TopLevelEntityEdfiOdsApi = {
-  exampleName: string,
+  exampleName: string;
 };
 
 // Model object initialization is a "setup" enhancer named prefixed as the parent object type

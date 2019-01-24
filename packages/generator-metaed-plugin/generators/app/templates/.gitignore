@@ -3,7 +3,7 @@ node_modules/
 ## VSCode user config
 .vscode/
 
-## Babel target directory
+## transpile target directory
 dist/
 
 ## Installer error log files

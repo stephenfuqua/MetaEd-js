@@ -1,8 +1,0 @@
-{
-  "presets": ["env"],
-  "plugins": [
-    "transform-flow-strip-types",
-    ["transform-object-rest-spread", { "useBuiltIns": true }]
-  ],
-  "sourceMap": "inline"
-}
