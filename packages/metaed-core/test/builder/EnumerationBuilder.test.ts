@@ -342,7 +342,6 @@ describe('when building enumeration with lowercase enumeration name', () => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const entityMetaEdId = '1';
   const documentation = 'Documentation';
   const itemShortDescription = 'ItemShortDescription';
@@ -366,53 +365,8 @@ describe('when building enumeration with lowercase enumeration name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one enumeration', () => {
-    expect(namespace.entity.enumeration.size).toBe(1);
-  });
-
-  it('should be found in entity repository', () => {
-    expect(getEnumeration(namespace.entity, expectedName)).toBeDefined();
-    expect(getEnumeration(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-
-  it('should have namespace', () => {
-    expect(getEnumeration(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', () => {
-    expect(getEnumeration(namespace.entity, expectedName).metaEdId).toBe(entityMetaEdId);
-  });
-
-  it('should have project extension', () => {
-    expect(getEnumeration(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have documentation', () => {
-    expect(getEnumeration(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have no properties', () => {
-    expect(getEnumeration(namespace.entity, expectedName).properties).toHaveLength(0);
-  });
-
-  it('should have one enumeration item', () => {
-    expect(getEnumeration(namespace.entity, expectedName).enumerationItems).toHaveLength(1);
-  });
-
-  it('should have enumeration item with short description', () => {
-    expect(getEnumeration(namespace.entity, expectedName).enumerationItems[0].shortDescription).toBe(itemShortDescription);
-  });
-
-  it('should have enumeration item with documentation', () => {
-    expect(getEnumeration(namespace.entity, expectedName).enumerationItems[0].documentation).toBe(itemDocumentation);
-  });
-
-  it('should have enumeration item with metaEdId ', () => {
-    expect(getEnumeration(namespace.entity, expectedName).enumerationItems[0].metaEdId).toBe(itemMetaEdId);
+  it('should build no enumeration', () => {
+    expect(namespace.entity.enumeration.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

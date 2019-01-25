@@ -49,8 +49,8 @@ Array [
 
 exports[`when building interchange extension with lowercase interchange extension name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Interchangeinterchange', column: 14, line: 2, token: interchange",
-  "no viable alternative at input 'Interchangeinterchange', column: 14, line: 2, token: interchange",
+  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
+  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
 ]
 `;
 
@@ -77,8 +77,8 @@ Array [
 
 exports[`when building interchange with lowercase interchange name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Interchangeinterchange', column: 14, line: 2, token: interchange",
-  "no viable alternative at input 'Interchangeinterchange', column: 14, line: 2, token: interchange",
+  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
+  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
 ]
 `;
 

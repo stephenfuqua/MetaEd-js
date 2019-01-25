@@ -270,8 +270,8 @@ describe('when building domain entity subclass with lowercase based on name', ()
     expect(getDomainEntitySubclass(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have base name but with lowercase prefix ignored', () => {
-    expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityName).toBe('EntityName');
+  it('should have no base name', () => {
+    expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityName).toBe('');
   });
 
   it('should have one property', () => {

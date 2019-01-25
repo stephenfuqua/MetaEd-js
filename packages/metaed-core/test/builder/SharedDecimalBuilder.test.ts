@@ -203,7 +203,6 @@ describe('when building shared decimal with lowercase shared decimal name', () =
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const metaEdId = '123';
   const documentation = 'doc';
   const totalDigits = '10';
@@ -228,45 +227,8 @@ describe('when building shared decimal with lowercase shared decimal name', () =
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared decimal', () => {
-    expect(namespace.entity.sharedDecimal.size).toBe(1);
-  });
-
-  it('should be found in entity repository', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName)).toBeDefined();
-    expect(getSharedDecimal(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have namespace', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have project extension', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have metaed id', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have documentation', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have total digits', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).totalDigits).toBe(totalDigits);
-  });
-
-  it('should have decimal places', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).decimalPlaces).toBe(decimalPlaces);
-  });
-
-  it('should have minValue', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).minValue).toBe(minValue);
-  });
-
-  it('should have maxValue', () => {
-    expect(getSharedDecimal(namespace.entity, expectedName).maxValue).toBe(maxValue);
+  it('should build no shared decimal', () => {
+    expect(namespace.entity.sharedDecimal.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

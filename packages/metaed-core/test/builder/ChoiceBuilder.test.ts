@@ -197,7 +197,6 @@ describe('when building choice with lowercase choice name', () => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const entityMetaEdId = '1';
   const entityDocumentation = 'EntityDocumentation';
   const propertyName = 'PropertyName';
@@ -221,47 +220,8 @@ describe('when building choice with lowercase choice name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one choice', () => {
-    expect(namespace.entity.choice.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getChoice(namespace.entity, expectedName)).toBeDefined();
-    expect(getChoice(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-
-  it('should have namespace', () => {
-    expect(getChoice(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', () => {
-    expect(getChoice(namespace.entity, expectedName).metaEdId).toBe(entityMetaEdId);
-  });
-
-  it('should have project extension', () => {
-    expect(getChoice(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have documentation', () => {
-    expect(getChoice(namespace.entity, expectedName).documentation).toBe(entityDocumentation);
-  });
-
-  it('should have one property', () => {
-    expect(getChoice(namespace.entity, expectedName).properties).toHaveLength(1);
-  });
-
-  it('should have integer property', () => {
-    const property = getChoice(namespace.entity, expectedName).properties[0];
-
-    expect(property.metaEdName).toBe(propertyName);
-    expect(property.type).toBe('integer');
-    expect(property.metaEdId).toBe(propertyMetaEdId);
-    expect(property.isRequired).toBe(true);
-    expect(property.documentation).toBe(propertyDocumentation);
+  it('should build no choice', () => {
+    expect(namespace.entity.choice.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

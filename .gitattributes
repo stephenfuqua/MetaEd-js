@@ -71,6 +71,7 @@
 ## ARCHIVES
 *.7z  binary
 *.gz  binary
+*.jar binary
 *.rar binary
 *.tar binary
 *.zip binary

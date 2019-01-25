@@ -68,18 +68,25 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
   }
 
   enterSharedStringName(context: MetaEdGrammar.SharedStringNameContext) {
-    this.enteringStringTypeName(context);
-  }
-
-  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
-    this.enteringStringTypeName(context);
-  }
-
-  enteringStringTypeName(context: MetaEdGrammar.withContextNameContext) {
     if (this.currentStringType === NoStringType) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentStringType.metaEdName = context.ID().getText();
     this.currentStringType.sourceMap.metaEdName = sourceMapFrom(context);
+  }
+
+  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
+    if (this.currentStringType === NoStringType) return;
+    if (context.exception || context.localPropertyName() == null) return;
+    const localPropertyNameContext = context.localPropertyName();
+    if (
+      localPropertyNameContext.exception ||
+      localPropertyNameContext.ID() == null ||
+      localPropertyNameContext.ID().exception ||
+      isErrorText(localPropertyNameContext.ID().getText())
+    )
+      return;
+    this.currentStringType.metaEdName = localPropertyNameContext.ID().getText();
+    this.currentStringType.sourceMap.metaEdName = sourceMapFrom(localPropertyNameContext);
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {

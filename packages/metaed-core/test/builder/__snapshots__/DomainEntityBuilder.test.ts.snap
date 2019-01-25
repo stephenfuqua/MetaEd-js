@@ -105,15 +105,15 @@ Array [
 
 exports[`when building domain entity with lowercase domain entity name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
 ]
 `;
 
 exports[`when building domain entity with lowercase project extension should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'project' expecting {'core', ID}, column: 26, line: 1, token: project",
-  "extraneous input 'project' expecting {'core', ID}, column: 26, line: 1, token: project",
+  "mismatched input 'projectExtension' expecting {'core', ID}, column: 26, line: 1, token: projectExtension",
+  "mismatched input 'projectExtension' expecting {'core', ID}, column: 26, line: 1, token: projectExtension",
 ]
 `;
 
@@ -283,6 +283,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "referencedNamespaceName": Object {
+    "column": 44,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
   "referencedType": Object {
     "column": 19,
     "line": 5,
@@ -410,6 +415,11 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "referencedEntity": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "referencedNamespaceName": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",

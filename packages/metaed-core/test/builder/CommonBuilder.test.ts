@@ -578,7 +578,6 @@ describe('when building inline common with lowercase inline common name', () => 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const entityMetaEdId = '1';
   const propertyName = 'PropertyName';
   const propertyDocumentation = 'PropertyDocumentation';
@@ -602,47 +601,8 @@ describe('when building inline common with lowercase inline common name', () => 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one inline common', () => {
-    expect(namespace.entity.common.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getCommon(namespace.entity, expectedName)).toBeDefined();
-    expect(getCommon(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have namespace', () => {
-    expect(getCommon(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', () => {
-    expect(getCommon(namespace.entity, expectedName).metaEdId).toBe(entityMetaEdId);
-  });
-
-  it('should have project extension', () => {
-    expect(getCommon(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should be inlined in ODS', () => {
-    expect(getCommon(namespace.entity, expectedName).inlineInOds).toBe(true);
-  });
-
-  it('should have documentation', () => {
-    expect(getCommon(namespace.entity, expectedName).documentation).toBe(entityDocumentation);
-  });
-
-  it('should have one property', () => {
-    expect(getCommon(namespace.entity, expectedName).properties).toHaveLength(1);
-  });
-
-  it('should have integer property', () => {
-    const property = getCommon(namespace.entity, expectedName).properties[0];
-
-    expect(property.metaEdName).toBe(propertyName);
-    expect(property.type).toBe('integer');
-    expect(property.metaEdId).toBe(propertyMetaEdId);
-    expect(property.isRequired).toBe(true);
-    expect(property.documentation).toBe(propertyDocumentation);
+  it('should build no inline common', () => {
+    expect(namespace.entity.common.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

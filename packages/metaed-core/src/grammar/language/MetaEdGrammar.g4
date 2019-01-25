@@ -430,19 +430,19 @@ domainEntityProperty : DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
             isWeakReference?
             mergePartOfReference* ;
 
-sharedDecimalProperty : SHARED_DECIMAL_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
+sharedDecimalProperty : SHARED_DECIMAL_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
             mergePartOfReference* ;
 
-sharedIntegerProperty : SHARED_INTEGER_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
+sharedIntegerProperty : SHARED_INTEGER_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
             mergePartOfReference* ;
 
-sharedShortProperty : SHARED_SHORT_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
+sharedShortProperty : SHARED_SHORT_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
             mergePartOfReference* ;
 
-sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED propertyName)? metaEdId?
+sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
             mergePartOfReference* ;
 
@@ -508,9 +508,17 @@ enumerationName : ID;
 extendeeName : ID;
 inlineCommonName : ID;
 interchangeName : ID;
+localPropertyName : ID;
+localPropertyType : ID;
 parentDomainName : ID;
-propertyName : ID;
-sharedPropertyType : ID ;
+propertyName
+    : (propertyNamespace PERIOD)? localPropertyName
+    ;
+propertyNamespace : ID;
+sharedPropertyName : ID;
+sharedPropertyType
+    : (propertyNamespace PERIOD)? localPropertyType
+    ;
 shortenToName : ID;
 subdomainName : ID;
 withContextName : ID;

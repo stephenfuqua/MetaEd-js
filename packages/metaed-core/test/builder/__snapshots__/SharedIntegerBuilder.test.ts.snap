@@ -69,8 +69,8 @@ Array [
 
 exports[`when building shared integer with lowercase shared integer name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 17, line: 2, token: entity",
-  "extraneous input 'entity' expecting ID, column: 17, line: 2, token: entity",
+  "mismatched input 'entityName' expecting ID, column: 17, line: 2, token: entityName",
+  "mismatched input 'entityName' expecting ID, column: 17, line: 2, token: entityName",
 ]
 `;
 
@@ -151,8 +151,8 @@ Array [
 
 exports[`when building shared short with lowercase shared short name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 15, line: 2, token: entity",
-  "extraneous input 'entity' expecting ID, column: 15, line: 2, token: entity",
+  "mismatched input 'entityName' expecting ID, column: 15, line: 2, token: entityName",
+  "mismatched input 'entityName' expecting ID, column: 15, line: 2, token: entityName",
 ]
 `;
 

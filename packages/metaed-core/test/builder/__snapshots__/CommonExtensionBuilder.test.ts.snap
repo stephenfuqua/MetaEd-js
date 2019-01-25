@@ -52,8 +52,8 @@ Array [
 
 exports[`when building common extension with lowercase common extension name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Commonentity', column: 9, line: 2, token: entity",
-  "no viable alternative at input 'Commonentity', column: 9, line: 2, token: entity",
+  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
+  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
 ]
 `;
 

@@ -394,7 +394,6 @@ describe('when building descriptor with lowercase descriptor name', () => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const metaEdId = '1';
   const documentation = 'Documentation';
   const propertyName = 'PropertyName';
@@ -416,48 +415,8 @@ describe('when building descriptor with lowercase descriptor name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one descriptor', () => {
-    expect(namespace.entity.descriptor.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getDescriptor(namespace.entity, expectedName)).toBeDefined();
-    expect(getDescriptor(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-
-  it('should have namespace', () => {
-    expect(getDescriptor(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have metaEdId', () => {
-    expect(getDescriptor(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have project extension', () => {
-    expect(getDescriptor(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have documentation', () => {
-    expect(getDescriptor(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have one property', () => {
-    expect(getDescriptor(namespace.entity, expectedName).properties).toHaveLength(1);
-  });
-
-  it('should have integer property', () => {
-    expect(getDescriptor(namespace.entity, expectedName).properties[0].metaEdName).toBe(propertyName);
-    expect(getDescriptor(namespace.entity, expectedName).properties[0].type).toBe('integer');
-  });
-
-  it('should not have map type enumeration', () => {
-    expect(getDescriptor(namespace.entity, expectedName).isMapTypeOptional).toBe(false);
-    expect(getDescriptor(namespace.entity, expectedName).isMapTypeRequired).toBe(false);
-    expect(getDescriptor(namespace.entity, expectedName).mapTypeEnumeration.enumerationItems).toHaveLength(0);
+  it('should build no descriptor', () => {
+    expect(namespace.entity.descriptor.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

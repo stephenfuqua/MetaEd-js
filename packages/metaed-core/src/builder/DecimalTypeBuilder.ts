@@ -68,18 +68,25 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
   }
 
   enterSharedDecimalName(context: MetaEdGrammar.SharedDecimalNameContext) {
-    this.enteringDecimalTypeName(context);
-  }
-
-  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
-    this.enteringDecimalTypeName(context);
-  }
-
-  enteringDecimalTypeName(context: MetaEdGrammar.withContextNameContext) {
     if (this.currentDecimalType === NoDecimalType) return;
     if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
     this.currentDecimalType.metaEdName = context.ID().getText();
     this.currentDecimalType.sourceMap.metaEdName = sourceMapFrom(context);
+  }
+
+  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
+    if (this.currentDecimalType === NoDecimalType) return;
+    if (context.exception || context.localPropertyName() == null) return;
+    const localPropertyNameContext = context.localPropertyName();
+    if (
+      localPropertyNameContext.exception ||
+      localPropertyNameContext.ID() == null ||
+      localPropertyNameContext.ID().exception ||
+      isErrorText(localPropertyNameContext.ID().getText())
+    )
+      return;
+    this.currentDecimalType.metaEdName = localPropertyNameContext.ID().getText();
+    this.currentDecimalType.sourceMap.metaEdName = sourceMapFrom(localPropertyNameContext);
   }
 
   enterMetaEdId(context: MetaEdGrammar.MetaEdIdContext) {

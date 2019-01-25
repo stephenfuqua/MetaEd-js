@@ -52,8 +52,8 @@ Array [
 
 exports[`when building choice with lowercase choice name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 9, line: 2, token: entity",
-  "extraneous input 'entity' expecting ID, column: 9, line: 2, token: entity",
+  "mismatched input 'entityName' expecting ID, column: 9, line: 2, token: entityName",
+  "mismatched input 'entityName' expecting ID, column: 9, line: 2, token: entityName",
 ]
 `;
 

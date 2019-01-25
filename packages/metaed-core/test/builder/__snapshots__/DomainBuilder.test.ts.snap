@@ -66,8 +66,8 @@ Array [
 
 exports[`when building domain with lowercase domain name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'domain' expecting ID, column: 9, line: 2, token: domain",
-  "extraneous input 'domain' expecting ID, column: 9, line: 2, token: domain",
+  "mismatched input 'domainName' expecting ID, column: 9, line: 2, token: domainName",
+  "mismatched input 'domainName' expecting ID, column: 9, line: 2, token: domainName",
 ]
 `;
 
@@ -194,15 +194,15 @@ Array [
 
 exports[`when building subdomain with lowercase parent domain name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'parent' expecting ID, column: 26, line: 2, token: parent",
-  "extraneous input 'parent' expecting ID, column: 26, line: 2, token: parent",
+  "mismatched input 'parentDomainName' expecting ID, column: 26, line: 2, token: parentDomainName",
+  "mismatched input 'parentDomainName' expecting ID, column: 26, line: 2, token: parentDomainName",
 ]
 `;
 
 exports[`when building subdomain with lowercase subdomain name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'domain' expecting ID, column: 12, line: 2, token: domain",
-  "extraneous input 'domain' expecting ID, column: 12, line: 2, token: domain",
+  "mismatched input 'domainName' expecting ID, column: 12, line: 2, token: domainName",
+  "mismatched input 'domainName' expecting ID, column: 12, line: 2, token: domainName",
 ]
 `;
 

@@ -200,6 +200,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "referencedNamespaceName": Object {
+    "column": 12,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
   "referencedType": Object {
     "column": 0,
     "line": 0,
@@ -432,6 +437,11 @@ Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
+  },
+  "referencedNamespaceName": Object {
+    "column": 12,
+    "line": 5,
+    "tokenText": "PropertyName",
   },
   "referencedType": Object {
     "column": 0,
@@ -791,6 +801,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "referencedNamespaceName": Object {
+    "column": 16,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
   "referencedType": Object {
     "column": 0,
     "line": 0,
@@ -961,6 +976,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "referencedNamespaceName": Object {
+    "column": 10,
+    "line": 5,
+    "tokenText": "PropertyName",
+  },
   "referencedType": Object {
     "column": 0,
     "line": 0,
@@ -1090,6 +1110,11 @@ Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
+  },
+  "referencedNamespaceName": Object {
+    "column": 11,
+    "line": 5,
+    "tokenText": "PropertyName",
   },
   "referencedType": Object {
     "column": 0,

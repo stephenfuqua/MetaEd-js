@@ -39,6 +39,7 @@ export type EntityPropertySourceMap = {
   withContext: SourceMap;
   hasRestriction: SourceMap;
   referencedType: SourceMap;
+  referencedNamespaceName: SourceMap;
   mergeTargetedBy: SourceMap;
 };
 
@@ -68,6 +69,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
     withContext: NoSourceMap,
     hasRestriction: NoSourceMap,
     referencedType: NoSourceMap,
+    referencedNamespaceName: NoSourceMap,
     mergeTargetedBy: NoSourceMap,
   };
 }
@@ -119,6 +121,8 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  *
  * **referencedType** is the optional metaEdName of the type being referenced, when it differs from the property's metaEdName.
  *
+ * **referencedNamespaceName** is the name of the namespace of the entity this property references, if any.
+ *
  * **mergeTargetedBy** is the list of all EntityProperties that are targeting this property for a merge.
  *
  * **sourceMap** annotates where in the .metaed files each piece of data for this property derives from.
@@ -148,6 +152,7 @@ export type EntityProperty = {
   withContext: string;
   hasRestriction: boolean;
   referencedType: string;
+  referencedNamespaceName: string;
   mergeTargetedBy: Array<EntityProperty>;
   sourceMap: EntityPropertySourceMap;
   data: any;
@@ -180,6 +185,7 @@ export function newEntityProperty(): EntityProperty {
     withContext: '',
     hasRestriction: false,
     referencedType: '',
+    referencedNamespaceName: '',
     mergeTargetedBy: [],
     sourceMap: newEntityPropertySourceMap(),
     data: {},

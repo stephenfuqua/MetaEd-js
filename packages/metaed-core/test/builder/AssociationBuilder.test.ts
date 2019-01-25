@@ -613,10 +613,6 @@ describe('when building association with no domain entity property', () => {
     expect(getAssociation(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have metaEdId', () => {
-    expect(getAssociation(namespace.entity, entityName).metaEdId).toBe(entityMetaEdId);
-  });
-
   it('should have project extension', () => {
     expect(getAssociation(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
@@ -625,28 +621,8 @@ describe('when building association with no domain entity property', () => {
     expect(getAssociation(namespace.entity, entityName).documentation).toBe(documentation1);
   });
 
-  it('should have one property', () => {
-    expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(1);
-  });
-
-  it('should have first domain entity property', () => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).properties[0];
-
-    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domainEntity');
-    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
-    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
-    expect(domainEntityProperty.documentation).toBe(documentation2);
-  });
-
-  it('should have first domain entity property as identity property', () => {
-    const domainEntityProperty = getAssociation(namespace.entity, entityName).identityProperties[0];
-
-    expect(domainEntityProperty.metaEdName).toBe(firstDomainEntityName);
-    expect(domainEntityProperty.type).toBe('domainEntity');
-    expect(domainEntityProperty.metaEdId).toBe(firstDomainEntityMetaEdId);
-    expect(domainEntityProperty.isPartOfIdentity).toBe(true);
-    expect(domainEntityProperty.documentation).toBe(documentation2);
+  it('should have no property', () => {
+    expect(getAssociation(namespace.entity, entityName).properties).toHaveLength(0);
   });
 
   it('should have mismatched input error', () => {

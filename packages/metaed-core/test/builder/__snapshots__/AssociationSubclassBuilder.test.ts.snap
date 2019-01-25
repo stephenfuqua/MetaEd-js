@@ -52,15 +52,15 @@ Array [
 
 exports[`when building association subclass with lowercase association subclass name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
-  "no viable alternative at input 'Associationentity', column: 14, line: 2, token: entity",
+  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
+  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
 ]
 `;
 
 exports[`when building association subclass with lowercase based on name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'base' expecting ID, column: 34, line: 2, token: base",
-  "extraneous input 'base' expecting ID, column: 34, line: 2, token: base",
+  "mismatched input 'baseEntityName' expecting ID, column: 34, line: 2, token: baseEntityName",
+  "mismatched input 'baseEntityName' expecting ID, column: 34, line: 2, token: baseEntityName",
 ]
 `;
 

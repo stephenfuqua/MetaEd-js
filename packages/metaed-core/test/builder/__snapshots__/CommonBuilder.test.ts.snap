@@ -57,8 +57,8 @@ Array [
 
 exports[`when building common with lowercase common name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Commonentity', column: 9, line: 2, token: entity",
-  "no viable alternative at input 'Commonentity', column: 9, line: 2, token: entity",
+  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
+  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
 ]
 `;
 
@@ -160,8 +160,8 @@ Array [
 
 exports[`when building inline common with lowercase inline common name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 16, line: 2, token: entity",
-  "extraneous input 'entity' expecting ID, column: 16, line: 2, token: entity",
+  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
+  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
 ]
 `;
 

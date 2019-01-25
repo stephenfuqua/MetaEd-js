@@ -1145,8 +1145,8 @@ describe('when building domain entity with lowercase project extension', () => {
     expect(getDomainEntity(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
   });
 
-  it('should have project extension but with lowercase prefix ignored', () => {
-    expect(getDomainEntity(namespace.entity, entityName).namespace.projectExtension).toBe('Extension');
+  it('should have empty project extension', () => {
+    expect(getDomainEntity(namespace.entity, entityName).namespace.projectExtension).toBe('');
   });
 
   it('should have metaEdId', () => {

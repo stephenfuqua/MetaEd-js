@@ -337,10 +337,6 @@ describe('when building association subclass with lowercase based on name', () =
     expect(getAssociationSubclass(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
   });
 
-  it('should have base name but with lowercase prefix ignored', () => {
-    expect(getAssociationSubclass(namespace.entity, entityName).baseEntityName).toBe('EntityName');
-  });
-
   it('should have documentation', () => {
     expect(getAssociationSubclass(namespace.entity, entityName).documentation).toBe(documentation);
   });

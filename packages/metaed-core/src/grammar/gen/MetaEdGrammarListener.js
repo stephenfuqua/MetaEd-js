@@ -1064,6 +1064,24 @@ MetaEdGrammarListener.prototype.exitInterchangeName = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#localPropertyName.
+MetaEdGrammarListener.prototype.enterLocalPropertyName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localPropertyName.
+MetaEdGrammarListener.prototype.exitLocalPropertyName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#localPropertyType.
+MetaEdGrammarListener.prototype.enterLocalPropertyType = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localPropertyType.
+MetaEdGrammarListener.prototype.exitLocalPropertyType = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#parentDomainName.
 MetaEdGrammarListener.prototype.enterParentDomainName = function(ctx) {
 };
@@ -1079,6 +1097,24 @@ MetaEdGrammarListener.prototype.enterPropertyName = function(ctx) {
 
 // Exit a parse tree produced by MetaEdGrammar#propertyName.
 MetaEdGrammarListener.prototype.exitPropertyName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#propertyNamespace.
+MetaEdGrammarListener.prototype.enterPropertyNamespace = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#propertyNamespace.
+MetaEdGrammarListener.prototype.exitPropertyNamespace = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#sharedPropertyName.
+MetaEdGrammarListener.prototype.enterSharedPropertyName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#sharedPropertyName.
+MetaEdGrammarListener.prototype.exitSharedPropertyName = function(ctx) {
 };
 
 

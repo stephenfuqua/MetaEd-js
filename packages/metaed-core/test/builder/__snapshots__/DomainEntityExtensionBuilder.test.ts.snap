@@ -52,8 +52,8 @@ Array [
 
 exports[`when building domain entity extension with lowercase domain entity extension name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
 ]
 `;
 

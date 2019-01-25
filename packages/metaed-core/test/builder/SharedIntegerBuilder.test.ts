@@ -257,7 +257,6 @@ describe('when building shared integer with lowercase shared integer name', () =
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
@@ -280,41 +279,8 @@ describe('when building shared integer with lowercase shared integer name', () =
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared short', () => {
-    expect(namespace.entity.sharedInteger.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getSharedInteger(namespace.entity, expectedName)).toBeDefined();
-    expect(getSharedInteger(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have namespace', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have project extension', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have metaed id', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have documentation', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have minValue', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).minValue).toBe(minValue);
-  });
-
-  it('should have maxValue', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).maxValue).toBe(maxValue);
-  });
-
-  it('should not be a short', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).isShort).toBe(false);
+  it('should build no shared short', () => {
+    expect(namespace.entity.sharedInteger.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {
@@ -621,7 +587,6 @@ describe('when building shared short with lowercase shared short name', () => {
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
@@ -644,41 +609,8 @@ describe('when building shared short with lowercase shared short name', () => {
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared short', () => {
-    expect(namespace.entity.sharedInteger.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getSharedInteger(namespace.entity, expectedName)).toBeDefined();
-    expect(getSharedInteger(namespace.entity, expectedName).metaEdName).toBe('Name');
-  });
-
-  it('should have namespace', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have project extension', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have metaed id', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have documentation', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have minValue', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).minValue).toBe(minValue);
-  });
-
-  it('should have maxValue', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).maxValue).toBe(maxValue);
-  });
-
-  it('should be a short', () => {
-    expect(getSharedInteger(namespace.entity, expectedName).isShort).toBe(true);
+  it('should build no shared short', () => {
+    expect(namespace.entity.sharedInteger.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

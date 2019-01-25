@@ -52,15 +52,15 @@ Array [
 
 exports[`when building domain entity subclass with lowercase based on name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'base' expecting ID, column: 36, line: 2, token: base",
-  "extraneous input 'base' expecting ID, column: 36, line: 2, token: base",
+  "mismatched input 'baseEntityName' expecting ID, column: 36, line: 2, token: baseEntityName",
+  "mismatched input 'baseEntityName' expecting ID, column: 36, line: 2, token: baseEntityName",
 ]
 `;
 
 exports[`when building domain entity subclass with lowercase domain entity subclass name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
-  "no viable alternative at input 'Domain Entityentity', column: 16, line: 2, token: entity",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
 ]
 `;
 

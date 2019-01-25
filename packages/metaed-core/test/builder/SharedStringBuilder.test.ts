@@ -187,7 +187,6 @@ describe('when building shared string with lowercase shared string name', () => 
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
-  const expectedName = 'Name';
   const metaEdId = '123';
   const documentation = 'doc';
   const minLength = '2';
@@ -210,37 +209,8 @@ describe('when building shared string with lowercase shared string name', () => 
     namespace = metaEd.namespace.get(namespaceName);
   });
 
-  it('should build one shared string', () => {
-    expect(namespace.entity.sharedString.size).toBe(1);
-  });
-
-  it('should be found in entity repository but with lowercase prefix ignored', () => {
-    expect(getSharedString(namespace.entity, expectedName)).toBeDefined();
-    expect(getSharedString(namespace.entity, expectedName).metaEdName).toBe(expectedName);
-  });
-
-  it('should have namespace', () => {
-    expect(getSharedString(namespace.entity, expectedName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have project extension', () => {
-    expect(getSharedString(namespace.entity, expectedName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should have metaed id', () => {
-    expect(getSharedString(namespace.entity, expectedName).metaEdId).toBe(metaEdId);
-  });
-
-  it('should have documentation', () => {
-    expect(getSharedString(namespace.entity, expectedName).documentation).toBe(documentation);
-  });
-
-  it('should have min length', () => {
-    expect(getSharedString(namespace.entity, expectedName).minLength).toBe(minLength);
-  });
-
-  it('should have max length', () => {
-    expect(getSharedString(namespace.entity, expectedName).maxLength).toBe(maxLength);
+  it('should build no shared string', () => {
+    expect(namespace.entity.sharedString.size).toBe(0);
   });
 
   it('should have extraneous input error', () => {

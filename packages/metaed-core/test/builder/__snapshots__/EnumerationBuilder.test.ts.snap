@@ -168,8 +168,8 @@ Array [
 
 exports[`when building enumeration with lowercase enumeration name should have extraneous input error 1`] = `
 Array [
-  "extraneous input 'entity' expecting ID, column: 14, line: 2, token: entity",
-  "extraneous input 'entity' expecting ID, column: 14, line: 2, token: entity",
+  "mismatched input 'entityName' expecting ID, column: 14, line: 2, token: entityName",
+  "mismatched input 'entityName' expecting ID, column: 14, line: 2, token: entityName",
 ]
 `;
 
