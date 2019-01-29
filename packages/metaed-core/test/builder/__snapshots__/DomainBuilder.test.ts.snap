@@ -17,6 +17,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -66,8 +71,8 @@ Array [
 
 exports[`when building domain with lowercase domain name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'domainName' expecting ID, column: 9, line: 2, token: domainName",
-  "mismatched input 'domainName' expecting ID, column: 9, line: 2, token: domainName",
+  "mismatched input 'd' expecting ID, column: 9, line: 2, token: d",
+  "mismatched input 'd' expecting ID, column: 9, line: 2, token: d",
 ]
 `;
 
@@ -136,6 +141,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -194,15 +204,15 @@ Array [
 
 exports[`when building subdomain with lowercase parent domain name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'parentDomainName' expecting ID, column: 26, line: 2, token: parentDomainName",
-  "mismatched input 'parentDomainName' expecting ID, column: 26, line: 2, token: parentDomainName",
+  "mismatched input 'p' expecting ID, column: 26, line: 2, token: p",
+  "mismatched input 'p' expecting ID, column: 26, line: 2, token: p",
 ]
 `;
 
 exports[`when building subdomain with lowercase subdomain name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'domainName' expecting ID, column: 12, line: 2, token: domainName",
-  "mismatched input 'domainName' expecting ID, column: 12, line: 2, token: domainName",
+  "mismatched input 'd' expecting ID, column: 12, line: 2, token: d",
+  "mismatched input 'd' expecting ID, column: 12, line: 2, token: d",
 ]
 `;
 

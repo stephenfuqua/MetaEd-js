@@ -8,7 +8,7 @@ describe('when validating namespace named changes', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('changes')
+      .withBeginNamespace('Changes')
       .withStartAbstractEntity('EntityName')
       .withDocumentation('doc')
       .withStringIdentity('Property1', 'doc', '100')
@@ -36,7 +36,7 @@ describe('when validating namespace not named changes', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('notchanges')
+      .withBeginNamespace('NotChanges')
       .withStartAbstractEntity('EntityName')
       .withDocumentation('doc')
       .withStringIdentity('Property1', 'doc', '100')

@@ -38,7 +38,9 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
 
       if (property.data.edfiOds.odsIsCollection) {
         const joinTable: Table = Object.assign(newTable(), {
-          schema: parentTableStrategy.table.schema,
+          // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
+          namespace: parentTableStrategy.table.namespace,
+          schema: parentTableStrategy.table.schema.toLowerCase(),
           name: baseNameCollapsingJoinTableNamer(property, parentTableStrategy.name, strategy.parentContext()),
           description: property.documentation,
           isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
@@ -50,6 +52,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
           property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
+          parentTableStrategy.schemaNamespace,
           parentTableStrategy.name,
           ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
         );

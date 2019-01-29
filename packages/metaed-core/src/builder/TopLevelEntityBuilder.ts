@@ -138,6 +138,74 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.currentTopLevelEntity = NoTopLevelEntity;
   }
 
+  enteringExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
+    if (context.exception || context.localExtendeeName() == null) return;
+
+    const localExtendeeNameContext = context.localExtendeeName();
+    if (
+      localExtendeeNameContext.exception ||
+      localExtendeeNameContext.ID() == null ||
+      localExtendeeNameContext.ID().exception ||
+      isErrorText(localExtendeeNameContext.ID().getText())
+    )
+      return;
+
+    const extendeeName = localExtendeeNameContext.ID().getText();
+    this.enteringName(extendeeName);
+    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
+
+    this.currentTopLevelEntity.baseEntityName = extendeeName;
+    this.currentTopLevelEntity.sourceMap.baseEntityName = sourceMapFrom(localExtendeeNameContext);
+
+    const extendeeNamespaceContext = context.extendeeNamespace();
+    if (
+      extendeeNamespaceContext == null ||
+      extendeeNamespaceContext.exception ||
+      extendeeNamespaceContext.ID() == null ||
+      extendeeNamespaceContext.ID().exception ||
+      isErrorText(extendeeNamespaceContext.ID().getText())
+    ) {
+      this.currentTopLevelEntity.baseEntityNamespaceName = this.currentNamespace.namespaceName;
+      this.currentTopLevelEntity.sourceMap.baseEntityNamespaceName = this.currentTopLevelEntity.sourceMap.baseEntityName;
+    } else {
+      this.currentTopLevelEntity.baseEntityNamespaceName = extendeeNamespaceContext.ID().getText();
+      this.currentTopLevelEntity.sourceMap.baseEntityNamespaceName = sourceMapFrom(extendeeNamespaceContext);
+    }
+  }
+
+  enteringBaseName(context: MetaEdGrammar.BaseNameContext) {
+    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
+    if (context.exception || context.localBaseName() == null) return;
+
+    const localBaseNameContext = context.localBaseName();
+    if (
+      localBaseNameContext.exception ||
+      localBaseNameContext.ID() == null ||
+      localBaseNameContext.ID().exception ||
+      isErrorText(localBaseNameContext.ID().getText())
+    )
+      return;
+
+    this.currentTopLevelEntity.baseEntityName = localBaseNameContext.ID().getText();
+    this.currentTopLevelEntity.sourceMap.baseEntityName = sourceMapFrom(localBaseNameContext);
+
+    const baseNamespaceContext = context.baseNamespace();
+    if (
+      baseNamespaceContext == null ||
+      baseNamespaceContext.exception ||
+      baseNamespaceContext.ID() == null ||
+      baseNamespaceContext.ID().exception ||
+      isErrorText(baseNamespaceContext.ID().getText())
+    ) {
+      this.currentTopLevelEntity.baseEntityNamespaceName = this.currentNamespace.namespaceName;
+      this.currentTopLevelEntity.sourceMap.baseEntityNamespaceName = this.currentTopLevelEntity.sourceMap.baseEntityName;
+    } else {
+      this.currentTopLevelEntity.baseEntityNamespaceName = baseNamespaceContext.ID().getText();
+      this.currentTopLevelEntity.sourceMap.baseEntityNamespaceName = sourceMapFrom(baseNamespaceContext);
+    }
+  }
+
   enterDocumentation(context: MetaEdGrammar.DocumentationContext) {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     this.currentTopLevelEntity.documentation = extractDocumentation(context);
@@ -467,11 +535,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       propertyNamespaceContext.ID() == null ||
       propertyNamespaceContext.ID().exception ||
       isErrorText(propertyNamespaceContext.ID().getText())
-    )
-      return;
-
-    this.currentProperty.referencedNamespaceName = propertyNamespaceContext.ID().getText();
-    this.currentProperty.sourceMap.referencedNamespaceName = sourceMapFrom(propertyNamespaceContext);
+    ) {
+      this.currentProperty.referencedNamespaceName = this.currentNamespace.namespaceName;
+      this.currentProperty.sourceMap.referencedNamespaceName = this.currentProperty.sourceMap.metaEdName;
+    } else {
+      this.currentProperty.referencedNamespaceName = propertyNamespaceContext.ID().getText();
+      this.currentProperty.sourceMap.referencedNamespaceName = sourceMapFrom(propertyNamespaceContext);
+    }
   }
 
   enterSharedPropertyName(context: MetaEdGrammar.SharedPropertyNameContext) {
@@ -502,11 +572,13 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       propertyNamespaceContext.ID() == null ||
       propertyNamespaceContext.ID().exception ||
       isErrorText(propertyNamespaceContext.ID().getText())
-    )
-      return;
-
-    this.currentProperty.referencedNamespaceName = propertyNamespaceContext.ID().getText();
-    this.currentProperty.sourceMap.referencedNamespaceName = sourceMapFrom(propertyNamespaceContext);
+    ) {
+      this.currentProperty.referencedNamespaceName = this.currentNamespace.namespaceName;
+      this.currentProperty.sourceMap.referencedNamespaceName = this.currentProperty.sourceMap.referencedType;
+    } else {
+      this.currentProperty.referencedNamespaceName = propertyNamespaceContext.ID().getText();
+      this.currentProperty.sourceMap.referencedNamespaceName = sourceMapFrom(propertyNamespaceContext);
+    }
   }
 
   enterIsQueryableField(context: MetaEdGrammar.IsQueryableFieldContext) {

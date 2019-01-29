@@ -7,7 +7,7 @@ describe('when enhancing domainEntity with string properties', () => {
   let domainEntity: DomainEntity;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     metaEd.namespace.set(namespace.namespaceName, namespace);
     const domainEntityName = 'DomainEntityName';
@@ -48,7 +48,7 @@ describe('when enhancing domainEntity with string properties', () => {
   let integerProperty: IntegerProperty;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     metaEd.namespace.set(namespace.namespaceName, namespace);
     const domainEntityName = 'DomainEntityName';

@@ -16,14 +16,14 @@ describe('when an association subclass subclasses GeneralStudentProgramAssociati
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(baseEntityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartAssociationSubclass(subclassName, baseEntityName)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationSubclass()
@@ -33,9 +33,9 @@ describe('when an association subclass subclasses GeneralStudentProgramAssociati
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -61,14 +61,14 @@ describe('when an association subclass subclasses a non-GeneralStudentProgramAss
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(baseEntityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartAssociationSubclass(subclassName, baseEntityName)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationSubclass()
@@ -78,9 +78,9 @@ describe('when an association subclass subclasses a non-GeneralStudentProgramAss
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -115,14 +115,14 @@ describe('when an association subclass subclasses StudentProgramAssociation asso
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(baseEntityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartAssociationSubclass(subclassName, baseEntityName)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationSubclass()
@@ -132,9 +132,9 @@ describe('when an association subclass subclasses StudentProgramAssociation asso
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 

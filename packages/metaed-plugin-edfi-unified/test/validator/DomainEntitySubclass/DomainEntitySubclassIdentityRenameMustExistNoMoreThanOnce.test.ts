@@ -16,7 +16,7 @@ describe('when domain entity subclass renames base identity more than once', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -34,7 +34,7 @@ describe('when domain entity subclass renames base identity more than once', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

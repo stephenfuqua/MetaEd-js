@@ -12,7 +12,7 @@ describe('when validating subdomain entity parent domain name does match a domai
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName)
       .withDocumentation('doc')
       .withEndDomain()
@@ -27,7 +27,7 @@ describe('when validating subdomain entity parent domain name does match a domai
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -51,7 +51,7 @@ describe('when validating subdomain entity parent domain name does not match a d
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('DifferentDomain')
       .withDocumentation('doc')
       .withEndDomain()
@@ -66,7 +66,7 @@ describe('when validating subdomain entity parent domain name does not match a d
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

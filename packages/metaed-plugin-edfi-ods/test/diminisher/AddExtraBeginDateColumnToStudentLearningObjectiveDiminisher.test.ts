@@ -12,7 +12,7 @@ import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const studentLearningObjective = 'StudentLearningObjective';
@@ -63,7 +63,7 @@ describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher dimin
 });
 
 describe('when AddExtraBeginDateColumnToStudentLearningObjectiveDiminisher diminishes StudentLearningObjective table with existing studentSectionAssociationBeginDate column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const studentLearningObjective = 'StudentLearningObjective';

@@ -21,7 +21,7 @@ describe('when building shared integer with duplicate integer property in core n
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue)
@@ -74,14 +74,14 @@ describe('when building shared integer with duplicate integer property in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false, maxValue, minValue)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartSharedInteger(entityName)
       .withDocumentation(documentation)
       .withNumericRestrictions(minValue, maxValue)
@@ -92,8 +92,8 @@ describe('when building shared integer with duplicate integer property in extens
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -137,14 +137,14 @@ describe('when building shared decimal with duplicate decimal property in extens
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withDecimalProperty(entityName, documentation, true, false, totalDigits, decimalPlaces, minValue, maxValue)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartSharedDecimal(entityName)
       .withDocumentation(documentation)
       .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
@@ -156,8 +156,8 @@ describe('when building shared decimal with duplicate decimal property in extens
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -199,14 +199,14 @@ describe('when building shared string with duplicate string property in extensio
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString(entityName)
       .withDocumentation(documentation)
       .withStringRestrictions(minLength, maxLength)
       .withEndSharedString()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withStringProperty(entityName, documentation, true, false, minLength, maxLength)
@@ -217,8 +217,8 @@ describe('when building shared string with duplicate string property in extensio
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -260,14 +260,14 @@ describe('when building shared string with duplicate integer property in extensi
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString(entityName)
       .withDocumentation(documentation)
       .withStringRestrictions(minLength, maxLength)
       .withEndSharedString()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false)
@@ -278,8 +278,8 @@ describe('when building shared string with duplicate integer property in extensi
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 

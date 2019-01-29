@@ -13,10 +13,11 @@ import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schemaName = namespaceName.toLowerCase();
   const parentTableName = 'ParentTableName';
   const gradebookEntryLearningObjective = 'GradebookEntryLearningObjective';
   const primaryKeyOrder: Array<string> = [
@@ -73,7 +74,7 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespaceName,
+          foreignTableSchema: schemaName,
           foreignTableName: foreignTable.name,
           columnNames: primaryKeyNames.map((name: string) =>
             Object.assign(newColumnNamePair(), {
@@ -108,10 +109,11 @@ describe('when ForeignKeyOrderDiminisher diminishes matching table', () => {
 });
 
 describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schemaName = namespaceName.toLowerCase();
   const parentTableName = 'ParentTableName';
   const foreignTableName = 'ForeignTableName';
   const primaryKeyNames: Array<string> = [
@@ -150,7 +152,7 @@ describe('when ForeignKeyOrderDiminisher diminishes non matching table', () => {
       ),
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespaceName,
+          foreignTableSchema: schemaName,
           foreignTableName: foreignTable.name,
           columnNames: primaryKeyNames.map((name: string) =>
             Object.assign(newColumnNamePair(), {

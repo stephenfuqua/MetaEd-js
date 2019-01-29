@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating common property has extension override of non common type extension should have validation failure for property 1`] = `"'common extension' is invalid for property CommonType on Domain Entity Extension EntityName. 'common extension' is only valid for referencing Common extensions."`;
+exports[`when validating common property has extension override of non common type extension should have validation failure for property 1`] = `"'common extension' is invalid for property CommonType on Domain Entity Extension EntityName in namespace Extension. 'common extension' is only valid for referencing Common extensions."`;
 
 exports[`when validating common property has extension override of non common type extension should have validation failure for property 2`] = `
 Object {

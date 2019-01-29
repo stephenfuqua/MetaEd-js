@@ -20,7 +20,7 @@ import {
 import { enhance } from '../../../src/enhancer/property/DecimalReferenceEnhancer';
 
 describe('when enhancing decimal property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -31,6 +31,7 @@ describe('when enhancing decimal property', () => {
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -55,7 +56,7 @@ describe('when enhancing decimal property', () => {
 });
 
 describe('when enhancing shared decimal property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -67,6 +68,7 @@ describe('when enhancing shared decimal property', () => {
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace,
       referencedType: referencedEntityName,
@@ -98,8 +100,8 @@ describe('when enhancing shared decimal property', () => {
 });
 
 describe('when enhancing decimal property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -111,6 +113,7 @@ describe('when enhancing decimal property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newDecimalProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });
@@ -135,8 +138,8 @@ describe('when enhancing decimal property across namespaces', () => {
 });
 
 describe('when enhancing shared decimal property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -149,6 +152,7 @@ describe('when enhancing shared decimal property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newSharedDecimalProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace: extensionNamespace,
       referencedType: referencedEntityName,

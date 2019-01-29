@@ -19,7 +19,7 @@ describe('when validating domain entity domain item matches top level entity', (
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem(domainEntityName)
@@ -36,12 +36,56 @@ describe('when validating domain entity domain item matches top level entity', (
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
     expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating domain entity domain item matches top level entity across namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainName = 'DomainName';
+  const domainEntityName = 'DomainEntityName';
+
+  let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('doc')
+      .withDomainEntityDomainItem(`EdFi.${domainEntityName}`)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    const coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies = [coreNamespace];
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -60,7 +104,7 @@ describe('when validating domain entity domain item matches top level entity sub
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem(domainEntitySubclassName)
@@ -83,7 +127,7 @@ describe('when validating domain entity domain item matches top level entity sub
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -107,7 +151,7 @@ describe('when validating domain entity domain item does not match top level ent
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainEntityDomainItemName')
@@ -129,7 +173,7 @@ describe('when validating domain entity domain item does not match top level ent
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

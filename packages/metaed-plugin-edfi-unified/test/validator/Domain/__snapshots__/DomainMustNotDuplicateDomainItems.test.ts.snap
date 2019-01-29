@@ -4,9 +4,9 @@ exports[`when validating domain entity domain item duplicates domain items shoul
 
 exports[`when validating domain entity domain item duplicates domain items should have one validation failure 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when validating domain entity domain item has multiple duplicate domain
 
 exports[`when validating domain entity domain item has multiple duplicate domain items should have multiple validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityName",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when validating domain entity domain item has multiple duplicate domain
 
 exports[`when validating domain entity domain item has multiple duplicate domain items should have multiple validation failures 4`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 8,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityName2",
 }
 `;

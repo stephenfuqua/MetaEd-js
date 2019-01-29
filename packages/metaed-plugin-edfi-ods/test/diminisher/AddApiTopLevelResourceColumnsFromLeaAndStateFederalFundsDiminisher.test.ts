@@ -7,7 +7,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AddApiTopLevelResourceColumnsFromLeaAndStateFederalFundsDiminisher diminishes local/state education agency federal fund tables', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';

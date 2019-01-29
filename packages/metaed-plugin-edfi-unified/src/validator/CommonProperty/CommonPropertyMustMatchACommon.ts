@@ -1,13 +1,14 @@
 import { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   metaEd.propertyIndex.common.forEach(property => {
-    const referencedEntity: ModelBase | null = getEntityForNamespaces(
+    const referencedEntity: ModelBase | null = getEntityFromNamespaceChain(
       property.metaEdName,
-      [property.namespace, ...property.namespace.dependencies],
+      property.referencedNamespaceName,
+      property.namespace,
       'common',
     );
 
@@ -15,7 +16,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'CommonPropertyMustMatchACommon',
         category: 'error',
-        message: `Common property '${property.metaEdName}' does not match any declared Common.`,
+        message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${
+          property.referencedNamespaceName
+        }.`,
         sourceMap: property.sourceMap.type,
         fileMap: null,
       });

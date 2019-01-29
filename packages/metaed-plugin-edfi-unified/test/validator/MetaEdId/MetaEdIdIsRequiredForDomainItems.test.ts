@@ -9,7 +9,7 @@ describe('when validating domain item is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('DomainName')
       .withDocumentation('DomainDocumentation')
       .withDomainEntityDomainItem('DomainItemName')
@@ -18,7 +18,7 @@ describe('when validating domain item is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -42,7 +42,7 @@ describe('when validating subdomain item is missing metaEdId for entity', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('SubdomainName', 'DomainName')
       .withDocumentation('SubdomainDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -52,7 +52,7 @@ describe('when validating subdomain item is missing metaEdId for entity', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

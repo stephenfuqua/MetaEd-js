@@ -21,8 +21,8 @@ jest.setTimeout(40000);
 
 describe('when common extension is a required common override property on association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
   const commonName = 'CommonName';
@@ -63,11 +63,11 @@ describe('when common extension is a required common override property on associ
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationExtension(associationName)
-      .withCommonExtensionOverrideProperty(commonName, 'Documentation', true, false)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
+      .withCommonExtensionOverrideProperty(`${namespaceName}.${commonName}`, 'Documentation', true, false)
       .withEndAssociationExtension()
 
-      .withStartCommonExtension(commonName)
+      .withStartCommonExtension(`${namespaceName}.${commonName}`)
       .withIntegerProperty(integerPropertyName5, 'Documentation', false, false)
       .withEndCommonExtension()
       .withEndNamespace()
@@ -191,8 +191,8 @@ describe('when common extension is a required common override property on associ
 
 describe('when common extension is a required common override property on domain entity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
@@ -217,11 +217,11 @@ describe('when common extension is a required common override property on domain
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(domainEntityName)
-      .withCommonExtensionOverrideProperty(commonName, 'Documentation', true, false)
+      .withStartDomainEntityExtension(`${namespaceName}.${domainEntityName}`)
+      .withCommonExtensionOverrideProperty(`${namespaceName}.${commonName}`, 'Documentation', true, false)
       .withEndDomainEntityExtension()
 
-      .withStartCommonExtension(commonName)
+      .withStartCommonExtension(`${namespaceName}.${commonName}`)
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndCommonExtension()
       .withEndNamespace()

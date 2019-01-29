@@ -12,7 +12,7 @@ import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
 describe('when building common property table', () => {
   const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
@@ -118,7 +118,7 @@ describe('when building common property table', () => {
 
 describe('when building optional common property table', () => {
   const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonName = 'CommonName';
   const commonPkName = 'CommonPkName';
@@ -226,7 +226,7 @@ describe('when building optional common property table', () => {
 
 describe('when building required collection common property table', () => {
   const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';
@@ -321,7 +321,7 @@ describe('when building required collection common property table', () => {
 
 describe('when building required collection common property table with make leaf column nullable strategy', () => {
   const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const entityPkName = 'EntityPkName';
   const commonPropertyName = 'CommonPropertyName';
   const commonPkName = 'CommonPkName';

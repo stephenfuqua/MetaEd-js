@@ -9,7 +9,7 @@ describe('when entities in same namespace have different names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -24,7 +24,7 @@ describe('when entities in same namespace have different names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -44,7 +44,7 @@ describe('when entities in same namespace have identical names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -59,7 +59,7 @@ describe('when entities in same namespace have identical names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -80,14 +80,14 @@ describe('when domains in separate dependency-linked namespaces have identical n
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
       .withEndDomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -97,8 +97,8 @@ describe('when domains in separate dependency-linked namespaces have identical n
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -137,21 +137,21 @@ describe('when domains in non-dependency-linked namespaces have identical names'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('NotADuplicate')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
       .withEndDomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'Extensiona')
+      .withBeginNamespace('Extensiona', 'Extensiona')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
       .withEndDomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'Extensionb')
+      .withBeginNamespace('Extensionb', 'Extensionb')
       .withStartDomain('ValidName1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -161,9 +161,9 @@ describe('when domains in non-dependency-linked namespaces have identical names'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
     // $FlowIgnore - null check

@@ -947,6 +947,15 @@ MetaEdGrammarListener.prototype.exitBaseName = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#baseNamespace.
+MetaEdGrammarListener.prototype.enterBaseNamespace = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#baseNamespace.
+MetaEdGrammarListener.prototype.exitBaseNamespace = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#choiceName.
 MetaEdGrammarListener.prototype.enterChoiceName = function(ctx) {
 };
@@ -1046,6 +1055,15 @@ MetaEdGrammarListener.prototype.exitExtendeeName = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#extendeeNamespace.
+MetaEdGrammarListener.prototype.enterExtendeeNamespace = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#extendeeNamespace.
+MetaEdGrammarListener.prototype.exitExtendeeNamespace = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#inlineCommonName.
 MetaEdGrammarListener.prototype.enterInlineCommonName = function(ctx) {
 };
@@ -1061,6 +1079,42 @@ MetaEdGrammarListener.prototype.enterInterchangeName = function(ctx) {
 
 // Exit a parse tree produced by MetaEdGrammar#interchangeName.
 MetaEdGrammarListener.prototype.exitInterchangeName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#localBaseName.
+MetaEdGrammarListener.prototype.enterLocalBaseName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localBaseName.
+MetaEdGrammarListener.prototype.exitLocalBaseName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#localDomainItemName.
+MetaEdGrammarListener.prototype.enterLocalDomainItemName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localDomainItemName.
+MetaEdGrammarListener.prototype.exitLocalDomainItemName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#localExtendeeName.
+MetaEdGrammarListener.prototype.enterLocalExtendeeName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localExtendeeName.
+MetaEdGrammarListener.prototype.exitLocalExtendeeName = function(ctx) {
+};
+
+
+// Enter a parse tree produced by MetaEdGrammar#localInterchangeItemName.
+MetaEdGrammarListener.prototype.enterLocalInterchangeItemName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#localInterchangeItemName.
+MetaEdGrammarListener.prototype.exitLocalInterchangeItemName = function(ctx) {
 };
 
 

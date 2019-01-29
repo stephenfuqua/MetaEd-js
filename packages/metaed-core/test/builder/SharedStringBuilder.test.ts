@@ -10,7 +10,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building shared string in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -76,7 +76,7 @@ describe('when building shared string in extension namespace', () => {
 describe('when building duplicate shared strings', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -144,7 +144,7 @@ describe('when building shared string with no shared string name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
@@ -183,7 +183,7 @@ describe('when building shared string with lowercase shared string name', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
@@ -222,7 +222,7 @@ describe('when building shared string with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -279,7 +279,7 @@ describe('when building shared string with no min length', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -338,7 +338,7 @@ describe('when building shared string with no max length', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -397,7 +397,7 @@ describe('when building shared string with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -457,7 +457,7 @@ describe('when building shared string with invalid trailing text', () => {
 describe('when building shared string source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';

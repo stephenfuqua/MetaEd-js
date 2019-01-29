@@ -18,7 +18,7 @@ describe('when validating short property does not match shared decimal', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedDecimal('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withTotalDigits('10')
@@ -36,7 +36,7 @@ describe('when validating short property does not match shared decimal', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -64,7 +64,7 @@ describe('when validating short identity matches shared decimal', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedDecimal(entityName)
       .withDocumentation('EntityDocumentation')
       .withTotalDigits('10')
@@ -81,7 +81,7 @@ describe('when validating short identity matches shared decimal', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -113,7 +113,7 @@ describe('when validating short property matches shared decimal', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedDecimal(entityName)
       .withDocumentation('EntityDocumentation')
       .withTotalDigits('10')
@@ -130,7 +130,7 @@ describe('when validating short property matches shared decimal', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

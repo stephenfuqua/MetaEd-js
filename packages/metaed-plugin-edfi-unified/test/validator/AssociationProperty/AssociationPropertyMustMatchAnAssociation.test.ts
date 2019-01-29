@@ -17,7 +17,7 @@ describe('when association property has identifier of association', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -51,7 +51,7 @@ describe('when association property has identifier of association subclass', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociationSubclass(entityName, 'BaseAssociation')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -82,7 +82,7 @@ describe('when association property has invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withAssociationProperty('UndefinedEntityName', 'doc', true, false)
@@ -117,7 +117,7 @@ describe('when association property has identifier of association in dependency 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -126,10 +126,10 @@ describe('when association property has identifier of association in dependency 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withAssociationProperty(entityName, 'doc', true, false)
+      .withAssociationProperty(`EdFi.${entityName}`, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -137,9 +137,8 @@ describe('when association property has identifier of association in dependency 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -160,7 +159,7 @@ describe('when association property has invalid identifier of association in dep
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -169,7 +168,7 @@ describe('when association property has invalid identifier of association in dep
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withAssociationProperty('NotValid', 'doc', true, false)
@@ -180,8 +179,8 @@ describe('when association property has invalid identifier of association in dep
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -210,21 +209,21 @@ describe('when association property refers to association in non-dependency name
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('CoreEntity')
       .withDocumentation('doc')
       .withBooleanProperty('Dummy', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'ProjectExtensiona')
+      .withBeginNamespace('Extensiona', 'ProjectExtensiona')
       .withStartDomainEntity('ExtensionEntity')
       .withDocumentation('doc')
       .withAssociationProperty('AssociationEntity', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'ProjectExtensionb')
+      .withBeginNamespace('Extensionb', 'ProjectExtensionb')
       .withStartAssociation('AssociationEntity')
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -237,9 +236,9 @@ describe('when association property refers to association in non-dependency name
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
     // $FlowIgnore - null check

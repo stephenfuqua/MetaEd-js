@@ -16,19 +16,19 @@ const metaEdConfiguration = {
   projects: [
     {
       projectName: 'Ed-Fi',
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       projectExtension: '',
       projectVersion: '3.0.0',
     },
     {
       projectName: 'Grand Bend',
-      namespaceName: 'gb',
+      namespaceName: 'Gb',
       projectExtension: 'GrandBend',
       projectVersion: '1.0.0',
     },
     {
       projectName: 'Sample',
-      namespaceName: 'sample',
+      namespaceName: 'Sample',
       projectExtension: 'Sample',
       projectVersion: '1.0.0',
     },
@@ -57,25 +57,25 @@ describe('when building a simple core and two simple extension projects', () => 
   });
 
   it('should have core domain entity', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('edfi');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('EdfiDomainEntity')).toBeDefined();
   });
 
   it('should have gb domain entity', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('gb');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('Gb');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('GbDomainEntity')).toBeDefined();
   });
 
   it('should have sample domain entity', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('sample');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('Sample');
     if (namespace == null) throw new Error();
     expect(namespace.entity.domainEntity.get('SampleDomainEntity')).toBeDefined();
   });
 
   it('should have core entity definition', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('edfi');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (namespace == null) throw new Error();
     const schemaSection = namespace.data.edfiXsd.xsdSchema.sections.find(
       s => s.complexTypes[0] && s.complexTypes[0].name === 'EdfiDomainEntity',
@@ -84,7 +84,7 @@ describe('when building a simple core and two simple extension projects', () => 
   });
 
   it('should have gb entity definition', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('gb');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('Gb');
     if (namespace == null) throw new Error();
     const schemaSection = namespace.data.edfiXsd.xsdSchema.sections.find(
       s => s.complexTypes[0] && s.complexTypes[0].name === 'GrandBend-GbDomainEntity',
@@ -93,7 +93,7 @@ describe('when building a simple core and two simple extension projects', () => 
   });
 
   it('should have sample entity definition', () => {
-    const namespace: Namespace | undefined = state.metaEd.namespace.get('sample');
+    const namespace: Namespace | undefined = state.metaEd.namespace.get('Sample');
     if (namespace == null) throw new Error();
     const schemaSection = namespace.data.edfiXsd.xsdSchema.sections.find(
       s => s.complexTypes[0] && s.complexTypes[0].name === 'Sample-SampleDomainEntity',

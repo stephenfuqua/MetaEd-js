@@ -13,7 +13,7 @@ import { MetaEdEnvironment, SharedString, SharedStringProperty, StringProperty, 
 import { enhance } from '../../../src/enhancer/property/StringReferenceEnhancer';
 
 describe('when enhancing string property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -24,6 +24,7 @@ describe('when enhancing string property', () => {
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -48,7 +49,7 @@ describe('when enhancing string property', () => {
 });
 
 describe('when enhancing shared string property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -60,6 +61,7 @@ describe('when enhancing shared string property', () => {
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace,
       referencedType: referencedEntityName,
@@ -91,8 +93,8 @@ describe('when enhancing shared string property', () => {
 });
 
 describe('when enhancing string property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -104,6 +106,7 @@ describe('when enhancing string property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newStringProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });
@@ -128,8 +131,8 @@ describe('when enhancing string property across namespaces', () => {
 });
 
 describe('when enhancing shared string property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -142,6 +145,7 @@ describe('when enhancing shared string property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newSharedStringProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace: extensionNamespace,
       referencedType: referencedEntityName,

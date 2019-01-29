@@ -10,7 +10,7 @@ describe('when association extension is in correct namespace', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -19,7 +19,7 @@ describe('when association extension is in correct namespace', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartAssociationExtension(entityName)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
@@ -27,7 +27,7 @@ describe('when association extension is in correct namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 
@@ -48,7 +48,7 @@ describe('when association extension is in core namespace', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -63,7 +63,7 @@ describe('when association extension is in core namespace', () => {
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

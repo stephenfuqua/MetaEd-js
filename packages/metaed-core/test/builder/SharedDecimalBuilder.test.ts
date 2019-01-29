@@ -10,7 +10,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building shared decimal in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -87,7 +87,7 @@ describe('when building shared decimal in extension namespace', () => {
 describe('when building duplicate shared decimals', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -158,7 +158,7 @@ describe('when building shared decimal with no shared decimal name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
@@ -199,7 +199,7 @@ describe('when building shared decimal with lowercase shared decimal name', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
@@ -240,7 +240,7 @@ describe('when building shared decimal with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -307,7 +307,7 @@ describe('when building shared decimal with no metaed id', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -317,7 +317,6 @@ describe('when building shared decimal with no metaed id', () => {
   const decimalPlaces = '3';
   const minValue = '2';
   const maxValue = '100';
-  let namespace: any = null;
 
   beforeAll(() => {
     const builder = new SharedDecimalBuilder(metaEd, validationFailures);
@@ -331,40 +330,6 @@ describe('when building shared decimal with no metaed id', () => {
       .withEndNamespace()
       .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
       .sendToListener(builder);
-
-    namespace = metaEd.namespace.get(namespaceName);
-  });
-
-  it('should have correct namespace', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
-  });
-
-  it('should have correct project extension', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).namespace.projectExtension).toBe(projectExtension);
-  });
-
-  it('should not have metaed id', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).metaEdId).toBe('');
-  });
-
-  it('should have documentation', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).documentation).toBe(documentation);
-  });
-
-  it('should have total digits', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).totalDigits).toBe(totalDigits);
-  });
-
-  it('should have decimal places', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).decimalPlaces).toBe(decimalPlaces);
-  });
-
-  it('should have minValue', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).minValue).toBe(minValue);
-  });
-
-  it('should have maxValue', () => {
-    expect(getSharedDecimal(namespace.entity, entityName).maxValue).toBe(maxValue);
   });
 
   it('should have token recognition error', () => {
@@ -376,7 +341,7 @@ describe('when building shared decimal with no total digits property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -446,7 +411,7 @@ describe('when building shared decimal with no total digits value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -518,7 +483,7 @@ describe('when building shared decimal with no decimal places property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -588,7 +553,7 @@ describe('when building shared decimal with no min value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -660,7 +625,7 @@ describe('when building shared decimal with no max value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -732,7 +697,7 @@ describe('when building shared decimal with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -802,7 +767,7 @@ describe('when building shared decimal with invalid trailing text', () => {
 describe('when building shared decimal source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';

@@ -9,7 +9,7 @@ export const dataPath: string = `${odsPath}Data/`;
 export const structurePath: string = `${odsPath}Structure/`;
 
 export function fileNameFor(prefix: string, namespace: Namespace, suffix: string): string {
-  if (namespace.namespaceName === 'edfi') return `${prefix}-${suffix}.sql`;
+  if (namespace.namespaceName === 'EdFi') return `${prefix}-${suffix}.sql`;
 
   const extensionNamespace: string =
     namespace.projectExtension === '' ? namespace.namespaceName : `${namespace.projectExtension}-${namespace.namespaceName}`;

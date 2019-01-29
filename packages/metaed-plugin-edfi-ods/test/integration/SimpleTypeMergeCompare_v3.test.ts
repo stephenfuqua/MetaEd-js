@@ -41,13 +41,13 @@ describe('when generating ods tables file with simple merges', () => {
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Extension',
-          namespaceName: 'extension',
+          namespaceName: 'Extension',
           projectExtension: 'Extension',
           projectVersion: '3.0.0',
         },
@@ -135,13 +135,13 @@ describe('when generating ods foreign keys file with simple merges', () => {
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Extension',
-          namespaceName: 'extension',
+          namespaceName: 'Extension',
           projectExtension: 'Extension',
           projectVersion: '3.0.0',
         },

@@ -1,11 +1,11 @@
 import { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { findFirstEntity } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   metaEd.propertyIndex.short.forEach(property => {
-    const referencedEntity: ModelBase | null = getEntityForNamespaces(
+    const referencedEntity: ModelBase | null = findFirstEntity(
       property.metaEdName,
       [property.namespace, ...property.namespace.dependencies],
       'sharedInteger',

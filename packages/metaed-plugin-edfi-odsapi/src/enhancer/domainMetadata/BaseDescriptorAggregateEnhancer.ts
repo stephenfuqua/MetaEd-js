@@ -5,7 +5,7 @@ import { NamespaceEdfiOdsApi } from '../../model/Namespace';
 const enhancerName = 'BaseDescriptorAggregateEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (!coreNamespace) return { enhancerName, success: false };
 
   const aggregate: Aggregate = {
@@ -19,7 +19,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         isA: null,
         isAbstract: true,
         isRequiredCollection: false,
-        schema: coreNamespace.namespaceName,
+        schema: coreNamespace.namespaceName.toLowerCase(),
         hasIsA: false,
         requiresSchema: false,
       },

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
+exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice in namespace Extension."`;
 
 exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 2`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when choice property has invalid identifier should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice."`;
+exports[`when choice property has invalid identifier should have validation failure for property 1`] = `"Choice property 'EntityName' does not match any declared Choice in namespace EdFi."`;
 
 exports[`when choice property has invalid identifier should have validation failure for property 2`] = `
 Object {

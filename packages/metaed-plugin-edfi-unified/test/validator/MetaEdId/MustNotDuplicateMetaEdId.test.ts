@@ -18,7 +18,7 @@ describe('when validating two entities have different metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1', '1')
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -33,7 +33,7 @@ describe('when validating two entities have different metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -54,7 +54,7 @@ describe('when validating two entities have duplicate metaEdId', () => {
   beforeAll(() => {
     const metaEdId = '1';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1', metaEdId)
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -69,7 +69,7 @@ describe('when validating two entities have duplicate metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -98,7 +98,7 @@ describe('when validating two domain items have duplicate metaEdId', () => {
   beforeAll(() => {
     const metaEdId = '1';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('DomainName')
       .withDocumentation('DomainDocumentation')
       .withDomainEntityDomainItem('DomainItemName1', metaEdId)
@@ -114,7 +114,7 @@ describe('when validating two domain items have duplicate metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -147,7 +147,7 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
   beforeAll(() => {
     const metaEdId = '1';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EnumerationName')
       .withDocumentation('EnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation', metaEdId)
@@ -162,7 +162,7 @@ describe('when validating two enumeration items have duplicate metaEdId', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -195,7 +195,7 @@ describe('when validating two map type enumeration items have duplicate metaEdId
   beforeAll(() => {
     const metaEdId = '1';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('DescriptorName1')
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType()
@@ -216,7 +216,7 @@ describe('when validating two map type enumeration items have duplicate metaEdId
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -245,7 +245,7 @@ describe('when validating interchange items have duplicate metaEdId', () => {
   beforeAll(() => {
     const metaEdId = '1';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName1', metaEdId)
@@ -259,7 +259,7 @@ describe('when validating interchange items have duplicate metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -293,7 +293,7 @@ describe('when validating multiple entities, properties, and items have duplicat
     const metaEdId1 = '1';
     const metaEdId2 = '2';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1', metaEdId1)
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -329,7 +329,7 @@ describe('when validating multiple entities, properties, and items have duplicat
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -384,7 +384,7 @@ describe('when validating multiple entities, properties, and items across namesp
     const metaEdId1 = '1';
     const metaEdId2 = '2';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1', metaEdId1)
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -396,7 +396,7 @@ describe('when validating multiple entities, properties, and items across namesp
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDescriptor('DescriptorName')
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType()
@@ -422,8 +422,8 @@ describe('when validating multiple entities, properties, and items across namesp
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 

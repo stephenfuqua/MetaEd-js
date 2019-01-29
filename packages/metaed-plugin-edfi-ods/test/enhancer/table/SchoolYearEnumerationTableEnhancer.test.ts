@@ -6,7 +6,7 @@ import { enhance } from '../../../src/enhancer/table/SchoolYearEnumerationTableE
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
 describe('when SchoolYearEnumerationTableEnhancer enhances schoolYearEnumeration', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolYear = 'SchoolYear';

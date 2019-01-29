@@ -19,7 +19,7 @@ describe('when enhancing top level entity with nested reference to top level ref
    *   DomainEntity 3
    *     merge 3.2 with 2
    */
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3 = 'DomainEntityName3';
@@ -89,7 +89,7 @@ describe('when enhancing top level entity with top level reference to nested ref
    *   SharedInteger 3
    *     merge 3 with 2.3
    */
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const sharedIntegerName3 = 'SharedIntegerName3';
@@ -158,7 +158,7 @@ describe('when enhancing top level entity with nested reference to nested refere
    *   DomainEntity 3
    *     merge 3.4 with 2.4
    */
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3 = 'DomainEntityName3';
@@ -240,7 +240,7 @@ describe('when enhancing top level entity with deep nested reference to deep nes
    *   DomainEntity 3
    *     merge 3.4.6 with 2.5.6
    */
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName3 = 'DomainEntityName3';

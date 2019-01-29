@@ -65,7 +65,9 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
 
       if (!referenceProperty.data.edfiOds.odsIsCollection) return;
       const joinTable: Table = Object.assign(newTable(), {
-        schema: parentTableStrategy.table.schema,
+        // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
+        namespace: parentTableStrategy.table.namespace,
+        schema: parentTableStrategy.table.schema.toLowerCase(),
         name: joinTableNamer(referenceProperty, parentTableStrategy.name, strategy.parentContext()),
         description: referenceProperty.documentation,
         isRequiredCollectionTable: referenceProperty.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
@@ -78,6 +80,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
         referenceProperty,
         parentPrimaryKeys,
         parentTableStrategy.schema,
+        parentTableStrategy.schemaNamespace,
         parentTableStrategy.name,
         ForeignKeyStrategy.foreignColumnCascade(
           true,

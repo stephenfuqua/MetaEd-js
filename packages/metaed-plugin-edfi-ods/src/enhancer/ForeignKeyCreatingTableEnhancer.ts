@@ -122,6 +122,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
         const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
           foreignTableName: foreignTable.name,
           foreignTableSchema: foreignTable.schema,
+          foreignTableNamespace: foreignTable.namespace,
           sourceReference: foreignKeySourceReferenceFrom(parentTablePairs.property),
         });
 

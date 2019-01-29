@@ -14,7 +14,7 @@ import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model
 import { Table } from '../../../src/model/database/Table';
 
 describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName = 'DescriptorName';
@@ -95,7 +95,7 @@ describe('when DescriptorTableEnhancer enhances simple descriptor', () => {
 });
 
 describe('when DescriptorTableEnhancer enhances descriptor with required map type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName = 'DescriptorName';
@@ -248,7 +248,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with required map typ
 });
 
 describe('when DescriptorTableEnhancer enhances descriptor with optional map type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName = 'DescriptorName';
@@ -401,7 +401,7 @@ describe('when DescriptorTableEnhancer enhances descriptor with optional map typ
 });
 
 describe("when DescriptorTableEnhancer enhances descriptor with map type name ending with 'Type'", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName = 'DescriptorName';

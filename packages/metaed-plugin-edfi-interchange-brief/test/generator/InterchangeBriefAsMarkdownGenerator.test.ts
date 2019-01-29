@@ -28,7 +28,7 @@ describe('When generating interchange brief with no extended references or descr
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -141,7 +141,7 @@ describe('When generating interchange brief with extended documentation', () => 
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -268,7 +268,7 @@ describe('When generating interchange brief with use case documentation', () => 
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -384,7 +384,7 @@ describe('When generating interchange brief with extended and use case documenta
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -509,7 +509,7 @@ describe('When generating interchange brief with extended references', () => {
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -659,7 +659,7 @@ describe('When generating interchange brief with descriptors', () => {
 
   let generatedResults: Array<GeneratedOutput>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 

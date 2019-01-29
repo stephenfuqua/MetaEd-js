@@ -11,7 +11,7 @@ describe('when enhancing domainEntity with string properties', () => {
     isPartOfIdentity: true,
   });
   const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'edfi',
+    namespaceName: 'EdFi',
   });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

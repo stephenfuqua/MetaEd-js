@@ -146,7 +146,7 @@ describe('when sorting graph with optional cycle', () => {
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
   let mergedInterchange: MergedInterchange;
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
 
   beforeAll(() => {
@@ -184,7 +184,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange', () => {
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0', () => {
   let mergedInterchange: MergedInterchange;
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
 
   beforeAll(() => {
@@ -222,7 +222,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with DS 3.0
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with different interchange item name', () => {
   let mergedInterchange: MergedInterchange;
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const interchangeItemName = 'InterchangeItemName';
 
   beforeAll(() => {
@@ -261,7 +261,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with differ
 
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with internal dependency', () => {
   let mergedInterchange: MergedInterchange;
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
 
@@ -324,7 +324,7 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with intern
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency', () => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
 
@@ -401,8 +401,8 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
   let mergedInterchange2Extension: MergedInterchange;
-  const namespaceName = 'edfi';
-  const extensionNamespaceName = 'extension';
+  const namespaceName = 'EdFi';
+  const extensionNamespaceName = 'Extension';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
 
@@ -501,8 +501,8 @@ describe('when InterchangeOrderMetadataEnhancer enhances interchange with extern
 describe('when InterchangeOrderMetadataEnhancer enhances interchange with external dependency in extension with duplicate name', () => {
   let mergedInterchange1: MergedInterchange;
   let mergedInterchange2: MergedInterchange;
-  const namespaceName = 'edfi';
-  const extensionNamespaceName = 'extension';
+  const namespaceName = 'EdFi';
+  const extensionNamespaceName = 'Extension';
   const domainEntityName1 = 'DomainEntityName1';
 
   beforeAll(() => {

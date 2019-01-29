@@ -16,7 +16,7 @@ describe('when domain entity subclass has different property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation3', true, false)
@@ -32,7 +32,7 @@ describe('when domain entity subclass has different property name', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -58,7 +58,7 @@ describe('when domain entity subclass has duplicate property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty(duplicatePropertyName, 'PropertyDocumentation3', true, false)
@@ -74,7 +74,7 @@ describe('when domain entity subclass has duplicate property name', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -103,7 +103,7 @@ describe('when domain entity subclass has duplicate property name but different 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty(duplicatePropertyName, 'PropertyDocumentation3', true, false)
@@ -137,7 +137,7 @@ describe('when domain entity subclass has multiple duplicate property name', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty(duplicatePropertyName1, 'PropertyDocumentation3', true, false)
@@ -156,7 +156,7 @@ describe('when domain entity subclass has multiple duplicate property name', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

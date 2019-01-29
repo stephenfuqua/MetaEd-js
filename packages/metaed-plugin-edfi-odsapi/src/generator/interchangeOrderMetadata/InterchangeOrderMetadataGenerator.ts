@@ -56,7 +56,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const results: Array<GeneratedOutput> = [];
 
   if (metaEd.namespace.size > 0) {
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) return { generatorName, generatedOutput: [] };
 
     const coreEdfiXsdEntityRepository: EdFiXsdEntityRepository | null = edfiXsdRepositoryForNamespace(metaEd, coreNamespace);
@@ -64,7 +64,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
 
     const coreInterchangeMetadata: Array<InterchangeMetadata> = [];
     coreEdfiXsdEntityRepository.mergedInterchange.forEach((interchange: MergedInterchange) => {
-      if (interchange.namespace.namespaceName !== 'edfi') return;
+      if (interchange.namespace.namespaceName !== 'EdFi') return;
 
       coreInterchangeMetadata.push(getInterchangeMetadataFor(interchange));
     });

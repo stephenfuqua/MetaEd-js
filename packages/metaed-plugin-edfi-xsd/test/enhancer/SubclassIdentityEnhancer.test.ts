@@ -12,7 +12,7 @@ import { enhance } from '../../src/enhancer/SubclassIdentityEnhancer';
 
 describe('when enhancing association subclass without identity renames', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseAssociationName = 'BaseName';
   const subclassAssociationName = 'SubclassName';
@@ -79,7 +79,7 @@ describe('when enhancing association subclass without identity renames', () => {
 
 describe('when enhancing association subclass with identity renames', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseAssociationName = 'BaseName';
   const baseIdentityName = 'BaseKeyName';

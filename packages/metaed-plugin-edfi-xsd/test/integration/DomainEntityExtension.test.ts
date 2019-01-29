@@ -14,7 +14,7 @@ describe('when generating xsd for descriptor', () => {
   const coreEntity = 'CoreEntity';
   const coreEntityPk = 'CoreEntityPk';
   const extensionProperty = 'ExtensionProperty';
-  const extensionNamespace = 'extension';
+  const extensionNamespace = 'Extension';
   const extension = 'EXTENSION';
 
   let coreResult;
@@ -26,7 +26,7 @@ describe('when generating xsd for descriptor', () => {
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity)
       .withDocumentation('doc')
@@ -37,7 +37,7 @@ describe('when generating xsd for descriptor', () => {
 
       .withBeginNamespace(extensionNamespace, extension)
 
-      .withStartDomainEntityExtension(coreEntity)
+      .withStartDomainEntityExtension(`EdFi.${coreEntity}`)
       .withIntegerProperty(extensionProperty, 'doc', true, false)
       .withEndDomainEntityExtension()
 
@@ -47,7 +47,7 @@ describe('when generating xsd for descriptor', () => {
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

@@ -18,7 +18,7 @@ const enhancerName = 'CreateDomainModelDefinitionEnhancer';
 export function buildSchemaDefinition(namespace: Namespace): SchemaDefinition {
   return {
     logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
-    physicalName: namespace.namespaceName,
+    physicalName: namespace.namespaceName.toLowerCase(),
   };
 }
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when common extension is in core namespace should have validation failure: when common extension is in core namespace should have validation failure -> message 1`] = `"Common additions 'CommonName' is not valid in core namespace 'edfi"`;
+exports[`when common extension is in core namespace should have validation failure: when common extension is in core namespace should have validation failure -> message 1`] = `"Common additions 'CommonName' is not valid in core namespace 'EdFi"`;
 
 exports[`when common extension is in core namespace should have validation failure: when common extension is in core namespace should have validation failure -> sourceMap 1`] = `
 Object {

@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import { getEntityFromNamespace, versionSatisfies } from 'metaed-core';
 import { EnhancerResult, MetaEdEnvironment, ModelBase, ModelType, Namespace } from 'metaed-core';
 import { NoSimpleType } from '../model/schema/SimpleType';
 import { Element } from '../model/schema/Element';
@@ -20,10 +20,10 @@ const integerType = 'xs:integer';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
 
-  const entity: ModelBase | null = getEntityForNamespaces(entityName1, [coreNamespace], entityType1);
+  const entity: ModelBase | null = getEntityFromNamespace(entityName1, coreNamespace, entityType1);
   if (entity != null && !R.isEmpty(entity.data.edfiXsd.xsdComplexTypes)) {
     const complexType: ComplexType = entity.data.edfiXsd.xsdComplexTypes.find(x => x.name === entityName1);
 
@@ -40,7 +40,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     }
   }
 
-  const element: ModelBase | null = getEntityForNamespaces(elementNameType1, [coreNamespace], entityType2);
+  const element: ModelBase | null = getEntityFromNamespace(elementNameType1, coreNamespace, entityType2);
   if (element != null) element.data.edfiXsd.xsdSimpleType = NoSimpleType;
 
   return {

@@ -39,7 +39,7 @@ describe('when generating schema', () => {
     const schema = createSchema(schemaVersion, schemaDocumentation);
     schema.sections.push(schemaSection);
     const namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       projectExtension: 'EXTENSION',
       data: {
         edfiXsd: {

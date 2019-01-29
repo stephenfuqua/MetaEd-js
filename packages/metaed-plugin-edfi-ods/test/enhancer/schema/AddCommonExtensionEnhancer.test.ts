@@ -6,7 +6,7 @@ describe('when CommonExtension enhances common extension entity', () => {
   const commonExtensionName = 'CommonExtensionName';
   const extensionEntitySuffix = 'Extension';
   let commonExtension: CommonExtension;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', extensionEntitySuffix };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', extensionEntitySuffix };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

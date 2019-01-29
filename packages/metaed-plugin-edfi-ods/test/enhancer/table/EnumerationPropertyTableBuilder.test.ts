@@ -118,7 +118,7 @@ describe('when building collection enumeration property table', () => {
   const enumerationName = 'EnumerationName';
   const enumerationEntityPropertyName1 = 'EnumerationEntityPropertyName1';
   const entityPkName = 'EntityPkName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const tableName = 'TableName';
   const tables: Array<Table> = [];
   let table: Table;

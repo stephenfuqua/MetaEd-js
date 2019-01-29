@@ -15,7 +15,8 @@ export const enumerationTableCreator: {
   build(metaEd: MetaEdEnvironment, name: string, namespace: Namespace, documentation: string): Table {
     const table: Table = Object.assign(newTable(), {
       name: normalizeEnumerationSuffix(name),
-      schema: namespace.namespaceName,
+      namespace,
+      schema: namespace.namespaceName.toLowerCase(),
       description: documentation,
       includeCreateDateColumn: true,
       includeLastModifiedDateAndIdColumn: true,

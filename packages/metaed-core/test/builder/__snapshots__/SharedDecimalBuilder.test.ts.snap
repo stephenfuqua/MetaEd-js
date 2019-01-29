@@ -74,8 +74,8 @@ Array [
 
 exports[`when building shared decimal with lowercase shared decimal name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'entityName' expecting ID, column: 17, line: 2, token: entityName",
-  "mismatched input 'entityName' expecting ID, column: 17, line: 2, token: entityName",
+  "mismatched input 'e' expecting ID, column: 17, line: 2, token: e",
+  "mismatched input 'e' expecting ID, column: 17, line: 2, token: e",
 ]
 `;
 
@@ -102,8 +102,8 @@ Array [
 
 exports[`when building shared decimal with no metaed id should have token recognition error 1`] = `
 Array [
-  "token recognition error at: '[]', column: 28, line: 2, token: ",
-  "token recognition error at: '[]', column: 28, line: 2, token: ",
+  "mismatched input '[' expecting {'documentation', METAED_ID}, column: 28, line: 2, token: [",
+  "mismatched input '[' expecting {'documentation', METAED_ID}, column: 28, line: 2, token: [",
 ]
 `;
 

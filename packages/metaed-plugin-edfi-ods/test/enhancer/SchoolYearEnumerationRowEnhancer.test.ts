@@ -11,7 +11,7 @@ import { enhance } from '../../src/enhancer/SchoolYearEnumerationRowEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../src/model/EdFiOdsEntityRepository';
 
 describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -56,7 +56,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     const row: any = rowEntities(metaEd, namespace).get(`2018${shortDescription1}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2018');
-    expect(row.namespace).toBe('edfi');
+    expect(row.namespace).toBe('EdFi');
     expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe('SchoolYearType');
     expect(row.documentation).toBe(itemDocumentation1);
@@ -68,7 +68,7 @@ describe('when SchoolYearEnumerationRowEnhancer enhances enumeration', () => {
     const row: any = rowEntities(metaEd, namespace).get(`2019${shortDescription2}`);
     expect(row.type).toBe('schoolYearEnumerationRow');
     expect(row.name).toBe('2019');
-    expect(row.namespace).toBe('edfi');
+    expect(row.namespace).toBe('EdFi');
     expect(row.schemaName).toBe('edfi');
     expect(row.tableName).toBe('SchoolYearType');
     expect(row.documentation).toBe(itemDocumentation2);

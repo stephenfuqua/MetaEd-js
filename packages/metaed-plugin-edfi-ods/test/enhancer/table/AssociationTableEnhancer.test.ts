@@ -33,7 +33,7 @@ import { ForeignKey } from '../../../src/model/database/ForeignKey';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationTableEnhancer enhances entity with simple property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -91,7 +91,7 @@ describe('when AssociationTableEnhancer enhances entity with simple property', (
 });
 
 describe('when AssociationTableEnhancer enhances entity with required collection property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -126,6 +126,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     });
     const requiredCollectionProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: associationName,
+      referencedNamespaceName: namespace.namespaceName,
       withContext: '',
       parentEntity: entity,
       data: {
@@ -216,7 +217,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
 });
 
 describe('when AssociationTableEnhancer enhances entity with required collection common property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -251,6 +252,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
     });
     const requiredCollectionProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
+      referencedNamespaceName: namespace.namespaceName,
       withContext: '',
       parentEntity: entity,
       data: {
@@ -333,7 +335,7 @@ describe('when AssociationTableEnhancer enhances entity with required collection
 });
 
 describe('when AssociationTableEnhancer enhances entity with primary key reference to another entity with a non primary key reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -370,6 +372,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     });
     const requiredProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       isRequired: true,
       parentEntity: entity,
       data: {
@@ -408,6 +411,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     });
     const referencedEntityRequiredProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: subReferencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       isRequired: true,
       parentEntity: referencedEntity,
       data: {
@@ -486,7 +490,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
 });
 
 describe('when AssociationTableEnhancer enhances entity with primary key reference to another entity with a primary key reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -523,6 +527,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     });
     const entityRequiredProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       isRequired: true,
       parentEntity: entity,
       data: {
@@ -561,6 +566,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
     });
     const referencedEntityPkProperty2: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: subReferencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       isPartOfIdentity: true,
       parentEntity: referencedEntity,
       data: {
@@ -643,7 +649,7 @@ describe('when AssociationTableEnhancer enhances entity with primary key referen
 });
 
 describe("when AssociationTableEnhancer enhances entity with collection property whose name starts with the referenced entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -665,6 +671,7 @@ describe("when AssociationTableEnhancer enhances entity with collection property
     });
     const entityCollectionProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -701,7 +708,7 @@ describe("when AssociationTableEnhancer enhances entity with collection property
 });
 
 describe('when AssociationTableEnhancer enhances entity with two reference properties that have same primary key names', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -725,6 +732,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     });
     const entityPkProperty1: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName1,
+      referencedNamespaceName: namespace.namespaceName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -736,6 +744,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
     });
     const entityPkProperty2: AssociationProperty = Object.assign(newAssociationProperty(), {
       metaEdName: referencedEntityName2,
+      referencedNamespaceName: namespace.namespaceName,
       isPartOfIdentity: true,
       parentEntity: entity,
       data: {
@@ -825,7 +834,7 @@ describe('when AssociationTableEnhancer enhances entity with two reference prope
 });
 
 describe('when AssociationTableEnhancer enhances entity with optional collection property with context', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const contextName = 'ContextName';
@@ -848,6 +857,7 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
     });
     const optionalCollectionProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: optionalCollectionPropertyName,
+      referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
       withContext: contextName,
       parentEntity: entity,
@@ -887,7 +897,7 @@ describe('when AssociationTableEnhancer enhances entity with optional collection
 });
 
 describe('when AssociationTableEnhancer enhances entity with collection enumeration property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -910,6 +920,7 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
     });
     const enumerationProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: enumerationName,
+      referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
@@ -958,7 +969,7 @@ describe('when AssociationTableEnhancer enhances entity with collection enumerat
 });
 
 describe('when AssociationTableEnhancer enhances entity with enumeration property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -981,6 +992,7 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
     });
     const enumerationProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: enumerationName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -1020,7 +1032,7 @@ describe('when AssociationTableEnhancer enhances entity with enumeration propert
 });
 
 describe("when AssociationTableEnhancer enhances entity with enumeration property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1043,6 +1055,7 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
     });
     const enumerationProperty: EnumerationProperty = Object.assign(newEnumerationProperty(), {
       metaEdName: enumerationName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -1083,7 +1096,7 @@ describe("when AssociationTableEnhancer enhances entity with enumeration propert
 });
 
 describe('when AssociationTableEnhancer enhances entity with descriptor collection property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1106,6 +1119,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
     });
     const descriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorName,
+      referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
@@ -1155,7 +1169,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor collecti
 });
 
 describe('when AssociationTableEnhancer enhances entity with descriptor property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1178,6 +1192,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
     });
     const descriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntity: entity,
       data: {
         edfiOds: {
@@ -1218,7 +1233,7 @@ describe('when AssociationTableEnhancer enhances entity with descriptor property
 });
 
 describe("when AssociationTableEnhancer enhances entity with descriptor collection property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1241,6 +1256,7 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
     });
     const descriptorProperty: DescriptorProperty = Object.assign(newDescriptorProperty(), {
       metaEdName: descriptorName,
+      referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
       parentEntity: entity,
       data: {
@@ -1283,7 +1299,7 @@ describe("when AssociationTableEnhancer enhances entity with descriptor collecti
 });
 
 describe("when AssociationTableEnhancer enhances entity with common collection property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1320,6 +1336,7 @@ describe("when AssociationTableEnhancer enhances entity with common collection p
     });
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
+      referencedNamespaceName: namespace.namespaceName,
       isOptionalCollection: true,
       parentEntity: entity,
       data: {

@@ -3,7 +3,7 @@ import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 
 import { Domain, DomainSourceMap } from '../model/Domain';
 import { Subdomain, SubdomainSourceMap } from '../model/Subdomain';
-import { DomainItem, DomainItemSourceMap } from '../model/DomainItem';
+import { DomainItem } from '../model/DomainItem';
 import { MetaEdEnvironment } from '../MetaEdEnvironment';
 import { Namespace } from '../model/Namespace';
 import { NoNamespace } from '../model/Namespace';
@@ -158,11 +158,29 @@ export class DomainBuilder extends MetaEdGrammarListener {
   }
 
   enterDomainItem(context: MetaEdGrammar.DomainItemContext) {
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-    this.currentDomainItem = Object.assign(newDomainItem(), { metaEdName: context.ID().getText() });
-    (this.currentDomainItem.sourceMap as DomainItemSourceMap).metaEdName = sourceMapFrom(context);
-    (this.currentDomainItem.sourceMap as DomainItemSourceMap).referencedType = sourceMapFrom(context);
-    (this.currentDomainItem.sourceMap as DomainItemSourceMap).type = sourceMapFrom(context);
+    if (this.currentDomain === NoDomain) return;
+
+    if (context.exception || context.localDomainItemName() == null) return;
+    const localDomainItemNameContext = context.localDomainItemName();
+    if (
+      localDomainItemNameContext.exception ||
+      localDomainItemNameContext.ID() == null ||
+      localDomainItemNameContext.ID().exception ||
+      isErrorText(localDomainItemNameContext.ID().getText())
+    )
+      return;
+
+    this.currentDomainItem = {
+      ...newDomainItem(),
+      metaEdName: localDomainItemNameContext.ID().getText(),
+      namespace: this.currentDomain.namespace,
+    };
+
+    Object.assign(this.currentDomainItem.sourceMap, {
+      type: sourceMapFrom(localDomainItemNameContext),
+      metaEdName: sourceMapFrom(localDomainItemNameContext),
+      referencedType: sourceMapFrom(localDomainItemNameContext),
+    });
 
     // mutually exclusive in language
     if (context.ASSOCIATION_KEYWORD()) this.currentDomainItem.referencedType = 'association';
@@ -170,6 +188,21 @@ export class DomainBuilder extends MetaEdGrammarListener {
     if (context.DOMAIN_ENTITY_KEYWORD()) this.currentDomainItem.referencedType = 'domainEntity';
     if (context.DESCRIPTOR_KEYWORD()) this.currentDomainItem.referencedType = 'descriptor';
     if (context.INLINE_COMMON_KEYWORD()) this.currentDomainItem.referencedType = 'inlineCommon';
+
+    const baseNamespaceContext = context.baseNamespace();
+    if (
+      baseNamespaceContext == null ||
+      baseNamespaceContext.exception ||
+      baseNamespaceContext.ID() == null ||
+      baseNamespaceContext.ID().exception ||
+      isErrorText(baseNamespaceContext.ID().getText())
+    ) {
+      this.currentDomainItem.referencedNamespaceName = this.currentNamespace.namespaceName;
+      this.currentDomainItem.sourceMap.referencedNamespaceName = this.currentDomainItem.sourceMap.metaEdName;
+    } else {
+      this.currentDomainItem.referencedNamespaceName = baseNamespaceContext.ID().getText();
+      this.currentDomainItem.sourceMap.referencedNamespaceName = sourceMapFrom(baseNamespaceContext);
+    }
   }
 
   exitDomainItem(context: MetaEdGrammar.DomainItemContext) {

@@ -9,7 +9,7 @@ describe('when descriptor has name ending in Descriptor', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('NameInvalidDescriptor')
       .withDocumentation('doc')
       .withEndDescriptor()
@@ -18,7 +18,7 @@ describe('when descriptor has name ending in Descriptor', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -42,7 +42,7 @@ describe('when descriptor has name not ending in Descriptor', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('ValidName')
       .withDocumentation('doc')
       .withEndDescriptor()
@@ -51,7 +51,7 @@ describe('when descriptor has name not ending in Descriptor', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

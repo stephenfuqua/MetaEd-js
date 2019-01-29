@@ -12,7 +12,7 @@ import { TableBuilder } from '../../../src/enhancer/table/TableBuilder';
 
 describe('when building simple entity property table with collection property and identity property', () => {
   const tableName = 'TableName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const entityPropertyName = 'EntityPropertyName';
   const entityPkName = 'EntityPkName';
   const entityPropertyDocumentation = 'EntityPropertyDocumentation';

@@ -9,7 +9,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building association subclass in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -58,6 +58,10 @@ describe('when building association subclass in extension namespace', () => {
     expect(getAssociationSubclass(namespace.entity, entityName).baseEntityName).toBe(baseEntityName);
   });
 
+  it('should have base namespace', () => {
+    expect(getAssociationSubclass(namespace.entity, entityName).baseEntityNamespaceName).toBe(namespaceName);
+  });
+
   it('should have documentation', () => {
     expect(getAssociationSubclass(namespace.entity, entityName).documentation).toBe(documentation);
   });
@@ -75,10 +79,51 @@ describe('when building association subclass in extension namespace', () => {
   });
 });
 
+describe('when building association subclass in extension namespace subclassing core entity', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespaceName = 'Namespace';
+  const coreNamespaceName = 'EdFi';
+  const projectExtension = 'ProjectExtension';
+
+  const entityName = 'EntityName';
+  const baseEntityName = 'BaseEntityName';
+  const documentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new AssociationSubclassBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartAssociationSubclass(entityName, `${coreNamespaceName}.${baseEntityName}`)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, 'doc', true, false)
+      .withEndAssociationSubclass()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have namespace', () => {
+    expect(getAssociationSubclass(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+  });
+
+  it('should have base name', () => {
+    expect(getAssociationSubclass(namespace.entity, entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have base namespace', () => {
+    expect(getAssociationSubclass(namespace.entity, entityName).baseEntityNamespaceName).toBe(coreNamespaceName);
+  });
+});
+
 describe('when building duplicate association subclasses', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -144,7 +189,7 @@ describe('when building association subclass with no association subclass name',
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
@@ -181,7 +226,7 @@ describe('when building association subclass with lowercase association subclass
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
@@ -218,7 +263,7 @@ describe('when building association subclass with no based on name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -283,7 +328,7 @@ describe('when building association subclass with no based on name', () => {
     expect(integerProperty.isRequired).toBe(true);
   });
 
-  it('should have missing id error', () => {
+  it('should have error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
@@ -292,7 +337,7 @@ describe('when building association subclass with lowercase based on name', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -362,7 +407,7 @@ describe('when building association subclass with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -426,7 +471,7 @@ describe('when building association subclass with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -490,7 +535,7 @@ describe('when building association subclass with invalid trailing text', () => 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -565,7 +610,7 @@ describe('when building association subclass with invalid trailing text', () => 
 describe('when building association subclass source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';

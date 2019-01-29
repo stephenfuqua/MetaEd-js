@@ -10,7 +10,7 @@ describe('when validating domain entity with identity fields', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc1')
       .withStringIdentity('Property1', 'doc2', '100')
@@ -20,7 +20,7 @@ describe('when validating domain entity with identity fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -41,7 +41,7 @@ describe('when validating domain entity with no identity fields', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc1')
       .withStringProperty('Property1', 'doc2', true, false, '100')
@@ -51,7 +51,7 @@ describe('when validating domain entity with no identity fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

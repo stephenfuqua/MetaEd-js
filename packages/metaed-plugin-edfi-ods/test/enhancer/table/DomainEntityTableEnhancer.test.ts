@@ -35,7 +35,7 @@ import { ForeignKey } from '../../../src/model/database/ForeignKey';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntityTableEnhancer enhances entity with simple property', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -81,7 +81,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
   });
 
   it('should have schema equal to namespace', () => {
-    expect((tableEntities(metaEd, namespace).get(entityName) as Table).schema).toBe(namespaceName);
+    expect((tableEntities(metaEd, namespace).get(entityName) as Table).schema).toBe(namespaceName.toLowerCase());
   });
 
   it('should have description equal to documentation', () => {
@@ -101,7 +101,7 @@ describe('when DomainEntityTableEnhancer enhances entity with simple property', 
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with required collection property', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
@@ -227,7 +227,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with required collection common property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -344,7 +344,7 @@ describe('when DomainEntityTableEnhancer enhances entity with required collectio
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with primary key reference to another entity with a non primary key reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -497,7 +497,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with primary key reference to another entity with a primary key reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -654,7 +654,7 @@ describe('when DomainEntityTableEnhancer enhances entity with primary key refere
 });
 
 describe("when DomainEntityTableEnhancer enhances entity with collection property whose name starts with the referenced entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -712,7 +712,7 @@ describe("when DomainEntityTableEnhancer enhances entity with collection propert
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with two reference properties that have same primary key names', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -836,7 +836,7 @@ describe('when DomainEntityTableEnhancer enhances entity with two reference prop
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with optional collection property with context', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const contextName = 'ContextName';
@@ -898,7 +898,7 @@ describe('when DomainEntityTableEnhancer enhances entity with optional collectio
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with collection enumeration property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -969,7 +969,7 @@ describe('when DomainEntityTableEnhancer enhances entity with collection enumera
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with enumeration property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1031,7 +1031,7 @@ describe('when DomainEntityTableEnhancer enhances entity with enumeration proper
 });
 
 describe("when DomainEntityTableEnhancer enhances entity with enumeration property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1094,7 +1094,7 @@ describe("when DomainEntityTableEnhancer enhances entity with enumeration proper
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with descriptor collection property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1166,7 +1166,7 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor collect
 });
 
 describe('when DomainEntityTableEnhancer enhances entity with descriptor property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1229,7 +1229,7 @@ describe('when DomainEntityTableEnhancer enhances entity with descriptor propert
 });
 
 describe("when DomainEntityTableEnhancer enhances entity with descriptor collection property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';
@@ -1294,7 +1294,7 @@ describe("when DomainEntityTableEnhancer enhances entity with descriptor collect
 });
 
 describe("when DomainEntityTableEnhancer enhances entity with common collection property whose name starts with the parent entity's name", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const entityName = 'EntityName';

@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { getEntitiesOfTypeForNamespaces } from 'metaed-core';
-import { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase } from 'metaed-core';
+import { Descriptor, EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, Namespace } from 'metaed-core';
 import {
   addColumns,
   addForeignKey,
@@ -34,7 +34,8 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
   const tables: Array<Table> = [];
 
   const mainTable: Table = Object.assign(newTable(), {
-    schema: descriptor.namespace.namespaceName,
+    namespace: descriptor.namespace,
+    schema: descriptor.namespace.namespaceName.toLowerCase(),
     name: descriptor.data.edfiOds.odsTableName,
     description: descriptor.documentation,
     parentEntity: descriptor,
@@ -51,9 +52,14 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
   });
   addColumns(mainTable, [primaryKey], ColumnTransformUnchanged);
 
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
+  // Bail out if core namespace isn't defined
+  if (coreNamespace == null) return tables;
+
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-    foreignTableSchema: 'edfi',
+    foreignTableSchema: coreNamespace.namespaceName.toLowerCase(),
     foreignTableName: 'Descriptor',
+    foreignTableNamespace: coreNamespace,
     withDeleteCascade: true,
     sourceReference: {
       ...newForeignKeySourceReference(),
@@ -99,6 +105,7 @@ function createTables(metaEd: MetaEdEnvironment, descriptor: Descriptor): Array<
       },
       getPrimaryKeys(mapTypeTable),
       mapTypeTable.schema,
+      mapTypeTable.namespace,
       mapTypeTable.name,
       ForeignKeyStrategyDefault,
     );

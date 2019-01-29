@@ -11,7 +11,7 @@ describe('when validating interchange extension has valid extendee', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -20,8 +20,8 @@ describe('when validating interchange extension has valid extendee', () => {
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityElement('DomainEntityIdentityTemplateName3')
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -29,9 +29,8 @@ describe('when validating interchange extension has valid extendee', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -58,15 +57,15 @@ describe('when validating interchange extension has invalid extendee', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity')
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension('InterchangeExtensionName')
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension('EdFi.InterchangeExtensionName')
       .withDomainEntityElement('DomainEntityIdentityTemplateName')
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -74,9 +73,8 @@ describe('when validating interchange extension has invalid extendee', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

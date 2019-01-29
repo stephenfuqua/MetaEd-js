@@ -21,7 +21,7 @@ describe('when validating association with valid identity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation('EntityName')
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -33,7 +33,7 @@ describe('when validating association with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -53,7 +53,7 @@ describe('when validating domain entity with valid identity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName', 'PropertyDocumentation', '100')
@@ -63,7 +63,7 @@ describe('when validating domain entity with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -83,7 +83,7 @@ describe('when validating abstract entity with valid identity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName', 'PropertyDocumentation', '100')
@@ -93,7 +93,7 @@ describe('when validating abstract entity with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -113,7 +113,7 @@ describe('when validating common type with valid identity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName', 'PropertyDocumentation', '100')
@@ -123,7 +123,7 @@ describe('when validating common type with valid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -143,7 +143,7 @@ describe('when validating inline common type with valid identity property', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInlineCommon('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName', 'PropertyDocumentation', '100')
@@ -153,7 +153,7 @@ describe('when validating inline common type with valid identity property', () =
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -174,7 +174,7 @@ describe('when validating association extension with invalid identity property',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -191,7 +191,7 @@ describe('when validating association extension with invalid identity property',
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -220,7 +220,7 @@ describe('when validating association subclass with invalid identity property', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -238,7 +238,7 @@ describe('when validating association subclass with invalid identity property', 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -266,7 +266,7 @@ describe('when validating descriptor with invalid identity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -281,7 +281,7 @@ describe('when validating descriptor with invalid identity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -306,7 +306,7 @@ describe('when validating domain entity extension with invalid identity property
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -321,7 +321,7 @@ describe('when validating domain entity extension with invalid identity property
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -350,7 +350,7 @@ describe('when validating domain entity subclass with invalid identity property'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -366,7 +366,7 @@ describe('when validating domain entity subclass with invalid identity property'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

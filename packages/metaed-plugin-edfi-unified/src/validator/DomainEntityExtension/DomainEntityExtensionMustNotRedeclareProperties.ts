@@ -1,14 +1,15 @@
 import { MetaEdEnvironment, ValidationFailure, TopLevelEntity } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.namespace.forEach(namespace => {
     namespace.entity.domainEntityExtension.forEach(domainEntityExtension => {
-      const extendedEntity: TopLevelEntity | null = getEntityForNamespaces(
+      const extendedEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
         domainEntityExtension.metaEdName,
-        namespace.dependencies,
+        domainEntityExtension.baseEntityNamespaceName,
+        domainEntityExtension.namespace,
         'domainEntity',
         'domainEntitySubclass',
       ) as TopLevelEntity | null;

@@ -26,12 +26,7 @@ import { Subdomain } from './Subdomain';
 import { ModelType } from './ModelType';
 import { ModelBase } from './ModelBase';
 import { TopLevelEntity } from './TopLevelEntity';
-import {
-  allEntityModelTypes,
-  allTopLevelEntityModelTypes,
-  topLevelCoreEntityModelTypes,
-  allEntityModelTypesNoSimpleTypes,
-} from './ModelType';
+import { allEntityModelTypes, allTopLevelEntityModelTypes, allEntityModelTypesNoSimpleTypes } from './ModelType';
 
 /**
  *
@@ -100,7 +95,6 @@ export function newEntityRepository(): EntityRepository {
  */
 export function getAllEntities(repository: EntityRepository): Array<ModelBase> {
   const result: Array<ModelBase> = [];
-  // $FlowIgnore - using model type repository lookup
   allEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -121,7 +115,6 @@ export function getAllEntitiesForNamespaces(namespaces: Array<Namespace>): Array
  */
 export function getAllTopLevelEntities(repository: EntityRepository): Array<TopLevelEntity> {
   const result: Array<TopLevelEntity> = [];
-  // $FlowIgnore - using model type repository lookup
   allTopLevelEntityModelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -132,7 +125,6 @@ export function getAllTopLevelEntities(repository: EntityRepository): Array<TopL
 export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>): Array<TopLevelEntity> {
   const result: Array<TopLevelEntity> = [];
   namespaces.forEach((namespace: Namespace) => {
-    // $FlowIgnore - using model type repository lookup
     result.push(...getAllTopLevelEntities(namespace.entity));
   });
   return result;
@@ -143,7 +135,6 @@ export function getAllTopLevelEntitiesForNamespaces(namespaces: Array<Namespace>
  */
 export function getAllEntitiesNoSimpleTypes(repository: EntityRepository): Array<ModelBase> {
   const result: Array<ModelBase> = [];
-  // $FlowIgnore - using model type repository lookup
   allEntityModelTypesNoSimpleTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -164,7 +155,6 @@ export function getAllEntitiesNoSimpleTypesForNamespaces(namespaces: Array<Names
  */
 export function getEntitiesOfType(repository: EntityRepository, ...modelTypes: Array<ModelType>): Array<ModelBase> {
   const result: Array<ModelBase> = [];
-  // $FlowIgnore - using model type repository lookup
   modelTypes.forEach(modelType => result.push(...repository[modelType].values()));
   return result;
 }
@@ -193,35 +183,21 @@ export function getAllEntitiesOfType(metaEd: MetaEdEnvironment, ...modelTypes: A
 /**
  *
  */
-export function getEntity(
-  repository: EntityRepository,
+export function getEntityFromNamespaceChain(
   entityName: string,
+  entityNamespaceName: string,
+  workingNamespace: Namespace,
   ...modelTypes: Array<ModelType>
 ): ModelBase | null {
-  let result: ModelBase | null = null;
-  modelTypes.forEach(modelType => {
-    // $FlowIgnore - using model type repository lookup
-    if (!result) result = repository[modelType].get(entityName);
-  });
-  return result;
-}
-
-/**
- *
- */
-export function getEntityForNamespaces(
-  entityName: string,
-  namespaces: Array<Namespace>,
-  ...modelTypes: Array<ModelType>
-): ModelBase | null {
+  const namespaceChain = [workingNamespace, ...workingNamespace.dependencies];
   // eslint-disable-next-line no-restricted-syntax
-  for (const namespace of namespaces) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const modelType of modelTypes) {
-      // $FlowIgnore - indexing with type
-      if (namespace.entity[modelType].has(entityName)) {
-        // $FlowIgnore - indexing with type
-        return namespace.entity[modelType].get(entityName);
+  for (const namespaceInChain of namespaceChain) {
+    if (namespaceInChain.namespaceName === entityNamespaceName) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const modelType of modelTypes) {
+        if (namespaceInChain.entity[modelType].has(entityName)) {
+          return namespaceInChain.entity[modelType].get(entityName);
+        }
       }
     }
   }
@@ -230,10 +206,43 @@ export function getEntityForNamespaces(
 }
 
 /**
+ * 
+ */
+export function getEntityFromNamespace(
+  entityName: string,
+  namespace: Namespace,
+  ...modelTypes: Array<ModelType>
+): ModelBase | null {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const modelType of modelTypes) {
+    if (namespace.entity[modelType].has(entityName)) {
+      return namespace.entity[modelType].get(entityName);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Returns the first matching entity.
+ */
+export function findFirstEntity(
+  entityName: string,
+  namespaces: Array<Namespace>,
+  ...modelTypes: Array<ModelType>
+): ModelBase | null {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const namespace of namespaces) {
+    const firstEntity = getEntityFromNamespace(entityName, namespace, ...modelTypes);
+    if (firstEntity != null) return firstEntity;
+  }
+  return null;
+}
+
+/**
  *
  */
-export function addEntity(repository: EntityRepository, entity: ModelBase) {
-  // $FlowIgnore - indexing with type
+function addEntity(repository: EntityRepository, entity: ModelBase) {
   repository[entity.type].set(entity.metaEdName, entity);
 }
 
@@ -242,25 +251,4 @@ export function addEntity(repository: EntityRepository, entity: ModelBase) {
  */
 export function addEntityForNamespace(entity: ModelBase) {
   addEntity(entity.namespace.entity, entity);
-}
-
-/**
- *
- */
-export function getTopLevelCoreEntity(repository: EntityRepository, entityName: string): TopLevelEntity | null {
-  let result: TopLevelEntity | null = null;
-  topLevelCoreEntityModelTypes.forEach(modelType => {
-    // $FlowIgnore - using model type repository lookup
-    if (!result) result = repository[modelType].get(entityName) as TopLevelEntity;
-  });
-  return result;
-}
-
-/**
- *
- */
-export function getTopLevelCoreEntityForNamespaces(namespaces: Array<Namespace>, entityName: string): TopLevelEntity | null {
-  const result: ModelBase | null = getEntityForNamespaces(entityName, namespaces, ...topLevelCoreEntityModelTypes);
-  if (result == null) return null;
-  return result as TopLevelEntity;
 }

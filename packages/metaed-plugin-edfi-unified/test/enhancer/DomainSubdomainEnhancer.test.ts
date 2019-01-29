@@ -3,14 +3,14 @@ import {
   newSubdomain,
   newDomain,
   addEntityForNamespace,
-  getEntityForNamespaces,
+  getEntityFromNamespace,
   newNamespace,
 } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DomainSubdomainEnhancer';
 
 describe('when enhancing domain', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainMetaEdName = 'DomainMetaEdName';
@@ -49,7 +49,7 @@ describe('when enhancing domain', () => {
   });
 
   it('should have sorted subdomain references', () => {
-    const domain: any = getEntityForNamespaces(domainMetaEdName, [namespace], 'domain');
+    const domain: any = getEntityFromNamespace(domainMetaEdName, namespace, 'domain');
     expect(domain.subdomains).toHaveLength(3);
     expect(domain.subdomains[0]).toBe(subdomain1);
     expect(domain.subdomains[1]).toBe(subdomain2);

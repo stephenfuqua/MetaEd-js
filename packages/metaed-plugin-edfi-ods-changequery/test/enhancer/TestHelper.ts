@@ -10,7 +10,7 @@ export function metaEdEnvironmentForApiVersion(targetTechnologyVersion: SemVer):
 export function newCoreNamespace(): Namespace {
   return {
     ...newNamespace(),
-    namespaceName: 'edfi',
+    namespaceName: 'EdFi',
     isExtension: false,
     data: {
       edfiOds: {

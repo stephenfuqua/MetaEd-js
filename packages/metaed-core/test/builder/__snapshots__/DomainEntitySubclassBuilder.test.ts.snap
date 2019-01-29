@@ -8,11 +8,16 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "baseEntity": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "baseEntityName": Object {
     "column": 36,
     "line": 2,
     "tokenText": "BaseEntityName",
   },
-  "baseEntityName": Object {
+  "baseEntityNamespaceName": Object {
     "column": 36,
     "line": 2,
     "tokenText": "BaseEntityName",
@@ -52,22 +57,22 @@ Array [
 
 exports[`when building domain entity subclass with lowercase based on name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'baseEntityName' expecting ID, column: 36, line: 2, token: baseEntityName",
-  "mismatched input 'baseEntityName' expecting ID, column: 36, line: 2, token: baseEntityName",
+  "mismatched input 'b' expecting ID, column: 36, line: 2, token: b",
+  "mismatched input 'b' expecting ID, column: 36, line: 2, token: b",
 ]
 `;
 
 exports[`when building domain entity subclass with lowercase domain entity subclass name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
 ]
 `;
 
-exports[`when building domain entity subclass with no based on name should have missing id error 1`] = `
+exports[`when building domain entity subclass with no based on name should have error 1`] = `
 Array [
-  "missing ID at 'documentation', column: 4, line: 3, token: documentation",
-  "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+  "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
+  "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
 ]
 `;
 

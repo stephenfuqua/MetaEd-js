@@ -14,7 +14,7 @@ describe('when generating xsd for common type extension in extension namespace b
   const coreEntity = 'CoreEntity';
   const coreEntityProperty = 'CoreEntityProperty';
   const extensionProperty = 'ExtensionProperty';
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const projectExtension = 'EXTENSION';
 
   let coreResult;
@@ -26,7 +26,7 @@ describe('when generating xsd for common type extension in extension namespace b
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartCommon(coreEntity)
       .withDocumentation('doc')
@@ -36,7 +36,7 @@ describe('when generating xsd for common type extension in extension namespace b
       .withEndNamespace()
       .withBeginNamespace(namespaceName, projectExtension)
 
-      .withStartCommonExtension(coreEntity, '1')
+      .withStartCommonExtension(`EdFi.${coreEntity}`, '1')
       .withIntegerProperty(extensionProperty, 'doc', true, false)
       .withEndCommonExtension()
 
@@ -47,7 +47,7 @@ describe('when generating xsd for common type extension in extension namespace b
       .sendToListener(commonBuilder)
       .toString();
 
-    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', namespaceName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

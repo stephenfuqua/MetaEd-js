@@ -22,7 +22,7 @@ describe('when an association extension extends an association with no required 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -59,7 +59,7 @@ describe('when an association extension extends an association with a required p
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -104,7 +104,7 @@ describe('when an association extension extends an association with a required p
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)

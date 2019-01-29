@@ -9,7 +9,7 @@ describe('when enumeration items have different short descriptions', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EntityName')
       .withDocumentation('EntityDocumentation')
       .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
@@ -20,7 +20,7 @@ describe('when enumeration items have different short descriptions', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -40,7 +40,7 @@ describe('when enumeration items have duplicate short descriptions', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EntityName')
       .withDocumentation('EntityDocumentation')
       .withEnumerationItem('ShortDescription', 'EnumerationItemDocumentation1')
@@ -51,7 +51,7 @@ describe('when enumeration items have duplicate short descriptions', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -75,7 +75,7 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EntityName')
       .withDocumentation('EntityDocumentation')
       .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
@@ -88,7 +88,7 @@ describe('when enumeration items have multiple duplicate short descriptions', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

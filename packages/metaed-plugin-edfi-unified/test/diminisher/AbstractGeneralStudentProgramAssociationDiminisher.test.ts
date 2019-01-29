@@ -4,7 +4,7 @@ import { enhance } from '../../src/diminisher/AbstractGeneralStudentProgramAssoc
 
 describe('when diminishing with no matching entity', () => {
   const entityName = 'EntityName';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
 
   let association: Association;
 
@@ -28,7 +28,7 @@ describe('when diminishing with matching entity', () => {
   const entityName = 'EntityName';
   const generalStudentProgramAssociationName = 'GeneralStudentProgramAssociation';
   const studentProgramAssociationName = 'StudentProgramAssociation';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
 
   let association1: Association;
   let association2: Association;

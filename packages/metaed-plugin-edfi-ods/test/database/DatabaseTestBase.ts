@@ -11,8 +11,8 @@ import { DatabaseIndex } from './DatabaseIndex';
 import { DatabaseTable } from './DatabaseTable';
 
 export const testDatabaseName = 'MetaEd_Ods_Integration_Tests';
-export const coreNamespace = 'edfi';
-export const extensionNamespace = 'extension';
+export const coreNamespace = 'EdFi';
+export const extensionNamespace = 'Extension';
 export const projectExtension = 'EXTENSION';
 
 beforeAll(async () => {

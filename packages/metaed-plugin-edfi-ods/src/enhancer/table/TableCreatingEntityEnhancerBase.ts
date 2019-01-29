@@ -1,4 +1,4 @@
-import { EntityProperty, MetaEdEnvironment, TopLevelEntity, Namespace } from 'metaed-core';
+import { EntityProperty, MetaEdEnvironment, TopLevelEntity } from 'metaed-core';
 import { BuildStrategyDefault } from './BuildStrategy';
 import { cloneColumn } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -27,7 +27,8 @@ export function buildTablesFromProperties(entity: TopLevelEntity, mainTable: Tab
 // @ts-ignore - "metaEd" is never read
 export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity, aggregateRootTable: boolean): Table {
   const mainTable: Table = Object.assign(newTable(), {
-    schema: entity.namespace.namespaceName,
+    namespace: entity.namespace,
+    schema: entity.namespace.namespaceName.toLowerCase(),
     name: entity.data.edfiOds.odsTableName,
     description: entity.documentation,
     parentEntity: entity,
@@ -47,8 +48,6 @@ export function buildMainTable(metaEd: MetaEdEnvironment, entity: TopLevelEntity
 
 export function addTables(metaEd: MetaEdEnvironment, tables: Array<Table>): void {
   tables.forEach((table: Table) => {
-    const namespace: Namespace | undefined = metaEd.namespace.get(table.schema);
-    if (namespace == null) return;
-    tableEntities(metaEd, namespace).set(table.name, table);
+    tableEntities(metaEd, table.namespace).set(table.name, table);
   });
 }

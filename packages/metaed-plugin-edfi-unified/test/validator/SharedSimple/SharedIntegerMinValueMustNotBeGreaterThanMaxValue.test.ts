@@ -8,7 +8,7 @@ describe('when validating shared integer with max value greater than min value',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinValue('10')
@@ -34,7 +34,7 @@ describe('when validating shared integer with min value greater than max value',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinValue('100')
@@ -45,7 +45,7 @@ describe('when validating shared integer with min value greater than max value',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -68,7 +68,7 @@ describe('when validating shared short with max value greater than min value', (
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedShort('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinValue('10')
@@ -94,7 +94,7 @@ describe('when validating shared short with min value greater than max value', (
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedShort('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinValue('100')
@@ -105,7 +105,7 @@ describe('when validating shared short with min value greater than max value', (
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

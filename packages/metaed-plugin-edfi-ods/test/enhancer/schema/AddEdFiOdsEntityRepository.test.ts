@@ -3,7 +3,7 @@ import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/model/EdFiOdsEntityRepository';
 
 describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

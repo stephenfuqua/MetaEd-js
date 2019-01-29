@@ -18,7 +18,7 @@ describe('when validating merge property name and types match', () => {
     const stringIdentityName = 'StringIdentityName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('doc')
       .withSharedStringIdentity(stringIdentityName, stringIdentityName, 'doc')
@@ -35,7 +35,7 @@ describe('when validating merge property name and types match', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -58,7 +58,7 @@ describe('when validating merge property type mismatch', () => {
     const stringIdentityName = 'StringIdentityName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('doc')
       .withSharedIntegerIdentity(stringIdentityName, stringIdentityName, 'doc')
@@ -75,7 +75,7 @@ describe('when validating merge property type mismatch', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -108,7 +108,7 @@ describe('when validating merge of doubly nested domain entity with domain entit
     const integerName = 'IntegerName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withSharedIntegerIdentity(integerName, integerName, 'IntegerIdentityDocumentation')
@@ -138,7 +138,7 @@ describe('when validating merge of doubly nested domain entity with domain entit
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -163,7 +163,7 @@ describe('when validating merge of domain entity and domain entity subclass prop
     const domainEntitySubclassName = 'DomainEntitySubclassName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation('DomainEntityDocumentation')
@@ -195,7 +195,7 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -42,11 +42,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       });
 
       table.foreignKeys.forEach((foreignKey: ForeignKey) => {
-        const foreignTableNamespace: Namespace | undefined = metaEd.namespace.get(foreignKey.foreignTableSchema);
-        // something is very wrong if namespace is not there, but for now just ignore
-        if (foreignTableNamespace == null) return;
-
-        const foreignTable: Table | undefined = tableEntities(metaEd, foreignTableNamespace).get(
+        const foreignTable: Table | undefined = tableEntities(metaEd, foreignKey.foreignTableNamespace).get(
           foreignKey.foreignTableName,
         );
 

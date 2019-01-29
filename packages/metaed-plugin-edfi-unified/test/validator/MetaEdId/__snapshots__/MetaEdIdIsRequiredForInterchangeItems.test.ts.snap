@@ -4,9 +4,9 @@ exports[`when validating interchange element is missing metaEdId should have val
 
 exports[`when validating interchange element is missing metaEdId should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when validating interchange extension element is missing metaEdId shoul
 
 exports[`when validating interchange extension element is missing metaEdId should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 3,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when validating interchange extension identity template is missing meta
 
 exports[`when validating interchange extension identity template is missing metaEdId should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 27,
   "line": 3,
-  "tokenText": "domain entity identity",
+  "tokenText": "DomainEntityIdentityTemplateName",
 }
 `;
 
@@ -34,8 +34,8 @@ exports[`when validating interchange identity template is missing metaEdId shoul
 
 exports[`when validating interchange identity template is missing metaEdId should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName",
 }
 `;

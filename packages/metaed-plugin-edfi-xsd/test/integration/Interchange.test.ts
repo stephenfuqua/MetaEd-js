@@ -30,7 +30,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(entityAsElement)
       .withDocumentation('doc')
@@ -79,7 +79,7 @@ describe('when generating xsd for domain entity in both namespaces sharing a sim
 });
 describe('when generating xsd for extension interchange with a new domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const xYZ = 'XYZ';
+  const interchangeName = 'InterchangeName';
   const coreEntity1 = 'CoreEntity';
   const extensionEntity = 'ExtensionEntity';
   const coreEntity1Pk = 'CoreEntityPk';
@@ -94,29 +94,29 @@ describe('when generating xsd for extension interchange with a new domain entity
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
       .withIntegerIdentity(coreEntity1Pk, 'doc')
       .withEndDomainEntity()
 
-      .withStartInterchange(xYZ)
+      .withStartInterchange(interchangeName)
       .withDocumentation('doc')
       .withDomainEntityDomainItem(coreEntity1)
       .withEndInterchange()
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(extensionEntityPk, 'doc')
-      .withDomainEntityProperty(coreEntity1, 'doc', true, false)
+      .withDomainEntityProperty(`EdFi.${coreEntity1}`, 'doc', true, false)
       .withEndDomainEntity()
 
-      .withStartInterchangeExtension(xYZ)
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityDomainItem(extensionEntity)
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -126,7 +126,7 @@ describe('when generating xsd for extension interchange with a new domain entity
       .sendToListener(interchangeBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -143,21 +143,21 @@ describe('when generating xsd for extension interchange with a new domain entity
   });
   it('should have element', () => {
     const elements = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
       interchangeResults[0] as any,
     );
     expect(elements).toHaveLength(1);
   });
   it('should have core in extension interchange', () => {
     const elements = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
   });
   it('should have extension element', () => {
     const elements = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
       interchangeResults[1] as any,
     );
     expect(elements).toHaveLength(1);
@@ -165,15 +165,15 @@ describe('when generating xsd for extension interchange with a new domain entity
 
   it('should list core element before extensions', () => {
     const extension: any = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element",
       interchangeResults[1] as any,
     );
     const coreElement: any = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='CoreEntity'][@type='CoreEntity']",
       interchangeResults[1] as any,
     )[0];
     const extensionElement: any = xpathSelect(
-      "/xs:schema/xs:element[@name='InterchangeXYZ']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
+      "/xs:schema/xs:element[@name='InterchangeInterchangeName']/xs:complexType/xs:choice/xs:element[@name='ExtensionEntity'][@type='EXTENSION-ExtensionEntity']",
       interchangeResults[1] as any,
     )[0];
     expect(extension[0].getAttribute('name')).toEqual(coreElement.getAttribute('name'));
@@ -199,7 +199,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
     const interchangeBuilder = new InterchangeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
@@ -219,7 +219,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDomainEntityExtension(coreEntity1)
       .withIntegerProperty(extensionProperty, 'doc', true, false)
@@ -233,7 +233,7 @@ describe('when generating xsd for extension interchange with a domain entity ext
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -308,7 +308,7 @@ describe('when generating xsd for extension interchange with an association exte
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
@@ -337,7 +337,7 @@ describe('when generating xsd for extension interchange with an association exte
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartAssociationExtension(coreAssociation)
       .withIntegerProperty(extensionProperty, 'doc', true, false)
@@ -352,7 +352,7 @@ describe('when generating xsd for extension interchange with an association exte
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 
@@ -423,7 +423,7 @@ describe('when generating xsd for extension interchange with extension descripto
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDescriptor(core)
       .withDocumentation('doc')
@@ -432,7 +432,7 @@ describe('when generating xsd for extension interchange with extension descripto
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDescriptor(extension)
       .withDocumentation('doc')
@@ -447,7 +447,7 @@ describe('when generating xsd for extension interchange with extension descripto
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ interchangeResults } = await enhanceAndGenerate(metaEd));
   });
 

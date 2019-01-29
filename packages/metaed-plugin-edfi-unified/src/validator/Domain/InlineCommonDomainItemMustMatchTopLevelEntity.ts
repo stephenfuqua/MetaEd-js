@@ -1,5 +1,5 @@
 import { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace, Common } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {
@@ -17,9 +17,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     namespace.entity.domain.forEach(domain => {
       domain.domainItems.forEach(domainItem => {
         if (domainItem.referencedType !== 'inlineCommon') return;
-        const inlineCommon: Common | null = getEntityForNamespaces(
+        const inlineCommon: Common | null = getEntityFromNamespaceChain(
           domainItem.metaEdName,
-          [namespace, ...namespace.dependencies],
+          domainItem.referencedNamespaceName,
+          namespace,
           'common',
         ) as Common | null;
 
@@ -28,7 +29,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             getFailure(
               domainItem,
               'InlineCommonDomainItemMustMatchTopLevelEntity',
-              `Inline Common Domain Item property '${domainItem.metaEdName}' does not match any declared Inline Common.`,
+              `Inline Common Domain Item property '${
+                domainItem.metaEdName
+              }' does not match any declared Inline Common in namespace ${domainItem.referencedNamespaceName}.`,
             ),
           );
         }

@@ -23,7 +23,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     );
     const tables: Array<Table> = orderByProp('name')(
       Array.from(tableEntities(metaEd, namespace).values()).filter(
-        (table: Table) => table.schema === namespace.namespaceName,
+        (table: Table) => table.schema === namespace.namespaceName.toLowerCase(),
       ),
     );
     const foreignKeys: Array<ForeignKey> = R.chain(table => table.foreignKeys)(tables);

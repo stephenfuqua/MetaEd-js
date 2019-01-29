@@ -11,7 +11,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   metaEd.namespace.forEach(namespace => {
     const tables: Array<Table> = orderByProp('name')(
       [...tableEntities(metaEd, namespace).values()].filter(
-        (table: Table) => table.includeLastModifiedDateAndIdColumn && table.schema === namespace.namespaceName,
+        (table: Table) => table.includeLastModifiedDateAndIdColumn && table.schema === namespace.namespaceName.toLowerCase(),
       ),
     );
 

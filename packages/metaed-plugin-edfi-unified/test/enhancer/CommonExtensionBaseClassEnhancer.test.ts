@@ -3,7 +3,7 @@ import { MetaEdEnvironment, Common, CommonExtension, Namespace } from 'metaed-co
 import { enhance } from '../../src/enhancer/CommonExtensionBaseClassEnhancer';
 
 describe('when enhancing common extension referring to common', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -20,6 +20,7 @@ describe('when enhancing common extension referring to common', () => {
     childEntity = Object.assign(newCommonExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace,
     });
     namespace.entity.commonExtension.set(childEntity.metaEdName, childEntity);
@@ -33,8 +34,8 @@ describe('when enhancing common extension referring to common', () => {
 });
 
 describe('when enhancing common extension referring to common across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -52,6 +53,7 @@ describe('when enhancing common extension referring to common across namespaces'
     childEntity = Object.assign(newCommonExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.commonExtension.set(childEntity.metaEdName, childEntity);

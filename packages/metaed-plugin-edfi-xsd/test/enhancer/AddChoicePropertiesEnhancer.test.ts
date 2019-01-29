@@ -14,7 +14,7 @@ import { enhance } from '../../src/enhancer/AddChoicePropertiesEnhancer';
 
 describe('when enhancing association with choice', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName = 'ChoiceName';
   const entityName = 'EntityName';
@@ -31,6 +31,7 @@ describe('when enhancing association with choice', () => {
     association.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -65,7 +66,7 @@ describe('when enhancing association with choice', () => {
 
 describe('when enhancing association with choices nested', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName1 = 'ChoiceName1';
   const choiceName2 = 'ChoiceName2';
@@ -83,6 +84,7 @@ describe('when enhancing association with choices nested', () => {
     association.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName1,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -98,6 +100,7 @@ describe('when enhancing association with choices nested', () => {
     choice1.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName2,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -138,7 +141,7 @@ describe('when enhancing association with choices nested', () => {
 
 describe('when enhancing common with choice', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName = 'ChoiceName';
   const entityName = 'EntityName';
@@ -155,6 +158,7 @@ describe('when enhancing common with choice', () => {
     common.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -189,7 +193,7 @@ describe('when enhancing common with choice', () => {
 
 describe('when enhancing common with choices nested', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName1 = 'ChoiceName1';
   const choiceName2 = 'ChoiceName2';
@@ -207,6 +211,7 @@ describe('when enhancing common with choices nested', () => {
     common.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName1,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -222,6 +227,7 @@ describe('when enhancing common with choices nested', () => {
     choice1.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName2,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -261,7 +267,7 @@ describe('when enhancing common with choices nested', () => {
 
 describe('when enhancing descriptor with choice', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName = 'ChoiceName';
   const entityName = 'EntityName';
@@ -278,6 +284,7 @@ describe('when enhancing descriptor with choice', () => {
     descriptor.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -312,7 +319,7 @@ describe('when enhancing descriptor with choice', () => {
 
 describe('when enhancing descriptor with choices nested', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName1 = 'ChoiceName1';
   const choiceName2 = 'ChoiceName2';
@@ -330,6 +337,7 @@ describe('when enhancing descriptor with choices nested', () => {
     descriptor.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName1,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -345,6 +353,7 @@ describe('when enhancing descriptor with choices nested', () => {
     choice1.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName2,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -385,7 +394,7 @@ describe('when enhancing descriptor with choices nested', () => {
 
 describe('when enhancing domainEntity with choice', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName = 'ChoiceName';
   const entityName = 'EntityName';
@@ -402,6 +411,7 @@ describe('when enhancing domainEntity with choice', () => {
     domainEntity.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -436,9 +446,9 @@ describe('when enhancing domainEntity with choice', () => {
 
 describe('when enhancing domainEntity with choice across namespaces', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension' };
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
   const choiceName = 'ChoiceName';
@@ -456,6 +466,7 @@ describe('when enhancing domainEntity with choice across namespaces', () => {
     domainEntity.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName,
+        referencedNamespaceName: namespace.namespaceName,
         namespace: extensionNamespace,
         data: { edfiXsd: {} },
       }),
@@ -490,7 +501,7 @@ describe('when enhancing domainEntity with choice across namespaces', () => {
 
 describe('when enhancing domainEntity with choices nested', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const choiceName1 = 'ChoiceName1';
   const choiceName2 = 'ChoiceName2';
@@ -508,6 +519,7 @@ describe('when enhancing domainEntity with choices nested', () => {
     domainEntity.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName1,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -523,6 +535,7 @@ describe('when enhancing domainEntity with choices nested', () => {
     choice1.properties.push(
       Object.assign(newChoiceProperty(), {
         metaEdName: choiceName2,
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
         data: { edfiXsd: {} },
       }),
@@ -530,6 +543,7 @@ describe('when enhancing domainEntity with choices nested', () => {
 
     const choice2: Choice = Object.assign(newChoice(), {
       metaEdName: choiceName2,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       data: { edfiXsd: {} },
     });

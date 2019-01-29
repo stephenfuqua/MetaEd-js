@@ -32,10 +32,10 @@ import { generate } from '../../src/generator/InterchangeGenerator';
 
 describe('when generating single interchange', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -208,10 +208,10 @@ describe('when generating single interchange', () => {
 
 describe('when generating single interchange with extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });

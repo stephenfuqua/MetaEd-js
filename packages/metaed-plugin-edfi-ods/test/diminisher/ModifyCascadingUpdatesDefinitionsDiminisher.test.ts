@@ -10,7 +10,7 @@ import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const courseOfferingCurriculumUsed = 'CourseOfferingCurriculumUsed';
@@ -44,7 +44,7 @@ describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes matching t
 });
 
 describe('when ModifyCascadingUpdatesDefinitionsDiminisher diminishes non matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';

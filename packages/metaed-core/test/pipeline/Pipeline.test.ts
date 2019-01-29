@@ -18,7 +18,7 @@ const metaEdConfiguration = {
   projects: [
     {
       projectName: 'Ed-Fi',
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       projectVersion: '2.0.0',
     },
   ],
@@ -40,7 +40,7 @@ describe('when building a DE with a common property but no common declaration', 
     state.pluginScanDirectory = path.resolve(__dirname, '../../..');
     await executePipeline(state);
 
-    coreNamespace = state.metaEd.namespace.get('edfi');
+    coreNamespace = state.metaEd.namespace.get('EdFi');
   });
 
   it('should have built one domain entity', () => {

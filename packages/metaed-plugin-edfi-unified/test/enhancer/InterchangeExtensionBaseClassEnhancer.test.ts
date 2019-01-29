@@ -3,8 +3,8 @@ import { MetaEdEnvironment, Interchange, InterchangeExtension, Namespace } from 
 import { enhance } from '../../src/enhancer/InterchangeExtensionBaseClassEnhancer';
 
 describe('when enhancing interchange extension referring to interchange', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -22,6 +22,7 @@ describe('when enhancing interchange extension referring to interchange', () => 
     childEntity = Object.assign(newInterchangeExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.interchangeExtension.set(childEntity.metaEdName, childEntity);

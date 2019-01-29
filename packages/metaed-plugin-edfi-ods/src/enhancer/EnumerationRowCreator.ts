@@ -19,7 +19,7 @@ export const enumerationRowCreator = {
       return Object.assign(newEnumerationRow(), {
         name,
         namespace: namespaceName,
-        schemaName: namespaceName,
+        schemaName: namespaceName.toLowerCase(),
         tableName: name,
         documentation: item.documentation,
         codeValue: '',

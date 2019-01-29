@@ -11,15 +11,15 @@ describe('when validating interchange extension elements has different names tha
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName1')
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityElement('DomainEntityElementName2')
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -27,8 +27,8 @@ describe('when validating interchange extension elements has different names tha
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -58,15 +58,15 @@ describe('when validating interchange extension elements duplicates names in bas
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement(domainEntityElementName)
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityElement(domainEntityElementName)
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -74,8 +74,8 @@ describe('when validating interchange extension elements duplicates names in bas
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -111,7 +111,7 @@ describe('when interchange extension elements duplicates multiple names in base 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement(domainEntityElementName1)
@@ -119,8 +119,8 @@ describe('when interchange extension elements duplicates multiple names in base 
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityElement(domainEntityElementName1)
       .withDomainEntityElement(domainEntityElementName2)
       .withDomainEntityIdentityTemplate(notDuplicateDomainEntityTemplateName)
@@ -130,8 +130,8 @@ describe('when interchange extension elements duplicates multiple names in base 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 

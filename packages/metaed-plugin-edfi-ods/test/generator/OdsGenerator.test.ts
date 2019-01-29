@@ -41,7 +41,7 @@ describe('when generating output for core namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespaceName = 'edfi';
+    const namespaceName = 'EdFi';
     const namespace: Namespace = {
       ...newNamespace(),
       namespaceName,
@@ -63,7 +63,7 @@ describe('when generating output for core namespace', () => {
 });
 
 describe('when generating output for extension namespace', () => {
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const projectExtension = 'EXTENSION';
   let result: GeneratorResult;
 

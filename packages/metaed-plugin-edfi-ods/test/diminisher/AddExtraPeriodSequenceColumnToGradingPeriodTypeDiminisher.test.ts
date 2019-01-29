@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const gradingPeriodType = 'GradingPeriodType';
@@ -37,7 +37,7 @@ describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminis
 });
 
 describe('when AddExtraPeriodSequenceColumnToGradingPeriodTypeDiminisher diminishes GradingPeriodType table with existing PeriodSequence column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const gradingPeriodType = 'GradingPeriodType';

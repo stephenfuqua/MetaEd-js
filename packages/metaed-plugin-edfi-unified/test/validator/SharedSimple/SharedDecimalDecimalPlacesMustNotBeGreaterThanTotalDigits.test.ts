@@ -8,7 +8,7 @@ describe('when validating shared decimal with total digits greater than decimal 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withTotalDigits('10')
@@ -33,7 +33,7 @@ describe('when validating shared decimal with same decimal places and total digi
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withTotalDigits('10')
@@ -59,7 +59,7 @@ describe('when validating shared decimal with decimal places greater than total 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withTotalDigits('10')
@@ -70,7 +70,7 @@ describe('when validating shared decimal with decimal places greater than total 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -1,8 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when domain entity extension extends an invalid identifier should have validation failures() 1`] = `"Domain Entity additions 'EntityName' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity extension extends an invalid identifier should have validation failures() 1`] = `"Domain Entity additions 'EntityName' does not match any declared Domain Entity or Domain Entity Subclass in namespace EdFi."`;
 
 exports[`when domain entity extension extends an invalid identifier should have validation failures() 2`] = `
+Object {
+  "column": 2,
+  "line": 11,
+  "tokenText": "Domain Entity",
+}
+`;
+
+exports[`when domain entity extension specifies wrong namespace should have validation failures() 1`] = `"Domain Entity additions 'EntityName' does not match any declared Domain Entity or Domain Entity Subclass in namespace Extension."`;
+
+exports[`when domain entity extension specifies wrong namespace should have validation failures() 2`] = `
 Object {
   "column": 2,
   "line": 11,

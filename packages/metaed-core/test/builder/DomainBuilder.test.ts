@@ -11,7 +11,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building domain in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -68,11 +68,13 @@ describe('when building domain in extension namespace', () => {
     expect(getDomain(namespace.entity, domainName).documentation).toBe(entityDocumentation);
   });
 
-  it('should have one domain item', () => {
+  it('should have one domain item in default namespace', () => {
     expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(1);
     expect(getDomain(namespace.entity, domainName).domainItems[0].referencedType).toBe('domainEntity');
+    expect(getDomain(namespace.entity, domainName).domainItems[0].referencedNamespaceName).toBe(namespaceName);
     expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdName).toBe(domainItemName);
     expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdId).toBe(domainItemMetaEdId);
+    expect(getDomain(namespace.entity, domainName).domainItems[0].namespace).toBe(namespace);
   });
 
   it('should have footer documentation', () => {
@@ -81,10 +83,67 @@ describe('when building domain in extension namespace', () => {
   });
 });
 
+describe('when building domain in extension namespace with item reference to another namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespaceName = 'Namespace';
+  const coreNamespaceName = 'EdFi';
+
+  const projectExtension = 'ProjectExtension';
+  const domainName = 'DomainName';
+  const domainMetaEdId = '1';
+  const entityDocumentation = 'EntityDocumentation';
+  const domainItemName1 = 'DomainItemName';
+  const domainItemName2 = 'DomainItemName';
+  const domainItem1MetaEdId = '2';
+  const domainItem2MetaEdId = '3';
+  const footerDocumentation = 'FooterDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartDomain(domainName, domainMetaEdId)
+      .withDocumentation(entityDocumentation)
+      .withDomainEntityDomainItem(domainItemName1, domainItem1MetaEdId)
+      .withDomainEntityDomainItem(`${coreNamespaceName}.${domainItemName2}`, domainItem2MetaEdId)
+      .withFooterDocumentation(footerDocumentation)
+      .withEndDomain()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have namespace', () => {
+    expect(getDomain(namespace.entity, domainName).namespace.namespaceName).toBe(namespaceName);
+  });
+
+  it('should have one domain item in default namespace', () => {
+    expect(getDomain(namespace.entity, domainName).domainItems).toHaveLength(2);
+    expect(getDomain(namespace.entity, domainName).domainItems[0].referencedType).toBe('domainEntity');
+    expect(getDomain(namespace.entity, domainName).domainItems[0].referencedNamespaceName).toBe(namespaceName);
+    expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdName).toBe(domainItemName1);
+    expect(getDomain(namespace.entity, domainName).domainItems[0].metaEdId).toBe(domainItem1MetaEdId);
+    expect(getDomain(namespace.entity, domainName).domainItems[0].namespace).toBe(namespace);
+  });
+
+  it('should have one domain item in core namespace', () => {
+    expect(getDomain(namespace.entity, domainName).domainItems[1].referencedType).toBe('domainEntity');
+    expect(getDomain(namespace.entity, domainName).domainItems[1].referencedNamespaceName).toBe(coreNamespaceName);
+    expect(getDomain(namespace.entity, domainName).domainItems[1].metaEdName).toBe(domainItemName2);
+    expect(getDomain(namespace.entity, domainName).domainItems[1].metaEdId).toBe(domainItem2MetaEdId);
+    expect(getDomain(namespace.entity, domainName).domainItems[1].namespace).toBe(namespace);
+  });
+});
+
 describe('when building domain with association item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainName = 'DomainName';
   const domainItemName = 'DomainItemName';
   const domainItemMetaEdId = '2';
@@ -118,7 +177,7 @@ describe('when building domain with association item', () => {
 describe('when building domain with common item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainName = 'DomainName';
   const domainItemName = 'DomainItemName';
   const domainItemMetaEdId = '2';
@@ -152,7 +211,7 @@ describe('when building domain with common item', () => {
 describe('when building domain with inline common item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainName = 'DomainName';
   const domainItemName = 'DomainItemName';
   const domainItemMetaEdId = '2';
@@ -186,7 +245,7 @@ describe('when building domain with inline common item', () => {
 describe('when building domain with descriptor item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainName = 'DomainName';
   const domainItemName = 'DomainItemName';
   const domainItemMetaEdId = '2';
@@ -220,7 +279,7 @@ describe('when building domain with descriptor item', () => {
 describe('when building duplicate domains', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -291,7 +350,7 @@ describe('when building duplicate domains', () => {
 describe('when building subdomain in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -360,7 +419,7 @@ describe('when building domain with no domain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = '';
@@ -401,7 +460,7 @@ describe('when building domain with lowercase domain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'domainName';
@@ -442,7 +501,7 @@ describe('when building domain with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -517,7 +576,7 @@ describe('when building domain with no domain item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -588,7 +647,7 @@ describe('when building domain with no text in footer documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -665,7 +724,7 @@ describe('when building domain with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -737,7 +796,7 @@ describe('when building subdomain with no subdomain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = '';
@@ -779,7 +838,7 @@ describe('when building subdomain with lowercase subdomain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'domainName';
@@ -821,7 +880,7 @@ describe('when building subdomain with no parent domain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -901,7 +960,7 @@ describe('when building subdomain with lowercase parent domain name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -936,7 +995,7 @@ describe('when building subdomain with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -1015,7 +1074,7 @@ describe('when building subdomain with no domain item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -1091,7 +1150,7 @@ describe('when building subdomain with no unsigned int in position', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -1172,7 +1231,7 @@ describe('when building subdomain with invalid trailing text', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const domainName = 'DomainName';
@@ -1254,7 +1313,7 @@ describe('when building subdomain with invalid trailing text', () => {
 describe('when building domain source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const projectExtension = 'ProjectExtension';
   const domainName = 'DomainName';
@@ -1314,7 +1373,7 @@ describe('when building domain source map', () => {
 describe('when building subdomain source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const domainName = 'SubdomainName';
   const parentDomainName = 'ParentDomainName';

@@ -30,7 +30,7 @@ import { baseTypeDescriptorReference } from '../../../src/enhancer/schema/AddCom
 
 describe('when enhancing namespace info for core', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   let createdSchema: SchemaContainer;
 
@@ -71,7 +71,7 @@ describe('when enhancing namespace info for core', () => {
 
 describe('when enhancing namespace info for extension', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const extensionNamespaceName = 'extensionNamespace';
   const projectExtension = 'EXTENSION';
@@ -120,7 +120,7 @@ describe('when enhancing namespace info for extension', () => {
 
 describe('when enhancing namespace info for core with children', () => {
   const dataStandardVersion: SemVer = '3.0.0';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
   const extensionNamespaceName = 'extensionNamespace';
   const projectExtension = 'EXTENSION';

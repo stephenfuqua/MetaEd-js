@@ -3,10 +3,10 @@ import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/DeleteExtraneousImplicitExtensionSimpleTypesEnhancer';
 
 describe('when there are duplicate string types', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = {
     ...newNamespace(),
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     isExtension: true,
     dependencies: [namespace],
   };

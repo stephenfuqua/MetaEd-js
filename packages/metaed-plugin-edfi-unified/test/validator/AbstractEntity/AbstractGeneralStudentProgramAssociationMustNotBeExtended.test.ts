@@ -16,8 +16,8 @@ describe('when validating association additions', () => {
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName = 'edfi';
-    const extensionNamespaceName = 'extension';
+    const coreNamespaceName = 'EdFi';
+    const extensionNamespaceName = 'Extension';
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(coreNamespaceName)
@@ -63,8 +63,8 @@ describe('when validating abstract GeneralStudentProgramAssociation additions', 
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName = 'edfi';
-    const extensionNamespaceName = 'extension';
+    const coreNamespaceName = 'EdFi';
+    const extensionNamespaceName = 'Extension';
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(coreNamespaceName)

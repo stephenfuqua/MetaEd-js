@@ -9,7 +9,7 @@ describe('when validating interchange identity template has different names', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -21,7 +21,7 @@ describe('when validating interchange identity template has different names', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -42,7 +42,7 @@ describe('when validating interchange identity template has duplicate names', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -54,7 +54,7 @@ describe('when validating interchange identity template has duplicate names', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -80,7 +80,7 @@ describe('when validating interchange identity template has multiple duplicate n
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -94,7 +94,7 @@ describe('when validating interchange identity template has multiple duplicate n
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -16,7 +16,7 @@ describe('when association subclass renames base identity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -34,7 +34,7 @@ describe('when association subclass renames base identity', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -60,7 +60,7 @@ describe('when association subclass renames base identity across dependent names
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -69,8 +69,8 @@ describe('when association subclass renames base identity across dependent names
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationSubclass('SubclassName', entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationSubclass('SubclassName', `EdFi.${entityName}`)
       .withDocumentation('EntityDocumentation')
       .withStringIdentityRename('PropertyName4', 'PropertyName3', 'PropertyDocumentation', '100')
       .withEndAssociationSubclass()
@@ -80,9 +80,8 @@ describe('when association subclass renames base identity across dependent names
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
     failures = validate(metaEd);
   });
@@ -108,7 +107,7 @@ describe('when association subclass does not rename identity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -126,7 +125,7 @@ describe('when association subclass does not rename identity', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -151,7 +150,7 @@ describe('when association subclass renames base identity that does not exist', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -169,7 +168,7 @@ describe('when association subclass renames base identity that does not exist', 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -202,7 +201,7 @@ describe('when association subclass renames base property that is not identity',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -220,7 +219,7 @@ describe('when association subclass renames base property that is not identity',
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -252,7 +251,7 @@ describe('when association subclass extends non existent entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociationSubclass('SubclassName', 'EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentityRename('PropertyName2', 'PropertyName1', 'PropertyDocumentation', '100')
@@ -262,7 +261,7 @@ describe('when association subclass extends non existent entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

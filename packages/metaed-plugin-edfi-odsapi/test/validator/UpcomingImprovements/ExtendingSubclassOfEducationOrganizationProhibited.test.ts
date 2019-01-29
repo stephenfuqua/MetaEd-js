@@ -17,7 +17,7 @@ describe('when a domain entity extension extends a non-education organization do
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -32,7 +32,7 @@ describe('when a domain entity extension extends a non-education organization do
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
 
     const entity = coreNamespace.entity.domainEntity.get(entityName);
@@ -62,7 +62,7 @@ describe('when a domain entity extension extends a non-education organization su
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -74,7 +74,7 @@ describe('when a domain entity extension extends a non-education organization su
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntityExtension(coreSubclassName)
       .withBooleanProperty('PropertyName3', 'doc', true, false)
       .withEndDomainEntitySubclass()
@@ -85,9 +85,9 @@ describe('when a domain entity extension extends a non-education organization su
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -120,7 +120,7 @@ describe('when a domain entity extension extends a subclass of education organiz
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -132,7 +132,7 @@ describe('when a domain entity extension extends a subclass of education organiz
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntityExtension(coreSubclassName)
       .withBooleanProperty('PropertyName3', 'doc', true, false)
       .withEndDomainEntitySubclass()
@@ -143,9 +143,9 @@ describe('when a domain entity extension extends a subclass of education organiz
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -187,7 +187,7 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -199,7 +199,7 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntitySubclass(extensionSubclassName, coreSubclassName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName3', 'doc', true, false)
@@ -215,9 +215,9 @@ describe('when a domain entity extension extends a subclass of a subclass of edu
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 

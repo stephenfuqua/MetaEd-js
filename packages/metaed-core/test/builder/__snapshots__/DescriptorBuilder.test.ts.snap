@@ -17,6 +17,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -75,6 +80,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -125,8 +135,8 @@ Array [
 
 exports[`when building descriptor with lowercase descriptor name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'entityName' expecting ID, column: 13, line: 2, token: entityName",
-  "mismatched input 'entityName' expecting ID, column: 13, line: 2, token: entityName",
+  "mismatched input 'e' expecting ID, column: 13, line: 2, token: e",
+  "mismatched input 'e' expecting ID, column: 13, line: 2, token: e",
 ]
 `;
 
@@ -226,6 +236,11 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "baseEntityName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "baseEntityNamespaceName": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",

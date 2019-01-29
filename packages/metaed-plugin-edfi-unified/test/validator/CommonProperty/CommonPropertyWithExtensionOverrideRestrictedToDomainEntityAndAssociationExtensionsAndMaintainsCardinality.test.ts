@@ -21,7 +21,7 @@ describe('when validating common property does not have extension override', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -37,7 +37,7 @@ describe('when validating common property does not have extension override', () 
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -62,7 +62,7 @@ describe('when validating common property has extension override on non domain e
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -79,7 +79,7 @@ describe('when validating common property has extension override on non domain e
       .sendToListener(new CommonExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -112,7 +112,7 @@ describe('when validating common property has extension override on domain entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -124,9 +124,9 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartDomainEntityExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartDomainEntityExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -136,9 +136,8 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -176,7 +175,7 @@ describe('when validating common property has extension override on association 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -190,9 +189,9 @@ describe('when validating common property has extension override on association 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartAssociationExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartAssociationExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -202,9 +201,8 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -242,7 +240,7 @@ describe('when validating common property has extension override on domain entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -255,9 +253,9 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartDomainEntityExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartDomainEntityExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -267,9 +265,8 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -303,7 +300,7 @@ describe('when validating common property has extension override on domain entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -321,9 +318,9 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartDomainEntityExtension(domainEntitySubclassName)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartDomainEntityExtension(`EdFi.${domainEntitySubclassName}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -334,9 +331,8 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -373,7 +369,7 @@ describe('when validating common property has extension override on association 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -388,9 +384,9 @@ describe('when validating common property has extension override on association 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartAssociationExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartAssociationExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -400,9 +396,8 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -436,7 +431,7 @@ describe('when validating common property has extension override on association 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -457,9 +452,9 @@ describe('when validating common property has extension override on association 
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartAssociationExtension(associationSubclassName)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartAssociationExtension(`EdFi.${associationSubclassName}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -470,9 +465,8 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -509,7 +503,7 @@ describe('when validating common property has extension override on domain entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -522,9 +516,9 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartDomainEntityExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartDomainEntityExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -534,9 +528,8 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -575,7 +568,7 @@ describe('when validating common property has extension override on association 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -590,9 +583,9 @@ describe('when validating common property has extension override on association 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartAssociationExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartAssociationExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -602,9 +595,8 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -643,7 +635,7 @@ describe('when validating common property has extension override on domain entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -656,9 +648,9 @@ describe('when validating common property has extension override on domain entit
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartDomainEntityExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartDomainEntityExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -668,9 +660,8 @@ describe('when validating common property has extension override on domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -709,7 +700,7 @@ describe('when validating common property has extension override on association 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName1)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
@@ -724,9 +715,9 @@ describe('when validating common property has extension override on association 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
-      .withStartAssociationExtension(entityName2)
-      .withCommonExtensionOverrideProperty(entityName1, 'PropertyDocumentation', true, true)
+      .withBeginNamespace('Extension', 'EXTENSION')
+      .withStartAssociationExtension(`EdFi.${entityName2}`)
+      .withCommonExtensionOverrideProperty(`EdFi.${entityName1}`, 'PropertyDocumentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -736,9 +727,8 @@ describe('when validating common property has extension override on association 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

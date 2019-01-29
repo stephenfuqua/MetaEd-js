@@ -10,6 +10,7 @@ import { TopLevelEntity } from './TopLevelEntity';
 
 export interface InterchangeItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
+  referencedNamespaceName: SourceMap;
   referencedEntity: SourceMap;
   typeHumanizedName: SourceMap;
 }
@@ -21,6 +22,7 @@ export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
   return {
     ...newModelBaseSourceMap(),
     referencedType: NoSourceMap,
+    referencedNamespaceName: NoSourceMap,
     referencedEntity: NoSourceMap,
     typeHumanizedName: NoSourceMap,
   };
@@ -29,6 +31,7 @@ export function newInterchangeItemSourceMap(): InterchangeItemSourceMap {
 export interface InterchangeItem extends ModelBase {
   sourceMap: InterchangeItemSourceMap;
   referencedType: Array<ModelType>;
+  referencedNamespaceName: string;
   referencedEntity: TopLevelEntity;
   typeHumanizedName: string;
 }
@@ -45,6 +48,7 @@ export function newInterchangeItem(): InterchangeItem {
     metaEdId: '',
     namespace: newNamespace(),
     referencedType: [],
+    referencedNamespaceName: '',
     referencedEntity: NoTopLevelEntity,
     sourceMap: newInterchangeItemSourceMap(),
     data: {},

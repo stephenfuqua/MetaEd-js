@@ -9,7 +9,7 @@ jest.setTimeout(40000);
 
 describe('when enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationItemShortDescription: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
@@ -52,7 +52,7 @@ describe('when enumeration has single item', () => {
 
 describe('when enumeration has multiple items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
@@ -106,7 +106,7 @@ describe('when enumeration has multiple items', () => {
 
 describe('when enumeration name ends in type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationNameType';
   const enumerationTableName: string = enumerationName;
   const shortDescription = 'ShortDescription';

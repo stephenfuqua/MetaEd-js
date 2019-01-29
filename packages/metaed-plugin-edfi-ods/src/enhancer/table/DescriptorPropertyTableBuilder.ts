@@ -34,14 +34,17 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         const foreignKey: ForeignKey = createForeignKey(
           property,
           [descriptorColumn],
-          descriptor.referencedEntity.namespace.namespaceName,
+          descriptor.referencedEntity.namespace.namespaceName.toLowerCase(),
+          descriptor.referencedEntity.namespace,
           descriptor.referencedEntity.data.edfiOds.odsDescriptorName,
           ForeignKeyStrategy.foreignColumnRename(`${descriptor.data.edfiOds.odsDescriptorifiedBaseName}Id`),
         );
         addForeignKey(parentTableStrategy.table, foreignKey);
       } else {
         const joinTable: Table = Object.assign(newTable(), {
-          schema: parentTableStrategy.table.schema,
+          // Are the next two lines correct?  EnumerationPropertyTableBuilder uses strategy properties directly rather than get from table, seems more correct
+          namespace: parentTableStrategy.table.namespace,
+          schema: parentTableStrategy.table.schema.toLowerCase(),
           name: baseNameCollapsingJoinTableNamer(descriptor, parentTableStrategy.name, buildStrategy.parentContext()),
           description: descriptor.documentation,
           isRequiredCollectionTable: descriptor.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
@@ -54,6 +57,7 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
           property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
+          parentTableStrategy.schemaNamespace,
           parentTableStrategy.name,
           ForeignKeyStrategy.foreignColumnCascade(true, descriptor.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
         );
@@ -71,7 +75,8 @@ export function descriptorPropertyTableBuilder(factory: ColumnCreatorFactory): T
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,
-          descriptor.referencedEntity.namespace.namespaceName,
+          descriptor.referencedEntity.namespace.namespaceName.toLowerCase(),
+          descriptor.referencedEntity.namespace,
           descriptor.referencedEntity.data.edfiOds.odsDescriptorName,
           ForeignKeyStrategy.foreignColumnRename(`${descriptor.data.edfiOds.odsDescriptorifiedBaseName}Id`),
         );

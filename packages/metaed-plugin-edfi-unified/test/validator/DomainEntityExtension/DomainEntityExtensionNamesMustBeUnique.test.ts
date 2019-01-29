@@ -9,7 +9,7 @@ describe('when entities in same namespace have different names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntityExtension('ValidName1')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
@@ -22,7 +22,7 @@ describe('when entities in same namespace have different names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -43,7 +43,7 @@ describe('when entities in same namespace have identical names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntityExtension(entityName)
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
@@ -56,7 +56,7 @@ describe('when entities in same namespace have identical names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -78,13 +78,13 @@ describe('when domainEntityExtensions in separate dependency-linked namespaces h
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntityExtension(entityName)
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntityExtension(entityName)
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
@@ -93,8 +93,8 @@ describe('when domainEntityExtensions in separate dependency-linked namespaces h
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -134,19 +134,19 @@ describe('when domainEntityExtensions in non-dependency-linked namespaces have i
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntityExtension('NotADuplicate')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'Extensiona')
+      .withBeginNamespace('Extensiona', 'Extensiona')
       .withStartDomainEntityExtension(entityName)
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'Extensionb')
+      .withBeginNamespace('Extensionb', 'Extensionb')
       .withStartDomainEntityExtension(entityName)
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntityExtension()
@@ -155,9 +155,9 @@ describe('when domainEntityExtensions in non-dependency-linked namespaces have i
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
     // $FlowIgnore - null check

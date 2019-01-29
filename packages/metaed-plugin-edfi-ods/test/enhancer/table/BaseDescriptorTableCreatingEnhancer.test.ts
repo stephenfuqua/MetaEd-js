@@ -6,7 +6,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when BaseDescriptorTableCreatingEnhancer enhances', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

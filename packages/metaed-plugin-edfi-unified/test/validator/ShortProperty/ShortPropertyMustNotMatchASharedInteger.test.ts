@@ -19,7 +19,7 @@ describe('when validating short property does not match shared integer', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger('SharedInteger')
       .withDocumentation('doc')
       .withEndSharedInteger()
@@ -35,7 +35,7 @@ describe('when validating short property does not match shared integer', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -60,7 +60,7 @@ describe('when validating string identity matches shared integer', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger(integerProperty)
       .withDocumentation('doc')
       .withEndSharedInteger()
@@ -75,7 +75,7 @@ describe('when validating string identity matches shared integer', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -104,7 +104,7 @@ describe('when validating short property matches shared integer', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger(integerProperty)
       .withDocumentation('doc')
       .withEndSharedInteger()
@@ -119,7 +119,7 @@ describe('when validating short property matches shared integer', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

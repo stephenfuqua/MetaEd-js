@@ -19,7 +19,7 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddAssociationExtensionComplexTypesEnhancer';
 
 describe('when enhancing association extension', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName = 'BaseTypeName';
@@ -99,10 +99,10 @@ describe('when enhancing association extension', () => {
 
 describe('when enhancing association extension with common type override', () => {
   const projectExtension = 'EXTENSION';
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = {
     ...newNamespace(),
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension,
     isExtension: true,
   };
@@ -257,7 +257,7 @@ describe('when enhancing association extension with common type override', () =>
 });
 
 describe('when enhancing association extension of a association subclass with common type override', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -276,7 +276,7 @@ describe('when enhancing association extension of a association subclass with co
 
   beforeAll(() => {
     const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension,
       isExtension: true,
     });

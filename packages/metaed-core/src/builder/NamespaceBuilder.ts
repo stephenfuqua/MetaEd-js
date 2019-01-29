@@ -11,28 +11,31 @@ import { ValidationFailure } from '../validator/ValidationFailure';
 export function namespaceNameFrom(context: MetaEdGrammar.NamespaceNameContext): string {
   if (
     context.exception ||
-    context.NAMESPACE_ID() == null ||
-    context.NAMESPACE_ID().exception != null ||
-    context.NAMESPACE_ID().getText() == null ||
-    isErrorText(context.NAMESPACE_ID().getText())
+    context.ID() == null ||
+    context.ID().exception != null ||
+    context.ID().getText() == null ||
+    isErrorText(context.ID().getText())
   )
     return '';
 
-  return context.NAMESPACE_ID().getText();
+  return context.ID().getText();
 }
 
 function enteringNamespaceName(context: MetaEdGrammar.NamespaceNameContext, namespace: Namespace): Namespace {
-  if (namespace === NoNamespace || isErrorText(context.NAMESPACE_ID().getText())) return newNamespace();
-
   if (
-    context.exception ||
-    context.NAMESPACE_ID() == null ||
-    context.NAMESPACE_ID().exception != null ||
-    context.NAMESPACE_ID().getText() == null
+    namespace === NoNamespace ||
+    (!context.exception &&
+      context.ID() != null &&
+      !context.ID().exception &&
+      context.ID().getText() != null &&
+      isErrorText(context.ID().getText()))
   )
+    return newNamespace();
+
+  if (context.exception || context.ID() == null || context.ID().exception != null || context.ID().getText() == null)
     return namespace;
 
-  Object.assign(namespace, { namespaceName: context.NAMESPACE_ID().getText() });
+  Object.assign(namespace, { namespaceName: context.ID().getText() });
 
   // This is a good guess -- capitalize the namespace -- given that projectName is not in the language yet,
   // but the AddProjectNameToNamespace task sets the correct value after the builders run,

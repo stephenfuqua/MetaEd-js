@@ -15,7 +15,7 @@ describe('when enhancing string type', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newStringType(), {
@@ -75,7 +75,7 @@ describe('when enhancing generated string type with min length only', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newStringType(), {
@@ -117,7 +117,7 @@ describe('when enhancing generated string type with max length only', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newStringType(), {
@@ -158,7 +158,7 @@ describe('when enhancing non-generated string type with no restrictions', () => 
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newStringType(), {
@@ -198,7 +198,7 @@ describe('when enhancing generated string type with no restrictions', () => {
   let createdSimpleType: StringSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newStringType(), {

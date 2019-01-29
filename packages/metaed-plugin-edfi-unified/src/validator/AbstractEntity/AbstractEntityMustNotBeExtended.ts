@@ -1,5 +1,11 @@
-import { getEntityForNamespaces, asDomainEntity } from 'metaed-core';
-import { MetaEdEnvironment, ValidationFailure, DomainEntityExtension, TopLevelEntity } from 'metaed-core';
+import {
+  getEntityFromNamespaceChain,
+  DomainEntity,
+  MetaEdEnvironment,
+  ValidationFailure,
+  DomainEntityExtension,
+  TopLevelEntity,
+} from 'metaed-core';
 
 // METAED-805
 const validatorName = 'AbstractEntityMustNotBeExtended';
@@ -9,13 +15,14 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.namespace.forEach(namespace => {
     namespace.entity.domainEntityExtension.forEach((extensionEntity: DomainEntityExtension) => {
-      const baseEntity: TopLevelEntity | null = getEntityForNamespaces(
+      const baseEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
         extensionEntity.metaEdName,
-        [namespace, ...namespace.dependencies],
+        extensionEntity.baseEntityNamespaceName,
+        namespace,
         'domainEntity',
       ) as TopLevelEntity | null;
 
-      if (baseEntity == null || !asDomainEntity(baseEntity).isAbstract) return;
+      if (baseEntity == null || !(baseEntity as DomainEntity).isAbstract) return;
 
       failures.push({
         validatorName,

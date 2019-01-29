@@ -1,6 +1,6 @@
 Domain Entity PostSecondaryOrganization
     documentation "PostSecondaryOrganization"
-    shared string NameOfInstitution
+    shared string EdFi.NameOfInstitution
         documentation "The name of the institution."
         is part of identity
     descriptor InstitutionLevel

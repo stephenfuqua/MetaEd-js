@@ -62,7 +62,7 @@ describe('when generating change event scripts and comparing to ODS/API 3.1 auth
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
@@ -159,13 +159,13 @@ describe('when generating change event scripts with simple extensions and compar
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Sample',
-          namespaceName: 'sample',
+          namespaceName: 'Sample',
           projectExtension: 'Sample',
           projectVersion: '3.0.0',
         },

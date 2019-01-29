@@ -7,7 +7,7 @@ import { MergedInterchange } from '../../src/model/MergedInterchange';
 
 describe('when running with one descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorBaseName = 'DescriptorBaseName';
   const descriptorName = 'DescriptorName';
   const namespace: Namespace = Object.assign(newNamespace(), {
@@ -51,7 +51,7 @@ describe('when running with one descriptor', () => {
 
 describe('when running with one extension descriptor', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorBaseName = 'DescriptorBaseName';
   const descriptorName = 'DescriptorName';
   const extensionDescriptorBaseName = 'ExtensionDescriptorBaseName';
@@ -137,7 +137,7 @@ describe('when running with one extension descriptor', () => {
 
 describe('when running with no descriptors', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = Object.assign(newNamespace(), {
     namespaceName,
   });

@@ -1,5 +1,5 @@
 import { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {
@@ -19,9 +19,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       domain.domainItems.forEach(domainItem => {
         if (domainItem.referencedType !== 'domainEntity') return;
         if (
-          getEntityForNamespaces(
+          getEntityFromNamespaceChain(
             domainItem.metaEdName,
-            [namespace, ...namespace.dependencies],
+            domainItem.referencedNamespaceName,
+            namespace,
             'domainEntity',
             'domainEntitySubclass',
           ) == null
@@ -32,7 +33,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
               'DomainEntityDomainItemMustMatchTopLevelEntity',
               `Domain Entity Domain Item property '${
                 domainItem.metaEdName
-              }' does not match any declared Domain Entity or Domain Entity Subclass.`,
+              }' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${
+                domainItem.referencedNamespaceName
+              }.`,
             ),
           );
         }

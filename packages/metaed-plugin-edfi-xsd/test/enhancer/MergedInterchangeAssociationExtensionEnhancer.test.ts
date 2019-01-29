@@ -16,10 +16,10 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when enhances MergedInterchange with association extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -103,6 +103,6 @@ describe('when enhances MergedInterchange with association extension', () => {
     expect(mergedInterchange.elements[0].metaEdName).toBe(association1Name);
     expect(mergedInterchange.elements[0].documentation).toBe(interchangeItemAssociation1Documentation);
     expect(mergedInterchange.elements[0].referencedEntity).toBe(associationExtension);
-    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe('extension');
+    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe('Extension');
   });
 });

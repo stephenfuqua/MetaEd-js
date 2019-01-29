@@ -13,7 +13,7 @@ import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InheritedDocumentationCopyingEnhancer';
 
 describe('when enhancing shared integer property with inherited documentation', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -55,7 +55,7 @@ describe('when enhancing shared integer property with inherited documentation', 
 });
 
 describe('when enhancing domain entity property with inherited documentation', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';

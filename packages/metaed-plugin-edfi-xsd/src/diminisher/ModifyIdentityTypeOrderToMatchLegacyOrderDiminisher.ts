@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { getEntityForNamespaces, versionSatisfies } from 'metaed-core';
+import { getEntityFromNamespace, versionSatisfies } from 'metaed-core';
 import { EnhancerResult, Namespace, MetaEdEnvironment, ModelBase, ModelType } from 'metaed-core';
 import { ComplexType } from '../model/schema/ComplexType';
 import { Element } from '../model/schema/Element';
@@ -16,7 +16,7 @@ function reorderIdentityType(
   metaEdName: string,
   newElementOrder: Array<string>,
 ): void {
-  const entity: ModelBase | null = getEntityForNamespaces(metaEdName, [namespace], modelType);
+  const entity: ModelBase | null = getEntityFromNamespace(metaEdName, namespace, modelType);
   const identityType: ComplexType | null = entity != null ? entity.data.edfiXsd.xsdIdentityType : null;
 
   if (
@@ -31,7 +31,7 @@ function reorderIdentityType(
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
-  const namespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const namespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (namespace == null) return { enhancerName, success: false };
 
   const domainEntity: ModelType = 'domainEntity';

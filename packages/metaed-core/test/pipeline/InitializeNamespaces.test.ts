@@ -6,7 +6,7 @@ import { initializeNamespaces } from '../../src/pipeline/InitializeNamespaces';
 
 describe('when enhancing core namespace only', () => {
   const state: State = newState();
-  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
+  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
 
   beforeAll(() => {
     state.metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
@@ -20,8 +20,8 @@ describe('when enhancing core namespace only', () => {
 
 describe('when enhancing core and extension namespace', () => {
   const state: State = newState();
-  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', isExtension: true };
+  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', isExtension: true };
 
   beforeAll(() => {
     state.metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);

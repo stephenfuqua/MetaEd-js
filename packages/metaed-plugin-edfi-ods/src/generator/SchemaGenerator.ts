@@ -7,7 +7,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   const prefix: string = versionSatisfies(metaEd.dataStandardVersion, '2.x') ? '0001' : '0010';
 
   metaEd.namespace.forEach(namespace => {
-    const schemaName: string = namespace.namespaceName;
+    const schemaName: string = namespace.namespaceName.toLowerCase();
     const generatedResult: string = namespace.isExtension
       ? template().extensionSchema({ schemaName })
       : template().coreSchema({ schemaName });

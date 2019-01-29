@@ -27,9 +27,9 @@ import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model
 import { Table } from '../../../src/model/database/Table';
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -125,9 +125,9 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with primary key', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -210,9 +210,9 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common extension override', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -335,6 +335,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       namespace: extensionNamespace,
       metaEdName: associationExtensionReferencePropertyName,
+      referencedNamespaceName: namespace.namespaceName,
       isPartOfIdentity: true,
       parentEntity: associationExtension,
       referencedEntity: association,
@@ -351,6 +352,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     const associationExtensionCommonExtensionOverrideProperty: CommonProperty = Object.assign(newCommonProperty(), {
       namespace: extensionNamespace,
       metaEdName: commonExtensionName,
+      referencedNamespaceName: extensionNamespace.namespaceName,
       isRequired: true,
       parentEntity: associationExtension,
       referencedEntity: commonExtension,
@@ -384,9 +386,9 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
 });
 
 describe('when AssociationExtensionTableEnhancerV2 enhances association extension with common', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const namespace: Namespace = { ...newNamespace(), namespaceName };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -480,6 +482,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     const associationExtensionReferenceProperty: AssociationProperty = Object.assign(newAssociationProperty(), {
       namespace: extensionNamespace,
       metaEdName: associationExtensionReferencePropertyName,
+      referencedNamespaceName: namespace.namespaceName,
       isPartOfIdentity: true,
       parentEntity: associationExtension,
       referencedEntity: association,
@@ -496,6 +499,7 @@ describe('when AssociationExtensionTableEnhancerV2 enhances association extensio
     const associationExtensionCommonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       namespace: extensionNamespace,
       metaEdName: commonName,
+      referencedNamespaceName: namespace.namespaceName,
       isRequired: true,
       parentEntity: associationExtension,
       referencedEntity: common,

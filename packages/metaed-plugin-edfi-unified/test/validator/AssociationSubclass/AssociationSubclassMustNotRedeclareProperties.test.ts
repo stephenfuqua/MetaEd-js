@@ -16,7 +16,7 @@ describe('when association subclass has different property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation1')
@@ -34,7 +34,7 @@ describe('when association subclass has different property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -61,7 +61,7 @@ describe('when association subclass has duplicate property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -82,7 +82,7 @@ describe('when association subclass has duplicate property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -119,7 +119,7 @@ describe('when association subclass has duplicate property name across dependent
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')
@@ -129,8 +129,8 @@ describe('when association subclass has duplicate property name across dependent
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationSubclass('SubclassName', entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationSubclass('SubclassName', `EdFi.${entityName}`)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty(duplicatePropertyName1, 'PropertyDocumentation3', true, false)
       .withBooleanProperty(duplicatePropertyName2, 'PropertyDocumentation3', true, false)
@@ -142,9 +142,8 @@ describe('when association subclass has duplicate property name across dependent
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
     failures = validate(metaEd);
   });
@@ -179,7 +178,7 @@ describe('when association subclass has duplicate property name but different ro
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation')

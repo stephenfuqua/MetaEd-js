@@ -12,7 +12,7 @@ import { xpathSelect, enhanceAndGenerate, initializeNamespaceDependencies } from
 describe('when generating xsd for association extension in extension namespace based on core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const projectExtension = 'EXTENSION';
   const coreEntity1 = 'CoreEntity1';
   const coreEntity1Pk = 'CoreEntity1Pk';
@@ -31,7 +31,7 @@ describe('when generating xsd for association extension in extension namespace b
     const associationSubclassBuilder = new AssociationSubclassBuilder(metaEd, []);
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
@@ -52,7 +52,7 @@ describe('when generating xsd for association extension in extension namespace b
       .withEndNamespace()
       .withBeginNamespace(namespaceName, projectExtension)
 
-      .withStartAssociationSubclass(extensionAssociation, coreAssociation)
+      .withStartAssociationSubclass(extensionAssociation, `EdFi.${coreAssociation}`)
       .withDocumentation('doc')
       .withIntegerProperty(extensionAssociationProperty, 'doc', true, false)
       .withEndAssociationSubclass()
@@ -63,7 +63,7 @@ describe('when generating xsd for association extension in extension namespace b
       .sendToListener(associationBuilder)
       .sendToListener(associationSubclassBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', namespaceName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

@@ -1,121 +1,183 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when parsing full MetaEd and another example: when parsing full MetaEd and another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing full MetaEd and another example: when parsing full MetaEd and another example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 12,
-  "tokenText": "comvmon",
-}
+exports[`when parsing full MetaEd and another example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 12,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing full MetaEd another example: when parsing full MetaEd another example - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing full MetaEd another example: when parsing full MetaEd another example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 10,
-  "tokenText": "comvmon",
-}
+exports[`when parsing full MetaEd another example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 10,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing full MetaEd one more example: when parsing full MetaEd one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
-
-exports[`when parsing full MetaEd one more example: when parsing full MetaEd one more example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 6,
-  "tokenText": "decscriptor",
-}
+exports[`when parsing full MetaEd one more example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'd' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 6,
+      "tokenText": "d",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing full MetaEd should not parse with extraneous xyz: when parsing full MetaEd should not parse with extraneous xyz - message 1`] = `"extraneous input 'xyz' expecting {'documentation', METAED_ID}"`;
-
-exports[`when parsing full MetaEd should not parse with extraneous xyz: when parsing full MetaEd should not parse with extraneous xyz - sourceMap 1`] = `
-Object {
-  "column": 23,
-  "line": 5,
-  "tokenText": "xyz",
-}
+exports[`when parsing full MetaEd should not parse with extraneous xyz 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'x' expecting {'documentation', METAED_ID}",
+    "sourceMap": Object {
+      "column": 23,
+      "line": 5,
+      "tokenText": "x",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'merge', 'with context'}"`;
-
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 10,
-  "tokenText": "comvmon",
-}
+exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 10,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'z' expecting {'Abstract Entity', 'Association', 'End Namespace', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain', 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'merge', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 28,
+      "tokenText": "z",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing full MetaEd should not parse with multiple keyword syntax errors: when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap 2`] = `
-Object {
-  "column": 0,
-  "line": 28,
-  "tokenText": "zcommvzxxon",
-}
+exports[`when parsing top level entities and another example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 11,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing top level entities and another example: when parsing top level entities and another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing top level entities and another example: when parsing top level entities and another example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 11,
-  "tokenText": "comvmon",
-}
+exports[`when parsing top level entities another example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 9,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing top level entities another example: when parsing top level entities another example - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing top level entities another example: when parsing top level entities another example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 9,
-  "tokenText": "comvmon",
-}
+exports[`when parsing top level entities one more example 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'd' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 5,
+      "tokenText": "d",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing top level entities one more example: when parsing top level entities one more example - message 1`] = `"mismatched input 'decscriptor' expecting {'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'allow primary key updates'}"`;
-
-exports[`when parsing top level entities one more example: when parsing top level entities one more example - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 5,
-  "tokenText": "decscriptor",
-}
+exports[`when parsing top level entities should not parse with extraneous xyz 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'x' expecting {'documentation', METAED_ID}",
+    "sourceMap": Object {
+      "column": 23,
+      "line": 4,
+      "tokenText": "x",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;
 
-exports[`when parsing top level entities should not parse with extraneous xyz: when parsing top level entities should not parse with extraneous xyz - message 1`] = `"extraneous input 'xyz' expecting {'documentation', METAED_ID}"`;
-
-exports[`when parsing top level entities should not parse with extraneous xyz: when parsing top level entities should not parse with extraneous xyz - sourceMap 1`] = `
-Object {
-  "column": 23,
-  "line": 4,
-  "tokenText": "xyz",
-}
-`;
-
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 1`] = `"mismatched input 'comvmon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}"`;
-
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - message 2`] = `"mismatched input 'zcommvzxxon' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'merge', 'with context'}"`;
-
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap 1`] = `
-Object {
-  "column": 0,
-  "line": 9,
-  "tokenText": "comvmon",
-}
-`;
-
-exports[`when parsing top level entities should not parse with multiple keyword syntax errors: when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap 2`] = `
-Object {
-  "column": 0,
-  "line": 27,
-  "tokenText": "zcommvzxxon",
-}
+exports[`when parsing top level entities should not parse with multiple keyword syntax errors 1`] = `
+Array [
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'c' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 9,
+      "tokenText": "c",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+  Object {
+    "category": "error",
+    "fileMap": null,
+    "message": "mismatched input 'z' expecting {<EOF>, 'association', 'bool', 'choice', 'common', 'common extension', 'currency', 'date', 'datetime', 'decimal', 'descriptor', 'domain entity', 'duration', 'enumeration', 'inline common', 'integer', 'percent', 'shared decimal', 'shared integer', 'shared short', 'shared string', 'short', 'string', 'time', 'year', 'is queryable field', 'merge', 'with context'}",
+    "sourceMap": Object {
+      "column": 0,
+      "line": 27,
+      "tokenText": "z",
+    },
+    "validatorName": "MetaEdErrorListener",
+  },
+]
 `;

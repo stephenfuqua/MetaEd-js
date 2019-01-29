@@ -9,7 +9,7 @@ import { MetaEdEnvironment, Association, AssociationSubclass, AssociationExtensi
 import { enhance } from '../../src/enhancer/AssociationExtensionBaseClassEnhancer';
 
 describe('when enhancing association extension referring to association', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -26,6 +26,7 @@ describe('when enhancing association extension referring to association', () => 
     childEntity = Object.assign(newAssociationExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace,
     });
     namespace.entity.associationExtension.set(childEntity.metaEdName, childEntity);
@@ -39,7 +40,7 @@ describe('when enhancing association extension referring to association', () => 
 });
 
 describe('when enhancing association extension referring to association subclass', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -56,6 +57,7 @@ describe('when enhancing association extension referring to association subclass
     childEntity = Object.assign(newAssociationExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace,
     });
     namespace.entity.associationExtension.set(childEntity.metaEdName, childEntity);
@@ -69,8 +71,8 @@ describe('when enhancing association extension referring to association subclass
 });
 
 describe('when enhancing association extension referring to association across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -88,6 +90,7 @@ describe('when enhancing association extension referring to association across n
     childEntity = Object.assign(newAssociationExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.associationExtension.set(childEntity.metaEdName, childEntity);
@@ -101,8 +104,8 @@ describe('when enhancing association extension referring to association across n
 });
 
 describe('when enhancing association extension referring to association subclass across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -120,6 +123,7 @@ describe('when enhancing association extension referring to association subclass
     childEntity = Object.assign(newAssociationExtension(), {
       metaEdName: parentEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.associationExtension.set(childEntity.metaEdName, childEntity);

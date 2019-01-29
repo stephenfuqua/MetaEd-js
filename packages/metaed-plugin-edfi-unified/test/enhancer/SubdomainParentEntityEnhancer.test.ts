@@ -3,7 +3,7 @@ import { MetaEdEnvironment, Domain, Subdomain, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/SubdomainParentEntityEnhancer';
 
 describe('when enhancing subdomain with parent', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';

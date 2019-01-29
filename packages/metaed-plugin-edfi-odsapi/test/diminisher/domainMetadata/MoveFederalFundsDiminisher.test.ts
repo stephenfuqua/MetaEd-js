@@ -8,7 +8,7 @@ import { NamespaceEdfiOdsApi } from '../../../src/model/Namespace';
 
 describe('when diminishing with no matching entity tables', () => {
   const entityName = 'EntityName';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
 
   let aggregate: Aggregate = NoAggregate;
   let namespace: Namespace = NoNamespace;
@@ -63,7 +63,7 @@ describe('when diminishing with matching entity tables', () => {
   const entityName2 = 'EntityName2';
   const localEducationAgencyFederalFunds = 'LocalEducationAgencyFederalFunds';
   const stateEducationAgencyFederalFunds = 'StateEducationAgencyFederalFunds';
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
 
   let aggregate1: Aggregate = NoAggregate;
   let aggregate2: Aggregate = NoAggregate;

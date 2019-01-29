@@ -36,7 +36,7 @@ describe('when building and enhancing domain item', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -62,7 +62,7 @@ describe('when building and enhancing domain item', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -79,7 +79,6 @@ describe('when building and enhancing domain item', () => {
   });
 
   it('should enhance domain entities', () => {
-    // $FlowIgnore = entity could be null
     const domainItem = R.head(namespace.entity.domain.get(domainName1).entities);
     const referencedEntity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(domainItem).toBeDefined();
@@ -88,7 +87,6 @@ describe('when building and enhancing domain item', () => {
   });
 
   it('should enhance subdomain entities', () => {
-    // $FlowIgnore = entity could be null
     const domainItem = R.head(namespace.entity.subdomain.get(subdomainName1).entities);
     const referencedEntity = namespace.entity.domainEntity.get(domainEntityName2);
     expect(domainItem).toBeDefined();
@@ -106,7 +104,7 @@ describe('when building and enhancing subdomain', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName1)
       .withDocumentation('DomainDocumentation')
       .withDomainEntityDomainItem('DomainEntityName1')
@@ -128,7 +126,7 @@ describe('when building and enhancing subdomain', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
 
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
@@ -172,7 +170,7 @@ describe('when building and enhancing association extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName1)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty(
@@ -196,7 +194,7 @@ describe('when building and enhancing association extension', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -236,7 +234,7 @@ describe('when building and enhancing association subclass', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName1)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty(
@@ -260,7 +258,7 @@ describe('when building and enhancing association subclass', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -299,7 +297,7 @@ describe('when building and enhancing common extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName1)
       .withDocumentation('CommonDocumentation')
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
@@ -315,7 +313,7 @@ describe('when building and enhancing common extension', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -354,7 +352,7 @@ describe('when building and enhancing domain entity extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
@@ -370,7 +368,7 @@ describe('when building and enhancing domain entity extension', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -410,7 +408,7 @@ describe('when building and enhancing domain entity subclass', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
@@ -426,7 +424,7 @@ describe('when building and enhancing domain entity subclass', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -464,7 +462,7 @@ describe('when building and enhancing interchange extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName1)
       .withDocumentation('InterchangeDocumentation')
       .withExtendedDocumentation('InterchangeExtendedDocumentation')
@@ -482,7 +480,7 @@ describe('when building and enhancing interchange extension', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -513,7 +511,7 @@ describe('when building and enhancing interchange items', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -537,7 +535,7 @@ describe('when building and enhancing interchange items', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -578,7 +576,7 @@ describe('when building and enhancing association property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName1)
       .withDocumentation(associationDocumentation)
       .withAssociationDomainEntityProperty(
@@ -601,7 +599,7 @@ describe('when building and enhancing association property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -645,7 +643,7 @@ describe('when building and enhancing choice property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice(choiceName1)
       .withDocumentation(choiceDocumentation)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -662,7 +660,7 @@ describe('when building and enhancing choice property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -706,7 +704,7 @@ describe('when building and enhancing common property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName1)
       .withDocumentation(commonDocumentation)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -722,7 +720,7 @@ describe('when building and enhancing common property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -766,7 +764,7 @@ describe('when building and enhancing descriptor property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor(descriptorName1)
       .withDocumentation(descriptorDocumentation)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -782,7 +780,7 @@ describe('when building and enhancing descriptor property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -826,7 +824,7 @@ describe('when building and enhancing domain entity property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation(domainEntityDocumentation)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -841,7 +839,7 @@ describe('when building and enhancing domain entity property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -881,7 +879,7 @@ describe('when building and enhancing enumeration property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration(enumerationName1)
       .withDocumentation(enumerationDocumentation)
       .withEnumerationItem('EnumerationItemShortDescription')
@@ -897,7 +895,7 @@ describe('when building and enhancing enumeration property', () => {
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -941,7 +939,7 @@ describe('when building and enhancing inline common property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInlineCommon(inlineCommonName1)
       .withDocumentation(inlineCommonDocumentation)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -957,7 +955,7 @@ describe('when building and enhancing inline common property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1001,7 +999,7 @@ describe('when building and enhancing school year enumeration property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration(schoolYearEnumerationName1)
       .withDocumentation(schoolYearEnumerationDocumentation)
       .withEnumerationItem('EnumerationItemShortDescription')
@@ -1017,7 +1015,7 @@ describe('when building and enhancing school year enumeration property', () => {
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1072,7 +1070,7 @@ describe('when building and enhancing shared decimal property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal(sharedDecimalName1)
       .withDocumentation(sharedDecimalDocumentation)
       .withDecimalRestrictions(totalDigits, decimalPlaces, minValue, maxValue)
@@ -1089,7 +1087,7 @@ describe('when building and enhancing shared decimal property', () => {
       .sendToListener(new SharedDecimalBuilder(metaEd, []))
       .sendToListener(new DecimalTypeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1173,7 +1171,7 @@ describe('when building and enhancing shared integer property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger(sharedIntegerName1)
       .withDocumentation(sharedIntegerDocumentation)
       .withNumericRestrictions(minValue, maxValue)
@@ -1190,7 +1188,7 @@ describe('when building and enhancing shared integer property', () => {
       .sendToListener(new SharedIntegerBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1262,7 +1260,7 @@ describe('when building and enhancing shared short property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedShort(sharedShortName1)
       .withDocumentation(sharedShortDocumentation)
       .withNumericRestrictions(minValue, maxValue)
@@ -1279,7 +1277,7 @@ describe('when building and enhancing shared short property', () => {
       .sendToListener(new SharedIntegerBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1351,7 +1349,7 @@ describe('when building and enhancing shared string property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString(sharedStringName1)
       .withDocumentation(sharedStringDocumentation)
       .withStringRestrictions(minLength, maxLength)
@@ -1368,7 +1366,7 @@ describe('when building and enhancing shared string property', () => {
       .sendToListener(new SharedStringBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 
@@ -1441,7 +1439,7 @@ describe('when building and enhancing domain entity merged properties', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation(domainEntityDocumentation2)
       .withIntegerIdentity('IntegerIdentity1', 'IntegerIdentityDocumentation')
@@ -1466,7 +1464,7 @@ describe('when building and enhancing domain entity merged properties', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    namespace = metaEd.namespace.get('edfi');
+    namespace = metaEd.namespace.get('EdFi');
     initialize().enhancer.forEach(enhance => enhance(metaEd));
   });
 

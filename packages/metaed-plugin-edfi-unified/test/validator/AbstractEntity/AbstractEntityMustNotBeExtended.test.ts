@@ -16,8 +16,8 @@ describe('when validating domain entity additions', () => {
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName = 'edfi';
-    const extensionNamespaceName = 'extension';
+    const coreNamespaceName = 'EdFi';
+    const extensionNamespaceName = 'Extension';
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(coreNamespaceName)
@@ -63,8 +63,8 @@ describe('when validating abstract entity additions', () => {
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName = 'edfi';
-    const extensionNamespaceName = 'extension';
+    const coreNamespaceName = 'EdFi';
+    const extensionNamespaceName = 'Extension';
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(coreNamespaceName)
@@ -75,7 +75,7 @@ describe('when validating abstract entity additions', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extensionNamespaceName)
-      .withStartDomainEntityExtension(domainEntityName)
+      .withStartDomainEntityExtension(`${coreNamespaceName}.${domainEntityName}`)
       .withDocumentation('Documentation')
       .withIntegerIdentity('PropertyName2', 'Documentation')
       .withEndDomainEntityExtension()
@@ -111,8 +111,8 @@ describe('when validating abstract entity additions in extension namespace', () 
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName = 'edfi';
-    const extensionNamespaceName = 'extension';
+    const coreNamespaceName = 'EdFi';
+    const extensionNamespaceName = 'Extension';
 
     MetaEdTextBuilder.build()
       .withBeginNamespace(coreNamespaceName)

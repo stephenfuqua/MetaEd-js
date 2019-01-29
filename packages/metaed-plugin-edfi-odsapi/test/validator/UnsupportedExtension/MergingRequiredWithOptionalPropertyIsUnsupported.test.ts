@@ -20,7 +20,7 @@ describe('when a domain entity has both a required and optional reference to a p
     const domainEntityName3 = 'DomainEntityName3';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -66,7 +66,7 @@ describe('when a domain entity has both a required and optional reference to a p
     const domainEntityName3 = 'DomainEntityName3';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -78,18 +78,18 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
-      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
+      .withDomainEntityProperty(`EdFi.${domainEntityName1}`, 'Documentation', false, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -131,7 +131,7 @@ describe('when a domain entity has both a required and optional reference to dom
     const domainEntityName3 = 'DomainEntityName3';
     const domainEntityName4 = 'DomainEntityName4';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -148,18 +148,18 @@ describe('when a domain entity has both a required and optional reference to dom
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity(domainEntityName4)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
-      .withDomainEntityProperty(domainEntityName3, 'Documentation', false, false)
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
+      .withDomainEntityProperty(`EdFi.${domainEntityName3}`, 'Documentation', false, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -201,7 +201,7 @@ describe('when a domain entity has both a required and optional reference to a p
     const domainEntityName2 = 'DomainEntityName2';
     const domainEntityName3 = 'DomainEntityName3';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -213,18 +213,18 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation', contextName)
-      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false, false, contextName)
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation', contextName)
+      .withDomainEntityProperty(`EdFi.${domainEntityName1}`, 'Documentation', false, false, false, contextName)
       .withEndDomainEntity()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -265,7 +265,7 @@ describe('when a domain entity has both a required and optional reference to a p
     const domainEntityName2 = 'DomainEntityName2';
     const domainEntityName3 = 'DomainEntityName3';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -277,18 +277,18 @@ describe('when a domain entity has both a required and optional reference to a p
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
-      .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false, false, 'ContextName')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
+      .withDomainEntityProperty(`EdFi.${domainEntityName1}`, 'Documentation', false, false, false, 'ContextName')
       .withEndDomainEntity()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -314,17 +314,17 @@ describe('when a domain entity has both a required and optional reference to a p
     const IntegerPropertyName1 = 'IntegerPropertyName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(IntegerPropertyName1, 'Documentation', '100', '0', 'ContextName')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName1, 'Documentation')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName1}`, 'Documentation')
       .withIntegerProperty(IntegerPropertyName1, 'Documentation', false, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -332,7 +332,7 @@ describe('when a domain entity has both a required and optional reference to a p
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',

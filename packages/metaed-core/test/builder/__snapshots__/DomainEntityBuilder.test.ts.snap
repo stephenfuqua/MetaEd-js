@@ -17,6 +17,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -65,6 +70,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -105,15 +115,15 @@ Array [
 
 exports[`when building domain entity with lowercase domain entity name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
 ]
 `;
 
 exports[`when building domain entity with lowercase project extension should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'projectExtension' expecting {'core', ID}, column: 26, line: 1, token: projectExtension",
-  "mismatched input 'projectExtension' expecting {'core', ID}, column: 26, line: 1, token: projectExtension",
+  "mismatched input 'p' expecting {'core', ID}, column: 26, line: 1, token: p",
+  "mismatched input 'p' expecting {'core', ID}, column: 26, line: 1, token: p",
 ]
 `;
 
@@ -138,17 +148,19 @@ Array [
 ]
 `;
 
-exports[`when building domain entity with no metaed id should have token recognition error 1`] = `
+exports[`when building domain entity with no metaed id should have syntax error 1`] = `
 Array [
-  "token recognition error at: '[]', column: 27, line: 2, token: ",
-  "token recognition error at: '[]', column: 27, line: 2, token: ",
+  "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
+  "no viable alternative at input 'Domain EntityEntityName[', column: 27, line: 2, token: [",
 ]
 `;
 
 exports[`when building domain entity with no namespace should have missing namespace id error 1`] = `
 Array [
-  "missing NAMESPACE_ID at 'ProjectExtension', column: 17, line: 1, token: ProjectExtension",
-  "missing NAMESPACE_ID at 'ProjectExtension', column: 17, line: 1, token: ProjectExtension",
+  "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+  "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
+  "extraneous input 'Domain Entity' expecting {'core', ID}, column: 2, line: 2, token: Domain Entity",
+  "mismatched input '[1]' expecting {'Abstract Entity', 'Association', 'Choice', 'Common', 'Descriptor', 'Domain', 'Domain Entity', 'Enumeration', 'Interchange', 'Inline Common', 'Shared Decimal', 'Shared Integer', 'Shared Short', 'Shared String', 'Subdomain'}, column: 27, line: 2, token: [1]",
 ]
 `;
 
@@ -284,9 +296,9 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "referencedNamespaceName": Object {
-    "column": 44,
+    "column": 19,
     "line": 5,
-    "tokenText": "PropertyName",
+    "tokenText": "SharedPropertyType",
   },
   "referencedType": Object {
     "column": 19,
@@ -420,9 +432,9 @@ Object {
     "tokenText": "NoSourceMap",
   },
   "referencedNamespaceName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
+    "column": 19,
+    "line": 5,
+    "tokenText": "SharedPropertyType",
   },
   "referencedType": Object {
     "column": 19,

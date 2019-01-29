@@ -1,5 +1,5 @@
 import { MetaEdEnvironment, EnhancerResult, TopLevelEntity, EntityProperty, Namespace, Common } from 'metaed-core';
-import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityFromNamespaceChain } from 'metaed-core';
 import { TopLevelEntityEdfiXsd } from '../model/TopLevelEntity';
 
 // This enhancer covers both the original AssociationBaseInlineIdentityEnhancer and DomainEntityBaseInlineIdentityEnhancer
@@ -10,9 +10,10 @@ function addInlineIdentities(topLevelEntity: TopLevelEntity, properties: Array<E
   properties
     .filter(p => p.type === 'inlineCommon')
     .forEach(commonProperty => {
-      const common: Common | null = getEntityForNamespaces(
+      const common: Common | null = getEntityFromNamespaceChain(
         commonProperty.metaEdName,
-        [namespace, ...namespace.dependencies],
+        commonProperty.referencedNamespaceName,
+        namespace,
         'common',
       ) as Common | null;
       if (common == null || common.inlineInOds == null) return;

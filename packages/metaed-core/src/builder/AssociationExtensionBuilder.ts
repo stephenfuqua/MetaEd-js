@@ -2,7 +2,6 @@ import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { TopLevelEntityBuilder } from './TopLevelEntityBuilder';
 import { newAssociationExtension } from '../model/AssociationExtension';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
-import { isErrorText } from './BuilderUtility';
 import { sourceMapFrom } from '../model/SourceMap';
 
 /**
@@ -22,12 +21,6 @@ export class AssociationExtensionBuilder extends TopLevelEntityBuilder {
   }
 
   enterExtendeeName(context: MetaEdGrammar.ExtendeeNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-
-    const extendeeName = context.ID().getText();
-    this.enteringName(extendeeName);
-    this.currentTopLevelEntity.baseEntityName = extendeeName;
-    this.currentTopLevelEntity.sourceMap.metaEdName = sourceMapFrom(context);
+    this.enteringExtendeeName(context);
   }
 }

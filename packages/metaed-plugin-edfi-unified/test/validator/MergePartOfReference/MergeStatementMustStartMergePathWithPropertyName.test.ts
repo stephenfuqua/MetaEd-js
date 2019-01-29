@@ -10,7 +10,7 @@ describe('when validating reference property starts merge path with matching pro
   beforeAll(() => {
     const entityName = 'DomainEntityPropertyName';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
@@ -22,7 +22,7 @@ describe('when validating reference property starts merge path with matching pro
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -42,7 +42,7 @@ describe('when validating reference property starts merge path with mismatched p
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
@@ -54,7 +54,7 @@ describe('when validating reference property starts merge path with mismatched p
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -83,7 +83,7 @@ describe('when validating reference property starts merge path with matching pro
   beforeAll(() => {
     const entityName = 'DomainEntityPropertyName';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
@@ -95,7 +95,7 @@ describe('when validating reference property starts merge path with matching pro
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -117,7 +117,7 @@ describe('when validating reference property starts merge path with property nam
     const entityName = 'DomainEntityPropertyName';
     const contextName = 'ContextName';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
@@ -129,7 +129,7 @@ describe('when validating reference property starts merge path with property nam
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -151,7 +151,7 @@ describe('when validating reference property starts merge path with property nam
     const entityName = 'DomainEntityPropertyName';
     const contextName = 'ContextName';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
@@ -163,7 +163,7 @@ describe('when validating reference property starts merge path with property nam
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -192,7 +192,7 @@ describe('when validating reference property starts merge path with matching pro
   beforeAll(() => {
     const propertyName = 'PropertyName';
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedStringIdentity(propertyName, propertyName, 'doc')
@@ -204,7 +204,7 @@ describe('when validating reference property starts merge path with matching pro
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

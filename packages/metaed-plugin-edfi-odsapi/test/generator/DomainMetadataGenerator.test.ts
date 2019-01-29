@@ -4,7 +4,8 @@ import { generate } from '../../src/generator/domainMetadata/DomainMetadataGener
 import { Aggregate } from '../../src/model/domainMetadata/Aggregate';
 
 describe('when generating aggregate for edfi', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
   let result = '';
 
@@ -22,7 +23,7 @@ describe('when generating aggregate for edfi', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: false,
         },
@@ -31,7 +32,7 @@ describe('when generating aggregate for edfi', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: false,
         },
@@ -59,7 +60,8 @@ describe('when generating aggregate for edfi', () => {
 });
 
 describe('when generating aggregate for extensions', () => {
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Extension';
   let result = '';
 
@@ -68,7 +70,7 @@ describe('when generating aggregate for extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -77,7 +79,7 @@ describe('when generating aggregate for extensions', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: true,
         },
@@ -106,7 +108,8 @@ describe('when generating aggregate for extensions', () => {
 });
 
 describe('when generating aggregate with subclass for edfi', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
   let result = '';
 
@@ -115,7 +118,7 @@ describe('when generating aggregate with subclass for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -124,7 +127,7 @@ describe('when generating aggregate with subclass for edfi', () => {
           isA: 'Entity4',
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: true,
           requiresSchema: false,
         },
@@ -153,7 +156,8 @@ describe('when generating aggregate with subclass for edfi', () => {
 });
 
 describe('when generating aggregate extensions', () => {
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Extension';
   let result = '';
 
@@ -162,7 +166,7 @@ describe('when generating aggregate extensions', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: false,
       isExtension: true,
       entityTables: [
@@ -171,7 +175,7 @@ describe('when generating aggregate extensions', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: true,
         },
@@ -200,7 +204,8 @@ describe('when generating aggregate extensions', () => {
 });
 
 describe('when generating abstract aggregate for edfi', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
   let result = '';
 
@@ -209,7 +214,7 @@ describe('when generating abstract aggregate for edfi', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [
@@ -218,7 +223,7 @@ describe('when generating abstract aggregate for edfi', () => {
           isA: null,
           isAbstract: true,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: false,
         },
@@ -247,7 +252,8 @@ describe('when generating abstract aggregate for edfi', () => {
 });
 
 describe('when generating aggregate with primary key update', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
   let result = '';
 
@@ -256,7 +262,7 @@ describe('when generating aggregate with primary key update', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [
@@ -265,7 +271,7 @@ describe('when generating aggregate with primary key update', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: false,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: false,
         },
@@ -294,7 +300,8 @@ describe('when generating aggregate with primary key update', () => {
 });
 
 describe('when generating aggregate with required collection table', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
+  const schema = namespaceName.toLowerCase();
   const projectName = 'Ed-Fi';
   let result = '';
 
@@ -303,7 +310,7 @@ describe('when generating aggregate with required collection table', () => {
 
     const aggregate: Aggregate = {
       root: 'Entity1',
-      schema: namespaceName,
+      schema,
       allowPrimaryKeyUpdates: true,
       isExtension: false,
       entityTables: [
@@ -312,7 +319,7 @@ describe('when generating aggregate with required collection table', () => {
           isA: null,
           isAbstract: false,
           isRequiredCollection: true,
-          schema: namespaceName,
+          schema,
           hasIsA: false,
           requiresSchema: false,
         },

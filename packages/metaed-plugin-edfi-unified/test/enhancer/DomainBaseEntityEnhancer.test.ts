@@ -25,7 +25,7 @@ import {
 import { enhance } from '../../src/enhancer/DomainBaseEntityEnhancer';
 
 describe('when enhancing domain', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -79,14 +79,62 @@ describe('when enhancing domain', () => {
     addEntityForNamespace(associationSubclass1);
     addEntityForNamespace(associationSubclass2);
 
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass1MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass2MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association1MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association2MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass1MetaEdName, namespace }));
-    domain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass2MetaEdName, namespace }));
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
 
     enhance(metaEd);
   });
@@ -116,8 +164,151 @@ describe('when enhancing domain', () => {
   });
 });
 
+describe('when enhancing domain with references across namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
+
+  const domainEntity1MetaEdName = 'DomainEntity1Name';
+  const domainEntity2MetaEdName = 'DomainEntity2Name';
+
+  const domainEntitySubclass1MetaEdName = 'DomainEntitySubclass1Name';
+  const domainEntitySubclass2MetaEdName = 'DomainEntitySubclass2Name';
+
+  const association1MetaEdName = 'Association1Name';
+  const association2MetaEdName = 'Association2Name';
+
+  const associationSubclass1MetaEdName = 'AssociationSubclass1Name';
+  const associationSubclass2MetaEdName = 'AssociationSubclass2Name';
+
+  const domainEntity1: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity1MetaEdName, namespace });
+  const domainEntity2: DomainEntity = Object.assign(newDomainEntity(), { metaEdName: domainEntity2MetaEdName, namespace });
+
+  const domainEntitySubclass1: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass1MetaEdName,
+    namespace,
+  });
+  const domainEntitySubclass2: DomainEntitySubclass = Object.assign(newDomainEntitySubclass(), {
+    metaEdName: domainEntitySubclass2MetaEdName,
+    namespace,
+  });
+
+  const association1: Association = Object.assign(newAssociation(), { metaEdName: association1MetaEdName, namespace });
+  const association2: Association = Object.assign(newAssociation(), { metaEdName: association2MetaEdName, namespace });
+
+  const associationSubclass1: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass1MetaEdName,
+    namespace,
+  });
+  const associationSubclass2: AssociationSubclass = Object.assign(newAssociationSubclass(), {
+    metaEdName: associationSubclass2MetaEdName,
+    namespace,
+  });
+
+  const domainMetaEdName = 'domainMetaEdName';
+
+  beforeAll(() => {
+    const domain: Domain = Object.assign(newDomain(), { metaEdName: domainMetaEdName, namespace: extensionNamespace });
+    addEntityForNamespace(domain);
+    addEntityForNamespace(domainEntity1);
+    addEntityForNamespace(domainEntity2);
+    addEntityForNamespace(domainEntitySubclass1);
+    addEntityForNamespace(domainEntitySubclass2);
+    addEntityForNamespace(association1);
+    addEntityForNamespace(association2);
+    addEntityForNamespace(associationSubclass1);
+    addEntityForNamespace(associationSubclass2);
+
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity1MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity2MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass1MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass2MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association1MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association2MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass1MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    domain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass2MetaEdName,
+        namespace: extensionNamespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+
+    enhance(metaEd);
+  });
+
+  it('should have references to domain entities', () => {
+    const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
+    expect(domain.entities).toContain(domainEntity1);
+    expect(domain.entities).toContain(domainEntity2);
+  });
+
+  it('should have references to domain subclasses', () => {
+    const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
+    expect(domain.entities).toContain(domainEntitySubclass1);
+    expect(domain.entities).toContain(domainEntitySubclass2);
+  });
+
+  it('should have references to associations', () => {
+    const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
+    expect(domain.entities).toContain(association1);
+    expect(domain.entities).toContain(association2);
+  });
+
+  it('should have references to association subclasses', () => {
+    const domain: any = extensionNamespace.entity.domain.get(domainMetaEdName);
+    expect(domain.entities).toContain(associationSubclass1);
+    expect(domain.entities).toContain(associationSubclass2);
+  });
+});
+
 describe('when enhancing subdomain', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -171,14 +362,62 @@ describe('when enhancing subdomain', () => {
     addEntityForNamespace(associationSubclass1);
     addEntityForNamespace(associationSubclass2);
 
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity1MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntity2MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass1MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: domainEntitySubclass2MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association1MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: association2MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass1MetaEdName, namespace }));
-    subdomain.domainItems.push(Object.assign(newDomainItem(), { metaEdName: associationSubclass2MetaEdName, namespace }));
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntity2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: domainEntitySubclass2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: association2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass1MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
+    subdomain.domainItems.push(
+      Object.assign(newDomainItem(), {
+        metaEdName: associationSubclass2MetaEdName,
+        namespace,
+        referencedNamespaceName: namespace.namespaceName,
+      }),
+    );
 
     enhance(metaEd);
   });

@@ -25,10 +25,11 @@ describe('when building common property extension table', () => {
   const commonName = 'CommonName';
   const commonPkName = 'CommonPkName';
   const commonExtensionPropertyName = 'CommonExtensionPropertyName';
-  const extensionNamespaceName = 'extension';
+  const extensionNamespaceName = 'Extension';
   const tables: Array<Table> = [];
-  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const coreNamespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: extensionNamespaceName };
+  extensionNamespace.dependencies.push(coreNamespace);
 
   beforeAll(() => {
     const common: Common = Object.assign(newCommon(), {
@@ -61,6 +62,7 @@ describe('when building common property extension table', () => {
     const commonExtension: CommonExtension = Object.assign(newCommonExtension(), {
       metaEdName: commonName,
       baseEntityName: common.metaEdName,
+      baseEntityNamespaceName: coreNamespace.namespaceName,
       baseEntity: common,
       namespace: extensionNamespace,
       data: {
@@ -73,7 +75,7 @@ describe('when building common property extension table', () => {
     addEntityForNamespace(commonExtension);
     const commonExtensionProperty: IntegerProperty = Object.assign(newIntegerProperty(), {
       metaEdName: commonExtensionPropertyName,
-      parentEntity: common,
+      parentEntity: commonExtension,
       namespace: extensionNamespace,
       data: {
         edfiOds: {
@@ -114,6 +116,7 @@ describe('when building common property extension table', () => {
     const commonProperty: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: commonName,
       namespace: extensionNamespace,
+      referencedNamespaceName: extensionNamespace.namespaceName,
       parentEntity: entity,
       referencedEntity: common,
       isExtensionOverride: true,
@@ -145,7 +148,7 @@ describe('when building common property extension table', () => {
   it('should return join table', () => {
     expect(tables).toHaveLength(1);
     expect(tables[0].name).toBe(`${tableName}${commonName}Extension`);
-    expect(tables[0].schema).toBe(extensionNamespaceName);
+    expect(tables[0].schema).toBe(extensionNamespaceName.toLowerCase());
   });
 
   it('should have three columns with two primary keys', () => {

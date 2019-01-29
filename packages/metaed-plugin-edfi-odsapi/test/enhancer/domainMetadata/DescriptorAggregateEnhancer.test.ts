@@ -11,7 +11,8 @@ import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 describe('when enhancing descriptor with no map type', () => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -35,7 +36,7 @@ describe('when enhancing descriptor with no map type', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
@@ -78,7 +79,7 @@ describe('when enhancing descriptor with no map type', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
   });
 });
@@ -87,7 +88,8 @@ describe('when enhancing descriptor with map type', () => {
   const entityName = 'EntityName';
   const descriptorTableName: string = `${entityName}Descriptor`;
   const typeTableName: string = normalizeEnumerationSuffix(entityName);
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -111,13 +113,13 @@ describe('when enhancing descriptor with map type', () => {
     const descriptorTable: Table = {
       ...newTable(),
       name: descriptorTableName,
-      schema: namespaceName,
+      schema,
     };
 
     const typeTable: Table = {
       ...newTable(),
       name: typeTableName,
-      schema: namespaceName,
+      schema,
     };
 
     const descriptor: Descriptor = Object.assign(newDescriptor(), {
@@ -168,13 +170,13 @@ describe('when enhancing descriptor with map type', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const descriptorEntityTable: EntityTable = aggregate.entityTables[0];
     expect(descriptorEntityTable).not.toBeNull();
-    expect(descriptorEntityTable.schema).toBe(namespaceName);
+    expect(descriptorEntityTable.schema).toBe(schema);
     expect(descriptorEntityTable.table).toBe(descriptorTableName);
 
     expect(typeAggregate.entityTables).toHaveLength(1);
     const typeEntityTable: EntityTable = typeAggregate.entityTables[0];
     expect(typeEntityTable).not.toBeNull();
-    expect(typeEntityTable.schema).toBe(namespaceName);
+    expect(typeEntityTable.schema).toBe(schema);
     expect(typeEntityTable.table).toBe(typeTableName);
   });
 });

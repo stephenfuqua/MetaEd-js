@@ -20,7 +20,7 @@ import {
 import { enhance } from '../../../src/enhancer/property/IntegerReferenceEnhancer';
 
 describe('when enhancing integer property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -31,6 +31,7 @@ describe('when enhancing integer property', () => {
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -55,7 +56,7 @@ describe('when enhancing integer property', () => {
 });
 
 describe('when enhancing shared integer property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -67,6 +68,7 @@ describe('when enhancing shared integer property', () => {
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace,
       referencedType: referencedEntityName,
@@ -98,8 +100,8 @@ describe('when enhancing shared integer property', () => {
 });
 
 describe('when enhancing integer property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -111,6 +113,7 @@ describe('when enhancing integer property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newIntegerProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });
@@ -135,8 +138,8 @@ describe('when enhancing integer property across namespaces', () => {
 });
 
 describe('when enhancing shared integer property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -149,6 +152,7 @@ describe('when enhancing shared integer property across namespaces', () => {
   beforeAll(() => {
     property = Object.assign(newSharedIntegerProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       parentEntityName,
       namespace: extensionNamespace,
       referencedType: referencedEntityName,

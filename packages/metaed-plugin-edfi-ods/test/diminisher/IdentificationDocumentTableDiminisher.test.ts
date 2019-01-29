@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when IdentificationDocumentTableDiminisher diminishes matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -70,7 +70,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes matching table',
 });
 
 describe('when IdentificationDocumentTableDiminisher diminishes multiple matching tables', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -129,7 +129,7 @@ describe('when IdentificationDocumentTableDiminisher diminishes multiple matchin
 });
 
 describe('when IdentificationDocumentTableDiminisher diminishes non matching tables', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';

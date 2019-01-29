@@ -16,7 +16,7 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDescriptorComplexTypesEnhancer';
 
 describe('when enhancing descriptor', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -98,7 +98,7 @@ describe('when enhancing descriptor', () => {
 });
 
 describe('when enhancing descriptor with required map type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -203,7 +203,7 @@ describe('when enhancing descriptor with required map type', () => {
 });
 
 describe('when enhancing descriptor with optional map type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -308,7 +308,7 @@ describe('when enhancing descriptor with optional map type', () => {
 });
 
 describe('when enhancing descriptor with property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -372,7 +372,7 @@ describe('when enhancing descriptor with property', () => {
 });
 
 describe('when enhancing descriptor with property and map type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -463,7 +463,7 @@ describe('when enhancing descriptor with property and map type', () => {
 });
 
 describe('when enhancing descriptor with descriptor property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -540,7 +540,7 @@ describe('when enhancing descriptor with descriptor property', () => {
 });
 
 describe('when enhancing descriptor with both queryable and identity property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';

@@ -17,7 +17,7 @@ describe('when generating education organization reference for core', () => {
     };
 
     const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       data: {
         edfiOdsApi: {
           apiEducationOrganizationReferences: [educationOrganizationReference],
@@ -47,7 +47,7 @@ describe('when generating education organization reference for extension', () =>
     };
 
     const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {
@@ -79,7 +79,7 @@ describe('when generating education organization reference for both core and ext
       identityPropertyName: 'SchoolId',
     };
     const coreNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       data: {
         edfiOdsApi: {
           apiEducationOrganizationReferences: [coreEducationOrganizationReference],
@@ -94,7 +94,7 @@ describe('when generating education organization reference for both core and ext
       identityPropertyName: 'EducationProviderId',
     };
     const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {
@@ -131,7 +131,7 @@ describe('when generating education organization reference for both core and emp
       identityPropertyName: 'SchoolId',
     };
     const coreNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       data: {
         edfiOdsApi: {
           apiEducationOrganizationReferences: [coreEducationOrganizationReference],
@@ -141,7 +141,7 @@ describe('when generating education organization reference for both core and emp
     metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
 
     const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
       data: {

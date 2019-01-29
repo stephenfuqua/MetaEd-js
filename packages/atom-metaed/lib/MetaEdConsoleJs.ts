@@ -259,9 +259,9 @@ function validProjectMetadata(metaEdProjectMetadata: Array<MetaEdProjectMetadata
   if (semver.satisfies(getTargetOdsApiVersionSemver(), '2.x')) {
     // eslint-disable-next-line no-restricted-syntax
     for (const pm of metaEdProjectMetadata) {
-      if (pm.isExtensionProject && pm.projectNamespace !== 'extension') {
+      if (pm.isExtensionProject && pm.projectNamespace !== 'Extension') {
         outputWindow.addMessage(
-          `Namespace derived from projectName (all lowercased, remove special characters) is not "extension". ODS/API version 2.x only supports the namespace "extension".`,
+          `Namespace derived from projectName (first character capitalized, remove special characters) is not "Extension". ODS/API version 2.x only supports the namespace "Extension".`,
         );
         return false;
       }

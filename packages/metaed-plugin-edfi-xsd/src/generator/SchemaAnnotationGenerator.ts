@@ -10,7 +10,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   );
   const formattedGeneratedResult = formatAndPrependHeader(template().schemaAnnotation({ descriptors }));
 
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   results.push({
     name: 'Core XSD Schema Annotation',
     namespace: coreNamespace ? coreNamespace.namespaceName : '',

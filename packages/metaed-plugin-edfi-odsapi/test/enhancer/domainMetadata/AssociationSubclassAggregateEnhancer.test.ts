@@ -12,7 +12,8 @@ describe('when enhancing association extensions', () => {
   const baseTableName = 'BaseTableName';
   const entityName = 'EntityName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   let aggregate: Aggregate = NoAggregate;
 
@@ -44,7 +45,7 @@ describe('when enhancing association extensions', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
     };
 
     const entity: AssociationSubclass = Object.assign(newAssociationSubclass(), {
@@ -76,7 +77,7 @@ describe('when enhancing association extensions', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
     expect(entityTable.isA).toBe(baseTableName);
   });

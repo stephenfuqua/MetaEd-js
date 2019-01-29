@@ -10,7 +10,7 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchange with no extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
   const interchangeName = 'InterchangeName';
@@ -59,7 +59,7 @@ describe('when MergedInterchangeSchemaLocationEnhancer enhances MergedInterchang
   const projectExtension = 'EXTENSION';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension,
     isExtension: true,
   });

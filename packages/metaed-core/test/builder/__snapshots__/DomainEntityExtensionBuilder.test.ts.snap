@@ -17,6 +17,11 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 16,
+    "line": 2,
+    "tokenText": "EntityName",
+  },
   "documentation": Object {
     "column": 0,
     "line": 0,
@@ -52,8 +57,8 @@ Array [
 
 exports[`when building domain entity extension with lowercase domain entity extension name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
-  "no viable alternative at input 'Domain EntityentityName', column: 16, line: 2, token: entityName",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
+  "no viable alternative at input 'Domain Entitye', column: 16, line: 2, token: e",
 ]
 `;
 

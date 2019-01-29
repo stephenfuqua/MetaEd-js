@@ -19,7 +19,7 @@ describe('when validating association domain item matches top level entity', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withAssociationDomainItem(associationName)
@@ -36,12 +36,56 @@ describe('when validating association domain item matches top level entity', () 
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain', () => {
     expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating association domain item matches top level entity across namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainName = 'DomainName';
+  const associationName = 'AssociationName';
+
+  let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartAssociation(associationName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('doc')
+      .withAssociationDomainItem(`EdFi.${associationName}`)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new AssociationBuilder(metaEd, []));
+
+    const coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies = [coreNamespace];
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain', () => {
+    expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -60,7 +104,7 @@ describe('when validating association domain item matches top level entity subcl
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withAssociationDomainItem(associationSubclassName)
@@ -83,11 +127,11 @@ describe('when validating association domain item matches top level entity subcl
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain', () => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 
@@ -107,7 +151,7 @@ describe('when validating association domain item does not match top level entit
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withAssociationDomainItem('AssociationDomainItemName')
@@ -129,11 +173,11 @@ describe('when validating association domain item does not match top level entit
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
-  it('should build one domain entity', () => {
+  it('should build one domain', () => {
     expect(coreNamespace.entity.domain.size).toBe(1);
   });
 

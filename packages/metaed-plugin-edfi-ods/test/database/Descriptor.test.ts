@@ -36,7 +36,7 @@ jest.setTimeout(40000);
 
 describe('when descriptor is defined', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName = 'Descriptor';
   const descriptorName = 'DescriptorName';
 
@@ -164,7 +164,7 @@ describe('when descriptor is defined', () => {
 
 describe('when descriptor does not have a map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation: string = `This is the documentation\nfor the descriptor with 'some' ""special"" --characters--.`;
   const descriptorName = 'DescriptorName';
@@ -232,7 +232,7 @@ describe('when descriptor does not have a map type', () => {
 
 describe('when descriptor has required map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
@@ -384,7 +384,7 @@ describe('when descriptor has required map type', () => {
 
 describe('when descriptor has required map type with multiple items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
   const mapTypeDocumentation: string = `MapTypeDocumentation`;
@@ -447,7 +447,7 @@ describe('when descriptor has required map type with multiple items', () => {
 
 describe('when descriptor has optional map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -496,7 +496,7 @@ describe('when descriptor has optional map type', () => {
 
 describe('when descriptor name has type suffix', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorNameType';
@@ -560,7 +560,7 @@ describe('when descriptor name has type suffix', () => {
 
 describe('when descriptor has properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorDocumentation = 'DescriptorDocumentation';
   const descriptorName = 'DescriptorName';
@@ -645,7 +645,7 @@ describe('when descriptor has properties', () => {
 
 describe('when descriptor has properties and map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -727,7 +727,7 @@ describe('when descriptor has properties and map type', () => {
 
 describe('when descriptor has required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -848,7 +848,7 @@ describe('when descriptor has required collection property', () => {
 
 describe('when descriptor has optional collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -969,7 +969,7 @@ describe('when descriptor has optional collection property', () => {
 
 describe('when descriptor has enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -1037,7 +1037,7 @@ describe('when descriptor has enumeration property', () => {
 
 describe('when descriptor has descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const referencedDescriptorName = 'ReferencedDescriptorName';
   const descriptorName = 'DescriptorName';
@@ -1108,7 +1108,7 @@ describe('when descriptor has descriptor property', () => {
 
 describe('when descriptor has collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorPropertyDocumentation = 'DescriptorPropertyDocumentation';
@@ -1226,8 +1226,8 @@ describe('when descriptor has collection descriptor property', () => {
 
 describe('when extension descriptor has required reference properties to core entity and map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const baseDescriptorTableName: string = `Descriptor`;
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = descriptorName + baseDescriptorTableName;
@@ -1251,7 +1251,7 @@ describe('when extension descriptor has required reference properties to core en
       .withBeginNamespace(extension)
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
-      .withDomainEntityProperty(domainEntityName, 'Documentation', true, false)
+      .withDomainEntityProperty(`${namespaceName}.${domainEntityName}`, 'Documentation', true, false)
       .withStartMapType()
       .withDocumentation('MapTypeDocumentation')
       .withEnumerationItem(mapTypeShortDescription, 'Documentation')

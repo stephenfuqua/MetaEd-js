@@ -18,8 +18,8 @@ jest.setTimeout(40000);
 
 describe('when domain entity extension has multiple properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
@@ -43,10 +43,10 @@ describe('when domain entity extension has multiple properties', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(domainEntityName)
+      .withStartDomainEntityExtension(`${namespaceName}.${domainEntityName}`)
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withIntegerProperty(integerPropertyName4, 'Documentation', false, true)
-      .withCommonProperty(commonName, 'Documentation', true, false)
+      .withCommonProperty(`${namespaceName}.${commonName}`, 'Documentation', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -210,8 +210,8 @@ describe('when domain entity extension has multiple properties', () => {
 
 describe('when domain entity extension has optional collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -226,7 +226,7 @@ describe('when domain entity extension has optional collection property', () => 
       .withEndDomainEntity()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(domainEntityName)
+      .withStartDomainEntityExtension(`${namespaceName}.${domainEntityName}`)
       .withIntegerProperty(integerPropertyName2, 'Documentation', false, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -322,8 +322,8 @@ describe('when domain entity extension has optional collection property', () => 
 
 describe('when domain entity extension has required collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
   const domainEntityExtensionName: string = `${domainEntityName}Extension`;
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -338,7 +338,7 @@ describe('when domain entity extension has required collection property', () => 
       .withEndDomainEntity()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(domainEntityName)
+      .withStartDomainEntityExtension(`${namespaceName}.${domainEntityName}`)
       .withIntegerProperty(integerPropertyName2, 'Documentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -434,8 +434,8 @@ describe('when domain entity extension has required collection property', () => 
 
 describe('when domain entity extension has multiple common properties', () => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const commonName1 = 'CommonName1';
   const commonName2 = 'CommonName2';
   const domainEntityName = 'DomainEntityName';
@@ -464,7 +464,7 @@ describe('when domain entity extension has multiple common properties', () => {
       .withIntegerIdentity(integerPropertyName3, 'Documentation')
       .withEndCommon()
 
-      .withStartDomainEntityExtension(domainEntityName)
+      .withStartDomainEntityExtension(`${namespaceName}.${domainEntityName}`)
       .withCommonProperty(commonName1, 'Documentation', false, false)
       .withCommonProperty(commonName2, 'Documentation', false, true)
       .withEndDomainEntityExtension()

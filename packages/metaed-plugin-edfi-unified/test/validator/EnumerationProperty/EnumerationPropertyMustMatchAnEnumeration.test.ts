@@ -16,7 +16,7 @@ describe('when enumeration property has valid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration(entityName)
       .withDocumentation('EntityDocumentation')
       .withEndEnumeration()
@@ -32,7 +32,7 @@ describe('when enumeration property has valid identifier', () => {
       .sendToListener(new EnumerationBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -56,7 +56,7 @@ describe('when enumeration property has invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -67,7 +67,7 @@ describe('when enumeration property has invalid identifier', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -17,6 +17,11 @@ Object {
     "line": 2,
     "tokenText": "BaseEntityName",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 34,
+    "line": 2,
+    "tokenText": "BaseEntityName",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -52,15 +57,15 @@ Array [
 
 exports[`when building association subclass with lowercase association subclass name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
-  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
+  "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
+  "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
 ]
 `;
 
 exports[`when building association subclass with lowercase based on name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'baseEntityName' expecting ID, column: 34, line: 2, token: baseEntityName",
-  "mismatched input 'baseEntityName' expecting ID, column: 34, line: 2, token: baseEntityName",
+  "mismatched input 'b' expecting ID, column: 34, line: 2, token: b",
+  "mismatched input 'b' expecting ID, column: 34, line: 2, token: b",
 ]
 `;
 
@@ -71,10 +76,10 @@ Array [
 ]
 `;
 
-exports[`when building association subclass with no based on name should have missing id error 1`] = `
+exports[`when building association subclass with no based on name should have error 1`] = `
 Array [
-  "missing ID at 'documentation', column: 4, line: 3, token: documentation",
-  "missing ID at 'documentation', column: 4, line: 3, token: documentation",
+  "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
+  "mismatched input 'documentation' expecting ID, column: 4, line: 3, token: documentation",
 ]
 `;
 

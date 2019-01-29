@@ -12,7 +12,7 @@ describe('when validating common domain item matches top level entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withCommonDomainItem(commonName)
@@ -29,12 +29,56 @@ describe('when validating common domain item matches top level entity', () => {
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
   it('should build one domain entity', () => {
     expect(coreNamespace.entity.domain.size).toBe(1);
+  });
+
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating common domain item matches top level entity across namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainName = 'DomainName';
+  const commonName = 'CommonName';
+
+  let failures: Array<ValidationFailure>;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartCommon(commonName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndCommon()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomain(domainName, '1')
+      .withDocumentation('doc')
+      .withCommonDomainItem(`EdFi.${commonName}`)
+      .withFooterDocumentation('FooterDocumentation')
+      .withEndDomain()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    const coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies = [coreNamespace];
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(extensionNamespace.entity.domain.size).toBe(1);
   });
 
   it('should have no validation failures()', () => {
@@ -52,7 +96,7 @@ describe('when validating common domain item does not match top level entity', (
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain(domainName, '1')
       .withDocumentation('doc')
       .withCommonDomainItem('CommonDomainItemName')
@@ -69,7 +113,7 @@ describe('when validating common domain item does not match top level entity', (
       .sendToListener(new DomainBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

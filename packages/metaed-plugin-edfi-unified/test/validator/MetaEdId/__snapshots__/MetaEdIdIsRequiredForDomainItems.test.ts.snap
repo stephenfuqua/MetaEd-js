@@ -4,9 +4,9 @@ exports[`when validating domain item is missing metaEdId should have validation 
 
 exports[`when validating domain item is missing metaEdId should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainItemName",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when validating subdomain item is missing metaEdId for entity should ha
 
 exports[`when validating subdomain item is missing metaEdId for entity should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName",
 }
 `;

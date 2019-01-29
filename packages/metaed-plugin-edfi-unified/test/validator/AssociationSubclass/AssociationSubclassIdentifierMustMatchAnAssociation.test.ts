@@ -16,7 +16,7 @@ describe('when association subclass has valid extendee', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation1')
@@ -33,7 +33,7 @@ describe('when association subclass has valid extendee', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -53,7 +53,7 @@ describe('when association subclass has invalid extendee', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociationSubclass('EntityName', 'BaseEntityName')
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation3', true, false)
@@ -62,7 +62,7 @@ describe('when association subclass has invalid extendee', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -92,7 +92,7 @@ describe('when association subclass has valid extendee across dependent namespac
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('EntityDocumentation')
       .withAssociationDomainEntityProperty('PropertyName1', 'PropertyDocumentation1')
@@ -101,8 +101,8 @@ describe('when association subclass has valid extendee across dependent namespac
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationSubclass('SubclassName', entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationSubclass('SubclassName', `EdFi.${entityName}`)
       .withBooleanProperty('PropertyName4', 'PropertyDocumentation1', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -111,9 +111,8 @@ describe('when association subclass has valid extendee across dependent namespac
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

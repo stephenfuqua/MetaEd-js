@@ -621,7 +621,7 @@ describe('when using get merge property column with multiple source entity prope
 });
 
 describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const sourceEntityName = 'SourceEntityName';
@@ -716,8 +716,8 @@ describe('when ForeignKeyCreatingEnhancer enhances a table with primary key refe
 });
 
 describe('when ForeignKeyCreatingEnhancer enhances a table with primary key reference column across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);

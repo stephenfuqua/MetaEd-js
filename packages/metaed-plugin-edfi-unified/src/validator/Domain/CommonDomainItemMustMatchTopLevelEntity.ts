@@ -1,5 +1,5 @@
 import { DomainItem, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 function getFailure(domainItem: DomainItem, name: string, failureMessage: string): ValidationFailure {
   return {
@@ -17,12 +17,16 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     namespace.entity.domain.forEach(domain => {
       domain.domainItems.forEach(domainItem => {
         if (domainItem.referencedType !== 'common') return;
-        if (getEntityForNamespaces(domainItem.metaEdName, [namespace, ...namespace.dependencies], 'common') == null) {
+        if (
+          getEntityFromNamespaceChain(domainItem.metaEdName, domainItem.referencedNamespaceName, namespace, 'common') == null
+        ) {
           failures.push(
             getFailure(
               domainItem,
               'CommonDomainItemMustMatchTopLevelEntity',
-              `Common Domain Item property '${domainItem.metaEdName}' does not match any declared Common.`,
+              `Common Domain Item property '${domainItem.metaEdName}' does not match any declared Common in namespace ${
+                domainItem.referencedNamespaceName
+              }.`,
             ),
           );
         }

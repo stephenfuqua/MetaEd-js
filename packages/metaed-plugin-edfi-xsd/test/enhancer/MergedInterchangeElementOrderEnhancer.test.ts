@@ -8,10 +8,10 @@ import { addEdFiXsdEntityRepositoryTo } from '../../src/model/EdFiXsdEntityRepos
 
 describe('when MergedInterchangeElementOrderEnhancer enhances MergedInterchanges with elements differing by xsdName', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });

@@ -32,7 +32,7 @@ describe('when generating a simple sql data dictionary', () => {
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity('Entity1')
       .withDocumentation('Entity1 doc')

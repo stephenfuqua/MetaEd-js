@@ -18,15 +18,15 @@ describe('when domain entity extension extends domain entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -35,9 +35,8 @@ describe('when domain entity extension extends domain entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -62,7 +61,7 @@ describe('when domain entity extension extends domain entity subclass', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
@@ -74,8 +73,8 @@ describe('when domain entity extension extends domain entity subclass', () => {
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(subclassName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -85,9 +84,8 @@ describe('when domain entity extension extends domain entity subclass', () => {
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -111,15 +109,15 @@ describe('when domain entity extension extends an invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity')
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -127,9 +125,53 @@ describe('when domain entity extension extends an invalid identifier', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity extension', () => {
+    expect(extensionNamespace.entity.domainEntityExtension.size).toBe(1);
+  });
+
+  it('should have validation failures()', () => {
+    expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when domain entity extension specifies wrong namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`Extension.${entityName}`)
+      .withBooleanProperty('PropertyName2', 'doc', true, false)
+      .withEndDomainEntityExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

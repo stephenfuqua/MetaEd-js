@@ -15,7 +15,7 @@ describe('when validating enumeration item is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EnumerationName')
       .withDocumentation('EnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
@@ -24,7 +24,7 @@ describe('when validating enumeration item is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -50,7 +50,7 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('DescriptorName')
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType()
@@ -63,7 +63,7 @@ describe('when validating map type enumeration item is missing metaEdId', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -87,7 +87,7 @@ describe('when validating school year enumeration item is missing metaEdId', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('SchoolYear')
       .withDocumentation('SchoolYearEnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
@@ -96,7 +96,7 @@ describe('when validating school year enumeration item is missing metaEdId', () 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -120,7 +120,7 @@ describe('when validating enumeration item is missing metaEdId in extension name
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartEnumeration('EnumerationName')
       .withDocumentation('EnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
@@ -129,7 +129,7 @@ describe('when validating enumeration item is missing metaEdId in extension name
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

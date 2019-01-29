@@ -23,7 +23,7 @@ module.exports = class extends Generator {
           const splitInputArray = input.split('-');
           if (splitInputArray.length !== 4 || splitInputArray[2].length === 0 || splitInputArray[3].length === 0)
             return 'There must be exactly one organization name and one plugin name';
-          if (splitInputArray[2] === 'edfi') return 'The "edfi" organization name is reserved';
+          if (splitInputArray[2] === 'EdFi') return 'The "EdFi" organization name is reserved';
           return true;
         },
       },
@@ -44,7 +44,7 @@ module.exports = class extends Generator {
           if (typeof input !== 'string' || input.length < 4 || input.length > 64)
             return 'Short names must be between 4 and 64 characters in length';
           if (!/^[a-zA-Z]+$/.test(input)) return 'Short names are limited to upper and lower case characters';
-          if (input.startsWith('edfi')) return 'The "edfi" organization name is reserved';
+          if (input.startsWith('EdFi')) return 'The "EdFi" organization name is reserved';
           return true;
         },
       },

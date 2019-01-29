@@ -11,7 +11,7 @@ describe('when validating interchange extension identity template has different 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -19,8 +19,8 @@ describe('when validating interchange extension identity template has different 
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName2')
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -28,9 +28,8 @@ describe('when validating interchange extension identity template has different 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -59,7 +58,7 @@ describe('when validating interchange extension identity template duplicates nam
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -67,8 +66,8 @@ describe('when validating interchange extension identity template duplicates nam
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityIdentityTemplate(domainEntityTemplateName)
       .withEndInterchangeExtension()
       .withEndNamespace()
@@ -76,9 +75,8 @@ describe('when validating interchange extension identity template duplicates nam
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -113,7 +111,7 @@ describe('when interchange extension identity templates duplicates multiple name
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange(interchangeName)
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -122,8 +120,8 @@ describe('when interchange extension identity templates duplicates multiple name
       .withEndInterchange()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartInterchangeExtension(interchangeName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartInterchangeExtension(`EdFi.${interchangeName}`)
       .withDomainEntityIdentityTemplate(domainEntityTemplateName1)
       .withDomainEntityIdentityTemplate(domainEntityTemplateName2)
       .withDomainEntityIdentityTemplate(notDuplicateDomainEntityTemplateName)
@@ -133,9 +131,8 @@ describe('when interchange extension identity templates duplicates multiple name
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

@@ -6,7 +6,7 @@ describe('when AssociationExtension enhances association extension entity', () =
   const associationExtensionName = 'AssociationExtensionName';
   const extensionEntitySuffix = 'Extension';
   let associationExtension: AssociationExtension;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', extensionEntitySuffix };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', extensionEntitySuffix };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

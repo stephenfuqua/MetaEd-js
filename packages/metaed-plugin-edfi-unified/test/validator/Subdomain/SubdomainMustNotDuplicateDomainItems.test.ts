@@ -12,7 +12,7 @@ describe('when validating subdomain entity domain item does not duplicate domain
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain(subdomainName, domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('DomainItem1')
@@ -23,7 +23,7 @@ describe('when validating subdomain entity domain item does not duplicate domain
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -55,7 +55,7 @@ describe('when validating subdomain entity domain item has duplicate domain item
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain(subdomainName, domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem(domainEntityName)
@@ -66,7 +66,7 @@ describe('when validating subdomain entity domain item has duplicate domain item
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -95,7 +95,7 @@ describe('when validating subdomain entity domain item has multiple duplicate do
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain(subdomainName, domainName, '1')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('NotDuplicate')
@@ -110,7 +110,7 @@ describe('when validating subdomain entity domain item has multiple duplicate do
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

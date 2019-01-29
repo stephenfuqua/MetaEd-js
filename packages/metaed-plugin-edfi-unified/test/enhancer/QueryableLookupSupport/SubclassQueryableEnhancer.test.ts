@@ -13,7 +13,7 @@ import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../../src/enhancer/QueryableLookupSupport/SubclassQueryableEnhancer';
 
 describe('when enhancing domain entity subclass queryables', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntitySubclassName1 = 'DomainEntitySubclassName2';
@@ -72,7 +72,7 @@ describe('when enhancing domain entity subclass queryables', () => {
 });
 
 describe('when enhancing domain entity subclass with identity rename of base class queryable', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntitySubclassName1 = 'DomainEntitySubclassName2';
@@ -123,7 +123,7 @@ describe('when enhancing domain entity subclass with identity rename of base cla
 });
 
 describe('when enhancing association subclass queryables', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationSubclassName1 = 'AssociationSubclassName1';
@@ -182,7 +182,7 @@ describe('when enhancing association subclass queryables', () => {
 });
 
 describe('when enhancing association subclass with identity rename of base class queryable', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationSubclassName1 = 'AssociationSubclassName1';

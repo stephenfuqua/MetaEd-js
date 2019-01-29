@@ -71,7 +71,7 @@ describe('when generating ods and comparing it to data standard 3.0 authoritativ
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
@@ -101,7 +101,7 @@ describe('when generating ods and comparing it to data standard 3.0 authoritativ
 
     fileMapForFailure(state);
 
-    const coreNamespace: Namespace | undefined = state.metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = state.metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
 
     const tables: Array<Table> = orderByProp('name')([...tableEntities(state.metaEd, coreNamespace).values()]);
@@ -188,13 +188,13 @@ describe('when generating ods with simple extensions and comparing it to data st
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Extension',
-          namespaceName: 'extension',
+          namespaceName: 'Extension',
           projectExtension: 'Extension',
           projectVersion: '3.0.0',
         },
@@ -282,13 +282,13 @@ describe('when generating ods with student transcript extensions and comparing i
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Extension',
-          namespaceName: 'extension',
+          namespaceName: 'Extension',
           projectExtension: 'Extension',
           projectVersion: '3.0.0',
         },

@@ -1,3 +1,4 @@
+import { newNamespace, Namespace } from 'metaed-core';
 import {
   addColumn,
   addColumns,
@@ -464,6 +465,7 @@ describe('when adding a foreign key with existing foreign key', () => {
 describe('when creating foreign key with single column', () => {
   const booleanColumnName = 'BooleanColumnName';
   const foreignTableSchema = 'ForeignTableSchema';
+  const foreignTableNamespace: Namespace = { ...newNamespace(), namespaceName: foreignTableSchema };
   const foreignTableName = 'ForeignTableName';
   let foreignKey: ForeignKey;
 
@@ -472,6 +474,7 @@ describe('when creating foreign key with single column', () => {
       newForeignKeySourceReference(),
       [Object.assign(newBooleanColumn(), { name: booleanColumnName })],
       foreignTableSchema,
+      foreignTableNamespace,
       foreignTableName,
       ForeignKeyStrategyDefault,
     );
@@ -506,6 +509,7 @@ describe('when creating foreign key with multiple columns', () => {
   const booleanColumnName1 = 'BooleanColumnName1';
   const booleanColumnName2 = 'BooleanColumnName2';
   const foreignTableSchema = 'ForeignTableSchema';
+  const foreignTableNamespace: Namespace = { ...newNamespace(), namespaceName: foreignTableSchema };
   const foreignTableName = 'ForeignTableName';
   let foreignKey: ForeignKey;
 
@@ -517,6 +521,7 @@ describe('when creating foreign key with multiple columns', () => {
         Object.assign(newBooleanColumn(), { name: booleanColumnName2 }),
       ],
       foreignTableSchema,
+      foreignTableNamespace,
       foreignTableName,
       ForeignKeyStrategyDefault,
     );

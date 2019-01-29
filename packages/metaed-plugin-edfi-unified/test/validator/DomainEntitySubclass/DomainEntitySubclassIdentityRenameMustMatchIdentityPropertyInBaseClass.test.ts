@@ -16,7 +16,7 @@ describe('when domain entity subclass renames base identity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
@@ -32,7 +32,7 @@ describe('when domain entity subclass renames base identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -49,6 +49,52 @@ describe('when domain entity subclass renames base identity', () => {
   });
 });
 
+describe('when domain entity subclass renames base identity across dependent namespaces', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('EntityDocumentation')
+      .withStringIdentity('PropertyName1', 'PropertyDocumentation', '100')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntitySubclass('SubclassName', `EdFi.${entityName}`)
+      .withDocumentation('EntityDocumentation')
+      .withStringIdentityRename('PropertyName2', 'PropertyName1', 'PropertyDocumentation', '100')
+      .withEndDomainEntitySubclass()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+    failures = validate(metaEd);
+  });
+
+  it('should build one domain entity', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+  });
+
+  it('should build one domain entity subclass', () => {
+    expect(extensionNamespace.entity.domainEntitySubclass.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when domain entity subclass does not rename identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const entityName = 'EntityName';
@@ -57,7 +103,7 @@ describe('when domain entity subclass does not rename identity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation3', '100')
@@ -73,7 +119,7 @@ describe('when domain entity subclass does not rename identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -98,7 +144,7 @@ describe('when domain entity subclass renames base identity that does not exist'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringIdentity('PropertyName1', 'PropertyDocumentation3', '100')
@@ -114,7 +160,7 @@ describe('when domain entity subclass renames base identity that does not exist'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -143,7 +189,7 @@ describe('when domain entity subclass renames base property that is not identity
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withStringProperty('PropertyName1', 'PropertyDocumentation', true, false, '100')
@@ -159,7 +205,7 @@ describe('when domain entity subclass renames base property that is not identity
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -187,7 +233,7 @@ describe('when domain entity subclass extends non existent entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntitySubclass('SubclassName', 'EntityName')
       .withDocumentation('EntityDocumentation')
       .withStringIdentityRename('PropertyName2', 'PropertyName1', 'PropertyDocumentation', '100')
@@ -197,7 +243,7 @@ describe('when domain entity subclass extends non existent entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

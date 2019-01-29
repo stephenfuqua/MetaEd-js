@@ -1,4 +1,4 @@
-import { asCommonProperty, getEntityForNamespaces } from 'metaed-core';
+import { asCommonProperty, getEntityFromNamespaceChain, Namespace } from 'metaed-core';
 import { ModelBase, EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, newTable, createForeignKeyUsingSourceReference } from '../../model/database/Table';
 import { appendOverlapping } from '../../shared/Utility';
@@ -27,18 +27,22 @@ function buildExtensionTables(
   _buildStrategy: BuildStrategy,
   joinTableName: string,
   joinTableSchema: string,
+  joinTableNamespace: Namespace,
   tables: Array<Table>,
   tableFactory: TableBuilderFactory,
 ): void {
-  const commonExtension: ModelBase | null = getEntityForNamespaces(
+  const commonExtension: ModelBase | null = getEntityFromNamespaceChain(
     property.metaEdName,
-    [property.namespace],
+    // assume common extension is in same namespace
+    property.namespace.namespaceName,
+    property.namespace,
     'commonExtension',
   );
   if (commonExtension == null) return;
 
   const extensionTable: Table = Object.assign(newTable(), {
-    schema: commonExtension.namespace.namespaceName,
+    namespace: commonExtension.namespace,
+    schema: commonExtension.namespace.namespaceName.toLowerCase(),
     name: overlapCollapsingJoinTableName(
       parentTableStrategy.name,
       property.data.edfiOds.odsName + commonExtension.namespace.extensionEntitySuffix,
@@ -66,6 +70,7 @@ function buildExtensionTables(
     },
     primaryKeys,
     joinTableSchema,
+    joinTableNamespace,
     joinTableName,
     ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
   );
@@ -77,7 +82,7 @@ function buildExtensionTables(
     const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(odsProperty);
     tableBuilder.buildTables(
       odsProperty,
-      TableStrategy.extension(extensionTable, joinTableSchema, joinTableName),
+      TableStrategy.extension(extensionTable, joinTableSchema, joinTableNamespace, joinTableName),
       primaryKeys,
       BuildStrategyDefault,
       tables,
@@ -118,14 +123,14 @@ export function commonExtensionPropertyTableBuilder(
         commonProperty.data.edfiOds.odsName,
       );
 
-      const joinTableSchema: string = commonProperty.referencedEntity.namespace.namespaceName;
       buildExtensionTables(
         commonProperty,
         parentTableStrategy,
         primaryKeys,
         buildStrategy,
         joinTableName,
-        joinTableSchema,
+        commonProperty.referencedEntity.namespace.namespaceName.toLowerCase(),
+        commonProperty.referencedEntity.namespace,
         tables,
         tableFactory,
       );

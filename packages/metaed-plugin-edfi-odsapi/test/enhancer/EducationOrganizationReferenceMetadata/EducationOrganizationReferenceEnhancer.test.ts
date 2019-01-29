@@ -27,7 +27,7 @@ function buildEducationOrganizationEntity(namespace: Namespace): DomainEntity {
 }
 
 describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -61,7 +61,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
 });
 
 describe('when EducationOrganizationReferenceEnhancer enhances namespace with no EducationOrganization Subclass', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreNamespace: Namespace = Object.assign(newNamespace(), {
     namespaceName,
@@ -82,7 +82,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with no
 });
 
 describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -119,10 +119,10 @@ describe('when EducationOrganizationReferenceEnhancer enhances namespace with Ed
 });
 
 describe('when EducationOrganizationReferenceEnhancer enhances extension namespace with EducationOrganization Subclass', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const entityIdName1 = 'EntityId1';
-  const extensionNamespaceName = 'extension';
+  const extensionNamespaceName = 'Extension';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreNamespace: Namespace = Object.assign(newNamespace(), {
     namespaceName,
@@ -169,7 +169,7 @@ describe('when EducationOrganizationReferenceEnhancer enhances extension namespa
 });
 
 describe('when EducationOrganizationReferenceEnhancer enhances namespace with EducationOrganization Subclass with no identity rename', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const entityName1 = 'Entity1';
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
 

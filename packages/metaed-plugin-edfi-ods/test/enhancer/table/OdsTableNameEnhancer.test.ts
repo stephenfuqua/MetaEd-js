@@ -10,7 +10,7 @@ import { Descriptor, DomainEntity, Enumeration, MetaEdEnvironment, SchoolYearEnu
 import { enhance } from '../../../src/enhancer/OdsTableNameEnhancer';
 
 describe('when enhancing a domain entity with ods table name', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -34,7 +34,7 @@ describe('when enhancing a domain entity with ods table name', () => {
 });
 
 describe('when enhancing a descriptor with ods table name', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorName = 'DescriptorName';
@@ -60,7 +60,7 @@ describe('when enhancing a descriptor with ods table name', () => {
 });
 
 describe('when enhancing an enumeration with ods table name', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const enumerationName = 'EnumerationName';
@@ -84,7 +84,7 @@ describe('when enhancing an enumeration with ods table name', () => {
 });
 
 describe('when enhancing an school year enumeration with ods table name', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const schoolYearEnumerationName = 'SchoolYearEnumerationName';

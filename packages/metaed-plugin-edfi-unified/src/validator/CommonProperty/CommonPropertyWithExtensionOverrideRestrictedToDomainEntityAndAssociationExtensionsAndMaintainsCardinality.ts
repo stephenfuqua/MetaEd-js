@@ -7,7 +7,7 @@ import {
   ValidationFailure,
   Namespace,
 } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 const validEntityTypes: ModelType[] = ['domainEntityExtension', 'associationExtension'];
 
@@ -20,59 +20,62 @@ function cardinalitiesMatch(originalProperty: EntityProperty, overrideProperty: 
   );
 }
 
-function parentEntityProperty(namespaces: Array<Namespace>, overrideProperty: EntityProperty): EntityProperty | undefined {
+function baseEntityMatchingProperty(namespace: Namespace, overrideProperty: EntityProperty): EntityProperty | undefined {
   if (!validEntityTypes.includes(overrideProperty.parentEntity.type)) return undefined;
-  // parent type is base type being extended - sketchy string manipulation here
-  const parentType: ModelType = overrideProperty.parentEntity.type.replace('Extension', '') as ModelType;
-  const parentTypeSubclassOption: ModelType = `${parentType}Subclass` as ModelType;
-  let parentEntity: TopLevelEntity | null = getEntityForNamespaces(
-    overrideProperty.parentEntityName,
-    namespaces,
-    parentTypeSubclassOption,
+  // base type being extended - sketchy string manipulation here
+  const baseType: ModelType = overrideProperty.parentEntity.type.replace('Extension', '') as ModelType;
+  const baseSubclassType: ModelType = `${baseType}Subclass` as ModelType;
+
+  const baseEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
+    overrideProperty.parentEntity.baseEntityName,
+    overrideProperty.parentEntity.baseEntityNamespaceName,
+    namespace,
+    baseSubclassType,
+    baseType,
   ) as TopLevelEntity | null;
 
-  if (parentEntity == null) {
-    parentEntity = getEntityForNamespaces(
-      overrideProperty.parentEntityName,
-      namespaces,
-      parentType,
-    ) as TopLevelEntity | null;
-    if (parentEntity == null) return undefined;
-  }
+  if (baseEntity == null) return undefined;
 
-  return parentEntity.properties.find(
-    property => property.metaEdName === overrideProperty.metaEdName && property.type === overrideProperty.type,
+  return baseEntity.properties.find(
+    property =>
+      property.metaEdName === overrideProperty.metaEdName &&
+      property.referencedNamespaceName === overrideProperty.referencedNamespaceName &&
+      property.type === overrideProperty.type,
   );
 }
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
-  metaEd.propertyIndex.common.forEach(common => {
-    if (!common.isExtensionOverride) return;
-    const parentProperty: EntityProperty | undefined = parentEntityProperty(
-      [common.namespace, ...common.namespace.dependencies],
-      common,
+  metaEd.propertyIndex.common.forEach(commonProperty => {
+    if (!commonProperty.isExtensionOverride) return;
+    const baseMatchingProperty: EntityProperty | undefined = baseEntityMatchingProperty(
+      commonProperty.namespace,
+      commonProperty,
     );
-    if (parentProperty == null) {
+    if (baseMatchingProperty == null) {
       failures.push({
         validatorName:
           'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
         category: 'error',
-        message: `'common extension' is invalid for property ${common.metaEdName} on ${
-          common.parentEntity.typeHumanizedName
-        } ${common.parentEntity.metaEdName}. 'common extension' is only valid for referencing Common extensions.`,
-        sourceMap: (common.sourceMap as CommonPropertySourceMap).isExtensionOverride,
+        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${
+          commonProperty.parentEntity.typeHumanizedName
+        } ${
+          commonProperty.parentEntity.metaEdName
+        }. 'common extension' is only valid for referencing common properties with the same declaration as in the base entity.`,
+        sourceMap: (commonProperty.sourceMap as CommonPropertySourceMap).isExtensionOverride,
         fileMap: null,
       });
-    } else if (!cardinalitiesMatch(parentProperty, common)) {
+    } else if (!cardinalitiesMatch(baseMatchingProperty, commonProperty)) {
       failures.push({
         validatorName:
           'CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality',
         category: 'error',
-        message: `'common extension' is invalid for property ${common.metaEdName} on ${
-          common.parentEntity.typeHumanizedName
-        } ${common.parentEntity.metaEdName}. 'common extension' must maintain original cardinality.`,
-        sourceMap: (common.sourceMap as CommonPropertySourceMap).isExtensionOverride,
+        message: `'common extension' is invalid for property ${commonProperty.metaEdName} on ${
+          commonProperty.parentEntity.typeHumanizedName
+        } ${
+          commonProperty.parentEntity.metaEdName
+        }. 'common extension' must maintain the same cardinality as in the base entity.`,
+        sourceMap: (commonProperty.sourceMap as CommonPropertySourceMap).isExtensionOverride,
         fileMap: null,
       });
     }

@@ -31,12 +31,7 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when parsing top level entities should not parse with extraneous xyz - message',
-    );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when parsing top level entities should not parse with extraneous xyz - sourceMap',
-    );
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('should not parse with multiple keyword syntax errors', () => {
@@ -63,18 +58,7 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when parsing top level entities should not parse with multiple keyword syntax errors - message',
-    );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap',
-    );
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when parsing top level entities should not parse with multiple keyword syntax errors - message',
-    );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when parsing top level entities should not parse with multiple keyword syntax errors - sourceMap',
-    );
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('another example', () => {
@@ -92,8 +76,7 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities another example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing top level entities another example - sourceMap');
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('and another example', () => {
@@ -112,10 +95,7 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities and another example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when parsing top level entities and another example - sourceMap',
-    );
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('one more example', () => {
@@ -134,15 +114,14 @@ describe('when parsing top level entities', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildTopLevelEntity(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing top level entities one more example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing top level entities one more example - sourceMap');
+    expect(validationFailures).toMatchSnapshot();
   });
 });
 
 describe('when parsing full MetaEd', () => {
   it('should parse with valid MetaEd', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity TestEntity',
       'documentation "This is the first line\nThis is more..."',
       '    integer MyProperty',
@@ -159,7 +138,7 @@ describe('when parsing full MetaEd', () => {
 
   it('should not parse with extraneous xyz', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity TestEntity',
       'documentation "This is the first line\nThis is more..."',
       '    integer MyProperty xyz',
@@ -172,17 +151,12 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with extraneous xyz - message',
-    );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with extraneous xyz - sourceMap',
-    );
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('should not parse with multiple keyword syntax errors', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff additions\n',
       'descriptor EducatorEffectiveness\n',
       'documentation "Indicates the educator effectiveness label as identified by the school district for each educator. The effectiveness labels should be based upon the employees most recent evaluation."\n',
@@ -206,23 +180,12 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(2);
-    expect(validationFailures[0].message).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with multiple keyword syntax errors - message',
-    );
-    expect(validationFailures[0].sourceMap).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap',
-    );
-    expect(validationFailures[1].message).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with multiple keyword syntax errors - message',
-    );
-    expect(validationFailures[1].sourceMap).toMatchSnapshot(
-      'when parsing full MetaEd should not parse with multiple keyword syntax errors - sourceMap',
-    );
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('another example', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff additions\n',
       'descriptor EducatorEffectiveness\n',
       'documentation "Indicates the educator effectiveness label as identified by the school district for each educator. The effectiveness labels should be based upon the employees most recent evaluation."\n',
@@ -237,13 +200,12 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing full MetaEd another example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing full MetaEd another example - sourceMap');
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('and another example', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff\n',
       'documentation "Something"\n',
       'descriptor EducatorEffectiveness\n',
@@ -259,13 +221,12 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing full MetaEd and another example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing full MetaEd and another example - sourceMap');
+    expect(validationFailures).toMatchSnapshot();
   });
 
   it('one more example', () => {
     const inputText = [
-      'Begin Namespace extension EXTENSION',
+      'Begin Namespace Extension EXTENSION',
       'Domain Entity Staff\n',
       'documentation "Something"\n',
       'decscriptor EducatorEffectiveness\n',
@@ -281,7 +242,6 @@ describe('when parsing full MetaEd', () => {
     const errorListener = new MetaEdErrorListener(validationFailures);
     buildMetaEd(errorListener, inputText);
     expect(validationFailures).toHaveLength(1);
-    expect(validationFailures[0].message).toMatchSnapshot('when parsing full MetaEd one more example - message');
-    expect(validationFailures[0].sourceMap).toMatchSnapshot('when parsing full MetaEd one more example - sourceMap');
+    expect(validationFailures).toMatchSnapshot();
   });
 });

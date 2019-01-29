@@ -25,7 +25,7 @@ describe('when merging property of an extension entity with a core property of t
     const baseEntityName = 'BaseEntityName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -43,13 +43,13 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
       .withEndDomainEntity()
 
-      .withStartAssociationExtension(baseEntityName)
+      .withStartAssociationExtension(`EdFi.${baseEntityName}`)
       .withDomainEntityProperty(domainEntityName3, 'Documentation', false, false)
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndAssociationExtension()
@@ -60,7 +60,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -97,7 +97,7 @@ describe('when merging property of an extension entity with a core property of t
     const baseEntityName = 'BaseEntityName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -115,13 +115,13 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
       .withEndDomainEntity()
 
-      .withStartAssociationExtension(baseEntityName)
+      .withStartAssociationExtension(`EdFi.${baseEntityName}`)
       .withDomainEntityProperty(domainEntityName3, 'Documentation', false, false, false, 'ContextName')
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndAssociationExtension()
@@ -132,7 +132,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',
@@ -162,7 +162,7 @@ describe('when merging property of an extension entity with a core property of t
     const baseEntityName = 'BaseEntityName';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IntegerPropertyName1', 'Documentation')
@@ -180,13 +180,13 @@ describe('when merging property of an extension entity with a core property of t
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartDomainEntity(domainEntityName3)
       .withDocumentation('Documentation')
-      .withDomainEntityIdentity(domainEntityName2, 'Documentation')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName2}`, 'Documentation')
       .withEndDomainEntity()
 
-      .withStartAssociationExtension(baseEntityName)
+      .withStartAssociationExtension(`EdFi.${baseEntityName}`)
       .withDomainEntityProperty(domainEntityName3, 'Documentation', false, false, false, contextName)
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndAssociationExtension()
@@ -196,7 +196,7 @@ describe('when merging property of an extension entity with a core property of t
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     initializeUnifiedPlugin().enhancer.forEach(enhance => enhance(metaEd));
     metaEd.plugin.set(
       'edfiOdsApi',

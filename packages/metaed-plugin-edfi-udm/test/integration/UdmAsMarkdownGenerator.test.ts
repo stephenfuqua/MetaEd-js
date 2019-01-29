@@ -14,7 +14,7 @@ describe('When generating interchange brief with no extended references or descr
 
   let generatedResults: Array<string>;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(async () => {

@@ -15,7 +15,7 @@ describe('when validating association property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withAssociationProperty('AssociationName', 'AssociationDocumentation', true, false)
@@ -25,7 +25,7 @@ describe('when validating association property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -53,7 +53,7 @@ describe('when validating choice property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withChoiceProperty('ChoiceName', 'ChoiceDocumentation', true, false)
@@ -63,7 +63,7 @@ describe('when validating choice property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -91,7 +91,7 @@ describe('when validating common property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withCommonProperty('CommonName', 'CommonDocumentation', true, false)
@@ -101,7 +101,7 @@ describe('when validating common property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -129,7 +129,7 @@ describe('when validating currency property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withCurrencyProperty('CurrencyName', 'CurrencyDocumentation', true, false)
@@ -139,7 +139,7 @@ describe('when validating currency property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -167,7 +167,7 @@ describe('when validating date property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDateProperty('DateName', 'DateDocumentation', true, false)
@@ -177,7 +177,7 @@ describe('when validating date property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -207,7 +207,7 @@ describe('when validating datetime property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDatetimeProperty('DatetimeName', 'DatetimeDocumentation', true, false)
@@ -217,7 +217,7 @@ describe('when validating datetime property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -247,7 +247,7 @@ describe('when validating decimal property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDecimalProperty('DecimalName', 'DecimalDocumentation', true, false, '10', '2')
@@ -257,7 +257,7 @@ describe('when validating decimal property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -285,7 +285,7 @@ describe('when validating descriptor property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDescriptorProperty('DescriptorName', 'DescriptorDocumentation', true, false)
@@ -295,7 +295,7 @@ describe('when validating descriptor property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -323,7 +323,7 @@ describe('when validating domainEntity property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityProperty('DomainEntityName', 'DomainEntityDocumentation', true, false)
@@ -333,7 +333,7 @@ describe('when validating domainEntity property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -361,7 +361,7 @@ describe('when validating duration property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withDurationProperty('DurationName', 'DurationDocumentation', true, false)
@@ -371,7 +371,7 @@ describe('when validating duration property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -399,7 +399,7 @@ describe('when validating enumeration property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withEnumerationProperty('EnumerationName', 'EnumerationDocumentation', true, false)
@@ -409,7 +409,7 @@ describe('when validating enumeration property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -437,7 +437,7 @@ describe('when validating first domain entity property is missing metaEdId', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation('AssociationName')
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty(
@@ -456,7 +456,7 @@ describe('when validating first domain entity property is missing metaEdId', () 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -484,7 +484,7 @@ describe('when validating inline common property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withInlineCommonProperty('InlineCommonName', 'InlineCommonDocumentation', true, false)
@@ -494,7 +494,7 @@ describe('when validating inline common property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -522,7 +522,7 @@ describe('when validating integer property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerProperty('IntegerName', 'IntegerDocumentation', true, false)
@@ -532,7 +532,7 @@ describe('when validating integer property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -560,7 +560,7 @@ describe('when validating percent property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withPercentProperty('PercentName', 'PercentDocumentation', true, false)
@@ -570,7 +570,7 @@ describe('when validating percent property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -598,7 +598,7 @@ describe('when validating school year enumeration property is missing metaEdId',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withEnumerationProperty('SchoolYear', 'SchoolYearEnumerationDocumentation', true, false)
@@ -608,7 +608,7 @@ describe('when validating school year enumeration property is missing metaEdId',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -636,7 +636,7 @@ describe('when validating second domain entity property is missing metaEdId', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation('AssociationName')
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty(
@@ -655,7 +655,7 @@ describe('when validating second domain entity property is missing metaEdId', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -683,7 +683,7 @@ describe('when validating shared decimal property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedDecimalProperty('SharedDecimalName', null, 'SharedDecimalDocumentation', true, false)
@@ -693,7 +693,7 @@ describe('when validating shared decimal property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -721,7 +721,7 @@ describe('when validating shared integer property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedIntegerProperty('SharedIntegerName', null, 'SharedIntegerDocumentation', true, false)
@@ -731,7 +731,7 @@ describe('when validating shared integer property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -759,7 +759,7 @@ describe('when validating shared short property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedShortProperty('SharedShortName', null, 'SharedShortDocumentation', true, false)
@@ -769,7 +769,7 @@ describe('when validating shared short property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -797,7 +797,7 @@ describe('when validating shared string property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedStringProperty('SharedStringName', null, 'SharedStringDocumentation', true, false)
@@ -807,7 +807,7 @@ describe('when validating shared string property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -835,7 +835,7 @@ describe('when validating short property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withShortProperty('ShortName', 'ShortDocumentation', true, false)
@@ -845,7 +845,7 @@ describe('when validating short property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -873,7 +873,7 @@ describe('when validating string property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withStringProperty('StringName', 'StringDocumentation', true, false, '100')
@@ -883,7 +883,7 @@ describe('when validating string property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -911,7 +911,7 @@ describe('when validating time property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withTimeProperty('TimeName', 'TimeDocumentation', true, false)
@@ -921,7 +921,7 @@ describe('when validating time property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -949,7 +949,7 @@ describe('when validating year property is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withYearProperty('YearName', 'YearDocumentation', true, false)
@@ -959,7 +959,7 @@ describe('when validating year property is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -987,7 +987,7 @@ describe('when validating association property in extension namespace is missing
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withAssociationProperty('AssociationName', 'AssociationDocumentation', true, false)
@@ -997,7 +997,7 @@ describe('when validating association property in extension namespace is missing
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

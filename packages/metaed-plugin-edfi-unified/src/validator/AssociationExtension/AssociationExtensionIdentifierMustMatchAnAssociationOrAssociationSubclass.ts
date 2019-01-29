@@ -1,18 +1,28 @@
 import { MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.associationExtension.forEach(entity => {
-      if (getEntityForNamespaces(entity.metaEdName, namespace.dependencies, 'association', 'associationSubclass') == null) {
+      if (
+        getEntityFromNamespaceChain(
+          entity.metaEdName,
+          entity.baseEntityNamespaceName,
+          entity.namespace,
+          'association',
+          'associationSubclass',
+        ) == null
+      ) {
         failures.push({
           validatorName: 'AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass',
           category: 'error',
           message: `Association additions '${
             entity.metaEdName
-          }' does not match any declared Association or Association Subclass.`,
-          sourceMap: entity.sourceMap.type,
+          }' does not match any declared Association or Association Subclass in namespace ${
+            entity.baseEntityNamespaceName
+          }.`,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });
       }

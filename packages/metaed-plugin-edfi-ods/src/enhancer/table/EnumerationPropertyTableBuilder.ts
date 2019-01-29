@@ -38,7 +38,8 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         const foreignKey: ForeignKey = createForeignKey(
           property,
           [enumerationColumn],
-          enumeration.referencedEntity.namespace.namespaceName,
+          enumeration.referencedEntity.namespace.namespaceName.toLowerCase(),
+          enumeration.referencedEntity.namespace,
           enumeration.referencedEntity.data.edfiOds.odsTableName,
           foreignKeyStrategyFor(enumeration),
         );
@@ -46,6 +47,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         addColumns(parentTableStrategy.table, [enumerationColumn], buildStrategy.leafColumns(ColumnTransformUnchanged));
       } else {
         const joinTable: Table = Object.assign(newTable(), {
+          namespace: parentTableStrategy.schemaNamespace,
           schema: parentTableStrategy.schema,
           name: baseNameCollapsingJoinTableNamer(enumeration, parentTableStrategy.name, buildStrategy.parentContext()),
           description: enumeration.documentation,
@@ -59,6 +61,7 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
           property,
           parentPrimaryKeys,
           parentTableStrategy.schema,
+          parentTableStrategy.schemaNamespace,
           parentTableStrategy.name,
           ForeignKeyStrategy.foreignColumnCascade(true, enumeration.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
         );
@@ -76,7 +79,8 @@ export function enumerationPropertyTableBuilder(factory: ColumnCreatorFactory): 
         const foreignKey: ForeignKey = createForeignKey(
           property,
           columns,
-          enumeration.referencedEntity.namespace.namespaceName,
+          enumeration.referencedEntity.namespace.namespaceName.toLowerCase(),
+          enumeration.referencedEntity.namespace,
           enumeration.referencedEntity.data.edfiOds.odsTableName,
           foreignKeyStrategyFor(enumeration),
         );

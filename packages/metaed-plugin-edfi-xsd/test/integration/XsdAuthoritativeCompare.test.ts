@@ -49,7 +49,7 @@ describe('when generating xsd and comparing it to data standard 2.0 authoritativ
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '2.0.0',
         },

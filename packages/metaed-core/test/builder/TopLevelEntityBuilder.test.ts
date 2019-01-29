@@ -28,7 +28,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building association property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -71,7 +71,7 @@ describe('when building association property', () => {
 describe('when building association property with weak reference', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -132,7 +132,7 @@ describe('when building association property with weak reference', () => {
 describe('when building boolean property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -176,7 +176,7 @@ describe('when building boolean property', () => {
 describe('when building choice property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -220,7 +220,7 @@ describe('when building choice property', () => {
 describe('when building common property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -263,7 +263,7 @@ describe('when building common property', () => {
 describe('when building common property with extension override', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -323,7 +323,7 @@ describe('when building common property with extension override', () => {
 describe('when building currency property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -367,7 +367,7 @@ describe('when building currency property', () => {
 describe('when building date property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -411,7 +411,7 @@ describe('when building date property', () => {
 describe('when building datetime property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -454,7 +454,7 @@ describe('when building datetime property', () => {
 // DecimalProperty
 describe('when building decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -566,7 +566,7 @@ describe('when building decimal property', () => {
 describe('when building descriptor property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -610,7 +610,7 @@ describe('when building descriptor property', () => {
 describe('when building domain entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -654,7 +654,7 @@ describe('when building domain entity property', () => {
 describe('when building domain entity property with weak reference', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -716,7 +716,7 @@ describe('when building domain entity property with weak reference', () => {
 describe('when building duration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -761,7 +761,7 @@ describe('when building duration property', () => {
 describe('when building required entity properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'entityDocumentation';
@@ -871,7 +871,7 @@ describe('when building required entity properties', () => {
 describe('when building entity property with inherited documentation', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -915,7 +915,7 @@ describe('when building entity property with inherited documentation', () => {
 describe('when building identity entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -963,7 +963,7 @@ describe('when building identity entity property', () => {
 describe('when building optional entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1001,7 +1001,7 @@ describe('when building optional entity property', () => {
 describe('when building required collection entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1039,7 +1039,7 @@ describe('when building required collection entity property', () => {
 describe('when building optional collection entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1077,7 +1077,7 @@ describe('when building optional collection entity property', () => {
 describe('when building entity property with context', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1117,7 +1117,7 @@ describe('when building entity property with context', () => {
 describe('when building entity property with shortened context', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1158,7 +1158,7 @@ describe('when building entity property with shortened context', () => {
 describe('when building renamed identity entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1218,7 +1218,7 @@ describe('when building renamed identity entity property', () => {
 describe('when building queryable entity property ', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1264,7 +1264,7 @@ describe('when building queryable entity property ', () => {
 describe('when building shared entity property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1306,7 +1306,7 @@ describe('when building shared entity property', () => {
 describe('when building enumeration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1350,7 +1350,7 @@ describe('when building enumeration property', () => {
 describe('when building inline common property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1393,7 +1393,7 @@ describe('when building inline common property', () => {
 // IntegerProperty
 describe('when building integer property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1477,7 +1477,7 @@ describe('when building integer property', () => {
 // TODO: add type, mergeProperty, and targetProperty source maps
 describe('when building merged property reference', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -1572,7 +1572,7 @@ describe('when building merged property reference', () => {
 
 describe('when building multiple merge property references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
   const entityDocumentation = 'Documentation';
@@ -1692,7 +1692,7 @@ describe('when building multiple merge property references', () => {
 
 describe('when building multiple merge property references for a shared simple type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
 
@@ -1813,7 +1813,7 @@ describe('when building multiple merge property references for a shared simple t
 describe('when building percent property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1858,7 +1858,7 @@ describe('when building percent property', () => {
 describe('when building referential property with merged properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1911,7 +1911,7 @@ describe('when building referential property with merged properties', () => {
 describe('when building school year enumeration property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1955,7 +1955,7 @@ describe('when building school year enumeration property', () => {
 describe('when building shared decimal property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -1999,7 +1999,7 @@ describe('when building shared decimal property', () => {
 describe('when building shared integer property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -2043,7 +2043,7 @@ describe('when building shared integer property', () => {
 describe('when building shared string property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -2086,7 +2086,7 @@ describe('when building shared string property', () => {
 // ShortProperty
 describe('when building short property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -2169,7 +2169,7 @@ describe('when building short property', () => {
 // StringProperty
 describe('when building string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -2253,7 +2253,7 @@ describe('when building string property', () => {
 describe('when building time property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';
@@ -2297,7 +2297,7 @@ describe('when building time property', () => {
 describe('when building year property', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const entityDocumentation = 'Documentation';

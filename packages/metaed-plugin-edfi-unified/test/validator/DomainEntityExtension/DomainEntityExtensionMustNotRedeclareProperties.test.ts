@@ -18,15 +18,15 @@ describe('when domain entity extension correctly has different property names', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -35,9 +35,8 @@ describe('when domain entity extension correctly has different property names', 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -62,15 +61,15 @@ describe('when domain entity extension has duplicate property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -79,9 +78,8 @@ describe('when domain entity extension has duplicate property name', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -110,15 +108,15 @@ describe('when domain entity extension has duplicate property name but different
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false, 'RoleName')
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -127,9 +125,8 @@ describe('when domain entity extension has duplicate property name but different
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -151,7 +148,7 @@ describe('when domain entity subclass and extension have duplicate property name
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyOne', 'doc', true, false)
@@ -163,8 +160,8 @@ describe('when domain entity subclass and extension have duplicate property name
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(subclassEntityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${subclassEntityName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -174,9 +171,8 @@ describe('when domain entity subclass and extension have duplicate property name
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -207,7 +203,7 @@ describe('when domain entity extension has multiple duplicates', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName1, 'doc', true, false)
@@ -215,8 +211,8 @@ describe('when domain entity extension has multiple duplicates', () => {
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName1, 'doc', true, false)
       .withBooleanProperty(duplicatePropertyName2, 'doc', true, false)
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
@@ -227,9 +223,8 @@ describe('when domain entity extension has multiple duplicates', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -261,15 +256,15 @@ describe('when domain entity extension has duplicate common property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -278,9 +273,8 @@ describe('when domain entity extension has duplicate common property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -301,15 +295,15 @@ describe('when domain entity extension has duplicate common extension override p
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -318,9 +312,8 @@ describe('when domain entity extension has duplicate common extension override p
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

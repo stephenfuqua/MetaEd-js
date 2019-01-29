@@ -17,7 +17,7 @@ describe('when association extension correctly has different property names', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -26,8 +26,8 @@ describe('when association extension correctly has different property names', ()
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -36,9 +36,8 @@ describe('when association extension correctly has different property names', ()
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -63,7 +62,7 @@ describe('when association extension has duplicate property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -72,8 +71,8 @@ describe('when association extension has duplicate property name', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -82,9 +81,8 @@ describe('when association extension has duplicate property name', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -113,7 +111,7 @@ describe('when association extension has duplicate base property name but differ
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -122,8 +120,8 @@ describe('when association extension has duplicate base property name but differ
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false, 'RoleName')
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -132,9 +130,8 @@ describe('when association extension has duplicate base property name but differ
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -157,7 +154,7 @@ describe('when association extension has multiple duplicates', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -167,8 +164,8 @@ describe('when association extension has multiple duplicates', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty(duplicatePropertyName1, 'doc', true, false)
       .withBooleanProperty(duplicatePropertyName2, 'doc', true, false)
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
@@ -179,9 +176,8 @@ describe('when association extension has multiple duplicates', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -213,7 +209,7 @@ describe('when association extension has duplicate common property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -222,8 +218,8 @@ describe('when association extension has duplicate common property', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -232,9 +228,8 @@ describe('when association extension has duplicate common property', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -259,7 +254,7 @@ describe('when association extension has duplicate common extension override pro
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -268,8 +263,8 @@ describe('when association extension has duplicate common extension override pro
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -278,9 +273,8 @@ describe('when association extension has duplicate common extension override pro
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

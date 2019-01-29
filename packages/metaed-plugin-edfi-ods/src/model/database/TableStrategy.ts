@@ -1,3 +1,4 @@
+import { Namespace } from 'metaed-core';
 import { Table } from './Table';
 
 export class TableStrategy {
@@ -5,11 +6,14 @@ export class TableStrategy {
 
   schema: string;
 
+  schemaNamespace: Namespace;
+
   name: string;
 
   constructor(table: Table) {
     this.table = table;
     this.schema = table.schema;
+    this.schemaNamespace = table.namespace;
     this.name = table.name;
   }
 
@@ -17,21 +21,17 @@ export class TableStrategy {
     return new TableStrategy(table);
   }
 
-  static extension(table: Table, baseSchemaName: string, baseTableName: string) {
+  static extension(table: Table, baseSchemaName: string, baseSchemaNamespace: Namespace, baseTableName: string) {
     // eslint-disable-next-line no-use-before-define
-    return new ExtensionTableStrategy(table, baseSchemaName, baseTableName);
+    return new ExtensionTableStrategy(table, baseSchemaName, baseSchemaNamespace, baseTableName);
   }
 }
 
 class ExtensionTableStrategy extends TableStrategy {
-  constructor(table: Table, baseSchemaName: string, baseTableName: string) {
+  constructor(table: Table, baseSchemaName: string, baseSchemaNamespace: Namespace, baseTableName: string) {
     super(table);
     this.schema = baseSchemaName;
+    this.schemaNamespace = baseSchemaNamespace;
     this.name = baseTableName;
   }
 }
-
-// export const TableStrategy = {
-//   default: (table: Table) => (): { table: Table, schema: string, name: string } => ({ table, schema: table.schema, name: table.name }),
-//   extension: (table: Table, name: string, schema: string) => (): { table: Table, schema: string, name: string } => ({ table, schema, name }),
-// };

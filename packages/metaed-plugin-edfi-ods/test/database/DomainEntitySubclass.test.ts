@@ -17,7 +17,7 @@ jest.setTimeout(40000);
 
 describe('when core domain entity subclass has identity rename property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -31,7 +31,7 @@ describe('when core domain entity subclass has identity rename property', () => 
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
       .withEndDomainEntity()
 
-      .withStartDomainEntitySubclass(domainEntitySubclassName, domainEntityName)
+      .withStartDomainEntitySubclass(domainEntitySubclassName, `${namespaceName}.${domainEntityName}`)
       .withDocumentation('Documentation')
       .withIntegerIdentityRename(integerPropertyName2, integerPropertyName1, 'Documentation')
       .withEndDomainEntitySubclass()
@@ -100,8 +100,8 @@ describe('when core domain entity subclass has identity rename property', () => 
 
 describe('when extension domain entity subclasses core domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -117,7 +117,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntitySubclass(domainEntitySubclassName, domainEntityName)
+      .withStartDomainEntitySubclass(domainEntitySubclassName, `${namespaceName}.${domainEntityName}`)
       .withDocumentation('Documentation')
       .withIntegerIdentityRename(integerPropertyName2, integerPropertyName1, 'Documentation')
       .withEndDomainEntitySubclass()
@@ -192,7 +192,7 @@ describe('when extension domain entity subclasses core domain entity', () => {
 
 describe('when extension domain entity subclasses extension domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const extension = 'extension';
+  const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const integerPropertyName1 = 'IntegerPropertyName1';

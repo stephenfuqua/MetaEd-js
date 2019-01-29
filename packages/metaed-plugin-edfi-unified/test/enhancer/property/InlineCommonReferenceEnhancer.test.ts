@@ -4,7 +4,7 @@ import { MetaEdEnvironment, InlineCommonProperty, Common, Namespace } from 'meta
 import { enhance } from '../../../src/enhancer/property/InlineCommonReferenceEnhancer';
 
 describe('when enhancing inlineCommon property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -13,6 +13,7 @@ describe('when enhancing inlineCommon property', () => {
   beforeAll(() => {
     const property: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -42,8 +43,8 @@ describe('when enhancing inlineCommon property', () => {
 });
 
 describe('when enhancing inlineCommon property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -53,6 +54,7 @@ describe('when enhancing inlineCommon property across namespaces', () => {
   beforeAll(() => {
     const property: InlineCommonProperty = Object.assign(newInlineCommonProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });

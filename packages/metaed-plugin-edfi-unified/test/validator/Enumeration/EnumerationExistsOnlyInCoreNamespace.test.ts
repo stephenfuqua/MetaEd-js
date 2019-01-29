@@ -9,7 +9,7 @@ describe('when validating enumeration type exists in core', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EntityName')
       .withDocumentation('EntityDocumentation')
       .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
@@ -20,7 +20,7 @@ describe('when validating enumeration type exists in core', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -40,14 +40,14 @@ describe('when validating enumeration exists in extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity')
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartEnumeration('EntityName')
       .withDocumentation('EntityDocumentation')
       .withEnumerationItem('ShortDescription1', 'EnumerationItemDocumentation1')
@@ -58,7 +58,7 @@ describe('when validating enumeration exists in extension', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

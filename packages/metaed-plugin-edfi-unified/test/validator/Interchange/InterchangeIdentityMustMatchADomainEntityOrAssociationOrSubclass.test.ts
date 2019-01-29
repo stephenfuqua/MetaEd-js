@@ -19,7 +19,7 @@ describe('when validating interchange identity template is an abstract entity', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('AbstractEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
@@ -36,7 +36,7 @@ describe('when validating interchange identity template is an abstract entity', 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -61,7 +61,7 @@ describe('when validating interchange identity template is a domain entity', () 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
@@ -78,7 +78,7 @@ describe('when validating interchange identity template is a domain entity', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -104,17 +104,17 @@ describe('when validating interchange identity template is a domain entity acros
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
-      .withDomainEntityIdentityTemplate(domainEntityName)
+      .withDomainEntityIdentityTemplate(`EdFi.${domainEntityName}`)
       .withDomainEntityElement('DomainEntityElementName')
       .withEndInterchange()
       .withEndNamespace()
@@ -123,9 +123,8 @@ describe('when validating interchange identity template is a domain entity acros
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -153,7 +152,7 @@ describe('when validating interchange identity template is a domain entity subcl
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
@@ -176,7 +175,7 @@ describe('when validating interchange identity template is a domain entity subcl
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -205,7 +204,7 @@ describe('when validating interchange identity template is an association', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty('DomainEntityName1', 'DomainEntityDocumentation')
@@ -224,7 +223,7 @@ describe('when validating interchange identity template is an association', () =
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -250,7 +249,7 @@ describe('when validating interchange identity template is an association', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty('DomainEntityName1', 'DomainEntityDocumentation')
@@ -275,7 +274,7 @@ describe('when validating interchange identity template is an association', () =
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -303,7 +302,7 @@ describe('when validating interchange identity template has invalid name', () =>
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName')
@@ -314,7 +313,7 @@ describe('when validating interchange identity template has invalid name', () =>
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

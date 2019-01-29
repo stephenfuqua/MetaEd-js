@@ -9,7 +9,7 @@ describe('when validating shared string with max length greater than min length'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinLength('10')
@@ -20,7 +20,7 @@ describe('when validating shared string with max length greater than min length'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -40,7 +40,7 @@ describe('when validating shared string with min length greater than max length'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withMinLength('100')
@@ -51,7 +51,7 @@ describe('when validating shared string with min length greater than max length'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

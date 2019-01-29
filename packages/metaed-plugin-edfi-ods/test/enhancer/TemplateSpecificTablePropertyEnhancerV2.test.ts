@@ -11,7 +11,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with alternate keys', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -56,7 +56,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with alterna
 });
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary keys', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -97,7 +97,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 });
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign keys', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -168,7 +168,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with foreign
 });
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique indexes', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -208,7 +208,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with unique 
 });
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary and non primary keys', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -259,7 +259,7 @@ describe('when TemplateSpecificTablePropertyEnhancer enhances table with primary
 });
 
 describe('when TemplateSpecificTablePropertyEnhancer enhances table and columns with sql escaped description', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';

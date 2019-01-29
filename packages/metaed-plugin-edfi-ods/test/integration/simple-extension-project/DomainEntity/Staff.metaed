@@ -1,4 +1,4 @@
-Domain Entity Staff additions
+Domain Entity EdFi.Staff additions
     integer MyCollection
         documentation "Hi"
         is required collection

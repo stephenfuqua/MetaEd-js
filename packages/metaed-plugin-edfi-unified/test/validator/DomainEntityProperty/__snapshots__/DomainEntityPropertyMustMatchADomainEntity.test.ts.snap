@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when domain entity property has invalid identifier of domain entity in dependency namespace should have validation failure for property 1`] = `"Domain entity property 'NotValid' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity property has invalid identifier of domain entity in dependency namespace should have validation failure for property 1`] = `"Domain entity property 'NotValid' does not match any declared Domain Entity or Domain Entity Subclass in namespace Extension."`;
 
 exports[`when domain entity property has invalid identifier of domain entity in dependency namespace should have validation failure for property 2`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when domain entity property has invalid identifier should have validation failure for property 1`] = `"Domain entity property 'UndefinedEntityName' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity property has invalid identifier should have validation failure for property 1`] = `"Domain entity property 'UndefinedEntityName' does not match any declared Domain Entity or Domain Entity Subclass in namespace EdFi."`;
 
 exports[`when domain entity property has invalid identifier should have validation failure for property 2`] = `
 Object {
@@ -20,9 +20,9 @@ Object {
 }
 `;
 
-exports[`when domain entity property on association has invalid identifier should have validation failure for property: message 0 1`] = `"Domain entity property 'UndefinedEntityName1' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity property on association has invalid identifier should have validation failure for property: message 0 1`] = `"Domain entity property 'UndefinedEntityName1' does not match any declared Domain Entity or Domain Entity Subclass in namespace EdFi."`;
 
-exports[`when domain entity property on association has invalid identifier should have validation failure for property: message 0 2`] = `"Domain entity property 'UndefinedEntityName2' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity property on association has invalid identifier should have validation failure for property: message 0 2`] = `"Domain entity property 'UndefinedEntityName2' does not match any declared Domain Entity or Domain Entity Subclass in namespace EdFi."`;
 
 exports[`when domain entity property on association has invalid identifier should have validation failure for property: sourceMap 0 1`] = `
 Object {
@@ -40,7 +40,7 @@ Object {
 }
 `;
 
-exports[`when domain entity property refers to domain entity in non-dependency namespace should have validation failure for property 1`] = `"Domain entity property 'ExtensionEntityB' does not match any declared Domain Entity or Domain Entity Subclass."`;
+exports[`when domain entity property refers to domain entity in non-dependency namespace should have validation failure for property 1`] = `"Domain entity property 'ExtensionEntityB' does not match any declared Domain Entity or Domain Entity Subclass in namespace Extensiona."`;
 
 exports[`when domain entity property refers to domain entity in non-dependency namespace should have validation failure for property 2`] = `
 Object {

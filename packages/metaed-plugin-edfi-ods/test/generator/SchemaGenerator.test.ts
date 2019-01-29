@@ -10,10 +10,10 @@ describe('when generating schemas for core namespace', () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const namespace: Namespace = {
       ...newNamespace(),
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
       isExtension: false,
     };
-    metaEd.namespace.set('edfi', namespace);
+    metaEd.namespace.set('EdFi', namespace);
 
     result = await generate(metaEd);
   });
@@ -21,7 +21,7 @@ describe('when generating schemas for core namespace', () => {
   it('should generate correct schema', () => {
     expect(result.generatorName).toEqual('edfiOds.SchemaGenerator');
     expect(R.head(result.generatedOutput).fileName).toBe('0010-Schemas.sql');
-    expect(R.head(result.generatedOutput).namespace).toBe('edfi');
+    expect(R.head(result.generatedOutput).namespace).toBe('EdFi');
     expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Schema');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();
@@ -36,19 +36,19 @@ describe('when generating schemas for extension namespace', () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
     const namespace: Namespace = {
       ...newNamespace(),
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension: 'EXTENSION',
       isExtension: true,
     };
-    metaEd.namespace.set('extension', namespace);
+    metaEd.namespace.set('Extension', namespace);
 
     result = await generate(metaEd);
   });
 
   it('should generate correct schema', () => {
     expect(result.generatorName).toEqual('edfiOds.SchemaGenerator');
-    expect(R.head(result.generatedOutput).fileName).toBe('0010-EXTENSION-extension-Schemas.sql');
-    expect(R.head(result.generatedOutput).namespace).toBe('extension');
+    expect(R.head(result.generatedOutput).fileName).toBe('0010-EXTENSION-Extension-Schemas.sql');
+    expect(R.head(result.generatedOutput).namespace).toBe('Extension');
     expect(R.head(result.generatedOutput).folderName).toBe('/Database/SQLServer/ODS/Structure/');
     expect(R.head(result.generatedOutput).name).toBe('ODS Schema');
     expect(R.head(result.generatedOutput).resultStream).toBeNull();

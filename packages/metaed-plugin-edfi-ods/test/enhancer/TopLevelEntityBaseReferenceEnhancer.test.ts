@@ -23,7 +23,7 @@ import {
 import { enhance } from '../../src/enhancer/TopLevelEntityBaseReferenceEnhancer';
 
 describe('when enhancing domain entity subclass base entity reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -77,7 +77,7 @@ describe('when enhancing domain entity subclass base entity reference', () => {
 });
 
 describe('when enhancing domain entity subclass base entity reference with identity rename', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -136,7 +136,7 @@ describe('when enhancing domain entity subclass base entity reference with ident
 });
 
 describe('when enhancing domain entity extension base entity reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -190,7 +190,7 @@ describe('when enhancing domain entity extension base entity reference', () => {
 });
 
 describe('when enhancing association subclass base entity reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationName = 'AssociationName';
@@ -244,7 +244,7 @@ describe('when enhancing association subclass base entity reference', () => {
 });
 
 describe('when enhancing association extension base entity reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const associationName = 'AssociationName';

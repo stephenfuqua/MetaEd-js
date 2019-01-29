@@ -16,10 +16,10 @@ import { EdFiXsdEntityRepository } from '../../src/model/EdFiXsdEntityRepository
 
 describe('when enhances MergedInterchange with domainEntity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -104,16 +104,16 @@ describe('when enhances MergedInterchange with domainEntity extension', () => {
     expect(mergedInterchange.elements[0].metaEdName).toBe(domainEntity1Name);
     expect(mergedInterchange.elements[0].documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(mergedInterchange.elements[0].referencedEntity).toBe(domainEntityExtension);
-    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe('extension');
+    expect(mergedInterchange.elements[0].namespace.namespaceName).toBe('Extension');
   });
 });
 
 describe('when enhances existing MergedInterchange with domainEntity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -247,16 +247,16 @@ describe('when enhances existing MergedInterchange with domainEntity extension',
     const extensionInterchangeElement2 = extensionInterchange.elements.find(e => e.metaEdName === domainEntity1Name);
     expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
     expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension);
-    expect(extensionInterchangeElement2.namespace.namespaceName).toBe('extension');
+    expect(extensionInterchangeElement2.namespace.namespaceName).toBe('Extension');
   });
 });
 
 describe('when enhances MergedInterchange with multiple domainEntity extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -398,28 +398,28 @@ describe('when enhances MergedInterchange with multiple domainEntity extension',
     expect(extensionInterchangeElement1.metaEdName).toBe(domainEntity2Name);
     expect(extensionInterchangeElement1.documentation).toBe(interchangeItemDomainEntity2Documentation);
     expect(extensionInterchangeElement1.referencedEntity).toBe(domainEntityExtension2);
-    expect(extensionInterchangeElement1.namespace.namespaceName).toBe('extension');
+    expect(extensionInterchangeElement1.namespace.namespaceName).toBe('Extension');
 
     const extensionInterchangeElement2 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity1Name);
     expect(extensionInterchangeElement2.metaEdName).toBe(domainEntity1Name);
     expect(extensionInterchangeElement2.documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(extensionInterchangeElement2.referencedEntity).toBe(domainEntityExtension1);
-    expect(extensionInterchangeElement2.namespace.namespaceName).toBe('extension');
+    expect(extensionInterchangeElement2.namespace.namespaceName).toBe('Extension');
 
     const extensionInterchangeElement3 = extensionInterchange.elements.find(x => x.metaEdName === domainEntity3Name);
     expect(extensionInterchangeElement3.metaEdName).toBe(domainEntity3Name);
     expect(extensionInterchangeElement3.documentation).toBe(interchangeItemDomainEntity3Documentation);
     expect(extensionInterchangeElement3.referencedEntity).toBe(domainEntity3);
-    expect(extensionInterchangeElement3.namespace.namespaceName).toBe('edfi');
+    expect(extensionInterchangeElement3.namespace.namespaceName).toBe('EdFi');
   });
 });
 
 describe('when enhances MergedInterchange in extension namespace with multiple domainEntity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -529,12 +529,12 @@ describe('when enhances MergedInterchange in extension namespace with multiple d
     expect(interchangeElement1.metaEdName).toBe(domainEntity1Name);
     expect(interchangeElement1.documentation).toBe(interchangeItemDomainEntity1Documentation);
     expect(interchangeElement1.referencedEntity).toBe(domainEntityExtension1);
-    expect(interchangeElement1.namespace.namespaceName).toBe('extension');
+    expect(interchangeElement1.namespace.namespaceName).toBe('Extension');
 
     const interchangeElement2 = interchange.elements.find(x => x.metaEdName === domainEntity2Name);
     expect(interchangeElement2.metaEdName).toBe(domainEntity2Name);
     expect(interchangeElement2.documentation).toBe(interchangeItemDomainEntity2Documentation);
     expect(interchangeElement2.referencedEntity).toBe(domainEntity2);
-    expect(interchangeElement2.namespace.namespaceName).toBe('extension');
+    expect(interchangeElement2.namespace.namespaceName).toBe('Extension');
   });
 });

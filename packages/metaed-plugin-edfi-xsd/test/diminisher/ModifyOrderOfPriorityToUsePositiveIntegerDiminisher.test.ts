@@ -11,7 +11,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
   const positiveIntegerType = 'xs:positiveInteger';
   let commonEntity: Common;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
@@ -51,7 +51,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes te
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes order of priority simple type', () => {
   let integerType: IntegerType;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
@@ -79,7 +79,7 @@ describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes or
 
 describe('when ModifyOrderOfPriorityToUsePositiveIntegerDiminisher diminishes with no order of priority', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {

@@ -10,7 +10,7 @@ import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
 describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes InterventionMeetingTime table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const interventionMeetingTime = 'InterventionMeetingTime';
@@ -43,7 +43,7 @@ describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminish
 });
 
 describe('when RemoveStartTimeFromPkOfInterventionMeetingTimeDiminisher diminishes non matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';

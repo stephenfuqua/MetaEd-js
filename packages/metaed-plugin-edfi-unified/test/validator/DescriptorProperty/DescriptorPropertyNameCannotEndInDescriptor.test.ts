@@ -15,7 +15,7 @@ describe('when descriptor property has valid name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('EntityName')
       .withDocumentation('doc')
       .withStringIdentity('PropertyName', 'doc', '100')
@@ -27,7 +27,7 @@ describe('when descriptor property has valid name', () => {
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -47,7 +47,7 @@ describe('when descriptor property has invalid name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('EntityName')
       .withDocumentation('doc')
       .withStringIdentity('PropertyName', 'doc', '100')
@@ -58,7 +58,7 @@ describe('when descriptor property has invalid name', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -26,7 +26,7 @@ describe('when validating domain entity has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName1, 'Documentation')
@@ -43,7 +43,7 @@ describe('when validating domain entity has merge property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -66,7 +66,7 @@ describe('when validating domain entity has merge property and entity is wrong',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(propertyName1, 'IntegerIdentityDocumentation')
@@ -83,7 +83,7 @@ describe('when validating domain entity has merge property and entity is wrong',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -114,7 +114,7 @@ describe('when validating domain entity has merge property and property is wrong
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(propertyName1, 'IntegerIdentityDocumentation')
@@ -131,7 +131,7 @@ describe('when validating domain entity has merge property and property is wrong
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -161,7 +161,7 @@ describe('when validating domain entity has merge property on common type', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity('Property1', 'Documentation')
@@ -186,7 +186,7 @@ describe('when validating domain entity has merge property on common type', () =
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new CommonBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -208,7 +208,7 @@ describe('when validating domain entity has merge property on school year enumer
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withEnumerationIdentity('SchoolYear', 'Documentation')
@@ -231,7 +231,7 @@ describe('when validating domain entity has merge property on school year enumer
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new EnumerationBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -253,7 +253,7 @@ describe('when validating domain entity extension has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName, 'Documentation')
@@ -274,7 +274,7 @@ describe('when validating domain entity extension has merge property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -298,7 +298,7 @@ describe('when validating domain entity subclass has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity('IdentityPropertyName', 'Documentation')
@@ -321,7 +321,7 @@ describe('when validating domain entity subclass has merge property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -343,7 +343,7 @@ describe('when validating association has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName, 'Documentation')
@@ -372,7 +372,7 @@ describe('when validating association has merge property', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, failures))
       .sendToListener(new AssociationBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -394,7 +394,7 @@ describe('when validating association extension has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName, 'Documentation')
@@ -426,7 +426,7 @@ describe('when validating association extension has merge property', () => {
       .sendToListener(new AssociationBuilder(metaEd, failures))
       .sendToListener(new AssociationExtensionBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -448,7 +448,7 @@ describe('when validating association subclass has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName, 'Documentation')
@@ -481,7 +481,7 @@ describe('when validating association subclass has merge property', () => {
       .sendToListener(new AssociationBuilder(metaEd, failures))
       .sendToListener(new AssociationSubclassBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -503,7 +503,7 @@ describe('when validating abstract entity has merge property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName, 'Documentation')
@@ -520,7 +520,7 @@ describe('when validating abstract entity has merge property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -536,8 +536,8 @@ describe('when validating abstract entity has merge property', () => {
 // METAED-797 - StudentProgramAssociation extension cause incorrect merge validation errors
 describe('when validating association subclass extension', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const associationName1 = 'AssociationName1';
   const associationName2 = 'AssociationName2';
   const associationSubclassName = 'AssociationSubclassName';
@@ -617,7 +617,7 @@ describe('when validating association subclass extension', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -641,14 +641,14 @@ describe('when validating domain entity has merge property across namespaces', (
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName1, 'Documentation')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName1, 'Documentation')
@@ -660,8 +660,8 @@ describe('when validating domain entity has merge property across namespaces', (
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -689,14 +689,14 @@ describe('when validating domain entity has merge property across namespaces and
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(propertyName1, 'IntegerIdentityDocumentation')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity('Entity2')
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName2, 'IntegerIdentityDocumentation')
@@ -708,8 +708,8 @@ describe('when validating domain entity has merge property across namespaces and
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -742,7 +742,7 @@ describe('when validating domain entity has simple property as merge property', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString('URI')
       .withDocumentation('doc')
       .withMinLength('5')
@@ -771,7 +771,7 @@ describe('when validating domain entity has simple property as merge property', 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, failures));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

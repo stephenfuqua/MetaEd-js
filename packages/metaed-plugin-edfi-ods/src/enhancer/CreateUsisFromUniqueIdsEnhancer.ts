@@ -6,7 +6,7 @@ import { addEntityPropertyEdfiOdsTo } from '../model/property/EntityProperty';
 const enhancerName = 'CreateUsisFromUniqueIdsEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
 
   getEntitiesOfTypeForNamespaces([coreNamespace], 'domainEntity').forEach((entity: ModelBase) => {

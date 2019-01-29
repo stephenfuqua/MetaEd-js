@@ -16,7 +16,7 @@ function generateAggregate(entity: TopLevelEntity, namespace: Namespace): Aggreg
   if (tables.length === 0) return null;
   const aggregate: Aggregate = {
     root: (entity.data.edfiOds as TopLevelEntityEdfiOds).odsTableName,
-    schema: entity.namespace.namespaceName,
+    schema: entity.namespace.namespaceName.toLowerCase(),
     allowPrimaryKeyUpdates: entity.allowPrimaryKeyUpdates,
     isExtension: false,
     entityTables: [],
@@ -26,7 +26,7 @@ function generateAggregate(entity: TopLevelEntity, namespace: Namespace): Aggreg
   if (entity.type === 'descriptor' && (entity.data.edfiOds as DescriptorEdfiOds).odsIsMapType) {
     typeAggregate = {
       root: normalizeEnumerationSuffix(entity.metaEdName),
-      schema: entity.namespace.namespaceName,
+      schema: entity.namespace.namespaceName.toLowerCase(),
       allowPrimaryKeyUpdates: false,
       isExtension: false,
       entityTables: [],

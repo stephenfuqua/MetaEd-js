@@ -11,7 +11,8 @@ import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 describe('when enhancing a domain entity', () => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -30,7 +31,7 @@ describe('when enhancing a domain entity', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
     };
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -67,7 +68,7 @@ describe('when enhancing a domain entity', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
   });
 });
@@ -75,7 +76,8 @@ describe('when enhancing a domain entity', () => {
 describe('when enhancing a domain entity that allows primary key updates', () => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -94,7 +96,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
     };
 
     const domainEntity: DomainEntity = Object.assign(newDomainEntity(), {
@@ -126,7 +128,7 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
   });
 });
@@ -134,7 +136,8 @@ describe('when enhancing a domain entity that allows primary key updates', () =>
 describe('when enhancing a domain entity that has a required collection table', () => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -153,7 +156,7 @@ describe('when enhancing a domain entity that has a required collection table', 
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
       isRequiredCollectionTable: true,
     };
 
@@ -191,7 +194,7 @@ describe('when enhancing a domain entity that has a required collection table', 
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
     expect(entityTable.isRequiredCollection).toBe(true);
   });

@@ -14,11 +14,11 @@ import { Table } from '../model/database/Table';
 const enhancerName = 'ForeignKeyOrderDiminisher';
 const targetVersions = '2.x';
 
-const namespaceName = 'edfi';
+const schemaName = 'edfi';
 
 function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>): void {
   const foreignKeys: Array<ForeignKey> = R.chain((table: Table) =>
-    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === namespaceName),
+    getForeignKeys(table).filter((fk: ForeignKey) => fk.columnNames.length > 1 && fk.foreignTableSchema === schemaName),
   )([...tablesForCoreNamespace.values()]);
   if (foreignKeys.length === 0) return;
 
@@ -45,7 +45,7 @@ function modifyForeignKeyColumnOrder(tablesForCoreNamespace: Map<string, Table>)
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 

@@ -21,7 +21,7 @@ describe('when two integer properties in different DEs have the same name', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
@@ -36,7 +36,7 @@ describe('when two integer properties in different DEs have the same name', () =
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -68,7 +68,7 @@ describe('when an integer property and a decimal property in different DEs have 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
@@ -84,7 +84,7 @@ describe('when an integer property and a decimal property in different DEs have 
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -108,7 +108,7 @@ describe('when a integer property and a string property in different DEs have th
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
@@ -124,7 +124,7 @@ describe('when a integer property and a string property in different DEs have th
       .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new IntegerTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -147,7 +147,7 @@ describe('when an string property and a string property in different DEs have th
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withStringProperty(propertyName, 'doc', true, false, '5', '2')
@@ -162,7 +162,7 @@ describe('when an string property and a string property in different DEs have th
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -184,7 +184,7 @@ describe('when an string property and a decimal property in different DEs have t
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withStringProperty(propertyName, 'doc', true, false, '5', '2')
@@ -200,7 +200,7 @@ describe('when an string property and a decimal property in different DEs have t
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new StringTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -224,7 +224,7 @@ describe('when an decimal property and a decimal property in different DEs have 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withDecimalProperty(propertyName, 'doc', true, false, '5', '2')
@@ -239,7 +239,7 @@ describe('when an decimal property and a decimal property in different DEs have 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DecimalTypeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -262,7 +262,7 @@ describe('when a decimal property and a shared decimal property in different DEs
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withDecimalProperty(propertyName, 'doc', true, false, '5', '2')
@@ -278,7 +278,7 @@ describe('when a decimal property and a shared decimal property in different DEs
       .sendToListener(new DecimalTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -301,7 +301,7 @@ describe('when a string property and a shared string property in different DEs h
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withStringProperty(propertyName, 'doc', true, false, '5', '2')
@@ -317,7 +317,7 @@ describe('when a string property and a shared string property in different DEs h
       .sendToListener(new StringTypeBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -341,7 +341,7 @@ describe('when an integer property and a shared integer property in different DE
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
@@ -357,7 +357,7 @@ describe('when an integer property and a shared integer property in different DE
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -380,7 +380,7 @@ describe('when a short property and a shared short property in different DEs hav
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withShortProperty(propertyName, 'doc', true, false, '5', '2')
@@ -396,7 +396,7 @@ describe('when a short property and a shared short property in different DEs hav
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -420,7 +420,7 @@ describe('when a string property and a shared decimal property in different DEs 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName1')
       .withDocumentation('doc')
       .withStringProperty(propertyName, 'doc', true, false, '5', '2')
@@ -436,7 +436,7 @@ describe('when a string property and a shared decimal property in different DEs 
       .sendToListener(new IntegerTypeBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });

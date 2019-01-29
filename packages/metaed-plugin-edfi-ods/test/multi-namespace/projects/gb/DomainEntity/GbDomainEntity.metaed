@@ -7,6 +7,6 @@ Domain Entity GbDomainEntity
         documentation "doc"
         is required
         max length 100
-    domain entity EdfiDomainEntity
+    domain entity EdFi.EdfiDomainEntity
         documentation "doc"
         is required

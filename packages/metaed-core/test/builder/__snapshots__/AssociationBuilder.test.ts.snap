@@ -17,6 +17,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -330,8 +335,8 @@ Array [
 
 exports[`when building association with lowercase association name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
-  "no viable alternative at input 'AssociationentityName', column: 14, line: 2, token: entityName",
+  "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
+  "no viable alternative at input 'Associatione', column: 14, line: 2, token: e",
 ]
 `;
 

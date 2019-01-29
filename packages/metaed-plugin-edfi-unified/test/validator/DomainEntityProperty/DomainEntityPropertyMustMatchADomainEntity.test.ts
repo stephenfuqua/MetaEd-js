@@ -17,7 +17,7 @@ describe('when domain entity property has identifier of domain entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -48,7 +48,7 @@ describe('when domain entity property has identifier of domain entity subclass',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntitySubclass(entityName, 'BaseDomainEntity')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -79,7 +79,7 @@ describe('when domain entity property has invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withDomainEntityProperty('UndefinedEntityName', 'doc', true, false)
@@ -111,7 +111,7 @@ describe('when domain entity property on association has invalid identifier', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('UndefinedEntityName1', 'doc')
@@ -152,26 +152,25 @@ describe('when domain entity property has identifier of domain entity in depende
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withDomainEntityProperty(entityName, 'doc', true, false)
+      .withDomainEntityProperty(`EdFi.${entityName}`, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -192,14 +191,14 @@ describe('when domain entity property has invalid identifier of domain entity in
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withDomainEntityProperty('NotValid', 'doc', true, false)
@@ -209,9 +208,8 @@ describe('when domain entity property has invalid identifier of domain entity in
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -239,21 +237,21 @@ describe('when domain entity property refers to domain entity in non-dependency 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('CoreEntity')
       .withDocumentation('doc')
       .withBooleanProperty('Dummy', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'ProjectExtensiona')
+      .withBeginNamespace('Extensiona', 'ProjectExtensiona')
       .withStartDomainEntity('ExtensionEntity')
       .withDocumentation('doc')
       .withDomainEntityProperty('ExtensionEntityB', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'ProjectExtensionb')
+      .withBeginNamespace('Extensionb', 'ProjectExtensionb')
       .withStartDomainEntity('ExtensionEntityB')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -263,12 +261,10 @@ describe('when domain entity property refers to domain entity in non-dependency 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     extensionNamespacea.dependencies.push(coreNamespace);
-    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

@@ -9,7 +9,7 @@ describe('when validating interchange extension identity template has different 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeName')
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName1')
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName2')
@@ -19,7 +19,7 @@ describe('when validating interchange extension identity template has different 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -40,7 +40,7 @@ describe('when validating interchange identity template has duplicate names', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeName')
       .withDomainEntityIdentityTemplate(domainEntityIdentityTemplateName)
       .withDomainEntityIdentityTemplate(domainEntityIdentityTemplateName)
@@ -50,7 +50,7 @@ describe('when validating interchange identity template has duplicate names', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -76,7 +76,7 @@ describe('when validating interchange identity template has multiple duplicate n
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeName')
       .withDomainEntityIdentityTemplate(domainEntityIdentityTemplateName1)
       .withDomainEntityIdentityTemplate(domainEntityIdentityTemplateName1)
@@ -88,7 +88,7 @@ describe('when validating interchange identity template has multiple duplicate n
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

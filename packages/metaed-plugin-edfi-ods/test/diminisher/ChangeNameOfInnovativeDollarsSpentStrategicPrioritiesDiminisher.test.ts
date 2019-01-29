@@ -10,7 +10,7 @@ import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const innovativeDollarsSpentOnStrategicPriorities = 'InnovativeDollarsSpentOnStrategicPriorities';
@@ -41,7 +41,7 @@ describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher d
 });
 
 describe('when ChangeNameOfInnovativeDollarsSpentStrategicPrioritiesDiminisher diminishes LocalEducationAgencyFederalFunds table with existing InnovativeDollarsSpentOnStrategicPriorities column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const innovativeDollarsSpentOnStrategicPriorities = 'InnovativeDollarsSpentOnStrategicPriorities';

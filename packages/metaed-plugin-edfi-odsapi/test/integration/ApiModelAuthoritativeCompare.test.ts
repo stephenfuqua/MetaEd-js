@@ -37,7 +37,7 @@ describe('when generating api model and comparing it to data standard 3.1 author
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.1.0',
         },
@@ -105,7 +105,7 @@ describe('when generating api model and comparing it to data standard 3.0 author
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
@@ -177,13 +177,13 @@ describe('when generating api model with simple extensions and comparing it to d
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'Sample',
-          namespaceName: 'sample',
+          namespaceName: 'Sample',
           projectExtension: 'Sample',
           projectVersion: '3.0.0',
         },
@@ -273,13 +273,13 @@ describe('when generating api model with student transcript extensions and compa
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.0.0',
         },
         {
           projectName: 'ExtTwo',
-          namespaceName: 'exttwo',
+          namespaceName: 'Exttwo',
           projectExtension: 'ExtTwo',
           projectVersion: '3.0.0',
         },
@@ -370,13 +370,13 @@ describe('when generating api model with simple type merge extensions and compar
       projects: [
         {
           projectName: 'Ed-Fi',
-          namespaceName: 'edfi',
+          namespaceName: 'EdFi',
           projectExtension: '',
           projectVersion: '3.1.0',
         },
         {
           projectName: 'Sample',
-          namespaceName: 'sample',
+          namespaceName: 'Sample',
           projectExtension: 'Sample',
           projectVersion: '3.1.0',
         },

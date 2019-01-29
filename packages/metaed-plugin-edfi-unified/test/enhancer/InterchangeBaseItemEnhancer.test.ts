@@ -11,13 +11,13 @@ import {
   newInterchangeExtension,
   newNamespace,
   addEntityForNamespace,
-  getEntityForNamespaces,
+  getEntityFromNamespace,
 } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/InterchangeBaseItemEnhancer';
 
 describe('when enhancing interchange in core', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -46,6 +46,7 @@ describe('when enhancing interchange in core', () => {
         Object.assign(newInterchangeItem(), {
           metaEdName: entity.metaEdName,
           referencedType: [entity.type],
+          referencedNamespaceName: namespace.namespaceName,
           namespace,
         }),
       );
@@ -57,6 +58,7 @@ describe('when enhancing interchange in core', () => {
         Object.assign(newInterchangeItem(), {
           metaEdName: entity.metaEdName,
           referencedType: [entity.type],
+          referencedNamespaceName: namespace.namespaceName,
           namespace,
         }),
       );
@@ -67,7 +69,7 @@ describe('when enhancing interchange in core', () => {
   });
 
   it('should have references for all entities', () => {
-    const interchange: any = getEntityForNamespaces(interchangeMetaEdName, [namespace], 'interchange');
+    const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
     expect(interchange.elements[0].referencedEntity).toBe(domainEntity1);
     expect(interchange.elements[1].referencedEntity).toBe(domainEntitySubclass1);
     expect(interchange.elements[2].referencedEntity).toBe(association1);
@@ -83,14 +85,20 @@ describe('when enhancing interchange in core', () => {
 });
 
 describe('when enhancing interchange extension', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
+
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
+  metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
 
   const interchangeMetaEdName = 'InterchangeMetaEdName';
 
   const domainEntity = Object.assign(newDomainEntity(), { metaEdName: 'DomainEntity', namespace });
-  const domainEntityExtension = Object.assign(newDomainEntityExtension(), { metaEdName: 'DomainEntity', namespace });
+  const domainEntityExtension = Object.assign(newDomainEntityExtension(), {
+    metaEdName: 'DomainEntity',
+    namespace: extensionNamespace,
+  });
 
   beforeAll(() => {
     addEntityForNamespace(domainEntity);
@@ -99,13 +107,17 @@ describe('when enhancing interchange extension', () => {
     const interchange = Object.assign(newInterchange(), { metaEdName: interchangeMetaEdName, namespace });
     addEntityForNamespace(interchange);
 
-    const interchangeExtension = Object.assign(newInterchangeExtension(), { metaEdName: interchangeMetaEdName, namespace });
+    const interchangeExtension = Object.assign(newInterchangeExtension(), {
+      metaEdName: interchangeMetaEdName,
+      namespace: extensionNamespace,
+    });
     addEntityForNamespace(interchangeExtension);
 
     interchange.elements.push(
       Object.assign(newInterchangeItem(), {
         metaEdName: domainEntity.metaEdName,
         referencedType: [domainEntity.type],
+        referencedNamespaceName: namespace.namespaceName,
         namespace,
       }),
     );
@@ -114,7 +126,8 @@ describe('when enhancing interchange extension', () => {
       Object.assign(newInterchangeItem(), {
         metaEdName: domainEntityExtension.metaEdName,
         referencedType: [domainEntityExtension.type],
-        namespace,
+        referencedNamespaceName: extensionNamespace.namespaceName,
+        extensionNamespace,
       }),
     );
 
@@ -122,10 +135,14 @@ describe('when enhancing interchange extension', () => {
   });
 
   it('should have references for all entities', () => {
-    const interchange: any = getEntityForNamespaces(interchangeMetaEdName, [namespace], 'interchange');
+    const interchange: any = getEntityFromNamespace(interchangeMetaEdName, namespace, 'interchange');
     expect(interchange.elements[0].referencedEntity).toBe(domainEntity);
 
-    const interchangeExtension: any = getEntityForNamespaces(interchangeMetaEdName, [namespace], 'interchangeExtension');
+    const interchangeExtension: any = getEntityFromNamespace(
+      interchangeMetaEdName,
+      extensionNamespace,
+      'interchangeExtension',
+    );
     expect(interchangeExtension.elements[0].referencedEntity).toBe(domainEntityExtension);
   });
 });

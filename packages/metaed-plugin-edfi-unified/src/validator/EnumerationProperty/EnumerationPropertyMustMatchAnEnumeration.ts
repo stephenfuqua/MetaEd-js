@@ -1,13 +1,14 @@
 import { MetaEdEnvironment, ValidationFailure, ModelBase } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   metaEd.propertyIndex.enumeration.forEach(property => {
-    const referencedEntity: ModelBase | null = getEntityForNamespaces(
+    const referencedEntity: ModelBase | null = getEntityFromNamespaceChain(
       property.metaEdName,
-      [property.namespace, ...property.namespace.dependencies],
+      property.referencedNamespaceName,
+      property.namespace,
       'enumeration',
     );
 

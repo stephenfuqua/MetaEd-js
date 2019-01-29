@@ -20,7 +20,7 @@ jest.setTimeout(40000);
 
 describe('when choice is a required property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
@@ -108,7 +108,7 @@ describe('when choice is a required property', () => {
 
 describe('when choice is an optional property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -157,8 +157,8 @@ describe('when choice is an optional property', () => {
 
 describe('when choice is a required property on extension entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const choiceName = 'ChoiceName';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
@@ -184,7 +184,7 @@ describe('when choice is a required property on extension entity', () => {
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName5, 'Documentation')
-      .withChoiceProperty(choiceName, 'Documentation', true, false)
+      .withChoiceProperty(`${namespaceName}.${choiceName}`, 'Documentation', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -254,8 +254,8 @@ describe('when choice is a required property on extension entity', () => {
 
 describe('when extension choice is a required property on extension entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const choiceName = 'ChoiceName';
   const contextName = 'ContextName';
   const domainEntityName2 = 'DomainEntityName2';
@@ -356,7 +356,7 @@ describe('when extension choice is a required property on extension entity', () 
 
 describe('when choice has an enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationItemName = 'EnumerationItemName';
   const enumerationTableName: string = `${enumerationName}Type`;
@@ -424,7 +424,7 @@ describe('when choice has an enumeration property', () => {
 
 describe('when choice has a collection enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationItemName = 'EnumerationItemName';
   const enumerationTableName: string = `${enumerationName}Type`;
@@ -511,7 +511,7 @@ describe('when choice has a collection enumeration property', () => {
 
 describe('when choice has a descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = `${descriptorName}Descriptor`;
   const descriptorColumnName: string = `${descriptorName}DescriptorId`;
@@ -577,7 +577,7 @@ describe('when choice has a descriptor property', () => {
 
 describe('when choice has a collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = `${descriptorName}Descriptor`;
   const descriptorColumnName: string = `${descriptorName}DescriptorId`;
@@ -662,7 +662,7 @@ describe('when choice has a collection descriptor property', () => {
 
 describe('when choice has a domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -726,7 +726,7 @@ describe('when choice has a domain entity property', () => {
 
 describe('when choice has a collection domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -808,7 +808,7 @@ describe('when choice has a collection domain entity property', () => {
 
 describe('when choice has a common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
@@ -875,7 +875,7 @@ describe('when choice has a common property', () => {
 
 describe('when choice has a collection common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
@@ -945,7 +945,7 @@ describe('when choice has a collection common property', () => {
 
 describe('when choice has a inline common property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const inlineCommonName = 'InlineCommonName';
   const domainEntityName = 'DomainEntityName';
@@ -1005,7 +1005,7 @@ describe('when choice has a inline common property', () => {
 
 describe('when choice has a inline common property with context with collection reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName = 'ChoiceName';
   const contextName = 'ContextName';
   const inlineCommonName = 'InlineCommonName';
@@ -1093,7 +1093,7 @@ describe('when choice has a inline common property with context with collection 
 
 describe('when choice has a choice property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const choiceName1 = 'ChoiceName1';
   const choiceName2 = 'ChoiceName2';
   const domainEntityName = 'DomainEntityName';

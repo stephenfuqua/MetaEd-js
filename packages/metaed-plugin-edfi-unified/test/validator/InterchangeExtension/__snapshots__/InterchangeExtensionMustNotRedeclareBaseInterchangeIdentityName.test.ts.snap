@@ -4,9 +4,9 @@ exports[`when interchange extension identity templates duplicates multiple names
 
 exports[`when interchange extension identity templates duplicates multiple names in base interchange should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 27,
   "line": 11,
-  "tokenText": "domain entity identity",
+  "tokenText": "DomainEntityIdentityTemplateName1",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when interchange extension identity templates duplicates multiple names
 
 exports[`when interchange extension identity templates duplicates multiple names in base interchange should have validation failures 4`] = `
 Object {
-  "column": 4,
+  "column": 27,
   "line": 12,
-  "tokenText": "domain entity identity",
+  "tokenText": "DomainEntityIdentityTemplateName2",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when validating interchange extension identity template duplicates name
 
 exports[`when validating interchange extension identity template duplicates names in base interchange should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 27,
   "line": 10,
-  "tokenText": "domain entity identity",
+  "tokenText": "DomainEntityIdentityTemplateName",
 }
 `;

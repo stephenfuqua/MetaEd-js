@@ -9,7 +9,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building domain entity with duplicate decimal properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -74,7 +74,7 @@ describe('when building domain entity with duplicate decimal properties in exten
 describe('when building domain entity with duplicate integer properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -116,7 +116,7 @@ describe('when building domain entity with duplicate integer properties in exten
 describe('when building domain entity with duplicate string properties in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -157,7 +157,7 @@ describe('when building domain entity with duplicate string properties in extens
 describe('when building entities with duplicate boolean properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -196,7 +196,7 @@ describe('when building entities with duplicate boolean properties', () => {
 describe('when building entities with duplicate currency properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -235,7 +235,7 @@ describe('when building entities with duplicate currency properties', () => {
 describe('when building entities with duplicate date properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -274,7 +274,7 @@ describe('when building entities with duplicate date properties', () => {
 describe('when building entities with duplicate duration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -313,7 +313,7 @@ describe('when building entities with duplicate duration properties', () => {
 describe('when building entities with duplicate enumeration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -351,7 +351,7 @@ describe('when building entities with duplicate enumeration properties', () => {
 describe('when building entities with duplicate common properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -389,7 +389,7 @@ describe('when building entities with duplicate common properties', () => {
 describe('when building entities with an association property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -429,7 +429,7 @@ describe('when building entities with an association property that duplicates na
 describe('when building entities with a short property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -468,7 +468,7 @@ describe('when building entities with a short property that duplicates name of a
 describe('when building entities with an shared decimal property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -507,7 +507,7 @@ describe('when building entities with an shared decimal property that duplicates
 describe('when building entities with a time property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -547,7 +547,7 @@ describe('when building entities with a time property that duplicates name of an
 describe('when building entities with a datetime property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -587,7 +587,7 @@ describe('when building entities with a datetime property that duplicates name o
 describe('when building entities with a year property that duplicates name of another property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -626,7 +626,7 @@ describe('when building entities with a year property that duplicates name of an
 describe('when building entities with two association properties duplicate property name but different contexts', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -656,7 +656,7 @@ describe('when building entities with two association properties duplicate prope
 describe('when building entities with two association properties with duplicate property name and duplicate contexts', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -694,7 +694,7 @@ describe('when building entities with two association properties with duplicate 
 describe('when building entities with two association properties with duplicate property name and duplicate contexts, different shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';
@@ -735,7 +735,7 @@ describe('when building entities with two association properties with duplicate 
 describe('when building entities with two association properties with duplicate property name and duplicate contexts, duplicate shorten to', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
 
   const entityName = 'EntityName';
   const propertyName = 'PropertyName';

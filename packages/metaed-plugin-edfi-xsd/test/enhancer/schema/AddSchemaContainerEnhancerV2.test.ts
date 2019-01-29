@@ -30,7 +30,7 @@ import { enhance } from '../../../src/enhancer/schema/AddSchemaContainerEnhancer
 describe('when enhancing namespace info for core', () => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   let createdSchema: SchemaContainer;
 
   beforeAll(() => {
@@ -71,7 +71,7 @@ describe('when enhancing namespace info for core', () => {
 describe('when enhancing namespace info for extension', () => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const extensionNamespaceName = 'extensionNamespace';
   const projectExtension = 'EXTENSION';
   let createdSchema: SchemaContainer;
@@ -120,7 +120,7 @@ describe('when enhancing namespace info for extension', () => {
 describe('when enhancing namespace info for core with children', () => {
   const dataStandardVersion: SemVer = '2.0.0';
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion };
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const extensionNamespaceName = 'extensionNamespace';
   const projectExtension = 'EXTENSION';
 

@@ -18,7 +18,7 @@ describe('when association extension extends association', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -27,8 +27,8 @@ describe('when association extension extends association', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -37,9 +37,8 @@ describe('when association extension extends association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -64,7 +63,7 @@ describe('when association extension extends association subclass', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -78,8 +77,8 @@ describe('when association extension extends association subclass', () => {
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(subclassName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${subclassName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -89,9 +88,8 @@ describe('when association extension extends association subclass', () => {
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -115,7 +113,7 @@ describe('when association extension extends an invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation('NotAMatch')
       .withDocumentation('doc')
       .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
@@ -124,8 +122,8 @@ describe('when association extension extends an invalid identifier', () => {
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -133,9 +131,8 @@ describe('when association extension extends an invalid identifier', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -149,11 +146,54 @@ describe('when association extension extends an invalid identifier', () => {
     expect(failures).toHaveLength(1);
     expect(failures[0].validatorName).toBe('AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass');
     expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot(
-      'when association extension extends an invalid identifier should have validation failure -> message',
-    );
-    expect(failures[0].sourceMap).toMatchSnapshot(
-      'when association extension extends an invalid identifier should have validation failure -> sourceMap',
-    );
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when association extension specifies wrong namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const entityName = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartAssociation(entityName)
+      .withDocumentation('doc')
+      .withAssociationDomainEntityProperty('DomainEntity1', 'doc')
+      .withAssociationDomainEntityProperty('DomainEntity2', 'doc')
+      .withBooleanProperty('PropertyName', 'doc', true, false)
+      .withEndAssociation()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`Extension.${entityName}`)
+      .withBooleanProperty('PropertyName2', 'doc', true, false)
+      .withEndAssociationExtension()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new AssociationExtensionBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should build one association extension', () => {
+    expect(extensionNamespace.entity.associationExtension.size).toBe(1);
+  });
+
+  it('should have validation failures()', () => {
+    expect(failures).toHaveLength(1);
+    expect(failures[0].validatorName).toBe('AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });

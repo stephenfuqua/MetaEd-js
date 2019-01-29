@@ -8,7 +8,7 @@ import { DefaultExtensionEntitySuffix } from '../../src/model/Namespace';
 describe('when building extension namespace info', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   beforeAll(() => {
@@ -56,7 +56,7 @@ describe('when building extension namespace info', () => {
 describe('when building core namespace info', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
 
   beforeAll(() => {
     const builder = new NamespaceBuilder(metaEd, validationFailures);

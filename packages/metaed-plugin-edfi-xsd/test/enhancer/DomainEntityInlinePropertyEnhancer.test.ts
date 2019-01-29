@@ -12,7 +12,7 @@ import { enhance } from '../../src/enhancer/AddInlineIdentityEnhancer';
 
 describe('when enhancing domainEntity with inline string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const inlineName = 'InlineName';
   const entityName = 'EntityName';
@@ -50,6 +50,7 @@ describe('when enhancing domainEntity with inline string property', () => {
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inlineName,
+          referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon,
         }),
@@ -74,7 +75,7 @@ describe('when enhancing domainEntity with inline string property', () => {
 
 describe('when enhancing domainEntity with inline nested string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const inline1Name = 'Inline1Name';
   const inline2Name = 'Inline2Name';
@@ -107,6 +108,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inline2Name,
+          referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon2,
         }),
@@ -128,6 +130,7 @@ describe('when enhancing domainEntity with inline nested string property', () =>
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inline1Name,
+          referencedNamespaceName: namespace.namespaceName,
           namespace,
           referencedEntity: inlineCommon1,
         }),

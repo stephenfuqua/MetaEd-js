@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating namespace named changes should have validation failure 1`] = `"The \\"changes\\" project name is reserved by the ODS/API Change Event feature.  Choose a different project name or disable the feature."`;
+exports[`when validating namespace named changes should have validation failure 1`] = `"The \\"Changes\\" project name is reserved by the ODS/API Change Event feature.  Choose a different project name or disable the feature."`;
 
 exports[`when validating namespace named changes should have validation failure 2`] = `
 Object {

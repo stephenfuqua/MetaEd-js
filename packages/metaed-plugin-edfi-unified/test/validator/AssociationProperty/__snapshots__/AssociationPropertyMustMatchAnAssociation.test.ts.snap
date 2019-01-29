@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association property has invalid identifier of association in dependency namespace should have validation failure for property 1`] = `"Association property 'NotValid' does not match any declared Association or Association Subclass."`;
+exports[`when association property has invalid identifier of association in dependency namespace should have validation failure for property 1`] = `"Association property 'NotValid' does not match any declared Association or Association Subclass in namespace Extension."`;
 
 exports[`when association property has invalid identifier of association in dependency namespace should have validation failure for property 2`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`when association property has invalid identifier should have validation failure for property 1`] = `"Association property 'UndefinedEntityName' does not match any declared Association or Association Subclass."`;
+exports[`when association property has invalid identifier should have validation failure for property 1`] = `"Association property 'UndefinedEntityName' does not match any declared Association or Association Subclass in namespace EdFi."`;
 
 exports[`when association property has invalid identifier should have validation failure for property 2`] = `
 Object {
@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`when association property refers to association in non-dependency namespace should have validation failure for property 1`] = `"Association property 'AssociationEntity' does not match any declared Association or Association Subclass."`;
+exports[`when association property refers to association in non-dependency namespace should have validation failure for property 1`] = `"Association property 'AssociationEntity' does not match any declared Association or Association Subclass in namespace Extensiona."`;
 
 exports[`when association property refers to association in non-dependency namespace should have validation failure for property 2`] = `
 Object {

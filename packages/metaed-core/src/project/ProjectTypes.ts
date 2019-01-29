@@ -22,7 +22,7 @@ export const newMetaEdProject: () => MetaEdProject = () => ({
 
 export const deriveNamespaceFromProjectName = (projectName: string): string | null => lowercaseAndNumericOnly(projectName);
 
-export const isDataStandard = (project: MetaEdProject): boolean => project.namespaceName === 'edfi';
+export const isDataStandard = (project: MetaEdProject): boolean => project.namespaceName === 'EdFi';
 
 export function findDataStandardVersions(projects: Array<MetaEdProject>): Array<SemVer> {
   return projects.filter(project => isDataStandard(project)).map(project => project.projectVersion);

@@ -17,7 +17,7 @@ describe('when enhancing association', () => {
   let createdIdentityType: ComplexType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newAssociation(), {

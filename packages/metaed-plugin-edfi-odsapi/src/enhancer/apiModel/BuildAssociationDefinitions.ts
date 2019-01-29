@@ -196,7 +196,7 @@ function isRequiredFrom(
 function allTablesInNamespacesBySchema(metaEd: MetaEdEnvironment): Map<string, Map<string, Table>> {
   const schemaTableMaps: Map<string, Map<string, Table>> = new Map();
   metaEd.namespace.forEach((namespace: Namespace) => {
-    schemaTableMaps.set(namespace.namespaceName, tableEntities(metaEd, namespace));
+    schemaTableMaps.set(namespace.namespaceName.toLowerCase(), tableEntities(metaEd, namespace));
   });
   return schemaTableMaps;
 }

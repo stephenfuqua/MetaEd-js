@@ -13,7 +13,7 @@ describe('when validating decimal property with correct total digits and decimal
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -22,7 +22,7 @@ describe('when validating decimal property with correct total digits and decimal
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });
@@ -47,7 +47,7 @@ describe('when validating decimal property with same total digits and decimal pl
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -57,7 +57,7 @@ describe('when validating decimal property with same total digits and decimal pl
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -81,7 +81,7 @@ describe('when validating decimal property with decimal places greater than tota
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withDecimalIdentity('DecimalProperty', 'doc', totalDigits, decimalPlaces)
@@ -90,7 +90,7 @@ describe('when validating decimal property with decimal places greater than tota
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

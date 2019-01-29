@@ -1,5 +1,5 @@
 import { Association, MetaEdEnvironment, ValidationFailure, Namespace } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failSubclassIdentityRenameNotMatchingBaseClassIdentityProperty } from '../ValidatorShared/FailSubclassIdentityRenameNotMatchingBaseClassIdentityProperty';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
@@ -7,9 +7,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.associationSubclass.forEach(associationSubclass => {
-      const extendedEntity: Association | null = getEntityForNamespaces(
+      const extendedEntity: Association | null = getEntityFromNamespaceChain(
         associationSubclass.baseEntityName,
-        [namespace, ...namespace.dependencies],
+        associationSubclass.baseEntityNamespaceName,
+        associationSubclass.namespace,
         'association',
       ) as Association | null;
 

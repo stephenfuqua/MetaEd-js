@@ -20,14 +20,14 @@ export function loadFiles(state: State): boolean {
   for (let i = 0; i < metaEdConfiguration.projects.length; i += 1) {
     const projectExtension =
       metaEdConfiguration.projects[i].projectExtension ||
-      (metaEdConfiguration.projects[i].namespaceName === 'edfi' ? '' : 'EXTENSION');
+      (metaEdConfiguration.projects[i].namespaceName === 'EdFi' ? '' : 'EXTENSION');
 
     state.inputDirectories.push({
       path: metaEdConfiguration.projectPaths[i],
       namespaceName: metaEdConfiguration.projects[i].namespaceName,
       projectExtension,
       projectName: metaEdConfiguration.projects[i].projectName,
-      isExtension: metaEdConfiguration.projects[i].namespaceName !== 'edfi',
+      isExtension: metaEdConfiguration.projects[i].namespaceName !== 'EdFi',
     });
   }
 

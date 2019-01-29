@@ -1,9 +1,9 @@
 Domain Entity LocalAccount
     documentation "This is documentation."
-    shared string AccountIdentifier
+    shared string EdFi.AccountIdentifier
         documentation "This is documentation."
         is part of identity
-    domain entity EducationOrganization
+    domain entity EdFi.EducationOrganization
         documentation "A reference to the education organization for which the account is applicable."
         is part of identity
         is queryable field
@@ -12,7 +12,7 @@ Domain Entity LocalAccount
         is part of identity
         is queryable field
 
-    shared string AccountName
+    shared string EdFi.AccountName
       documentation "A descriptive name for the account"
       is optional
     domain entity ChartOfAccount

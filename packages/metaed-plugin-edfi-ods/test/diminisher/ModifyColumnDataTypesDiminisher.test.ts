@@ -9,7 +9,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ModifyColumnDataTypesDiminisher diminishes data types for matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const studentIndicator = 'StudentIndicator';
@@ -47,7 +47,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes data types for matchin
 });
 
 describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentAuthor = 'EducationContentAuthor';
@@ -79,7 +79,7 @@ describe('when ModifyColumnDataTypesDiminisher diminishes string lengths for mat
 });
 
 describe('when ModifyColumnDataTypesDiminisher diminishes non matching table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';

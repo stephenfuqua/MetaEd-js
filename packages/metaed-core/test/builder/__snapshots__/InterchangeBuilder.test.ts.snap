@@ -49,8 +49,8 @@ Array [
 
 exports[`when building interchange extension with lowercase interchange extension name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
-  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
+  "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+  "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
 ]
 `;
 
@@ -77,8 +77,8 @@ Array [
 
 exports[`when building interchange with lowercase interchange name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
-  "no viable alternative at input 'InterchangeinterchangeName', column: 14, line: 2, token: interchangeName",
+  "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
+  "no viable alternative at input 'Interchangei', column: 14, line: 2, token: i",
 ]
 `;
 
@@ -116,24 +116,29 @@ Object {
     "tokenText": "[2]",
   },
   "metaEdName": Object {
-    "column": 4,
+    "column": 18,
     "line": 9,
-    "tokenText": "domain entity",
+    "tokenText": "InterchangeElementName",
   },
   "referencedEntity": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "referencedType": Object {
-    "column": 4,
+  "referencedNamespaceName": Object {
+    "column": 18,
     "line": 9,
-    "tokenText": "domain entity",
+    "tokenText": "InterchangeElementName",
+  },
+  "referencedType": Object {
+    "column": 18,
+    "line": 9,
+    "tokenText": "InterchangeElementName",
   },
   "type": Object {
-    "column": 4,
+    "column": 18,
     "line": 9,
-    "tokenText": "domain entity",
+    "tokenText": "InterchangeElementName",
   },
   "typeHumanizedName": Object {
     "column": 0,
@@ -156,24 +161,29 @@ Object {
     "tokenText": "[3]",
   },
   "metaEdName": Object {
-    "column": 4,
+    "column": 27,
     "line": 10,
-    "tokenText": "domain entity identity",
+    "tokenText": "InterchangeIdentityTemplateName",
   },
   "referencedEntity": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "referencedType": Object {
-    "column": 4,
+  "referencedNamespaceName": Object {
+    "column": 27,
     "line": 10,
-    "tokenText": "domain entity identity",
+    "tokenText": "InterchangeIdentityTemplateName",
+  },
+  "referencedType": Object {
+    "column": 27,
+    "line": 10,
+    "tokenText": "InterchangeIdentityTemplateName",
   },
   "type": Object {
-    "column": 4,
+    "column": 27,
     "line": 10,
-    "tokenText": "domain entity identity",
+    "tokenText": "InterchangeIdentityTemplateName",
   },
   "typeHumanizedName": Object {
     "column": 0,
@@ -185,6 +195,21 @@ Object {
 
 exports[`when building single interchange source map should have line, column, text for each property 1`] = `
 Object {
+  "baseEntity": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "baseEntityName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,

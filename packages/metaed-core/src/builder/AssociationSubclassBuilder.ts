@@ -29,10 +29,6 @@ export class AssociationSubclassBuilder extends TopLevelEntityBuilder {
   }
 
   enterBaseName(context: MetaEdGrammar.BaseNameContext) {
-    if (this.currentTopLevelEntity === NoTopLevelEntity) return;
-    if (context.exception || context.ID() == null || context.ID().exception || isErrorText(context.ID().getText())) return;
-
-    this.currentTopLevelEntity.baseEntityName = context.ID().getText();
-    this.currentTopLevelEntity.sourceMap.baseEntityName = sourceMapFrom(context);
+    this.enteringBaseName(context);
   }
 }

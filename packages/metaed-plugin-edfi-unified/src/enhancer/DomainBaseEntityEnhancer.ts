@@ -1,17 +1,21 @@
-import { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
-import { getAllEntitiesOfType, getTopLevelCoreEntityForNamespaces, asDomainBase } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult, TopLevelEntity, Domain, Subdomain } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityFromNamespaceChain, topLevelCoreEntityModelTypes } from 'metaed-core';
 
 const enhancerName = 'DomainBaseEntityEnhancer';
 
+type DomainBase = Domain | Subdomain;
+
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'domain', 'subdomain').forEach(entity => {
-    const domainBase = asDomainBase(entity);
-    domainBase.domainItems.forEach(domainItem => {
-      const referencedEntity = getTopLevelCoreEntityForNamespaces(
-        [domainBase.namespace, ...domainBase.namespace.dependencies],
+    (entity as DomainBase).domainItems.forEach(domainItem => {
+      const referencedEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
         domainItem.metaEdName,
-      );
-      if (referencedEntity) domainBase.entities.push(referencedEntity);
+        domainItem.referencedNamespaceName,
+        domainItem.namespace,
+        ...topLevelCoreEntityModelTypes,
+      ) as TopLevelEntity | null;
+
+      if (referencedEntity) (entity as DomainBase).entities.push(referencedEntity);
     });
   });
 

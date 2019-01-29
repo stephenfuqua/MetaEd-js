@@ -10,7 +10,7 @@ import { MetaEdEnvironment, DomainEntityProperty, DomainEntity, DomainEntitySubc
 import { enhance } from '../../../src/enhancer/property/DomainEntityReferenceEnhancer';
 
 describe('when enhancing domainEntity property referring to domainEntity', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -19,6 +19,7 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
   beforeAll(() => {
     const property: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -48,7 +49,7 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
 });
 
 describe('when enhancing domainEntity property referring to subclass', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -57,6 +58,7 @@ describe('when enhancing domainEntity property referring to subclass', () => {
   beforeAll(() => {
     const property: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -86,8 +88,8 @@ describe('when enhancing domainEntity property referring to subclass', () => {
 });
 
 describe('when enhancing domainEntity property referring to domainEntity across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -97,6 +99,7 @@ describe('when enhancing domainEntity property referring to domainEntity across 
   beforeAll(() => {
     const property: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });

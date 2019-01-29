@@ -7,7 +7,7 @@ import { tableEntities } from '../../../src/enhancer/EnhancerHelper';
 import { Table } from '../../../src/model/database/Table';
 
 describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 3.1', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
@@ -39,7 +39,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
 });
 
 describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent and aggregate root on 2.0', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
@@ -71,7 +71,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with DE parent
 });
 
 describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(
@@ -102,7 +102,7 @@ describe('when DiscriminatorColumnFlaggingEnhancer enhances table with no parent
 });
 
 describe('when DiscriminatorColumnFlaggingEnhancer enhances non aggregate root table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.plugin.set(

@@ -20,8 +20,8 @@ describe('when validating domain entity names that do not start with "Example"',
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName: string = 'edfi';
-    const extensionNamespaceName: string = 'extension';
+    const coreNamespaceName: string = 'EdFi';
+    const extensionNamespaceName: string = 'Extension';
 
     // Create the metaed language text for the test
     MetaEdTextBuilder.build()
@@ -72,8 +72,8 @@ describe('when validating domain entity names that start with "Example"', () => 
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName: string = 'edfi';
-    const extensionNamespaceName: string = 'extension';
+    const coreNamespaceName: string = 'EdFi';
+    const extensionNamespaceName: string = 'Extension';
 
     // Create the metaed language text for the test
     MetaEdTextBuilder.build()
@@ -121,8 +121,8 @@ describe('when validating domain entity names that start with "Example" on data 
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName: string = 'edfi';
-    const extensionNamespaceName: string = 'extension';
+    const coreNamespaceName: string = 'EdFi';
+    const extensionNamespaceName: string = 'Extension';
 
     // Create the metaed language text for the test
     MetaEdTextBuilder.build()
@@ -173,8 +173,8 @@ describe('when validating association names that start with "Example" on data st
   let failures: Array<ValidationFailure>;
 
   beforeAll(() => {
-    const coreNamespaceName: string = 'edfi';
-    const extensionNamespaceName: string = 'extension';
+    const coreNamespaceName: string = 'EdFi';
+    const extensionNamespaceName: string = 'Extension';
 
     // Create the metaed language text for the test
     MetaEdTextBuilder.build()

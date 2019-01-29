@@ -1,14 +1,15 @@
 import { MetaEdEnvironment, ValidationFailure, CommonExtension } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 import { failExtensionPropertyRedeclarations } from '../ValidatorShared/FailExtensionPropertyRedeclarations';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   metaEd.namespace.forEach(namespace => {
     namespace.entity.commonExtension.forEach(commonExtension => {
-      const extendedEntity: CommonExtension | null = getEntityForNamespaces(
+      const extendedEntity: CommonExtension | null = getEntityFromNamespaceChain(
         commonExtension.metaEdName,
-        namespace.dependencies,
+        commonExtension.baseEntityNamespaceName,
+        commonExtension.namespace,
         'common',
       ) as CommonExtension | null;
 

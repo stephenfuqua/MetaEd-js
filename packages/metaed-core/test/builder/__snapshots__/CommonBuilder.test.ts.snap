@@ -17,6 +17,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -57,8 +62,8 @@ Array [
 
 exports[`when building common with lowercase common name should have no viable alternative error 1`] = `
 Array [
-  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
-  "no viable alternative at input 'CommonentityName', column: 9, line: 2, token: entityName",
+  "no viable alternative at input 'Commone', column: 9, line: 2, token: e",
+  "no viable alternative at input 'Commone', column: 9, line: 2, token: e",
 ]
 `;
 
@@ -120,6 +125,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "baseEntityNamespaceName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "documentation": Object {
     "column": 4,
     "line": 3,
@@ -160,8 +170,8 @@ Array [
 
 exports[`when building inline common with lowercase inline common name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
-  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
+  "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
+  "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
 ]
 `;
 

@@ -4,8 +4,8 @@ exports[`when validating interchange identity template has invalid name should h
 
 exports[`when validating interchange identity template has invalid name should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 27,
   "line": 5,
-  "tokenText": "domain entity identity",
+  "tokenText": "DomainEntityIdentityTemplateName",
 }
 `;

@@ -17,7 +17,7 @@ describe('when an association extension extends a non-student program associatio
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -32,7 +32,7 @@ describe('when an association extension extends a non-student program associatio
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
 
     const entity = coreNamespace.entity.association.get(entityName);
@@ -61,7 +61,7 @@ describe('when an association extension extends student program association', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -76,7 +76,7 @@ describe('when an association extension extends student program association', ()
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     const entity = coreNamespace.entity.association.get(entityName);
     const extension = coreNamespace.entity.associationExtension.get(entityName);
@@ -113,7 +113,7 @@ describe('when an association extension extends a subclass of student program as
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(entityName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName1', 'doc', true, false)
@@ -125,7 +125,7 @@ describe('when an association extension extends a subclass of student program as
       .withEndAssociationSubclass()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartAssociationExtension(coreSubclassName)
       .withBooleanProperty('PropertyName3', 'doc', true, false)
       .withEndAssociationExtension()
@@ -136,9 +136,9 @@ describe('when an association extension extends a subclass of student program as
       .sendToListener(new AssociationExtensionBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
-    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('extension');
+    const extensionNamespace: Namespace | undefined = metaEd.namespace.get('Extension');
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
 

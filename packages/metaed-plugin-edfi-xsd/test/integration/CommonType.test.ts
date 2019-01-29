@@ -22,7 +22,7 @@ describe('when generating xsd for common type', () => {
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartCommon(coreEntity)
       .withDocumentation('doc')
@@ -52,7 +52,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreEntity = 'CoreEntity';
   const coreProperty = 'CoreProperty';
-  const extensionName = 'extension';
+  const extensionName = 'Extension';
   const extension = 'EXTENSION';
   const extensionEntity = 'ExtensionEntity';
   const extensionEntityPk = 'ExtensionEntityPk';
@@ -67,7 +67,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartCommon(coreEntity)
       .withDocumentation('doc')
@@ -90,7 +90,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -109,7 +109,7 @@ describe('when generating xsd for common type in extension namespace with refere
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const coreEntity = 'CoreEntity';
   const coreEntityPk = 'CoreEntityPk';
-  const extensionName = 'extension';
+  const extensionName = 'Extension';
   const extension = 'EXTENSION';
   const extensionEntity = 'ExtensionEntity';
 
@@ -124,7 +124,7 @@ describe('when generating xsd for common type in extension namespace with refere
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartCommon(coreEntity)
       .withDocumentation('doc')
@@ -147,7 +147,7 @@ describe('when generating xsd for common type in extension namespace with refere
       .sendToListener(domainEntityExtensionBuilder)
       .sendToListener(commonBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

@@ -4,7 +4,7 @@ import { MetaEdEnvironment, CommonProperty, Common, Namespace } from 'metaed-cor
 import { enhance } from '../../../src/enhancer/property/CommonReferenceEnhancer';
 
 describe('when enhancing common property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -13,6 +13,7 @@ describe('when enhancing common property', () => {
   beforeAll(() => {
     const property: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace,
       parentEntityName,
     });
@@ -42,8 +43,8 @@ describe('when enhancing common property', () => {
 });
 
 describe('when enhancing common property across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -53,6 +54,7 @@ describe('when enhancing common property across namespaces', () => {
   beforeAll(() => {
     const property: CommonProperty = Object.assign(newCommonProperty(), {
       metaEdName: referencedEntityName,
+      referencedNamespaceName: namespace.namespaceName,
       namespace: extensionNamespace,
       parentEntityName,
     });

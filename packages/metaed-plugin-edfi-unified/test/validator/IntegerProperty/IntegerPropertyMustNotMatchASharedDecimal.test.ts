@@ -15,7 +15,7 @@ describe('when validating integer property does not match shared decimal', () =>
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedDecimal('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withTotalDigits('10')
@@ -32,7 +32,7 @@ describe('when validating integer property does not match shared decimal', () =>
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -57,7 +57,7 @@ describe('when validating integer property matches shared decimal', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedDecimal(entityName)
       .withDocumentation('EntityDocumentation')
       .withTotalDigits('10')
@@ -74,7 +74,7 @@ describe('when validating integer property matches shared decimal', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

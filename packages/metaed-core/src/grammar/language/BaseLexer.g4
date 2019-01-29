@@ -94,7 +94,6 @@ fragment ALPHANUMERIC : DIGIT | UPPER_CASE | LOWER_CASE;
 fragment INT_FRAG :     ([0] | [1-9] [0-9]*);
 
 ID : UPPER_CASE (ALPHANUMERIC)* ;
-NAMESPACE_ID : (UPPER_CASE | LOWER_CASE) (ALPHANUMERIC)* ;
 
 UNSIGNED_INT : INT_FRAG;
 DECIMAL_VALUE : '-'? INT_FRAG '.' [0-9]* ;
@@ -111,3 +110,6 @@ PERIOD : '.';
 LINE_COMMENT : '//' .*? '\r'? '\n' -> skip ; // Match "//" stuff '\n'
 
 WS : [ \t\n\r]+ -> skip ;
+
+// Anything left over is an error character
+ERROR_CHARACTER : . ;

@@ -5,7 +5,7 @@ import { enhance } from '../../../src/model/Descriptor';
 describe('when Descriptor enhances descriptor entity', () => {
   const descriptorName = 'DescriptorName';
   let descriptor: Descriptor;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -31,7 +31,7 @@ describe('when Descriptor enhances descriptor entity', () => {
 describe('when Descriptor enhances descriptor entity with descriptor suffix', () => {
   const descriptorName = 'DescriptorName';
   let descriptor: Descriptor;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -56,7 +56,7 @@ describe('when Descriptor enhances descriptor entity with descriptor suffix', ()
 
 describe('when Descriptor enhances descriptor entity with is map type required', () => {
   let descriptor: Descriptor;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -77,7 +77,7 @@ describe('when Descriptor enhances descriptor entity with is map type required',
 
 describe('when Descriptor enhances descriptor entity with is amp type optional', () => {
   let descriptor: Descriptor;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

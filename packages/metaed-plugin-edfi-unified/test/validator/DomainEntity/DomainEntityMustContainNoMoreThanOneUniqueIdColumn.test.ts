@@ -10,7 +10,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringIdentity('Property1', 'doc', '100')
@@ -21,7 +21,7 @@ describe('when validating domain entity with no UniqueId fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -42,7 +42,7 @@ describe('when validating domain entity with one UniqueId field', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringIdentity('UniqueId', 'doc', '100', 'Student')
@@ -53,7 +53,7 @@ describe('when validating domain entity with one UniqueId field', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -74,7 +74,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringIdentity('UniqueId', 'doc', '100', null, 'Student')
@@ -86,7 +86,7 @@ describe('when validating domain entity with two UniqueId fields', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -112,14 +112,14 @@ describe('when validating domain entity with two UniqueId fields in extension na
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity')
       .withDocumentation('doc')
       .withStringIdentity('EntityId', 'doc', '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(entityName)
       .withDocumentation('doc')
       .withStringIdentity('UniqueId', 'doc', '100', null, 'Student')
@@ -131,8 +131,8 @@ describe('when validating domain entity with two UniqueId fields in extension na
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 

@@ -208,7 +208,8 @@ domainItem
      | COMMON_KEYWORD
      | DOMAIN_ENTITY_KEYWORD
      | DESCRIPTOR_KEYWORD
-     | INLINE_COMMON_KEYWORD) ID metaEdId?
+     | INLINE_COMMON_KEYWORD)
+     (baseNamespace PERIOD)? localDomainItemName metaEdId?
     ;
 
 footerDocumentation
@@ -225,14 +226,14 @@ domainEntity
    ;
 
 domainEntityExtension
-     : DOMAIN_ENTITY extendeeName ADDITIONS metaEdId?
-       property+
+    : DOMAIN_ENTITY extendeeName ADDITIONS metaEdId?
+      property+
     ;
 
 domainEntitySubclass
-     : DOMAIN_ENTITY entityName BASED_ON baseName metaEdId?
-       documentation
-       property+
+    : DOMAIN_ENTITY entityName BASED_ON baseName metaEdId?
+      documentation
+      property+
     ;
 
 // Enumeration
@@ -246,13 +247,13 @@ enumeration
 enumerationItem
     : ENUMERATION_ITEM shortDescription metaEdId?
       enumerationItemDocumentation?
-      ;
+    ;
 
 shortDescription : TEXT ;
 
 // InlineCommon
 inlineCommon
-     : INLINE_COMMON inlineCommonName metaEdId?
+    : INLINE_COMMON inlineCommonName metaEdId?
       documentation
       property+
     ;
@@ -265,7 +266,7 @@ interchange
       extendedDocumentation?
       useCaseDocumentation?
       interchangeComponent
-      ;
+    ;
 
 extendedDocumentation
     : EXTENDED_DOCUMENTATION TEXT
@@ -280,17 +281,19 @@ interchangeComponent
     ;
 
 interchangeElement
-    : (ASSOCIATION_KEYWORD | DESCRIPTOR_KEYWORD | DOMAIN_ENTITY_KEYWORD) ID metaEdId?
+    : (ASSOCIATION_KEYWORD | DESCRIPTOR_KEYWORD | DOMAIN_ENTITY_KEYWORD)
+      (baseNamespace PERIOD)? localInterchangeItemName metaEdId?
     ;
 
 interchangeIdentity
-    : (ASSOCIATION_IDENTITY | DOMAIN_ENTITY_IDENTITY) ID metaEdId?
+    : (ASSOCIATION_IDENTITY | DOMAIN_ENTITY_IDENTITY)
+      (baseNamespace PERIOD)? localInterchangeItemName metaEdId?
     ;
 
 interchangeExtension
 	: INTERCHANGE extendeeName ADDITIONS metaEdId?
 	  interchangeExtensionComponent
-	  ;
+	;
 
 interchangeExtensionComponent
 	: (interchangeElement | interchangeIdentity)+
@@ -299,7 +302,7 @@ interchangeExtensionComponent
 // Subdomain
 
 subdomain
-     : SUBDOMAIN subdomainName SUBDOMAIN_OF parentDomainName metaEdId?
+    : SUBDOMAIN subdomainName SUBDOMAIN_OF parentDomainName metaEdId?
       documentation
       domainItem+
       (SUBDOMAIN_POSITION subdomainPosition)?
@@ -494,7 +497,10 @@ unaryOperator : POS_SIGN | NEG_SIGN;
 abstractEntityName : ID;
 associationName : ID;
 baseKeyName : ID;
-baseName : ID;
+baseName
+    : (baseNamespace PERIOD)? localBaseName
+    ;
+baseNamespace : ID;
 choiceName : ID;
 sharedDecimalName : ID;
 sharedIntegerName : ID;
@@ -505,9 +511,16 @@ descriptorName : ID;
 domainName : ID ;
 entityName : ID;
 enumerationName : ID;
-extendeeName : ID;
+extendeeName
+    : (extendeeNamespace PERIOD)? localExtendeeName
+    ;
+extendeeNamespace: ID;
 inlineCommonName : ID;
 interchangeName : ID;
+localBaseName : ID;
+localDomainItemName: ID;
+localExtendeeName : ID;
+localInterchangeItemName : ID;
 localPropertyName : ID;
 localPropertyType : ID;
 parentDomainName : ID;
@@ -523,5 +536,5 @@ shortenToName : ID;
 subdomainName : ID;
 withContextName : ID;
 
-namespaceName : NAMESPACE_ID;
+namespaceName : ID;
 metaEdId : METAED_ID;

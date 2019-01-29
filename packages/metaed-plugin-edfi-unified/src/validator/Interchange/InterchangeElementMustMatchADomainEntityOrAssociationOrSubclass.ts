@@ -1,5 +1,5 @@
 import { MetaEdEnvironment, ValidationFailure, Interchange, InterchangeItem, ModelType } from 'metaed-core';
-import { getAllEntitiesOfType, getEntityForNamespaces } from 'metaed-core';
+import { getAllEntitiesOfType, getEntityFromNamespaceChain } from 'metaed-core';
 
 const validTypes: ModelType[] = ['association', 'associationSubclass', 'descriptor', 'domainEntity', 'domainEntitySubclass'];
 
@@ -17,9 +17,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   (getAllEntitiesOfType(metaEd, 'interchange') as Array<Interchange>).forEach((interchange: Interchange) => {
     if (interchange.elements.length === 0) return;
     interchange.elements.forEach((item: InterchangeItem) => {
-      const foundEntity = getEntityForNamespaces(
+      const foundEntity = getEntityFromNamespaceChain(
         item.metaEdName,
-        [interchange.namespace, ...interchange.namespace.dependencies],
+        item.referencedNamespaceName,
+        interchange.namespace,
         ...validTypes,
       );
       if (foundEntity != null) return;

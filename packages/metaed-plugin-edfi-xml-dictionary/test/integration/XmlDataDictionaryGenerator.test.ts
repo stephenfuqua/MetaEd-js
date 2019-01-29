@@ -30,7 +30,7 @@ describe('when generating xsd for domain entity', () => {
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('Domain entity documentation')

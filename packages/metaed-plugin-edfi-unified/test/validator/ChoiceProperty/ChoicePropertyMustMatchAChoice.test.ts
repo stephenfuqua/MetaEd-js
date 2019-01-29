@@ -10,7 +10,7 @@ describe('when choice property has identifier of choice', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -44,17 +44,17 @@ describe('when choice property has identifier of choice in dependency namespace'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndChoice()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withChoiceProperty(entityName, 'doc', true, false)
+      .withChoiceProperty(`EdFi.${entityName}`, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -62,9 +62,8 @@ describe('when choice property has identifier of choice in dependency namespace'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
     failures = validate(metaEd);
   });
@@ -82,7 +81,7 @@ describe('when choice property has invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice('WrongName')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -123,14 +122,14 @@ describe('when choice property has invalid identifier in dependency namespace', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice('WrongName')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndChoice()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withChoiceProperty(entityName, 'doc', true, false)
@@ -141,8 +140,8 @@ describe('when choice property has invalid identifier in dependency namespace', 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 

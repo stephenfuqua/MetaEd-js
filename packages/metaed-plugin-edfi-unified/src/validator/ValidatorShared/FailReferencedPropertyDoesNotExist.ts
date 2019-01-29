@@ -9,14 +9,14 @@ import {
 
 export function failReferencedPropertyDoesNotExist(
   validatorName: string,
-  namespaces: Array<Namespace>,
+  namespace: Namespace,
   entity: ModelBase,
   propertyPath: Array<string>,
   pairedMergePropertyName: string,
   sourceMap: SourceMap,
   failures: Array<ValidationFailure>,
 ) {
-  const matchingProperty = findReferencedProperty(namespaces, entity, [pairedMergePropertyName], matchAll());
+  const matchingProperty = findReferencedProperty(namespace, entity, [pairedMergePropertyName], matchAll());
   if (!matchingProperty) return;
 
   const filter =
@@ -24,7 +24,7 @@ export function failReferencedPropertyDoesNotExist(
       ? matchAllIdentityReferenceProperties()
       : matchAllButFirstAsIdentityProperties();
 
-  const propertyContext = findReferencedProperty(namespaces, entity, propertyPath, filter);
+  const propertyContext = findReferencedProperty(namespace, entity, propertyPath, filter);
   if (!propertyContext) {
     failures.push({
       validatorName,

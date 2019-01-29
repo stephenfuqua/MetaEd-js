@@ -18,7 +18,7 @@ jest.setTimeout(40000);
 
 describe('when association references two different domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -97,7 +97,7 @@ describe('when association references two different domain entities', () => {
 
 describe('when association references two different domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
@@ -164,7 +164,7 @@ describe('when association references two different domain entities', () => {
 
 describe('when association references the same domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
@@ -224,7 +224,7 @@ describe('when association references the same domain entity', () => {
 
 describe('when association has additional primary key simple properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -295,7 +295,7 @@ describe('when association has additional primary key simple properties', () => 
 
 describe('when association has additional primary key reference properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const enumerationName = 'EnumerationName';
   const enumerationItemName = 'EnumerationItemName';
@@ -379,7 +379,7 @@ describe('when association has additional primary key reference properties', () 
 
 describe('when association references another association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const associationName1 = 'AssociationName1';
   const associationName2 = 'AssociationNameTest';
@@ -458,7 +458,7 @@ describe('when association references another association', () => {
 
 describe('when association has overlapping primary key properties with domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -546,7 +546,7 @@ describe('when association has overlapping primary key properties with domain en
 
 describe('when association references another association property with matching context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -620,8 +620,8 @@ describe('when association references another association property with matching
 
 describe('when extension association references core domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -645,8 +645,8 @@ describe('when extension association references core domain entities', () => {
       .withBeginNamespace(extension)
       .withStartAssociation(associationName)
       .withDocumentation('Documentation')
-      .withAssociationDomainEntityProperty(domainEntityName1, 'Documentation')
-      .withAssociationDomainEntityProperty(domainEntityName2, 'Documentation')
+      .withAssociationDomainEntityProperty(`${namespaceName}.${domainEntityName1}`, 'Documentation')
+      .withAssociationDomainEntityProperty(`${namespaceName}.${domainEntityName2}`, 'Documentation')
       .withEndAssociation()
       .withEndNamespace()
 
@@ -712,8 +712,8 @@ describe('when extension association references core domain entities', () => {
 
 describe('when extension association references extension domain entities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';

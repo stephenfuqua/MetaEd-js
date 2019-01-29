@@ -8,7 +8,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor', () => {
   const descriptorBaseName = 'DescriptorName';
   const descriptorName = 'DescriptorNameDescriptor';
   const namespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'edfi',
+    namespaceName: 'EdFi',
   });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -54,9 +54,9 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with extension',
 
   const descriptorBaseName = 'DescriptorName';
   const descriptorName = 'DescriptorNameDescriptor';
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
-  const extensionNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'extension', projectExtension });
+  const extensionNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'Extension', projectExtension });
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
   extensionNamespace.dependencies.push(namespace);
 
@@ -87,7 +87,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with extension',
 
 describe('when DescriptorPropertiesEnhancer enhances descriptor with required map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorBaseName = 'DescriptorName';
 
@@ -119,7 +119,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with required ma
 
 describe('when DescriptorPropertiesEnhancer enhances descriptor with optional map type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorBaseName = 'DescriptorName';
 
@@ -151,7 +151,7 @@ describe('when DescriptorPropertiesEnhancer enhances descriptor with optional ma
 
 describe('when DescriptorPropertiesEnhancer enhances descriptor with items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const descriptorBaseName = 'DescriptorName';
 

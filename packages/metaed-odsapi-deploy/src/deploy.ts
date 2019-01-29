@@ -172,7 +172,7 @@ export function deployTargetsFor(metaEdConfiguration: MetaEdConfiguration, deplo
 
 async function projectExists(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
   const { projectName }: { projectName: string } = target;
-  if (target.namespaceName === 'edfi') return true;
+  if (target.namespaceName === 'EdFi') return true;
   if (versionSatisfies(dataStandardVersionFor(metaEdConfiguration.projects), V2Only)) return true;
 
   const targetPath: string = path.resolve(
@@ -194,7 +194,7 @@ async function removeSupportingArtifacts(
 ): Promise<boolean> {
   const { projectName }: { projectName: string } = target;
   if (suppressDelete) return true;
-  if (target.namespaceName === 'edfi') return true;
+  if (target.namespaceName === 'EdFi') return true;
 
   const targetPath: string = path.resolve(
     metaEdConfiguration.deployDirectory,
@@ -218,7 +218,7 @@ async function removeSupportingArtifacts(
 
 async function refreshProjectFile(metaEdConfiguration: MetaEdConfiguration, target: DeployTargets): Promise<boolean> {
   const { projectName }: { projectName: string } = target;
-  if (target.namespaceName === 'edfi') return true;
+  if (target.namespaceName === 'EdFi') return true;
 
   const csproj = '.csproj';
   const targetPath: string = path.resolve(
@@ -273,7 +273,7 @@ async function deployArtifactSources(metaEdConfiguration: MetaEdConfiguration, t
             let deployPath: string = path.resolve(deployTarget, file);
 
             // FIXME: METAED-821 - Core ApiModel is currently deploying to a different location than the other metadata artifacts
-            if (file.toLowerCase() === 'apimodel.json' && target.namespaceName === 'edfi') {
+            if (file.toLowerCase() === 'apimodel.json' && target.namespaceName === 'EdFi') {
               deployPath = coreApiModelDeployPathFor(metaEdConfiguration);
             }
 

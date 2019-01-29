@@ -19,8 +19,8 @@ jest.setTimeout(40000);
 
 describe('when association extension has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
@@ -50,7 +50,7 @@ describe('when association extension has a single property', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationExtension(associationName)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -133,8 +133,8 @@ describe('when association extension has a single property', () => {
 
 describe('when association extension has a required property and a collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
@@ -165,7 +165,7 @@ describe('when association extension has a required property and a collection', 
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationExtension(associationName)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
       .withIntegerProperty(integerPropertyName3, 'Documentation', true, false)
       .withIntegerProperty(integerPropertyName4, 'Documentation', false, true)
       .withEndAssociationExtension()
@@ -255,8 +255,8 @@ describe('when association extension has a required property and a collection', 
 
 describe('when association extension only has a collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
@@ -286,7 +286,7 @@ describe('when association extension only has a collection', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationExtension(associationName)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
       .withIntegerProperty(integerPropertyName3, 'Documentation', true, true)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -349,8 +349,8 @@ describe('when association extension only has a collection', () => {
 
 describe('when association extension has a reference property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationExtensionName: string = `${associationName}Extension`;
   const domainEntityName1 = 'DomainEntityName1';
@@ -386,8 +386,8 @@ describe('when association extension has a reference property', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationExtension(associationName)
-      .withDomainEntityProperty(domainEntityName3, 'Documentation', false, false)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
+      .withDomainEntityProperty(`${namespaceName}.${domainEntityName3}`, 'Documentation', false, false)
       .withEndAssociationExtension()
       .withEndNamespace()
 
@@ -444,8 +444,8 @@ describe('when association extension has a reference property', () => {
 
 describe('when association extension has multiple common properties', () => {
   const metaEd: MetaEdEnvironment = { ...newMetaEdEnvironment(), dataStandardVersion: '3.0.0' };
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const commonName1 = 'CommonName1';
@@ -488,7 +488,7 @@ describe('when association extension has multiple common properties', () => {
       .withIntegerIdentity(integerPropertyName4, 'Documentation')
       .withEndCommon()
 
-      .withStartAssociationExtension(associationName)
+      .withStartAssociationExtension(`${namespaceName}.${associationName}`)
       .withCommonProperty(commonName1, 'Documentation', false, false)
       .withCommonProperty(commonName2, 'Documentation', false, true)
       .withEndAssociationExtension()

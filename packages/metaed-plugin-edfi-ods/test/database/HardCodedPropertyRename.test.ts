@@ -33,7 +33,7 @@ import { DatabaseIndex } from './DatabaseIndex';
 
 describe('when domain entity is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const student = 'Student';
   const uniqueId = 'UniqueId';
   const usiColumnName: string = `${student}USI`;
@@ -88,7 +88,7 @@ describe('when domain entity is student', () => {
 
 describe('when referenced domain entity is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const student = 'Student';
@@ -150,8 +150,8 @@ describe('when referenced domain entity is student', () => {
 
 describe('when referenced domain entity across namespaces is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
-  const extension = 'extension';
+  const namespaceName = 'EdFi';
+  const extension = 'Extension';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const student = 'Student';
@@ -171,7 +171,7 @@ describe('when referenced domain entity across namespaces is student', () => {
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName, 'Documentation')
-      .withDomainEntityIdentity(student, 'Documentation')
+      .withDomainEntityIdentity(`${namespaceName}.${student}`, 'Documentation')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -221,7 +221,7 @@ describe('when referenced domain entity across namespaces is student', () => {
 
 describe('when domain entity is staff', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const staff = 'Staff';
   const uniqueId = 'UniqueId';
   const usiColumnName: string = `${staff}USI`;
@@ -276,7 +276,7 @@ describe('when domain entity is staff', () => {
 
 describe('when referenced domain entity is staff', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const staff = 'Staff';
@@ -338,7 +338,7 @@ describe('when referenced domain entity is staff', () => {
 
 describe('when domain entity is parent', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const parent = 'Parent';
   const uniqueId = 'UniqueId';
   const usiColumnName: string = `${parent}USI`;
@@ -393,7 +393,7 @@ describe('when domain entity is parent', () => {
 
 describe('when referenced domain entity is parent', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
@@ -455,7 +455,7 @@ describe('when referenced domain entity is parent', () => {
 
 describe('when referenced domain entity is required', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
@@ -517,7 +517,7 @@ describe('when referenced domain entity is required', () => {
 
 describe('when referenced domain entity is optional', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const parent = 'Parent';
@@ -579,7 +579,7 @@ describe('when referenced domain entity is optional', () => {
 
 describe('when referenced two domain entities with one as collection', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const domainEntityName = 'DomainEntityName';
   const student = 'Student';
   const staff = 'Staff';
@@ -681,7 +681,7 @@ describe('when referenced two domain entities with one as collection', () => {
 
 describe('when enumeration is school year', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const schoolYear = 'SchoolYear';
   const schoolYearTableName: string = `${schoolYear}Type`;
   const year1 = '1991';
@@ -799,7 +799,7 @@ describe('when enumeration is school year', () => {
 
 describe('when enumeration property is school year', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
   const schoolYear = 'SchoolYear';
@@ -867,7 +867,7 @@ describe('when enumeration property is school year', () => {
 
 describe('when enumeration property is school year with context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';

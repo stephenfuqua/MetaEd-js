@@ -29,9 +29,10 @@ function addForeignKeyToPrimaryKeyRename(table: Table, entity: TopLevelEntity): 
       },
     });
 
-    // null check for Flow
+    // null check for typescript
     if (entity.baseEntity != null) {
-      foreignKey.foreignTableSchema = entity.baseEntity.namespace.namespaceName;
+      foreignKey.foreignTableSchema = entity.baseEntity.namespace.namespaceName.toLowerCase();
+      foreignKey.foreignTableNamespace = entity.baseEntity.namespace;
       foreignKey.foreignTableName = entity.baseEntity.data.edfiOds.odsTableName;
     }
 

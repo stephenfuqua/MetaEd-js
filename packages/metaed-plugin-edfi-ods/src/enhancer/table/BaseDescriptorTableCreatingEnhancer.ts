@@ -9,12 +9,13 @@ import { Table } from '../../model/database/Table';
 const enhancerName = 'BaseDescriptorTableCreatingEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
-  const edfiNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const edfiNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (edfiNamespace == null) return { enhancerName, success: false };
 
   const descriptorTable: Table = Object.assign(newTable(), {
     name: 'Descriptor',
-    schema: edfiNamespace.namespaceName,
+    namespace: edfiNamespace,
+    schema: edfiNamespace.namespaceName.toLowerCase(),
     description: 'This is the base entity for the descriptor pattern.',
     includeCreateDateColumn: true,
     includeLastModifiedDateAndIdColumn: true,

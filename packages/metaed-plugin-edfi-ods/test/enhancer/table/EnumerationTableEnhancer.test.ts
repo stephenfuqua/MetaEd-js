@@ -6,7 +6,7 @@ import { enhance } from '../../../src/enhancer/table/EnumerationTableEnhancer';
 import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model/EdFiOdsEntityRepository';
 
 describe('when EnumerationTableEnhancer enhances enumeration', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const enumerationName = 'EnumerationName';
@@ -84,7 +84,7 @@ describe('when EnumerationTableEnhancer enhances enumeration', () => {
 });
 
 describe("when EnumerationTableEnhancer enhances enumeration name ending with 'Type'", () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const enumerationNameType = 'EnumerationNameType';

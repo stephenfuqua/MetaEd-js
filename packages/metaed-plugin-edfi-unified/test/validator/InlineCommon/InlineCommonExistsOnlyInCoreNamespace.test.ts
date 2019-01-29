@@ -9,7 +9,7 @@ describe('when validating inline common type exists in core', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInlineCommon('EntityName')
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName', 'PropertyDocumentation', true, false)
@@ -19,7 +19,7 @@ describe('when validating inline common type exists in core', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -39,14 +39,14 @@ describe('when validating inline common type exists in extension', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity')
       .withDocumentation('doc1')
       .withStringProperty('Property1', 'doc2', true, false, '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartInlineCommon('EntityName')
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName', 'PropertyDocumentation', true, false)
@@ -57,7 +57,7 @@ describe('when validating inline common type exists in extension', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

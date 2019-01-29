@@ -19,7 +19,7 @@ function remove(array: Array<EntityTable>, element: EntityTable) {
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (!versionSatisfies(metaEd.dataStandardVersion, targetVersions)) return { enhancerName, success: true };
 
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
   const aggregatesToClean = (coreNamespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates.filter((a: Aggregate) =>
     a.entityTables.some((et: EntityTable) => affectedTables.includes(et.table)),

@@ -1,14 +1,14 @@
-import { MetaEdEnvironment, EnhancerResult, Namespace, Common } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult, Common } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 const enhancerName = 'CommonReferenceEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.common.forEach(property => {
-    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
-    const referencedEntity: Common | null = getEntityForNamespaces(
+    const referencedEntity: Common | null = getEntityFromNamespaceChain(
       property.metaEdName,
-      namespaces,
+      property.referencedNamespaceName,
+      property.namespace,
       'common',
     ) as Common | null;
 

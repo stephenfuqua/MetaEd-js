@@ -17,21 +17,19 @@ export { execute as runEnhancers } from './enhancer/RunEnhancers';
 export { execute as runGenerators } from './generator/RunGenerators';
 export { fileMapForFailure } from './pipeline/FileMapForFailure';
 export {
-  addEntity,
   getAllEntities,
   getAllTopLevelEntities,
-  getEntity,
-  getTopLevelCoreEntity,
   getEntitiesOfType,
   getAllEntitiesNoSimpleTypes,
   addEntityForNamespace,
-  getEntityForNamespaces,
+  getEntityFromNamespaceChain,
+  getEntityFromNamespace,
   getAllEntitiesForNamespaces,
+  findFirstEntity,
   getAllTopLevelEntitiesForNamespaces,
   getAllEntitiesNoSimpleTypesForNamespaces,
   getEntitiesOfTypeForNamespaces,
   getAllEntitiesOfType,
-  getTopLevelCoreEntityForNamespaces,
 } from './model/EntityRepository';
 export {
   addProperty,

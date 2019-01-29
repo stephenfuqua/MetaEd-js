@@ -4,9 +4,9 @@ exports[`when validating interchange interchange element has duplicate names sho
 
 exports[`when validating interchange interchange element has duplicate names should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when validating interchange interchange element has multiple duplicate 
 
 exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName1",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when validating interchange interchange element has multiple duplicate 
 
 exports[`when validating interchange interchange element has multiple duplicate names should have validation failures 4`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 7,
-  "tokenText": "domain entity",
+  "tokenText": "DomainEntityElementName2",
 }
 `;

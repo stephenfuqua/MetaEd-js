@@ -10,7 +10,8 @@ import { EntityTable } from '../../../src/model/domainMetadata/EntityTable';
 describe('when enhancing enumerations', () => {
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
+  const schema = namespaceName.toLowerCase();
 
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const namespace: Namespace = {
@@ -30,7 +31,7 @@ describe('when enhancing enumerations', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: namespaceName,
+      schema,
     };
 
     const enumeration: Enumeration = Object.assign(newEnumeration(), {
@@ -61,7 +62,7 @@ describe('when enhancing enumerations', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(namespaceName);
+    expect(entityTable.schema).toBe(schema);
     expect(entityTable.table).toBe(tableName);
   });
 });

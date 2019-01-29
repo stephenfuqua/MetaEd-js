@@ -1,11 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association extension extends an invalid identifier should have validation failures(): when association extension extends an invalid identifier should have validation failure -> message 1`] = `"Association additions 'EntityName' does not match any declared Association or Association Subclass."`;
+exports[`when association extension extends an invalid identifier should have validation failures() 1`] = `"Association additions 'EntityName' does not match any declared Association or Association Subclass in namespace EdFi."`;
 
-exports[`when association extension extends an invalid identifier should have validation failures(): when association extension extends an invalid identifier should have validation failure -> sourceMap 1`] = `
+exports[`when association extension extends an invalid identifier should have validation failures() 2`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 17,
-  "tokenText": "Association",
+  "tokenText": "EdFi",
+}
+`;
+
+exports[`when association extension specifies wrong namespace should have validation failures() 1`] = `"Association additions 'EntityName' does not match any declared Association or Association Subclass in namespace Extension."`;
+
+exports[`when association extension specifies wrong namespace should have validation failures() 2`] = `
+Object {
+  "column": 14,
+  "line": 17,
+  "tokenText": "Extension",
 }
 `;

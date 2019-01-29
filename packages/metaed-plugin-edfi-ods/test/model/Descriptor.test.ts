@@ -11,14 +11,14 @@ import { initialize as initializeOdsPlugin } from '../../index';
 
 describe('when descriptor is required property of domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const extensionNamespace = 'extension';
+  const extensionNamespace = 'Extension';
   const descriptorName = 'DescriptorName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DummyCoreEntity')
       .withDocumentation('doc')
       .withIntegerIdentity('DummyCoreInteger', 'doc')

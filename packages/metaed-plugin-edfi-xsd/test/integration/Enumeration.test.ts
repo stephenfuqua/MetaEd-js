@@ -22,7 +22,7 @@ describe('when generating xsd for enumeration', () => {
     const enumerationBuilder = new EnumerationBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartEnumeration(coreEntity)
       .withDocumentation('doc')
@@ -59,7 +59,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   const extensionEntity = 'ExtensionEntity';
   const extensionEntityPk = 'ExtensionEntityPk';
 
-  const extensionNamespace = 'extension';
+  const extensionNamespace = 'Extension';
   const extension = 'EXTENSION';
   let coreResult;
   let extensionResult;
@@ -72,7 +72,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartEnumeration(coreEntity)
       .withDocumentation('doc')
@@ -86,7 +86,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(extensionEntityPk, 'doc')
-      .withEnumerationProperty(coreEntity, 'doc', true, false)
+      .withEnumerationProperty(`EdFi.${coreEntity}`, 'doc', true, false)
       .withEndDomainEntity()
 
       .withEndNamespace()
@@ -96,7 +96,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .sendToListener(enumerationBuilder)
       .sendToListener(descriptorBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -127,7 +127,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
   const enumerationItem = 'EnumerationItem';
   const extensionEntity = 'ExtensionEntity';
 
-  const extensionNamespace = 'extension';
+  const extensionNamespace = 'Extension';
   const extension = 'EXTENSION';
   let coreResult;
   let extensionResult;
@@ -139,7 +139,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity)
       .withDocumentation('doc')
@@ -161,7 +161,7 @@ describe('when generating xsd for enumeration in extension namespace with refere
       .sendToListener(domainEntityBuilder)
       .sendToListener(enumerationBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

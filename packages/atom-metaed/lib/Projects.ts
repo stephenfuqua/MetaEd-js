@@ -114,8 +114,8 @@ export async function findMetaEdProjectMetadata(createProjectJson: boolean = fal
         projectName: projectFileData.projectName,
         projectVersion,
         projectNamespace,
-        isExtensionProject: projectNamespace !== 'edfi',
-        projectExtension: projectNamespace === 'edfi' ? '' : 'EXTENSION',
+        isExtensionProject: projectNamespace !== 'EdFi',
+        projectExtension: projectNamespace === 'EdFi' ? '' : 'EXTENSION',
       };
     }),
   );

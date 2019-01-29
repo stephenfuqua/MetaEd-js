@@ -13,7 +13,7 @@ import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentContentStandard table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const assessment = 'Assessment';
@@ -74,7 +74,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 });
 
 describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentContentStandardAuthor table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const assessmentContentStandard = 'AssessmentContentStandard';
@@ -127,7 +127,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 });
 
 describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentContentStandard table with existing AssessmentVersion column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const assessment = 'Assessment';
@@ -180,7 +180,7 @@ describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentCon
 });
 
 describe('when AssessmentContentStandardTableDiminisher diminishes AssessmentContentStandardAuthor table with existing AssessmentVersion column', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const assessmentContentStandard = 'AssessmentContentStandard';

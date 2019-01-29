@@ -17,15 +17,15 @@ describe('when common extension correctly has different property names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false)
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
@@ -34,9 +34,8 @@ describe('when common extension correctly has different property names', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -61,15 +60,15 @@ describe('when common extension has duplicate property name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
@@ -78,9 +77,8 @@ describe('when common extension has duplicate property name', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -109,15 +107,15 @@ describe('when common extension has duplicate property name but different role n
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withBooleanProperty(duplicatePropertyName, 'doc', true, false, 'RoleName')
       .withEndCommonExtension()
       .withEndNamespace()
@@ -126,9 +124,8 @@ describe('when common extension has duplicate property name but different role n
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -151,7 +148,7 @@ describe('when common extension has multiple duplicates', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withBooleanProperty(duplicatePropertyName1, 'doc', true, false)
@@ -159,8 +156,8 @@ describe('when common extension has multiple duplicates', () => {
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withBooleanProperty(duplicatePropertyName1, 'doc', true, false)
       .withBooleanProperty(duplicatePropertyName2, 'doc', true, false)
       .withBooleanProperty(notDuplicatePropertyName, 'doc', true, false)
@@ -171,9 +168,8 @@ describe('when common extension has multiple duplicates', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -205,15 +201,15 @@ describe('when common extension has duplicate common property', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
@@ -222,9 +218,8 @@ describe('when common extension has duplicate common property', () => {
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -249,15 +244,15 @@ describe('when common extension has duplicate common extension override property
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(commonName)
       .withDocumentation('doc')
       .withCommonProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartCommonExtension(commonName)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartCommonExtension(`EdFi.${commonName}`)
       .withCommonExtensionOverrideProperty(duplicatePropertyName, 'doc', true, false)
       .withEndCommonExtension()
       .withEndNamespace()
@@ -266,9 +261,8 @@ describe('when common extension has duplicate common extension override property
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

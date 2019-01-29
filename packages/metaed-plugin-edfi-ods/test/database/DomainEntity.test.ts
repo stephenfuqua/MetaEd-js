@@ -19,8 +19,8 @@ jest.setTimeout(40000);
 
 describe('when creating extension domain entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -39,7 +39,7 @@ describe('when creating extension domain entity', () => {
       .withStartDomainEntity(domainEntityName2)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName2, 'Documentation')
-      .withDomainEntityProperty(domainEntityName1, 'Documentation', true, false)
+      .withDomainEntityProperty(`${namespaceName}.${domainEntityName1}`, 'Documentation', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -144,7 +144,7 @@ describe('when creating extension domain entity', () => {
 
 describe('when creating domain entity based on abstract entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -253,7 +253,7 @@ describe('when creating domain entity based on abstract entity', () => {
 
 describe('when creating domain entity based on abstract entity with identity rename', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const abstractEntityName = 'AbstractEntityName';
   const domainEntitySubclassName = 'DomainEntitySubclassName';
   const stringPropertyName = 'StringPropertyName';
@@ -326,7 +326,7 @@ describe('when creating domain entity based on abstract entity with identity ren
 });
 describe('when domain entity based on abstract entity both have collection properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const abstractEntityName = 'AbstractEntityName';
   const commonName = 'CommonName';
   const descriptorName = 'DescriptorName';

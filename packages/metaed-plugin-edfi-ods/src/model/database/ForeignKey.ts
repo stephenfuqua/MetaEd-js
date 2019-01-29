@@ -1,7 +1,7 @@
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, asCommonProperty } from 'metaed-core';
-import { EntityProperty, PropertyType } from 'metaed-core';
+import { orderByProp, asCommonProperty, NoNamespace } from 'metaed-core';
+import { EntityProperty, PropertyType, Namespace } from 'metaed-core';
 import { ReferencePropertyEdfiOds } from '../property/ReferenceProperty';
 import { NoTable, getPrimaryKeys } from './Table';
 import { ColumnNamePair } from './ColumnNamePair';
@@ -30,6 +30,7 @@ export type ForeignKey = {
   parentTableSchema: string;
   foreignTableName: string;
   foreignTableSchema: string;
+  foreignTableNamespace: Namespace;
   foreignKeyNameSuffix: string;
   parentTableColumnNames: Array<string>;
   foreignTableColumnNames: Array<string>;
@@ -94,6 +95,7 @@ export function newForeignKey(): ForeignKey {
     parentTableSchema: '',
     foreignTableName: '',
     foreignTableSchema: '',
+    foreignTableNamespace: NoNamespace,
     foreignKeyNameSuffix: '',
     parentTableColumnNames: [],
     foreignTableColumnNames: [],

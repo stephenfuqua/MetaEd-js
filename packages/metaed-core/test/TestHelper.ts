@@ -21,8 +21,12 @@ import { SharedString } from '../src/model/SharedString';
 import { StringType } from '../src/model/StringType';
 import { Domain } from '../src/model/Domain';
 import { Subdomain } from '../src/model/Subdomain';
+import { ModelType } from '../src/model/ModelType';
 import { EntityRepository } from '../src/model/EntityRepository';
-import { getEntity } from '../src/model/EntityRepository';
+
+function getEntity(repository: EntityRepository, entityName: string, modelType: ModelType): any {
+  return repository[modelType].get(entityName);
+}
 
 export function getUnknown(repository: EntityRepository, metaEdId: string): any {
   return getEntity(repository, metaEdId, 'unknown') as Association;

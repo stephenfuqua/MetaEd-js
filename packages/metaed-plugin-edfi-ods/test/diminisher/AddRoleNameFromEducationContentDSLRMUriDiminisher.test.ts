@@ -10,7 +10,7 @@ import { Column } from '../../src/model/database/Column';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceLearningResourceMetadataURI table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentDerivativeSourceLearningResourceMetadataURI =
@@ -52,7 +52,7 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
 });
 
 describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes EducationContentDerivativeSourceURI table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const educationContentDerivativeSourceURI = 'EducationContentDerivativeSourceURI';

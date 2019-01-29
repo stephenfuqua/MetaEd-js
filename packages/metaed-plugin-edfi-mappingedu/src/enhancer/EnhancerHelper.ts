@@ -8,11 +8,10 @@ import { ElementDefinition } from '../model/ElementDefinition';
 import { EnumerationDefinition } from '../model/EnumerationDefinition';
 import { EnumerationItemDefinition } from '../model/EnumerationItemDefinition';
 
-export const dataStandardNamespaceName: string = 'edfi';
+export const dataStandardNamespaceName: string = 'EdFi';
 export const dataStandardElementGroupName: string = 'Core';
 
-export const isDataStandard = (namespace: Namespace): boolean =>
-  namespace.namespaceName.toLowerCase() === dataStandardNamespaceName;
+export const isDataStandard = (namespace: Namespace): boolean => namespace.namespaceName === dataStandardNamespaceName;
 export const elementGroupNameFor = (namespace: Namespace): string =>
   isDataStandard(namespace) ? dataStandardElementGroupName : namespace.namespaceName;
 

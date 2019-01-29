@@ -26,7 +26,7 @@ describe('when looking for property on current entity', () => {
     const domainEntityName1 = 'DomainEntityName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation')
@@ -41,10 +41,10 @@ describe('when looking for property on current entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName1) as any,
       [domainEntityName2],
       matchAllIdentityReferenceProperties(),
@@ -74,7 +74,7 @@ describe('when looking for first domain entity on association', () => {
     const AssociationName1 = 'AssociationName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -96,10 +96,10 @@ describe('when looking for first domain entity on association', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.association.get(AssociationName1) as any,
       [domainEntityName1],
       matchAllIdentityReferenceProperties(),
@@ -133,7 +133,7 @@ describe('when looking for second domain entity on association', () => {
     const AssociationName1 = 'AssociationName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -155,10 +155,10 @@ describe('when looking for second domain entity on association', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.association.get(AssociationName1) as any,
       [domainEntityName2],
       matchAllIdentityReferenceProperties(),
@@ -191,7 +191,7 @@ describe('when looking for non identity property on current entity', () => {
     const integerPropertyName2 = 'IntegerPropertyName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -202,10 +202,10 @@ describe('when looking for non identity property on current entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName1) as any,
       [integerPropertyName2],
       matchAllIdentityReferenceProperties(),
@@ -230,7 +230,7 @@ describe('when looking for property that does not exist', () => {
     const domainEntityName1 = 'DomainEntityName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -241,10 +241,10 @@ describe('when looking for property that does not exist', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName1) as any,
       ['IntegerPropertyName3'],
       matchAllIdentityReferenceProperties(),
@@ -271,7 +271,7 @@ describe('when looking for duplicated property with context', () => {
     const domainEntityName2 = 'DomainEntityName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -288,10 +288,10 @@ describe('when looking for duplicated property with context', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${domainEntityName1}`],
       matchAllIdentityReferenceProperties(),
@@ -323,7 +323,7 @@ describe('when looking for deep property', () => {
     const contextName1 = 'ContextName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -345,10 +345,10 @@ describe('when looking for deep property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName3) as any,
       [`${contextName1}${domainEntityName2}`, `${contextName1}${domainEntityName1}`],
       matchAllIdentityReferenceProperties(),
@@ -378,7 +378,7 @@ describe('when looking for non primary key property', () => {
     const contextName1 = 'ContextName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -394,10 +394,10 @@ describe('when looking for non primary key property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${domainEntityName1}`],
       matchAllButFirstAsIdentityProperties(),
@@ -427,7 +427,7 @@ describe('when looking for property on parent abstract entity', () => {
     const domainEntitySubclassName1 = 'DomainEntitySubclassName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(domainEntityName1)
       .withDocumentation('AbstractEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation')
@@ -448,10 +448,10 @@ describe('when looking for property on parent abstract entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntitySubclass.get(domainEntitySubclassName1) as any,
       [domainEntityName2],
       matchAllIdentityReferenceProperties(),
@@ -485,7 +485,7 @@ describe('when looking for property on parent domain entity from subclass', () =
     const domainEntitySubclassName1 = 'DomainEntitySubclassName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation')
@@ -506,10 +506,10 @@ describe('when looking for property on parent domain entity from subclass', () =
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntitySubclass.get(domainEntitySubclassName1) as any,
       [domainEntityName2],
       matchAllIdentityReferenceProperties(),
@@ -542,7 +542,7 @@ describe('when looking for property on parent domain entity from extension', () 
     const domainEntityName1 = 'DomainEntityName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation')
@@ -563,10 +563,10 @@ describe('when looking for property on parent domain entity from extension', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntityExtension.get(domainEntityName1) as any,
       [domainEntityName2],
       matchAllIdentityReferenceProperties(),
@@ -601,7 +601,7 @@ describe('when looking for property on parent association from subclass', () => 
     const associationSubclassName1 = 'AssociationSubclassName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -629,10 +629,10 @@ describe('when looking for property on parent association from subclass', () => 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.associationSubclass.get(associationSubclassName1) as any,
       [domainEntityName1],
       matchAllIdentityReferenceProperties(),
@@ -670,7 +670,7 @@ describe('when looking for property on parent association from extension', () =>
     const associationName1 = 'AssociationName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -698,10 +698,10 @@ describe('when looking for property on parent association from extension', () =>
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.associationExtension.get(associationName1) as any,
       [domainEntityName1],
       matchAllIdentityReferenceProperties(),
@@ -740,7 +740,7 @@ describe('when looking for property on parent association from extension across 
     const associationName1 = 'AssociationName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -758,8 +758,8 @@ describe('when looking for property on parent association from extension across 
       .withEndAssociation()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
-      .withStartAssociationExtension(associationName1)
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartAssociationExtension(`EdFi.${associationName1}`)
       .withDocumentation('AssociationExtensionDocumentation')
       .withIntegerIdentity('IntegerIdentityName3', 'IntegerIdentityDocumentation')
       .withEndAssociationExtension()
@@ -770,13 +770,13 @@ describe('when looking for property on parent association from extension across 
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     if (coreNamespace == null) throw new Error();
     if (extensionNamespace == null) throw new Error();
     extensionNamespace.dependencies.push(coreNamespace);
     property = findReferencedProperty(
-      [coreNamespace, extensionNamespace],
+      extensionNamespace,
       extensionNamespace.entity.associationExtension.get(associationName1) as any,
       [domainEntityName1],
       matchAllIdentityReferenceProperties(),
@@ -814,7 +814,7 @@ describe('when looking for non identity property on parent domain entity from su
     const integerPropertyName2 = 'IntegerPropertyName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -830,11 +830,11 @@ describe('when looking for non identity property on parent domain entity from su
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
 
     property = findReferencedProperty(
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntitySubclass.get(domainEntitySubclassName1) as any,
       [integerPropertyName2],
       matchAllButFirstAsIdentityProperties(),

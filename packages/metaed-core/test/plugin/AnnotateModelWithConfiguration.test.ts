@@ -278,8 +278,8 @@ describe('when config rule is for a single entity type in a core namespace', () 
     },
   };
   const pluginEnvironment: PluginEnvironment = { ...newPluginEnvironment(), shortName: 'pluginName' };
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', isExtension: true };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', isExtension: true };
   const domainEntity: DomainEntity = { ...newDomainEntity(), namespace, metaEdName: 'DomainEntityName' };
   addEntityForNamespace(domainEntity);
   const domainEntityInExtension: DomainEntity = {
@@ -331,7 +331,7 @@ describe('when config rule is for a single entity type in an extension namespace
     },
   };
   const pluginEnvironment: PluginEnvironment = { ...newPluginEnvironment(), shortName: 'pluginName' };
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
   const extensionNamespace1: Namespace = { ...newNamespace(), namespaceName: 'extension1', isExtension: true };
   const extensionNamespace2: Namespace = { ...newNamespace(), namespaceName: 'extension2', isExtension: true };
 
@@ -786,7 +786,7 @@ describe('when config rule has multiple match definitions that do not overlap', 
     },
   };
   const pluginEnvironment: PluginEnvironment = { ...newPluginEnvironment(), shortName: 'pluginName' };
-  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
+  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
   const namespace2: Namespace = { ...newNamespace(), namespaceName: 'def', isExtension: true };
   const domainEntity1: DomainEntity = { ...newDomainEntity(), namespace: namespace1, metaEdName: 'DomainEntityName' };
   addEntityForNamespace(domainEntity1);
@@ -856,7 +856,7 @@ describe('when config rule has multiple match definitions that overlap', () => {
     },
   };
   const pluginEnvironment: PluginEnvironment = { ...newPluginEnvironment(), shortName: 'pluginName' };
-  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
+  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
   const namespace2: Namespace = { ...newNamespace(), namespaceName: 'def', isExtension: true };
   const domainEntity1: DomainEntity = { ...newDomainEntity(), namespace: namespace1, metaEdName: 'DomainEntityName' };
   addEntityForNamespace(domainEntity1);
@@ -926,7 +926,7 @@ describe('when config rule has multiple match definitions where one is invalid',
     },
   };
   const pluginEnvironment: PluginEnvironment = { ...newPluginEnvironment(), shortName: 'pluginName' };
-  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'edfi', isExtension: false };
+  const namespace1: Namespace = { ...newNamespace(), namespaceName: 'EdFi', isExtension: false };
   const namespace2: Namespace = { ...newNamespace(), namespaceName: 'def', isExtension: true };
   const domainEntity1: DomainEntity = { ...newDomainEntity(), namespace: namespace1, metaEdName: 'DomainEntityName' };
   addEntityForNamespace(domainEntity1);

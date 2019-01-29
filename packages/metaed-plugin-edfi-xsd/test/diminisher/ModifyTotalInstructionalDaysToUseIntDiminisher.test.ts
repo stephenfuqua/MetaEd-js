@@ -10,7 +10,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes academi
   const intType = 'xs:int';
   let domainEntity: DomainEntity;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
@@ -51,7 +51,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session
   const intType = 'xs:int';
   let domainEntity: DomainEntity;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
@@ -90,7 +90,7 @@ describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes session
 
 describe('when ModifyTotalInstructionalDaysToUseIntDiminisher diminishes with no academic week or session', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {

@@ -9,7 +9,7 @@ describe('when map type enumeration items have different short descriptions', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStartMapType()
@@ -23,7 +23,7 @@ describe('when map type enumeration items have different short descriptions', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -43,7 +43,7 @@ describe('when map type enumeration items have duplicate short descriptions', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStartMapType()
@@ -57,7 +57,7 @@ describe('when map type enumeration items have duplicate short descriptions', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -81,7 +81,7 @@ describe('when map type enumeration items have multiple duplicate short descript
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('EntityName')
       .withDocumentation('EntityDocumentation')
       .withStartMapType()
@@ -97,7 +97,7 @@ describe('when map type enumeration items have multiple duplicate short descript
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

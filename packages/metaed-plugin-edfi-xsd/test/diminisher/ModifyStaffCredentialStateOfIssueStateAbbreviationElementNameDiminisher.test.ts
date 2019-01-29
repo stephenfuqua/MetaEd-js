@@ -10,7 +10,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
   const expectedElementName = 'StateOfIssueStateAbbreviationType';
   let commonEntity: Common;
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {
@@ -50,7 +50,7 @@ describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDimi
 
 describe('when ModifyStaffCredentialStateOfIssueStateAbbreviationElementNameDiminisher diminishes with no credential common type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
 
   beforeAll(() => {

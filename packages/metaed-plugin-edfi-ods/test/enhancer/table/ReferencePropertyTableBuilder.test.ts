@@ -369,7 +369,7 @@ describe('when building collection domain entity property table', () => {
   const domainEntityName = 'DomainEntityName';
   const domainEntityPkName = 'domainEntityPkName';
   const entityPkName = 'EntityPkName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const tableName = 'TableName';
   const tables: Array<Table> = [];
   let table: Table;

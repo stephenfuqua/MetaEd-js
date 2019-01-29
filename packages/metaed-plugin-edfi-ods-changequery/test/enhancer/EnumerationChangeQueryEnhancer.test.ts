@@ -7,7 +7,7 @@ import { metaEdEnvironmentForApiVersion, newCoreNamespace, newExtensionNamespace
 import { deleteTrackingTableEntities, deleteTrackingTriggerEntities } from '../../src/enhancer/EnhancerHelper';
 
 describe('when enhancing core enumeration targeting 2.3 ODS/API', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const pkColumnName = 'PkColumnName';
@@ -49,7 +49,7 @@ describe('when enhancing core enumeration targeting 2.3 ODS/API', () => {
 });
 
 describe('when enhancing core enumeration targeting 2.5 ODS/API', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const pkColumnName = 'PkColumnName';
@@ -91,7 +91,7 @@ describe('when enhancing core enumeration targeting 2.5 ODS/API', () => {
 });
 
 describe('when enhancing extension enumeration targeting 2.5 ODS/API', () => {
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const pkColumnName = 'PkColumnName';
@@ -133,7 +133,7 @@ describe('when enhancing extension enumeration targeting 2.5 ODS/API', () => {
 });
 
 describe('when enhancing core enumeration targeting 3.1 ODS/API', () => {
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const pkColumnName = 'PkColumnName';
@@ -194,7 +194,7 @@ describe('when enhancing core enumeration targeting 3.1 ODS/API', () => {
 });
 
 describe('when enhancing extension enumeration targeting 3.1 ODS/API', () => {
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const metaEdName = 'MetaEdName';
   const tableName = 'TableName';
   const pkColumnName = 'PkColumnName';

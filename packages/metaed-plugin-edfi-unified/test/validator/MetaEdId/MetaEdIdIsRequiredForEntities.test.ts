@@ -29,7 +29,7 @@ describe('when validating abstract entity is missing metaEdId for entity', () =>
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity('AbstractEntityName')
       .withDocumentation('AbstractEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -39,7 +39,7 @@ describe('when validating abstract entity is missing metaEdId for entity', () =>
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -63,7 +63,7 @@ describe('when validating association is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation('AssociationName')
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty('FirstDomainEntityName', 'FirstDomainEntityDocumentation')
@@ -74,7 +74,7 @@ describe('when validating association is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -98,7 +98,7 @@ describe('when validating association extension is missing metaEdId for entity',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociationExtension('AssociationExtensionName')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
       .withEndAssociationExtension()
@@ -107,7 +107,7 @@ describe('when validating association extension is missing metaEdId for entity',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -131,7 +131,7 @@ describe('when validating association subclass is missing metaEdId for entity', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociationSubclass('AssociationSubclassName', 'BaseAssociationName')
       .withDocumentation('AssociationSubclassDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -141,7 +141,7 @@ describe('when validating association subclass is missing metaEdId for entity', 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -165,7 +165,7 @@ describe('when validating choice is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartChoice('ChoiceName')
       .withDocumentation('ChoiceDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -175,7 +175,7 @@ describe('when validating choice is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new ChoiceBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -199,7 +199,7 @@ describe('when validating common is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon('CommonName')
       .withDocumentation('CommonsDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -209,7 +209,7 @@ describe('when validating common is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -233,7 +233,7 @@ describe('when validating common extension is missing metaEdId for entity', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommonExtension('CommonExtensionName')
       .withDocumentation('CommonsExtensionDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -243,7 +243,7 @@ describe('when validating common extension is missing metaEdId for entity', () =
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -267,7 +267,7 @@ describe('when validating descriptor is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('DescriptorName')
       .withDocumentation('DescriptorDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -277,7 +277,7 @@ describe('when validating descriptor is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -301,7 +301,7 @@ describe('when validating domain is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomain('DomainName')
       .withDocumentation('DomainDocumentation')
       .withDomainEntityDomainItem('DomainItemName')
@@ -311,7 +311,7 @@ describe('when validating domain is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -335,7 +335,7 @@ describe('when validating domain entity is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -345,7 +345,7 @@ describe('when validating domain entity is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -369,7 +369,7 @@ describe('when validating domain entity extension is missing metaEdId for entity
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntityExtension('DomainEntityExtensionName')
       .withDocumentation('DomainEntityExtensionDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -379,7 +379,7 @@ describe('when validating domain entity extension is missing metaEdId for entity
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityExtensionBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -403,7 +403,7 @@ describe('when validating domain entity subclass is missing metaEdId for entity'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntitySubclass('DomainEntitySubclassName', 'DomainEntityName')
       .withDocumentation('DomainEntitySubclassDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -413,7 +413,7 @@ describe('when validating domain entity subclass is missing metaEdId for entity'
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -437,7 +437,7 @@ describe('when validating enumeration is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('EnumerationName')
       .withDocumentation('EnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
@@ -447,7 +447,7 @@ describe('when validating enumeration is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -471,7 +471,7 @@ describe('when validating inline common is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInlineCommon('InlineCommonName')
       .withDocumentation('InlineCommonDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -481,7 +481,7 @@ describe('when validating inline common is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -505,7 +505,7 @@ describe('when validating interchange is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -515,7 +515,7 @@ describe('when validating interchange is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -539,7 +539,7 @@ describe('when validating map type enumeration is missing metaEdId for entity', 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor('DescriptorName')
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType()
@@ -553,7 +553,7 @@ describe('when validating map type enumeration is missing metaEdId for entity', 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DescriptorBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -586,7 +586,7 @@ describe('when validating interchange extension is missing metaEdId for entity',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeExtensionName')
       .withDocumentation('InterchangeExtensionDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -595,7 +595,7 @@ describe('when validating interchange extension is missing metaEdId for entity',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -619,7 +619,7 @@ describe('when validating school year enumeration is missing metaEdId for entity
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartEnumeration('SchoolYear')
       .withDocumentation('SchoolYearEnumerationDocumentation')
       .withEnumerationItem('EnumerationItemName', 'EnumerationItemDocumentation')
@@ -628,7 +628,7 @@ describe('when validating school year enumeration is missing metaEdId for entity
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new EnumerationBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -652,7 +652,7 @@ describe('when validating shared decimal is missing metaEdId for entity', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('SharedDecimalName')
       .withDocumentation('SharedDecimalDocumentation')
       .withTotalDigits('10')
@@ -662,7 +662,7 @@ describe('when validating shared decimal is missing metaEdId for entity', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -686,7 +686,7 @@ describe('when validating shared integer is missing metaEdId for entity', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedInteger('SharedIntegerName')
       .withDocumentation('SharedIntegerDocumentation')
       .withEndSharedInteger()
@@ -694,7 +694,7 @@ describe('when validating shared integer is missing metaEdId for entity', () => 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -718,7 +718,7 @@ describe('when validating shared short is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedShort('SharedShortName')
       .withDocumentation('SharedShortDocumentation')
       .withEndSharedShort()
@@ -726,7 +726,7 @@ describe('when validating shared short is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedIntegerBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -750,7 +750,7 @@ describe('when validating shared string is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedString('SharedStringName')
       .withDocumentation('SharedStringDocumentation')
       .withMaxLength('100')
@@ -759,7 +759,7 @@ describe('when validating shared string is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -782,7 +782,7 @@ describe('when validating subdomain is missing metaEdId for entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('SubdomainName', 'DomainName')
       .withDocumentation('SubdomainDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -791,7 +791,7 @@ describe('when validating subdomain is missing metaEdId for entity', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -815,14 +815,14 @@ describe('when validating abstract entity in extension namespace is missing meta
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('AnEntity', '123')
       .withDocumentation('doc')
       .withBooleanProperty('PropertyName', 'doc', true, false, null, '456')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartAbstractEntity('AbstractEntityName')
       .withDocumentation('AbstractEntityDocumentation')
       .withBooleanProperty('BooleanName', 'BooleanDocumentation', true, false)
@@ -832,7 +832,7 @@ describe('when validating abstract entity in extension namespace is missing meta
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

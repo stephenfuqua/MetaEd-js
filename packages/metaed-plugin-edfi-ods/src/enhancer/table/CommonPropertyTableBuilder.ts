@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { asCommonProperty } from 'metaed-core';
-import { EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
+import { EntityProperty, MergedProperty, ReferentialProperty, Namespace } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
 import { appendOverlapping } from '../../shared/Utility';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -26,13 +26,15 @@ function buildJoinTables(
   primaryKeys: Array<Column>,
   buildStrategy: BuildStrategy,
   joinTableName: string,
+  joinTableNamespace: Namespace,
   joinTableSchema: string,
   tables: Array<Table>,
   tableFactory: TableBuilderFactory,
   parentIsRequired: boolean | null,
 ): void {
   const joinTable: Table = Object.assign(newTable(), {
-    schema: joinTableSchema,
+    namespace: joinTableNamespace,
+    schema: joinTableSchema.toLowerCase(),
     name: joinTableName,
     description: property.documentation,
     isRequiredCollectionTable: property.isRequiredCollection && R.defaultTo(true)(parentIsRequired),
@@ -52,7 +54,6 @@ function buildJoinTables(
 
   property.referencedEntity.data.edfiOds.odsProperties.forEach((referenceProperty: EntityProperty) => {
     const tableBuilder: TableBuilder = tableFactory.tableBuilderFor(referenceProperty);
-    // $FlowIgnore - strategy could be null
     tableBuilder.buildTables(referenceProperty, TableStrategy.default(joinTable), primaryKeys, strategy, tables, null);
   });
 
@@ -60,6 +61,7 @@ function buildJoinTables(
     property,
     parentPrimaryKeys,
     parentTableStrategy.schema,
+    parentTableStrategy.schemaNamespace,
     parentTableStrategy.name,
     ForeignKeyStrategy.foreignColumnCascade(true, property.parentEntity.data.edfiOds.odsCascadePrimaryKeyUpdates),
   );
@@ -100,7 +102,6 @@ export function commonPropertyTableBuilder(
         commonProperty.data.edfiOds.odsName,
       );
 
-      const joinTableSchema: string = parentTableStrategy.table.schema;
       buildJoinTables(
         commonProperty,
         parentTableStrategy,
@@ -108,7 +109,8 @@ export function commonPropertyTableBuilder(
         primaryKeys,
         buildStrategy,
         joinTableName,
-        joinTableSchema,
+        parentTableStrategy.table.namespace,
+        parentTableStrategy.table.schema,
         tables,
         tableFactory,
         parentIsRequired,

@@ -3,7 +3,7 @@ import { DomainEntity, IntegerProperty, MetaEdEnvironment, Namespace } from 'met
 import { enhance } from '../../src/enhancer/CreateUsisFromUniqueIdsEnhancer';
 
 describe('when enhancing entity with unique id property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -81,7 +81,7 @@ describe('when enhancing entity with unique id property', () => {
 });
 
 describe('when enhancing entity with non unique id property', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName = 'DomainEntityName';
@@ -132,8 +132,8 @@ describe('when enhancing entity with non unique id property', () => {
 });
 
 describe('when enhancing entity with unique id property in extension namespace', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);

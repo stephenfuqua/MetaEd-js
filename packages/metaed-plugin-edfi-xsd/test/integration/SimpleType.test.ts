@@ -31,14 +31,14 @@ describe('when generating xsd for domain entity in extension namespace with a si
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(coreEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(coreEntityPk, 'doc')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(extensionEntityPk, 'doc')
@@ -50,7 +50,7 @@ describe('when generating xsd for domain entity in extension namespace with a si
       .sendToListener(stringTypeBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -91,7 +91,7 @@ describe('when generating xsd for common string', () => {
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedString(simpleTypeEntity)
       .withDocumentation('doc')
@@ -167,7 +167,7 @@ describe('when generating xsd for common decimal', () => {
     const decimalTypeBuilder = new DecimalTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedDecimal(simpleTypeEntity)
       .withDocumentation('doc')
@@ -261,7 +261,7 @@ describe('when generating xsd for common integer', () => {
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedInteger(simpleTypeEntity)
       .withDocumentation('doc')
@@ -337,7 +337,7 @@ describe('when generating xsd for common short', () => {
     const integerTypeBuilder = new IntegerTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedShort(simpleTypeEntity)
       .withDocumentation('doc')
@@ -418,7 +418,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedString(coreSharedString)
       .withDocumentation('doc')
@@ -427,12 +427,12 @@ describe('when generating xsd for shared simpel property in extension namespace 
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(coreEntityPk, 'doc')
-      .withSharedStringProperty(coreSharedString, coreSharedString, 'doc', true, false)
+      .withSharedStringProperty(`EdFi.${coreSharedString}`, coreSharedString, 'doc', true, false)
 
       .withEndNamespace()
 
@@ -441,7 +441,7 @@ describe('when generating xsd for shared simpel property in extension namespace 
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -483,7 +483,7 @@ describe('when generating xsd for renamed shared simple property in extension na
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedString(coreSharedString)
       .withDocumentation('doc')
@@ -492,12 +492,12 @@ describe('when generating xsd for renamed shared simple property in extension na
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(coreEntityPk, 'doc')
-      .withSharedStringProperty(coreSharedString, differentName, 'doc', true, false)
+      .withSharedStringProperty(`EdFi.${coreSharedString}`, differentName, 'doc', true, false)
 
       .withEndNamespace()
 
@@ -506,7 +506,7 @@ describe('when generating xsd for renamed shared simple property in extension na
       .sendToListener(sharedStringBuilder)
       .sendToListener(domainEntityBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -548,7 +548,7 @@ describe('when generating xsd for shared simple property in extension namespace 
 
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedString(dummy)
       .withDocumentation('doc')
@@ -557,7 +557,7 @@ describe('when generating xsd for shared simple property in extension namespace 
 
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'EXTENSION')
+      .withBeginNamespace('Extension', 'EXTENSION')
 
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
@@ -578,7 +578,7 @@ describe('when generating xsd for shared simple property in extension namespace 
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', 'extension');
+    initializeNamespaceDependencies(metaEd, 'EdFi', 'Extension');
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

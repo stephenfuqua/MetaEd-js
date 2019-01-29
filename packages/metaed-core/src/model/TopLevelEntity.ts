@@ -11,6 +11,7 @@ export interface TopLevelEntitySourceMap extends ModelBaseSourceMap {
   queryableFields: Array<SourceMap>;
   allowPrimaryKeyUpdates: SourceMap;
   baseEntityName: SourceMap;
+  baseEntityNamespaceName: SourceMap;
   baseEntity: SourceMap;
 }
 
@@ -25,6 +26,7 @@ export function newTopLevelEntitySourceMap() {
     queryableFields: [],
     allowPrimaryKeyUpdates: NoSourceMap,
     baseEntityName: NoSourceMap,
+    baseEntityNamespaceName: NoSourceMap,
     baseEntity: NoSourceMap,
   };
 }
@@ -36,6 +38,7 @@ export interface TopLevelEntity extends ModelBase {
   typeHumanizedName: string;
   allowPrimaryKeyUpdates: boolean;
   baseEntityName: string;
+  baseEntityNamespaceName: string;
   baseEntity: TopLevelEntity | null;
   sourceMap: TopLevelEntitySourceMap;
 }
@@ -58,6 +61,7 @@ export function newTopLevelEntity(): TopLevelEntity {
 
     allowPrimaryKeyUpdates: false,
     baseEntityName: '',
+    baseEntityNamespaceName: '',
     baseEntity: null,
     sourceMap: newTopLevelEntitySourceMap(),
 

@@ -117,7 +117,7 @@ describe('when building collection descriptor property table', () => {
   const descriptorName = 'DescriptorName';
   const descriptorEntityPropertyName1 = 'DescriptorEntityPropertyName1';
   const entityPkName = 'EntityPkName';
-  const tableSchema = 'TableSchema';
+  const tableSchema = 'tableschema';
   const tableName = 'TableName';
   const tables: Array<Table> = [];
   let table: Table;

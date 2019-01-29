@@ -16,7 +16,7 @@ const educationOrganizationEntityName = 'EducationOrganization';
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   // If no Education Organization domain entity or if for some reason it
   // has more than one identity property, generating this metadata doesn't make any sense
-  const coreNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+  const coreNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
   if (coreNamespace == null) return { enhancerName, success: false };
 
   const educationOrganizationAbstractEntity: DomainEntity | undefined = coreNamespace.entity.domainEntity.get(

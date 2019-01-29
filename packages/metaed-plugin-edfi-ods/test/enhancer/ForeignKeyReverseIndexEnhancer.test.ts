@@ -13,7 +13,7 @@ import { ForeignKey } from '../../src/model/database/ForeignKey';
 import { Table } from '../../src/model/database/Table';
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key matching primary key columns', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -51,7 +51,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key ma
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key not matching primary key columns', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -91,7 +91,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key no
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column foreign key matching primary key columns', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -137,7 +137,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with multi column f
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key subset of primary key columns', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';
@@ -179,7 +179,7 @@ describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key su
 });
 
 describe('when ForeignKeyReverseIndexEnhancer enhances table with foreign key superset of primary key columns', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const tableName = 'TableName';

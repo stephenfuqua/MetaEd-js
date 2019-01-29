@@ -15,7 +15,7 @@ describe('when enhancing integer type', () => {
   let createdSimpleType: IntegerSimpleType;
 
   beforeAll(() => {
-    const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+    const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     enhancedItem = Object.assign(newIntegerType(), {
@@ -67,7 +67,7 @@ describe('when enhancing integer type', () => {
 });
 
 describe('when enhancing integer type is short', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -128,7 +128,7 @@ describe('when enhancing integer type is short', () => {
 });
 
 describe('when enhancing generated integer type with min value only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -169,7 +169,7 @@ describe('when enhancing generated integer type with min value only', () => {
 });
 
 describe('when enhancing generated integer type with max value only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -210,7 +210,7 @@ describe('when enhancing generated integer type with max value only', () => {
 });
 
 describe('when enhancing non-generated integer type with no restrictions', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -249,7 +249,7 @@ describe('when enhancing non-generated integer type with no restrictions', () =>
 });
 
 describe('when enhancing generated integer type with no restrictions', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';

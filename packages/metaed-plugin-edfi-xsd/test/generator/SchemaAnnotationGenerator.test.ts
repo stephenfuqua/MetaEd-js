@@ -11,7 +11,7 @@ describe('when generating schema annotation for a single descriptor', () => {
   });
   const schema = createSchema('200', 'Schema Documentation');
   const namespace = Object.assign(newNamespace(), {
-    namespaceName: 'edfi',
+    namespaceName: 'EdFi',
     projectExtension: 'EXTENSION',
     data: {
       edfiXsd: {

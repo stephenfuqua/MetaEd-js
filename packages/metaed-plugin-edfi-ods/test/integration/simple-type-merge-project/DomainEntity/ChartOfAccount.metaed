@@ -1,6 +1,6 @@
 Domain Entity ChartOfAccount
     documentation "A valid combination of account dimensions under which financials are reported."
-    shared string AccountIdentifier
+    shared string EdFi.AccountIdentifier
         documentation "Code value for the valid combination of account dimensions under which financials are reported."
         is part of identity
         is queryable field
@@ -8,7 +8,7 @@ Domain Entity ChartOfAccount
         documentation "Fiscal year for the account"
         is part of identity
         is queryable field
-    domain entity EducationOrganization
+    domain entity EdFi.EducationOrganization
         documentation "A reference to the education organization managing the chart of accounts."
         is part of identity
         is queryable field
@@ -16,7 +16,7 @@ Domain Entity ChartOfAccount
     descriptor AccountType
         documentation "Type of Account such as Revenue, Expenditure, or Balance Sheet."
         is required
-    shared string AccountName
+    shared string EdFi.AccountName
         documentation "A descriptive name for the account"
         is optional
 

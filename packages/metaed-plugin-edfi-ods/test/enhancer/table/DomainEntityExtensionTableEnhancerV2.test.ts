@@ -27,8 +27,8 @@ import { enhance as initializeEdFiOdsEntityRepository } from '../../../src/model
 import { Table } from '../../../src/model/database/Table';
 
 describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -124,8 +124,8 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
 });
 
 describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with primary key', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -164,6 +164,7 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
       namespace: extensionNamespace,
       metaEdName: domainEntityExtensionName,
       baseEntityName: domainEntityName,
+      baseEntityNamespaceName: domainEntity.namespace.namespaceName,
       baseEntity: domainEntity,
       data: {
         edfiOds: {
@@ -208,8 +209,8 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
 });
 
 describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with common extension override', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -276,6 +277,7 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
       namespace: extensionNamespace,
       metaEdName: commonExtensionName,
       baseEntityName: common.metaEdName,
+      baseEntityNamespaceName: common.namespace.namespaceName,
       baseEntity: common,
       data: {
         edfiOds: {
@@ -383,8 +385,8 @@ describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity exten
 });
 
 describe('when DomainEntityExtensionTableEnhancerV2 enhances domain entity extension with common', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);

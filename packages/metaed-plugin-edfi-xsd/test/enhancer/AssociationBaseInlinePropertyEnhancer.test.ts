@@ -21,7 +21,7 @@ describe('when enhancing association with inline string property', () => {
 
   beforeAll(() => {
     const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
     });
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -53,6 +53,7 @@ describe('when enhancing association with inline string property', () => {
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inlineName,
+          referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon,
         }),
       ],
@@ -83,7 +84,7 @@ describe('when enhancing association with inline nested string property', () => 
 
   beforeAll(() => {
     const namespace: Namespace = Object.assign(newNamespace(), {
-      namespaceName: 'edfi',
+      namespaceName: 'EdFi',
     });
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
@@ -110,6 +111,7 @@ describe('when enhancing association with inline nested string property', () => 
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inline2Name,
+          referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon2,
         }),
       ],
@@ -125,6 +127,7 @@ describe('when enhancing association with inline nested string property', () => 
       properties: [
         Object.assign(newInlineCommonProperty(), {
           metaEdName: inline1Name,
+          referencedNamespaceName: namespace.namespaceName,
           referencedEntity: inlineCommon1,
         }),
       ],

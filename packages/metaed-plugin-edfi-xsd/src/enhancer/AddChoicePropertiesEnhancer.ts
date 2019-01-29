@@ -1,21 +1,22 @@
 import { MetaEdEnvironment, EnhancerResult, Choice, EntityProperty, Namespace } from 'metaed-core';
-import { getAllTopLevelEntitiesForNamespaces, getEntityForNamespaces } from 'metaed-core';
+import { getAllTopLevelEntitiesForNamespaces, getEntityFromNamespaceChain } from 'metaed-core';
 import { ChoicePropertyEdfiXsd } from '../model/property/ChoiceProperty';
 
 const enhancerName = 'AddChoicePropertiesEnhancer';
 
-function addChoiceProperties(namespaces: Array<Namespace>, properties: Array<EntityProperty>) {
+function addChoiceProperties(namespace: Namespace, properties: Array<EntityProperty>) {
   properties
     .filter(p => p.type === 'choice')
     .forEach(choiceProperty => {
-      const referencedChoice: Choice | null = getEntityForNamespaces(
+      const referencedChoice: Choice | null = getEntityFromNamespaceChain(
         choiceProperty.metaEdName,
-        namespaces,
+        choiceProperty.referencedNamespaceName,
+        namespace,
         'choice',
       ) as Choice | null;
 
       if (referencedChoice) {
-        addChoiceProperties(namespaces, referencedChoice.properties);
+        addChoiceProperties(namespace, referencedChoice.properties);
         (choiceProperty.data.edfiXsd as ChoicePropertyEdfiXsd).xsdProperties = referencedChoice.properties;
       }
     });
@@ -23,8 +24,7 @@ function addChoiceProperties(namespaces: Array<Namespace>, properties: Array<Ent
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllTopLevelEntitiesForNamespaces(Array.from(metaEd.namespace.values())).forEach(entity => {
-    const namespaces: Array<Namespace> = [entity.namespace, ...entity.namespace.dependencies];
-    addChoiceProperties(namespaces, entity.properties);
+    addChoiceProperties(entity.namespace, entity.properties);
   });
 
   return {

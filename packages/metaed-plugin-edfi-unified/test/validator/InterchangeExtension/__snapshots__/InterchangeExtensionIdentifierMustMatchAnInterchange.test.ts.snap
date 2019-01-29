@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating interchange extension has invalid extendee should have validation failures 1`] = `"Interchange additions InterchangeExtensionName does not match any declared Interchange."`;
+exports[`when validating interchange extension has invalid extendee should have validation failures 1`] = `"Interchange additions InterchangeExtensionName does not match any declared Interchange in namespace EdFi."`;
 
 exports[`when validating interchange extension has invalid extendee should have validation failures 2`] = `
 Object {
-  "column": 14,
+  "column": 19,
   "line": 11,
   "tokenText": "InterchangeExtensionName",
 }

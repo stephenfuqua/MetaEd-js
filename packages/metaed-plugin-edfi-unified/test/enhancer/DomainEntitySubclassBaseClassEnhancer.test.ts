@@ -3,7 +3,7 @@ import { MetaEdEnvironment, DomainEntity, DomainEntitySubclass, Namespace } from
 import { enhance } from '../../src/enhancer/DomainEntitySubclassBaseClassEnhancer';
 
 describe('when enhancing domainEntity subclass referring to domainEntity', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -21,6 +21,7 @@ describe('when enhancing domainEntity subclass referring to domainEntity', () =>
     childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace,
     });
     namespace.entity.domainEntitySubclass.set(childEntity.metaEdName, childEntity);
@@ -34,7 +35,7 @@ describe('when enhancing domainEntity subclass referring to domainEntity', () =>
 });
 
 describe('when enhancing domainEntity subclass referring to domainEntity subclass', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const parentEntityName = 'ParentEntityName';
@@ -52,6 +53,7 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
     childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace,
     });
     namespace.entity.domainEntitySubclass.set(childEntity.metaEdName, childEntity);
@@ -65,8 +67,8 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
 });
 
 describe('when enhancing domainEntity subclass referring to domainEntity across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -85,6 +87,7 @@ describe('when enhancing domainEntity subclass referring to domainEntity across 
     childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.domainEntitySubclass.set(childEntity.metaEdName, childEntity);
@@ -98,8 +101,8 @@ describe('when enhancing domainEntity subclass referring to domainEntity across 
 });
 
 describe('when enhancing domainEntity subclass referring to domainEntity subclass across namespaces', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
-  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'extension', dependencies: [namespace] };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const extensionNamespace: Namespace = { ...newNamespace(), namespaceName: 'Extension', dependencies: [namespace] };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   metaEd.namespace.set(extensionNamespace.namespaceName, extensionNamespace);
@@ -118,6 +121,7 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
     childEntity = Object.assign(newDomainEntitySubclass(), {
       metaEdName: childEntityName,
       baseEntityName: parentEntityName,
+      baseEntityNamespaceName: parentEntity.namespace.namespaceName,
       namespace: extensionNamespace,
     });
     extensionNamespace.entity.domainEntitySubclass.set(childEntity.metaEdName, childEntity);

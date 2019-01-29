@@ -64,8 +64,8 @@ Array [
 
 exports[`when building shared string with lowercase shared string name should have extraneous input error 1`] = `
 Array [
-  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
-  "mismatched input 'entityName' expecting ID, column: 16, line: 2, token: entityName",
+  "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
+  "mismatched input 'e' expecting ID, column: 16, line: 2, token: e",
 ]
 `;
 

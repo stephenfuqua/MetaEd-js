@@ -15,7 +15,7 @@ describe('when validating integer property does not match shared string', () => 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedString('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withEndSharedString()
@@ -30,7 +30,7 @@ describe('when validating integer property does not match shared string', () => 
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -55,7 +55,7 @@ describe('when validating integer property matches shared string', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartSharedString(entityName)
       .withDocumentation('EntityDocumentation')
       .withEndSharedString()
@@ -70,7 +70,7 @@ describe('when validating integer property matches shared string', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -9,7 +9,7 @@ describe('when validating interchange element is missing metaEdId', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -19,7 +19,7 @@ describe('when validating interchange element is missing metaEdId', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -43,7 +43,7 @@ describe('when validating interchange extension element is missing metaEdId', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeExtensionName')
       .withDomainEntityElement('DomainEntityElementName')
       .withEndInterchangeExtension()
@@ -52,7 +52,7 @@ describe('when validating interchange extension element is missing metaEdId', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -76,7 +76,7 @@ describe('when validating interchange identity template is missing metaEdId', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityElementName')
@@ -87,7 +87,7 @@ describe('when validating interchange identity template is missing metaEdId', ()
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -111,7 +111,7 @@ describe('when validating interchange extension identity template is missing met
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchangeExtension('InterchangeExtensionName')
       .withDomainEntityIdentityTemplate('DomainEntityIdentityTemplateName')
       .withEndInterchangeExtension()
@@ -120,7 +120,7 @@ describe('when validating interchange extension identity template is missing met
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -144,7 +144,7 @@ describe('when validating interchange extension element in extension namespace i
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartInterchangeExtension('InterchangeExtensionName')
       .withDomainEntityElement('DomainEntityElementName')
       .withEndInterchangeExtension()
@@ -153,7 +153,7 @@ describe('when validating interchange extension element in extension namespace i
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    extensionNamespace = metaEd.namespace.get('extension');
+    extensionNamespace = metaEd.namespace.get('Extension');
     failures = validate(metaEd);
   });
 

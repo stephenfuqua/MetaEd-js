@@ -17,7 +17,7 @@ jest.setTimeout(40000);
 
 describe('when enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
@@ -103,7 +103,7 @@ describe('when enumeration has single item', () => {
 
 describe('when enumeration has multiple items', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationName';
   const enumerationTableName: string = `${enumerationName}Type`;
   const enumerationTypeIdColumnName: string = `${enumerationName}TypeId`;
@@ -192,7 +192,7 @@ describe('when enumeration has multiple items', () => {
 
 describe('when enumeration name ends in type', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const enumerationName = 'EnumerationNameType';
   const enumerationTableName: string = enumerationName;
   const enumerationTypeIdColumnName: string = `${enumerationName}Id`;
@@ -281,8 +281,8 @@ describe('when enumeration name ends in type', () => {
 
 describe('when extension enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const enumerationName2 = 'EnumerationName2';
   const enumerationTableName2: string = `${enumerationName2}Type`;
   const enumerationTypeIdColumnName2: string = `${enumerationName2}TypeId`;

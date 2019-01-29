@@ -23,7 +23,7 @@ describe('when generating xsd for domain entity', () => {
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(sample)
       .withDocumentation('doc')
@@ -71,7 +71,7 @@ describe('when generating xsd for domain entity with inline common type as part 
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(sample)
       .withDocumentation('doc')
@@ -121,7 +121,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
   const extensionEntity = 'ExtensionEntity';
   const extensionEntityPk = 'ExtensionEntityPk';
 
-  const extensionNamespace = 'extension';
+  const extensionNamespace = 'Extension';
   const extension = 'EXTENSION';
 
   let coreResult;
@@ -133,7 +133,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
     const domainEntityExtensionBuilder = new DomainEntityExtensionBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity)
       .withDocumentation('doc')
@@ -146,7 +146,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .withStartDomainEntity(extensionEntity)
       .withDocumentation('doc')
       .withIntegerIdentity(extensionEntityPk, 'doc')
-      .withDomainEntityProperty(coreEntity, 'doc', true, false)
+      .withDomainEntityProperty(`EdFi.${coreEntity}`, 'doc', true, false)
       .withEndDomainEntity()
 
       .withEndNamespace()
@@ -155,7 +155,7 @@ describe('when generating xsd for domain entity in extension namespace with refe
       .sendToListener(domainEntityBuilder)
       .sendToListener(domainEntityExtensionBuilder);
 
-    initializeNamespaceDependencies(metaEd, 'edfi', extensionNamespace);
+    initializeNamespaceDependencies(metaEd, 'EdFi', extensionNamespace);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -226,7 +226,7 @@ describe('when generating xsd for domain entity with queryable only field', () =
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(assessment)
       .withDocumentation('doc')
@@ -288,7 +288,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(assessment)
       .withDocumentation('doc')
@@ -350,7 +350,7 @@ describe('when generating xsd for domain entity with queryable field', () => {
     const stringTypeBuilder = new StringTypeBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartSharedString(commonStringReference)
       .withDocumentation('doc')
@@ -408,7 +408,7 @@ describe('when generating xsd for abstract entity with identity property', () =>
     const domainEntityBuilder = new DomainEntityBuilder(metaEd, []);
     MetaEdTextBuilder.build()
 
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('doc')

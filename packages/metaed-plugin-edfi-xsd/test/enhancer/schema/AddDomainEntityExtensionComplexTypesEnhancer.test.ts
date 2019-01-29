@@ -20,7 +20,7 @@ import { enhance as initializeTopLevelEntities } from '../../../src/model/TopLev
 import { enhance } from '../../../src/enhancer/schema/AddDomainEntityExtensionComplexTypesEnhancer';
 
 describe('when enhancing domainEntity extension', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const baseTypeName = 'BaseTypeName';
@@ -99,7 +99,7 @@ describe('when enhancing domainEntity extension', () => {
 });
 
 describe('when enhancing domainEntity extension with common type override', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -116,7 +116,7 @@ describe('when enhancing domainEntity extension with common type override', () =
 
   beforeAll(() => {
     const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension,
       isExtension: true,
     });
@@ -258,7 +258,7 @@ describe('when enhancing domainEntity extension with common type override', () =
 });
 
 describe('when enhancing domainEntity extension of a domain entity subclass with common type override', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const projectExtension = 'EXTENSION';
@@ -277,7 +277,7 @@ describe('when enhancing domainEntity extension of a domain entity subclass with
 
   beforeAll(() => {
     const extensionNamespace = Object.assign(newNamespace(), {
-      namespaceName: 'extension',
+      namespaceName: 'Extension',
       projectExtension,
       isExtension: true,
     });

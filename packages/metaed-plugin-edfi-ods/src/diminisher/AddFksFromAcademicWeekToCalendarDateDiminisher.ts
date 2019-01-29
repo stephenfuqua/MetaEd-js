@@ -13,7 +13,8 @@ import { Table } from '../model/database/Table';
 const enhancerName = 'AddFksFromAcademicWeekToCalendarDateDiminisher';
 const targetVersions = '2.x';
 
-const coreNamespaceName = 'edfi';
+const coreNamespaceName = 'EdFi';
+const coreSchema = 'edfi';
 
 const academicWeek = 'AcademicWeek';
 const beginDate = 'BeginDate';
@@ -22,12 +23,16 @@ const date = 'Date';
 const endDate = 'EndDate';
 const schoolId = 'SchoolId';
 
-function addForeignKeyToCalendarDate(table: Table | undefined, parentTableColumnName: string): void {
+function addForeignKeyToCalendarDate(
+  table: Table | undefined,
+  parentTableColumnName: string,
+  coreNamespace: Namespace,
+): void {
   if (
     table == null ||
     getForeignKeys(table).find(
       (fk: ForeignKey) =>
-        fk.foreignTableSchema === coreNamespaceName &&
+        fk.foreignTableSchema === coreSchema &&
         fk.foreignTableName === calendarDate &&
         !!fk.columnNames.find(
           (columnNamePair: ColumnNamePair) =>
@@ -38,7 +43,8 @@ function addForeignKeyToCalendarDate(table: Table | undefined, parentTableColumn
     return;
 
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
-    foreignTableSchema: coreNamespaceName,
+    foreignTableSchema: coreSchema,
+    foreignTableNamespace: coreNamespace,
     foreignTableName: calendarDate,
     withDeleteCascade: false,
     sourceReference: {
@@ -67,8 +73,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   const tablesForCoreNamespace: Map<string, Table> = tableEntities(metaEd, coreNamespace);
 
   const table: Table | undefined = tablesForCoreNamespace.get(academicWeek);
-  addForeignKeyToCalendarDate(table, beginDate);
-  addForeignKeyToCalendarDate(table, endDate);
+  addForeignKeyToCalendarDate(table, beginDate, coreNamespace);
+  addForeignKeyToCalendarDate(table, endDate, coreNamespace);
 
   return {
     enhancerName,

@@ -1,12 +1,5 @@
-import {
-  EnhancerResult,
-  MetaEdEnvironment,
-  SharedDecimalProperty,
-  Namespace,
-  DecimalType,
-  SharedDecimal,
-} from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { EnhancerResult, MetaEdEnvironment, SharedDecimalProperty, DecimalType, SharedDecimal } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 const enhancerName = 'DecimalReferenceEnhancer';
 
@@ -17,10 +10,10 @@ const enhancerName = 'DecimalReferenceEnhancer';
 // referringSimpleProperties should be moved to SharedSimple instead of DecimalType
 function addReferringSimplePropertiesToDecimalType(metaEd: MetaEdEnvironment): void {
   metaEd.propertyIndex.sharedDecimal.forEach((property: SharedDecimalProperty) => {
-    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
-    const referencedEntity: DecimalType | null = getEntityForNamespaces(
+    const referencedEntity: DecimalType | null = getEntityFromNamespaceChain(
       property.referencedType,
-      namespaces,
+      property.referencedNamespaceName,
+      property.namespace,
       'decimalType',
     ) as DecimalType | null;
 
@@ -32,10 +25,10 @@ function addReferringSimplePropertiesToDecimalType(metaEd: MetaEdEnvironment): v
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   metaEd.propertyIndex.sharedDecimal.forEach((property: SharedDecimalProperty) => {
-    const namespaces: Array<Namespace> = [property.namespace, ...property.namespace.dependencies];
-    const referencedEntity: SharedDecimal | null = getEntityForNamespaces(
+    const referencedEntity: SharedDecimal | null = getEntityFromNamespaceChain(
       property.referencedType,
-      namespaces,
+      property.referencedNamespaceName,
+      property.namespace,
       'sharedDecimal',
     ) as SharedDecimal | null;
 

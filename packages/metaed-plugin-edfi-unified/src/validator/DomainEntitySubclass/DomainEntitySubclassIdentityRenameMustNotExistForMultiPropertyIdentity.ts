@@ -1,5 +1,5 @@
 import { MetaEdEnvironment, ValidationFailure, Namespace, TopLevelEntity } from 'metaed-core';
-import { getEntityForNamespaces } from 'metaed-core';
+import { getEntityFromNamespaceChain } from 'metaed-core';
 
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
@@ -7,10 +7,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.namespace.forEach((namespace: Namespace) => {
     namespace.entity.domainEntitySubclass.forEach(domainEntitySubclass => {
       if (!domainEntitySubclass.identityProperties.some(x => x.isIdentityRename)) return;
-
-      const baseEntity: TopLevelEntity | null = getEntityForNamespaces(
+      const baseEntity: TopLevelEntity | null = getEntityFromNamespaceChain(
         domainEntitySubclass.baseEntityName,
-        [namespace, ...namespace.dependencies],
+        domainEntitySubclass.baseEntityNamespaceName,
+        domainEntitySubclass.namespace,
         'domainEntity',
       ) as TopLevelEntity | null;
       if (baseEntity && baseEntity.identityProperties.length <= 1) return;

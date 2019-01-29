@@ -6,7 +6,7 @@ Domain Entity StaffEvaluationRating
     date StaffEvaluationDate
         documentation "The date for the staff evaluation."
         is part of identity
-    domain entity Staff
+    domain entity EdFi.Staff
         documentation "The staff member evaluated."
         is part of identity
     domain entity StaffEvaluation

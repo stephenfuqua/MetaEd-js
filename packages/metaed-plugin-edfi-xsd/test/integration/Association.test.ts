@@ -27,7 +27,7 @@ describe('when generating xsd for association with inline common type as part of
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(sampleEntity)
       .withDocumentation('doc')
@@ -94,7 +94,7 @@ describe('when generating xsd for association in extension namespace with refere
   const coreEntity2PK = 'CoreEntity2Pk';
   const coreEntity2 = 'CoreEntity2';
   const extensionAssociation = 'ExtensionAssociation';
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const projectExtension = 'EXTENSION';
 
   let coreResult;
@@ -106,7 +106,7 @@ describe('when generating xsd for association in extension namespace with refere
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
@@ -122,8 +122,8 @@ describe('when generating xsd for association in extension namespace with refere
       .withBeginNamespace(namespaceName, projectExtension)
       .withStartAssociation(extensionAssociation)
       .withDocumentation('doc')
-      .withAssociationDomainEntityProperty(coreEntity1, 'doc')
-      .withAssociationDomainEntityProperty(coreEntity2, 'doc')
+      .withAssociationDomainEntityProperty(`EdFi.${coreEntity1}`, 'doc')
+      .withAssociationDomainEntityProperty(`EdFi.${coreEntity2}`, 'doc')
       .withEndAssociation()
 
       .withEndNamespace()
@@ -134,7 +134,7 @@ describe('when generating xsd for association in extension namespace with refere
       .sendToListener(commonBuilder)
       .toString();
 
-    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', namespaceName);
     ({ coreResult, extensionResult } = await enhanceAndGenerate(metaEd));
   });
 
@@ -232,7 +232,7 @@ describe('when generating xsd for association in extension namespace with refere
   const extensionEntity1 = 'ExtensionEntity1';
   const extensionEntity2 = 'ExtensionEntity2';
   const extensionAssociation = 'ExtensionAssociation';
-  const namespaceName = 'extension';
+  const namespaceName = 'Extension';
   const projectExtension = 'EXTENSION';
 
   let extensionResult;
@@ -243,7 +243,7 @@ describe('when generating xsd for association in extension namespace with refere
     const namespaceBuilder = new NamespaceBuilder(metaEd, []);
     const commonBuilder = new CommonBuilder(metaEd, []);
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
 
       .withStartDomainEntity(coreEntity1)
       .withDocumentation('doc')
@@ -277,7 +277,7 @@ describe('when generating xsd for association in extension namespace with refere
       .sendToListener(commonBuilder)
       .toString();
 
-    initializeNamespaceDependencies(metaEd, 'edfi', namespaceName);
+    initializeNamespaceDependencies(metaEd, 'EdFi', namespaceName);
     ({ extensionResult } = await enhanceAndGenerate(metaEd));
   });
 

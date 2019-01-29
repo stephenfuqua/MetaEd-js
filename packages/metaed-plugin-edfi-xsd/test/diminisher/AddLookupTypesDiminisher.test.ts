@@ -8,7 +8,7 @@ import { enhance } from '../../src/diminisher/AddLookupTypesDiminisher';
 
 describe('when AddLookupTypesDiminisher diminishes entity included in lookupTypeNames list', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'Assessment';
   const booleanPropertyName1 = 'BooleanPropertyName1';
@@ -149,10 +149,10 @@ describe('when AddLookupTypesDiminisher diminishes entity included in lookupType
 
 describe('when AddLookupTypesDiminisher diminishes entity not included in lookupTypeNames list', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });

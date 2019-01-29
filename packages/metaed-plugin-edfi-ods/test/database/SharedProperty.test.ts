@@ -24,7 +24,7 @@ jest.setTimeout(40000);
 
 describe('when entity has shared decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const sharedPropertyName = 'SharedPropertyName';
   const totalDigits = 10;
@@ -72,7 +72,7 @@ describe('when entity has shared decimal property', () => {
 
 describe('when entity has shared integer property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const sharedPropertyName = 'SharedPropertyName';
 
@@ -115,7 +115,7 @@ describe('when entity has shared integer property', () => {
 
 describe('when entity has shared short property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const sharedPropertyName = 'SharedPropertyName';
 
@@ -158,7 +158,7 @@ describe('when entity has shared short property', () => {
 
 describe('when entity has shared string property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const sharedPropertyName = 'SharedPropertyName';
   const maxLength = 50;
@@ -204,7 +204,7 @@ describe('when entity has shared string property', () => {
 
 describe('when entity has multiple shared properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const sharedPropertyName1 = 'SharedPropertyName1';
   const sharedPropertyName2 = 'SharedPropertyName2';

@@ -22,7 +22,6 @@ function dbTypeFrom(column: Column): DbType {
 
 function maxLengthFrom(column: Column): number {
   if (column.type === 'duration') return 30;
-  // if (column.type === 'percent') return 5;
   if (column.type === 'string') return Number.parseInt((column as StringColumn).length, 10);
   return 0;
 }

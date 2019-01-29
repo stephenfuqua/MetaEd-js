@@ -8,7 +8,7 @@ describe('when validating shared decimal with max value greater than min value',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withTotalDigits('10')
@@ -36,7 +36,7 @@ describe('when validating shared decimal with min value greater than max value',
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSharedDecimal('EntityName')
       .withDocumentation('PropertyDocumentation')
       .withTotalDigits('10')
@@ -49,7 +49,7 @@ describe('when validating shared decimal with min value greater than max value',
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new SharedDecimalBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -9,7 +9,7 @@ const enhancerName = 'BaseDescriptorChangeQueryEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   if (changeQueryIndicated(metaEd)) {
-    const edfiNamespace: Namespace | undefined = metaEd.namespace.get('edfi');
+    const edfiNamespace: Namespace | undefined = metaEd.namespace.get('EdFi');
     if (edfiNamespace == null) return { enhancerName, success: false };
 
     const baseDescriptorTable: Table | undefined = tableEntities(metaEd, edfiNamespace).get('Descriptor');

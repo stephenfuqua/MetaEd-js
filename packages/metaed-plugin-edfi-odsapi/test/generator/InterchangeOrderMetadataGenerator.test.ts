@@ -13,7 +13,7 @@ import { generate } from '../../src/generator/interchangeOrderMetadata/Interchan
 
 describe('when generating core interchange', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -58,7 +58,7 @@ describe('when generating core interchange', () => {
 
 describe('when generating core interchange on DS 3.0', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '3.0.0' });
-  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(namespace.namespaceName, namespace);
   addEdFiXsdEntityRepositoryTo(metaEd);
 
@@ -103,10 +103,10 @@ describe('when generating core interchange on DS 3.0', () => {
 
 describe('when generating extension interchange', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -156,10 +156,10 @@ describe('when generating extension interchange', () => {
 
 describe('when generating core and extension interchange', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });
@@ -250,10 +250,10 @@ describe('when generating core and extension interchange', () => {
 
 describe('when generating core and extension interchange with same interchange name', () => {
   const metaEd: MetaEdEnvironment = Object.assign(newMetaEdEnvironment(), { dataStandardVersion: '2.0.0' });
-  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+  const coreNamespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
   metaEd.namespace.set(coreNamespace.namespaceName, coreNamespace);
   const extensionNamespace: Namespace = Object.assign(newNamespace(), {
-    namespaceName: 'extension',
+    namespaceName: 'Extension',
     projectExtension: 'EXTENSION',
     isExtension: true,
   });

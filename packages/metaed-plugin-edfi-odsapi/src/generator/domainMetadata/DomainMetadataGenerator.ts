@@ -19,7 +19,7 @@ export async function generate(metaEd: MetaEdEnvironment): Promise<GeneratorResu
   metaEd.namespace.forEach((namespace: Namespace) => {
     const schema: SchemaDefinition = {
       logicalName: deriveLogicalNameFromProjectName(namespace.projectName),
-      physicalName: namespace.namespaceName,
+      physicalName: namespace.namespaceName.toLowerCase(),
     };
     const aggregates = (namespace.data.edfiOdsApi as NamespaceEdfiOdsApi).aggregates.filter(
       (a: Aggregate) => !a.isExtension,

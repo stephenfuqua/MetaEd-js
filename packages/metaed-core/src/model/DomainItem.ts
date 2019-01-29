@@ -8,6 +8,7 @@ import { NoSourceMap } from './SourceMap';
 
 export interface DomainItemSourceMap extends ModelBaseSourceMap {
   referencedType: SourceMap;
+  referencedNamespaceName: SourceMap;
   typeHumanizedName: SourceMap;
 }
 
@@ -18,6 +19,7 @@ export function newDomainItemSourceMap(): DomainItemSourceMap {
   return {
     ...newModelBaseSourceMap(),
     referencedType: NoSourceMap,
+    referencedNamespaceName: NoSourceMap,
     typeHumanizedName: NoSourceMap,
   };
 }
@@ -25,6 +27,7 @@ export function newDomainItemSourceMap(): DomainItemSourceMap {
 export interface DomainItem extends ModelBase {
   sourceMap: DomainItemSourceMap;
   referencedType: ModelType;
+  referencedNamespaceName: string;
   typeHumanizedName: string;
 }
 
@@ -40,6 +43,7 @@ export function newDomainItem(): DomainItem {
     metaEdId: '',
     namespace: newNamespace(),
     referencedType: 'unknown',
+    referencedNamespaceName: '',
     sourceMap: newDomainItemSourceMap(),
     data: {},
     config: {},

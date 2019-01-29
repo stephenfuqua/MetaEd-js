@@ -20,7 +20,7 @@ import {
 import { enhance } from '../../src/enhancer/UpdateCascadeTopLevelEntityEnhancer';
 
 describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DomainEntityName1';
@@ -135,7 +135,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 });
 
 describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with allow primary key updates', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DomainEntityName1';
@@ -280,7 +280,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances associations with al
 });
 
 describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on deep reference graph', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DomainEntityName1';
@@ -414,7 +414,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 });
 
 describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on cyclical reference graph', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DomainEntityName1';
@@ -572,7 +572,7 @@ describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with a
 });
 
 describe('when UpdateCascadeTopLevelEntityEnhancer enhances domain entity with allow primary key updates on non primary key reference', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const domainEntityName1 = 'DomainEntityName1';

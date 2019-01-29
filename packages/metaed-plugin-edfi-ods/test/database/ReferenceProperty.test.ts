@@ -25,7 +25,7 @@ jest.setTimeout(40000);
 
 describe('when entity has descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const descriptorName = 'DescriptorName';
   const descriptorPropertyDocumentation = 'DescriptorPropertyDocumentation';
   const domainEntityName = 'DomainEntityName';
@@ -94,7 +94,7 @@ describe('when entity has descriptor property', () => {
 
 describe('when entity has multiple descriptor properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const contextName1 = 'ContextName1';
   const contextName2 = 'ContextName2';
   const descriptorName = 'DescriptorName';
@@ -180,7 +180,7 @@ describe('when entity has multiple descriptor properties', () => {
 
 describe('when entity has collection descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const contextName = 'ContextName';
   const descriptorName = 'DescriptorName';
   const descriptorPropertyDocumentation1 = 'DescriptorPropertyDocumentation1';
@@ -323,7 +323,7 @@ describe('when entity has collection descriptor property', () => {
 
 describe('when entity has enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const enumerationName = 'EnumerationName';
   const enumerationItemName = 'EnumerationItemName';
   const enumerationPropertyDocumentation = 'EnumerationPropertyDocumentation';
@@ -394,7 +394,7 @@ describe('when entity has enumeration property', () => {
 
 describe('when entity has multiple enumeration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const contextName1 = 'ContextName1';
   const contextName2 = 'ContextName2';
   const enumerationName = 'EnumerationName';
@@ -490,7 +490,7 @@ describe('when entity has multiple enumeration properties', () => {
 
 describe('when entity has collection enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const contextName = 'ContextName';
   const enumerationName = 'EnumerationName';
   const enumerationPropertyDocumentation1 = 'EnumerationPropertyDocumentation1';
@@ -633,7 +633,7 @@ describe('when entity has collection enumeration property', () => {
 
 describe('when entity has collection enumeration property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const overlapName = 'OverlapName';
   const enumerationName = 'EnumerationName';
   const domainEntityName = 'DomainEntityName';
@@ -740,7 +740,7 @@ describe('when entity has collection enumeration property', () => {
 
 describe('when entity has domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityPropertyDocumentation = 'DomainEntityPropertyDocumentation';
@@ -868,7 +868,7 @@ describe('when entity has domain entity property', () => {
 
 describe('when entity has domain entity identity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyDocumentation = 'IntegerPropertyDocumentation';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -965,7 +965,7 @@ describe('when entity has domain entity identity', () => {
 
 describe('when entity has nested domain entity identities', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
@@ -1109,7 +1109,7 @@ describe('when entity has nested domain entity identities', () => {
 
 describe('when entity has collection domain entity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const domainEntityPropertyDocumentation1 = 'DomainEntityPropertyDocumentation1';
@@ -1324,7 +1324,7 @@ describe('when entity has collection domain entity property', () => {
 
 describe('when entity has collection domain entity that references domain entity with matching context name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName1 = 'IntegerPropertyName1';
   const integerPropertyName2 = 'IntegerPropertyName2';
@@ -1467,7 +1467,7 @@ describe('when entity has collection domain entity that references domain entity
 
 describe('when entity has domain entity property with shortened context', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const shortenTo = 'ShortenTo';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -1545,7 +1545,7 @@ describe('when entity has domain entity property with shortened context', () => 
 
 describe('when entity has collection domain entity that references domain entity with shortened context name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const shortenTo = 'ShortenTo';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -1690,7 +1690,7 @@ describe('when entity has collection domain entity that references domain entity
 
 describe('when entity has reference to self', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
@@ -1745,7 +1745,7 @@ describe('when entity has reference to self', () => {
 
 describe('when entity has reference to self', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
@@ -1800,7 +1800,7 @@ describe('when entity has reference to self', () => {
 
 describe('when entity has collection reference to self', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const contextName = 'ContextName';
   const domainEntityName = 'DomainEntityName';
   const integerPropertyName = 'IntegerPropertyName';
@@ -1888,7 +1888,7 @@ describe('when entity has collection reference to self', () => {
 
 describe('when entity has identity collection reference with context and a collection property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'edfi';
+  const namespaceName = 'EdFi';
   const contextName = 'ContextName';
   const descriptorName = 'DescriptorName';
   const descriptorTableName: string = `${descriptorName}Descriptor`;
@@ -2012,7 +2012,7 @@ describe('when entity has identity collection reference with context and a colle
 
 describe('when entity has collection reference to entity that starts with the same name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const referencedEntityName: string = `${domainEntityName}ReferencedEntityName`;
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -2052,7 +2052,7 @@ describe('when entity has collection reference to entity that starts with the sa
 
 describe('when entity has collection reference to entity that overlaps names', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const domainEntityName = 'DomainEntityName';
   const referencedEntityName: string = `EntityNameReferencedEntityName`;
   const integerPropertyName1 = 'IntegerPropertyName1';
@@ -2092,7 +2092,7 @@ describe('when entity has collection reference to entity that overlaps names', (
 
 describe('when entity has referenced entity with matching context name and properties that start with same name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const commonName = 'CommonName';
   const domainEntityName = 'DomainEntityName';
   const referencedEntityName: string = `ReferencedEntityName`;

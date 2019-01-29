@@ -13,8 +13,9 @@ describe('when enhancing domainEntity extensions', () => {
   const baseTableName = 'BaseTableName';
   const entityName = 'EntityName';
   const tableName = 'TableName';
-  const namespaceName = 'namespace';
-  const extensionNamespaceName = 'extension';
+  const namespaceName = 'Namespace';
+  const extensionNamespaceName = 'Extension';
+  const extensionSchema = extensionNamespaceName.toLowerCase();
 
   let aggregate: Aggregate = NoAggregate;
   let extensionNamespace: Namespace = NoNamespace;
@@ -59,7 +60,7 @@ describe('when enhancing domainEntity extensions', () => {
     const table: Table = {
       ...newTable(),
       name: tableName,
-      schema: extensionNamespaceName,
+      schema: extensionSchema,
     };
 
     const entity: DomainEntityExtension = Object.assign(newDomainEntityExtension(), {
@@ -97,7 +98,7 @@ describe('when enhancing domainEntity extensions', () => {
     expect(aggregate.entityTables).toHaveLength(1);
     const entityTable: EntityTable = aggregate.entityTables[0];
     expect(entityTable).not.toBeNull();
-    expect(entityTable.schema).toBe(extensionNamespaceName);
+    expect(entityTable.schema).toBe(extensionSchema);
     expect(entityTable.table).toBe(tableName);
   });
 });

@@ -9,7 +9,7 @@ describe('when entities in same namespace have different names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
@@ -24,7 +24,7 @@ describe('when entities in same namespace have different names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -44,7 +44,7 @@ describe('when entities in same namespace have identical names', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
@@ -59,7 +59,7 @@ describe('when entities in same namespace have identical names', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -80,14 +80,14 @@ describe('when subdomains in separate dependency-linked namespaces have identica
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
       .withEndSubdomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'Extension')
+      .withBeginNamespace('Extension', 'Extension')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
@@ -97,9 +97,8 @@ describe('when subdomains in separate dependency-linked namespaces have identica
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -137,21 +136,21 @@ describe('when subdomains in non-dependency-linked namespaces have identical nam
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartSubdomain('NotADuplicate', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
       .withEndSubdomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'Extensiona')
+      .withBeginNamespace('Extensiona', 'Extensiona')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
       .withEndSubdomain()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'Extensionb')
+      .withBeginNamespace('Extensionb', 'Extensionb')
       .withStartSubdomain('ValidName1', 'DomainName')
       .withDocumentation('doc')
       .withDomainEntityDomainItem('SubdomainItem1')
@@ -161,9 +160,9 @@ describe('when subdomains in non-dependency-linked namespaces have identical nam
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
     // $FlowIgnore - null check

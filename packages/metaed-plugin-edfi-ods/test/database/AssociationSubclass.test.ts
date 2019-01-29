@@ -18,7 +18,7 @@ jest.setTimeout(40000);
 
 describe('when association subclass has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
   const domainEntityName1 = 'DomainEntityName1';
@@ -121,8 +121,8 @@ describe('when association subclass has a single property', () => {
 
 describe('when extension association subclasses core association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const namespaceName = 'Namespace';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
   const domainEntityName1 = 'DomainEntityName1';
@@ -152,7 +152,7 @@ describe('when extension association subclasses core association', () => {
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartAssociationSubclass(associationSubclassName, associationName)
+      .withStartAssociationSubclass(associationSubclassName, `${namespaceName}.${associationName}`)
       .withDocumentation('Documentation')
       .withIntegerProperty(integerPropertyName3, 'Documentation', false, false)
       .withEndAssociationSubclass()
@@ -233,8 +233,8 @@ describe('when extension association subclasses core association', () => {
 
 describe('when extension association subclasses extension association', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const namespaceName = 'namespace';
-  const extension = 'extension';
+  const coreNamespaceName = 'EdFi';
+  const extension = 'Extension';
   const associationName = 'AssociationName';
   const associationSubclassName = 'AssociationSubclassName';
   const domainEntityName1 = 'DomainEntityName1';
@@ -245,7 +245,7 @@ describe('when extension association subclasses extension association', () => {
 
   beforeAll(async () => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
+      .withBeginNamespace(coreNamespaceName)
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('Documentation')
       .withIntegerIdentity(integerPropertyName1, 'Documentation')
@@ -260,8 +260,8 @@ describe('when extension association subclasses extension association', () => {
       .withBeginNamespace(extension)
       .withStartAssociation(associationName)
       .withDocumentation('Documentation')
-      .withAssociationDomainEntityProperty(domainEntityName1, 'Documentation')
-      .withAssociationDomainEntityProperty(domainEntityName2, 'Documentation')
+      .withAssociationDomainEntityProperty(`${coreNamespaceName}.${domainEntityName1}`, 'Documentation')
+      .withAssociationDomainEntityProperty(`${coreNamespaceName}.${domainEntityName2}`, 'Documentation')
       .withEndAssociation()
 
       .withStartAssociationSubclass(associationSubclassName, associationName)
@@ -275,7 +275,7 @@ describe('when extension association subclasses extension association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new AssociationSubclassBuilder(metaEd, []));
 
-    const coreNamespace: Namespace | undefined = metaEd.namespace.get(namespaceName);
+    const coreNamespace: Namespace | undefined = metaEd.namespace.get(coreNamespaceName);
     if (coreNamespace == null) throw new Error();
     const extensionNamespace: Namespace | undefined = metaEd.namespace.get(extension);
     if (extensionNamespace == null) throw new Error();

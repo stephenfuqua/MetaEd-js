@@ -10,7 +10,7 @@ describe('when common property has identifier of common', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -42,7 +42,7 @@ describe('when common property has invalid identifier', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon('WrongName')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -87,17 +87,17 @@ describe('when common property has identifier of common in dependency namespace'
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withCommonProperty(entityName, 'doc', true, false)
+      .withCommonProperty(`EdFi.${entityName}`, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -105,9 +105,8 @@ describe('when common property has identifier of common in dependency namespace'
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -128,14 +127,14 @@ describe('when common property has invalid identifier of common in dependency na
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndCommon()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
       .withCommonProperty('NotValid', 'doc', true, false)
@@ -146,8 +145,8 @@ describe('when common property has invalid identifier of common in dependency na
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
@@ -176,21 +175,21 @@ describe('when common property refers to common in non-dependency namespace', ()
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('CoreEntity')
       .withDocumentation('doc')
       .withBooleanProperty('Dummy', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensiona', 'ProjectExtensiona')
+      .withBeginNamespace('Extensiona', 'ProjectExtensiona')
       .withStartDomainEntity('ExtensionEntity')
       .withDocumentation('doc')
       .withCommonProperty('CommonEntity', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extensionb', 'ProjectExtensionb')
+      .withBeginNamespace('Extensionb', 'ProjectExtensionb')
       .withStartCommon('CommonEntity')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
@@ -201,9 +200,9 @@ describe('when common property refers to common in non-dependency namespace', ()
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespacea = metaEd.namespace.get('extensiona');
-    extensionNamespaceb = metaEd.namespace.get('extensionb');
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespacea = metaEd.namespace.get('Extensiona');
+    extensionNamespaceb = metaEd.namespace.get('Extensionb');
     // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
     // $FlowIgnore - null check

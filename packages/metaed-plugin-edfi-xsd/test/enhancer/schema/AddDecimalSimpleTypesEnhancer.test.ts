@@ -6,7 +6,7 @@ import { addModelBaseEdfiXsdTo } from '../../../src/model/ModelBase';
 import { enhance } from '../../../src/enhancer/schema/AddDecimalSimpleTypesEnhancer';
 
 describe('when enhancing decimal type', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -78,7 +78,7 @@ describe('when enhancing decimal type', () => {
 });
 
 describe('when enhancing generated decimal type with min value only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -127,7 +127,7 @@ describe('when enhancing generated decimal type with min value only', () => {
 });
 
 describe('when enhancing generated decimal type with max value only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -176,7 +176,7 @@ describe('when enhancing generated decimal type with max value only', () => {
 });
 
 describe('when enhancing generated decimal type with decimal places only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -225,7 +225,7 @@ describe('when enhancing generated decimal type with decimal places only', () =>
 });
 
 describe('when enhancing generated decimal type with total digits only', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -274,7 +274,7 @@ describe('when enhancing generated decimal type with total digits only', () => {
 });
 
 describe('when enhancing non-generated decimal type with no restrictions', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';
@@ -321,7 +321,7 @@ describe('when enhancing non-generated decimal type with no restrictions', () =>
 });
 
 describe('when enhancing generated decimal type with no restrictions', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const simpleTypeName = 'SimpleTypeName';

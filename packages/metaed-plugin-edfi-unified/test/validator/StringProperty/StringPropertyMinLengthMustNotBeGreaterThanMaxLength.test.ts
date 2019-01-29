@@ -13,7 +13,7 @@ describe('when validating string property with correct minimum length and maximu
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -24,7 +24,7 @@ describe('when validating string property with correct minimum length and maximu
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -52,7 +52,7 @@ describe('when validating string property with same minimum length and maximum l
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -63,7 +63,7 @@ describe('when validating string property with same minimum length and maximum l
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -91,7 +91,7 @@ describe('when validating string property with minimum length greater than maxim
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(entityName, '1')
       .withDocumentation('doc')
       .withStringIdentity('StringIdentity', 'doc', maxLength, minLength)
@@ -102,7 +102,7 @@ describe('when validating string property with minimum length greater than maxim
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

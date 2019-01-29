@@ -16,7 +16,7 @@ const testBase = (
 
   beforeAll(() => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'edfi' });
+    const namespace: Namespace = Object.assign(newNamespace(), { namespaceName: 'EdFi' });
     metaEd.namespace.set(namespace.namespaceName, namespace);
 
     complexType = Object.assign(newComplexType(), {

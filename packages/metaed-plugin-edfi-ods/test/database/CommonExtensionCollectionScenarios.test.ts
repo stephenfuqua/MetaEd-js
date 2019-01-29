@@ -17,11 +17,10 @@ import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
 
-// scenario 2
 describe('when domain entity extension has a common extension with a collection which overrides a collection of that common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const core = 'edfi';
-  const extension = 'extension';
+  const core = 'EdFi';
+  const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
   const domainEntityExtension: string = `${coreDomainEntity}Extension`;
@@ -49,12 +48,12 @@ describe('when domain entity extension has a common extension with a collection 
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(coreDomainEntity)
+      .withStartDomainEntityExtension(`${core}.${coreDomainEntity}`)
       .withBooleanProperty(scalarPlaceholder1, 'doc', false, false) // forces table for DE Extension to exist
-      .withCommonExtensionOverrideProperty(coreCommon, 'doc', true, true) // require collection override
+      .withCommonExtensionOverrideProperty(`${core}.${coreCommon}`, 'doc', true, true) // require collection override
       .withEndDomainEntityExtension()
 
-      .withStartCommonExtension(coreCommon)
+      .withStartCommonExtension(`${core}.${coreCommon}`)
       .withIntegerProperty(collectionOnCommonExtension, 'doc', true, true) // additional collection on common
       .withBooleanProperty(scalarPlaceholder2, 'doc', false, false) // forces table for Common Extension to exist
       .withEndCommonExtension()
@@ -198,8 +197,8 @@ describe('when domain entity extension has a common extension with a collection 
 
 describe('when domain entity extension has only a common collection which is extended', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const core = 'edfi';
-  const extension = 'extension';
+  const core = 'EdFi';
+  const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
   const domainEntityExtension: string = `${coreDomainEntity}Extension`;
@@ -226,11 +225,11 @@ describe('when domain entity extension has only a common collection which is ext
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(coreDomainEntity)
-      .withCommonExtensionOverrideProperty(coreCommon, 'doc', true, true) // require collection override
+      .withStartDomainEntityExtension(`${core}.${coreDomainEntity}`)
+      .withCommonExtensionOverrideProperty(`${core}.${coreCommon}`, 'doc', true, true) // require collection override
       .withEndDomainEntityExtension()
 
-      .withStartCommonExtension(coreCommon)
+      .withStartCommonExtension(`${core}.${coreCommon}`)
       .withIntegerProperty(collectionOnCommonExtension, 'doc', true, true) // additional collection on common
       .withBooleanProperty(scalarPlaceholder, 'doc', false, false) // forces table for Common Extension to exist
       .withEndCommonExtension()
@@ -355,8 +354,8 @@ describe('when domain entity extension has only a common collection which is ext
 
 describe('when domain entity extension has only a common collection - with only a collection - which is extended', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const core = 'edfi';
-  const extension = 'extension';
+  const core = 'EdFi';
+  const extension = 'Extension';
   const coreCommon = 'CoreCommon';
   const coreDomainEntity = 'CoreDomainEntity';
   const domainEntityExtension: string = `${coreDomainEntity}Extension`;
@@ -382,11 +381,11 @@ describe('when domain entity extension has only a common collection - with only 
       .withEndNamespace()
 
       .withBeginNamespace(extension)
-      .withStartDomainEntityExtension(coreDomainEntity)
-      .withCommonExtensionOverrideProperty(coreCommon, 'doc', true, true) // require collection override
+      .withStartDomainEntityExtension(`${core}.${coreDomainEntity}`)
+      .withCommonExtensionOverrideProperty(`${core}.${coreCommon}`, 'doc', true, true) // require collection override
       .withEndDomainEntityExtension()
 
-      .withStartCommonExtension(coreCommon)
+      .withStartCommonExtension(`${core}.${coreCommon}`)
       .withIntegerProperty(collectionOnCommonExtension, 'doc', true, true) // additional collection on common
       .withEndCommonExtension()
       .withEndNamespace()

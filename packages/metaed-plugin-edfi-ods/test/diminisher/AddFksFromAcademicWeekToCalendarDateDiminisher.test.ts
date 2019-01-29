@@ -10,7 +10,7 @@ import { tableEntities } from '../../src/enhancer/EnhancerHelper';
 import { Table } from '../../src/model/database/Table';
 
 describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const academicWeek = 'AcademicWeek';
@@ -75,13 +75,14 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
 });
 
 describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes AcademicWeek table with existing foreign keys to CalendarDate', () => {
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi' };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
   const academicWeek = 'AcademicWeek';
 
   beforeAll(() => {
-    const namespaceName = 'edfi';
+    const namespaceName = 'EdFi';
+    const schemaName = namespaceName.toLowerCase();
     const beginDate = 'BeginDate';
     const calendarDate = 'CalendarDate';
     const date = 'Date';
@@ -93,7 +94,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
       name: academicWeek,
       foreignKeys: [
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespaceName,
+          foreignTableSchema: schemaName,
           foreignTableName: calendarDate,
           columnNames: [
             Object.assign(newColumnNamePair(), {
@@ -107,7 +108,7 @@ describe('when AddFksFromAcademicWeekToCalendarDateDiminisher diminishes Academi
           ],
         }),
         Object.assign(newForeignKey(), {
-          foreignTableSchema: namespaceName,
+          foreignTableSchema: schemaName,
           foreignTableName: calendarDate,
           columnNames: [
             Object.assign(newColumnNamePair(), {

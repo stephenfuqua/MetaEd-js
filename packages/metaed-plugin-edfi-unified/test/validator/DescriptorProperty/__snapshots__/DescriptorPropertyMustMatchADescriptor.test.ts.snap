@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when descriptor property has invalid identifier should have validation failures 1`] = `"Descriptor property PropertyName2 does not match any declared descriptor."`;
+exports[`when descriptor property has invalid identifier should have validation failures 1`] = `"Descriptor property PropertyName2 does not match any declared descriptor in namespace EdFi."`;
 
 exports[`when descriptor property has invalid identifier should have validation failures 2`] = `
 Object {

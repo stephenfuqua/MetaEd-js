@@ -20,7 +20,7 @@ describe('when validating merge property path', () => {
     const integerIdentityName1 = 'IntegerIdentityName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity(integerIdentityName1, 'IntegerIdentityDocumentation')
@@ -30,11 +30,11 @@ describe('when validating merge property path', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName1) as any,
       [integerIdentityName1],
       'IntegerIdentityName2',
@@ -61,7 +61,7 @@ describe('when validating path with no matching merge property', () => {
     const domainEntityName1 = 'DomainEntityName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -71,11 +71,11 @@ describe('when validating path with no matching merge property', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName1) as any,
       ['IntegerIdentityName2'],
       'DomainEntityName2',
@@ -105,7 +105,7 @@ describe('when validating path with merge property collection targeting non iden
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -122,11 +122,11 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
@@ -158,7 +158,7 @@ describe('when validating path with merge property collection targeting identity
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -175,11 +175,11 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${domainEntityName1}`],
       `${contextName2}${domainEntityName1}`,
@@ -209,7 +209,7 @@ describe('when validating path with merge property targeting non identity on cur
     const integerPropertyName1 = 'IntegerPropertyName1';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -226,11 +226,11 @@ describe('when validating path with merge property targeting non identity on cur
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [integerPropertyName1],
       `${contextName2}${domainEntityName1}`,
@@ -260,7 +260,7 @@ describe('when validating path with merge property targeting identity on referen
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation', contextName1)
@@ -284,11 +284,11 @@ describe('when validating path with merge property targeting identity on referen
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${domainEntityName1}`, `${contextName1}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
@@ -319,7 +319,7 @@ describe('when validating path with merge property targeting non identity on ref
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntityName2, 'DomainEntityIdentityDocumentation', contextName1)
@@ -341,11 +341,11 @@ describe('when validating path with merge property targeting non identity on ref
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName3) as any,
       [`${contextName1}${domainEntityName1}`, `${contextName2}${domainEntityName2}`],
       `${contextName2}${domainEntityName1}`,
@@ -378,7 +378,7 @@ describe('when validating path with merge property targeting optional on common 
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -401,11 +401,11 @@ describe('when validating path with merge property targeting optional on common 
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
@@ -440,7 +440,7 @@ describe('when validating path with merge property targeting non identity inline
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName', 'IntegerIdentityDocumentation')
@@ -463,11 +463,11 @@ describe('when validating path with merge property targeting non identity inline
       .sendToListener(new CommonBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${CommonName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
@@ -504,7 +504,7 @@ describe('when validating path with merge property targeting non identity choice
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName1', 'IntegerIdentityDocumentation')
@@ -527,11 +527,11 @@ describe('when validating path with merge property targeting non identity choice
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
@@ -566,7 +566,7 @@ describe('when validating path with merge property collection targeting non iden
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName', 'IntegerIdentityDocumentation')
@@ -589,11 +589,11 @@ describe('when validating path with merge property collection targeting non iden
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,
@@ -630,7 +630,7 @@ describe('when validating path with merge property collection targeting identity
     const contextName2 = 'ContextName2';
 
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName1)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName', 'IntegerIdentityDocumentation')
@@ -653,11 +653,11 @@ describe('when validating path with merge property collection targeting identity
       .sendToListener(new ChoiceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     failReferencedPropertyDoesNotExist(
       'failReferencedPropertyDoesNotExistTest',
-      [coreNamespace],
+      coreNamespace,
       coreNamespace.entity.domainEntity.get(domainEntityName2) as any,
       [`${contextName1}${ChoiceName1}`, domainEntityName1],
       `${contextName2}${domainEntityName1}`,

@@ -1,4 +1,10 @@
-import { asReferentialProperty, asTopLevelEntity, getEntitiesOfTypeForNamespaces, versionSatisfies } from 'metaed-core';
+import {
+  asReferentialProperty,
+  asTopLevelEntity,
+  getEntitiesOfTypeForNamespaces,
+  versionSatisfies,
+  NoNamespace,
+} from 'metaed-core';
 import { EnhancerResult, EntityProperty, MetaEdEnvironment, ModelBase, TopLevelEntity } from 'metaed-core';
 import { addTables } from './TableCreatingEntityEnhancerBase';
 import { BuildStrategyDefault } from './BuildStrategy';
@@ -23,7 +29,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .forEach((entity: TopLevelEntity) => {
       const tables: Array<Table> = [];
       const mainTable: Table = Object.assign(newTable(), {
-        schema: entity.namespace.namespaceName,
+        namespace: entity.namespace,
+        schema: entity.namespace.namespaceName.toLowerCase(),
         name: entity.data.edfiOds.odsExtensionName,
         description: entity.documentation,
         parentEntity: entity,
@@ -49,7 +56,8 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       entity.data.edfiOds.odsProperties.forEach((property: EntityProperty) => {
         const tableStrategy: TableStrategy = TableStrategy.extension(
           mainTable,
-          entity.baseEntity != null ? entity.baseEntity.namespace.namespaceName : '',
+          entity.baseEntity != null ? entity.baseEntity.namespace.namespaceName.toLowerCase() : '',
+          entity.baseEntity != null ? entity.baseEntity.namespace : NoNamespace,
           entity.baseEntity != null ? entity.baseEntity.data.edfiOds.odsTableName : '',
         );
         const tableBuilder: TableBuilder = tableBuilderFactory.tableBuilderFor(property);

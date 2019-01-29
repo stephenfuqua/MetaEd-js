@@ -31,7 +31,7 @@ describe('when loading a project with two invalid plugin configuration files', (
     projects: [
       {
         projectName: 'Ed-Fi',
-        namespaceName: 'edfi',
+        namespaceName: 'EdFi',
         projectExtension: '',
         projectVersion: '3.0.0',
       },
@@ -107,7 +107,7 @@ describe('when loading a project with one invalid and one valid plugin configura
     projects: [
       {
         projectName: 'Ed-Fi',
-        namespaceName: 'edfi',
+        namespaceName: 'EdFi',
         projectExtension: '',
         projectVersion: '3.0.0',
       },
@@ -155,7 +155,7 @@ describe('when loading a project with one invalid and one valid plugin configura
   });
 
   it('should annotate the edfi.Grade entity with edfiXsd config data', async () => {
-    const coreNamespace = state.metaEd.namespace.get('edfi');
+    const coreNamespace = state.metaEd.namespace.get('EdFi');
     if (coreNamespace == null) throw new Error();
     const grade = coreNamespace.entity.domainEntity.get('Grade');
     if (grade == null) throw new Error();

@@ -6,7 +6,7 @@ describe('when DomainEntityExtension enhances domain entity extension entity', (
   const domainEntityExtensionName = 'DomainEntityExtensionName';
   const extensionEntitySuffix = 'Extension';
   let domainEntityExtension: DomainEntityExtension;
-  const namespace: Namespace = { ...newNamespace(), namespaceName: 'edfi', extensionEntitySuffix };
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi', extensionEntitySuffix };
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   metaEd.namespace.set(namespace.namespaceName, namespace);
 

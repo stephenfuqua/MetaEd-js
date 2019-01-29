@@ -21,7 +21,7 @@ describe('when domain entity has no properties named Discriminator on tech versi
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('doc')
       .withStringProperty('NotDiscriminator', 'doc', true, false, '100')
@@ -52,7 +52,7 @@ describe('when domain entity has property named Discriminator on tech version 3.
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('doc')
       .withStringProperty('Discriminator', 'doc', true, false, '100')
@@ -84,7 +84,7 @@ describe('when domain entity has property named Discriminator on tech version be
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('doc')
       .withStringProperty('Discriminator', 'doc', true, false, '100')

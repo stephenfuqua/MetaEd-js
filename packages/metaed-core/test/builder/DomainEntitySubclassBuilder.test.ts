@@ -9,7 +9,7 @@ import { ValidationFailure } from '../../src/validator/ValidationFailure';
 describe('when building domain entity subclass in extension namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -60,6 +60,10 @@ describe('when building domain entity subclass in extension namespace', () => {
     expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityName).toBe(baseEntityName);
   });
 
+  it('should have base namespace', () => {
+    expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityNamespaceName).toBe(namespaceName);
+  });
+
   it('should have one property', () => {
     expect(getDomainEntitySubclass(namespace.entity, entityName).properties).toHaveLength(1);
   });
@@ -73,10 +77,53 @@ describe('when building domain entity subclass in extension namespace', () => {
   });
 });
 
+describe('when building domain entity subclass in extension namespace subclassing core entity', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespaceName = 'Namespace';
+  const coreNamespaceName = 'EdFi';
+  const projectExtension = 'ProjectExtension';
+
+  const entityName = 'EntityName';
+  const baseEntityName = 'BaseEntityName';
+  const documentation = 'Documentation';
+  const propertyName = 'PropertyName';
+  const propertyDocumentation = 'PropertyDocumentation';
+  let namespace: any = null;
+
+  beforeAll(() => {
+    const builder = new DomainEntitySubclassBuilder(metaEd, validationFailures);
+
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName, projectExtension)
+      .withStartDomainEntitySubclass(entityName, `${coreNamespaceName}.${baseEntityName}`)
+      .withDocumentation(documentation)
+      .withIntegerProperty(propertyName, propertyDocumentation, true, false)
+      .withEndDomainEntitySubclass()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(builder);
+
+    namespace = metaEd.namespace.get(namespaceName);
+  });
+
+  it('should have namespace', () => {
+    expect(getDomainEntitySubclass(namespace.entity, entityName).namespace.namespaceName).toBe(namespaceName);
+  });
+
+  it('should have base name', () => {
+    expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityName).toBe(baseEntityName);
+  });
+
+  it('should have base namespace', () => {
+    expect(getDomainEntitySubclass(namespace.entity, entityName).baseEntityNamespaceName).toBe(coreNamespaceName);
+  });
+});
+
 describe('when building duplicate domain entity subclasses', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -145,7 +192,7 @@ describe('when building domain entity subclass with no domain entity subclass na
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = '';
@@ -184,7 +231,7 @@ describe('when building domain entity subclass with lowercase domain entity subc
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'entityName';
@@ -223,7 +270,7 @@ describe('when building domain entity subclass with lowercase based on name', ()
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -295,7 +342,7 @@ describe('when building domain entity subclass with no based on name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -361,7 +408,7 @@ describe('when building domain entity subclass with no based on name', () => {
     expect(integerProperty.isRequired).toBe(true);
   });
 
-  it('should have missing id error', () => {
+  it('should have error', () => {
     expect(textBuilder.errorMessages).toMatchSnapshot();
   });
 });
@@ -370,7 +417,7 @@ describe('when building domain entity subclass with no documentation', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -436,7 +483,7 @@ describe('when building domain entity subclass with no property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -501,7 +548,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
   const textBuilder: MetaEdTextBuilder = MetaEdTextBuilder.build();
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -578,7 +625,7 @@ describe('when building domain entity subclass with invalid trailing text', () =
 describe('when building domain entity subclass source map', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'namespace';
+  const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
   const entityName = 'EntityName';
@@ -623,18 +670,12 @@ describe('when building domain entity subclass source map', () => {
     expect(getDomainEntitySubclass(namespace.entity, entityName).sourceMap.metaEdId.tokenText).toBe(`[${metaEdId}]`);
   });
 
-  it('should have baseEntity', () => {
-    expect(getDomainEntitySubclass(namespace.entity, entityName).sourceMap.baseEntity).toBeDefined();
-    expect(getDomainEntitySubclass(namespace.entity, entityName).sourceMap.baseEntity.tokenText).toBe(baseEntityName);
-  });
-
   it('should have baseEntityName', () => {
     expect(getDomainEntitySubclass(namespace.entity, entityName).sourceMap.baseEntityName).toBeDefined();
     expect(getDomainEntitySubclass(namespace.entity, entityName).sourceMap.baseEntityName.tokenText).toBe(baseEntityName);
   });
 
   it('should have isAbstract', () => {
-    // $FlowIgnore - isAbstract could be null
     expect((getDomainEntitySubclass(namespace.entity, entityName).sourceMap as any).isAbstract).toBeUndefined();
   });
 

@@ -9,7 +9,7 @@ describe('when validating common property is part of identity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartCommon('EntityName1')
       .withDocumentation('EntityDocumentation')
       .withStringProperty('PropertyName1', 'PropertyDocumentation', true, false, '100')
@@ -25,7 +25,7 @@ describe('when validating common property is part of identity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new CommonBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
 
     failures = validate(metaEd);
   });

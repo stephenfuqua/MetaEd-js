@@ -5,6 +5,6 @@ Domain Entity StudentAcademicRecord additions
     descriptor SubmissionCertification
         documentation "The type of submission certification."
         is optional
-    common extension ClassRanking
+    common extension EdFi.ClassRanking
         documentation "Class Ranking Extension"
         is optional

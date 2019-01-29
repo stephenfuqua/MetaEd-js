@@ -12,7 +12,7 @@ describe('when validating short property with correct minimum value and maximum 
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartAbstractEntity('EntityName', '1')
       .withDocumentation('EntityDocumentation')
       .withShortIdentity('ShortIdentity', 'doc', maxValue, minValue)
@@ -23,7 +23,7 @@ describe('when validating short property with correct minimum value and maximum 
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -46,7 +46,7 @@ describe('when validating short property with same minimum value and maximum val
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartAbstractEntity('EntityName', '1')
       .withDocumentation('EntityDocumentation')
       .withShortIdentity('ShortIdentity', 'doc', maxValue, minValue)
@@ -57,7 +57,7 @@ describe('when validating short property with same minimum value and maximum val
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -80,7 +80,7 @@ describe('when validating short property with minimum value greater than maximum
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi', 'ProjectExtension')
+      .withBeginNamespace('EdFi', 'ProjectExtension')
       .withStartAbstractEntity('EntityName', '1')
       .withDocumentation('EntityDocumentation')
       .withShortIdentity('ShortIdentity', 'doc', maxValue, minValue)
@@ -91,7 +91,7 @@ describe('when validating short property with minimum value greater than maximum
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

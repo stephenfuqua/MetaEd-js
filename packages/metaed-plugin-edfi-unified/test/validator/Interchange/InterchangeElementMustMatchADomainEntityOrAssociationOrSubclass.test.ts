@@ -20,7 +20,7 @@ describe('when validating interchange element is an abstract entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAbstractEntity(abstractEntityName)
       .withDocumentation('AbstractEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
@@ -36,7 +36,7 @@ describe('when validating interchange element is an abstract entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -61,7 +61,7 @@ describe('when validating interchange element is a domain entity', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
@@ -77,7 +77,7 @@ describe('when validating interchange element is a domain entity', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -103,17 +103,17 @@ describe('when validating interchange element is a domain entity across namespac
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringName', 'StringDocumentation', '100')
       .withEndDomainEntity()
       .withEndNamespace()
 
-      .withBeginNamespace('extension', 'ProjectExtension')
+      .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartInterchange('InterchangeName')
       .withDocumentation('EntityDocumentation')
-      .withDomainEntityElement(domainEntityName)
+      .withDomainEntityElement(`EdFi.${domainEntityName}`)
       .withEndInterchange()
       .withEndNamespace()
 
@@ -121,9 +121,8 @@ describe('when validating interchange element is a domain entity across namespac
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
-    extensionNamespace = metaEd.namespace.get('extension');
-    // $FlowIgnore - null check
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -151,7 +150,7 @@ describe('when validating interchange element is a domain entity subclass', () =
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('DomainEntityDocumentation')
       .withBooleanProperty('BooleanName1', 'BooleanDocumentation', true, false)
@@ -173,7 +172,7 @@ describe('when validating interchange element is a domain entity subclass', () =
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -202,7 +201,7 @@ describe('when validating interchange element is an association', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty('DomainEntityName1', 'DomainEntityDocumentation')
@@ -220,7 +219,7 @@ describe('when validating interchange element is an association', () => {
       .sendToListener(new AssociationBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -246,7 +245,7 @@ describe('when validating interchange element is an association subclass', () =>
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartAssociation(associationName)
       .withDocumentation('AssociationDocumentation')
       .withAssociationDomainEntityProperty('DomainEntityName1', 'EntityDocumentation')
@@ -270,7 +269,7 @@ describe('when validating interchange element is an association subclass', () =>
       .sendToListener(new AssociationSubclassBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -299,7 +298,7 @@ describe('when validating interchange element is a descriptor', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartDescriptor(descriptorName)
       .withDocumentation('DescriptorDocumentation')
       .withStartMapType()
@@ -318,7 +317,7 @@ describe('when validating interchange element is a descriptor', () => {
       .sendToListener(new DescriptorBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
@@ -342,7 +341,7 @@ describe('when validating interchange element has invalid name', () => {
 
   beforeAll(() => {
     MetaEdTextBuilder.build()
-      .withBeginNamespace('edfi')
+      .withBeginNamespace('EdFi')
       .withStartInterchange('InterchangeName')
       .withDocumentation('InterchangeDocumentation')
       .withDomainEntityElement('DomainEntityName')
@@ -352,7 +351,7 @@ describe('when validating interchange element has invalid name', () => {
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new InterchangeBuilder(metaEd, []));
 
-    coreNamespace = metaEd.namespace.get('edfi');
+    coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 

@@ -1,8 +1,8 @@
 import deepFreeze from 'deep-freeze';
 import R from 'ramda';
 import winston from 'winston';
-import { orderByProp, NoTopLevelEntity } from 'metaed-core';
-import { TopLevelEntity, EntityProperty } from 'metaed-core';
+import { orderByProp, NoTopLevelEntity, NoNamespace } from 'metaed-core';
+import { TopLevelEntity, EntityProperty, Namespace } from 'metaed-core';
 import { columnConstraintMerge, cloneColumn } from './Column';
 import { addColumnNamePair, newForeignKey, foreignKeySourceReferenceFrom } from './ForeignKey';
 import { newColumnNamePair } from './ColumnNamePair';
@@ -17,6 +17,7 @@ const maxSqlServerIdentifierLength = R.take(128);
 
 export type Table = {
   name: string;
+  namespace: Namespace;
   schema: string;
   type: string;
   description: string;
@@ -44,6 +45,7 @@ export type Table = {
 export function newTable(): Table {
   return {
     name: '',
+    namespace: NoNamespace,
     schema: '',
     type: 'table',
     description: '',
@@ -166,12 +168,14 @@ function createForeignKeyInternal(
   sourceReference: ForeignKeySourceReference,
   foreignKeyColumns: Array<Column>,
   foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
   foreignTableName: string,
   strategy: ForeignKeyStrategy,
 ): ForeignKey {
   const foreignKey: ForeignKey = Object.assign(newForeignKey(), {
     foreignTableSchema,
     foreignTableName,
+    foreignTableNamespace,
     withDeleteCascade: strategy.hasDeleteCascade(),
     withUpdateCascade: strategy.hasUpdateCascade(),
     sourceReference,
@@ -193,6 +197,7 @@ export function createForeignKey(
   sourceProperty: EntityProperty,
   foreignKeyColumns: Array<Column>,
   foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
   foreignTableName: string,
   strategy: ForeignKeyStrategy,
 ): ForeignKey {
@@ -200,6 +205,7 @@ export function createForeignKey(
     foreignKeySourceReferenceFrom(sourceProperty),
     foreignKeyColumns,
     foreignTableSchema,
+    foreignTableNamespace,
     foreignTableName,
     strategy,
   );
@@ -209,8 +215,16 @@ export function createForeignKeyUsingSourceReference(
   sourceReference: ForeignKeySourceReference,
   foreignKeyColumns: Array<Column>,
   foreignTableSchema: string,
+  foreignTableNamespace: Namespace,
   foreignTableName: string,
   strategy: ForeignKeyStrategy,
 ): ForeignKey {
-  return createForeignKeyInternal(sourceReference, foreignKeyColumns, foreignTableSchema, foreignTableName, strategy);
+  return createForeignKeyInternal(
+    sourceReference,
+    foreignKeyColumns,
+    foreignTableSchema,
+    foreignTableNamespace,
+    foreignTableName,
+    strategy,
+  );
 }

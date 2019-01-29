@@ -17,7 +17,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       const row: SchoolYearEnumerationRow = Object.assign(newSchoolYearEnumerationRow(), {
         name,
         namespace: entity.namespace.namespaceName,
-        schemaName: entity.namespace.namespaceName,
+        schemaName: entity.namespace.namespaceName.toLowerCase(),
         tableName: 'SchoolYearType',
         documentation: item.documentation,
         schoolYear: parseInt(name, 10),

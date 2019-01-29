@@ -11,6 +11,9 @@ export interface InterchangeSourceMap extends ModelBaseSourceMap {
   identityTemplates: Array<SourceMap>;
   extendedDocumentation: SourceMap;
   useCaseDocumentation: SourceMap;
+  baseEntityName: SourceMap;
+  baseEntityNamespaceName: SourceMap;
+  baseEntity: SourceMap;
 }
 
 /**
@@ -23,6 +26,9 @@ export function newInterchangeSourceMap(): InterchangeSourceMap {
     identityTemplates: [],
     extendedDocumentation: NoSourceMap,
     useCaseDocumentation: NoSourceMap,
+    baseEntityName: NoSourceMap,
+    baseEntityNamespaceName: NoSourceMap,
+    baseEntity: NoSourceMap,
   };
 }
 
@@ -33,8 +39,9 @@ export interface Interchange extends ModelBase {
   extendedDocumentation: string;
   useCaseDocumentation: string;
   baseEntityName: string;
+  baseEntityNamespaceName: string;
   baseEntity: Interchange | null;
-  sourceMap: ModelBaseSourceMap | InterchangeSourceMap;
+  sourceMap: InterchangeSourceMap;
 }
 
 /**
@@ -54,6 +61,7 @@ export function newInterchange(): Interchange {
     extendedDocumentation: '',
     useCaseDocumentation: '',
     baseEntityName: '',
+    baseEntityNamespaceName: '',
     baseEntity: null,
 
     sourceMap: newInterchangeSourceMap(),
