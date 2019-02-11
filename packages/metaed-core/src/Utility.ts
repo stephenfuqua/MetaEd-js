@@ -4,13 +4,13 @@ import { SemVer } from './MetaEdEnvironment';
 
 export const nextMacroTask = (): Promise<void> => new Promise(resolve => setImmediate(resolve));
 
-export function lowercaseAndNumericOnly(aString: string): string | null {
+export function uppercaseThenAlphanumericOnly(aString: string): string | null {
   const alphanumericMatches: Array<string> | null = aString.match(/[a-zA-Z0-9]+/g);
   if (alphanumericMatches == null) return null;
   const alphanumericOnly = alphanumericMatches.join('');
-  const leadingAlphaCharacter = /^[a-zA-Z]/;
+  const leadingAlphaCharacter = /^[A-Z]/;
   if (!alphanumericOnly || !alphanumericOnly.match(leadingAlphaCharacter)) return null;
-  return alphanumericOnly.toLowerCase();
+  return alphanumericOnly;
 }
 
 export function prependIndefiniteArticle(phrase: string): string {

@@ -4,9 +4,9 @@ exports[`when map type enumeration items have duplicate short descriptions shoul
 
 exports[`when map type enumeration items have duplicate short descriptions should have validation failure 2`] = `
 Object {
-  "column": 6,
+  "column": 11,
   "line": 8,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription\\"",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when map type enumeration items have multiple duplicate short descripti
 
 exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 2`] = `
 Object {
-  "column": 6,
+  "column": 11,
   "line": 8,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription1\\"",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when map type enumeration items have multiple duplicate short descripti
 
 exports[`when map type enumeration items have multiple duplicate short descriptions should have multiple validation failure 4`] = `
 Object {
-  "column": 6,
+  "column": 11,
   "line": 14,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription2\\"",
 }
 `;

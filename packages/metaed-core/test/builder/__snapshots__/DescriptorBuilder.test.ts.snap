@@ -207,9 +207,9 @@ exports[`when building multiple descriptors should have validation failures for 
 
 exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 13,
   "line": 9,
-  "tokenText": "Descriptor",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -217,9 +217,9 @@ exports[`when building multiple descriptors should have validation failures for 
 
 exports[`when building multiple descriptors should have validation failures for each entity: when building duplicate descriptors should have validation failures for each entity -> Descriptor 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 13,
   "line": 2,
-  "tokenText": "Descriptor",
+  "tokenText": "EntityName",
 }
 `;
 

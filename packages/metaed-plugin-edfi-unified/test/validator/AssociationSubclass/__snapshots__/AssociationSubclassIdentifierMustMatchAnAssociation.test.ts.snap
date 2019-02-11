@@ -4,8 +4,8 @@ exports[`when association subclass has invalid extendee should have validation f
 
 exports[`when association subclass has invalid extendee should have validation failures: when association subclass has invalid extendee should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 2,
-  "tokenText": "Association",
+  "tokenText": "EntityName",
 }
 `;

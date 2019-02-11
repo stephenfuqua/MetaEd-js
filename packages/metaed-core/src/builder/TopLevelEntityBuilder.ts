@@ -103,7 +103,6 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   exitingEntity() {
     if (this.currentTopLevelEntity === NoTopLevelEntity) return;
     if (this.currentTopLevelEntity.metaEdName) {
-      // $FlowIgnore - allowing currentTopLevelEntity.type to specify the entityRepository Map property
       const currentTopLevelEntityRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[
         this.currentTopLevelEntity.type
       ];
@@ -114,7 +113,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
           message: `${this.currentTopLevelEntity.typeHumanizedName} named ${
             this.currentTopLevelEntity.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: this.currentTopLevelEntity.sourceMap.type,
+          sourceMap: this.currentTopLevelEntity.sourceMap.metaEdName,
           fileMap: null,
         });
         const duplicateEntity: TopLevelEntity | undefined = currentTopLevelEntityRepository.get(
@@ -127,7 +126,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
             message: `${duplicateEntity.typeHumanizedName} named ${
               duplicateEntity.metaEdName
             } is a duplicate declaration of that name.`,
-            sourceMap: duplicateEntity.sourceMap.type,
+            sourceMap: duplicateEntity.sourceMap.metaEdName,
             fileMap: null,
           });
         }
@@ -411,9 +410,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // side effect - pushes ValidationFailures if there is a name collision
   propertyNameCollision(): boolean {
-    const fullPropertyName = `${this.currentProperty.referencedNamespaceName}.${this.currentProperty.withContext}${
-      this.currentProperty.metaEdName
-    }`;
+    const fullPropertyName = `${this.currentProperty.withContext}${this.currentProperty.metaEdName}`;
 
     // if this is empty there's a parse error - go ahead and declare collision, but don't bother with error messages
     if (!fullPropertyName) return true;
@@ -426,8 +423,10 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.validationFailures.push({
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
-      message: `Property named ${this.currentProperty.metaEdName} is a duplicate declaration of that name.`,
-      sourceMap: this.currentProperty.sourceMap.type,
+      message: `Property named ${
+        this.currentProperty.metaEdName
+      } is a duplicate declaration of that name. Use 'with context' keyword to avoid naming collisions.`,
+      sourceMap: this.currentProperty.sourceMap.metaEdName,
       fileMap: null,
     });
 
@@ -437,8 +436,10 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.validationFailures.push({
       validatorName: 'TopLevelEntityBuilder',
       category: 'error',
-      message: `Property named ${duplicateProperty.metaEdName} is a duplicate declaration of that name.`,
-      sourceMap: duplicateProperty.sourceMap.type,
+      message: `Property named ${
+        duplicateProperty.metaEdName
+      } is a duplicate declaration of that name.  Use 'with context' keyword to avoid naming collisions.`,
+      sourceMap: duplicateProperty.sourceMap.metaEdName,
       fileMap: null,
     });
 

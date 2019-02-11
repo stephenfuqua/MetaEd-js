@@ -101,9 +101,9 @@ exports[`when building duplicate domain entity subclasses should have validation
 
 exports[`when building duplicate domain entity subclasses should have validation failures for each entity: when building duplicate domain entity subclasses should have validation failures for each entity -> DES 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 9,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -111,8 +111,8 @@ exports[`when building duplicate domain entity subclasses should have validation
 
 exports[`when building duplicate domain entity subclasses should have validation failures for each entity: when building duplicate domain entity subclasses should have validation failures for each entity -> DES 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;

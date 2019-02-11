@@ -4,8 +4,8 @@ exports[`when common extension is in core namespace should have validation failu
 
 exports[`when common extension is in core namespace should have validation failure: when common extension is in core namespace should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 9,
   "line": 9,
-  "tokenText": "Common",
+  "tokenText": "CommonName",
 }
 `;

@@ -19,7 +19,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           message: `Domain Entity ${
             domainEntity.metaEdName
           } has multiple properties with a property name of 'UniqueId'.  Only one column in a core domain entity can be named 'UniqueId'.`,
-          sourceMap: domainEntity.sourceMap.type,
+          sourceMap: domainEntity.sourceMap.metaEdName,
           fileMap: null,
         });
       }

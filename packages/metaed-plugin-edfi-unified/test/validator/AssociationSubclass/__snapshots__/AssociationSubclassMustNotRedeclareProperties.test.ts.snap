@@ -4,9 +4,9 @@ exports[`when association subclass has duplicate property name across dependent 
 
 exports[`when association subclass has duplicate property name across dependent namespaces should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 24,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when association subclass has duplicate property name across dependent 
 
 exports[`when association subclass has duplicate property name across dependent namespaces should have validation failures 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 28,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName2",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when association subclass has duplicate property name should have valid
 
 exports[`when association subclass has duplicate property name should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 22,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -34,8 +34,8 @@ exports[`when association subclass has duplicate property name should have valid
 
 exports[`when association subclass has duplicate property name should have validation failures 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 26,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName2",
 }
 `;

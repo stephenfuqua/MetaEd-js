@@ -4,9 +4,9 @@ exports[`when building duplicate shared decimals should have validation failures
 
 exports[`when building duplicate shared decimals should have validation failures for each entity: when building duplicate shared decimals should have validation failures for each entity -> SD 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 17,
   "line": 9,
-  "tokenText": "Shared Decimal",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when building duplicate shared decimals should have validation failures
 
 exports[`when building duplicate shared decimals should have validation failures for each entity: when building duplicate shared decimals should have validation failures for each entity -> SD 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 17,
   "line": 2,
-  "tokenText": "Shared Decimal",
+  "tokenText": "EntityName",
 }
 `;
 

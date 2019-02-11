@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating namespaces are different only in casing should have validation failure 1`] = `"EdFi is a project name that differs only in case from another name.  Make the casing the same to indicate the same namespace or choose a different name."`;
+
+exports[`when validating namespaces are different only in casing should have validation failure 2`] = `null`;
+
+exports[`when validating namespaces are different only in casing should have validation failure 3`] = `"EDFI is a project name that differs only in case from another name.  Make the casing the same to indicate the same namespace or choose a different name."`;
+
+exports[`when validating namespaces are different only in casing should have validation failure 4`] = `null`;

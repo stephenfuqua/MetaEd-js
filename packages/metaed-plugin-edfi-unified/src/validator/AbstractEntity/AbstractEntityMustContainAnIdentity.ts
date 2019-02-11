@@ -9,7 +9,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           validatorName: 'AbstractEntityMustContainAnIdentity',
           category: 'error',
           message: `Abstract Entity ${domainEntity.metaEdName} does not have an identity specified.`,
-          sourceMap: domainEntity.sourceMap.type,
+          sourceMap: domainEntity.sourceMap.metaEdName,
           fileMap: null,
         });
       }

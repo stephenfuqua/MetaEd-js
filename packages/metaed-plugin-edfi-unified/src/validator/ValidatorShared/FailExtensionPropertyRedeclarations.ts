@@ -24,7 +24,7 @@ export function failExtensionPropertyRedeclarations(
           message: `${extensionEntity.typeHumanizedName} ${extensionEntity.metaEdName} redeclares property ${
             extensionProperty.metaEdName
           } of base ${baseEntity.typeHumanizedName}.`,
-          sourceMap: extensionProperty.sourceMap.type,
+          sourceMap: extensionProperty.sourceMap.metaEdName,
           fileMap: null,
         });
       }

@@ -4,8 +4,8 @@ exports[`when domain entity extension is in core namespace should have validatio
 
 exports[`when domain entity extension is in core namespace should have validation failure 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 9,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;

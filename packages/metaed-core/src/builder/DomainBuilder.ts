@@ -81,7 +81,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
 
   exitingEntity() {
     if (this.currentDomain === NoDomain) return;
-    // $FlowIgnore
+
     const currentDomainRepository: Map<string, TopLevelEntity> = this.currentNamespace.entity[this.currentDomain.type];
     if (this.currentDomain.metaEdName) {
       if (currentDomainRepository.has(this.currentDomain.metaEdName)) {
@@ -91,7 +91,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
           message: `${this.currentDomain.typeHumanizedName} named ${
             this.currentDomain.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: this.currentDomain.sourceMap.type,
+          sourceMap: this.currentDomain.sourceMap.metaEdName,
           fileMap: null,
         });
         const duplicateEntity: any = currentDomainRepository.get(this.currentDomain.metaEdName);
@@ -101,7 +101,7 @@ export class DomainBuilder extends MetaEdGrammarListener {
           message: `${duplicateEntity.typeHumanizedName} named ${
             duplicateEntity.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
+          sourceMap: duplicateEntity.sourceMap.metaEdName,
           fileMap: null,
         });
       } else {

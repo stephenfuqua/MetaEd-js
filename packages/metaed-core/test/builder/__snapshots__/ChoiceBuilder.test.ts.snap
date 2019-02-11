@@ -87,9 +87,9 @@ exports[`when building duplicate choices should have validation failures for eac
 
 exports[`when building duplicate choices should have validation failures for each entity: when building duplicate choices should have validation failures for each entity -> Choice 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 9,
   "line": 9,
-  "tokenText": "Choice",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -97,8 +97,8 @@ exports[`when building duplicate choices should have validation failures for eac
 
 exports[`when building duplicate choices should have validation failures for each entity: when building duplicate choices should have validation failures for each entity -> Choice 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 9,
   "line": 2,
-  "tokenText": "Choice",
+  "tokenText": "EntityName",
 }
 `;

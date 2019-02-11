@@ -379,9 +379,9 @@ exports[`when building duplicate associations should have validation failures fo
 
 exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 11,
-  "tokenText": "Association",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -389,8 +389,8 @@ exports[`when building duplicate associations should have validation failures fo
 
 exports[`when building duplicate associations should have validation failures for each entity: when building duplicate associations should have validation failures for each entity -> Association 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 2,
-  "tokenText": "Association",
+  "tokenText": "EntityName",
 }
 `;

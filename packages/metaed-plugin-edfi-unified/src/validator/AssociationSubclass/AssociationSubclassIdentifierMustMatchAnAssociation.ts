@@ -20,7 +20,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           message: `Association ${entity.metaEdName} based on ${
             entity.baseEntityName
           } does not match any declared Association in namespace ${entity.baseEntityNamespaceName}.`,
-          sourceMap: entity.sourceMap.type,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });
       }

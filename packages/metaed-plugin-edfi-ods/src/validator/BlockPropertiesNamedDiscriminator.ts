@@ -17,7 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         validatorName: 'BlockPropertiesNamedDiscriminator',
         category: 'warning',
         message: `The ODS does not allow properties named 'Discriminator'.  ODS generation will likely fail.`,
-        sourceMap: property.sourceMap.type,
+        sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });
     }

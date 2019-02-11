@@ -95,7 +95,6 @@ describe('when descriptors in separate dependency-linked namespaces have identic
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -109,18 +108,8 @@ describe('when descriptors in separate dependency-linked namespaces have identic
     expect(extensionNamespace.entity.descriptor.size).toBe(1);
   });
 
-  it('should have validation failures for each entity', () => {
-    expect(failures).toHaveLength(2);
-
-    expect(failures[0].validatorName).toBe('DescriptorNamesMustBeUnique');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
-
-    expect(failures[1].validatorName).toBe('DescriptorNamesMustBeUnique');
-    expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot();
-    expect(failures[1].sourceMap).toMatchSnapshot();
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });
 

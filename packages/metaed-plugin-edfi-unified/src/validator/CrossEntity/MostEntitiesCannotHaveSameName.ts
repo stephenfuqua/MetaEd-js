@@ -27,7 +27,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.namespace.forEach((namespace: Namespace) => {
     failures.push(
       ...generateValidationErrorsForDuplicates(
-        entitiesNeedingDuplicateChecking(namespace, ...namespace.dependencies),
+        entitiesNeedingDuplicateChecking(namespace),
         'MostEntitiesCannotHaveSameName',
       ),
     );

@@ -23,7 +23,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         } is invalid for identity rename because parent entity ${
           domainEntitySubclass.baseEntityName
         } has more than one identity property.`,
-        sourceMap: domainEntitySubclass.sourceMap.type,
+        sourceMap: domainEntitySubclass.sourceMap.metaEdName,
         fileMap: null,
       });
     });

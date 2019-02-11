@@ -4,9 +4,9 @@ exports[`when association extension has duplicate common property should have va
 
 exports[`when association extension has duplicate common property should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 18,
-  "tokenText": "common",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when association extension has duplicate property name should have vali
 
 exports[`when association extension has duplicate property name should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 18,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when association extension has multiple duplicates should have validati
 
 exports[`when association extension has multiple duplicates should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 22,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName1",
 }
 `;
 
@@ -34,8 +34,8 @@ exports[`when association extension has multiple duplicates should have validati
 
 exports[`when association extension has multiple duplicates should have validation failures() 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 26,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName2",
 }
 `;

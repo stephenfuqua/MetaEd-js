@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when validating inline common type exists in extension should have validation failure 1`] = `"Inline Common EntityName is not valid in extension namespace ProjectExtension ."`;
+exports[`when validating inline common type exists in extension should have validation failure 1`] = `"Inline Common EntityName is not valid in extension namespace Extension."`;
 
 exports[`when validating inline common type exists in extension should have validation failure 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 12,
-  "tokenText": "Inline Common",
+  "tokenText": "EntityName",
 }
 `;

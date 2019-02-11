@@ -35,7 +35,7 @@ function generateValidationErrorsForDuplicates(metaEdProperty: Array<SimplePrope
           validatorName: 'SimplePropertiesCannotDuplicateNames',
           category: 'error',
           message: `${property.typeHumanizedName} named ${metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: property.sourceMap.type,
+          sourceMap: property.sourceMap.metaEdName,
           fileMap: null,
         });
       });

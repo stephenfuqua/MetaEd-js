@@ -4,9 +4,9 @@ exports[`when domain entity extension has duplicate property name should have va
 
 exports[`when domain entity extension has duplicate property name should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 12,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when domain entity extension has multiple duplicates should have valida
 
 exports[`when domain entity extension has multiple duplicates should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 16,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName1",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when domain entity extension has multiple duplicates should have valida
 
 exports[`when domain entity extension has multiple duplicates should have validation failures() 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 20,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName2",
 }
 `;
 
@@ -34,8 +34,8 @@ exports[`when domain entity subclass and extension have duplicate property name 
 
 exports[`when domain entity subclass and extension have duplicate property name should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 19,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;

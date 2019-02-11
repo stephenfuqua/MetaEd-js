@@ -4,9 +4,9 @@ exports[`when building shared decimal with duplicate decimal property in extensi
 
 exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
+  "column": 17,
   "line": 15,
-  "tokenText": "Shared Decimal",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when building shared decimal with duplicate decimal property in extensi
 
 exports[`when building shared decimal with duplicate decimal property in extension namespace should have validation failures for each entity 4`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "decimal",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when building shared integer with duplicate integer property in core na
 
 exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
+  "column": 17,
   "line": 11,
-  "tokenText": "Shared Integer",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -34,9 +34,9 @@ exports[`when building shared integer with duplicate integer property in core na
 
 exports[`when building shared integer with duplicate integer property in core namespace should have validation failures for each entity 4`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "integer",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -44,9 +44,9 @@ exports[`when building shared integer with duplicate integer property in extensi
 
 exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
+  "column": 17,
   "line": 13,
-  "tokenText": "Shared Integer",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -54,9 +54,9 @@ exports[`when building shared integer with duplicate integer property in extensi
 
 exports[`when building shared integer with duplicate integer property in extension namespace should have validation failures for each entity 4`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 5,
-  "tokenText": "integer",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -64,9 +64,9 @@ exports[`when building shared string with duplicate integer property in extensio
 
 exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Shared String",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -74,9 +74,9 @@ exports[`when building shared string with duplicate integer property in extensio
 
 exports[`when building shared string with duplicate integer property in extension namespace reversed should have validation failures for each entity 4`] = `
 Object {
-  "column": 4,
+  "column": 12,
   "line": 12,
-  "tokenText": "integer",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -84,9 +84,9 @@ exports[`when building shared string with duplicate string property in extension
 
 exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Shared String",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -94,8 +94,8 @@ exports[`when building shared string with duplicate string property in extension
 
 exports[`when building shared string with duplicate string property in extension namespace reversed should have validation failures for each entity 4`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 12,
-  "tokenText": "string",
+  "tokenText": "EntityName",
 }
 `;

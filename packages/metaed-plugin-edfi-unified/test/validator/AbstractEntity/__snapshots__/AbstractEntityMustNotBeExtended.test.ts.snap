@@ -7,9 +7,9 @@ Array [
     "fileMap": null,
     "message": "Abstract Entity DomainEntityName2 additions is not valid.  Abstract entities cannot be extended.",
     "sourceMap": Object {
-      "column": 2,
+      "column": 16,
       "line": 18,
-      "tokenText": "Domain Entity",
+      "tokenText": "DomainEntityName2",
     },
     "validatorName": "AbstractEntityMustNotBeExtended",
   },
@@ -23,9 +23,9 @@ Array [
     "fileMap": null,
     "message": "Abstract Entity DomainEntityName additions is not valid.  Abstract entities cannot be extended.",
     "sourceMap": Object {
-      "column": 2,
+      "column": 16,
       "line": 11,
-      "tokenText": "Domain Entity",
+      "tokenText": "EdFi",
     },
     "validatorName": "AbstractEntityMustNotBeExtended",
   },

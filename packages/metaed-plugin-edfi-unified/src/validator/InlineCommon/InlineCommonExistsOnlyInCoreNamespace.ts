@@ -11,9 +11,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         validatorName: 'InlineCommonExistsOnlyInCoreNamespace',
         category: 'error',
         message: `${common.typeHumanizedName} ${common.metaEdName} is not valid in extension namespace ${
-          common.namespace.projectExtension
-        } .`,
-        sourceMap: common.sourceMap.type,
+          common.namespace.namespaceName
+        }.`,
+        sourceMap: common.sourceMap.metaEdName,
         fileMap: null,
       });
     });

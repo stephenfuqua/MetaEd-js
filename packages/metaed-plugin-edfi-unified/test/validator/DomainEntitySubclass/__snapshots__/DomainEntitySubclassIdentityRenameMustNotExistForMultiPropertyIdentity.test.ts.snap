@@ -4,9 +4,9 @@ exports[`when domain entity subclass extends non existent entity should have val
 
 exports[`when domain entity subclass extends non existent entity should have validation failures 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Domain Entity",
+  "tokenText": "SubclassName",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when domain entity subclass renames base identity more than once should
 
 exports[`when domain entity subclass renames base identity more than once should have validation failures 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 15,
-  "tokenText": "Domain Entity",
+  "tokenText": "SubclassName",
 }
 `;

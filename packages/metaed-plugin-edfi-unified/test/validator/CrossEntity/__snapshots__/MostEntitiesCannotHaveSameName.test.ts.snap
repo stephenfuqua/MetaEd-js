@@ -1,81 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when DE and Association have identical names should have validation failures for each entity: when DE and Association have identical names should have validation failures for each entity -> DE message  1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
+exports[`when DE and Association have identical names should have validation failures for each entity 1`] = `"Association named EntityName is a duplicate declaration of that name."`;
 
-exports[`when DE and Association have identical names should have validation failures for each entity: when DE and Association have identical names should have validation failures for each entity -> DE sourceMap 1`] = `
+exports[`when DE and Association have identical names should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Domain Entity",
-}
-`;
-
-exports[`when DE and Association have identical names should have validation failures for each entity: when DE and Association have identical names should have validation failures for each entity -> association message  1`] = `"Association named EntityName is a duplicate declaration of that name."`;
-
-exports[`when DE and Association have identical names should have validation failures for each entity: when DE and Association have identical names should have validation failures for each entity -> association sourceMap 1`] = `
-Object {
-  "column": 2,
+  "column": 14,
   "line": 9,
-  "tokenText": "Association",
+  "tokenText": "EntityName",
 }
 `;
 
-exports[`when DE and Common have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> DE message  1`] = `"Common named EntityName is a duplicate declaration of that name."`;
+exports[`when DE and Association have identical names should have validation failures for each entity 3`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
 
-exports[`when DE and Common have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> DE sourceMap 1`] = `
+exports[`when DE and Association have identical names should have validation failures for each entity 4`] = `
 Object {
-  "column": 2,
+  "column": 16,
+  "line": 2,
+  "tokenText": "EntityName",
+}
+`;
+
+exports[`when DE and Common have identical names should have validation failures for each entity 1`] = `"Common named EntityName is a duplicate declaration of that name."`;
+
+exports[`when DE and Common have identical names should have validation failures for each entity 2`] = `
+Object {
+  "column": 9,
   "line": 9,
-  "tokenText": "Common",
+  "tokenText": "EntityName",
 }
 `;
 
-exports[`when DE and Common have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> SharedInteger message  1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
+exports[`when DE and Common have identical names should have validation failures for each entity 3`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
 
-exports[`when DE and Common have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> SharedInteger sourceMap 1`] = `
+exports[`when DE and Common have identical names should have validation failures for each entity 4`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;
 
-exports[`when DE and Common in separate dependency-linked namespaces have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> DE message  1`] = `"Common named EntityName is a duplicate declaration of that name."`;
+exports[`when DE and SharedInteger have identical names should have validation failures for each entity 1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
 
-exports[`when DE and Common in separate dependency-linked namespaces have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> DE sourceMap 1`] = `
+exports[`when DE and SharedInteger have identical names should have validation failures for each entity 2`] = `
 Object {
-  "column": 2,
-  "line": 11,
-  "tokenText": "Common",
-}
-`;
-
-exports[`when DE and Common in separate dependency-linked namespaces have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> SharedInteger message  1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
-
-exports[`when DE and Common in separate dependency-linked namespaces have identical names should have validation failures for each entity: when DE and Common have identical names should have validation failures for each entity -> SharedInteger sourceMap 1`] = `
-Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;
 
-exports[`when DE and SharedInteger have identical names should have validation failures for each entity: when DE and SharedInteger have identical names should have validation failures for each entity -> DE message  1`] = `"Domain Entity named EntityName is a duplicate declaration of that name."`;
+exports[`when DE and SharedInteger have identical names should have validation failures for each entity 3`] = `"Shared Integer named EntityName is a duplicate declaration of that name."`;
 
-exports[`when DE and SharedInteger have identical names should have validation failures for each entity: when DE and SharedInteger have identical names should have validation failures for each entity -> DE sourceMap 1`] = `
+exports[`when DE and SharedInteger have identical names should have validation failures for each entity 4`] = `
 Object {
-  "column": 2,
-  "line": 2,
-  "tokenText": "Domain Entity",
-}
-`;
-
-exports[`when DE and SharedInteger have identical names should have validation failures for each entity: when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger message  1`] = `"Shared Integer named EntityName is a duplicate declaration of that name."`;
-
-exports[`when DE and SharedInteger have identical names should have validation failures for each entity: when DE and SharedInteger have identical names should have validation failures for each entity -> SharedInteger sourceMap 1`] = `
-Object {
-  "column": 2,
+  "column": 17,
   "line": 9,
-  "tokenText": "Shared Integer",
+  "tokenText": "EntityName",
 }
 `;

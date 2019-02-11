@@ -27,7 +27,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             } is an extension with required property ${
               property.metaEdName
             }.  The ODS/API does not currently support this pattern.`,
-            sourceMap: property.sourceMap.type,
+            sourceMap: property.sourceMap.metaEdName,
             fileMap: null,
           });
         }

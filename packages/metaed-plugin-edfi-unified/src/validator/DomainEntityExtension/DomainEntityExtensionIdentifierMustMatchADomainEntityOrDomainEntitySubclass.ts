@@ -22,7 +22,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           }' does not match any declared Domain Entity or Domain Entity Subclass in namespace ${
             entity.baseEntityNamespaceName
           }.`,
-          sourceMap: entity.sourceMap.type,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });
       }

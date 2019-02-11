@@ -4,8 +4,8 @@ exports[`when enumeration property has invalid identifier should have validation
 
 exports[`when enumeration property has invalid identifier should have validation failures 2`] = `
 Object {
-  "column": 4,
+  "column": 16,
   "line": 10,
-  "tokenText": "enumeration",
+  "tokenText": "PropertyName2",
 }
 `;

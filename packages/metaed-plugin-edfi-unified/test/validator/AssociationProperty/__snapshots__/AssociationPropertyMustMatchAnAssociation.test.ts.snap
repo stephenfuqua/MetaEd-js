@@ -4,9 +4,9 @@ exports[`when association property has invalid identifier of association in depe
 
 exports[`when association property has invalid identifier of association in dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 16,
   "line": 21,
-  "tokenText": "association",
+  "tokenText": "NotValid",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when association property has invalid identifier should have validation
 
 exports[`when association property has invalid identifier should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 16,
   "line": 5,
-  "tokenText": "association",
+  "tokenText": "UndefinedEntityName",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when association property refers to association in non-dependency names
 
 exports[`when association property refers to association in non-dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 16,
   "line": 14,
-  "tokenText": "association",
+  "tokenText": "AssociationEntity",
 }
 `;

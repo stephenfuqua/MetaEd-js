@@ -22,7 +22,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         message: `Abstract Association ${
           extensionEntity.metaEdName
         } additions is not valid.  Abstract entities cannot be extended.`,
-        sourceMap: extensionEntity.sourceMap.type,
+        sourceMap: extensionEntity.sourceMap.metaEdName,
         fileMap: null,
       });
     });

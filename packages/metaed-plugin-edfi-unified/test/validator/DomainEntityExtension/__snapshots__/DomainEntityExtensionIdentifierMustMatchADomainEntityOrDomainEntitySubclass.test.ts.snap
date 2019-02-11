@@ -4,9 +4,9 @@ exports[`when domain entity extension extends an invalid identifier should have 
 
 exports[`when domain entity extension extends an invalid identifier should have validation failures() 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 11,
-  "tokenText": "Domain Entity",
+  "tokenText": "EdFi",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when domain entity extension specifies wrong namespace should have vali
 
 exports[`when domain entity extension specifies wrong namespace should have validation failures() 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 11,
-  "tokenText": "Domain Entity",
+  "tokenText": "Extension",
 }
 `;

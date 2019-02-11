@@ -43,7 +43,6 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
     if (this.currentSharedSimple === NoSharedSimple) return;
 
     if (this.currentSharedSimple.metaEdName) {
-      // $FlowIgnore - allowing currentSharedSimple.type to specify the entityRepository Map property
       const currentSharedSimpleRepository: Map<string, SharedSimple> = this.currentNamespace.entity[
         this.currentSharedSimple.type
       ];
@@ -54,7 +53,7 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
           message: `${this.currentSharedSimple.typeHumanizedName} named ${
             this.currentSharedSimple.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: this.currentSharedSimple.sourceMap.type,
+          sourceMap: this.currentSharedSimple.sourceMap.metaEdName,
           fileMap: null,
         });
         const duplicateEntity: SharedSimple | undefined = currentSharedSimpleRepository.get(
@@ -67,7 +66,7 @@ export class SharedSimpleBuilder extends MetaEdGrammarListener {
             message: `${duplicateEntity.typeHumanizedName} named ${
               duplicateEntity.metaEdName
             } is a duplicate declaration of that name.`,
-            sourceMap: duplicateEntity.sourceMap.type,
+            sourceMap: duplicateEntity.sourceMap.metaEdName,
             fileMap: null,
           });
         }

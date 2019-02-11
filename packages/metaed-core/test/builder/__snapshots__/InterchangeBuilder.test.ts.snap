@@ -4,9 +4,9 @@ exports[`when building duplicate interchange extensions should have validation f
 
 exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 5,
-  "tokenText": "Interchange",
+  "tokenText": "InterchangeName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when building duplicate interchange extensions should have validation f
 
 exports[`when building duplicate interchange extensions should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 2,
-  "tokenText": "Interchange",
+  "tokenText": "InterchangeName",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when building duplicate interchanges should have validation failures fo
 
 exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 1 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 11,
-  "tokenText": "Interchange",
+  "tokenText": "InterchangeName",
 }
 `;
 
@@ -34,9 +34,9 @@ exports[`when building duplicate interchanges should have validation failures fo
 
 exports[`when building duplicate interchanges should have validation failures for each entity: when building duplicate interchanges should have validation failures for each entity -> Interchange 2 sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 2,
-  "tokenText": "Interchange",
+  "tokenText": "InterchangeName",
 }
 `;
 

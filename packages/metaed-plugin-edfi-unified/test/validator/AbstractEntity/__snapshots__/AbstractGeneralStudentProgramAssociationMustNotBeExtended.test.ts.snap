@@ -7,9 +7,9 @@ Array [
     "fileMap": null,
     "message": "Abstract Association GeneralStudentProgramAssociation additions is not valid.  Abstract entities cannot be extended.",
     "sourceMap": Object {
-      "column": 2,
+      "column": 14,
       "line": 11,
-      "tokenText": "Association",
+      "tokenText": "GeneralStudentProgramAssociation",
     },
     "validatorName": "AbstractGeneralStudentProgramAssociationMustNotBeExtended",
   },

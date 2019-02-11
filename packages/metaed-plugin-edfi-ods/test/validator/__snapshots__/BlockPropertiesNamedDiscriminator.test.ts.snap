@@ -7,9 +7,9 @@ Array [
     "fileMap": null,
     "message": "The ODS does not allow properties named 'Discriminator'.  ODS generation will likely fail.",
     "sourceMap": Object {
-      "column": 4,
+      "column": 11,
       "line": 5,
-      "tokenText": "string",
+      "tokenText": "Discriminator",
     },
     "validatorName": "BlockPropertiesNamedDiscriminator",
   },

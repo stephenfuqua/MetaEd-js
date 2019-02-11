@@ -4,9 +4,9 @@ exports[`when common property has invalid identifier of common in dependency nam
 
 exports[`when common property has invalid identifier of common in dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 15,
-  "tokenText": "common",
+  "tokenText": "NotValid",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when common property has invalid identifier should have validation fail
 
 exports[`when common property has invalid identifier should have validation failure for property: when common property has invalid identifier should have validation failures for each property -> sourceMap 1`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 13,
-  "tokenText": "common",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when common property refers to common in non-dependency namespace shoul
 
 exports[`when common property refers to common in non-dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 14,
-  "tokenText": "common",
+  "tokenText": "CommonEntity",
 }
 `;

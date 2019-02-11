@@ -27,6 +27,7 @@ import { validate as commonPropertyMustNotContainIdentity } from './validator/Co
 import { validate as commonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension } from './validator/CommonProperty/CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension';
 import { validate as commonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality } from './validator/CommonProperty/CommonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality';
 import { validate as mostEntitiesCannotHaveSameName } from './validator/CrossEntity/MostEntitiesCannotHaveSameName';
+import { validate as propertiesMustReferToValidNamespace } from './validator/CrossProperty/PropertiesMustReferToValidNamespace';
 
 import { validate as decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/DecimalProperty/DecimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits';
 import { validate as decimalPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/DecimalProperty/DecimalPropertyMinValueMustNotBeGreaterThanMaxValue';
@@ -95,6 +96,7 @@ import { validate as interchangeExtensionMustNotRedeclareIdentityName } from './
 import { validate as mergePropertyAndTargetPropertyMustMatch } from './validator/MergePartOfReference/MergePropertyAndTargetPropertyMustMatch';
 import { validate as mergePropertyPathMustExist } from './validator/MergePartOfReference/MergePropertyPathMustExist';
 import { validate as mergeStatementMustStartMergePathWithPropertyName } from './validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
+import { validate as namespacesNamesMustNotHaveOnlyDifferentCasing } from './validator/Namespace/NamespacesNamesMustNotHaveOnlyDifferentCasing';
 import { validate as targetPropertyPathMustExist } from './validator/MergePartOfReference/TargetPropertyPathMustExist';
 
 /*
@@ -193,6 +195,7 @@ function validatorList(): Array<Validator> {
     commonPropertyWithExtensionOverrideRestrictedToDomainEntityAndAssociationExtensionsAndMaintainsCardinality,
 
     mostEntitiesCannotHaveSameName,
+    propertiesMustReferToValidNamespace,
 
     decimalPropertyDecimalPlacesMustNotBeGreaterThanTotalDigits,
     decimalPropertyMinValueMustNotBeGreaterThanMaxValue,
@@ -271,6 +274,8 @@ function validatorList(): Array<Validator> {
     // metaEdIdIsRequiredForInterchangeItems,
     // metaEdIdIsRequiredForProperties,
     mustNotDuplicateMetaEdId,
+
+    namespacesNamesMustNotHaveOnlyDifferentCasing,
 
     sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits,
     sharedDecimalMinValueMustNotBeGreaterThanMaxValue,

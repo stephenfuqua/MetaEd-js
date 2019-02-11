@@ -4,9 +4,9 @@ exports[`when common extension has duplicate common property should have validat
 
 exports[`when common extension has duplicate common property should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 12,
-  "tokenText": "common",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when common extension has duplicate property name should have validatio
 
 exports[`when common extension has duplicate property name should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 12,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName",
 }
 `;
 
@@ -24,9 +24,9 @@ exports[`when common extension has multiple duplicates should have validation fa
 
 exports[`when common extension has multiple duplicates should have validation failures() 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 16,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName1",
 }
 `;
 
@@ -34,8 +34,8 @@ exports[`when common extension has multiple duplicates should have validation fa
 
 exports[`when common extension has multiple duplicates should have validation failures() 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 20,
-  "tokenText": "bool",
+  "tokenText": "DuplicatePropertyName2",
 }
 `;

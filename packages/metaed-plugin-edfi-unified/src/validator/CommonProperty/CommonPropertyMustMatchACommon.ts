@@ -19,7 +19,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${
           property.referencedNamespaceName
         }.`,
-        sourceMap: property.sourceMap.type,
+        sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });
     }

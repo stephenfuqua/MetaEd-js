@@ -50,14 +50,14 @@ function generateValidationErrorsForDuplicates(
           validatorName: 'SimplePropertiesCannotReuseEntitySharedTypeNames',
           category: 'error',
           message: `${entity.typeHumanizedName} named ${entity.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: entity.sourceMap.type,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         },
         {
           validatorName: 'SimplePropertiesCannotReuseEntitySharedTypeNames',
           category: 'error',
           message: `${property.typeHumanizedName} named ${property.metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: property.sourceMap.type,
+          sourceMap: property.sourceMap.metaEdName,
           fileMap: null,
         },
       );

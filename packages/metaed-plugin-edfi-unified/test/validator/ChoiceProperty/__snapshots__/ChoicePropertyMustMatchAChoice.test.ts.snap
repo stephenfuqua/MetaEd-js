@@ -4,9 +4,9 @@ exports[`when choice property has invalid identifier in dependency namespace sho
 
 exports[`when choice property has invalid identifier in dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 15,
-  "tokenText": "choice",
+  "tokenText": "EntityName",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when choice property has invalid identifier should have validation fail
 
 exports[`when choice property has invalid identifier should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 11,
   "line": 13,
-  "tokenText": "choice",
+  "tokenText": "EntityName",
 }
 `;

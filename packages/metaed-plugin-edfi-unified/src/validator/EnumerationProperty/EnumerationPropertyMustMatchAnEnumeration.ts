@@ -17,7 +17,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         validatorName: 'EnumerationPropertyMustMatchAEnumeration',
         category: 'error',
         message: `Enumeration property ${property.metaEdName} does not match any declared enumeration.`,
-        sourceMap: property.sourceMap.type,
+        sourceMap: property.sourceMap.metaEdName,
         fileMap: null,
       });
     }

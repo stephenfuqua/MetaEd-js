@@ -6,7 +6,7 @@ function getFailure(domainItem: DomainItem, name: string, failureMessage: string
     validatorName: name,
     category: 'error',
     message: failureMessage,
-    sourceMap: domainItem.sourceMap.type,
+    sourceMap: domainItem.sourceMap.metaEdName,
     fileMap: null,
   };
 }

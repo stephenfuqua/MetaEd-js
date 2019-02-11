@@ -8,7 +8,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   metaEd.namespace.forEach((namespace: Namespace) => {
     failures.push(
       ...generateValidationErrorsForDuplicates(
-        getEntitiesOfTypeForNamespaces([namespace, ...namespace.dependencies], 'domainEntityExtension'),
+        getEntitiesOfTypeForNamespaces([namespace], 'domainEntityExtension'),
         'DomainEntityExtensionNamesMustBeUnique',
       ),
     );

@@ -78,8 +78,8 @@ describe('when building domain entity with non-duplicate decimal properties in e
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const metaEdId = '123';
   const documentation = 'doc';
   const totalDigits = '10';
@@ -128,9 +128,9 @@ describe('when building domain entity with non-duplicate decimal properties in e
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.decimal[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.decimal[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.decimal[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.decimal[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.decimal[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.decimal[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -186,8 +186,8 @@ describe('when building domain entity with non-duplicate integer properties in e
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const metaEdId = '123';
   const documentation = 'doc';
   const minValue = '2';
@@ -212,9 +212,9 @@ describe('when building domain entity with non-duplicate integer properties in e
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.integer[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.integer[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.integer[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.integer[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.integer[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.integer[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -270,8 +270,8 @@ describe('when building domain entity with non-duplicate string properties in ex
   const namespaceName = 'Namespace';
   const projectExtension = 'ProjectExtension';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const metaEdId = '123';
   const documentation = 'doc';
   const minLength = '2';
@@ -296,9 +296,9 @@ describe('when building domain entity with non-duplicate string properties in ex
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.string[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.string[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.string[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.string[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.string[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.string[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -349,8 +349,8 @@ describe('when building entities with non-duplicate boolean properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -372,9 +372,9 @@ describe('when building entities with non-duplicate boolean properties', () => {
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.boolean[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.boolean[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.boolean[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.boolean[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.boolean[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.boolean[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -425,8 +425,8 @@ describe('when building entities with non-duplicate currency properties', () => 
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -448,9 +448,9 @@ describe('when building entities with non-duplicate currency properties', () => 
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.currency[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.currency[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.currency[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.currency[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.currency[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.currency[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -501,8 +501,8 @@ describe('when building entities with non-duplicate date properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -524,9 +524,9 @@ describe('when building entities with non-duplicate date properties', () => {
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.date[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.date[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.date[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.date[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.date[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.date[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -577,8 +577,8 @@ describe('when building entities with non-duplicate duration properties', () => 
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -600,9 +600,9 @@ describe('when building entities with non-duplicate duration properties', () => 
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.duration[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.duration[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.duration[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.duration[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.duration[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.duration[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -653,8 +653,8 @@ describe('when building entities with non-duplicate enumeration properties', () 
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -676,9 +676,9 @@ describe('when building entities with non-duplicate enumeration properties', () 
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.enumeration[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.enumeration[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.enumeration[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.enumeration[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.enumeration[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.enumeration[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -729,8 +729,8 @@ describe('when building entities with non-duplicate common properties', () => {
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -752,9 +752,9 @@ describe('when building entities with non-duplicate common properties', () => {
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.common[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.common[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -806,8 +806,8 @@ describe('when building entities with an association property that non-duplicate
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -830,9 +830,9 @@ describe('when building entities with an association property that non-duplicate
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.association[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -884,8 +884,8 @@ describe('when building entities with a short property that non-duplicates name 
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -908,9 +908,9 @@ describe('when building entities with a short property that non-duplicates name 
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.short[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.short[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.short[0].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -962,8 +962,8 @@ describe('when building entities with an shared decimal property that non-duplic
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -986,10 +986,10 @@ describe('when building entities with an shared decimal property that non-duplic
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.sharedDecimal[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.sharedDecimal[0].metaEdName).toBe('PropertyName');
-    expect(metaEd.propertyIndex.sharedDecimal[0].referencedType).toBe('PropertyName');
+    expect(metaEd.propertyIndex.sharedDecimal[0].metaEdName).toBe('PropertyName2');
+    expect(metaEd.propertyIndex.sharedDecimal[0].referencedType).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1002,8 +1002,8 @@ describe('when building entities with renamed shared decimal property that non-d
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1026,10 +1026,10 @@ describe('when building entities with renamed shared decimal property that non-d
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.sharedDecimal[0].referencedNamespaceName).toBe('Abc');
     expect(metaEd.propertyIndex.sharedDecimal[0].metaEdName).toBe('RenamedName');
-    expect(metaEd.propertyIndex.sharedDecimal[0].referencedType).toBe('PropertyName');
+    expect(metaEd.propertyIndex.sharedDecimal[0].referencedType).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1081,8 +1081,8 @@ describe('when building entities with a time property that non-duplicates name o
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1105,9 +1105,9 @@ describe('when building entities with a time property that non-duplicates name o
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.time[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.time[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.time[0].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1159,8 +1159,8 @@ describe('when building entities with a datetime property that non-duplicates na
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1183,9 +1183,9 @@ describe('when building entities with a datetime property that non-duplicates na
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.datetime[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.datetime[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.datetime[0].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1237,8 +1237,8 @@ describe('when building entities with a year property that non-duplicates name o
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1261,9 +1261,9 @@ describe('when building entities with a year property that non-duplicates name o
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.year[0].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.year[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.year[0].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1306,8 +1306,8 @@ describe('when building entities with two association properties non-duplicate p
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1329,9 +1329,9 @@ describe('when building entities with two association properties non-duplicate p
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.association[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.association[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1382,8 +1382,8 @@ describe('when building entities with two association properties with non-duplic
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1405,9 +1405,9 @@ describe('when building entities with two association properties with non-duplic
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.association[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.association[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1460,8 +1460,8 @@ describe('when building entities with two association properties with non-duplic
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Abc.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1485,9 +1485,9 @@ describe('when building entities with two association properties with non-duplic
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.association[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName1');
     expect(metaEd.propertyIndex.association[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
@@ -1540,8 +1540,8 @@ describe('when building entities with two association properties with non-duplic
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName1 = 'Xyz.PropertyName';
-  const propertyName2 = 'Abc.PropertyName';
+  const propertyName1 = 'Xyz.PropertyName1';
+  const propertyName2 = 'Xyz.PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1565,12 +1565,45 @@ describe('when building entities with two association properties with non-duplic
 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.association[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName');
-    expect(metaEd.propertyIndex.association[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName');
+    expect(metaEd.propertyIndex.association[0].metaEdName).toBe('PropertyName1');
+    expect(metaEd.propertyIndex.association[1].referencedNamespaceName).toBe('Xyz');
+    expect(metaEd.propertyIndex.association[1].metaEdName).toBe('PropertyName2');
   });
 
   it('should have no validation failures', () => {
     expect(validationFailures).toHaveLength(0);
+  });
+});
+
+describe('when building entities with two association properties with non-duplicate namespaces, duplicate property name and duplicate contexts', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const validationFailures: Array<ValidationFailure> = [];
+  const namespaceName = 'Namespace';
+
+  const propertyName1 = 'Xyz.PropertyName';
+  const propertyName2 = 'Abc.PropertyName';
+  const documentation = 'doc';
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace(namespaceName)
+      .withStartDomainEntity('EntityName')
+      .withDocumentation(documentation)
+      .withAssociationProperty(propertyName1, documentation, true, false, false)
+      .withContext('context1')
+      .withAssociationProperty(propertyName2, documentation, true, false, false)
+      .withContext('context1')
+      .withEndDomainEntity()
+      .withEndNamespace()
+      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
+      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
+  });
+
+  it('should have validation failures for each entity', () => {
+    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[0].category).toBe('error');
+
+    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
+    expect(validationFailures[1].category).toBe('error');
   });
 });

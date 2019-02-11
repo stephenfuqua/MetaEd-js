@@ -14,7 +14,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         } will no longer be valid in extension namespace ${
           enumeration.namespace.projectExtension
         } in future releases.  Please convert to a Descriptor.`,
-        sourceMap: enumeration.sourceMap.type,
+        sourceMap: enumeration.sourceMap.metaEdName,
         fileMap: null,
       });
     });

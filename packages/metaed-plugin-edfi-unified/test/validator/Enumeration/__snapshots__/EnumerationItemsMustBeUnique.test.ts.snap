@@ -4,9 +4,9 @@ exports[`when enumeration items have duplicate short descriptions should have va
 
 exports[`when enumeration items have duplicate short descriptions should have validation failure 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 5,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription\\"",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when enumeration items have multiple duplicate short descriptions shoul
 
 exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 2`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 5,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription1\\"",
 }
 `;
 
@@ -24,8 +24,8 @@ exports[`when enumeration items have multiple duplicate short descriptions shoul
 
 exports[`when enumeration items have multiple duplicate short descriptions should have multiple validation failure 4`] = `
 Object {
-  "column": 4,
+  "column": 9,
   "line": 11,
-  "tokenText": "item",
+  "tokenText": "\\"ShortDescription2\\"",
 }
 `;

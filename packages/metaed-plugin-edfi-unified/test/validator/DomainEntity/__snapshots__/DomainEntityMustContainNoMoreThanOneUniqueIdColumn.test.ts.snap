@@ -4,8 +4,8 @@ exports[`when validating domain entity with two UniqueId fields should have vali
 
 exports[`when validating domain entity with two UniqueId fields should have validation failure 2`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 2,
-  "tokenText": "Domain Entity",
+  "tokenText": "EntityName",
 }
 `;

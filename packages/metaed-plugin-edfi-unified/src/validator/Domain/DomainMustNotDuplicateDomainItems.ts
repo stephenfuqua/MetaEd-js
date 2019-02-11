@@ -15,7 +15,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
             validatorName: 'DomainMustNotDuplicateDomainItems',
             category: 'error',
             message: `Domain Entity Domain Item '${domainItem.metaEdName}' has a duplicate Domain Item.`,
-            sourceMap: domainItem.sourceMap.type,
+            sourceMap: domainItem.sourceMap.metaEdName,
             fileMap: null,
           });
         }

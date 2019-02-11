@@ -4,8 +4,8 @@ exports[`when validating abstract entity with no identity fields should have val
 
 exports[`when validating abstract entity with no identity fields should have validation failure: when validating abstract entity with no identity fields -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 18,
   "line": 2,
-  "tokenText": "Abstract Entity",
+  "tokenText": "EntityName",
 }
 `;

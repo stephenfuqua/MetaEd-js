@@ -93,7 +93,7 @@ export async function scanForProjects(
 
   // core first, then extensions in alphabetical order
   const sortedProjects = R.sortWith([
-    R.descend(R.pathEq(['project', 'projectName'], 'Ed-Fi')),
+    R.descend(R.pathEq(['project', 'projectName'], 'EdFi')),
     R.ascend(R.path(['project', 'projectName'])),
   ])(projectNameOverrideProjects);
 

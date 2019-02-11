@@ -206,7 +206,7 @@ export function getEntityFromNamespaceChain(
 }
 
 /**
- * 
+ *
  */
 export function getEntityFromNamespace(
   entityName: string,

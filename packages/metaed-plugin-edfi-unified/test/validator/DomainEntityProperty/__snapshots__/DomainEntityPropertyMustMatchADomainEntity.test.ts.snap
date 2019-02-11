@@ -4,9 +4,9 @@ exports[`when domain entity property has invalid identifier of domain entity in 
 
 exports[`when domain entity property has invalid identifier of domain entity in dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 15,
-  "tokenText": "domain entity",
+  "tokenText": "NotValid",
 }
 `;
 
@@ -14,9 +14,9 @@ exports[`when domain entity property has invalid identifier should have validati
 
 exports[`when domain entity property has invalid identifier should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "UndefinedEntityName",
 }
 `;
 
@@ -26,17 +26,17 @@ exports[`when domain entity property on association has invalid identifier shoul
 
 exports[`when domain entity property on association has invalid identifier should have validation failure for property: sourceMap 0 1`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 5,
-  "tokenText": "domain entity",
+  "tokenText": "UndefinedEntityName1",
 }
 `;
 
 exports[`when domain entity property on association has invalid identifier should have validation failure for property: sourceMap 0 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 8,
-  "tokenText": "domain entity",
+  "tokenText": "UndefinedEntityName2",
 }
 `;
 
@@ -44,8 +44,8 @@ exports[`when domain entity property refers to domain entity in non-dependency n
 
 exports[`when domain entity property refers to domain entity in non-dependency namespace should have validation failure for property 2`] = `
 Object {
-  "column": 4,
+  "column": 18,
   "line": 14,
-  "tokenText": "domain entity",
+  "tokenText": "ExtensionEntityB",
 }
 `;

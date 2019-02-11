@@ -12,7 +12,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
           message: `Common additions '${entity.metaEdName}' is not valid in core namespace '${
             entity.namespace.namespaceName
           }`,
-          sourceMap: entity.sourceMap.type,
+          sourceMap: entity.sourceMap.metaEdName,
           fileMap: null,
         });
       });

@@ -18,7 +18,7 @@ export function failEnumerationItemRedeclarations(
       validatorName,
       category: 'error',
       message: `${entity.typeHumanizedName} ${entity.metaEdName} redeclares item ${duplicate}.`,
-      sourceMap: enumerationItem.sourceMap.type,
+      sourceMap: enumerationItem.sourceMap.shortDescription,
       fileMap: null,
     });
   });

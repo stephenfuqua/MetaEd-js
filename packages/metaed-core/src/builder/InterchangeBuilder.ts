@@ -100,7 +100,7 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
     if (this.currentInterchange === NoInterchange) return;
     if (this.currentInterchange.metaEdName) {
       const extensionMessageString = this.currentInterchange.type === 'interchangeExtension' ? 'Extension ' : '';
-      // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
+
       if (this.currentNamespace.entity[this.currentInterchange.type].has(this.currentInterchange.metaEdName)) {
         this.validationFailures.push({
           validatorName: 'InterchangeBuilder',
@@ -108,10 +108,10 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
           message: `Interchange ${extensionMessageString}named ${
             this.currentInterchange.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: this.currentInterchange.sourceMap.type,
+          sourceMap: this.currentInterchange.sourceMap.metaEdName,
           fileMap: null,
         });
-        // $FlowIgnore - we ensure the key is in the map above, and allow currentInterchange.type to specify the entityRepository Map property
+
         const duplicateEntity: Interchange = this.currentNamespace.entity[this.currentInterchange.type].get(
           this.currentInterchange.metaEdName,
         );
@@ -121,15 +121,12 @@ export class InterchangeBuilder extends MetaEdGrammarListener {
           message: `Interchange ${extensionMessageString}named ${
             duplicateEntity.metaEdName
           } is a duplicate declaration of that name.`,
-          sourceMap: duplicateEntity.sourceMap.type,
+          sourceMap: duplicateEntity.sourceMap.metaEdName,
           fileMap: null,
         });
       } else {
-        // $FlowIgnore - allow currentInterchange.type to specify the entityRepository Map property
         this.currentNamespace.entity[this.currentInterchange.type].set(
-          // $FlowIgnore
           this.currentInterchange.metaEdName,
-          // $FlowIgnore
           this.currentInterchange,
         );
       }

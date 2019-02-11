@@ -4,9 +4,9 @@ exports[`when an association subclass subclasses StudentProgramAssociation assoc
 
 exports[`when an association subclass subclasses StudentProgramAssociation association should have validation failures: when an association subclass subclasses StudentProgramAssociation association should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 11,
-  "tokenText": "Association",
+  "tokenText": "SubclassName",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when an association subclass subclasses a non-GeneralStudentProgramAsso
 
 exports[`when an association subclass subclasses a non-GeneralStudentProgramAssociation association should have validation failures: when a association subclass subclasses a non-GeneralStudentProgramAssociation association should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 11,
-  "tokenText": "Association",
+  "tokenText": "SubclassName",
 }
 `;

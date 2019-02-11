@@ -4,8 +4,8 @@ exports[`when validating enumeration exists in extension should have validation 
 
 exports[`when validating enumeration exists in extension should have validation failure 2`] = `
 Object {
-  "column": 2,
+  "column": 14,
   "line": 11,
-  "tokenText": "Enumeration",
+  "tokenText": "EntityName",
 }
 `;

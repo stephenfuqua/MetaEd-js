@@ -17,7 +17,7 @@ export function generateValidationErrorsForDuplicates(
           message: `${
             asTopLevelEntity(entity).typeHumanizedName
           } named ${metaEdName} is a duplicate declaration of that name.`,
-          sourceMap: asTopLevelEntity(entity).sourceMap.type,
+          sourceMap: asTopLevelEntity(entity).sourceMap.metaEdName,
           fileMap: null,
         });
       });

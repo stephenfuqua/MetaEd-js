@@ -1,5 +1,5 @@
 import { SemVer } from '../MetaEdEnvironment';
-import { lowercaseAndNumericOnly } from '../Utility';
+import { uppercaseThenAlphanumericOnly } from '../Utility';
 
 export type MetaEdProject = {
   namespaceName: string;
@@ -20,7 +20,8 @@ export const newMetaEdProject: () => MetaEdProject = () => ({
   projectExtension: '',
 });
 
-export const deriveNamespaceFromProjectName = (projectName: string): string | null => lowercaseAndNumericOnly(projectName);
+export const deriveNamespaceFromProjectName = (projectName: string): string | null =>
+  uppercaseThenAlphanumericOnly(projectName);
 
 export const isDataStandard = (project: MetaEdProject): boolean => project.namespaceName === 'EdFi';
 

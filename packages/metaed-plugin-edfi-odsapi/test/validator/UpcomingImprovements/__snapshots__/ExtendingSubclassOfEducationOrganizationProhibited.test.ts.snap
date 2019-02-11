@@ -4,9 +4,9 @@ exports[`when a domain entity extension extends a subclass of a subclass of educ
 
 exports[`when a domain entity extension extends a subclass of a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 25,
-  "tokenText": "Domain Entity",
+  "tokenText": "CoreSubclassName",
 }
 `;
 
@@ -14,8 +14,8 @@ exports[`when a domain entity extension extends a subclass of education organiza
 
 exports[`when a domain entity extension extends a subclass of education organization should have validation failures: when an extension domain entity subclass extends a core subclass of education organization should have validation failure -> sourceMap 1`] = `
 Object {
-  "column": 2,
+  "column": 16,
   "line": 18,
-  "tokenText": "Domain Entity",
+  "tokenText": "CoreSubclassName",
 }
 `;

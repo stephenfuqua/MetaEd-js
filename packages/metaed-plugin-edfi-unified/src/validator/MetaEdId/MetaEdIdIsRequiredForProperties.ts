@@ -12,7 +12,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       message: `${property.typeHumanizedName} ${property.metaEdName} on ${property.parentEntity.typeHumanizedName} ${
         property.parentEntity.metaEdName
       } is missing a MetaEdId value.`,
-      sourceMap: property.sourceMap.type,
+      sourceMap: property.sourceMap.metaEdName,
       fileMap: null,
     });
   });
