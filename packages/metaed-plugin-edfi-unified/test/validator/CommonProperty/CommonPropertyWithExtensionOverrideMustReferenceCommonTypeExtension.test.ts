@@ -26,10 +26,6 @@ describe('when validating common property has extension override of common type 
       .withBooleanProperty('PropertyName1', 'PropertyDocumentation', true, false)
       .withEndCommon()
 
-      .withStartCommonExtension(commonTypeName)
-      .withBooleanProperty('PropertyName3', 'PropertyDocumentation', true, false)
-      .withEndCommon()
-
       .withStartDomainEntity(entityName)
       .withDocumentation('EntityDocumentation')
       .withBooleanProperty('PropertyName2', 'PropertyDocumentation', true, false)
@@ -37,7 +33,11 @@ describe('when validating common property has extension override of common type 
       .withEndNamespace()
 
       .withBeginNamespace('Extension', 'EXTENSION')
-      .withStartDomainEntityExtension(entityName)
+      .withStartCommonExtension(commonTypeName)
+      .withBooleanProperty('PropertyName3', 'PropertyDocumentation', true, false)
+      .withEndCommon()
+
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withCommonExtensionOverrideProperty(`EdFi.${commonTypeName}`, 'PropertyDocumentation', true, true)
       .withEndDomainEntityExtension()
       .withEndNamespace()

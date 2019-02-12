@@ -8,7 +8,8 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     if (!property.isExtensionOverride) return;
     const referencedEntity: ModelBase | null = getEntityFromNamespaceChain(
       property.metaEdName,
-      property.referencedNamespaceName,
+      // implicitly we reference Common Extension declared in same namespace as property using it
+      property.namespace.namespaceName,
       property.namespace,
       'commonExtension',
     );
