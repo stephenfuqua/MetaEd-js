@@ -6,22 +6,23 @@ import {
   MetaEdEnvironment,
   PropertyIndex,
   ValidationFailure,
+  Namespace,
 } from 'metaed-core';
 import { groupByMetaEdName } from '../../shared/GroupByMetaEdName';
 
 type SimpleProperties = ShortProperty | DecimalProperty | IntegerProperty | StringProperty;
 
-function propertiesNeedingDuplicateChecking(properties: PropertyIndex): Array<SimpleProperties> {
+function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace: Namespace): Array<SimpleProperties> {
   const result: Array<SimpleProperties> = [];
 
-  result.push(...properties.string);
-  result.push(...properties.decimal);
-  result.push(...properties.integer);
-  result.push(...properties.short);
-  result.push(...properties.sharedString);
-  result.push(...properties.sharedDecimal);
-  result.push(...properties.sharedInteger);
-  result.push(...properties.sharedShort);
+  result.push(...properties.string.filter(property => property.namespace === namespace));
+  result.push(...properties.decimal.filter(property => property.namespace === namespace));
+  result.push(...properties.integer.filter(property => property.namespace === namespace));
+  result.push(...properties.short.filter(property => property.namespace === namespace));
+  result.push(...properties.sharedString.filter(property => property.namespace === namespace));
+  result.push(...properties.sharedDecimal.filter(property => property.namespace === namespace));
+  result.push(...properties.sharedInteger.filter(property => property.namespace === namespace));
+  result.push(...properties.sharedShort.filter(property => property.namespace === namespace));
   return result;
 }
 
@@ -47,7 +48,11 @@ function generateValidationErrorsForDuplicates(metaEdProperty: Array<SimplePrope
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  failures.push(...generateValidationErrorsForDuplicates(propertiesNeedingDuplicateChecking(metaEd.propertyIndex)));
+  metaEd.namespace.forEach(namespace => {
+    failures.push(
+      ...generateValidationErrorsForDuplicates(propertiesNeedingDuplicateChecking(metaEd.propertyIndex, namespace)),
+    );
+  });
 
   return failures;
 }

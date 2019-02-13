@@ -94,7 +94,6 @@ describe('when building shared integer with duplicate integer property in extens
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -105,19 +104,7 @@ describe('when building shared integer with duplicate integer property in extens
   });
 
   it('should have validation failures', () => {
-    expect(failures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(failures[0].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
-
-    expect(failures[1].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot();
-    expect(failures[1].sourceMap).toMatchSnapshot();
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -158,7 +145,6 @@ describe('when building shared decimal with duplicate decimal property in extens
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -169,19 +155,7 @@ describe('when building shared decimal with duplicate decimal property in extens
   });
 
   it('should have validation failures', () => {
-    expect(failures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(failures[0].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
-
-    expect(failures[1].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot();
-    expect(failures[1].sourceMap).toMatchSnapshot();
+    expect(failures).toHaveLength(0);
   });
 });
 
@@ -219,7 +193,6 @@ describe('when building shared string with duplicate string property in extensio
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -230,23 +203,11 @@ describe('when building shared string with duplicate string property in extensio
   });
 
   it('should have validation failures', () => {
-    expect(failures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(failures[0].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
-
-    expect(failures[1].validatorName).toBe('SimplePropertiesCannotReuseEntitySharedTypeNames');
-    expect(failures[1].category).toBe('error');
-    expect(failures[1].message).toMatchSnapshot();
-    expect(failures[1].sourceMap).toMatchSnapshot();
+    expect(failures).toHaveLength(0);
   });
 });
 
-describe('when building shared string with duplicate integer property in extension namespace reversed', () => {
+describe('when building shared string with duplicate integer property in core namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure> = [];
 
@@ -255,9 +216,6 @@ describe('when building shared string with duplicate integer property in extensi
   const minLength = '2';
   const maxLength = '100';
 
-  let coreNamespace: any = null;
-  let extensionNamespace: any = null;
-
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('EdFi')
@@ -265,9 +223,7 @@ describe('when building shared string with duplicate integer property in extensi
       .withDocumentation(documentation)
       .withStringRestrictions(minLength, maxLength)
       .withEndSharedString()
-      .withEndNamespace()
 
-      .withBeginNamespace('Extension', 'Extension')
       .withStartDomainEntity('DomainEntity', '1')
       .withDocumentation(documentation)
       .withIntegerProperty(entityName, documentation, true, false)
@@ -277,11 +233,6 @@ describe('when building shared string with duplicate integer property in extensi
       .sendToListener(new NamespaceBuilder(metaEd, []))
       .sendToListener(new DomainEntityBuilder(metaEd, []))
       .sendToListener(new SharedStringBuilder(metaEd, []));
-
-    coreNamespace = metaEd.namespace.get('EdFi');
-    extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
-    extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
   });

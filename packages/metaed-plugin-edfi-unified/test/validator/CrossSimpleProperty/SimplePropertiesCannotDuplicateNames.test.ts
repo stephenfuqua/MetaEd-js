@@ -60,6 +60,50 @@ describe('when two integer properties in different DEs have the same name', () =
   });
 });
 
+describe('when two integer properties in different DEs in different namespaces have the same name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const propertyName = 'PropertyName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('DomainEntityName1')
+      .withDocumentation('doc')
+      .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomainEntity('DomainEntityName2')
+      .withDocumentation('doc')
+      .withIntegerProperty(propertyName, 'doc', true, false, '5', '2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new IntegerTypeBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities, and one integer property', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntity.size).toBe(1);
+    expect(metaEd.propertyIndex.integer.length).toBe(2);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
 describe('when an integer property and a decimal property in different DEs have the same name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
@@ -293,6 +337,7 @@ describe('when a decimal property and a shared decimal property in different DEs
     expect(failures).toHaveLength(2);
   });
 });
+
 describe('when a string property and a shared string property in different DEs have the same name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const propertyName = 'PropertyName';
@@ -330,6 +375,52 @@ describe('when a string property and a shared string property in different DEs h
 
   it('should have validation failures for each entity', () => {
     expect(failures).toHaveLength(2);
+  });
+});
+
+describe('when a string property and a shared string property in different DEs in different namespaces have the same name', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const propertyName = 'PropertyName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartDomainEntity('DomainEntityName1')
+      .withDocumentation('doc')
+      .withStringProperty(propertyName, 'doc', true, false, '5', '2')
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension')
+      .withStartDomainEntity('DomainEntityName2')
+      .withDocumentation('doc')
+      .withSharedStringProperty(propertyName, null, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new StringTypeBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+
+    failures = validate(metaEd);
+  });
+
+  it('should build two domain entities, one shared string, one string property', () => {
+    expect(coreNamespace.entity.domainEntity.size).toBe(1);
+    expect(extensionNamespace.entity.domainEntity.size).toBe(1);
+    expect(metaEd.propertyIndex.string.length).toBe(1);
+    expect(metaEd.propertyIndex.sharedString.length).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
   });
 });
 

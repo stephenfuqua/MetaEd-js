@@ -2,35 +2,27 @@ import {
   EntityProperty,
   SimpleProperty,
   MetaEdEnvironment,
-  EntityRepository,
   PropertyIndex,
   SharedSimple,
   ValidationFailure,
   Namespace,
 } from 'metaed-core';
 
-function sharedSimpleNeedingDuplicateChecking(namespaces: Array<Namespace>): Array<SharedSimple> {
+function sharedSimpleNeedingDuplicateChecking(namespace: Namespace): Array<SharedSimple> {
   const result: Array<SharedSimple> = [];
-
-  const entityRepositories: Array<EntityRepository> = namespaces.map((n: Namespace) => n.entity);
-  entityRepositories.forEach((entityRepository: EntityRepository) => {
-    result.push(...entityRepository.sharedString.values());
-    result.push(...entityRepository.sharedDecimal.values());
-    result.push(...entityRepository.sharedInteger.values());
-  });
+  result.push(...namespace.entity.sharedString.values());
+  result.push(...namespace.entity.sharedDecimal.values());
+  result.push(...namespace.entity.sharedInteger.values());
   return result;
 }
 
-function propertiesNeedingDuplicateChecking(
-  properties: PropertyIndex,
-  namespaces: Array<Namespace>,
-): Map<string, SimpleProperty> {
+function propertiesNeedingDuplicateChecking(properties: PropertyIndex, namespace: Namespace): Map<string, SimpleProperty> {
   const result: Array<SimpleProperty> = [];
 
-  result.push(...properties.string.filter((property: EntityProperty) => namespaces.includes(property.namespace)));
-  result.push(...properties.decimal.filter((property: EntityProperty) => namespaces.includes(property.namespace)));
-  result.push(...properties.integer.filter((property: EntityProperty) => namespaces.includes(property.namespace)));
-  result.push(...properties.short.filter((property: EntityProperty) => namespaces.includes(property.namespace)));
+  result.push(...properties.string.filter((property: EntityProperty) => namespace === property.namespace));
+  result.push(...properties.decimal.filter((property: EntityProperty) => namespace === property.namespace));
+  result.push(...properties.integer.filter((property: EntityProperty) => namespace === property.namespace));
+  result.push(...properties.short.filter((property: EntityProperty) => namespace === property.namespace));
 
   // @ts-ignore -- typescript not correctly typing map() operation as SimpleProperty => [string, SimpleProperty] tuples
   return new Map(result.map(i => [i.metaEdName, i]));
@@ -70,11 +62,10 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
   metaEd.namespace.forEach((namespace: Namespace) => {
-    const namespacesToSearch: Array<Namespace> = [namespace, ...namespace.dependencies];
     failures.push(
       ...generateValidationErrorsForDuplicates(
-        propertiesNeedingDuplicateChecking(metaEd.propertyIndex, namespacesToSearch),
-        sharedSimpleNeedingDuplicateChecking(namespacesToSearch),
+        propertiesNeedingDuplicateChecking(metaEd.propertyIndex, namespace),
+        sharedSimpleNeedingDuplicateChecking(namespace),
       ),
     );
   });
