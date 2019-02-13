@@ -89,7 +89,7 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     this.enteringIntegerTypeName(context);
   }
 
-  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
+  enterSimplePropertyName(context: MetaEdGrammar.SimplePropertyNameContext) {
     if (this.currentIntegerType === NoIntegerType) return;
     if (context.exception || context.localPropertyName() == null) return;
     const localPropertyNameContext = context.localPropertyName();

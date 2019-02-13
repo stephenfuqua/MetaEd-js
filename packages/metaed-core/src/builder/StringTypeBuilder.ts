@@ -74,7 +74,7 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     this.currentStringType.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
+  enterSimplePropertyName(context: MetaEdGrammar.SimplePropertyNameContext) {
     if (this.currentStringType === NoStringType) return;
     if (context.exception || context.localPropertyName() == null) return;
     const localPropertyNameContext = context.localPropertyName();

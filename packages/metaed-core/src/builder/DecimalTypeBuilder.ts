@@ -74,7 +74,7 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     this.currentDecimalType.sourceMap.metaEdName = sourceMapFrom(context);
   }
 
-  enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
+  enterSimplePropertyName(context: MetaEdGrammar.SimplePropertyNameContext) {
     if (this.currentDecimalType === NoDecimalType) return;
     if (context.exception || context.localPropertyName() == null) return;
     const localPropertyNameContext = context.localPropertyName();

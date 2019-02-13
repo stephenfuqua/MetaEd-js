@@ -513,16 +513,8 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterPropertyName(context: MetaEdGrammar.PropertyNameContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception || context.localPropertyName() == null) return;
-    const localPropertyNameContext = context.localPropertyName();
-    if (
-      localPropertyNameContext.exception ||
-      localPropertyNameContext.ID() == null ||
-      localPropertyNameContext.ID().exception ||
-      isErrorText(localPropertyNameContext.ID().getText())
-    )
-      return;
-    this.currentProperty.metaEdName = localPropertyNameContext.ID().getText();
-    this.currentProperty.sourceMap.metaEdName = sourceMapFrom(localPropertyNameContext);
+
+    this.enteringLocalPropertyName(context.localPropertyName());
 
     // School year enumerations are a very special case of enumeration - override the type
     if (this.currentProperty.metaEdName === 'SchoolYear' && this.currentProperty.type === 'enumeration') {
@@ -543,6 +535,25 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       this.currentProperty.referencedNamespaceName = propertyNamespaceContext.ID().getText();
       this.currentProperty.sourceMap.referencedNamespaceName = sourceMapFrom(propertyNamespaceContext);
     }
+  }
+
+  enterSimplePropertyName(context: MetaEdGrammar.SimplePropertyNameContext) {
+    if (this.currentProperty === NoEntityProperty) return;
+    if (context.exception || context.localPropertyName() == null) return;
+
+    this.enteringLocalPropertyName(context.localPropertyName());
+  }
+
+  enteringLocalPropertyName(localPropertyNameContext: MetaEdGrammar.LocalPropertyNameContext) {
+    if (
+      localPropertyNameContext.exception ||
+      localPropertyNameContext.ID() == null ||
+      localPropertyNameContext.ID().exception ||
+      isErrorText(localPropertyNameContext.ID().getText())
+    )
+      return;
+    this.currentProperty.metaEdName = localPropertyNameContext.ID().getText();
+    this.currentProperty.sourceMap.metaEdName = sourceMapFrom(localPropertyNameContext);
   }
 
   enterSharedPropertyName(context: MetaEdGrammar.SharedPropertyNameContext) {

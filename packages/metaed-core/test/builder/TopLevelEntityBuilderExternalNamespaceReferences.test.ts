@@ -6,610 +6,6 @@ import { newMetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { MetaEdEnvironment } from '../../src/MetaEdEnvironment';
 import { ValidationFailure } from '../../src/validator/ValidationFailure';
 
-describe('when building domain entity with duplicate decimal properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName = 'Xyz.PropertyName';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const totalDigits = '10';
-  const decimalPlaces = '3';
-  const minValue = '2';
-  const maxValue = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withDecimalProperty(
-        propertyName,
-        documentation,
-        true,
-        false,
-        totalDigits,
-        decimalPlaces,
-        minValue,
-        maxValue,
-        null,
-        metaEdId,
-      )
-      .withDecimalProperty(
-        propertyName,
-        documentation,
-        true,
-        false,
-        totalDigits,
-        decimalPlaces,
-        minValue,
-        maxValue,
-        null,
-        metaEdId,
-      )
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one decimal', () => {
-    expect(metaEd.propertyIndex.decimal.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building domain entity with non-duplicate decimal properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const totalDigits = '10';
-  const decimalPlaces = '3';
-  const minValue = '2';
-  const maxValue = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withDecimalProperty(
-        propertyName1,
-        documentation,
-        true,
-        false,
-        totalDigits,
-        decimalPlaces,
-        minValue,
-        maxValue,
-        null,
-        metaEdId,
-      )
-      .withDecimalProperty(
-        propertyName2,
-        documentation,
-        true,
-        false,
-        totalDigits,
-        decimalPlaces,
-        minValue,
-        maxValue,
-        null,
-        metaEdId,
-      )
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two decimals', () => {
-    expect(metaEd.propertyIndex.decimal.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.decimal[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.decimal[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.decimal[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.decimal[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building domain entity with duplicate integer properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName = 'Xyz.PropertyName';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const minValue = '2';
-  const maxValue = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withIntegerProperty(propertyName, documentation, true, false, maxValue, minValue, null, metaEdId)
-      .withIntegerProperty(propertyName, documentation, true, false, maxValue, minValue, null, metaEdId)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one integer', () => {
-    expect(metaEd.propertyIndex.integer.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building domain entity with non-duplicate integer properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const minValue = '2';
-  const maxValue = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withIntegerProperty(propertyName1, documentation, true, false, maxValue, minValue, null, metaEdId)
-      .withIntegerProperty(propertyName2, documentation, true, false, maxValue, minValue, null, metaEdId)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two integers', () => {
-    expect(metaEd.propertyIndex.integer.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.integer[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.integer[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.integer[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.integer[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building domain entity with duplicate string properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName = 'Xyz.PropertyName';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const minLength = '2';
-  const maxLength = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withStringProperty(propertyName, documentation, true, false, maxLength, minLength, null, metaEdId)
-      .withStringProperty(propertyName, documentation, true, false, maxLength, minLength, null, metaEdId)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one string', () => {
-    expect(metaEd.propertyIndex.string.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building domain entity with non-duplicate string properties in extension namespace', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-  const projectExtension = 'ProjectExtension';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const metaEdId = '123';
-  const documentation = 'doc';
-  const minLength = '2';
-  const maxLength = '100';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName, projectExtension)
-      .withStartDomainEntity('DomainEntity', '1')
-      .withDocumentation(documentation)
-      .withStringProperty(propertyName1, documentation, true, false, maxLength, minLength, null, metaEdId)
-      .withStringProperty(propertyName2, documentation, true, false, maxLength, minLength, null, metaEdId)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two strings', () => {
-    expect(metaEd.propertyIndex.string.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.string[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.string[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.string[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.string[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building entities with duplicate boolean properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName = 'Xyz.PropertyName';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withBooleanProperty(propertyName, documentation, true, false)
-      .withBooleanProperty(propertyName, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one boolean', () => {
-    expect(metaEd.propertyIndex.boolean.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building entities with non-duplicate boolean properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withBooleanProperty(propertyName1, documentation, true, false)
-      .withBooleanProperty(propertyName2, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two booleans', () => {
-    expect(metaEd.propertyIndex.boolean.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.boolean[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.boolean[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.boolean[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.boolean[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building entities with duplicate currency properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName = 'Xyz.PropertyName';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withCurrencyProperty(propertyName, documentation, true, false)
-      .withCurrencyProperty(propertyName, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one currency', () => {
-    expect(metaEd.propertyIndex.currency.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building entities with non-duplicate currency properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withCurrencyProperty(propertyName1, documentation, true, false)
-      .withCurrencyProperty(propertyName2, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two currencies', () => {
-    expect(metaEd.propertyIndex.currency.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.currency[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.currency[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.currency[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.currency[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building entities with duplicate date properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName = 'Xyz.PropertyName';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withDateProperty(propertyName, documentation, true, false)
-      .withDateProperty(propertyName, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one date', () => {
-    expect(metaEd.propertyIndex.date.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building entities with non-duplicate date properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withDateProperty(propertyName1, documentation, true, false)
-      .withDateProperty(propertyName2, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two dates', () => {
-    expect(metaEd.propertyIndex.date.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.date[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.date[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.date[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.date[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
-describe('when building entities with duplicate duration properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName = 'PropertyName';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withDurationProperty(propertyName, documentation, true, false)
-      .withDurationProperty(propertyName, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build one duration', () => {
-    expect(metaEd.propertyIndex.duration.length).toBe(1);
-  });
-
-  it('should have validation failures', () => {
-    expect(validationFailures).toHaveLength(2);
-  });
-
-  it('should have validation failures for each entity', () => {
-    expect(validationFailures[0].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[0].category).toBe('error');
-
-    expect(validationFailures[1].validatorName).toBe('TopLevelEntityBuilder');
-    expect(validationFailures[1].category).toBe('error');
-  });
-});
-
-describe('when building entities with non-duplicate duration properties', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const validationFailures: Array<ValidationFailure> = [];
-  const namespaceName = 'Namespace';
-
-  const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
-  const documentation = 'doc';
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace(namespaceName)
-      .withStartDomainEntity('EntityName')
-      .withDocumentation(documentation)
-      .withDurationProperty(propertyName1, documentation, true, false)
-      .withDurationProperty(propertyName2, documentation, true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-      .sendToListener(new NamespaceBuilder(metaEd, validationFailures))
-      .sendToListener(new DomainEntityBuilder(metaEd, validationFailures));
-  });
-
-  it('should build two durations', () => {
-    expect(metaEd.propertyIndex.duration.length).toBe(2);
-  });
-
-  it('should have correct reference namespace and metaed name', () => {
-    expect(metaEd.propertyIndex.duration[0].referencedNamespaceName).toBe('Xyz');
-    expect(metaEd.propertyIndex.duration[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.duration[1].referencedNamespaceName).toBe('Abc');
-    expect(metaEd.propertyIndex.duration[1].metaEdName).toBe('PropertyName2');
-  });
-
-  it('should have no validation failures', () => {
-    expect(validationFailures).toHaveLength(0);
-  });
-});
-
 describe('when building entities with duplicate enumeration properties', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const validationFailures: Array<ValidationFailure> = [];
@@ -845,7 +241,7 @@ describe('when building entities with a short property that duplicates name of a
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName = 'Xyz.PropertyName';
+  const propertyName = 'PropertyName';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -853,7 +249,7 @@ describe('when building entities with a short property that duplicates name of a
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity('EntityName')
       .withDocumentation(documentation)
-      .withCommonProperty(propertyName, documentation, true, false)
+      .withCommonProperty(`Xyz.${propertyName}`, documentation, true, false)
       .withShortProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -885,7 +281,7 @@ describe('when building entities with a short property that non-duplicates name 
   const namespaceName = 'Namespace';
 
   const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
+  const propertyName2 = 'PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -909,7 +305,7 @@ describe('when building entities with a short property that non-duplicates name 
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
     expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.short[0].referencedNamespaceName).toBe('Abc');
+    expect(metaEd.propertyIndex.short[0].referencedNamespaceName).toBe(namespaceName);
     expect(metaEd.propertyIndex.short[0].metaEdName).toBe('PropertyName2');
   });
 
@@ -1042,7 +438,7 @@ describe('when building entities with a time property that duplicates name of an
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName = 'Xyz.PropertyName';
+  const propertyName = 'PropertyName';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1050,7 +446,7 @@ describe('when building entities with a time property that duplicates name of an
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity('EntityName')
       .withDocumentation(documentation)
-      .withCommonProperty(propertyName, documentation, true, false)
+      .withCommonProperty(`Xyz.${propertyName}`, documentation, true, false)
       .withTimeProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -1082,7 +478,7 @@ describe('when building entities with a time property that non-duplicates name o
   const namespaceName = 'Namespace';
 
   const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
+  const propertyName2 = 'PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1106,7 +502,7 @@ describe('when building entities with a time property that non-duplicates name o
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
     expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.time[0].referencedNamespaceName).toBe('Abc');
+    expect(metaEd.propertyIndex.time[0].referencedNamespaceName).toBe(namespaceName);
     expect(metaEd.propertyIndex.time[0].metaEdName).toBe('PropertyName2');
   });
 
@@ -1120,7 +516,7 @@ describe('when building entities with a datetime property that duplicates name o
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName = 'Xyz.PropertyName';
+  const propertyName = 'PropertyName';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1128,7 +524,7 @@ describe('when building entities with a datetime property that duplicates name o
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity('EntityName')
       .withDocumentation(documentation)
-      .withCommonProperty(propertyName, documentation, true, false)
+      .withCommonProperty(`Xyz.${propertyName}`, documentation, true, false)
       .withDatetimeProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -1160,7 +556,7 @@ describe('when building entities with a datetime property that non-duplicates na
   const namespaceName = 'Namespace';
 
   const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
+  const propertyName2 = 'PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1184,7 +580,7 @@ describe('when building entities with a datetime property that non-duplicates na
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
     expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.datetime[0].referencedNamespaceName).toBe('Abc');
+    expect(metaEd.propertyIndex.datetime[0].referencedNamespaceName).toBe(namespaceName);
     expect(metaEd.propertyIndex.datetime[0].metaEdName).toBe('PropertyName2');
   });
 
@@ -1198,7 +594,7 @@ describe('when building entities with a year property that duplicates name of an
   const validationFailures: Array<ValidationFailure> = [];
   const namespaceName = 'Namespace';
 
-  const propertyName = 'Xyz.PropertyName';
+  const propertyName = 'PropertyName';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1206,7 +602,7 @@ describe('when building entities with a year property that duplicates name of an
       .withBeginNamespace(namespaceName)
       .withStartDomainEntity('EntityName')
       .withDocumentation(documentation)
-      .withCommonProperty(propertyName, documentation, true, false)
+      .withCommonProperty(`Xyz.${propertyName}`, documentation, true, false)
       .withYearProperty(propertyName, documentation, true, false)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -1238,7 +634,7 @@ describe('when building entities with a year property that non-duplicates name o
   const namespaceName = 'Namespace';
 
   const propertyName1 = 'Xyz.PropertyName1';
-  const propertyName2 = 'Abc.PropertyName2';
+  const propertyName2 = 'PropertyName2';
   const documentation = 'doc';
 
   beforeAll(() => {
@@ -1262,7 +658,7 @@ describe('when building entities with a year property that non-duplicates name o
   it('should have correct reference namespace and metaed name', () => {
     expect(metaEd.propertyIndex.common[0].referencedNamespaceName).toBe('Xyz');
     expect(metaEd.propertyIndex.common[0].metaEdName).toBe('PropertyName1');
-    expect(metaEd.propertyIndex.year[0].referencedNamespaceName).toBe('Abc');
+    expect(metaEd.propertyIndex.year[0].referencedNamespaceName).toBe(namespaceName);
     expect(metaEd.propertyIndex.year[0].metaEdName).toBe('PropertyName2');
   });
 

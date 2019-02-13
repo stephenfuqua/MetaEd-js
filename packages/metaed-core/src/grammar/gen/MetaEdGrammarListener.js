@@ -1190,6 +1190,15 @@ MetaEdGrammarListener.prototype.exitShortenToName = function(ctx) {
 };
 
 
+// Enter a parse tree produced by MetaEdGrammar#simplePropertyName.
+MetaEdGrammarListener.prototype.enterSimplePropertyName = function(ctx) {
+};
+
+// Exit a parse tree produced by MetaEdGrammar#simplePropertyName.
+MetaEdGrammarListener.prototype.exitSimplePropertyName = function(ctx) {
+};
+
+
 // Enter a parse tree produced by MetaEdGrammar#subdomainName.
 MetaEdGrammarListener.prototype.enterSubdomainName = function(ctx) {
 };

@@ -391,19 +391,19 @@ property
     | yearProperty
     ;
 
-booleanProperty : BOOLEAN propertyName metaEdId? propertyComponents;
+booleanProperty : BOOLEAN simplePropertyName metaEdId? propertyComponents;
 
-currencyProperty : CURRENCY propertyName metaEdId? propertyComponents;
+currencyProperty : CURRENCY simplePropertyName metaEdId? propertyComponents;
 
-dateProperty : DATE propertyName metaEdId? propertyComponents;
+dateProperty : DATE simplePropertyName metaEdId? propertyComponents;
 
-datetimeProperty : DATETIME propertyName metaEdId? propertyComponents;
+datetimeProperty : DATETIME simplePropertyName metaEdId? propertyComponents;
 
-decimalProperty : DECIMAL propertyName metaEdId? propertyComponents totalDigits decimalPlaces minValueDecimal? maxValueDecimal? ;
+decimalProperty : DECIMAL simplePropertyName metaEdId? propertyComponents totalDigits decimalPlaces minValueDecimal? maxValueDecimal? ;
 
 descriptorProperty : DESCRIPTOR_KEYWORD propertyName metaEdId? propertyComponents ;
 
-durationProperty :DURATION propertyName metaEdId? propertyComponents;
+durationProperty :DURATION simplePropertyName metaEdId? propertyComponents;
 
 enumerationProperty : ENUMERATION_KEYWORD propertyName metaEdId? propertyComponents ;
 
@@ -419,9 +419,9 @@ choiceProperty : CHOICE_KEYWORD propertyName metaEdId?
             propertyComponents
             mergePartOfReference* ;
 
-integerProperty : INTEGER propertyName metaEdId? propertyComponents minValue? maxValue? ;
+integerProperty : INTEGER simplePropertyName metaEdId? propertyComponents minValue? maxValue? ;
 
-percentProperty : PERCENT propertyName metaEdId? propertyComponents ;
+percentProperty : PERCENT simplePropertyName metaEdId? propertyComponents ;
 
 associationProperty : ASSOCIATION_KEYWORD propertyName metaEdId?
             propertyComponents
@@ -449,20 +449,20 @@ sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED sh
             propertyComponents
             mergePartOfReference* ;
 
-shortProperty : SHORT propertyName metaEdId?
+shortProperty : SHORT simplePropertyName metaEdId?
             propertyComponents
             minValue?
             maxValue? ;
 
-stringProperty : STRING propertyName metaEdId?
+stringProperty : STRING simplePropertyName metaEdId?
             propertyComponents
             minLength?
             maxLength ;
 
-timeProperty : TIME propertyName metaEdId?
+timeProperty : TIME simplePropertyName metaEdId?
             propertyComponents ;
 
-yearProperty : YEAR propertyName metaEdId?
+yearProperty : YEAR simplePropertyName metaEdId?
             propertyComponents ;
 
 // ReferenceProperty
@@ -533,6 +533,7 @@ sharedPropertyType
     : (propertyNamespace PERIOD)? localPropertyType
     ;
 shortenToName : ID;
+simplePropertyName: localPropertyName;
 subdomainName : ID;
 withContextName : ID;
 
