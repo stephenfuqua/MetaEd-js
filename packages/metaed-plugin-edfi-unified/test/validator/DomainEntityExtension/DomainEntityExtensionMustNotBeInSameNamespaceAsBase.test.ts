@@ -1,6 +1,6 @@
 import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityExtensionBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/DomainEntityExtension/DomainEntityExtensionExistsOnlyInExtensionNamespace';
+import { validate } from '../../../src/validator/DomainEntityExtension/DomainEntityExtensionMustNotBeInSameNamespaceAsBase';
 
 describe('when domain entity extension is in correct namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -18,7 +18,7 @@ describe('when domain entity extension is in correct namespace', () => {
       .withEndNamespace()
 
       .withBeginNamespace('Extension', 'ProjectExtension')
-      .withStartDomainEntityExtension(entityName)
+      .withStartDomainEntityExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndDomainEntityExtension()
       .withEndNamespace()
@@ -69,7 +69,7 @@ describe('when domain entity extension is in core namespace', () => {
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('DomainEntityExtensionExistsOnlyInExtensionNamespace');
+    expect(failures[0].validatorName).toBe('DomainEntityExtensionMustNotBeInSameNamespaceAsBase');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();

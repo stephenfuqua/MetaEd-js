@@ -1,6 +1,6 @@
 import { newMetaEdEnvironment, MetaEdTextBuilder, AssociationExtensionBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
+import { validate } from '../../../src/validator/AssociationExtension/AssociationExtensionMustNotBeInSameNamespaceAsBase';
 
 describe('when association extension is in correct namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -20,7 +20,7 @@ describe('when association extension is in correct namespace', () => {
       .withEndNamespace()
 
       .withBeginNamespace('Extension', 'ProjectExtension')
-      .withStartAssociationExtension(entityName)
+      .withStartAssociationExtension(`EdFi.${entityName}`)
       .withBooleanProperty('PropertyName2', 'doc', true, false)
       .withEndAssociationExtension()
       .withEndNamespace()
@@ -73,7 +73,7 @@ describe('when association extension is in core namespace', () => {
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('AssociationExtensionExistsOnlyInExtensionNamespace');
+    expect(failures[0].validatorName).toBe('AssociationExtensionMustNotBeInSameNamespaceAsBase');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();

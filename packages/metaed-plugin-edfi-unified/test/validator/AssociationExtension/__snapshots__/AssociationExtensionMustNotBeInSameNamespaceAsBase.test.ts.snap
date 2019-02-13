@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`when association extension is in core namespace should have validation failure 1`] = `"Association additions 'EntityName' is not valid in core namespace 'EdFi"`;
+exports[`when association extension is in core namespace should have validation failure 1`] = `"Association additions 'EntityName' cannot be in the same namespace as its base entity."`;
 
 exports[`when association extension is in core namespace should have validation failure 2`] = `
 Object {

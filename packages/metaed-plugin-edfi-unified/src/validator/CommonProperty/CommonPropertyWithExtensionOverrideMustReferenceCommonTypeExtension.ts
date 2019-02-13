@@ -18,11 +18,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'CommonPropertyWithExtensionOverrideMustReferenceCommonTypeExtension',
         category: 'error',
-        message: `'common extension' is invalid for property ${property.metaEdName} on ${
-          property.parentEntity.typeHumanizedName
-        } ${property.parentEntity.metaEdName} in namespace ${
+        message: `No common extension named ${property.metaEdName} is declared in namespace ${
           property.referencedNamespaceName
-        }. 'common extension' is only valid for referencing Common extensions.`,
+        }.`,
         sourceMap: (property.sourceMap as CommonPropertySourceMap).isExtensionOverride,
         fileMap: null,
       });

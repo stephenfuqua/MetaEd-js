@@ -5,7 +5,7 @@ import { validate as abstractEntityMustContainAnIdentity } from './validator/Abs
 import { validate as abstractEntityMustNotBeExtended } from './validator/AbstractEntity/AbstractEntityMustNotBeExtended';
 import { validate as abstractGeneralStudentProgramAssociationMustNotBeExtended } from './validator/AbstractEntity/AbstractGeneralStudentProgramAssociationMustNotBeExtended';
 
-import { validate as associationExtensionExistsOnlyInExtensionNamespace } from './validator/AssociationExtension/AssociationExtensionExistsOnlyInExtensionNamespace';
+import { validate as associationExtensionMustNotBeInSameNamespaceAsBase } from './validator/AssociationExtension/AssociationExtensionMustNotBeInSameNamespaceAsBase';
 import { validate as associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass } from './validator/AssociationExtension/AssociationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass';
 import { validate as associationExtensionMustNotRedeclareProperties } from './validator/AssociationExtension/AssociationExtensionMustNotRedeclareProperties';
 
@@ -54,7 +54,7 @@ import { validate as inlineCommonDomainItemMustMatchTopLevelEntity } from './val
 import { validate as domainEntityMustContainAnIdentity } from './validator/DomainEntity/DomainEntityMustContainAnIdentity';
 import { validate as domainEntityMustContainNoMoreThanOneUniqueIdColumn } from './validator/DomainEntity/DomainEntityMustContainNoMoreThanOneUniqueIdColumn';
 
-import { validate as domainEntityExtensionExistsOnlyInExtensionNamespace } from './validator/DomainEntityExtension/DomainEntityExtensionExistsOnlyInExtensionNamespace';
+import { validate as domainEntityExtensionMustNotBeInSameNamespaceAsBase } from './validator/DomainEntityExtension/DomainEntityExtensionMustNotBeInSameNamespaceAsBase';
 import { validate as domainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass } from './validator/DomainEntityExtension/DomainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass';
 import { validate as domainEntityExtensionMustNotRedeclareProperties } from './validator/DomainEntityExtension/DomainEntityExtensionMustNotRedeclareProperties';
 
@@ -172,7 +172,7 @@ function validatorList(): Array<Validator> {
     abstractEntityMustNotBeExtended,
     abstractGeneralStudentProgramAssociationMustNotBeExtended,
 
-    associationExtensionExistsOnlyInExtensionNamespace,
+    associationExtensionMustNotBeInSameNamespaceAsBase,
     associationExtensionIdentifierMustMatchAnAssociationOrAssociationSubclass,
     associationExtensionMustNotRedeclareProperties,
 
@@ -223,7 +223,7 @@ function validatorList(): Array<Validator> {
     domainEntityMustContainAnIdentity,
     domainEntityMustContainNoMoreThanOneUniqueIdColumn,
 
-    domainEntityExtensionExistsOnlyInExtensionNamespace,
+    domainEntityExtensionMustNotBeInSameNamespaceAsBase,
     domainEntityExtensionIdentifierMustMatchADomainEntityOrDomainEntitySubclass,
     domainEntityExtensionMustNotRedeclareProperties,
 
