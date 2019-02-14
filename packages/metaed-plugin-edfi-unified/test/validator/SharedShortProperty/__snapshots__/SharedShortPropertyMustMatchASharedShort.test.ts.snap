@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when shared short property has identifier of shared integer should have validation failure for property 1`] = `"Shared short property 'SharedName' does not match any declared Shared Short in namespace EdFi."`;
+
+exports[`when shared short property has identifier of shared integer should have validation failure for property 2`] = `
+Object {
+  "column": 34,
+  "line": 5,
+  "tokenText": "SharedName",
+}
+`;
+
+exports[`when shared short property has invalid identifier of shared short in dependency namespace should have validation failure for property 1`] = `"Shared short property 'SharedName' does not match any declared Shared Short in namespace EdFi."`;
+
+exports[`when shared short property has invalid identifier of shared short in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 36,
+  "line": 10,
+  "tokenText": "SharedName",
+}
+`;
+
+exports[`when shared short property has invalid identifier should have validation failure for property 1`] = `"Shared short property 'InvalidName' does not match any declared Shared Short in namespace EdFi."`;
+
+exports[`when shared short property has invalid identifier should have validation failure for property 2`] = `
+Object {
+  "column": 35,
+  "line": 5,
+  "tokenText": "InvalidName",
+}
+`;
+
+exports[`when shared short property refers to shared short in non-dependency namespace should have validation failure for property 1`] = `"Shared short property 'SharedName' does not match any declared Shared Short in namespace Extensiona."`;
+
+exports[`when shared short property refers to shared short in non-dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 45,
+  "line": 10,
+  "tokenText": "SharedName",
+}
+`;

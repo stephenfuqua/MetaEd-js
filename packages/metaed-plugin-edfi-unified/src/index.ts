@@ -123,6 +123,11 @@ import { validate as stringPropertyMustNotMatchASharedDecimal } from './validato
 import { validate as stringPropertyMustNotMatchASharedInteger } from './validator/StringProperty/StringPropertyMustNotMatchASharedInteger';
 import { validate as stringPropertyMustNotMatchASharedString } from './validator/StringProperty/StringPropertyMustNotMatchASharedString';
 
+import { validate as sharedDecimalPropertyMustMatchASharedDecimal } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
+import { validate as sharedIntegerPropertyMustMatchASharedInteger } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
+import { validate as sharedShortPropertyMustMatchASharedShort } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
+import { validate as sharedStringPropertyMustMatchASharedString } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
+
 import { validate as subdomainMustNotDuplicateDomainItems } from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 import { validate as subdomainParentDomainNameMustMatchADomain } from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
 
@@ -291,6 +296,11 @@ function validatorList(): Array<Validator> {
     stringPropertyMustNotMatchASharedDecimal,
     stringPropertyMustNotMatchASharedInteger,
     stringPropertyMustNotMatchASharedString,
+
+    sharedDecimalPropertyMustMatchASharedDecimal,
+    sharedIntegerPropertyMustMatchASharedInteger,
+    sharedShortPropertyMustMatchASharedShort,
+    sharedStringPropertyMustMatchASharedString,
 
     subdomainMustNotDuplicateDomainItems,
     subdomainParentDomainNameMustMatchADomain,

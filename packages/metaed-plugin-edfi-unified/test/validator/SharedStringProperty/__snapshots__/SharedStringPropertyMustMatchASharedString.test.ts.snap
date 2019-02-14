@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when shared string property has invalid identifier of shared string in dependency namespace should have validation failure for property 1`] = `"Shared string property 'SharedName' does not match any declared Shared String in namespace EdFi."`;
+
+exports[`when shared string property has invalid identifier of shared string in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 37,
+  "line": 11,
+  "tokenText": "SharedName",
+}
+`;
+
+exports[`when shared string property has invalid identifier should have validation failure for property 1`] = `"Shared string property 'InvalidName' does not match any declared Shared String in namespace EdFi."`;
+
+exports[`when shared string property has invalid identifier should have validation failure for property 2`] = `
+Object {
+  "column": 36,
+  "line": 5,
+  "tokenText": "InvalidName",
+}
+`;
+
+exports[`when shared string property refers to shared string in non-dependency namespace should have validation failure for property 1`] = `"Shared string property 'SharedName' does not match any declared Shared String in namespace Extensiona."`;
+
+exports[`when shared string property refers to shared string in non-dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 46,
+  "line": 11,
+  "tokenText": "SharedName",
+}
+`;

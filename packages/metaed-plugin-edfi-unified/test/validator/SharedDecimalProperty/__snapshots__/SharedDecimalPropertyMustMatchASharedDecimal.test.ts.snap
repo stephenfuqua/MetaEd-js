@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when shared decimal property has invalid identifier of shared decimal in dependency namespace should have validation failure for property 1`] = `"Shared decimal property 'SharedName' does not match any declared Shared Decimal in namespace EdFi."`;
+
+exports[`when shared decimal property has invalid identifier of shared decimal in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 38,
+  "line": 12,
+  "tokenText": "SharedName",
+}
+`;
+
+exports[`when shared decimal property has invalid identifier should have validation failure for property 1`] = `"Shared decimal property 'InvalidName' does not match any declared Shared Decimal in namespace EdFi."`;
+
+exports[`when shared decimal property has invalid identifier should have validation failure for property 2`] = `
+Object {
+  "column": 37,
+  "line": 5,
+  "tokenText": "InvalidName",
+}
+`;
+
+exports[`when shared decimal property refers to shared decimal in non-dependency namespace should have validation failure for property 1`] = `"Shared decimal property 'SharedName' does not match any declared Shared Decimal in namespace Extensiona."`;
+
+exports[`when shared decimal property refers to shared decimal in non-dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 47,
+  "line": 12,
+  "tokenText": "SharedName",
+}
+`;
