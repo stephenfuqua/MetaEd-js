@@ -108,10 +108,10 @@ import { validate as metaEdIdIsRequiredForProperties } from './validator/MetaEdI
 */
 import { validate as mustNotDuplicateMetaEdId } from './validator/MetaEdId/MustNotDuplicateMetaEdId';
 
-import { validate as sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/SharedSimple/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
-import { validate as sharedDecimalMinValueMustNotBeGreaterThanMaxValue } from './validator/SharedSimple/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
-import { validate as sharedIntegerMinValueMustNotBeGreaterThanMaxValue } from './validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
-import { validate as sharedStringMinLengthMustNotBeGreaterThanMaxLength } from './validator/SharedSimple/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
+import { validate as sharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits } from './validator/SharedDecimal/SharedDecimalDecimalPlacesMustNotBeGreaterThanTotalDigits';
+import { validate as sharedDecimalMinValueMustNotBeGreaterThanMaxValue } from './validator/SharedDecimal/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
+import { validate as sharedIntegerMinValueMustNotBeGreaterThanMaxValue } from './validator/SharedInteger/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
+import { validate as sharedStringMinLengthMustNotBeGreaterThanMaxLength } from './validator/SharedString/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
 import { validate as shortPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/ShortProperty/ShortPropertyMinValueMustNotBeGreaterThanMaxValue';
 import { validate as shortPropertyMustNotMatchASharedDecimal } from './validator/ShortProperty/ShortPropertyMustNotMatchASharedDecimal';

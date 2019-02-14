@@ -1,6 +1,6 @@
 import { newMetaEdEnvironment, MetaEdTextBuilder, SharedIntegerBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/SharedSimple/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
+import { validate } from '../../../src/validator/SharedInteger/SharedIntegerMinValueMustNotBeGreaterThanMaxValue';
 
 describe('when validating shared integer with max value greater than min value', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

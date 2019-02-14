@@ -1,35 +1,8 @@
-import { newMetaEdEnvironment, MetaEdTextBuilder, SharedDecimalBuilder, NamespaceBuilder } from 'metaed-core';
+import { newMetaEdEnvironment, MetaEdTextBuilder, SharedStringBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/SharedSimple/SharedDecimalMinValueMustNotBeGreaterThanMaxValue';
+import { validate } from '../../../src/validator/SharedString/SharedStringMinLengthMustNotBeGreaterThanMaxLength';
 
-describe('when validating shared decimal with max value greater than min value', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('EdFi')
-      .withStartSharedDecimal('EntityName')
-      .withDocumentation('PropertyDocumentation')
-      .withTotalDigits('10')
-      .withDecimalPlaces('2')
-      .withMinValue('10')
-      .withMaxValue('100')
-      .withEndSharedDecimal()
-      .withEndNamespace()
-
-      .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new SharedDecimalBuilder(metaEd, []));
-
-    failures = validate(metaEd);
-  });
-
-  it('should have no validation failures', () => {
-    expect(failures).toHaveLength(0);
-  });
-});
-
-describe('when validating shared decimal with min value greater than max value', () => {
+describe('when validating shared string with max length greater than min length', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
   let coreNamespace: any = null;
@@ -37,29 +10,58 @@ describe('when validating shared decimal with min value greater than max value',
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('EdFi')
-      .withStartSharedDecimal('EntityName')
+      .withStartSharedString('EntityName')
       .withDocumentation('PropertyDocumentation')
-      .withTotalDigits('10')
-      .withDecimalPlaces('2')
-      .withMinValue('100')
-      .withMaxValue('10')
-      .withEndSharedDecimal()
+      .withMinLength('10')
+      .withMaxLength('100')
+      .withEndSharedString()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new SharedDecimalBuilder(metaEd, []));
+      .sendToListener(new SharedStringBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
     failures = validate(metaEd);
   });
 
-  it('should build one shared decimal', () => {
-    expect(coreNamespace.entity.sharedDecimal.size).toBe(1);
+  it('should build one shared string', () => {
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
+  });
+
+  it('should have no validation failures', () => {
+    expect(failures).toHaveLength(0);
+  });
+});
+
+describe('when validating shared string with min length greater than max length', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartSharedString('EntityName')
+      .withDocumentation('PropertyDocumentation')
+      .withMinLength('100')
+      .withMaxLength('10')
+      .withEndSharedString()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedStringBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    failures = validate(metaEd);
+  });
+
+  it('should build one shared string', () => {
+    expect(coreNamespace.entity.sharedString.size).toBe(1);
   });
 
   it('should have validation failures', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('SharedDecimalMinValueMustNotBeGreaterThanMaxValue');
+    expect(failures[0].validatorName).toBe('SharedStringMinLengthMustNotBeGreaterThanMaxLength');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();
