@@ -8,7 +8,14 @@ import {
   newMetaEdEnvironment,
 } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
-import { column, foreignKey, table, testTearDown, enhanceGenerateAndExecuteSql } from './DatabaseTestBase';
+import {
+  column,
+  foreignKey,
+  table,
+  testTearDown,
+  enhanceGenerateAndExecuteSql,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import { columnExists, columnIsNullable } from './DatabaseColumn';
 import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';
 import { tableExists, tablePrimaryKeys } from './DatabaseTable';
@@ -16,6 +23,8 @@ import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when domain entity extension has a common extension with a collection which overrides a collection of that common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

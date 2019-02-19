@@ -10,7 +10,14 @@ import {
   newMetaEdEnvironment,
 } from 'metaed-core';
 import { MetaEdEnvironment } from 'metaed-core';
-import { column, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown } from './DatabaseTestBase';
+import {
+  column,
+  enhanceGenerateAndExecuteSql,
+  foreignKey,
+  table,
+  testTearDown,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import { columnExists, columnIsNullable } from './DatabaseColumn';
 import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';
 import { tableExists, tablePrimaryKeys } from './DatabaseTable';
@@ -18,6 +25,8 @@ import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when domain entity merges references', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

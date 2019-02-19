@@ -14,6 +14,7 @@ import {
   table,
   testTearDown,
   index,
+  testSuiteAfterAll,
 } from './DatabaseTestBase';
 import {
   columnExists,
@@ -30,6 +31,10 @@ import { tableExists, tablePrimaryKeys } from './DatabaseTable';
 import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 import { DatabaseIndex } from './DatabaseIndex';
+
+jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when domain entity is student', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

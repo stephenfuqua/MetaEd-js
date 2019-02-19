@@ -1,6 +1,14 @@
 import { DomainEntityBuilder, MetaEdTextBuilder, NamespaceBuilder, newMetaEdEnvironment } from 'metaed-core';
 import { MetaEdEnvironment } from 'metaed-core';
-import { column, columnDataTypes, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown } from './DatabaseTestBase';
+import {
+  column,
+  columnDataTypes,
+  enhanceGenerateAndExecuteSql,
+  foreignKey,
+  table,
+  testTearDown,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import {
   columnDataType,
   columnExists,
@@ -16,6 +24,8 @@ import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when entity has identity property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

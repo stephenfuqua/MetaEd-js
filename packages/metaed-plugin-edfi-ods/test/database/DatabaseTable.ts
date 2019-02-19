@@ -1,5 +1,4 @@
-import { database, firstKeyValueOf, scalar, query, queryWithBoolResult } from './DatabaseConnection';
-import { testDatabaseName } from './DatabaseTestBase';
+import { database, firstKeyValueOf, scalar, query, queryWithBoolResult, testDatabaseName } from './DatabaseConnection';
 
 export type DatabaseTable = {
   schema: string;

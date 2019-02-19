@@ -1,6 +1,5 @@
 import Sugar from 'sugar';
-import { database, scalar, firstKeyValueOf } from './DatabaseConnection';
-import { testDatabaseName } from './DatabaseTestBase';
+import { database, scalar, firstKeyValueOf, testDatabaseName } from './DatabaseConnection';
 import { DatabaseTable } from './DatabaseTable';
 
 export type DatabaseIndex = {

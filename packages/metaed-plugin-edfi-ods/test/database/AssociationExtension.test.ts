@@ -8,7 +8,15 @@ import {
   newMetaEdEnvironment,
 } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
-import { column, columnDataTypes, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown } from './DatabaseTestBase';
+import {
+  column,
+  columnDataTypes,
+  enhanceGenerateAndExecuteSql,
+  foreignKey,
+  table,
+  testTearDown,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import { columnExists, columnIsNullable, columnDataType, columnDefaultConstraint } from './DatabaseColumn';
 import { foreignKeyDeleteCascades, foreignKeyExists } from './DatabaseForeignKey';
 import { tableExists, tablePrimaryKeys } from './DatabaseTable';
@@ -16,6 +24,8 @@ import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when association extension has a single property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

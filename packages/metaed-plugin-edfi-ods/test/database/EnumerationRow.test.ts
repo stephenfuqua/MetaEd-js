@@ -1,11 +1,13 @@
 import { EnumerationBuilder, MetaEdTextBuilder, NamespaceBuilder, newMetaEdEnvironment } from 'metaed-core';
 import { MetaEdEnvironment } from 'metaed-core';
-import { column, enhanceGenerateAndExecuteSql, table, testTearDown } from './DatabaseTestBase';
+import { column, enhanceGenerateAndExecuteSql, table, testTearDown, testSuiteAfterAll } from './DatabaseTestBase';
 import { columnExists, columnFirstRowValue, columnMSDescription, columnNthRowValue } from './DatabaseColumn';
 import { tableExists } from './DatabaseTable';
 import { DatabaseColumn } from './DatabaseColumn';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when enumeration has single item', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

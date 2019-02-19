@@ -2,6 +2,8 @@ import winston from 'winston';
 import { Connection, ConnectionPool, Request, Transaction } from 'mssql/msnodesqlv8';
 import { highlight } from 'cli-highlight';
 
+export const testDatabaseName = 'MetaEd_Ods_Integration_Tests';
+
 winston.configure({ transports: [new winston.transports.Console()], format: winston.format.cli() });
 if (process.env.TEAMCITY_VERSION != null) {
   winston.level = 'debug';
@@ -29,19 +31,23 @@ export const newConfig = () => ({
   },
 });
 
-export async function disconnect(databaseName: string = 'master'): Promise<void> {
+export async function disconnect(databaseName: string): Promise<void> {
   if (pools.has(databaseName)) {
     const pool: Pool | undefined = pools.get(databaseName);
     try {
       if (pool != null) {
-        if (pool.transaction != null) await pool.transaction.rollback();
-        winston.verbose(`[${databaseName}] rolling back transaction`);
-        if (pool.connection != null) await pool.connection.close();
+        if (pool.transaction != null) {
+          await pool.transaction.rollback();
+          winston.verbose(`[${databaseName}] DatabaseConnection.disconnect: rolling back transaction`);
+        }
+        if (pool.connection != null) {
+          await pool.connection.close();
+          winston.verbose(`[${databaseName}] DatabaseConnection.disconnect: pool disconnected.`);
+        }
         pools.delete(databaseName);
-        winston.verbose(`[${databaseName}] pool disconnected.`);
       }
     } catch (error) {
-      winston.verbose(`[${databaseName}] ${error.message} ${error.stack}`);
+      winston.verbose(`[${databaseName}] DatabaseConnection.disconnect: ${error.message} ${error.stack}`);
     }
   }
 }
@@ -54,7 +60,7 @@ export async function disconnectAll() {
   pools.clear();
 }
 
-export async function connect(databaseName: string = 'master', retry: number = retryCount): Promise<ConnectionPool> {
+export async function connect(databaseName: string, retry: number = retryCount): Promise<ConnectionPool> {
   if (pools.has(databaseName)) {
     return pools.get(databaseName);
   }
@@ -107,14 +113,22 @@ export async function database(databaseName: string, fn: Function, transaction: 
   }
 }
 
-export async function rollbackAndBeginTransaction(databaseName: string = 'master'): Promise<void> {
+export async function beginTransaction(databaseName: string): Promise<void> {
   if (pools.has(databaseName)) {
     const pool = pools.get(databaseName);
     if (pool != null && pool.transaction != null) {
-      winston.verbose(`[${databaseName}] rolling back transaction`);
-      await pool.transaction.rollback();
+      winston.verbose(`[${databaseName}] DatabaseConnection.beginTransaction: beginning transaction`);
       await pool.transaction.begin();
-      winston.verbose(`[${databaseName}] ---------- begin transaction ----------`);
+    }
+  }
+}
+
+export async function rollbackTransaction(databaseName: string): Promise<void> {
+  if (pools.has(databaseName)) {
+    const pool = pools.get(databaseName);
+    if (pool != null && pool.transaction != null) {
+      winston.verbose(`[${databaseName}] DatabaseConnection.rollbackTransaction: rolling back transaction`);
+      await pool.transaction.rollback();
     }
   }
 }

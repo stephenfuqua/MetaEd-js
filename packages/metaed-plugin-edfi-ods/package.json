@@ -38,7 +38,7 @@
     "ed-fi-model-2.0": "1.0.3",
     "ed-fi-model-3.0": "1.0.0",
     "final-fs": "^1.6.1",
-    "msnodesqlv8": "0.4.18",
+    "msnodesqlv8": "0.6.12",
     "mssql": "^4.3.0"
   },
   "scripts": {

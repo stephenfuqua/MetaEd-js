@@ -49,7 +49,7 @@
     "test:unit:odsapi": "yarn jest packages/metaed-plugin-edfi-odsapi/test",
     "test:unit:ods-changequery": "yarn jest packages/metaed-plugin-edfi-ods-changequery/test",
     "test:unit:ods-non-db": "yarn jest \"packages/metaed-plugin-edfi-ods/test/(?!database)\"",
-    "test:unit:ods-db": "yarn jest packages/metaed-plugin-edfi-ods/test/database -i",
+    "test:unit:ods-db": "yarn ts-node packages/metaed-plugin-edfi-ods/test/database/InitializeOdsIntegrationTestDatabase.ts && yarn jest packages/metaed-plugin-edfi-ods/test/database -i",
     "test:unit:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "test:atom": "yarn workspace atom-metaed test",
     "test:code-duplication": "yarn jsinspect -t 50 --ignore \"test|gen|dist\" ./packages",

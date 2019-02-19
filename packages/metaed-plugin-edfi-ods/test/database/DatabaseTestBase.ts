@@ -3,31 +3,30 @@ import { initialize as initializeUnifiedPlugin } from 'metaed-plugin-edfi-unifie
 import { initialize as initializeOdsPlugin } from '../../index';
 import { generate as odsGenerate } from '../../src/generator/OdsGenerator';
 import { generate as schemaGenerate } from '../../src/generator/SchemaGenerator';
-import { createDatabaseIfNotExists, dropDatabaseIfExists } from './DatabaseUtility';
-import { disconnectAll, executeGeneratedSql, rollbackAndBeginTransaction, disconnect } from './DatabaseConnection';
+import {
+  disconnect,
+  executeGeneratedSql,
+  rollbackTransaction,
+  beginTransaction,
+  testDatabaseName,
+} from './DatabaseConnection';
 import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 import { DatabaseIndex } from './DatabaseIndex';
 import { DatabaseTable } from './DatabaseTable';
 
-export const testDatabaseName = 'MetaEd_Ods_Integration_Tests';
 export const coreNamespace = 'EdFi';
 export const extensionNamespace = 'Extension';
 export const projectExtension = 'EXTENSION';
 
-beforeAll(async () => {
-  await dropDatabaseIfExists(testDatabaseName);
-  await createDatabaseIfNotExists(testDatabaseName);
+export async function testSuiteAfterAll() {
+  await disconnect(testDatabaseName);
   await disconnect('master');
-});
-
-afterAll(async () => {
-  await dropDatabaseIfExists(testDatabaseName);
-  await disconnectAll();
-});
+}
 
 export async function testTearDown(databaseName: string = testDatabaseName): Promise<any> {
-  await rollbackAndBeginTransaction(databaseName);
+  await rollbackTransaction(databaseName);
+  await beginTransaction(databaseName);
 }
 
 export function table(schema: string, name: string): DatabaseTable {

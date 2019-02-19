@@ -1,6 +1,5 @@
 import Sugar from 'sugar';
-import { database, firstKeyValueOf, scalar } from './DatabaseConnection';
-import { testDatabaseName } from './DatabaseTestBase';
+import { database, firstKeyValueOf, scalar, testDatabaseName } from './DatabaseConnection';
 import { DatabaseTable } from './DatabaseTable';
 
 export type DatabaseForeignKey = {

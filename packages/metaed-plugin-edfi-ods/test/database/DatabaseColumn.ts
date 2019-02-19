@@ -1,5 +1,4 @@
-import { database, firstKeyValueOf, queryWithBoolResult, scalar } from './DatabaseConnection';
-import { testDatabaseName } from './DatabaseTestBase';
+import { database, firstKeyValueOf, queryWithBoolResult, scalar, testDatabaseName } from './DatabaseConnection';
 
 export type DatabaseColumn = {
   parentTableSchema: string;

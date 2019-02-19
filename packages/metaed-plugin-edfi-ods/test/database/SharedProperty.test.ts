@@ -8,7 +8,14 @@ import {
   SharedStringBuilder,
 } from 'metaed-core';
 import { MetaEdEnvironment } from 'metaed-core';
-import { column, enhanceGenerateAndExecuteSql, table, testTearDown, columnDataTypes } from './DatabaseTestBase';
+import {
+  column,
+  enhanceGenerateAndExecuteSql,
+  table,
+  testTearDown,
+  columnDataTypes,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import {
   columnExists,
   columnIsNullable,
@@ -21,6 +28,8 @@ import { tableExists } from './DatabaseTable';
 import { DatabaseColumn } from './DatabaseColumn';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when entity has shared decimal property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

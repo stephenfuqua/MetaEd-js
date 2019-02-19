@@ -8,7 +8,15 @@ import {
   newMetaEdEnvironment,
 } from 'metaed-core';
 import { MetaEdEnvironment } from 'metaed-core';
-import { column, enhanceGenerateAndExecuteSql, foreignKey, table, testTearDown, columnDataTypes } from './DatabaseTestBase';
+import {
+  column,
+  enhanceGenerateAndExecuteSql,
+  foreignKey,
+  table,
+  testTearDown,
+  columnDataTypes,
+  testSuiteAfterAll,
+} from './DatabaseTestBase';
 import {
   columnExists,
   columnIsNullable,
@@ -22,6 +30,8 @@ import { DatabaseColumn } from './DatabaseColumn';
 import { DatabaseForeignKey } from './DatabaseForeignKey';
 
 jest.setTimeout(40000);
+
+afterAll(async () => testSuiteAfterAll());
 
 describe('when entity has descriptor property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
