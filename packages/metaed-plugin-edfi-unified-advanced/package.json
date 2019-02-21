@@ -19,11 +19,14 @@
     "authorName": "Ed-Fi Alliance",
     "metaEdVersion": "2.x",
     "technologyVersion": "*",
-    "dependencies": ["metaed-plugin-edfi-unified"]
+    "dependencies": [
+      "metaed-plugin-edfi-unified"
+    ]
   },
   "dependencies": {
     "metaed-core": "2.0.0-dev.3",
-    "metaed-plugin-edfi-unified": "2.0.0-dev.3"
+    "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "ramda": "^0.26.1"
   },
   "scripts": {
     "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",

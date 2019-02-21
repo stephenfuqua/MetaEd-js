@@ -1,6 +1,6 @@
 import { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
-import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
+import { failReferencedPropertyDoesNotExist } from './FailReferencedPropertyDoesNotExist';
 
 const validPropertyTypes: Array<PropertyType> = [
   'association',

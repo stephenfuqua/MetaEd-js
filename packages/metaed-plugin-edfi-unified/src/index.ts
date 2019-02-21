@@ -93,11 +93,8 @@ import { validate as interchangeExtensionMustNotRedeclareBaseInterchangeIdentity
 import { validate as interchangeExtensionMustNotRedeclareElements } from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareElements';
 import { validate as interchangeExtensionMustNotRedeclareIdentityName } from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareIdentityName';
 
-import { validate as sourcePropertyAndTargetPropertyMustMatch } from './validator/MergeDirective/SourcePropertyAndTargetPropertyMustMatch';
-import { validate as sourcePropertyPathMustExist } from './validator/MergeDirective/SourcePropertyPathMustExist';
 import { validate as mergeDirectiveMustStartSourcePathWithPropertyName } from './validator/MergeDirective/MergeDirectiveMustStartSourcePathWithPropertyName';
 import { validate as namespacesNamesMustNotHaveOnlyDifferentCasing } from './validator/Namespace/NamespacesNamesMustNotHaveOnlyDifferentCasing';
-import { validate as targetPropertyPathMustExist } from './validator/MergeDirective/TargetPropertyPathMustExist';
 
 /*
 import { validate as metaEdIdIsRequiredForDomainItems } from './validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
@@ -267,10 +264,7 @@ function validatorList(): Array<Validator> {
     interchangeExtensionMustNotRedeclareElements,
     interchangeExtensionMustNotRedeclareIdentityName,
 
-    sourcePropertyAndTargetPropertyMustMatch,
-    sourcePropertyPathMustExist,
     mergeDirectiveMustStartSourcePathWithPropertyName,
-    targetPropertyPathMustExist,
 
     // ////// Commenting out MetaEd ID required warnings -- imports commented out above
     // metaEdIdIsRequiredForDomainItems,

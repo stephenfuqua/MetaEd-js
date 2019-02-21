@@ -12,7 +12,7 @@ import {
   referenceTypes,
   matchAllButFirstAsIdentityProperties,
   matchAllIdentityReferenceProperties,
-} from '../ValidatorShared/FindReferencedProperty';
+} from './FindReferencedProperty';
 
 const validPropertyTypes: Array<PropertyType> = [
   'association',

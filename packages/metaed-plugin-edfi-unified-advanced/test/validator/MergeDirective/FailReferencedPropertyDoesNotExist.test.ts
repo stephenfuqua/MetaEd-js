@@ -8,7 +8,7 @@ import {
   newMetaEdEnvironment,
   newSourceMap,
 } from 'metaed-core';
-import { failReferencedPropertyDoesNotExist } from '../../../src/validator/ValidatorShared/FailReferencedPropertyDoesNotExist';
+import { failReferencedPropertyDoesNotExist } from '../../../src/validator/MergeDirective/FailReferencedPropertyDoesNotExist';
 
 describe('when validating merge property path', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

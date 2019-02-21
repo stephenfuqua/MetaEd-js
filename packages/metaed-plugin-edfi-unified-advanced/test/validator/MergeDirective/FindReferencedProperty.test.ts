@@ -14,7 +14,7 @@ import {
   findReferencedProperty,
   matchAllButFirstAsIdentityProperties,
   matchAllIdentityReferenceProperties,
-} from '../../../src/validator/ValidatorShared/FindReferencedProperty';
+} from '../../../src/validator/MergeDirective/FindReferencedProperty';
 
 describe('when looking for property on current entity', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();

@@ -82,7 +82,7 @@ export const matchAllButFirstAsIdentityProperties = () => {
   };
 };
 
-export function withContext(property: EntityProperty): string {
+function withContext(property: EntityProperty): string {
   if (!property.withContext) return '';
   return !property.shortenTo
     ? `${property.withContext}${property.metaEdName}`
