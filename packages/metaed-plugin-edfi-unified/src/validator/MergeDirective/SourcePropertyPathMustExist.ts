@@ -1,4 +1,3 @@
-import R from 'ramda';
 import { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
 import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
 import { failReferencedPropertyDoesNotExist } from '../ValidatorShared/FailReferencedPropertyDoesNotExist';
@@ -23,16 +22,16 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
-    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
+    // are not currently extensions of ReferentialProperty but have an equivalent mergeDirectives field
     const referentialProperty = asReferentialProperty(property);
-    referentialProperty.mergedProperties.forEach(mergedProperty => {
+    referentialProperty.mergeDirectives.forEach(mergeDirective => {
       failReferencedPropertyDoesNotExist(
-        'TargetPropertyPathMustExist',
+        'SourcePropertyPathMustExist',
         referentialProperty.namespace,
         referentialProperty.parentEntity,
-        mergedProperty.targetPropertyPath,
-        R.head(mergedProperty.mergePropertyPath),
-        R.head(mergedProperty.sourceMap.targetPropertyPath),
+        mergeDirective.sourcePropertyPath,
+        mergeDirective.targetPropertyPath[0],
+        mergeDirective.sourceMap.sourcePropertyPath[0],
         failures,
       );
     });

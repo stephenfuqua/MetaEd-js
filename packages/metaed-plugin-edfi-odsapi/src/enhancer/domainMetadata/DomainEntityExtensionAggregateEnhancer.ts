@@ -21,7 +21,6 @@ const isAggregateExtension = () => true;
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllEntitiesOfType(metaEd, 'domainEntityExtension').forEach((modelBase: ModelBase) => {
-    // $FlowIgnore - Flow issue #183 - Add support for destructuring parameters + default values
     enhanceSingleEntity(
       asTopLevelEntity(modelBase),
       metaEd.namespace,

@@ -77,7 +77,6 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 
   it('should rename DerivativeSourceURI column to URI', () => {
-    // $FlowIgnore null check
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
     );
@@ -85,7 +84,6 @@ describe('when AddRoleNameFromEducationContentDSLRMUriDiminisher diminishes Educ
   });
 
   it('should set column length', () => {
-    // $FlowIgnore null check
     const column: Column = R.head(
       (tableEntities(metaEd, namespace).get(educationContentDerivativeSourceURI) as Table).columns,
     );

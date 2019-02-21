@@ -133,7 +133,6 @@ describe('when validating domain entity with two UniqueId fields in extension na
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

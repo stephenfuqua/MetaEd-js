@@ -142,7 +142,6 @@ describe('when choice property has invalid identifier in dependency namespace', 
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

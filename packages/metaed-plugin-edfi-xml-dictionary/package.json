@@ -17,10 +17,10 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiXmlDictionary",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
-      "metaed-plugin-edfi-unified",
+      "metaed-plugin-edfi-unified-advanced",
       "metaed-plugin-edfi-xsd"
     ]
   },
@@ -29,6 +29,7 @@
     "js-beautify": "^1.7.4",
     "metaed-core": "2.0.0-dev.3",
     "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "metaed-plugin-edfi-xsd": "2.0.0-dev.3",
     "winston": "3.0.0",
     "xlsx": "^0.11.8",

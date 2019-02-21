@@ -17,7 +17,7 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiInterchangeBrief",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-xsd"

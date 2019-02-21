@@ -1,11 +1,11 @@
 import { ShortProperty, ShortPropertySourceMap } from './ShortProperty';
 import { newShortProperty, newShortPropertySourceMap } from './ShortProperty';
 import { EntityProperty } from './EntityProperty';
-import { MergedProperty } from './MergedProperty';
+import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedShortPropertySourceMap extends ShortPropertySourceMap {
-  mergedProperties: Array<SourceMap>;
+  mergeDirectives: Array<SourceMap>;
 }
 
 /**
@@ -14,13 +14,13 @@ export interface SharedShortPropertySourceMap extends ShortPropertySourceMap {
 export function newSharedShortPropertySourceMap(): SharedShortPropertySourceMap {
   return {
     ...newShortPropertySourceMap(),
-    mergedProperties: [],
+    mergeDirectives: [],
   };
 }
 
 export interface SharedShortProperty extends ShortProperty {
   sourceMap: SharedShortPropertySourceMap;
-  mergedProperties: Array<MergedProperty>;
+  mergeDirectives: Array<MergeDirective>;
 }
 
 /**
@@ -31,7 +31,7 @@ export function newSharedShortProperty(): SharedShortProperty {
     ...newShortProperty(),
     type: 'sharedShort',
     typeHumanizedName: 'Shared Short Property',
-    mergedProperties: [],
+    mergeDirectives: [],
     sourceMap: newSharedShortPropertySourceMap(),
   };
 }

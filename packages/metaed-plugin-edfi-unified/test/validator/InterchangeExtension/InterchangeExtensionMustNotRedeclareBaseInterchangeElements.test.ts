@@ -29,7 +29,6 @@ describe('when validating interchange extension elements has different names tha
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -76,7 +75,6 @@ describe('when validating interchange extension elements duplicates names in bas
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -132,7 +130,6 @@ describe('when interchange extension elements duplicates multiple names in base 
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

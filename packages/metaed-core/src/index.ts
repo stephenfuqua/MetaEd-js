@@ -106,7 +106,7 @@ export { EntityProperty, EntityPropertySourceMap, HasReferencedEntity } from './
 export { EnumerationProperty, EnumerationPropertySourceMap } from './model/property/EnumerationProperty';
 export { InlineCommonProperty, InlineCommonPropertySourceMap } from './model/property/InlineCommonProperty';
 export { IntegerProperty, IntegerPropertySourceMap } from './model/property/IntegerProperty';
-export { MergedProperty, MergedPropertySourceMap } from './model/property/MergedProperty';
+export { MergeDirective, MergeDirectiveSourceMap } from './model/property/MergeDirective';
 export { PercentProperty, PercentPropertySourceMap } from './model/property/PercentProperty';
 export { PropertyIndex } from './model/property/PropertyRepository';
 export { PropertyType } from './model/property/PropertyType';
@@ -189,7 +189,7 @@ export { asDurationProperty, newDurationProperty } from './model/property/Durati
 export { asEnumerationProperty, newEnumerationProperty } from './model/property/EnumerationProperty';
 export { asInlineCommonProperty, newInlineCommonProperty } from './model/property/InlineCommonProperty';
 export { asIntegerProperty, newIntegerProperty } from './model/property/IntegerProperty';
-export { newMergedProperty } from './model/property/MergedProperty';
+export { newMergeDirective } from './model/property/MergeDirective';
 export { asPercentProperty, newPercentProperty } from './model/property/PercentProperty';
 export { asReferentialProperty, newReferentialProperty } from './model/property/ReferentialProperty';
 export {

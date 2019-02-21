@@ -6,7 +6,7 @@ import {
   MetaEdTextBuilder,
 } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyAndTargetPropertyMustMatch';
+import { validate } from '../../../src/validator/MergeDirective/SourcePropertyAndTargetPropertyMustMatch';
 
 describe('when validating merge property name and types match', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -28,7 +28,7 @@ describe('when validating merge property name and types match', () => {
       .withDocumentation('doc')
       .withSharedStringIdentity(stringIdentityName, stringIdentityName, 'doc')
       .withDomainEntityIdentity(domainEntityName1, 'doc')
-      .withMergePartOfReference(`${domainEntityName1}.${stringIdentityName}`, stringIdentityName)
+      .withMergeDirective(`${domainEntityName1}.${stringIdentityName}`, stringIdentityName)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -68,7 +68,7 @@ describe('when validating merge property type mismatch', () => {
       .withDocumentation('doc')
       .withSharedStringIdentity(stringIdentityName, stringIdentityName, 'doc')
       .withDomainEntityIdentity(domainEntityName1, 'doc')
-      .withMergePartOfReference(`${domainEntityName1}.${stringIdentityName}`, stringIdentityName)
+      .withMergeDirective(`${domainEntityName1}.${stringIdentityName}`, stringIdentityName)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -85,7 +85,7 @@ describe('when validating merge property type mismatch', () => {
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyAndTargetPropertyMustMatch');
+    expect(failures[0].validatorName).toBe('SourcePropertyAndTargetPropertyMustMatch');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when validating merge property type mismatch should have validation failure -> message ',
@@ -128,10 +128,7 @@ describe('when validating merge of doubly nested domain entity with domain entit
       .withDocumentation('DomainEntityDocumentation')
       .withSharedIntegerIdentity(integerName, integerName, 'DomainEntityPropertyDocumentation')
       .withDomainEntityIdentity(domainEntityName3, 'DomainEntityPropertyDocumentation')
-      .withMergePartOfReference(
-        `${domainEntityName3}.${domainEntityName2}.${domainEntityName1}.${integerName}`,
-        `${integerName}`,
-      )
+      .withMergeDirective(`${domainEntityName3}.${domainEntityName2}.${domainEntityName1}.${integerName}`, `${integerName}`)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -184,7 +181,7 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityIdentity(domainEntitySubclassName, 'DomainEntityPropertyDocumentation')
       .withDomainEntityIdentity(domainEntityName3, 'DomainEntityPropertyDocumentation')
-      .withMergePartOfReference(
+      .withMergeDirective(
         `${domainEntityName3}.${sharedIntegerEntityName1}`,
         `${domainEntitySubclassName}.${sharedIntegerEntityName1}`,
       )

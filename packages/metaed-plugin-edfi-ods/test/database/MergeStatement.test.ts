@@ -58,7 +58,7 @@ describe('when domain entity merges references', () => {
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation', contextName)
-      .withMergePartOfReference(contextName + domainEntityName1, `${domainEntityName2}.${domainEntityName1}`)
+      .withMergeDirective(contextName + domainEntityName1, `${domainEntityName2}.${domainEntityName1}`)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -129,7 +129,7 @@ describe('when domain entity merges abstract references', () => {
       .withIntegerIdentity(integerPropertyName4, 'Documentation')
       .withDomainEntityIdentity(domainEntitySubclassName, 'Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
-      .withMergePartOfReference(`${domainEntityName1}.${abstractEntityName}`, domainEntitySubclassName)
+      .withMergeDirective(`${domainEntityName1}.${abstractEntityName}`, domainEntitySubclassName)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -206,7 +206,7 @@ describe('when domain entity merges collection references', () => {
       .withIntegerIdentity(integerPropertyName5, 'Documentation')
       .withDomainEntityIdentity(domainEntitySubclassName, 'Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
-      .withMergePartOfReference(`${domainEntityName1}.${abstractEntityName}`, domainEntitySubclassName)
+      .withMergeDirective(`${domainEntityName1}.${abstractEntityName}`, domainEntitySubclassName)
       .withCommonProperty(commonName, 'Documentation', false, true)
       .withEndDomainEntity()
       .withEndNamespace()
@@ -288,7 +288,7 @@ describe('when association merges domain entity property', () => {
       .withIntegerIdentity(integerPropertyName4, 'Documentation')
       .withAssociationProperty(associationName1, 'Documentation', false, false)
       .withContext(associationName1, shortenTo)
-      .withMergePartOfReference(`${associationName1}.${domainEntityName}`, domainEntityName)
+      .withMergeDirective(`${associationName1}.${domainEntityName}`, domainEntityName)
       .withEndAssociation()
       .withEndNamespace()
 
@@ -384,7 +384,7 @@ describe('when domain entity merges deep path', () => {
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation')
       .withDomainEntityIdentity(domainEntityName3, 'Documentation')
-      .withMergePartOfReference(
+      .withMergeDirective(
         `${domainEntityName3}.${abstractEntityName}`,
         `${domainEntityName2}.${domainEntityName1}.${domainEntitySubclassName}`,
       )
@@ -449,7 +449,7 @@ describe('when domain entity merges collection property', () => {
       .withIntegerIdentity(integerPropertyName2, 'Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withDomainEntityProperty(domainEntityName2, 'Documentation', false, true, false, domainEntityName2)
-      .withMergePartOfReference(`${domainEntityName2}.${domainEntityName1}`, domainEntityName1)
+      .withMergeDirective(`${domainEntityName2}.${domainEntityName1}`, domainEntityName1)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -551,7 +551,7 @@ describe('when domain entity merges self reference property', () => {
       .withIntegerIdentity(integerPropertyName2, 'Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withDomainEntityProperty(domainEntityName2, 'Documentation', false, false, false, contextName)
-      .withMergePartOfReference(`${contextName + domainEntityName2}.${domainEntityName1}`, domainEntityName1)
+      .withMergeDirective(`${contextName + domainEntityName2}.${domainEntityName1}`, domainEntityName1)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -630,7 +630,7 @@ describe('when domain entity merges descriptor property', () => {
       .withDocumentation('Documentation')
       .withDescriptorIdentity(descriptorName, 'Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation', contextName)
-      .withMergePartOfReference(`${contextName + domainEntityName2}.${domainEntityName1}.${descriptorName}`, descriptorName)
+      .withMergeDirective(`${contextName + domainEntityName2}.${domainEntityName1}.${descriptorName}`, descriptorName)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -730,10 +730,7 @@ describe('when domain entity merges enumeration property', () => {
       .withDocumentation('Documentation')
       .withEnumerationIdentity(enumerationName, 'Documentation')
       .withDomainEntityIdentity(domainEntityName2, 'Documentation', contextName)
-      .withMergePartOfReference(
-        `${contextName + domainEntityName2}.${domainEntityName1}.${enumerationName}`,
-        enumerationName,
-      )
+      .withMergeDirective(`${contextName + domainEntityName2}.${domainEntityName1}.${enumerationName}`, enumerationName)
       .withEndDomainEntity()
       .withEndNamespace()
 

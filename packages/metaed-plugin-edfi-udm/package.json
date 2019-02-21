@@ -17,11 +17,12 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiUdm",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
-      "metaed-core",
-      "metaed-plugin-edfi-unified"
+      "metaed-plugin-edfi-unified-advanced",
+      "metaed-plugin-edfi-ods",
+      "metaed-plugin-edfi-xsd"
     ]
   },
   "dependencies": {
@@ -30,7 +31,7 @@
     "marked": "^0.4.0",
     "metaed-core": "2.0.0-dev.3",
     "metaed-plugin-edfi-ods": "2.0.0-dev.3",
-    "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "metaed-plugin-edfi-xsd": "2.0.0-dev.3",
     "ramda": "^0.25.0",
     "sort-array": "^2.0.0",

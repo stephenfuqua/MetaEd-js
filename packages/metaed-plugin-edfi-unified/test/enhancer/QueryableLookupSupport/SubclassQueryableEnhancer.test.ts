@@ -62,11 +62,8 @@ describe('when enhancing domain entity subclass queryables', () => {
     const entity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
-    // $FlowIgnore - entity could be null
     expect(entity.queryableFields).toHaveLength(2);
-    // $FlowIgnore - entity could be null
     expect(R.head(entity.queryableFields).metaEdName).toBe(integerPropertyName4);
-    // $FlowIgnore - entity could be null
     expect(R.last(entity.queryableFields).metaEdName).toBe(integerPropertyName2);
   });
 });
@@ -117,7 +114,6 @@ describe('when enhancing domain entity subclass with identity rename of base cla
     const entity: any = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
-    // $FlowIgnore - entity could be null
     expect(R.head(entity.queryableFields).metaEdName).toBe(integerPropertyName3);
   });
 });
@@ -172,11 +168,8 @@ describe('when enhancing association subclass queryables', () => {
     const entity: any = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
-    // $FlowIgnore - entity could be null
     expect(entity.queryableFields).toHaveLength(2);
-    // $FlowIgnore - entity could be null
     expect(R.head(entity.queryableFields).metaEdName).toBe(integerPropertyName4);
-    // $FlowIgnore - entity could be null
     expect(R.last(entity.queryableFields).metaEdName).toBe(integerPropertyName2);
   });
 });
@@ -228,7 +221,6 @@ describe('when enhancing association subclass with identity rename of base class
     const entity: any = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(entity).toBeDefined();
     expect(entity).not.toBeNull();
-    // $FlowIgnore - entity could be null
     expect(R.head(entity.queryableFields).metaEdName).toBe(integerPropertyName3);
   });
 });

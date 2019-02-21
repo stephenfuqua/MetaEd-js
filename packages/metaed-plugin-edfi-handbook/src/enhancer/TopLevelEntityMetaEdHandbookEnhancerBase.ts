@@ -142,10 +142,10 @@ function getDataTypeName(property: EntityProperty): string {
 }
 
 function getMergedProperties(property: ReferentialProperty): Array<HandbookMergeProperty> {
-  if (!property.mergedProperties) return [];
+  if (!property.mergeDirectives) return [];
 
-  return property.mergedProperties.map(x => ({
-    propertyPath: x.mergePropertyPath,
+  return property.mergeDirectives.map(x => ({
+    propertyPath: x.sourcePropertyPath,
     targetPath: x.targetPropertyPath,
   }));
 }
@@ -164,7 +164,7 @@ function entityPropertyToHandbookEntityReferenceProperty(
     definition: property.documentation,
     isIdentity: property.isPartOfIdentity || property.isIdentityRename,
     cardinality: getCardinalityStringFor(property, true),
-    mergedProperties: getMergedProperties(referentialProperty),
+    mergeDirectives: getMergedProperties(referentialProperty),
   };
 }
 

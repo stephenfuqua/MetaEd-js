@@ -149,7 +149,7 @@ class SkipPathStrategy extends BuildStrategy {
   }
 
   buildColumns(property: EntityProperty): boolean {
-    this.onPathPropertyPaths = this.myEligiblePropertyPaths.filter(x => x.length > 0 && x[0] === property.propertyPathName);
+    this.onPathPropertyPaths = this.myEligiblePropertyPaths.filter(x => x.length > 0 && x[0] === property.fullPropertyName);
     return this.onPathPropertyPaths.length === 0 || this.onPathPropertyPaths.some(x => x.length > 1);
   }
 

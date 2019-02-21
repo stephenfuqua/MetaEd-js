@@ -45,7 +45,7 @@
                     <td>{{r.cardinality}}</td>
                     <td>{{r.definition}}</td>
                     <td ng-if="ctrl.showMerge">
-                        <div ng-repeat="merge in r.mergedProperties" ng-style="ctrl.getMergeStyle(merge, $last)">
+                        <div ng-repeat="merge in r.mergeDirectives" ng-style="ctrl.getMergeStyle(merge, $last)">
                             <span ng-repeat="path in merge.propertyPath">{{path}}
                                 <span ng-if="!$last">.</span>
                             </span>

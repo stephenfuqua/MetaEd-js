@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { EntityProperty, MergedProperty } from 'metaed-core';
+import { EntityProperty, MergeDirective } from 'metaed-core';
 import { isSharedProperty, asReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
 import { baseNameCollapsingJoinTableNamer } from './JoinTableNamer';
@@ -29,10 +29,10 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
       let strategy: BuildStrategy = buildStrategy;
 
       // TODO: As of METAED-881, the property here could be a shared simple property, which
-      // is not currently an extension of ReferentialProperty but has an equivalent mergedProperties field
-      if (isSharedProperty(property) && asReferentialProperty(property).mergedProperties.length > 0) {
+      // is not currently an extension of ReferentialProperty but has an equivalent mergeDirectives field
+      if (isSharedProperty(property) && asReferentialProperty(property).mergeDirectives.length > 0) {
         strategy = strategy.skipPath(
-          asReferentialProperty(property).mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
+          asReferentialProperty(property).mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
         );
       }
 

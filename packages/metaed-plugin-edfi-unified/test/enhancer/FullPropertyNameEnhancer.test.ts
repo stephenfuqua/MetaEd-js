@@ -8,7 +8,7 @@ import {
   newNamespace,
 } from 'metaed-core';
 import { MetaEdEnvironment, Namespace } from 'metaed-core';
-import { enhance } from '../../src/enhancer/PropertyPathNameEnhancer';
+import { enhance } from '../../src/enhancer/FullPropertyNameEnhancer';
 
 describe('when enhancing entity property without with context', () => {
   const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
@@ -36,9 +36,9 @@ describe('when enhancing entity property without with context', () => {
     enhance(metaEd);
   });
 
-  it('should have correct property path', () => {
+  it('should have correct full property name', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === propertyName));
-    expect(property.propertyPathName).toBe(propertyName);
+    expect(property.fullPropertyName).toBe(propertyName);
   });
 });
 
@@ -70,9 +70,9 @@ describe('when enhancing entity property with a with context', () => {
     enhance(metaEd);
   });
 
-  it('should have correct property path', () => {
+  it('should have correct full property name', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === propertyName));
-    expect(property.propertyPathName).toBe(withContext + propertyName);
+    expect(property.fullPropertyName).toBe(withContext + propertyName);
   });
 });
 
@@ -104,8 +104,8 @@ describe('when enhancing entity property with identical with context', () => {
     enhance(metaEd);
   });
 
-  it('should have correct property path', () => {
+  it('should have correct full property name', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === propertyName));
-    expect(property.propertyPathName).toBe(withContext);
+    expect(property.fullPropertyName).toBe(withContext);
   });
 });

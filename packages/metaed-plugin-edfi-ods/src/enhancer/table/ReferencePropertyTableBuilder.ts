@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { asReferentialProperty } from 'metaed-core';
-import { EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
+import { EntityProperty, MergeDirective, ReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, createForeignKey, newTable } from '../../model/database/Table';
 import { addSourceEntityProperty, addMergedReferenceContext } from '../../model/database/Column';
 import { collectPrimaryKeys } from './PrimaryKeyCollector';
@@ -44,9 +44,9 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
       const referenceProperty: ReferentialProperty = asReferentialProperty(property);
       let strategy: BuildStrategy = buildStrategy;
 
-      if (!R.isEmpty(referenceProperty.mergedProperties)) {
+      if (!R.isEmpty(referenceProperty.mergeDirectives)) {
         strategy = strategy.skipPath(
-          referenceProperty.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
+          referenceProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
         );
       }
 

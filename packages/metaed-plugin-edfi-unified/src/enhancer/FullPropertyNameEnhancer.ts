@@ -1,11 +1,10 @@
-import { MetaEdEnvironment, EnhancerResult } from 'metaed-core';
-import { getAllProperties } from 'metaed-core';
+import { MetaEdEnvironment, EnhancerResult, getAllProperties } from 'metaed-core';
 
-const enhancerName = 'PropertyPathNameEnhancer';
+const enhancerName = 'FullPropertyNameEnhancer';
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
   getAllProperties(metaEd.propertyIndex).forEach(entityProperty => {
-    entityProperty.propertyPathName =
+    entityProperty.fullPropertyName =
       (entityProperty.withContext !== entityProperty.metaEdName ? entityProperty.withContext : '') +
       entityProperty.metaEdName;
   });

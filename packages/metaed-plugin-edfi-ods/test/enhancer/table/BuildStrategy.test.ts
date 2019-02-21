@@ -165,7 +165,7 @@ describe('when composing skip path with eligible property paths, append parent c
 
   it('should return true when calling build columns', () => {
     // NOTE: This would be false if the skip path decorator wasn't removing itself from the decorator chain. see SkipPathStrategy class in BuildStrategy
-    const integerProperty = Object.assign(newIntegerProperty(), { propertyPathName: integerPropertyPathName });
+    const integerProperty = Object.assign(newIntegerProperty(), { fullPropertyName: integerPropertyPathName });
     expect(strategy.buildColumns(integerProperty)).toBe(true);
   });
 
@@ -203,7 +203,7 @@ describe('when composing skip path with eligible property paths, append parent c
   });
 
   it('should return true when calling build columns', () => {
-    const integerProperty = Object.assign(newIntegerProperty(), { propertyPathName: integerPropertyPathName });
+    const integerProperty = Object.assign(newIntegerProperty(), { fullPropertyName: integerPropertyPathName });
     expect(strategy.buildColumns(integerProperty)).toBe(true);
   });
 

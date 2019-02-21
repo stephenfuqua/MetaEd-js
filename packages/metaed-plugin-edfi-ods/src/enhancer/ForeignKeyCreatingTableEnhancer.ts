@@ -1,6 +1,6 @@
 import R from 'ramda';
 import { asReferentialProperty } from 'metaed-core';
-import { EnhancerResult, EntityProperty, MergedProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
+import { EnhancerResult, EntityProperty, MergeDirective, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { getAllColumns, getPrimaryKeys, addForeignKey } from '../model/database/Table';
 import { newColumnNamePair } from '../model/database/ColumnNamePair';
 import { newForeignKey, addColumnNamePair, foreignKeySourceReferenceFrom } from '../model/database/ForeignKey';
@@ -54,32 +54,31 @@ export function getMatchingColumnFromSourceEntityProperties(
 export function getMergePropertyColumn(table: Table, column: Column, property: EntityProperty): Column | undefined {
   let result: Column | undefined;
   // TODO: As of METAED-881, the property here could be a shared simple property, which
-  // is not currently an extension of ReferentialProperty but has an equivalent mergedProperties field
-  asReferentialProperty(property).mergedProperties.forEach((mergedProperty: MergedProperty) => {
+  // is not currently an extension of ReferentialProperty but has an equivalent mergeDirectives field
+  asReferentialProperty(property).mergeDirectives.forEach((mergeDirective: MergeDirective) => {
     if (
-      mergedProperty.mergeProperty != null &&
-      !column.sourceEntityProperties.includes(mergedProperty.mergeProperty) &&
+      mergeDirective.sourceProperty != null &&
+      !column.sourceEntityProperties.includes(mergeDirective.sourceProperty) &&
       !column.mergedReferenceContexts.some((context: string) =>
-        context.startsWith(R.tail(mergedProperty.mergePropertyPath).join('')),
+        context.startsWith(R.tail(mergeDirective.sourcePropertyPath).join('')),
       )
     )
       return;
 
     const expandedTargetProperties: Array<EntityProperty> = [];
-    if (mergedProperty.targetProperty != null) {
-      if (isOdsReferenceProperty(mergedProperty.targetProperty)) {
-        // if (isOdsMergeableProperty(mergedProperty.targetProperty)) {
+    if (mergeDirective.targetProperty != null) {
+      if (isOdsReferenceProperty(mergeDirective.targetProperty)) {
+        // if (isOdsMergeableProperty(mergeDirective.targetProperty)) {
         expandedTargetProperties.push(
           ...R.chain((x: Column) => x.sourceEntityProperties)(
             R.compose(
               R.uniq,
               getPrimaryKeys,
-              // $FlowIgnore - targetProperty could be null/undefined
-            )(asReferentialProperty(mergedProperty.targetProperty).referencedEntity.data.edfiOds.odsEntityTable),
+            )(asReferentialProperty(mergeDirective.targetProperty).referencedEntity.data.edfiOds.odsEntityTable),
           ),
         );
       } else {
-        expandedTargetProperties.push(mergedProperty.targetProperty);
+        expandedTargetProperties.push(mergeDirective.targetProperty);
       }
     }
 
@@ -88,7 +87,7 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
         ? R.head(expandedTargetProperties)
         : R.head(expandedTargetProperties.filter((x: EntityProperty) => column.sourceEntityProperties.includes(x)));
 
-    let targetPropertyPath: string = R.join('')(mergedProperty.targetPropertyPath);
+    let targetPropertyPath: string = R.join('')(mergeDirective.targetPropertyPath);
     if (property.parentEntity.type !== 'choice' && table.name !== property.parentEntity.data.edfiOds.odsTableName) {
       // If dealing with a property from a parent table for a join table primary key, add the parent entity name to make paths match
       targetPropertyPath = property.parentEntity.data.edfiOds.odsTableName + targetPropertyPath;

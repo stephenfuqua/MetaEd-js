@@ -110,6 +110,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "fullPropertyName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "hasRestriction": Object {
     "column": 6,
     "line": 12,
@@ -189,11 +194,6 @@ Object {
     "column": 16,
     "line": 2,
     "tokenText": "EntityName",
-  },
-  "propertyPathName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
   "referencedEntity": Object {
     "column": 0,
@@ -348,6 +348,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "fullPropertyName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "hasRestriction": Object {
     "column": 6,
     "line": 10,
@@ -428,11 +433,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "propertyPathName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
   "referencedEntity": Object {
     "column": 0,
     "line": 0,
@@ -466,7 +466,7 @@ Object {
 }
 `;
 
-exports[`when building merged property reference should have source map for mergePropertyPath with line, column, text 1`] = `
+exports[`when building merge directive reference should have source map for sourcePropertyPath with line, column, text 1`] = `
 Array [
   Object {
     "column": 10,
@@ -476,7 +476,7 @@ Array [
 ]
 `;
 
-exports[`when building merged property reference should have source map for targetPropertyPath with line, column, text 1`] = `
+exports[`when building merge directive reference should have source map for targetPropertyPath with line, column, text 1`] = `
 Array [
   Object {
     "column": 31,
@@ -486,18 +486,18 @@ Array [
 ]
 `;
 
-exports[`when building multiple merge property references for a shared simple type should have source map for first merged property 1`] = `
+exports[`when building multiple merge property references for a shared simple type should have source map for first merge directive 1`] = `
 Object {
-  "mergeProperty": Object {
+  "sourceProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "mergePropertyPath": Array [
+  "sourcePropertyPath": Array [
     Object {
       "column": 10,
       "line": 9,
-      "tokenText": "MergePropertyPath0",
+      "tokenText": "SourcePropertyPath0",
     },
   ],
   "targetProperty": Object {
@@ -507,7 +507,7 @@ Object {
   },
   "targetPropertyPath": Array [
     Object {
-      "column": 34,
+      "column": 35,
       "line": 9,
       "tokenText": "TargetPropertyPath0",
     },
@@ -520,18 +520,18 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references for a shared simple type should have source map for second merged property 1`] = `
+exports[`when building multiple merge property references for a shared simple type should have source map for second merge directive 1`] = `
 Object {
-  "mergeProperty": Object {
+  "sourceProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "mergePropertyPath": Array [
+  "sourcePropertyPath": Array [
     Object {
       "column": 10,
       "line": 10,
-      "tokenText": "MergePropertyPath1",
+      "tokenText": "SourcePropertyPath1",
     },
   ],
   "targetProperty": Object {
@@ -541,7 +541,7 @@ Object {
   },
   "targetPropertyPath": Array [
     Object {
-      "column": 34,
+      "column": 35,
       "line": 10,
       "tokenText": "TargetPropertyPath1",
     },
@@ -554,18 +554,18 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references should have source map for first merged property 1`] = `
+exports[`when building multiple merge property references should have source map for first merge directive 1`] = `
 Object {
-  "mergeProperty": Object {
+  "sourceProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "mergePropertyPath": Array [
+  "sourcePropertyPath": Array [
     Object {
       "column": 10,
       "line": 9,
-      "tokenText": "MergePropertyPath0",
+      "tokenText": "SourcePropertyPath0",
     },
   ],
   "targetProperty": Object {
@@ -575,7 +575,7 @@ Object {
   },
   "targetPropertyPath": Array [
     Object {
-      "column": 34,
+      "column": 35,
       "line": 9,
       "tokenText": "TargetPropertyPath0",
     },
@@ -588,18 +588,18 @@ Object {
 }
 `;
 
-exports[`when building multiple merge property references should have source map for second merged property 1`] = `
+exports[`when building multiple merge property references should have source map for second merge directive 1`] = `
 Object {
-  "mergeProperty": Object {
+  "sourceProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "mergePropertyPath": Array [
+  "sourcePropertyPath": Array [
     Object {
       "column": 10,
       "line": 10,
-      "tokenText": "MergePropertyPath1",
+      "tokenText": "SourcePropertyPath1",
     },
   ],
   "targetProperty": Object {
@@ -609,7 +609,7 @@ Object {
   },
   "targetPropertyPath": Array [
     Object {
-      "column": 34,
+      "column": 35,
       "line": 10,
       "tokenText": "TargetPropertyPath1",
     },
@@ -664,7 +664,7 @@ Object {
 }
 `;
 
-exports[`when building referential property with merged properties should have source map for mergedProperties with line, column, text 1`] = `
+exports[`when building referential property with merge directives should have source map for mergeDirectives with line, column, text 1`] = `
 Array [
   Object {
     "column": 4,
@@ -715,6 +715,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "fullPropertyName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "hasRestriction": Object {
     "column": 0,
     "line": 0,
@@ -760,12 +765,12 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "mergeDirectives": Array [],
   "mergeTargetedBy": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "mergedProperties": Array [],
   "metaEdId": Object {
     "column": 29,
     "line": 5,
@@ -790,11 +795,6 @@ Object {
     "column": 16,
     "line": 2,
     "tokenText": "EntityName",
-  },
-  "propertyPathName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
   "referencedEntity": Object {
     "column": 0,
@@ -886,6 +886,11 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
+  "fullPropertyName": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
   "hasRestriction": Object {
     "column": 6,
     "line": 10,
@@ -966,11 +971,6 @@ Object {
     "line": 2,
     "tokenText": "EntityName",
   },
-  "propertyPathName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
-  },
   "referencedEntity": Object {
     "column": 0,
     "line": 0,
@@ -1017,6 +1017,11 @@ Object {
     "tokenText": "documentation",
   },
   "documentationInherited": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "fullPropertyName": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
@@ -1100,11 +1105,6 @@ Object {
     "column": 16,
     "line": 2,
     "tokenText": "EntityName",
-  },
-  "propertyPathName": Object {
-    "column": 0,
-    "line": 0,
-    "tokenText": "NoSourceMap",
   },
   "referencedEntity": Object {
     "column": 0,

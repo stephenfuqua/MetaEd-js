@@ -1,11 +1,11 @@
 import { newIntegerProperty, newIntegerPropertySourceMap } from './IntegerProperty';
 import { IntegerProperty, IntegerPropertySourceMap } from './IntegerProperty';
 import { EntityProperty } from './EntityProperty';
-import { MergedProperty } from './MergedProperty';
+import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedIntegerPropertySourceMap extends IntegerPropertySourceMap {
-  mergedProperties: Array<SourceMap>;
+  mergeDirectives: Array<SourceMap>;
 }
 
 /**
@@ -14,13 +14,13 @@ export interface SharedIntegerPropertySourceMap extends IntegerPropertySourceMap
 export function newSharedIntegerPropertySourceMap(): SharedIntegerPropertySourceMap {
   return {
     ...newIntegerPropertySourceMap(),
-    mergedProperties: [],
+    mergeDirectives: [],
   };
 }
 
 export interface SharedIntegerProperty extends IntegerProperty {
   sourceMap: SharedIntegerPropertySourceMap;
-  mergedProperties: Array<MergedProperty>;
+  mergeDirectives: Array<MergeDirective>;
 }
 
 /**
@@ -31,7 +31,7 @@ export function newSharedIntegerProperty(): SharedIntegerProperty {
     ...newIntegerProperty(),
     type: 'sharedInteger',
     typeHumanizedName: 'Shared Integer Property',
-    mergedProperties: [],
+    mergeDirectives: [],
     sourceMap: newSharedIntegerPropertySourceMap(),
   };
 }

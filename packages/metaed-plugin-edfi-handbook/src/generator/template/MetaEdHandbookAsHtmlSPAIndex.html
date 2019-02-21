@@ -433,7 +433,7 @@
                 sharedContext.selectEntity(ctrl.selected);
 
                 angular.forEach(ctrl.selected.modelReferencesContainsProperties, function (property) {
-                    if (property.mergedProperties && property.mergedProperties.length) ctrl.showMerge = true;
+                    if (property.mergeDirectives && property.mergeDirectives.length) ctrl.showMerge = true;
                 })
             }
 

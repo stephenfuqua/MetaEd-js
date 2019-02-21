@@ -144,7 +144,6 @@ describe('when building and enhancing subdomain', () => {
     const subdomain = namespace.entity.subdomain.get(subdomainName1);
     expect(domain).toBeDefined();
     expect(subdomain).toBeDefined();
-    // $FlowIgnore = subdomain could be null
     expect(subdomain.parent).toBe(domain);
   });
 
@@ -155,9 +154,7 @@ describe('when building and enhancing subdomain', () => {
     expect(domain).toBeDefined();
     expect(subdomain1).toBeDefined();
     expect(subdomain2).toBeDefined();
-    // $FlowIgnore = domain could be null
     expect(R.head(domain.subdomains)).toBe(subdomain2);
-    // $FlowIgnore = domain could be null
     expect(R.last(domain.subdomains)).toBe(subdomain1);
   });
 });
@@ -211,16 +208,13 @@ describe('when building and enhancing association extension', () => {
     const extensionEntity = namespace.entity.associationExtension.get(associationName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.baseEntity).toBe(baseEntity);
   });
 
   it('should enhance extension with queryable fields', () => {
     const extensionEntity = namespace.entity.associationExtension.get(associationName1);
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
-    // $FlowIgnore - extensionEntity could be null
     expect(R.head(extensionEntity.queryableFields).metaEdName).toBe(integerIdentityName1);
   });
 });
@@ -275,16 +269,13 @@ describe('when building and enhancing association subclass', () => {
     const subclassEntity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(baseEntity).toBeDefined();
     expect(subclassEntity).toBeDefined();
-    // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.baseEntity).toBe(baseEntity);
   });
 
   it('should enhance subclass with queryable fields', () => {
     const subclassEntity = namespace.entity.associationSubclass.get(associationSubclassName1);
     expect(subclassEntity).toBeDefined();
-    // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.queryableFields).toHaveLength(1);
-    // $FlowIgnore - subclassEntity could be null
     expect(R.head(subclassEntity.queryableFields).metaEdName).toBe(integerIdentityName1);
   });
 });
@@ -330,16 +321,13 @@ describe('when building and enhancing common extension', () => {
     const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.baseEntity).toBe(baseEntity);
   });
 
   it('should enhance extension with queryable fields', () => {
     const extensionEntity = namespace.entity.commonExtension.get(commonName1);
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
-    // $FlowIgnore - extensionEntity could be null
     expect(R.head(extensionEntity.queryableFields).metaEdName).toBe(integerIdentityName1);
   });
 });
@@ -385,16 +373,13 @@ describe('when building and enhancing domain entity extension', () => {
     const extensionEntity = namespace.entity.domainEntityExtension.get(domainEntityName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.baseEntity).toBe(baseEntity);
   });
 
   it('should enhance extension with queryable fields', () => {
     const extensionEntity = namespace.entity.domainEntityExtension.get(domainEntityName1);
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.queryableFields).toHaveLength(1);
-    // $FlowIgnore - extensionEntity could be null
     expect(R.head(extensionEntity.queryableFields).metaEdName).toBe(integerIdentityName1);
   });
 });
@@ -441,16 +426,13 @@ describe('when building and enhancing domain entity subclass', () => {
     const subclassEntity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(baseEntity).toBeDefined();
     expect(subclassEntity).toBeDefined();
-    // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.baseEntity).toBe(baseEntity);
   });
 
   it('should enhance subclass with queryable fields', () => {
     const subclassEntity = namespace.entity.domainEntitySubclass.get(domainEntitySubclassName1);
     expect(subclassEntity).toBeDefined();
-    // $FlowIgnore - subclassEntity could be null
     expect(subclassEntity.queryableFields).toHaveLength(1);
-    // $FlowIgnore - subclassEntity could be null
     expect(R.head(subclassEntity.queryableFields).metaEdName).toBe(integerIdentityName1);
   });
 });
@@ -497,7 +479,6 @@ describe('when building and enhancing interchange extension', () => {
     const extensionEntity = namespace.entity.interchangeExtension.get(interchangeName1);
     expect(baseEntity).toBeDefined();
     expect(extensionEntity).toBeDefined();
-    // $FlowIgnore - extensionEntity could be null
     expect(extensionEntity.baseEntity).toBe(baseEntity);
   });
 });
@@ -548,7 +529,6 @@ describe('when building and enhancing interchange items', () => {
   });
 
   it('should enhance elements with referenced entity', () => {
-    // $FlowIgnore = entity could be null
     const property = R.head(namespace.entity.interchange.get(interchangeName1).elements);
     const referencedEntity = namespace.entity.domainEntity.get(domainEntityName1);
     expect(property).toBeDefined();
@@ -557,7 +537,6 @@ describe('when building and enhancing interchange items', () => {
   });
 
   it('should enhance identity templates with referenced entity', () => {
-    // $FlowIgnore = entity could be null
     const property = R.head(namespace.entity.interchange.get(interchangeName1).identityTemplates);
     const referencedEntity = namespace.entity.domainEntity.get(domainEntityName2);
     expect(property).toBeDefined();
@@ -614,7 +593,7 @@ describe('when building and enhancing association property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.association.filter(x => x.metaEdName === associationName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${associationName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${associationName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -675,7 +654,7 @@ describe('when building and enhancing choice property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.choice.filter(x => x.metaEdName === choiceName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${choiceName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${choiceName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -735,7 +714,7 @@ describe('when building and enhancing common property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.common.filter(x => x.metaEdName === commonName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${commonName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${commonName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -795,7 +774,7 @@ describe('when building and enhancing descriptor property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.descriptor.filter(x => x.metaEdName === descriptorName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${descriptorName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${descriptorName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -850,7 +829,7 @@ describe('when building and enhancing domain entity property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(x => x.metaEdName === domainEntityName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${domainEntityName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${domainEntityName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -910,7 +889,7 @@ describe('when building and enhancing enumeration property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.enumeration.filter(x => x.metaEdName === enumerationName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${enumerationName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${enumerationName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -970,7 +949,7 @@ describe('when building and enhancing inline common property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.inlineCommon.filter(x => x.metaEdName === inlineCommonName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${inlineCommonName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${inlineCommonName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1032,7 +1011,7 @@ describe('when building and enhancing school year enumeration property', () => {
       metaEd.propertyIndex.schoolYearEnumeration.filter(x => x.metaEdName === schoolYearEnumerationName1),
     );
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${schoolYearEnumerationName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${schoolYearEnumerationName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1106,7 +1085,7 @@ describe('when building and enhancing shared decimal property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.sharedDecimal.filter(x => x.metaEdName === sharedDecimalPropertyName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${sharedDecimalPropertyName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${sharedDecimalPropertyName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1122,7 +1101,6 @@ describe('when building and enhancing shared decimal property', () => {
     const referencedEntity = namespace.entity.decimalType.get(sharedDecimalName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
-    // $FlowIgnore - referencedEntity could be null
     expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
@@ -1207,7 +1185,7 @@ describe('when building and enhancing shared integer property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.sharedInteger.filter(x => x.metaEdName === sharedIntegerPropertyName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${sharedIntegerPropertyName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${sharedIntegerPropertyName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1223,7 +1201,6 @@ describe('when building and enhancing shared integer property', () => {
     const referencedEntity = namespace.entity.integerType.get(sharedIntegerName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
-    // $FlowIgnore - referencedEntity could be null
     expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
@@ -1296,7 +1273,7 @@ describe('when building and enhancing shared short property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.sharedShort.filter(x => x.metaEdName === sharedShortPropertyName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${sharedShortPropertyName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${sharedShortPropertyName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1312,7 +1289,6 @@ describe('when building and enhancing shared short property', () => {
     const referencedEntity = namespace.entity.integerType.get(sharedShortName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
-    // $FlowIgnore - referencedEntity could be null
     expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
@@ -1385,7 +1361,7 @@ describe('when building and enhancing shared string property', () => {
   it('should enhance property path name with context', () => {
     const property = R.head(metaEd.propertyIndex.sharedString.filter(x => x.metaEdName === sharedStringPropertyName1));
     expect(property).toBeDefined();
-    expect(property.propertyPathName).toBe(`${contextName}${sharedStringPropertyName1}`);
+    expect(property.fullPropertyName).toBe(`${contextName}${sharedStringPropertyName1}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1401,7 +1377,6 @@ describe('when building and enhancing shared string property', () => {
     const referencedEntity = namespace.entity.stringType.get(sharedStringName1);
     expect(property).toBeDefined();
     expect(referencedEntity).toBeDefined();
-    // $FlowIgnore - referencedEntity could be null
     expect(R.head(referencedEntity.referringSimpleProperties)).toBe(property);
   });
 
@@ -1425,7 +1400,7 @@ describe('when building and enhancing shared string property', () => {
   });
 });
 
-describe('when building and enhancing domain entity merged properties', () => {
+describe('when building and enhancing domain entity merge directives', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName1 = 'DomainEntityName1';
   const domainEntityName2 = 'DomainEntityName2';
@@ -1454,7 +1429,7 @@ describe('when building and enhancing domain entity merged properties', () => {
       .withDocumentation('DomainEntityDocumentation')
       .withDomainEntityProperty(domainEntityName2, 'inherited', false, false, false, contextName2)
       .withDomainEntityProperty(domainEntityName3, 'inherited', false, false, false, contextName3)
-      .withMergePartOfReference(
+      .withMergeDirective(
         `${contextName3}${domainEntityName3}.${contextName1}${domainEntityName2}`,
         `${contextName2}${domainEntityName2}`,
       )
@@ -1479,7 +1454,7 @@ describe('when building and enhancing domain entity merged properties', () => {
       ),
     );
     expect(property2).toBeDefined();
-    expect(property2.propertyPathName).toBe(`${contextName2}${domainEntityName2}`);
+    expect(property2.fullPropertyName).toBe(`${contextName2}${domainEntityName2}`);
 
     const property3 = R.head(
       metaEd.propertyIndex.domainEntity.filter(
@@ -1487,7 +1462,7 @@ describe('when building and enhancing domain entity merged properties', () => {
       ),
     );
     expect(property3).toBeDefined();
-    expect(property3.propertyPathName).toBe(`${contextName3}${domainEntityName3}`);
+    expect(property3.fullPropertyName).toBe(`${contextName3}${domainEntityName3}`);
   });
 
   it('should enhance referenced entity', () => {
@@ -1532,7 +1507,7 @@ describe('when building and enhancing domain entity merged properties', () => {
     expect(property3.documentation).toBe(domainEntityDocumentation3);
   });
 
-  it('should enhance merged properties with merge', () => {
+  it('should enhance merge directives with merge', () => {
     const property = R.head(
       metaEd.propertyIndex.domainEntity.filter(
         x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
@@ -1545,10 +1520,10 @@ describe('when building and enhancing domain entity merged properties', () => {
     );
     expect(property).toBeDefined();
     expect(referencedProperty).toBeDefined();
-    expect(R.head(property.mergedProperties).mergeProperty).toBe(referencedProperty);
+    expect(property.mergeDirectives[0].sourceProperty).toBe(referencedProperty);
   });
 
-  it('should enhance merged properties with target', () => {
+  it('should enhance merge directives with target', () => {
     const property = R.head(
       metaEd.propertyIndex.domainEntity.filter(
         x => x.parentEntityName === domainEntityName1 && x.metaEdName === domainEntityName3,
@@ -1561,6 +1536,6 @@ describe('when building and enhancing domain entity merged properties', () => {
     );
     expect(property).toBeDefined();
     expect(referencedProperty).toBeDefined();
-    expect(R.head(property.mergedProperties).targetProperty).toBe(referencedProperty);
+    expect(R.head(property.mergeDirectives).targetProperty).toBe(referencedProperty);
   });
 });

@@ -147,9 +147,7 @@ describe('when associationExtensions in non-dependency-linked namespaces have id
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespacea = metaEd.namespace.get('Extensiona');
     extensionNamespaceb = metaEd.namespace.get('Extensionb');
-    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
-    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

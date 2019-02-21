@@ -178,7 +178,6 @@ export class IntegerTypeBuilder extends MetaEdGrammarListener {
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentIntegerType.metaEdName}`
       : this.currentIntegerType.metaEdName;
-    // $FlowIgnore - allowing currentIntegerType.type to specify the entityRepository Map property
     this.currentNamespace.entity[this.currentIntegerType.type].set(repositoryId, this.currentIntegerType);
 
     this.currentIntegerType = NoIntegerType;

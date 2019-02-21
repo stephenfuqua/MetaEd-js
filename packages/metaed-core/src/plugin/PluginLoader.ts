@@ -106,7 +106,6 @@ export function materializePlugin(pluginManifest: PluginManifest) {
     }
 
     /* eslint-disable */
-    // $FlowIgnore - No one likes a dynamic require
     const pluginFactoryCandidate = require(pluginManifest.mainModule);
     /* eslint-enable */
 

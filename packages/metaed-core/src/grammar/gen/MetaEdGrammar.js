@@ -842,8 +842,8 @@ var ruleNames =  [ "metaEd", "namespace", "namespaceType", "topLevelEntity",
                    "percentProperty", "associationProperty", "domainEntityProperty", 
                    "sharedDecimalProperty", "sharedIntegerProperty", "sharedShortProperty", 
                    "sharedStringProperty", "shortProperty", "stringProperty", 
-                   "timeProperty", "yearProperty", "isWeakReference", "mergePartOfReference", 
-                   "mergePropertyPath", "targetPropertyPath", "propertyPath", 
+                   "timeProperty", "yearProperty", "isWeakReference", "mergeDirective", 
+                   "sourcePropertyPath", "targetPropertyPath", "propertyPath", 
                    "signed_int", "unaryOperator", "abstractEntityName", 
                    "associationName", "baseKeyName", "baseName", "baseNamespace", 
                    "choiceName", "sharedDecimalName", "sharedIntegerName", 
@@ -1064,8 +1064,8 @@ MetaEdGrammar.RULE_stringProperty = 90;
 MetaEdGrammar.RULE_timeProperty = 91;
 MetaEdGrammar.RULE_yearProperty = 92;
 MetaEdGrammar.RULE_isWeakReference = 93;
-MetaEdGrammar.RULE_mergePartOfReference = 94;
-MetaEdGrammar.RULE_mergePropertyPath = 95;
+MetaEdGrammar.RULE_mergeDirective = 94;
+MetaEdGrammar.RULE_sourcePropertyPath = 95;
 MetaEdGrammar.RULE_targetPropertyPath = 96;
 MetaEdGrammar.RULE_propertyPath = 97;
 MetaEdGrammar.RULE_signed_int = 98;
@@ -8209,14 +8209,14 @@ CommonPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-CommonPropertyContext.prototype.mergePartOfReference = function(i) {
+CommonPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -8275,7 +8275,7 @@ MetaEdGrammar.prototype.commonProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 863;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 868;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -8326,14 +8326,14 @@ InlineCommonPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-InlineCommonPropertyContext.prototype.mergePartOfReference = function(i) {
+InlineCommonPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -8380,7 +8380,7 @@ MetaEdGrammar.prototype.inlineCommonProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 875;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 880;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -8431,14 +8431,14 @@ ChoicePropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-ChoicePropertyContext.prototype.mergePartOfReference = function(i) {
+ChoicePropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -8485,7 +8485,7 @@ MetaEdGrammar.prototype.choiceProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 887;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 892;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -8732,14 +8732,14 @@ AssociationPropertyContext.prototype.isWeakReference = function() {
     return this.getTypedRuleContext(IsWeakReferenceContext,0);
 };
 
-AssociationPropertyContext.prototype.mergePartOfReference = function(i) {
+AssociationPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -8794,7 +8794,7 @@ MetaEdGrammar.prototype.associationProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 921;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 926;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -8849,14 +8849,14 @@ DomainEntityPropertyContext.prototype.isWeakReference = function() {
     return this.getTypedRuleContext(IsWeakReferenceContext,0);
 };
 
-DomainEntityPropertyContext.prototype.mergePartOfReference = function(i) {
+DomainEntityPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -8911,7 +8911,7 @@ MetaEdGrammar.prototype.domainEntityProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 936;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 941;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -8970,14 +8970,14 @@ SharedDecimalPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-SharedDecimalPropertyContext.prototype.mergePartOfReference = function(i) {
+SharedDecimalPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -9034,7 +9034,7 @@ MetaEdGrammar.prototype.sharedDecimalProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 952;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 957;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -9093,14 +9093,14 @@ SharedIntegerPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-SharedIntegerPropertyContext.prototype.mergePartOfReference = function(i) {
+SharedIntegerPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -9157,7 +9157,7 @@ MetaEdGrammar.prototype.sharedIntegerProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 968;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 973;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -9216,14 +9216,14 @@ SharedShortPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-SharedShortPropertyContext.prototype.mergePartOfReference = function(i) {
+SharedShortPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -9280,7 +9280,7 @@ MetaEdGrammar.prototype.sharedShortProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 984;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 989;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -9339,14 +9339,14 @@ SharedStringPropertyContext.prototype.metaEdId = function() {
     return this.getTypedRuleContext(MetaEdIdContext,0);
 };
 
-SharedStringPropertyContext.prototype.mergePartOfReference = function(i) {
+SharedStringPropertyContext.prototype.mergeDirective = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(MergePartOfReferenceContext);
+        return this.getTypedRuleContexts(MergeDirectiveContext);
     } else {
-        return this.getTypedRuleContext(MergePartOfReferenceContext,i);
+        return this.getTypedRuleContext(MergeDirectiveContext,i);
     }
 };
 
@@ -9403,7 +9403,7 @@ MetaEdGrammar.prototype.sharedStringProperty = function() {
         _la = this._input.LA(1);
         while(_la===MetaEdGrammar.MERGE_REFERENCE) {
             this.state = 1000;
-            this.mergePartOfReference();
+            this.mergeDirective();
             this.state = 1005;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
@@ -9859,7 +9859,7 @@ MetaEdGrammar.prototype.isWeakReference = function() {
     return localctx;
 };
 
-function MergePartOfReferenceContext(parser, parent, invokingState) {
+function MergeDirectiveContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -9868,56 +9868,56 @@ function MergePartOfReferenceContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = MetaEdGrammar.RULE_mergePartOfReference;
+    this.ruleIndex = MetaEdGrammar.RULE_mergeDirective;
     return this;
 }
 
-MergePartOfReferenceContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-MergePartOfReferenceContext.prototype.constructor = MergePartOfReferenceContext;
+MergeDirectiveContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+MergeDirectiveContext.prototype.constructor = MergeDirectiveContext;
 
-MergePartOfReferenceContext.prototype.MERGE_REFERENCE = function() {
+MergeDirectiveContext.prototype.MERGE_REFERENCE = function() {
     return this.getToken(MetaEdGrammar.MERGE_REFERENCE, 0);
 };
 
-MergePartOfReferenceContext.prototype.mergePropertyPath = function() {
-    return this.getTypedRuleContext(MergePropertyPathContext,0);
+MergeDirectiveContext.prototype.sourcePropertyPath = function() {
+    return this.getTypedRuleContext(SourcePropertyPathContext,0);
 };
 
-MergePartOfReferenceContext.prototype.WITH = function() {
+MergeDirectiveContext.prototype.WITH = function() {
     return this.getToken(MetaEdGrammar.WITH, 0);
 };
 
-MergePartOfReferenceContext.prototype.targetPropertyPath = function() {
+MergeDirectiveContext.prototype.targetPropertyPath = function() {
     return this.getTypedRuleContext(TargetPropertyPathContext,0);
 };
 
-MergePartOfReferenceContext.prototype.enterRule = function(listener) {
+MergeDirectiveContext.prototype.enterRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.enterMergePartOfReference(this);
+        listener.enterMergeDirective(this);
 	}
 };
 
-MergePartOfReferenceContext.prototype.exitRule = function(listener) {
+MergeDirectiveContext.prototype.exitRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.exitMergePartOfReference(this);
+        listener.exitMergeDirective(this);
 	}
 };
 
 
 
 
-MetaEdGrammar.MergePartOfReferenceContext = MergePartOfReferenceContext;
+MetaEdGrammar.MergeDirectiveContext = MergeDirectiveContext;
 
-MetaEdGrammar.prototype.mergePartOfReference = function() {
+MetaEdGrammar.prototype.mergeDirective = function() {
 
-    var localctx = new MergePartOfReferenceContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 188, MetaEdGrammar.RULE_mergePartOfReference);
+    var localctx = new MergeDirectiveContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 188, MetaEdGrammar.RULE_mergeDirective);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 1045;
         this.match(MetaEdGrammar.MERGE_REFERENCE);
         this.state = 1046;
-        this.mergePropertyPath();
+        this.sourcePropertyPath();
         this.state = 1047;
         this.match(MetaEdGrammar.WITH);
         this.state = 1048;
@@ -9936,7 +9936,7 @@ MetaEdGrammar.prototype.mergePartOfReference = function() {
     return localctx;
 };
 
-function MergePropertyPathContext(parser, parent, invokingState) {
+function SourcePropertyPathContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -9945,38 +9945,38 @@ function MergePropertyPathContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = MetaEdGrammar.RULE_mergePropertyPath;
+    this.ruleIndex = MetaEdGrammar.RULE_sourcePropertyPath;
     return this;
 }
 
-MergePropertyPathContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-MergePropertyPathContext.prototype.constructor = MergePropertyPathContext;
+SourcePropertyPathContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+SourcePropertyPathContext.prototype.constructor = SourcePropertyPathContext;
 
-MergePropertyPathContext.prototype.propertyPath = function() {
+SourcePropertyPathContext.prototype.propertyPath = function() {
     return this.getTypedRuleContext(PropertyPathContext,0);
 };
 
-MergePropertyPathContext.prototype.enterRule = function(listener) {
+SourcePropertyPathContext.prototype.enterRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.enterMergePropertyPath(this);
+        listener.enterSourcePropertyPath(this);
 	}
 };
 
-MergePropertyPathContext.prototype.exitRule = function(listener) {
+SourcePropertyPathContext.prototype.exitRule = function(listener) {
     if(listener instanceof MetaEdGrammarListener ) {
-        listener.exitMergePropertyPath(this);
+        listener.exitSourcePropertyPath(this);
 	}
 };
 
 
 
 
-MetaEdGrammar.MergePropertyPathContext = MergePropertyPathContext;
+MetaEdGrammar.SourcePropertyPathContext = SourcePropertyPathContext;
 
-MetaEdGrammar.prototype.mergePropertyPath = function() {
+MetaEdGrammar.prototype.sourcePropertyPath = function() {
 
-    var localctx = new MergePropertyPathContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 190, MetaEdGrammar.RULE_mergePropertyPath);
+    var localctx = new SourcePropertyPathContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 190, MetaEdGrammar.RULE_sourcePropertyPath);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 1050;

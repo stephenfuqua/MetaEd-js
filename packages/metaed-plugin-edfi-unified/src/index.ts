@@ -93,11 +93,11 @@ import { validate as interchangeExtensionMustNotRedeclareBaseInterchangeIdentity
 import { validate as interchangeExtensionMustNotRedeclareElements } from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareElements';
 import { validate as interchangeExtensionMustNotRedeclareIdentityName } from './validator/InterchangeExtension/InterchangeExtensionMustNotRedeclareIdentityName';
 
-import { validate as mergePropertyAndTargetPropertyMustMatch } from './validator/MergePartOfReference/MergePropertyAndTargetPropertyMustMatch';
-import { validate as mergePropertyPathMustExist } from './validator/MergePartOfReference/MergePropertyPathMustExist';
-import { validate as mergeStatementMustStartMergePathWithPropertyName } from './validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
+import { validate as sourcePropertyAndTargetPropertyMustMatch } from './validator/MergeDirective/SourcePropertyAndTargetPropertyMustMatch';
+import { validate as sourcePropertyPathMustExist } from './validator/MergeDirective/SourcePropertyPathMustExist';
+import { validate as mergeDirectiveMustStartSourcePathWithPropertyName } from './validator/MergeDirective/MergeDirectiveMustStartSourcePathWithPropertyName';
 import { validate as namespacesNamesMustNotHaveOnlyDifferentCasing } from './validator/Namespace/NamespacesNamesMustNotHaveOnlyDifferentCasing';
-import { validate as targetPropertyPathMustExist } from './validator/MergePartOfReference/TargetPropertyPathMustExist';
+import { validate as targetPropertyPathMustExist } from './validator/MergeDirective/TargetPropertyPathMustExist';
 
 /*
 import { validate as metaEdIdIsRequiredForDomainItems } from './validator/MetaEdId/MetaEdIdIsRequiredForDomainItems';
@@ -168,8 +168,8 @@ import { enhance as sharedStringPropertyEnhancer } from './enhancer/SharedString
 
 import { enhance as inheritedDocumentationCopyingEnhancer } from './enhancer/InheritedDocumentationCopyingEnhancer';
 
-import { enhance as propertyPathNameEnhancer } from './enhancer/PropertyPathNameEnhancer';
-import { enhance as mergedPropertyEnhancer } from './enhancer/MergedPropertyEnhancer';
+import { enhance as fullPropertyNameEnhancer } from './enhancer/FullPropertyNameEnhancer';
+import { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
 
 function validatorList(): Array<Validator> {
   return [
@@ -267,9 +267,9 @@ function validatorList(): Array<Validator> {
     interchangeExtensionMustNotRedeclareElements,
     interchangeExtensionMustNotRedeclareIdentityName,
 
-    mergePropertyAndTargetPropertyMustMatch,
-    mergePropertyPathMustExist,
-    mergeStatementMustStartMergePathWithPropertyName,
+    sourcePropertyAndTargetPropertyMustMatch,
+    sourcePropertyPathMustExist,
+    mergeDirectiveMustStartSourcePathWithPropertyName,
     targetPropertyPathMustExist,
 
     // ////// Commenting out MetaEd ID required warnings -- imports commented out above
@@ -362,10 +362,10 @@ function enhancerList(): Array<Enhancer> {
     // enhance :: (referencedEntity) => documentation
     inheritedDocumentationCopyingEnhancer,
 
-    // enhance :: (referencedEntity) => propertyPathName
-    propertyPathNameEnhancer,
-    // enhance :: (referencedEntity, propertyPathName) => mergedProperty.mergeProperty, mergedProperty.targetProperty
-    mergedPropertyEnhancer,
+    // enhance :: (referencedEntity) => fullPropertyName
+    fullPropertyNameEnhancer,
+    // enhance :: (referencedEntity, fullPropertyName) => mergeDirective.sourceProperty, mergeDirective.targetProperty
+    mergeDirectiveEnhancer,
   ];
 }
 

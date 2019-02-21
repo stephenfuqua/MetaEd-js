@@ -17,7 +17,7 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiHandbook",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
       "metaed-plugin-edfi-xsd",
@@ -28,8 +28,8 @@
     "handlebars": "^4.0.10",
     "js-beautify": "^1.7.5",
     "metaed-core": "2.0.0-dev.3",
-    "metaed-plugin-edfi-ods": "2.0.0-dev.3",
     "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-ods": "2.0.0-dev.3",
     "metaed-plugin-edfi-xsd": "2.0.0-dev.3",
     "ramda": "^0.25.0",
     "sort-array": "^2.0.0",

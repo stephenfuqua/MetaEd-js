@@ -107,7 +107,6 @@ describe('when validating common property has extension override of non common t
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

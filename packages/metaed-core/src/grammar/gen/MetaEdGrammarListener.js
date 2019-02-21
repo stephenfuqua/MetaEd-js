@@ -857,21 +857,21 @@ MetaEdGrammarListener.prototype.exitIsWeakReference = function(ctx) {
 };
 
 
-// Enter a parse tree produced by MetaEdGrammar#mergePartOfReference.
-MetaEdGrammarListener.prototype.enterMergePartOfReference = function(ctx) {
+// Enter a parse tree produced by MetaEdGrammar#mergeDirective.
+MetaEdGrammarListener.prototype.enterMergeDirective = function(ctx) {
 };
 
-// Exit a parse tree produced by MetaEdGrammar#mergePartOfReference.
-MetaEdGrammarListener.prototype.exitMergePartOfReference = function(ctx) {
+// Exit a parse tree produced by MetaEdGrammar#mergeDirective.
+MetaEdGrammarListener.prototype.exitMergeDirective = function(ctx) {
 };
 
 
-// Enter a parse tree produced by MetaEdGrammar#mergePropertyPath.
-MetaEdGrammarListener.prototype.enterMergePropertyPath = function(ctx) {
+// Enter a parse tree produced by MetaEdGrammar#sourcePropertyPath.
+MetaEdGrammarListener.prototype.enterSourcePropertyPath = function(ctx) {
 };
 
-// Exit a parse tree produced by MetaEdGrammar#mergePropertyPath.
-MetaEdGrammarListener.prototype.exitMergePropertyPath = function(ctx) {
+// Exit a parse tree produced by MetaEdGrammar#sourcePropertyPath.
+MetaEdGrammarListener.prototype.exitSourcePropertyPath = function(ctx) {
 };
 
 

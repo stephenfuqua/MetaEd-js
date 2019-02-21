@@ -26,7 +26,7 @@ export type EntityPropertySourceMap = {
   namespace: SourceMap;
   baseKeyName: SourceMap;
   shortenTo: SourceMap;
-  propertyPathName: SourceMap;
+  fullPropertyName: SourceMap;
   parentEntityName: SourceMap;
   parentEntity: SourceMap;
   isPartOfIdentity: SourceMap;
@@ -56,7 +56,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
     namespace: NoSourceMap,
     baseKeyName: NoSourceMap,
     shortenTo: NoSourceMap,
-    propertyPathName: NoSourceMap,
+    fullPropertyName: NoSourceMap,
     parentEntityName: NoSourceMap,
     parentEntity: NoSourceMap,
     isPartOfIdentity: NoSourceMap,
@@ -95,7 +95,7 @@ export function newEntityPropertySourceMap(): EntityPropertySourceMap {
  *
  * **shortenTo** is the optional shortenTo name for a with context -> shorten to directive.
  *
- * **propertyPathName** is the property name, prepended with the optional withContext name.
+ * **fullPropertyName** is the property name, prepended with the optional withContext name.
  *
  * **parentEntityName** is the metaEdName of the parent entity
  *
@@ -139,7 +139,7 @@ export type EntityProperty = {
   namespace: Namespace;
   baseKeyName: string;
   shortenTo: string;
-  propertyPathName: string;
+  fullPropertyName: string;
   parentEntityName: string;
   parentEntity: TopLevelEntity;
   isPartOfIdentity: boolean;
@@ -172,7 +172,7 @@ export function newEntityProperty(): EntityProperty {
     namespace: newNamespace(),
     baseKeyName: '',
     shortenTo: '',
-    propertyPathName: '',
+    fullPropertyName: '',
     parentEntityName: '',
     parentEntity: newTopLevelEntity(),
     isPartOfIdentity: false,

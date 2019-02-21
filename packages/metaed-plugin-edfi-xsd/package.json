@@ -17,10 +17,10 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiXsd",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
-      "metaed-plugin-edfi-unified"
+      "metaed-plugin-edfi-unified-advanced"
     ]
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "js-beautify": "^1.7.4",
     "metaed-core": "2.0.0-dev.3",
     "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "ramda": "^0.25.0",
     "semver": "^5.4.1",
     "sugar": "^2.0.4",

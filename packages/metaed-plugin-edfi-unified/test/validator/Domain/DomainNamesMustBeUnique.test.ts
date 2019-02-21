@@ -153,9 +153,7 @@ describe('when domains in non-dependency-linked namespaces have identical names'
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespacea = metaEd.namespace.get('Extensiona');
     extensionNamespaceb = metaEd.namespace.get('Extensionb');
-    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
-    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

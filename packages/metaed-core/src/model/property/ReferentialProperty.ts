@@ -4,11 +4,11 @@ import { SourceMap } from '../SourceMap';
 import { NoSourceMap } from '../SourceMap';
 import { TopLevelEntity } from '../TopLevelEntity';
 import { NoTopLevelEntity } from '../TopLevelEntity';
-import { MergedProperty } from './MergedProperty';
+import { MergeDirective } from './MergeDirective';
 
 export interface ReferentialPropertySourceMap extends EntityPropertySourceMap {
   referencedEntity: SourceMap;
-  mergedProperties: Array<SourceMap>;
+  mergeDirectives: Array<SourceMap>;
 }
 
 /**
@@ -18,14 +18,14 @@ export function newReferentialPropertySourceMap(): ReferentialPropertySourceMap 
   return {
     ...newEntityPropertySourceMap(),
     referencedEntity: NoSourceMap,
-    mergedProperties: [],
+    mergeDirectives: [],
   };
 }
 
 export interface ReferentialProperty extends EntityProperty {
   sourceMap: ReferentialPropertySourceMap;
   referencedEntity: TopLevelEntity;
-  mergedProperties: Array<MergedProperty>;
+  mergeDirectives: Array<MergeDirective>;
 }
 
 /**
@@ -35,7 +35,7 @@ export function newReferentialProperty(): ReferentialProperty {
   return {
     ...newEntityProperty(),
     referencedEntity: NoTopLevelEntity,
-    mergedProperties: [],
+    mergeDirectives: [],
     sourceMap: newReferentialPropertySourceMap(),
   };
 }

@@ -147,7 +147,6 @@ export class StringTypeBuilder extends MetaEdGrammarListener {
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentStringType.metaEdName}`
       : this.currentStringType.metaEdName;
-    // $FlowIgnore - allowing currentStringType.type to specify the entityRepository Map property
     this.currentNamespace.entity[this.currentStringType.type].set(repositoryId, this.currentStringType);
 
     this.currentStringType = NoStringType;

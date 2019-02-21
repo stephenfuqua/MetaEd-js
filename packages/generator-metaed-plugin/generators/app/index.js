@@ -78,8 +78,8 @@ module.exports = class extends Generator {
         type: 'checkbox',
         name: 'dependencies',
         message: 'Which Ed-Fi Alliance MetaEd plugins does your new plugin depend on?',
-        default: ['metaed-plugin-edfi-unified'],
-        choices: ['metaed-plugin-edfi-unified', 'metaed-plugin-edfi-ods', 'metaed-plugin-edfi-xsd'],
+        default: ['metaed-plugin-edfi-unified-advanced'],
+        choices: ['metaed-plugin-edfi-unified-advanced', 'metaed-plugin-edfi-ods', 'metaed-plugin-edfi-xsd'],
       },
     ];
 

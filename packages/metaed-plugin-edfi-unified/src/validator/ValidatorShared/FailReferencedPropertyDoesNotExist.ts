@@ -29,7 +29,7 @@ export function failReferencedPropertyDoesNotExist(
     failures.push({
       validatorName,
       category: 'error',
-      message: `Merge statement ${propertyPath.join(
+      message: `Merge directive ${propertyPath.join(
         '.',
       )} must be a valid path. Either the path is not to a mergeable type, or no property '${R.last(
         propertyPath,

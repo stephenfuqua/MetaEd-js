@@ -17,10 +17,10 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiOdsApi",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": "*",
     "dependencies": [
-      "metaed-plugin-edfi-unified",
+      "metaed-plugin-edfi-unified-advanced",
       "metaed-plugin-edfi-ods",
       "metaed-plugin-edfi-xsd"
     ]
@@ -32,6 +32,7 @@
     "metaed-core": "2.0.0-dev.3",
     "metaed-plugin-edfi-ods": "2.0.0-dev.3",
     "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "metaed-plugin-edfi-xsd": "2.0.0-dev.3",
     "ramda": "^0.25.0",
     "sugar": "^2.0.4",

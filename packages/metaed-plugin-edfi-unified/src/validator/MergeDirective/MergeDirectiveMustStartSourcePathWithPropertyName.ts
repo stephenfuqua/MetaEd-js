@@ -19,22 +19,22 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
-    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
+    // are not currently extensions of ReferentialProperty but have an equivalent mergeDirectives field
     const referentialProperty = asReferentialProperty(property);
-    referentialProperty.mergedProperties.forEach(mergedProperty => {
+    referentialProperty.mergeDirectives.forEach(mergeDirective => {
       const prefix: string =
         referentialProperty.withContext && referentialProperty.withContext !== referentialProperty.metaEdName
           ? referentialProperty.withContext
           : '';
-      if (mergedProperty.mergePropertyPath[0] === `${prefix}${referentialProperty.metaEdName}`) return;
+      if (mergeDirective.sourcePropertyPath[0] === `${prefix}${referentialProperty.metaEdName}`) return;
 
       failures.push({
-        validatorName: 'MergeStatementMustStartMergePathWithPropertyName',
+        validatorName: 'MergeDirectiveMustStartSourcePathWithPropertyName',
         category: 'error',
-        message: `Merge statement must start first property path with the current property ${
+        message: `Merge directive must start first property path with the current property ${
           prefix ? 'context and ' : ''
         }name: ${prefix}${referentialProperty.metaEdName}.`,
-        sourceMap: mergedProperty.sourceMap.mergePropertyPath[0],
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPath[0],
         fileMap: null,
       });
     });

@@ -4,8 +4,8 @@ import { MetaEdGrammar } from '../grammar/gen/MetaEdGrammar';
 import { MetaEdGrammarListener } from '../grammar/gen/MetaEdGrammarListener';
 import { EntityProperty } from '../model/property/EntityProperty';
 import { NoEntityProperty } from '../model/property/EntityProperty';
-import { newMergedProperty, NoMergedProperty } from '../model/property/MergedProperty';
-import { MergedProperty, MergedPropertySourceMap } from '../model/property/MergedProperty';
+import { newMergeDirective, NoMergeDirective } from '../model/property/MergeDirective';
+import { MergeDirective, MergeDirectiveSourceMap } from '../model/property/MergeDirective';
 import { TopLevelEntity } from '../model/TopLevelEntity';
 import { NoTopLevelEntity } from '../model/TopLevelEntity';
 import { NamespaceRepository } from '../model/NamespaceRepository';
@@ -67,7 +67,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   currentProperty: EntityProperty;
 
-  currentMergedProperty: MergedProperty;
+  currentMergeDirective: MergeDirective;
 
   whenExitingPropertyCommand: Array<() => void>;
 
@@ -83,7 +83,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     this.currentNamespace = NoNamespace;
     this.currentTopLevelEntity = NoTopLevelEntity;
     this.currentProperty = NoEntityProperty;
-    this.currentMergedProperty = NoMergedProperty;
+    this.currentMergeDirective = NoMergeDirective;
     this.whenExitingPropertyCommand = [];
     this.validationFailures = validationFailures;
     this.currentTopLevelEntityPropertyLookup = new Map();
@@ -798,32 +798,32 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   }
 
   // @ts-ignore
-  enterMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
+  enterMergeDirective(context: MetaEdGrammar.MergeDirectiveContext) {
     if (this.currentProperty === NoEntityProperty) return;
     if (context.exception) return;
-    this.currentMergedProperty = newMergedProperty();
+    this.currentMergeDirective = newMergeDirective();
   }
 
-  enterMergePropertyPath(context: MetaEdGrammar.MergePropertyPathContext) {
-    if (this.currentMergedProperty === NoMergedProperty) return;
+  enterSourcePropertyPath(context: MetaEdGrammar.SourcePropertyPathContext) {
+    if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
-    this.currentMergedProperty.mergePropertyPath = propertyPathFrom(context.propertyPath());
-    (this.currentMergedProperty.sourceMap as MergedPropertySourceMap).mergePropertyPath.push(sourceMapFrom(context));
+    this.currentMergeDirective.sourcePropertyPath = propertyPathFrom(context.propertyPath());
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).sourcePropertyPath.push(sourceMapFrom(context));
   }
 
   enterTargetPropertyPath(context: MetaEdGrammar.TargetPropertyPathContext) {
-    if (this.currentMergedProperty === NoMergedProperty) return;
+    if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
-    this.currentMergedProperty.targetPropertyPath = propertyPathFrom(context.propertyPath());
-    (this.currentMergedProperty.sourceMap as MergedPropertySourceMap).targetPropertyPath.push(sourceMapFrom(context));
+    this.currentMergeDirective.targetPropertyPath = propertyPathFrom(context.propertyPath());
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).targetPropertyPath.push(sourceMapFrom(context));
   }
 
-  exitMergePartOfReference(context: MetaEdGrammar.MergePartOfReferenceContext) {
-    if (this.currentProperty === NoEntityProperty || this.currentMergedProperty === NoMergedProperty) return;
+  exitMergeDirective(context: MetaEdGrammar.MergeDirectiveContext) {
+    if (this.currentProperty === NoEntityProperty || this.currentMergeDirective === NoMergeDirective) return;
     // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
-    // are not currently extensions of ReferentialProperty but have an equivalent mergedProperties field
-    (this.currentProperty as ReferentialProperty).mergedProperties.push(this.currentMergedProperty);
-    (this.currentProperty.sourceMap as ReferentialPropertySourceMap).mergedProperties.push(sourceMapFrom(context));
-    this.currentMergedProperty = NoMergedProperty;
+    // are not currently extensions of ReferentialProperty but have an equivalent mergeDirectives field
+    (this.currentProperty as ReferentialProperty).mergeDirectives.push(this.currentMergeDirective);
+    (this.currentProperty.sourceMap as ReferentialPropertySourceMap).mergeDirectives.push(sourceMapFrom(context));
+    this.currentMergeDirective = NoMergeDirective;
   }
 }

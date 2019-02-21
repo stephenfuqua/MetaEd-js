@@ -147,7 +147,6 @@ describe('when common property has invalid identifier of common in dependency na
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -203,9 +202,7 @@ describe('when common property refers to common in non-dependency namespace', ()
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespacea = metaEd.namespace.get('Extensiona');
     extensionNamespaceb = metaEd.namespace.get('Extensionb');
-    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
-    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

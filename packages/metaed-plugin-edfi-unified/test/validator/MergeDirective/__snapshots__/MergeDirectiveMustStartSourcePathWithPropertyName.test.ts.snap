@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when validating reference property starts merge path with mismatched property name should have validation failure: when validating reference property starts merge path with mismatched property name should have validation failure -> message 1`] = `"Merge directive must start first property path with the current property name: DomainEntityPropertyName."`;
+
+exports[`when validating reference property starts merge path with mismatched property name should have validation failure: when validating reference property starts merge path with mismatched property name should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 10,
+  "line": 14,
+  "tokenText": "EntityName",
+}
+`;
+
+exports[`when validating reference property starts merge path with property name and missing context should have validation failure: when validating reference property starts merge path with property name and missing context should have validation failure -> message 1`] = `"Merge directive must start first property path with the current property context and name: ContextNameDomainEntityPropertyName."`;
+
+exports[`when validating reference property starts merge path with property name and missing context should have validation failure: when validating reference property starts merge path with property name and missing context should have validation failure -> sourceMap 1`] = `
+Object {
+  "column": 10,
+  "line": 15,
+  "tokenText": "DomainEntityPropertyName",
+}
+`;

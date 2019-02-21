@@ -172,7 +172,6 @@ export class DecimalTypeBuilder extends MetaEdGrammarListener {
     const repositoryId = projectExtension
       ? `${projectExtension}-${this.currentDecimalType.metaEdName}`
       : this.currentDecimalType.metaEdName;
-    // $FlowIgnore - allowing currentDecimalType.type to specify the entityRepository Map property
     this.currentNamespace.entity[this.currentDecimalType.type].set(repositoryId, this.currentDecimalType);
 
     this.currentDecimalType = NoDecimalType;

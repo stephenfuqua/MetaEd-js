@@ -17,10 +17,10 @@
     "pluginType": "artifact-specific",
     "shortName": "edfiOdsChangeQuery",
     "authorName": "Ed-Fi Alliance",
-    "metaEdVersion": "1.x",
+    "metaEdVersion": "2.x",
     "technologyVersion": ">=3.0.0",
     "dependencies": [
-      "metaed-plugin-edfi-unified",
+      "metaed-plugin-edfi-unified-advanced",
       "metaed-plugin-edfi-ods"
     ]
   },
@@ -28,7 +28,7 @@
     "handlebars": "^4.0.11",
     "metaed-core": "2.0.0-dev.3",
     "metaed-plugin-edfi-ods": "2.0.0-dev.3",
-    "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "ramda": "^0.25.0",
     "winston": "3.0.0"
   },

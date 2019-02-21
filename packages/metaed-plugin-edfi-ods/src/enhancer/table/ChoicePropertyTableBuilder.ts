@@ -1,4 +1,4 @@
-import { EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
+import { EntityProperty, MergeDirective, ReferentialProperty } from 'metaed-core';
 import { asReferentialProperty } from 'metaed-core';
 import { cloneColumn } from '../../model/database/Column';
 import { BuildStrategy } from './BuildStrategy';
@@ -22,8 +22,8 @@ export function choicePropertyTableBuilder(factory: TableBuilderFactory): TableB
       const choice: ReferentialProperty = asReferentialProperty(property);
       let strategy: BuildStrategy = buildStrategy;
 
-      if (choice.mergedProperties.length > 0) {
-        strategy = strategy.skipPath(choice.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)));
+      if (choice.mergeDirectives.length > 0) {
+        strategy = strategy.skipPath(choice.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)));
       }
 
       choice.referencedEntity.data.edfiOds.odsProperties.forEach((odsProperty: EntityProperty) => {

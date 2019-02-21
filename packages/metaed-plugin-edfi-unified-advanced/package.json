@@ -1,0 +1,34 @@
+{
+  "name": "metaed-plugin-edfi-unified-advanced",
+  "main": "dist/index.js",
+  "version": "2.0.0-dev.3",
+  "description": "Ed-Fi Alliance advanced unified plugin for MetaEd",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "registry": "https://www.myget.org/F/ed-fi/npm/"
+  },
+  "files": [
+    "/dist",
+    "/CHANGELOG.md",
+    "/LICENSE.md",
+    "/package.json"
+  ],
+  "metaed-plugin": {
+    "pluginType": "artifact-specific",
+    "shortName": "edfiUnifiedAdvanced",
+    "authorName": "Ed-Fi Alliance",
+    "metaEdVersion": "2.x",
+    "technologyVersion": "*",
+    "dependencies": ["metaed-plugin-edfi-unified"]
+  },
+  "dependencies": {
+    "metaed-core": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified": "2.0.0-dev.3"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:copy-non-ts && yarn build:dist",
+    "build:clean": "rimraf dist",
+    "build:dist": "tsc",
+    "build:copy-non-ts": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist --verbose"
+  }
+}

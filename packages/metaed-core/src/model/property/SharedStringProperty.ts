@@ -1,11 +1,11 @@
 import { newStringProperty, newStringPropertySourceMap } from './StringProperty';
 import { StringProperty, StringPropertySourceMap } from './StringProperty';
 import { EntityProperty } from './EntityProperty';
-import { MergedProperty } from './MergedProperty';
+import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedStringPropertySourceMap extends StringPropertySourceMap {
-  mergedProperties: Array<SourceMap>;
+  mergeDirectives: Array<SourceMap>;
 }
 
 /**
@@ -14,13 +14,13 @@ export interface SharedStringPropertySourceMap extends StringPropertySourceMap {
 export function newSharedStringPropertySourceMap(): SharedStringPropertySourceMap {
   return {
     ...newStringPropertySourceMap(),
-    mergedProperties: [],
+    mergeDirectives: [],
   };
 }
 
 export interface SharedStringProperty extends StringProperty {
   sourceMap: SharedStringPropertySourceMap;
-  mergedProperties: Array<MergedProperty>;
+  mergeDirectives: Array<MergeDirective>;
 }
 
 /**
@@ -31,7 +31,7 @@ export function newSharedStringProperty(): SharedStringProperty {
     ...newStringProperty(),
     type: 'sharedString',
     typeHumanizedName: 'Shared String Property',
-    mergedProperties: [],
+    mergeDirectives: [],
     sourceMap: newSharedStringPropertySourceMap(),
   };
 }

@@ -35,37 +35,37 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   getPropertiesOfType(metaEd.propertyIndex, ...validPropertyTypes).forEach(property => {
     if (!isReferentialProperty(property)) return;
     const referentialProperty = asReferentialProperty(property);
-    if (referentialProperty.mergedProperties.length === 0) return;
+    if (referentialProperty.mergeDirectives.length === 0) return;
     const { namespace } = referentialProperty;
-    referentialProperty.mergedProperties.forEach(mergedProperty => {
-      const mergeProperty: EntityProperty | null = findReferencedProperty(
+    referentialProperty.mergeDirectives.forEach(mergeDirective => {
+      const sourceProperty: EntityProperty | null = findReferencedProperty(
         namespace,
         referentialProperty.parentEntity,
-        mergedProperty.mergePropertyPath,
+        mergeDirective.sourcePropertyPath,
         matchAllButFirstAsIdentityProperties(),
       );
       const targetProperty: EntityProperty | null = findReferencedProperty(
         namespace,
         referentialProperty.parentEntity,
-        mergedProperty.targetPropertyPath,
+        mergeDirective.targetPropertyPath,
         matchAllIdentityReferenceProperties(),
       );
 
-      if (!mergeProperty || !targetProperty) return;
+      if (!sourceProperty || !targetProperty) return;
 
-      if (mergeProperty && targetProperty) {
-        if (mergeProperty.type === targetProperty.type) {
-          if (mergeProperty.metaEdName === targetProperty.metaEdName) return;
+      if (sourceProperty && targetProperty) {
+        if (sourceProperty.type === targetProperty.type) {
+          if (sourceProperty.metaEdName === targetProperty.metaEdName) return;
 
           if (
-            referenceTypes.includes(asModelType(mergeProperty.type)) &&
+            referenceTypes.includes(asModelType(sourceProperty.type)) &&
             referenceTypes.includes(asModelType(targetProperty.type))
           ) {
             const mergeBaseEntity: Array<ModelBase> = getReferencedEntities(
               namespace,
-              mergeProperty.metaEdName,
-              mergeProperty.referencedNamespaceName,
-              mergeProperty.type,
+              sourceProperty.metaEdName,
+              sourceProperty.referencedNamespaceName,
+              sourceProperty.type,
             );
             const targetBaseEntity: Array<ModelBase> = getReferencedEntities(
               namespace,
@@ -76,19 +76,19 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
 
             if (mergeBaseEntity[0] && asTopLevelEntity(mergeBaseEntity[0]).baseEntityName === targetProperty.metaEdName)
               return;
-            if (targetBaseEntity[0] && asTopLevelEntity(targetBaseEntity[0]).baseEntityName === mergeProperty.metaEdName)
+            if (targetBaseEntity[0] && asTopLevelEntity(targetBaseEntity[0]).baseEntityName === sourceProperty.metaEdName)
               return;
           }
         }
       }
 
       failures.push({
-        validatorName: 'MergePropertyAndTargetPropertyMustMatch',
+        validatorName: 'SourcePropertyAndTargetPropertyMustMatch',
         category: 'error',
-        message: `The merge paths '${mergedProperty.mergePropertyPath.join(
+        message: `The merge paths '${mergeDirective.sourcePropertyPath.join(
           '.',
-        )}' and '${mergedProperty.targetPropertyPath.join('.')}' do not correspond to the same entity name and/or type.`,
-        sourceMap: mergedProperty.sourceMap.mergePropertyPath[0],
+        )}' and '${mergeDirective.targetPropertyPath.join('.')}' do not correspond to the same entity name and/or type.`,
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPath[0],
         fileMap: null,
       });
     });

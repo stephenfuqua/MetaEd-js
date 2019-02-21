@@ -409,15 +409,15 @@ enumerationProperty : ENUMERATION_KEYWORD propertyName metaEdId? propertyCompone
 
 commonProperty : (COMMON_KEYWORD | commonExtensionOverride) propertyName metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 inlineCommonProperty : INLINE_COMMON_KEYWORD propertyName metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 choiceProperty : CHOICE_KEYWORD propertyName metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 integerProperty : INTEGER simplePropertyName metaEdId? propertyComponents minValue? maxValue? ;
 
@@ -426,28 +426,28 @@ percentProperty : PERCENT simplePropertyName metaEdId? propertyComponents ;
 associationProperty : ASSOCIATION_KEYWORD propertyName metaEdId?
             propertyComponents
             isWeakReference?
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 domainEntityProperty : DOMAIN_ENTITY_KEYWORD propertyName metaEdId?
             propertyComponents
             isWeakReference?
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 sharedDecimalProperty : SHARED_DECIMAL_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 sharedIntegerProperty : SHARED_INTEGER_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 sharedShortProperty : SHARED_SHORT_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 sharedStringProperty : SHARED_STRING_KEYWORD sharedPropertyType (SHARED_NAMED sharedPropertyName)? metaEdId?
             propertyComponents
-            mergePartOfReference* ;
+            mergeDirective* ;
 
 shortProperty : SHORT simplePropertyName metaEdId?
             propertyComponents
@@ -470,11 +470,11 @@ isWeakReference
     : IS_WEAK_REFERENCE
     ;
 
-mergePartOfReference
-    : MERGE_REFERENCE mergePropertyPath WITH targetPropertyPath
+mergeDirective
+    : MERGE_REFERENCE sourcePropertyPath WITH targetPropertyPath
     ;
 
-mergePropertyPath
+sourcePropertyPath
     : propertyPath
     ;
 

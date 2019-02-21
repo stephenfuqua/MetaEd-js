@@ -181,7 +181,6 @@ describe('when association property has invalid identifier of association in dep
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -239,9 +238,7 @@ describe('when association property refers to association in non-dependency name
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespacea = metaEd.namespace.get('Extensiona');
     extensionNamespaceb = metaEd.namespace.get('Extensionb');
-    // $FlowIgnore - null check
     extensionNamespacea.dependencies.push(coreNamespace);
-    // $FlowIgnore - null check
     extensionNamespaceb.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);

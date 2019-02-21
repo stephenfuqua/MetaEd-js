@@ -120,7 +120,6 @@ export function getPropertiesOfType(
   ...propertyTypes: Array<PropertyType>
 ): Array<EntityProperty> {
   const result: Array<EntityProperty> = [];
-  // $FlowIgnore - using model type repository lookup
   propertyTypes.forEach(propertyType => result.push(...propertyIndex[propertyType]));
   return result;
 }
@@ -136,7 +135,6 @@ export function getPropertiesOfTypeForNamespaces(
   const result: Array<EntityProperty> = [];
 
   propertyTypes.forEach(propertyType => {
-    // $FlowIgnore - using model type repository lookup
     const propertiesInNamespaces = propertyIndex[propertyType].filter((property: EntityProperty) =>
       namespaces.includes(property.namespace),
     );
@@ -166,6 +164,5 @@ export function getAllPropertiesForNamespaces(
  *
  */
 export function addProperty(propertyIndex: PropertyIndex, property: EntityProperty) {
-  // $FlowIgnore - indexing with type
   propertyIndex[property.type].push(property);
 }

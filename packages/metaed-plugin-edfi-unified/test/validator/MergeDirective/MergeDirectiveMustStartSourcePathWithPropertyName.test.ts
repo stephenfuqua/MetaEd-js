@@ -1,6 +1,6 @@
 import { newMetaEdEnvironment, MetaEdTextBuilder, DomainEntityBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/MergePartOfReference/MergeStatementMustStartMergePathWithPropertyName';
+import { validate } from '../../../src/validator/MergeDirective/MergeDirectiveMustStartSourcePathWithPropertyName';
 
 describe('when validating reference property starts merge path with matching property name', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -15,7 +15,7 @@ describe('when validating reference property starts merge path with matching pro
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
       .withDomainEntityProperty(entityName, 'DomainEntityPropertyDocumentation', true, false)
-      .withMergePartOfReference(`${entityName}.Property`, 'TargetPropertyName')
+      .withMergeDirective(`${entityName}.Property`, 'TargetPropertyName')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -47,7 +47,7 @@ describe('when validating reference property starts merge path with mismatched p
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
       .withDomainEntityProperty('DomainEntityPropertyName', 'DomainEntityPropertyDocumentation', true, false)
-      .withMergePartOfReference('EntityName.PropertyName', 'TargetPropertyName')
+      .withMergeDirective('EntityName.PropertyName', 'TargetPropertyName')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -64,7 +64,7 @@ describe('when validating reference property starts merge path with mismatched p
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergeStatementMustStartMergePathWithPropertyName');
+    expect(failures[0].validatorName).toBe('MergeDirectiveMustStartSourcePathWithPropertyName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when validating reference property starts merge path with mismatched property name should have validation failure -> message',
@@ -88,7 +88,7 @@ describe('when validating reference property starts merge path with matching pro
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
       .withDomainEntityProperty(entityName, 'DomainEntityPropertyDocumentation', true, false, false, entityName)
-      .withMergePartOfReference(`${entityName}.Property`, 'TargetPropertyName')
+      .withMergeDirective(`${entityName}.Property`, 'TargetPropertyName')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -122,7 +122,7 @@ describe('when validating reference property starts merge path with property nam
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
       .withDomainEntityProperty(entityName, 'DomainEntityPropertyDocumentation', true, false, false, contextName)
-      .withMergePartOfReference(`${contextName}${entityName}.Property`, 'TargetPropertyName')
+      .withMergeDirective(`${contextName}${entityName}.Property`, 'TargetPropertyName')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -156,7 +156,7 @@ describe('when validating reference property starts merge path with property nam
       .withDocumentation('DomainEntityDocumentation')
       .withStringIdentity('StringIdentityName', 'StringIdentityDocumentation', '100')
       .withDomainEntityProperty(entityName, 'DomainEntityPropertyDocumentation', true, false, false, contextName)
-      .withMergePartOfReference(`${entityName}.Property`, 'TargetPropertyName')
+      .withMergeDirective(`${entityName}.Property`, 'TargetPropertyName')
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -173,7 +173,7 @@ describe('when validating reference property starts merge path with property nam
 
   it('should have validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergeStatementMustStartMergePathWithPropertyName');
+    expect(failures[0].validatorName).toBe('MergeDirectiveMustStartSourcePathWithPropertyName');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when validating reference property starts merge path with property name and missing context should have validation failure -> message',
@@ -196,7 +196,7 @@ describe('when validating reference property starts merge path with matching pro
       .withStartDomainEntity('DomainEntityName')
       .withDocumentation('DomainEntityDocumentation')
       .withSharedStringIdentity(propertyName, propertyName, 'doc')
-      .withMergePartOfReference(`${propertyName}.Property`, 'TargetPropertyName')
+      .withMergeDirective(`${propertyName}.Property`, 'TargetPropertyName')
       .withDomainEntityProperty('DomainEntityPropertyName', 'DomainEntityPropertyDocumentation', true, false)
       .withEndDomainEntity()
       .withEndNamespace()

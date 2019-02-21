@@ -14,7 +14,7 @@ import {
   SharedStringBuilder,
 } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/MergePartOfReference/MergePropertyPathMustExist';
+import { validate } from '../../../src/validator/MergeDirective/SourcePropertyPathMustExist';
 
 describe('when validating domain entity has merge property', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
@@ -36,7 +36,7 @@ describe('when validating domain entity has merge property', () => {
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName1, 'Documentation')
       .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName1}.${propertyName1}`, `${domainEntityName2}.${propertyName1}`)
+      .withMergeDirective(`${domainEntityName1}.${propertyName1}`, `${domainEntityName2}.${propertyName1}`)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -76,7 +76,7 @@ describe('when validating domain entity has merge property and entity is wrong',
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName2, 'IntegerIdentityDocumentation')
       .withAssociationProperty(domainEntityName1, 'AssociationPropertyDocumentation', false, false)
-      .withMergePartOfReference(`UnknowEntity.${propertyName1}`, propertyName2)
+      .withMergeDirective(`UnknowEntity.${propertyName1}`, propertyName2)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -93,7 +93,7 @@ describe('when validating domain entity has merge property and entity is wrong',
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].validatorName).toBe('SourcePropertyPathMustExist');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when validating domain entity has merge property and entity is wrong -> message',
@@ -124,7 +124,7 @@ describe('when validating domain entity has merge property and property is wrong
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName2, 'IntegerIdentityDocumentation')
       .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName1}.UnknownProperty`, propertyName2)
+      .withMergeDirective(`${domainEntityName1}.UnknownProperty`, propertyName2)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -141,7 +141,7 @@ describe('when validating domain entity has merge property and property is wrong
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].validatorName).toBe('SourcePropertyPathMustExist');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot(
       'when validating domain entity has merge property and property is wrong -> message',
@@ -172,7 +172,7 @@ describe('when validating domain entity has merge property on common type', () =
       .withIntegerIdentity('Property2', 'Documentation')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
       .withCommonProperty(commonName, 'Documentation', false, false)
-      .withMergePartOfReference(`${commonName}.${domainEntityName}`, domainEntityName)
+      .withMergeDirective(`${commonName}.${domainEntityName}`, domainEntityName)
       .withEndDomainEntity()
 
       .withStartCommon(commonName)
@@ -218,7 +218,7 @@ describe('when validating domain entity has merge property on school year enumer
       .withDocumentation('Documentation')
       .withEnumerationIdentity('SchoolYear', 'Documentation')
       .withDomainEntityProperty(domainEntityName, 'Documentation', true, false)
-      .withMergePartOfReference(`${domainEntityName}.${schoolYear}`, schoolYear)
+      .withMergeDirective(`${domainEntityName}.${schoolYear}`, schoolYear)
       .withEndDomainEntity()
 
       .withStartEnumeration('SchoolYear')
@@ -266,7 +266,7 @@ describe('when validating domain entity extension has merge property', () => {
 
       .withStartDomainEntityExtension('Entity2')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity2.Property2')
+      .withMergeDirective(`${domainEntityName}.${propertyName}`, 'Entity2.Property2')
       .withEndDomainEntityExtension()
       .withEndNamespace()
 
@@ -313,7 +313,7 @@ describe('when validating domain entity subclass has merge property', () => {
       .withDocumentation('Documentation')
       .withIntegerProperty(propertyName, 'Documentation', true, false)
       .withDomainEntityProperty(domainEntityName2, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName2}.${propertyName}`, `${domainEntityName3}.${propertyName}`)
+      .withMergeDirective(`${domainEntityName2}.${propertyName}`, `${domainEntityName3}.${propertyName}`)
       .withEndDomainEntitySubclass()
       .withEndNamespace()
 
@@ -365,7 +365,7 @@ describe('when validating association has merge property', () => {
       .withAssociationDomainEntityProperty('Entity3', 'Documentation')
       .withIntegerIdentity('Property4', 'Documentation')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
+      .withMergeDirective(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -418,7 +418,7 @@ describe('when validating association extension has merge property', () => {
 
       .withStartAssociationExtension('Entity4')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
+      .withMergeDirective(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -473,7 +473,7 @@ describe('when validating association subclass has merge property', () => {
       .withStartAssociationSubclass('Entity5', 'Entity4')
       .withDocumentation('Documentation')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
+      .withMergeDirective(`${domainEntityName}.${propertyName}`, 'Entity4.Property4')
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -513,7 +513,7 @@ describe('when validating abstract entity has merge property', () => {
       .withDocumentation('Documentation')
       .withIntegerIdentity('Property2', 'Documentation')
       .withDomainEntityProperty(domainEntityName, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName}.${propertyName}`, 'Entity2.Property2')
+      .withMergeDirective(`${domainEntityName}.${propertyName}`, 'Entity2.Property2')
       .withEndAbstractEntity()
       .withEndNamespace()
 
@@ -599,8 +599,8 @@ describe('when validating association subclass extension', () => {
       .withDocumentation('Documentation')
       .withDomainEntityIdentity(domainEntityName1, 'Documentation')
       .withChoiceProperty(choiceName, 'Documentation', false, false)
-      .withMergePartOfReference(`${choiceName}.${associationName1}.${domainEntityName1}`, domainEntityName1)
-      .withMergePartOfReference(`${choiceName}.${associationSubclassName}.${domainEntityName1}`, domainEntityName1)
+      .withMergeDirective(`${choiceName}.${associationName1}.${domainEntityName1}`, domainEntityName1)
+      .withMergeDirective(`${choiceName}.${associationSubclassName}.${domainEntityName1}`, domainEntityName1)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -653,7 +653,7 @@ describe('when validating domain entity has merge property across namespaces', (
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName1, 'Documentation')
       .withDomainEntityProperty(domainEntityName1, 'Documentation', false, false)
-      .withMergePartOfReference(`${domainEntityName1}.${propertyName1}`, `${domainEntityName2}.${propertyName1}`)
+      .withMergeDirective(`${domainEntityName1}.${propertyName1}`, `${domainEntityName2}.${propertyName1}`)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -662,7 +662,6 @@ describe('when validating domain entity has merge property across namespaces', (
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -701,7 +700,7 @@ describe('when validating domain entity has merge property across namespaces and
       .withDocumentation('Documentation')
       .withIntegerIdentity(propertyName2, 'IntegerIdentityDocumentation')
       .withAssociationProperty(domainEntityName1, 'AssociationPropertyDocumentation', false, false)
-      .withMergePartOfReference(`UnknownEntity.${propertyName1}`, propertyName2)
+      .withMergeDirective(`UnknownEntity.${propertyName1}`, propertyName2)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -710,7 +709,6 @@ describe('when validating domain entity has merge property across namespaces and
 
     coreNamespace = metaEd.namespace.get('EdFi');
     extensionNamespace = metaEd.namespace.get('Extension');
-    // $FlowIgnore - null check
     extensionNamespace.dependencies.push(coreNamespace);
 
     failures = validate(metaEd);
@@ -723,7 +721,7 @@ describe('when validating domain entity has merge property across namespaces and
 
   it('should have one validation failure', () => {
     expect(failures).toHaveLength(1);
-    expect(failures[0].validatorName).toBe('MergePropertyPathMustExist');
+    expect(failures[0].validatorName).toBe('SourcePropertyPathMustExist');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();
@@ -763,7 +761,7 @@ describe('when validating domain entity has simple property as merge property', 
       .withDocumentation('doc')
       .withDomainEntityIdentity(assessmentName, 'doc')
       .withDomainEntityProperty(learningObjectiveName, 'doc', false, true)
-      .withMergePartOfReference(`${learningObjectiveName}.${namespaceRename}`, `${assessmentName}.${namespaceRename}`)
+      .withMergeDirective(`${learningObjectiveName}.${namespaceRename}`, `${assessmentName}.${namespaceRename}`)
       .withEndDomainEntity()
       .withEndNamespace()
 

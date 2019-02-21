@@ -12,7 +12,7 @@ export type HandbookEntityReferenceProperty = {
   isIdentity: boolean;
   cardinality: string;
   definition: string;
-  mergedProperties?: Array<HandbookMergeProperty>;
+  mergeDirectives?: Array<HandbookMergeProperty>;
 };
 
 export type HandbookEntry = {

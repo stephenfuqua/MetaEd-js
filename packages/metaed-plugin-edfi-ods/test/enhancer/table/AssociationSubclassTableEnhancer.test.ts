@@ -91,12 +91,10 @@ describe('when AssociationSubclassTableEnhancer enhances association subclass', 
   });
 
   it('should have schema equal to namespace', () => {
-    // $FlowIgnore - null check
     expect((tableEntities(metaEd, extensionNamespace).get(associationSubclassName) as Table).schema).toBe('extension');
   });
 
   it('should have description equal to documentation', () => {
-    // $FlowIgnore - null check
     expect((tableEntities(metaEd, extensionNamespace).get(associationSubclassName) as Table).description).toBe(
       documentation,
     );

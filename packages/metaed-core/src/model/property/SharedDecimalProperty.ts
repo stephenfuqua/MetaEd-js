@@ -1,11 +1,11 @@
 import { DecimalProperty, DecimalPropertySourceMap } from './DecimalProperty';
 import { newDecimalProperty, newDecimalPropertySourceMap } from './DecimalProperty';
 import { EntityProperty } from './EntityProperty';
-import { MergedProperty } from './MergedProperty';
+import { MergeDirective } from './MergeDirective';
 import { SourceMap } from '../SourceMap';
 
 export interface SharedDecimalPropertySourceMap extends DecimalPropertySourceMap {
-  mergedProperties: Array<SourceMap>;
+  mergeDirectives: Array<SourceMap>;
 }
 
 /**
@@ -14,13 +14,13 @@ export interface SharedDecimalPropertySourceMap extends DecimalPropertySourceMap
 export function newSharedDecimalPropertySourceMap(): SharedDecimalPropertySourceMap {
   return {
     ...newDecimalPropertySourceMap(),
-    mergedProperties: [],
+    mergeDirectives: [],
   };
 }
 
 export interface SharedDecimalProperty extends DecimalProperty {
   sourceMap: SharedDecimalPropertySourceMap;
-  mergedProperties: Array<MergedProperty>;
+  mergeDirectives: Array<MergeDirective>;
 }
 
 /**
@@ -31,7 +31,7 @@ export function newSharedDecimalProperty(): SharedDecimalProperty {
     ...newDecimalProperty(),
     type: 'sharedDecimal',
     typeHumanizedName: 'Shared Decimal Property',
-    mergedProperties: [],
+    mergeDirectives: [],
     sourceMap: newSharedDecimalPropertySourceMap(),
   };
 }

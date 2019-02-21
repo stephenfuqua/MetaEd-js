@@ -3,7 +3,7 @@ import {
   newDomainEntity,
   newDomainEntityProperty,
   newIntegerProperty,
-  newMergedProperty,
+  newMergeDirective,
   newMetaEdEnvironment,
   newNamespace,
 } from 'metaed-core';
@@ -373,9 +373,9 @@ describe('when using get merge property column with property that is not include
   beforeAll(() => {
     const domainEntity1Property3: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: 'DomainEntityName3',
-      mergedProperties: [
-        Object.assign(newMergedProperty(), {
-          mergeProperty: newIntegerProperty(),
+      mergeDirectives: [
+        Object.assign(newMergeDirective(), {
+          sourceProperty: newIntegerProperty(),
         }),
       ],
     });
@@ -397,12 +397,12 @@ describe('when using get merge property column with column that has invalid merg
     const domainEntity1Property3: DomainEntityProperty = Object.assign(newDomainEntityProperty(), {
       metaEdName: domainEntityName3,
     });
-    const mergedProperty = Object.assign(newMergedProperty(), {
-      mergeProperty: domainEntity1Property3,
-      mergePropertyPath: [domainEntityName3, domainEntityName2],
+    const mergedProperty = Object.assign(newMergeDirective(), {
+      sourceProperty: domainEntity1Property3,
+      sourcePropertyPath: [domainEntityName3, domainEntityName2],
       targetPropertyPath: [domainEntityName2],
     });
-    domainEntity1Property3.mergedProperties.push(mergedProperty);
+    domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
     const referencedColumn: Column = Object.assign(newIntegerColumn(), {
       name: domainEntityName3,
@@ -448,13 +448,13 @@ describe('when using get merge property column with non reference target propert
       metaEdName: domainEntityName3,
       parentEntity: domainEntity,
     });
-    const mergedProperty = Object.assign(newMergedProperty(), {
-      mergeProperty: domainEntityProperty,
+    const mergedProperty = Object.assign(newMergeDirective(), {
+      sourceProperty: domainEntityProperty,
       targetProperty: nonReferenceProperty,
-      mergePropertyPath: [domainEntityName3, nonReferencePropertyName],
+      sourcePropertyPath: [domainEntityName3, nonReferencePropertyName],
       targetPropertyPath: [nonReferencePropertyName],
     });
-    domainEntityProperty.mergedProperties.push(mergedProperty);
+    domainEntityProperty.mergeDirectives.push(mergedProperty);
 
     const referencedColumn: Column = Object.assign(newIntegerColumn(), {
       name: domainEntityName3,
@@ -512,13 +512,13 @@ describe('when using get merge property column with reference property', () => {
       referencedEntity: domainEntity3,
       parentEntity: domainEntity1,
     });
-    const mergedProperty = Object.assign(newMergedProperty(), {
-      mergeProperty: domainEntity1Property3,
+    const mergedProperty = Object.assign(newMergeDirective(), {
+      sourceProperty: domainEntity1Property3,
       targetProperty: domainEntity3Property2,
-      mergePropertyPath: [domainEntityName3, domainEntityName2],
+      sourcePropertyPath: [domainEntityName3, domainEntityName2],
       targetPropertyPath: [domainEntityName2],
     });
-    domainEntity1Property3.mergedProperties.push(mergedProperty);
+    domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
     const referencedColumn: Column = Object.assign(newIntegerColumn(), {
       name: domainEntityName3,
@@ -584,13 +584,13 @@ describe('when using get merge property column with multiple source entity prope
       referencedEntity: domainEntity3,
       parentEntity: domainEntity1,
     });
-    const mergedProperty = Object.assign(newMergedProperty(), {
-      mergeProperty: domainEntity1Property3,
+    const mergedProperty = Object.assign(newMergeDirective(), {
+      sourceProperty: domainEntity1Property3,
       targetProperty: domainEntity3Property2,
-      mergePropertyPath: [domainEntityName3, domainEntityName2],
+      sourcePropertyPath: [domainEntityName3, domainEntityName2],
       targetPropertyPath: [domainEntityName2],
     });
-    domainEntity1Property3.mergedProperties.push(mergedProperty);
+    domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
     const referencedColumn: Column = Object.assign(newIntegerColumn(), {
       name: domainEntityName3,

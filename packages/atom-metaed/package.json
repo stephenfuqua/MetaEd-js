@@ -202,6 +202,7 @@
     "metaed-plugin-edfi-sql-dictionary": "2.0.0-dev.3",
     "metaed-plugin-edfi-udm": "2.0.0-dev.3",
     "metaed-plugin-edfi-unified": "2.0.0-dev.3",
+    "metaed-plugin-edfi-unified-advanced": "2.0.0-dev.3",
     "metaed-plugin-edfi-xml-dictionary": "2.0.0-dev.3",
     "metaed-plugin-edfi-xsd": "2.0.0-dev.3",
     "path": "0.12.7",

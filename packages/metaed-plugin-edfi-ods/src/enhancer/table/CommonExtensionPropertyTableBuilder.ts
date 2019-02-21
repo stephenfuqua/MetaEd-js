@@ -1,5 +1,5 @@
 import { asCommonProperty, getEntityFromNamespaceChain, Namespace } from 'metaed-core';
-import { ModelBase, EntityProperty, MergedProperty, ReferentialProperty } from 'metaed-core';
+import { ModelBase, EntityProperty, MergeDirective, ReferentialProperty } from 'metaed-core';
 import { addColumns, addForeignKey, newTable, createForeignKeyUsingSourceReference } from '../../model/database/Table';
 import { appendOverlapping } from '../../shared/Utility';
 import { BuildStrategyDefault } from './BuildStrategy';
@@ -106,9 +106,9 @@ export function commonExtensionPropertyTableBuilder(
       const commonProperty = asCommonProperty(property);
       let strategy: BuildStrategy = buildStrategy;
 
-      if (commonProperty.mergedProperties.length > 0) {
+      if (commonProperty.mergeDirectives.length > 0) {
         strategy = strategy.skipPath(
-          commonProperty.mergedProperties.map((x: MergedProperty) => x.mergePropertyPath.slice(1)),
+          commonProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
         );
       }
 
