@@ -19,14 +19,21 @@ const referenceTypes: Array<PropertyType> = [
   'sharedString',
 ];
 
-function findProperty(entity: TopLevelEntity, paths: Array<string>): EntityProperty | null {
-  const propertyName: string | undefined = paths.pop();
+function findProperty(
+  entity: TopLevelEntity,
+  pathStrings: Array<string>,
+  propertyChainAccumulator: Array<EntityProperty>,
+): EntityProperty | null {
+  const propertyName: string | undefined = pathStrings.pop();
   if (propertyName == null) return null;
   const property: EntityProperty | undefined = entity.properties.find(x => x.fullPropertyName === propertyName);
   if (property == null) return null;
+  propertyChainAccumulator.push(property);
   // Shared simple properties are legal - they should always be a path leaf, ending search here
-  if (paths.length === 0) return property;
-  return findProperty(asReferentialProperty(property).referencedEntity, paths);
+  if (pathStrings.length === 0) return property;
+
+  // TODO: Reference navigation should include Extension entities with the same base entity as the property's referenced entity
+  return findProperty(asReferentialProperty(property).referencedEntity, pathStrings, propertyChainAccumulator);
 }
 
 export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
@@ -36,16 +43,24 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .map(x => asReferentialProperty(x))
     .filter(x => !R.isEmpty(x.mergeDirectives))
     .forEach(property => {
+      const sourcePropertyChain: Array<EntityProperty> = [];
+      const targetPropertyChain: Array<EntityProperty> = [];
+
       property.mergeDirectives.forEach(mergeDirective => {
         mergeDirective.sourceProperty = findProperty(
           property.parentEntity,
           R.reverse(mergeDirective.sourcePropertyPathStrings),
+          sourcePropertyChain,
         );
+        mergeDirective.sourcePropertyChain = sourcePropertyChain;
+        if (mergeDirective.sourceProperty) mergeDirective.sourceProperty.mergeSourcedBy.push(property);
+
         mergeDirective.targetProperty = findProperty(
           property.parentEntity,
           R.reverse(mergeDirective.targetPropertyPathStrings),
+          targetPropertyChain,
         );
-        if (mergeDirective.sourceProperty) mergeDirective.sourceProperty.mergeSourcedBy.push(property);
+        mergeDirective.targetPropertyChain = targetPropertyChain;
         if (mergeDirective.targetProperty) mergeDirective.targetProperty.mergeTargetedBy.push(property);
       });
     });
