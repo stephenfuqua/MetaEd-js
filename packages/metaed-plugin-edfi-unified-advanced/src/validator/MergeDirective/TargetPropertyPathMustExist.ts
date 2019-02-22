@@ -29,9 +29,9 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         'TargetPropertyPathMustExist',
         referentialProperty.namespace,
         referentialProperty.parentEntity,
-        mergeDirective.targetPropertyPath,
-        mergeDirective.sourcePropertyPath[0],
-        mergeDirective.sourceMap.targetPropertyPath[0],
+        mergeDirective.targetPropertyPathStrings,
+        mergeDirective.sourcePropertyPathStrings[0],
+        mergeDirective.sourceMap.targetPropertyPathStrings[0],
         failures,
       );
     });

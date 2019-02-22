@@ -46,7 +46,7 @@ export function referencePropertyTableBuilder(factory: ColumnCreatorFactory): Ta
 
       if (!R.isEmpty(referenceProperty.mergeDirectives)) {
         strategy = strategy.skipPath(
-          referenceProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
+          referenceProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPathStrings.slice(1)),
         );
       }
 

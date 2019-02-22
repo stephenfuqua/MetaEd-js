@@ -41,13 +41,13 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       const sourceProperty: EntityProperty | null = findReferencedProperty(
         namespace,
         referentialProperty.parentEntity,
-        mergeDirective.sourcePropertyPath,
+        mergeDirective.sourcePropertyPathStrings,
         matchAllButFirstAsIdentityProperties(),
       );
       const targetProperty: EntityProperty | null = findReferencedProperty(
         namespace,
         referentialProperty.parentEntity,
-        mergeDirective.targetPropertyPath,
+        mergeDirective.targetPropertyPathStrings,
         matchAllIdentityReferenceProperties(),
       );
 
@@ -85,10 +85,12 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       failures.push({
         validatorName: 'SourcePropertyAndTargetPropertyMustMatch',
         category: 'error',
-        message: `The merge paths '${mergeDirective.sourcePropertyPath.join(
+        message: `The merge paths '${mergeDirective.sourcePropertyPathStrings.join(
           '.',
-        )}' and '${mergeDirective.targetPropertyPath.join('.')}' do not correspond to the same entity name and/or type.`,
-        sourceMap: mergeDirective.sourceMap.sourcePropertyPath[0],
+        )}' and '${mergeDirective.targetPropertyPathStrings.join(
+          '.',
+        )}' do not correspond to the same entity name and/or type.`,
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings[0],
         fileMap: null,
       });
     });

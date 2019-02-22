@@ -8,8 +8,8 @@ import { NoSourceMap } from '../SourceMap';
  */
 export type MergeDirectiveSourceMap = {
   type: SourceMap;
-  sourcePropertyPath: Array<SourceMap>;
-  targetPropertyPath: Array<SourceMap>;
+  sourcePropertyPathStrings: Array<SourceMap>;
+  targetPropertyPathStrings: Array<SourceMap>;
   sourceProperty: SourceMap;
   targetProperty: SourceMap;
 };
@@ -20,8 +20,8 @@ export type MergeDirectiveSourceMap = {
 export function newMergeDirectiveSourceMap() {
   return {
     type: NoSourceMap,
-    sourcePropertyPath: [],
-    targetPropertyPath: [],
+    sourcePropertyPathStrings: [],
+    targetPropertyPathStrings: [],
     sourceProperty: NoSourceMap,
     targetProperty: NoSourceMap,
   };
@@ -31,8 +31,8 @@ export function newMergeDirectiveSourceMap() {
  *
  */
 export type MergeDirective = {
-  sourcePropertyPath: Array<string>;
-  targetPropertyPath: Array<string>;
+  sourcePropertyPathStrings: Array<string>;
+  targetPropertyPathStrings: Array<string>;
   sourceProperty: EntityProperty | null;
   targetProperty: EntityProperty | null;
   sourceMap: MergeDirectiveSourceMap;
@@ -43,8 +43,8 @@ export type MergeDirective = {
  */
 export function newMergeDirective(): MergeDirective {
   return {
-    sourcePropertyPath: [],
-    targetPropertyPath: [],
+    sourcePropertyPathStrings: [],
+    targetPropertyPathStrings: [],
     sourceProperty: null,
     targetProperty: null,
     sourceMap: newMergeDirectiveSourceMap(),

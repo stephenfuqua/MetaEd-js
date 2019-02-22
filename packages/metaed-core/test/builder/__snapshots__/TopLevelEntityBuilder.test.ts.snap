@@ -466,7 +466,7 @@ Object {
 }
 `;
 
-exports[`when building merge directive reference should have source map for sourcePropertyPath with line, column, text 1`] = `
+exports[`when building merge directive reference should have source map for sourcePropertyPathStrings with line, column, text 1`] = `
 Array [
   Object {
     "column": 10,
@@ -476,7 +476,7 @@ Array [
 ]
 `;
 
-exports[`when building merge directive reference should have source map for targetPropertyPath with line, column, text 1`] = `
+exports[`when building merge directive reference should have source map for targetPropertyPathStrings with line, column, text 1`] = `
 Array [
   Object {
     "column": 31,
@@ -493,7 +493,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPath": Array [
+  "sourcePropertyPathStrings": Array [
     Object {
       "column": 10,
       "line": 9,
@@ -505,7 +505,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPath": Array [
+  "targetPropertyPathStrings": Array [
     Object {
       "column": 35,
       "line": 9,
@@ -527,7 +527,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPath": Array [
+  "sourcePropertyPathStrings": Array [
     Object {
       "column": 10,
       "line": 10,
@@ -539,7 +539,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPath": Array [
+  "targetPropertyPathStrings": Array [
     Object {
       "column": 35,
       "line": 10,
@@ -561,7 +561,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPath": Array [
+  "sourcePropertyPathStrings": Array [
     Object {
       "column": 10,
       "line": 9,
@@ -573,7 +573,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPath": Array [
+  "targetPropertyPathStrings": Array [
     Object {
       "column": 35,
       "line": 9,
@@ -595,7 +595,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPath": Array [
+  "sourcePropertyPathStrings": Array [
     Object {
       "column": 10,
       "line": 10,
@@ -607,7 +607,7 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPath": Array [
+  "targetPropertyPathStrings": Array [
     Object {
       "column": 35,
       "line": 10,

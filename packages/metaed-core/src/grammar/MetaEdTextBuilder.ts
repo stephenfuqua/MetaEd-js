@@ -668,8 +668,8 @@ export class MetaEdTextBuilder {
   /**
    *
    */
-  withMergeDirective(sourcePropertyPath: string, targetPropertyPath: string): MetaEdTextBuilder {
-    this.addLine(`merge ${sourcePropertyPath} with ${targetPropertyPath}`);
+  withMergeDirective(sourcePropertyPathStrings: string, targetPropertyPathStrings: string): MetaEdTextBuilder {
+    this.addLine(`merge ${sourcePropertyPathStrings} with ${targetPropertyPathStrings}`);
     return this;
   }
 

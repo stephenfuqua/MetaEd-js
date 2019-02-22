@@ -60,7 +60,7 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
       mergeDirective.sourceProperty != null &&
       !column.sourceEntityProperties.includes(mergeDirective.sourceProperty) &&
       !column.mergedReferenceContexts.some((context: string) =>
-        context.startsWith(R.tail(mergeDirective.sourcePropertyPath).join('')),
+        context.startsWith(R.tail(mergeDirective.sourcePropertyPathStrings).join('')),
       )
     )
       return;
@@ -87,16 +87,16 @@ export function getMergePropertyColumn(table: Table, column: Column, property: E
         ? R.head(expandedTargetProperties)
         : R.head(expandedTargetProperties.filter((x: EntityProperty) => column.sourceEntityProperties.includes(x)));
 
-    let targetPropertyPath: string = R.join('')(mergeDirective.targetPropertyPath);
+    let targetPropertyPathStrings: string = R.join('')(mergeDirective.targetPropertyPathStrings);
     if (property.parentEntity.type !== 'choice' && table.name !== property.parentEntity.data.edfiOds.odsTableName) {
       // If dealing with a property from a parent table for a join table primary key, add the parent entity name to make paths match
-      targetPropertyPath = property.parentEntity.data.edfiOds.odsTableName + targetPropertyPath;
+      targetPropertyPathStrings = property.parentEntity.data.edfiOds.odsTableName + targetPropertyPathStrings;
     }
     result = getAllColumns(table).find(
       (x: Column) =>
         x.sourceEntityProperties.includes(targetProperty) &&
         // startsWith() used because we can merge references in the middle of a reference context, but the start will always match
-        x.mergedReferenceContexts.some((context: string) => context.startsWith(targetPropertyPath)),
+        x.mergedReferenceContexts.some((context: string) => context.startsWith(targetPropertyPathStrings)),
     );
   });
   return result;

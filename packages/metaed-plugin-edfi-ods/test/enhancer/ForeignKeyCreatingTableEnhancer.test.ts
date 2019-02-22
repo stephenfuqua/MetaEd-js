@@ -399,8 +399,8 @@ describe('when using get merge property column with column that has invalid merg
     });
     const mergedProperty = Object.assign(newMergeDirective(), {
       sourceProperty: domainEntity1Property3,
-      sourcePropertyPath: [domainEntityName3, domainEntityName2],
-      targetPropertyPath: [domainEntityName2],
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName2],
+      targetPropertyPathStrings: [domainEntityName2],
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
@@ -451,8 +451,8 @@ describe('when using get merge property column with non reference target propert
     const mergedProperty = Object.assign(newMergeDirective(), {
       sourceProperty: domainEntityProperty,
       targetProperty: nonReferenceProperty,
-      sourcePropertyPath: [domainEntityName3, nonReferencePropertyName],
-      targetPropertyPath: [nonReferencePropertyName],
+      sourcePropertyPathStrings: [domainEntityName3, nonReferencePropertyName],
+      targetPropertyPathStrings: [nonReferencePropertyName],
     });
     domainEntityProperty.mergeDirectives.push(mergedProperty);
 
@@ -515,8 +515,8 @@ describe('when using get merge property column with reference property', () => {
     const mergedProperty = Object.assign(newMergeDirective(), {
       sourceProperty: domainEntity1Property3,
       targetProperty: domainEntity3Property2,
-      sourcePropertyPath: [domainEntityName3, domainEntityName2],
-      targetPropertyPath: [domainEntityName2],
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName2],
+      targetPropertyPathStrings: [domainEntityName2],
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 
@@ -587,8 +587,8 @@ describe('when using get merge property column with multiple source entity prope
     const mergedProperty = Object.assign(newMergeDirective(), {
       sourceProperty: domainEntity1Property3,
       targetProperty: domainEntity3Property2,
-      sourcePropertyPath: [domainEntityName3, domainEntityName2],
-      targetPropertyPath: [domainEntityName2],
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName2],
+      targetPropertyPathStrings: [domainEntityName2],
     });
     domainEntity1Property3.mergeDirectives.push(mergedProperty);
 

@@ -59,8 +59,8 @@ describe('when enhancing top level entity with nested reference to top level ref
     domainEntity1.properties.push(domainEntity1Property2);
     addProperty(metaEd.propertyIndex, domainEntity1Property2);
     const mergedProperty = Object.assign(newMergeDirective(), {
-      sourcePropertyPath: [domainEntityName3, SharedIntegerName2],
-      targetPropertyPath: [SharedIntegerName2],
+      sourcePropertyPathStrings: [domainEntityName3, SharedIntegerName2],
+      targetPropertyPathStrings: [SharedIntegerName2],
     });
     domainEntity1Property2.mergeDirectives.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -128,8 +128,8 @@ describe('when enhancing top level entity with top level reference to nested ref
     domainEntity1.properties.push(domainEntity1Property2);
     addProperty(metaEd.propertyIndex, domainEntity1Property2);
     const mergedProperty = Object.assign(newMergeDirective(), {
-      sourcePropertyPath: [sharedIntegerName3],
-      targetPropertyPath: [domainEntityName2, sharedIntegerName3],
+      sourcePropertyPathStrings: [sharedIntegerName3],
+      targetPropertyPathStrings: [domainEntityName2, sharedIntegerName3],
     });
     domainEntity1Property2.mergeDirectives.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -210,8 +210,8 @@ describe('when enhancing top level entity with nested reference to nested refere
     domainEntity1.properties.push(domainEntity1Property2);
     addProperty(metaEd.propertyIndex, domainEntity1Property2);
     const mergedProperty = Object.assign(newMergeDirective(), {
-      sourcePropertyPath: [domainEntityName3, sharedIntegerName4],
-      targetPropertyPath: [domainEntityName2, sharedIntegerName4],
+      sourcePropertyPathStrings: [domainEntityName3, sharedIntegerName4],
+      targetPropertyPathStrings: [domainEntityName2, sharedIntegerName4],
     });
     domainEntity1Property2.mergeDirectives.push(mergedProperty);
     addEntityForNamespace(domainEntity1);
@@ -319,8 +319,8 @@ describe('when enhancing top level entity with deep nested reference to deep nes
     domainEntity1.properties.push(domainEntity1Property2);
     addProperty(metaEd.propertyIndex, domainEntity1Property2);
     const mergedProperty = Object.assign(newMergeDirective(), {
-      sourcePropertyPath: [domainEntityName3, domainEntityName4, sharedIntegerName6],
-      targetPropertyPath: [domainEntityName2, domainEntityName5, sharedIntegerName6],
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName4, sharedIntegerName6],
+      targetPropertyPathStrings: [domainEntityName2, domainEntityName5, sharedIntegerName6],
     });
     domainEntity1Property2.mergeDirectives.push(mergedProperty);
     addEntityForNamespace(domainEntity1);

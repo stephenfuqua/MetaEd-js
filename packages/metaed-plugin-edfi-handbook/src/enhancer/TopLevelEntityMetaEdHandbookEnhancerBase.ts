@@ -145,8 +145,8 @@ function getMergedProperties(property: ReferentialProperty): Array<HandbookMerge
   if (!property.mergeDirectives) return [];
 
   return property.mergeDirectives.map(x => ({
-    propertyPath: x.sourcePropertyPath,
-    targetPath: x.targetPropertyPath,
+    propertyPath: x.sourcePropertyPathStrings,
+    targetPath: x.targetPropertyPathStrings,
   }));
 }
 

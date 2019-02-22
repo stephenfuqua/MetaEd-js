@@ -807,15 +807,15 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
   enterSourcePropertyPath(context: MetaEdGrammar.SourcePropertyPathContext) {
     if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
-    this.currentMergeDirective.sourcePropertyPath = propertyPathFrom(context.propertyPath());
-    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).sourcePropertyPath.push(sourceMapFrom(context));
+    this.currentMergeDirective.sourcePropertyPathStrings = propertyPathFrom(context.propertyPath());
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).sourcePropertyPathStrings.push(sourceMapFrom(context));
   }
 
   enterTargetPropertyPath(context: MetaEdGrammar.TargetPropertyPathContext) {
     if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
-    this.currentMergeDirective.targetPropertyPath = propertyPathFrom(context.propertyPath());
-    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).targetPropertyPath.push(sourceMapFrom(context));
+    this.currentMergeDirective.targetPropertyPathStrings = propertyPathFrom(context.propertyPath());
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).targetPropertyPathStrings.push(sourceMapFrom(context));
   }
 
   exitMergeDirective(context: MetaEdGrammar.MergeDirectiveContext) {

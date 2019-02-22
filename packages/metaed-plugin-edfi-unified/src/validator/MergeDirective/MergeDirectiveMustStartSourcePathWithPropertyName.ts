@@ -26,7 +26,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         referentialProperty.withContext && referentialProperty.withContext !== referentialProperty.metaEdName
           ? referentialProperty.withContext
           : '';
-      if (mergeDirective.sourcePropertyPath[0] === `${prefix}${referentialProperty.metaEdName}`) return;
+      if (mergeDirective.sourcePropertyPathStrings[0] === `${prefix}${referentialProperty.metaEdName}`) return;
 
       failures.push({
         validatorName: 'MergeDirectiveMustStartSourcePathWithPropertyName',
@@ -34,7 +34,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         message: `Merge directive must start first property path with the current property ${
           prefix ? 'context and ' : ''
         }name: ${prefix}${referentialProperty.metaEdName}.`,
-        sourceMap: mergeDirective.sourceMap.sourcePropertyPath[0],
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings[0],
         fileMap: null,
       });
     });

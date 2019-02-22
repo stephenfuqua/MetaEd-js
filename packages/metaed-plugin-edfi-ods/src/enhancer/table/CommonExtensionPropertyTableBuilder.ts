@@ -108,7 +108,7 @@ export function commonExtensionPropertyTableBuilder(
 
       if (commonProperty.mergeDirectives.length > 0) {
         strategy = strategy.skipPath(
-          commonProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
+          commonProperty.mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPathStrings.slice(1)),
         );
       }
 

@@ -37,8 +37,14 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .filter(x => !R.isEmpty(x.mergeDirectives))
     .forEach(property => {
       property.mergeDirectives.forEach(mergeDirective => {
-        mergeDirective.sourceProperty = findProperty(property.parentEntity, R.reverse(mergeDirective.sourcePropertyPath));
-        mergeDirective.targetProperty = findProperty(property.parentEntity, R.reverse(mergeDirective.targetPropertyPath));
+        mergeDirective.sourceProperty = findProperty(
+          property.parentEntity,
+          R.reverse(mergeDirective.sourcePropertyPathStrings),
+        );
+        mergeDirective.targetProperty = findProperty(
+          property.parentEntity,
+          R.reverse(mergeDirective.targetPropertyPathStrings),
+        );
         if (mergeDirective.sourceProperty) mergeDirective.sourceProperty.mergeSourcedBy.push(property);
         if (mergeDirective.targetProperty) mergeDirective.targetProperty.mergeTargetedBy.push(property);
       });

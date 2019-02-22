@@ -32,7 +32,7 @@ export function simplePropertyTableBuilder(factory: ColumnCreatorFactory): Table
       // is not currently an extension of ReferentialProperty but has an equivalent mergeDirectives field
       if (isSharedProperty(property) && asReferentialProperty(property).mergeDirectives.length > 0) {
         strategy = strategy.skipPath(
-          asReferentialProperty(property).mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPath.slice(1)),
+          asReferentialProperty(property).mergeDirectives.map((x: MergeDirective) => x.sourcePropertyPathStrings.slice(1)),
         );
       }
 
