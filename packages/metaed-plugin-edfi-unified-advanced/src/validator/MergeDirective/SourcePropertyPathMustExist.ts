@@ -31,7 +31,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         referentialProperty.parentEntity,
         mergeDirective.sourcePropertyPathStrings,
         mergeDirective.targetPropertyPathStrings[0],
-        mergeDirective.sourceMap.sourcePropertyPathStrings[0],
+        mergeDirective.sourceMap.sourcePropertyPathStrings,
         failures,
       );
     });

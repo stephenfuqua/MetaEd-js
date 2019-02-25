@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when enhancing top level entity with nested reference to top level reference should have correct source property 1`] = `
+Object {
+  "column": 0,
+  "line": 0,
+  "tokenText": "NoSourceMap",
+}
+`;
+
+exports[`when enhancing top level entity with nested reference to top level reference should have correct source property 2`] = `
+Object {
+  "column": 0,
+  "line": 0,
+  "tokenText": "NoSourceMap",
+}
+`;
+
+exports[`when enhancing top level entity with nested reference to top level reference should have correct target property 1`] = `
+Object {
+  "column": 0,
+  "line": 0,
+  "tokenText": "NoSourceMap",
+}
+`;
+
+exports[`when enhancing top level entity with nested reference to top level reference should have correct target property 2`] = `
+Object {
+  "column": 0,
+  "line": 0,
+  "tokenText": "NoSourceMap",
+}
+`;

@@ -808,14 +808,14 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
     this.currentMergeDirective.sourcePropertyPathStrings = propertyPathFrom(context.propertyPath());
-    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).sourcePropertyPathStrings.push(sourceMapFrom(context));
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).sourcePropertyPathStrings = sourceMapFrom(context);
   }
 
   enterTargetPropertyPath(context: MetaEdGrammar.TargetPropertyPathContext) {
     if (this.currentMergeDirective === NoMergeDirective) return;
     if (context.exception || context.propertyPath() == null || context.propertyPath().exception) return;
     this.currentMergeDirective.targetPropertyPathStrings = propertyPathFrom(context.propertyPath());
-    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).targetPropertyPathStrings.push(sourceMapFrom(context));
+    (this.currentMergeDirective.sourceMap as MergeDirectiveSourceMap).targetPropertyPathStrings = sourceMapFrom(context);
   }
 
   exitMergeDirective(context: MetaEdGrammar.MergeDirectiveContext) {

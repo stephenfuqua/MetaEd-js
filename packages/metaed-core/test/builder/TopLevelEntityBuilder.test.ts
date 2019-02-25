@@ -1528,14 +1528,6 @@ describe('when building merge directive reference', () => {
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .sourcePropertyPathStrings,
-    ).toHaveLength(1);
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings,
-    ).not.toBe(NoSourceMap);
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings,
     ).toMatchSnapshot();
   });
 
@@ -1555,14 +1547,6 @@ describe('when building merge directive reference', () => {
   });
 
   it('should have source map for targetPropertyPathStrings with line, column, text', () => {
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings,
-    ).toHaveLength(1);
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings,
-    ).not.toBe(NoSourceMap);
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
         .targetPropertyPathStrings,
@@ -1628,22 +1612,6 @@ describe('when building multiple merge property references', () => {
 
   it('should have source map for first merge directive', () => {
     expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap,
     ).toMatchSnapshot();
   });
@@ -1668,22 +1636,6 @@ describe('when building multiple merge property references', () => {
   });
 
   it('should have source map for second merge directive', () => {
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .targetPropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .targetPropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
     expect(
       asReferentialProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap,
     ).toMatchSnapshot();
@@ -1747,22 +1699,6 @@ describe('when building multiple merge property references for a shared simple t
 
   it('should have source map for first merge directive', () => {
     expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap
-        .targetPropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
       asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[0].sourceMap,
     ).toMatchSnapshot();
   });
@@ -1787,22 +1723,6 @@ describe('when building multiple merge property references for a shared simple t
   });
 
   it('should have source map for second merge directive', () => {
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .sourcePropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .targetPropertyPathStrings[0],
-    ).toBeDefined();
-    expect(
-      asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap
-        .targetPropertyPathStrings[0],
-    ).not.toBe(NoSourceMap);
     expect(
       asSharedStringProperty(getDomainEntity(namespace.entity, entityName).properties[0]).mergeDirectives[1].sourceMap,
     ).toMatchSnapshot();

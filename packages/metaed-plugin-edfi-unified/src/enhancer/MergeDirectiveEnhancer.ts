@@ -52,7 +52,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           R.reverse(mergeDirective.sourcePropertyPathStrings),
           sourcePropertyChain,
         );
+        mergeDirective.sourceMap.sourceProperty = mergeDirective.sourceMap.sourcePropertyPathStrings;
         mergeDirective.sourcePropertyChain = sourcePropertyChain;
+        mergeDirective.sourceMap.sourcePropertyChain = mergeDirective.sourceMap.sourcePropertyPathStrings;
         if (mergeDirective.sourceProperty) mergeDirective.sourceProperty.mergeSourcedBy.push(property);
 
         mergeDirective.targetProperty = findProperty(
@@ -60,7 +62,9 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
           R.reverse(mergeDirective.targetPropertyPathStrings),
           targetPropertyChain,
         );
+        mergeDirective.sourceMap.targetProperty = mergeDirective.sourceMap.targetPropertyPathStrings;
         mergeDirective.targetPropertyChain = targetPropertyChain;
+        mergeDirective.sourceMap.targetPropertyChain = mergeDirective.sourceMap.targetPropertyPathStrings;
         if (mergeDirective.targetProperty) mergeDirective.targetProperty.mergeTargetedBy.push(property);
       });
     });

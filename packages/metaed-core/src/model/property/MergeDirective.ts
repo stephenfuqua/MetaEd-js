@@ -8,10 +8,10 @@ import { NoSourceMap } from '../SourceMap';
  */
 export type MergeDirectiveSourceMap = {
   type: SourceMap;
-  sourcePropertyPathStrings: Array<SourceMap>;
-  targetPropertyPathStrings: Array<SourceMap>;
-  sourcePropertyChain: Array<SourceMap>;
-  targetPropertyChain: Array<SourceMap>;
+  sourcePropertyPathStrings: SourceMap;
+  targetPropertyPathStrings: SourceMap;
+  sourcePropertyChain: SourceMap;
+  targetPropertyChain: SourceMap;
   sourceProperty: SourceMap;
   targetProperty: SourceMap;
 };
@@ -22,10 +22,10 @@ export type MergeDirectiveSourceMap = {
 export function newMergeDirectiveSourceMap() {
   return {
     type: NoSourceMap,
-    sourcePropertyPathStrings: [],
-    targetPropertyPathStrings: [],
-    sourcePropertyChain: [],
-    targetPropertyChain: [],
+    sourcePropertyPathStrings: NoSourceMap,
+    targetPropertyPathStrings: NoSourceMap,
+    sourcePropertyChain: NoSourceMap,
+    targetPropertyChain: NoSourceMap,
     sourceProperty: NoSourceMap,
     targetProperty: NoSourceMap,
   };

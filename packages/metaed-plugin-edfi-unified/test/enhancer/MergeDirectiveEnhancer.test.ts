@@ -113,6 +113,8 @@ describe('when enhancing top level entity with nested reference to top level ref
     expect(property.mergeDirectives[0].sourcePropertyChain).toHaveLength(2);
     expect(property.mergeDirectives[0].sourcePropertyChain[0]).toBe(domainEntity1Referencing3);
     expect(property.mergeDirectives[0].sourcePropertyChain[1]).toBe(domainEntity3Referencing2);
+    expect(property.mergeDirectives[0].sourceMap.sourceProperty).toMatchSnapshot();
+    expect(property.mergeDirectives[0].sourceMap.sourcePropertyChain).toMatchSnapshot();
   });
 
   it('should have correct target property', () => {
@@ -121,6 +123,8 @@ describe('when enhancing top level entity with nested reference to top level ref
     expect(property.mergeDirectives[0].targetProperty).toBe(domainEntity1Referencing2);
     expect(property.mergeDirectives[0].targetPropertyChain).toHaveLength(1);
     expect(property.mergeDirectives[0].targetPropertyChain[0]).toBe(domainEntity1Referencing2);
+    expect(property.mergeDirectives[0].sourceMap.targetProperty).toMatchSnapshot();
+    expect(property.mergeDirectives[0].sourceMap.targetPropertyChain).toMatchSnapshot();
   });
 
   it('should have correct source targeted by property', () => {

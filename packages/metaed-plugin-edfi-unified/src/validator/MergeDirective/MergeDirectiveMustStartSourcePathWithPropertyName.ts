@@ -34,7 +34,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         message: `Merge directive must start first property path with the current property ${
           prefix ? 'context and ' : ''
         }name: ${prefix}${referentialProperty.metaEdName}.`,
-        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings[0],
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings,
         fileMap: null,
       });
     });

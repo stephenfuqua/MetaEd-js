@@ -467,23 +467,19 @@ Object {
 `;
 
 exports[`when building merge directive reference should have source map for sourcePropertyPathStrings with line, column, text 1`] = `
-Array [
-  Object {
-    "column": 10,
-    "line": 9,
-    "tokenText": "Entity",
-  },
-]
+Object {
+  "column": 10,
+  "line": 9,
+  "tokenText": "Entity",
+}
 `;
 
 exports[`when building merge directive reference should have source map for targetPropertyPathStrings with line, column, text 1`] = `
-Array [
-  Object {
-    "column": 31,
-    "line": 9,
-    "tokenText": "TargetEntity",
-  },
-]
+Object {
+  "column": 31,
+  "line": 9,
+  "tokenText": "TargetEntity",
+}
 `;
 
 exports[`when building multiple merge property references for a shared simple type should have source map for first merge directive 1`] = `
@@ -493,25 +489,31 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPathStrings": Array [
-    Object {
-      "column": 10,
-      "line": 9,
-      "tokenText": "SourcePropertyPath0",
-    },
-  ],
+  "sourcePropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "sourcePropertyPathStrings": Object {
+    "column": 10,
+    "line": 9,
+    "tokenText": "SourcePropertyPath0",
+  },
   "targetProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPathStrings": Array [
-    Object {
-      "column": 35,
-      "line": 9,
-      "tokenText": "TargetPropertyPath0",
-    },
-  ],
+  "targetPropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPathStrings": Object {
+    "column": 35,
+    "line": 9,
+    "tokenText": "TargetPropertyPath0",
+  },
   "type": Object {
     "column": 0,
     "line": 0,
@@ -527,25 +529,31 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPathStrings": Array [
-    Object {
-      "column": 10,
-      "line": 10,
-      "tokenText": "SourcePropertyPath1",
-    },
-  ],
+  "sourcePropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "sourcePropertyPathStrings": Object {
+    "column": 10,
+    "line": 10,
+    "tokenText": "SourcePropertyPath1",
+  },
   "targetProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPathStrings": Array [
-    Object {
-      "column": 35,
-      "line": 10,
-      "tokenText": "TargetPropertyPath1",
-    },
-  ],
+  "targetPropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPathStrings": Object {
+    "column": 35,
+    "line": 10,
+    "tokenText": "TargetPropertyPath1",
+  },
   "type": Object {
     "column": 0,
     "line": 0,
@@ -561,25 +569,31 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPathStrings": Array [
-    Object {
-      "column": 10,
-      "line": 9,
-      "tokenText": "SourcePropertyPath0",
-    },
-  ],
+  "sourcePropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "sourcePropertyPathStrings": Object {
+    "column": 10,
+    "line": 9,
+    "tokenText": "SourcePropertyPath0",
+  },
   "targetProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPathStrings": Array [
-    Object {
-      "column": 35,
-      "line": 9,
-      "tokenText": "TargetPropertyPath0",
-    },
-  ],
+  "targetPropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPathStrings": Object {
+    "column": 35,
+    "line": 9,
+    "tokenText": "TargetPropertyPath0",
+  },
   "type": Object {
     "column": 0,
     "line": 0,
@@ -595,25 +609,31 @@ Object {
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "sourcePropertyPathStrings": Array [
-    Object {
-      "column": 10,
-      "line": 10,
-      "tokenText": "SourcePropertyPath1",
-    },
-  ],
+  "sourcePropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "sourcePropertyPathStrings": Object {
+    "column": 10,
+    "line": 10,
+    "tokenText": "SourcePropertyPath1",
+  },
   "targetProperty": Object {
     "column": 0,
     "line": 0,
     "tokenText": "NoSourceMap",
   },
-  "targetPropertyPathStrings": Array [
-    Object {
-      "column": 35,
-      "line": 10,
-      "tokenText": "TargetPropertyPath1",
-    },
-  ],
+  "targetPropertyChain": Object {
+    "column": 0,
+    "line": 0,
+    "tokenText": "NoSourceMap",
+  },
+  "targetPropertyPathStrings": Object {
+    "column": 35,
+    "line": 10,
+    "tokenText": "TargetPropertyPath1",
+  },
   "type": Object {
     "column": 0,
     "line": 0,

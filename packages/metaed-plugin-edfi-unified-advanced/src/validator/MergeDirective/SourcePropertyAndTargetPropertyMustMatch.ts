@@ -90,7 +90,7 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
         )}' and '${mergeDirective.targetPropertyPathStrings.join(
           '.',
         )}' do not correspond to the same entity name and/or type.`,
-        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings[0],
+        sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings,
         fileMap: null,
       });
     });
