@@ -15,6 +15,7 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
 
     if (referencedEntity) {
       childEntity.baseEntity = referencedEntity;
+      referencedEntity.extendedBy.push(childEntity);
     }
   });
 

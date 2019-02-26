@@ -40,6 +40,8 @@ export interface TopLevelEntity extends ModelBase {
   baseEntityName: string;
   baseEntityNamespaceName: string;
   baseEntity: TopLevelEntity | null;
+  extendedBy: Array<TopLevelEntity>;
+  subclassedBy: Array<TopLevelEntity>;
   sourceMap: TopLevelEntitySourceMap;
 }
 
@@ -63,6 +65,8 @@ export function newTopLevelEntity(): TopLevelEntity {
     baseEntityName: '',
     baseEntityNamespaceName: '',
     baseEntity: null,
+    extendedBy: [],
+    subclassedBy: [],
     sourceMap: newTopLevelEntitySourceMap(),
 
     data: {},

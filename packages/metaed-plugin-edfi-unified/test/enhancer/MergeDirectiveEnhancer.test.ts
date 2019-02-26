@@ -7,6 +7,8 @@ import {
   newMergeDirective,
   newMetaEdEnvironment,
   newNamespace,
+  newIntegerProperty,
+  IntegerProperty,
 } from 'metaed-core';
 import { DomainEntityProperty, MetaEdEnvironment, Namespace } from 'metaed-core';
 import { enhance } from '../../src/enhancer/MergeDirectiveEnhancer';
@@ -476,10 +478,9 @@ describe('when enhancing top level entity with deep nested reference to deep nes
   });
 });
 
-// TODO: Reference navigation should include Extension entities with the same base entity as the property's referenced entity
-describe.skip('when enhancing top level entity with nested reference through an extension to top level reference', () => {
+describe('when enhancing top level entity with nested reference through an extension to top level reference', () => {
   /*
-   * merges through extensions -- need to see what the API supports and how
+   * merges through extensions
    *
    * DomainEntityExtension 3
    *   DomainEntity 2
@@ -520,6 +521,7 @@ describe.skip('when enhancing top level entity with nested reference through an 
     });
     domainEntity3Extension.properties.push(domainEntityExtension3Referencing2);
     addEntityForNamespace(domainEntity3Extension);
+    domainEntity3.extendedBy.push(domainEntity3Extension);
 
     const domainEntityName1 = 'DomainEntityName1';
     const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
@@ -582,6 +584,316 @@ describe.skip('when enhancing top level entity with nested reference through an 
   });
 });
 
-/*
- * bad paths - incomplete or just wrong
- */
+describe('when enhancing top level entity with extraneous target property reference', () => {
+  /*
+   * DomainEntity 1
+   *   DomainEntity 2
+   *   DomainEntity 3
+   *     merge 3.2 with 2.9
+   */
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const domainEntityName3 = 'DomainEntityName3';
+  let domainEntity1Referencing2: DomainEntityProperty;
+  let domainEntity1Referencing3: DomainEntityProperty;
+  let domainEntity3Referencing2: DomainEntityProperty;
+  beforeAll(() => {
+    const domainEntityName2 = 'DomainEntityName2';
+    const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
+    addEntityForNamespace(domainEntity2);
+
+    const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
+    domainEntity3Referencing2 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName2,
+      fullPropertyName: domainEntityName2,
+      parentEntityName: domainEntityName3,
+      parentEntity: domainEntity3,
+      referencedEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity3.properties.push(domainEntity3Referencing2);
+    addEntityForNamespace(domainEntity3);
+
+    const domainEntityName1 = 'DomainEntityName1';
+    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
+    domainEntity1Referencing2 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName2,
+      fullPropertyName: domainEntityName2,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing2);
+    domainEntity1Referencing3 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName3,
+      fullPropertyName: domainEntityName3,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity3,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing3);
+    addProperty(metaEd.propertyIndex, domainEntity1Referencing3);
+    const mergeDirective = Object.assign(newMergeDirective(), {
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName2],
+      targetPropertyPathStrings: ['domainEntityName9'],
+    });
+    domainEntity1Referencing3.mergeDirectives.push(mergeDirective);
+    addEntityForNamespace(domainEntity1);
+
+    enhance(metaEd);
+  });
+
+  it('should have correct source property', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property).toBeDefined();
+    expect(property.mergeDirectives[0].sourceProperty).toBe(domainEntity3Referencing2);
+    expect(property.mergeDirectives[0].sourcePropertyChain).toHaveLength(2);
+    expect(property.mergeDirectives[0].sourcePropertyChain[0]).toBe(domainEntity1Referencing3);
+    expect(property.mergeDirectives[0].sourcePropertyChain[1]).toBe(domainEntity3Referencing2);
+    expect(property.mergeDirectives[0].sourceMap.sourceProperty).toMatchSnapshot();
+    expect(property.mergeDirectives[0].sourceMap.sourcePropertyChain).toMatchSnapshot();
+  });
+
+  it('should have null target property', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property.mergeDirectives[0].targetProperty).toBeNull();
+    expect(property.mergeDirectives[0].targetPropertyChain).toHaveLength(0);
+  });
+
+  it('should have correct source targeted by property', () => {
+    expect(domainEntity1Referencing2.mergeSourcedBy).toHaveLength(0);
+    expect(domainEntity3Referencing2.mergeSourcedBy).toHaveLength(1);
+    expect(domainEntity3Referencing2.mergeSourcedBy[0]).toBe(domainEntity1Referencing3);
+  });
+
+  it('should have no merge targeted by property', () => {
+    expect(domainEntity3Referencing2.mergeTargetedBy).toHaveLength(0);
+    expect(domainEntity1Referencing2.mergeTargetedBy).toHaveLength(0);
+  });
+});
+
+describe('when enhancing top level entity with extraneous source property reference', () => {
+  /*
+   * DomainEntity 1
+   *   DomainEntity 2
+   *   DomainEntity 3
+   *     merge 3.2.9 with 2
+   */
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const domainEntityName3 = 'DomainEntityName3';
+  let domainEntity1Referencing2: DomainEntityProperty;
+  let domainEntity1Referencing3: DomainEntityProperty;
+  let domainEntity3Referencing2: DomainEntityProperty;
+  beforeAll(() => {
+    const domainEntityName2 = 'DomainEntityName2';
+    const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
+    addEntityForNamespace(domainEntity2);
+
+    const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
+    domainEntity3Referencing2 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName2,
+      fullPropertyName: domainEntityName2,
+      parentEntityName: domainEntityName3,
+      parentEntity: domainEntity3,
+      referencedEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity3.properties.push(domainEntity3Referencing2);
+    addEntityForNamespace(domainEntity3);
+
+    const domainEntityName1 = 'DomainEntityName1';
+    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
+    domainEntity1Referencing2 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName2,
+      fullPropertyName: domainEntityName2,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing2);
+    domainEntity1Referencing3 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName3,
+      fullPropertyName: domainEntityName3,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity3,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing3);
+    addProperty(metaEd.propertyIndex, domainEntity1Referencing3);
+    const mergeDirective = Object.assign(newMergeDirective(), {
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName2, 'domainEntityName9'],
+      targetPropertyPathStrings: [domainEntityName2],
+    });
+    domainEntity1Referencing3.mergeDirectives.push(mergeDirective);
+    addEntityForNamespace(domainEntity1);
+
+    enhance(metaEd);
+  });
+
+  it('should have null source property', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property.mergeDirectives[0].sourceProperty).toBeNull();
+  });
+
+  it('should have correct target property', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property).toBeDefined();
+    expect(property.mergeDirectives[0].targetProperty).toBe(domainEntity1Referencing2);
+    expect(property.mergeDirectives[0].targetPropertyChain).toHaveLength(1);
+    expect(property.mergeDirectives[0].targetPropertyChain[0]).toBe(domainEntity1Referencing2);
+    expect(property.mergeDirectives[0].sourceMap.targetProperty).toMatchSnapshot();
+    expect(property.mergeDirectives[0].sourceMap.targetPropertyChain).toMatchSnapshot();
+  });
+
+  it('should have no source targeted by property', () => {
+    expect(domainEntity1Referencing2.mergeSourcedBy).toHaveLength(0);
+    expect(domainEntity3Referencing2.mergeSourcedBy).toHaveLength(0);
+  });
+
+  it('should have correct merge targeted by property', () => {
+    expect(domainEntity3Referencing2.mergeTargetedBy).toHaveLength(0);
+    expect(domainEntity1Referencing2.mergeTargetedBy).toHaveLength(1);
+    expect(domainEntity1Referencing2.mergeTargetedBy[0]).toBe(domainEntity1Referencing3);
+  });
+});
+
+describe('when enhancing top level entity with non-reference property in middle of target path', () => {
+  /*
+   * DomainEntity 1
+   *   DomainEntity 2
+   *   DomainEntity 3
+   *     merge 3.4.6 with 2.5.6
+   */
+  const namespace: Namespace = { ...newNamespace(), namespaceName: 'EdFi' };
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  metaEd.namespace.set(namespace.namespaceName, namespace);
+  const domainEntityName3 = 'DomainEntityName3';
+  let domainEntity1Referencing2: DomainEntityProperty;
+  let domainEntity1Referencing3: DomainEntityProperty;
+  let domainEntity2SimpleProperty5: IntegerProperty;
+  let domainEntity3Referencing4: DomainEntityProperty;
+  let domainEntity4Referencing6: DomainEntityProperty;
+  let domainEntity5Referencing6: DomainEntityProperty;
+  beforeAll(() => {
+    const domainEntityName6 = 'DomainEntityName6';
+    const domainEntity6 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName6, namespace });
+    addEntityForNamespace(domainEntity6);
+
+    const domainEntityName4 = 'DomainEntityName4';
+    const domainEntity4 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName4, namespace });
+    domainEntity4Referencing6 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName6,
+      fullPropertyName: domainEntityName6,
+      parentEntityName: domainEntityName4,
+      parentEntity: domainEntity4,
+      referencedEntity: domainEntity6,
+      namespace,
+    });
+    domainEntity4.properties.push(domainEntity4Referencing6);
+    addEntityForNamespace(domainEntity4);
+
+    const domainEntityName5 = 'DomainEntityName5';
+    const domainEntity5 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName5, namespace });
+    domainEntity5Referencing6 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName6,
+      fullPropertyName: domainEntityName6,
+      parentEntityName: domainEntityName5,
+      parentEntity: domainEntity5,
+      referencedEntity: domainEntity6,
+      namespace,
+    });
+    domainEntity5.properties.push(domainEntity5Referencing6);
+    addEntityForNamespace(domainEntity5);
+
+    const domainEntityName2 = 'DomainEntityName2';
+    const domainEntity2 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName2, namespace });
+    domainEntity2SimpleProperty5 = Object.assign(newIntegerProperty(), {
+      metaEdName: domainEntityName5,
+      fullPropertyName: domainEntityName5,
+      parentEntityName: domainEntityName2,
+      parentEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity2.properties.push(domainEntity2SimpleProperty5);
+    addEntityForNamespace(domainEntity2);
+
+    const domainEntity3 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName3, namespace });
+    domainEntity3Referencing4 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName4,
+      fullPropertyName: domainEntityName4,
+      parentEntityName: domainEntityName3,
+      parentEntity: domainEntity3,
+      referencedEntity: domainEntity4,
+      namespace,
+    });
+    domainEntity3.properties.push(domainEntity3Referencing4);
+    addEntityForNamespace(domainEntity3);
+
+    const domainEntityName1 = 'DomainEntityName1';
+    const domainEntity1 = Object.assign(newDomainEntity(), { metaEdName: domainEntityName1, namespace });
+    domainEntity1Referencing2 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName2,
+      fullPropertyName: domainEntityName2,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity2,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing2);
+    domainEntity1Referencing3 = Object.assign(newDomainEntityProperty(), {
+      metaEdName: domainEntityName3,
+      fullPropertyName: domainEntityName3,
+      parentEntityName: domainEntityName1,
+      parentEntity: domainEntity1,
+      referencedEntity: domainEntity3,
+      namespace,
+    });
+    domainEntity1.properties.push(domainEntity1Referencing3);
+    addProperty(metaEd.propertyIndex, domainEntity1Referencing3);
+    const mergeDirective = Object.assign(newMergeDirective(), {
+      sourcePropertyPathStrings: [domainEntityName3, domainEntityName4, domainEntityName6],
+      targetPropertyPathStrings: [domainEntityName2, domainEntityName5, domainEntityName6],
+    });
+    domainEntity1Referencing3.mergeDirectives.push(mergeDirective);
+    addEntityForNamespace(domainEntity1);
+
+    enhance(metaEd);
+  });
+
+  it('should have correct source property', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property).toBeDefined();
+    expect(property.mergeDirectives[0].sourceProperty).toBe(domainEntity4Referencing6);
+    expect(property.mergeDirectives[0].sourcePropertyChain).toHaveLength(3);
+    expect(property.mergeDirectives[0].sourcePropertyChain[0]).toBe(domainEntity1Referencing3);
+    expect(property.mergeDirectives[0].sourcePropertyChain[1]).toBe(domainEntity3Referencing4);
+    expect(property.mergeDirectives[0].sourcePropertyChain[2]).toBe(domainEntity4Referencing6);
+  });
+
+  it('should have no target property and only partial target chain', () => {
+    const property = metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === domainEntityName3)[0];
+    expect(property).toBeDefined();
+    expect(property.mergeDirectives[0].targetProperty).toBeNull();
+    expect(property.mergeDirectives[0].targetPropertyChain).toHaveLength(2);
+    expect(property.mergeDirectives[0].targetPropertyChain[0]).toBe(domainEntity1Referencing2);
+    expect(property.mergeDirectives[0].targetPropertyChain[1]).toBe(domainEntity2SimpleProperty5);
+  });
+
+  it('should have correct source targeted by property', () => {
+    expect(domainEntity5Referencing6.mergeSourcedBy).toHaveLength(0);
+    expect(domainEntity4Referencing6.mergeSourcedBy).toHaveLength(1);
+    expect(domainEntity4Referencing6.mergeSourcedBy[0]).toBe(domainEntity1Referencing3);
+  });
+
+  it('should have no merge targeted by property', () => {
+    expect(domainEntity4Referencing6.mergeTargetedBy).toHaveLength(0);
+    expect(domainEntity5Referencing6.mergeTargetedBy).toHaveLength(0);
+  });
+});

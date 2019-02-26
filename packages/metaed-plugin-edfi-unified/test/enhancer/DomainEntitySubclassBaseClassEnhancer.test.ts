@@ -29,8 +29,10 @@ describe('when enhancing domainEntity subclass referring to domainEntity', () =>
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.subclassedBy).toHaveLength(1);
+    expect(parentEntity.subclassedBy[0]).toBe(childEntity);
   });
 });
 
@@ -61,8 +63,10 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.subclassedBy).toHaveLength(1);
+    expect(parentEntity.subclassedBy[0]).toBe(childEntity);
   });
 });
 
@@ -95,8 +99,10 @@ describe('when enhancing domainEntity subclass referring to domainEntity across 
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.subclassedBy).toHaveLength(1);
+    expect(parentEntity.subclassedBy[0]).toBe(childEntity);
   });
 });
 
@@ -129,7 +135,9 @@ describe('when enhancing domainEntity subclass referring to domainEntity subclas
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.subclassedBy).toHaveLength(1);
+    expect(parentEntity.subclassedBy[0]).toBe(childEntity);
   });
 });

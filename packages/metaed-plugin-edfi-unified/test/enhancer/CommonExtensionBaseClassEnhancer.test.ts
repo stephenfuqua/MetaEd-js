@@ -28,8 +28,10 @@ describe('when enhancing common extension referring to common', () => {
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.extendedBy).toHaveLength(1);
+    expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
 
@@ -61,7 +63,9 @@ describe('when enhancing common extension referring to common across namespaces'
     enhance(metaEd);
   });
 
-  it('should have no validation failures()', () => {
+  it('should have correct references', () => {
     expect(childEntity.baseEntity).toBe(parentEntity);
+    expect(parentEntity.extendedBy).toHaveLength(1);
+    expect(parentEntity.extendedBy[0]).toBe(childEntity);
   });
 });
