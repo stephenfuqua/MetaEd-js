@@ -13,6 +13,7 @@ export interface Namespace {
   dependencies: Array<Namespace>;
   projectExtension: string;
   projectName: string;
+  projectVersion: string;
   extensionEntitySuffix: string;
   data: any;
   config: any;
@@ -38,6 +39,7 @@ export function newNamespace(): Namespace {
     dependencies: [],
     projectExtension: '',
     projectName: '',
+    projectVersion: '',
     extensionEntitySuffix: DefaultExtensionEntitySuffix,
     data: {},
     config: {},

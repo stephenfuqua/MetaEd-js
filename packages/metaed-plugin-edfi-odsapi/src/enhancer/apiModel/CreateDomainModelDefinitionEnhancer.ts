@@ -103,9 +103,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     const additionalEntityDefinitions = [];
 
     const odsApiVersion: string = (metaEd.plugin.get('edfiOds') as PluginEnvironment).targetTechnologyVersion || '3.0.0';
+    const version: string = namespace.projectVersion;
 
     const domainModelDefinition: DomainModelDefinition = {
       odsApiVersion,
+      version,
       schemaDefinition: buildSchemaDefinition(namespace),
       aggregateDefinitions: buildAggregateDefinitions(namespace),
       aggregateExtensionDefinitions: buildAggregateExtensionDefinitions(namespace),

@@ -8,6 +8,7 @@ import { NoSchemaDefinition } from './SchemaDefinition';
 
 export type DomainModelDefinition = {
   odsApiVersion: string;
+  version: string;
   schemaDefinition: SchemaDefinition;
   aggregateDefinitions: Array<AggregateDefinition>;
   aggregateExtensionDefinitions: Array<AggregateExtensionDefinition>;
@@ -18,6 +19,7 @@ export type DomainModelDefinition = {
 export function newDomainModelDefinition(): DomainModelDefinition {
   return {
     odsApiVersion: '',
+    version: '',
     schemaDefinition: NoSchemaDefinition,
     aggregateDefinitions: [],
     aggregateExtensionDefinitions: [],
