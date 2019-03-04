@@ -61,6 +61,11 @@ describe('when building association property', () => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].type).toBe(propertyType);
   });
 
+  it('should have names', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].fullPropertyName).toBe(propertyName);
+  });
+
   it('should have source map for type with line, column, text', () => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).toBeDefined();
     expect(getDomainEntity(namespace.entity, entityName).properties[0].sourceMap.type).not.toBe(NoSourceMap);
@@ -1105,6 +1110,13 @@ describe('when building entity property with context', () => {
 
   it('should have withContext', () => {
     expect(getDomainEntity(namespace.entity, entityName).properties[0].withContext).toBe(contextName);
+  });
+
+  it('should have names', () => {
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].metaEdName).toBe(propertyName);
+    expect(getDomainEntity(namespace.entity, entityName).properties[0].fullPropertyName).toBe(
+      `${contextName}${propertyName}`,
+    );
   });
 
   it('should have source map for contextName with line, column, text', () => {

@@ -34,6 +34,8 @@ function findProperty(
 ): EntityProperty | null {
   const propertyName: string | undefined = pathStrings.pop();
   if (propertyName == null) return null;
+
+  // first, look for property on the entity
   let property: EntityProperty | undefined = entity.properties.find(x => x.fullPropertyName === propertyName);
 
   if (property == null) {
@@ -62,9 +64,10 @@ function findProperty(
   // done if we hit the end of the path
   if (pathStrings.length === 0) return property;
 
-  // if property isn't referential, terminate early because the remaining path is invalid
+  // if property isn't referential, terminate early because the remaining path is invalid - the chain recorded how far we got
   if (!isReferentialProperty(property)) return null;
 
+  // continue down the path
   return findProperty((property as ReferentialProperty).referencedEntity, pathStrings, propertyChainAccumulator);
 }
 
@@ -75,10 +78,10 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
     .map(x => asReferentialProperty(x))
     .filter(x => !R.isEmpty(x.mergeDirectives))
     .forEach(property => {
-      const sourcePropertyChain: Array<EntityProperty> = [];
-      const targetPropertyChain: Array<EntityProperty> = [];
-
       property.mergeDirectives.forEach(mergeDirective => {
+        const sourcePropertyChain: Array<EntityProperty> = [];
+        const targetPropertyChain: Array<EntityProperty> = [];
+
         mergeDirective.sourceProperty = findProperty(
           property.parentEntity,
           R.reverse(mergeDirective.sourcePropertyPathStrings),

@@ -4,8 +4,14 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
+  MetaEdEnvironment,
+  ValidationFailure,
 } from 'metaed-core';
-import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import {
+  mergeDirectiveEnhancer,
+  domainEntityReferenceEnhancer,
+  domainEntitySubclassBaseClassEnhancer,
+} from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeDirective/SourcePropertyAndTargetPropertyMustMatch';
 
 describe('when validating merge property name and types match', () => {
@@ -36,6 +42,8 @@ describe('when validating merge property name and types match', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -76,6 +84,8 @@ describe('when validating merge property type mismatch', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -136,6 +146,8 @@ describe('when validating merge of doubly nested domain entity with domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -193,6 +205,9 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntitySubclassBaseClassEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 

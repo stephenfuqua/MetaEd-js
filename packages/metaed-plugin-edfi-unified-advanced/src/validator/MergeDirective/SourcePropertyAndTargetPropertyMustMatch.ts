@@ -1,18 +1,13 @@
-import { EntityProperty, MetaEdEnvironment, PropertyType, ValidationFailure, ModelBase } from 'metaed-core';
 import {
+  MetaEdEnvironment,
+  PropertyType,
+  ValidationFailure,
+  ReferentialProperty,
   asReferentialProperty,
-  asModelType,
   getPropertiesOfType,
-  asTopLevelEntity,
   isReferentialProperty,
+  TopLevelEntity,
 } from 'metaed-core';
-import {
-  findReferencedProperty,
-  getReferencedEntities,
-  referenceTypes,
-  matchAllButFirstAsIdentityProperties,
-  matchAllIdentityReferenceProperties,
-} from './FindReferencedProperty';
 
 const validPropertyTypes: Array<PropertyType> = [
   'association',
@@ -29,6 +24,18 @@ const validPropertyTypes: Array<PropertyType> = [
   'sharedString',
 ];
 
+function ancestors(entity: TopLevelEntity, accumulator: Array<TopLevelEntity>): Array<TopLevelEntity> {
+  if (entity.baseEntity == null) return accumulator;
+  accumulator.push(entity.baseEntity);
+  return ancestors(entity.baseEntity, accumulator);
+}
+
+function hasCommonSuperClass(entity1: TopLevelEntity, entity2: TopLevelEntity): boolean {
+  if (ancestors(entity1, []).includes(entity2)) return true;
+  if (ancestors(entity2, []).includes(entity1)) return true;
+  return false;
+}
+
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
@@ -36,60 +43,38 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     if (!isReferentialProperty(property)) return;
     const referentialProperty = asReferentialProperty(property);
     if (referentialProperty.mergeDirectives.length === 0) return;
-    const { namespace } = referentialProperty;
+
     referentialProperty.mergeDirectives.forEach(mergeDirective => {
-      const sourceProperty: EntityProperty | null = findReferencedProperty(
-        namespace,
-        referentialProperty.parentEntity,
-        mergeDirective.sourcePropertyPathStrings,
-        matchAllButFirstAsIdentityProperties(),
-      );
-      const targetProperty: EntityProperty | null = findReferencedProperty(
-        namespace,
-        referentialProperty.parentEntity,
-        mergeDirective.targetPropertyPathStrings,
-        matchAllIdentityReferenceProperties(),
-      );
+      if (!mergeDirective.sourceProperty || !mergeDirective.targetProperty) return;
 
-      if (!sourceProperty || !targetProperty) return;
+      if (mergeDirective.sourceProperty.type !== mergeDirective.targetProperty.type) {
+        failures.push({
+          validatorName: 'SourcePropertyAndTargetPropertyMustMatch',
+          category: 'error',
+          message: `The merge paths '${mergeDirective.sourcePropertyPathStrings.join(
+            '.',
+          )}' and '${mergeDirective.targetPropertyPathStrings.join('.')}' do not correspond to the same type.`,
+          sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings,
+          fileMap: null,
+        });
 
-      if (sourceProperty && targetProperty) {
-        if (sourceProperty.type === targetProperty.type) {
-          if (sourceProperty.metaEdName === targetProperty.metaEdName) return;
-
-          if (
-            referenceTypes.includes(asModelType(sourceProperty.type)) &&
-            referenceTypes.includes(asModelType(targetProperty.type))
-          ) {
-            const mergeBaseEntity: Array<ModelBase> = getReferencedEntities(
-              namespace,
-              sourceProperty.metaEdName,
-              sourceProperty.referencedNamespaceName,
-              sourceProperty.type,
-            );
-            const targetBaseEntity: Array<ModelBase> = getReferencedEntities(
-              namespace,
-              targetProperty.metaEdName,
-              targetProperty.referencedNamespaceName,
-              targetProperty.type,
-            );
-
-            if (mergeBaseEntity[0] && asTopLevelEntity(mergeBaseEntity[0]).baseEntityName === targetProperty.metaEdName)
-              return;
-            if (targetBaseEntity[0] && asTopLevelEntity(targetBaseEntity[0]).baseEntityName === sourceProperty.metaEdName)
-              return;
-          }
-        }
+        return;
       }
+
+      // TODO: As of METAED-881, the current property here could also be one of the shared simple properties, which
+      // are not currently extensions of ReferentialProperty but have an equivalent referencedEntity field
+      const sourceReferencedEntity = (mergeDirective.sourceProperty as ReferentialProperty).referencedEntity;
+      const targetReferencedEntity = (mergeDirective.targetProperty as ReferentialProperty).referencedEntity;
+
+      if (sourceReferencedEntity === targetReferencedEntity) return;
+      if (hasCommonSuperClass(sourceReferencedEntity, targetReferencedEntity)) return;
 
       failures.push({
         validatorName: 'SourcePropertyAndTargetPropertyMustMatch',
         category: 'error',
         message: `The merge paths '${mergeDirective.sourcePropertyPathStrings.join(
           '.',
-        )}' and '${mergeDirective.targetPropertyPathStrings.join(
-          '.',
-        )}' do not correspond to the same entity name and/or type.`,
+        )}' and '${mergeDirective.targetPropertyPathStrings.join('.')}' do not correspond to the same entity.`,
         sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings,
         fileMap: null,
       });

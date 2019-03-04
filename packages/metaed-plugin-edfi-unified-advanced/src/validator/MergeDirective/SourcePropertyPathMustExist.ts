@@ -1,6 +1,13 @@
-import { PropertyType, MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { getPropertiesOfType, asReferentialProperty } from 'metaed-core';
-import { failReferencedPropertyDoesNotExist } from './FailReferencedPropertyDoesNotExist';
+import R from 'ramda';
+import {
+  PropertyType,
+  MetaEdEnvironment,
+  ValidationFailure,
+  MergeDirective,
+  getPropertiesOfType,
+  asReferentialProperty,
+  EntityProperty,
+} from 'metaed-core';
 
 const validPropertyTypes: Array<PropertyType> = [
   'association',
@@ -17,6 +24,30 @@ const validPropertyTypes: Array<PropertyType> = [
   'sharedString',
 ];
 
+function isCollectionProperty(property: EntityProperty): boolean {
+  return property.isOptionalCollection || property.isRequiredCollection;
+}
+
+function isIdentityLikeProperty(property: EntityProperty): boolean {
+  return (
+    property.isPartOfIdentity || property.isIdentityRename || ['choice', 'inlineCommon'].includes(property.parentEntity.type)
+  );
+}
+
+function makeFailure(failures: ValidationFailure[], mergeDirective: MergeDirective) {
+  failures.push({
+    validatorName: 'SourcePropertyPathMustExist',
+    category: 'error',
+    message: `Merge directive ${mergeDirective.sourcePropertyPathStrings.join(
+      '.',
+    )} must be a valid path. Either the path is not to a mergeable type, or no property '${R.last(
+      mergeDirective.sourcePropertyPathStrings,
+    )}' was found`,
+    sourceMap: mergeDirective.sourceMap.sourcePropertyPathStrings,
+    fileMap: null,
+  });
+}
+
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
@@ -25,15 +56,25 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
     // are not currently extensions of ReferentialProperty but have an equivalent mergeDirectives field
     const referentialProperty = asReferentialProperty(property);
     referentialProperty.mergeDirectives.forEach(mergeDirective => {
-      failReferencedPropertyDoesNotExist(
-        'SourcePropertyPathMustExist',
-        referentialProperty.namespace,
-        referentialProperty.parentEntity,
-        mergeDirective.sourcePropertyPathStrings,
-        mergeDirective.targetPropertyPathStrings[0],
-        mergeDirective.sourceMap.sourcePropertyPathStrings,
-        failures,
-      );
+      if (mergeDirective.sourceProperty == null) {
+        makeFailure(failures, mergeDirective);
+        return;
+      }
+      if (mergeDirective.sourcePropertyPathStrings.length !== mergeDirective.sourcePropertyChain.length) {
+        makeFailure(failures, mergeDirective);
+        return;
+      }
+      const firstSourceProperty = mergeDirective.sourcePropertyChain[0];
+
+      if (mergeDirective.targetPropertyChain.length < 1) return; // something wrong but not this validators problem
+      const firstTargetProperty = mergeDirective.targetPropertyChain[0];
+      if (isCollectionProperty(firstTargetProperty) && !isIdentityLikeProperty(firstSourceProperty)) {
+        makeFailure(failures, mergeDirective);
+        return;
+      }
+      R.tail(mergeDirective.sourcePropertyChain).forEach(propertyInChain => {
+        if (!isIdentityLikeProperty(propertyInChain)) makeFailure(failures, mergeDirective);
+      });
     });
   });
 

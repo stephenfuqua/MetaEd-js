@@ -165,8 +165,33 @@ import { enhance as sharedStringPropertyEnhancer } from './enhancer/SharedString
 
 import { enhance as inheritedDocumentationCopyingEnhancer } from './enhancer/InheritedDocumentationCopyingEnhancer';
 
-import { enhance as fullPropertyNameEnhancer } from './enhancer/FullPropertyNameEnhancer';
 import { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
+
+export { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
+export { enhance as interchangeBaseItemEnhancer } from './enhancer/InterchangeBaseItemEnhancer';
+export { enhance as associationReferenceEnhancer } from './enhancer/property/AssociationReferenceEnhancer';
+export { enhance as choiceReferenceEnhancer } from './enhancer/property/ChoiceReferenceEnhancer';
+export { enhance as commonReferenceEnhancer } from './enhancer/property/CommonReferenceEnhancer';
+export { enhance as descriptorReferenceEnhancer } from './enhancer/property/DescriptorReferenceEnhancer';
+export { enhance as domainEntityReferenceEnhancer } from './enhancer/property/DomainEntityReferenceEnhancer';
+export { enhance as enumerationReferenceEnhancer } from './enhancer/property/EnumerationReferenceEnhancer';
+export { enhance as inlineCommonReferenceEnhancer } from './enhancer/property/InlineCommonReferenceEnhancer';
+
+export { enhance as decimalReferenceEnhancer } from './enhancer/property/DecimalReferenceEnhancer';
+export { enhance as integerReferenceEnhancer } from './enhancer/property/IntegerReferenceEnhancer';
+export { enhance as shortReferenceEnhancer } from './enhancer/property/ShortReferenceEnhancer';
+export { enhance as stringReferenceEnhancer } from './enhancer/property/StringReferenceEnhancer';
+
+export { enhance as sharedDecimalPropertyEnhancer } from './enhancer/SharedDecimalPropertyEnhancer';
+export { enhance as sharedIntegerPropertyEnhancer } from './enhancer/SharedIntegerPropertyEnhancer';
+export { enhance as sharedStringPropertyEnhancer } from './enhancer/SharedStringPropertyEnhancer';
+
+export { enhance as associationExtensionBaseClassEnhancer } from './enhancer/AssociationExtensionBaseClassEnhancer';
+export { enhance as associationSubclassBaseClassEnhancer } from './enhancer/AssociationSubclassBaseClassEnhancer';
+export { enhance as commonExtensionBaseClassEnhancer } from './enhancer/CommonExtensionBaseClassEnhancer';
+export { enhance as domainEntityExtensionBaseClassEnhancer } from './enhancer/DomainEntityExtensionBaseClassEnhancer';
+export { enhance as domainEntitySubclassBaseClassEnhancer } from './enhancer/DomainEntitySubclassBaseClassEnhancer';
+export { enhance as interchangeExtensionBaseClassEnhancer } from './enhancer/InterchangeExtensionBaseClassEnhancer';
 
 function validatorList(): Array<Validator> {
   return [
@@ -356,8 +381,6 @@ function enhancerList(): Array<Enhancer> {
     // enhance :: (referencedEntity) => documentation
     inheritedDocumentationCopyingEnhancer,
 
-    // enhance :: (referencedEntity) => fullPropertyName
-    fullPropertyNameEnhancer,
     // enhance :: (referencedEntity, fullPropertyName) => mergeDirective.sourceProperty, mergeDirective.targetProperty
     mergeDirectiveEnhancer,
   ];

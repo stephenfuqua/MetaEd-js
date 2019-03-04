@@ -410,13 +410,11 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
 
   // side effect - pushes ValidationFailures if there is a name collision
   propertyNameCollision(): boolean {
-    const fullPropertyName = `${this.currentProperty.withContext}${this.currentProperty.metaEdName}`;
-
     // if this is empty there's a parse error - go ahead and declare collision, but don't bother with error messages
-    if (!fullPropertyName) return true;
+    if (!this.currentProperty.fullPropertyName) return true;
 
-    if (!this.currentTopLevelEntityPropertyLookup.has(fullPropertyName)) {
-      this.currentTopLevelEntityPropertyLookup.set(fullPropertyName, this.currentProperty);
+    if (!this.currentTopLevelEntityPropertyLookup.has(this.currentProperty.fullPropertyName)) {
+      this.currentTopLevelEntityPropertyLookup.set(this.currentProperty.fullPropertyName, this.currentProperty);
       return false;
     }
 
@@ -431,7 +429,7 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
     });
 
     const duplicateProperty: EntityProperty = this.currentTopLevelEntityPropertyLookup.get(
-      fullPropertyName,
+      this.currentProperty.fullPropertyName,
     ) as EntityProperty;
     this.validationFailures.push({
       validatorName: 'TopLevelEntityBuilder',
@@ -474,6 +472,9 @@ export class TopLevelEntityBuilder extends MetaEdGrammarListener {
       this.currentProperty.parentEntityName = this.currentTopLevelEntity.metaEdName;
       this.currentProperty.sourceMap.parentEntityName = this.currentTopLevelEntity.sourceMap.metaEdName;
 
+      this.currentProperty.fullPropertyName =
+        (this.currentProperty.withContext !== this.currentProperty.metaEdName ? this.currentProperty.withContext : '') +
+        this.currentProperty.metaEdName;
       // isQueryableOnly is XSD-specific and needs to be pulled out to artifact-specific configuration
       if (!this.currentProperty.isQueryableOnly && !this.propertyNameCollision()) {
         this.currentTopLevelEntity.properties.push(this.currentProperty);

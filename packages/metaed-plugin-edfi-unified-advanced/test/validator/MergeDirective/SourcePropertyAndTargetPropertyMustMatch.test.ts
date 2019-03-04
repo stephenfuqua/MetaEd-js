@@ -6,8 +6,15 @@ import {
   NamespaceBuilder,
   newMetaEdEnvironment,
   MetaEdTextBuilder,
+  MetaEdEnvironment,
+  ValidationFailure,
 } from 'metaed-core';
-import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
+import {
+  mergeDirectiveEnhancer,
+  domainEntityReferenceEnhancer,
+  domainEntitySubclassBaseClassEnhancer,
+  domainEntityExtensionBaseClassEnhancer,
+} from 'metaed-plugin-edfi-unified';
 import { validate } from '../../../src/validator/MergeDirective/SourcePropertyAndTargetPropertyMustMatch';
 
 describe('when validating merge property name and types match', () => {
@@ -38,6 +45,8 @@ describe('when validating merge property name and types match', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -84,6 +93,8 @@ describe('when validating merge property type mismatch', () => {
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -137,6 +148,8 @@ describe('when validating merge of nested domain entity with domain entity prope
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -182,6 +195,8 @@ describe('when validating merge of domain entity with nested domain entity prope
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -233,6 +248,8 @@ describe('when validating merge of doubly nested domain entity with domain entit
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -279,6 +296,9 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntitySubclassBaseClassEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -341,6 +361,9 @@ describe('when validating merge of domain entity and domain entity subclass prop
       .sendToListener(new DomainEntitySubclassBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntitySubclassBaseClassEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -380,14 +403,14 @@ describe('when validating merge of domain entity, domain entity extension, and d
       .withIntegerIdentity('IntegerIdentityName2', 'IntegerIdentityDocumentation')
       .withEndDomainEntityExtension()
 
-      .withStartDomainEntitySubclass(domainEntitySubclassName, domainEntityName1)
+      .withStartDomainEntitySubclass(domainEntitySubclassName, `EdFi.${domainEntityName1}`)
       .withDocumentation('DomainEntityDocumentation')
       .withIntegerIdentity('IntegerIdentityName3', 'IntegerIdentityDocumentation')
       .withEndDomainEntitySubclass()
 
       .withStartDomainEntity('DomainEntityName3')
       .withDocumentation('DomainEntityDocumentation')
-      .withDomainEntityIdentity(domainEntityName1, 'DomainEntityPropertyDocumentation')
+      .withDomainEntityIdentity(`EdFi.${domainEntityName1}`, 'DomainEntityPropertyDocumentation')
       .withDomainEntityIdentity(domainEntitySubclassName, 'DomainEntityPropertyDocumentation')
       .withMergeDirective(domainEntitySubclassName, domainEntityName1)
       .withEndDomainEntity()
@@ -402,6 +425,10 @@ describe('when validating merge of domain entity, domain entity extension, and d
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
+    domainEntityReferenceEnhancer(metaEd);
+    domainEntitySubclassBaseClassEnhancer(metaEd);
+    domainEntityExtensionBaseClassEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -465,6 +492,8 @@ describe('when validating merging domain entity property of an association', () 
       .sendToListener(new DomainEntityBuilder(metaEd, []));
 
     coreNamespace = metaEd.namespace.get('EdFi');
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
@@ -529,6 +558,8 @@ describe('when validating merging domain entity property of an association acros
     extensionNamespace = metaEd.namespace.get('Extension');
     extensionNamespace.dependencies.push(coreNamespace);
 
+    domainEntityReferenceEnhancer(metaEd);
+    mergeDirectiveEnhancer(metaEd);
     failures = validate(metaEd);
   });
 
