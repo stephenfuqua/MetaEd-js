@@ -1,12 +1,22 @@
 import R from 'ramda';
-import { asDomainEntity, asAssociation, isSharedProperty } from 'metaed-core';
-import { MetaEdEnvironment, Namespace, EntityProperty } from 'metaed-core';
+import {
+  asDomainEntity,
+  asAssociation,
+  isSharedProperty,
+  SemVer,
+  versionSatisfies,
+  PluginEnvironment,
+  MetaEdEnvironment,
+  Namespace,
+  EntityProperty,
+} from 'metaed-core';
 import { Table, Column, ForeignKey } from 'metaed-plugin-edfi-ods';
 import { tableEntities } from 'metaed-plugin-edfi-ods';
 import { buildApiProperty } from './BuildApiProperty';
 import { EntityDefinition } from '../../model/apiModel/EntityDefinition';
 import { EntityIdentifier } from '../../model/apiModel/EntityIdentifier';
 import { ApiProperty } from '../../model/apiModel/ApiProperty';
+import { DbType } from '../../model/apiModel/DbType';
 
 type BuildSingleEntityDefinitionOptions = {
   includeAlternateKeys: boolean;
@@ -86,7 +96,7 @@ function includeColumn(column: Column, table: Table, foreignKeyColumnNamesOnTabl
   );
 }
 
-function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
+function locallyDefinedPropertiesFrom(targetTechnologyVersion: SemVer, table: Table): Array<ApiProperty> {
   const foreignKeyColumnNamesOnTable: Array<string> = R.chain(
     (foreignKey: ForeignKey) => foreignKey.parentTableColumnNames,
     table.foreignKeys,
@@ -96,11 +106,13 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     .filter((column: Column) => includeColumn(column, table, foreignKeyColumnNamesOnTable))
     .map((column: Column) => buildApiProperty(column));
 
+  const datetime: DbType = versionSatisfies(targetTechnologyVersion, '>=3.1.1') ? 'DateTime2' : 'DateTime';
+
   if (table.includeCreateDateColumn) {
     result.push({
       propertyName: 'CreateDate',
       propertyType: {
-        dbType: 'DateTime',
+        dbType: datetime,
         maxLength: 0,
         precision: 0,
         scale: 0,
@@ -130,7 +142,7 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
     result.push({
       propertyName: 'LastModifiedDate',
       propertyType: {
-        dbType: 'DateTime',
+        dbType: datetime,
         maxLength: 0,
         precision: 0,
         scale: 0,
@@ -151,11 +163,15 @@ function locallyDefinedPropertiesFrom(table: Table): Array<ApiProperty> {
   );
 }
 
-function buildSingleEntityDefinitionFrom(table: Table, options: BuildSingleEntityDefinitionOptions): EntityDefinition {
+function buildSingleEntityDefinitionFrom(
+  targetTechnologyVersion: SemVer,
+  table: Table,
+  options: BuildSingleEntityDefinitionOptions,
+): EntityDefinition {
   return {
     schema: table.schema,
     name: table.name,
-    locallyDefinedProperties: locallyDefinedPropertiesFrom(table),
+    locallyDefinedProperties: locallyDefinedPropertiesFrom(targetTechnologyVersion, table),
     identifiers: identifiersFrom(table, options),
     isAbstract: options.isAbstract,
     description: table.description,
@@ -185,10 +201,11 @@ export function buildEntityDefinitions(
   namespace: Namespace,
   additionalEntityDefinitions: Array<EntityDefinition>,
 ): Array<EntityDefinition> {
+  const { targetTechnologyVersion } = metaEd.plugin.get('edfiOds') as PluginEnvironment;
   const result: Array<EntityDefinition> = [];
   tableEntities(metaEd, namespace).forEach((table: Table) => {
     result.push(
-      buildSingleEntityDefinitionFrom(table, {
+      buildSingleEntityDefinitionFrom(targetTechnologyVersion, table, {
         isAbstract: isAbstract(table),
         includeAlternateKeys: shouldIncludeAlternateKeys(table),
       }),
