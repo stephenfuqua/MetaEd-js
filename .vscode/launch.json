@@ -7,6 +7,7 @@
       "name": "Jest :: File",
       "program": "${workspaceRoot}/node_modules/jest-cli/bin/jest.js",
       "args": [
+        "--runTestsByPath",
         "${relativeFile}",
         "--runInBand"
       ],
@@ -19,6 +20,7 @@
       "name": "Jest :: Watch File",
       "program": "${workspaceRoot}/node_modules/jest-cli/bin/jest.js",
       "args": [
+        "--runTestsByPath",
         "${relativeFile}",
         "--runInBand",
         "--watch",
