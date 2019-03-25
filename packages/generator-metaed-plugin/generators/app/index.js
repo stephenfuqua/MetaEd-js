@@ -109,7 +109,7 @@ module.exports = class extends Generator {
       },
       dependencies: {
         handlebars: 'latest',
-        'metaed-core': 'latest',
+        'metaed-core': 'beta',
       },
       devDependencies: {
         '@types/jest': '^23.3.11',
@@ -147,7 +147,7 @@ module.exports = class extends Generator {
       },
     };
     this.props.dependencies.forEach(dependency => {
-      packageJson.dependencies[dependency] = 'latest';
+      packageJson.dependencies[dependency] = 'beta';
     });
 
     await this.fs.writeJSON(this.destinationPath('package.json'), packageJson);
