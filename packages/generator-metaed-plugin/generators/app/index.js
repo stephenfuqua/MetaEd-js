@@ -126,7 +126,7 @@ module.exports = class extends Generator {
         'eslint-plugin-prettier': '^2.6.2',
         'eslint-plugin-react': '^7.12.3',
         'eslint-plugin-typescript': '^1.0.0-rc.2',
-        jest: '^23.5.0',
+        jest: '^24.5.0',
         prettier: '^1.14.2',
         rimraf: '^2.6.1',
         'ts-jest': '^23.10.5',
