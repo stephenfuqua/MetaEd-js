@@ -58,7 +58,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'metaEdVersion',
         message: 'What version range of MetaEd does your new plugin support? (in SemVer range format)',
-        default: '1.x',
+        default: '2.x',
         validate: async input =>
           semver.validRange(input)
             ? true
