@@ -10,6 +10,7 @@ describe('when generating output for namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.plugin.set('edfiOds', { targetTechnologyVersion: '3.0.0', shortName: '', namespace: new Map(), config: {} });
     const namespace: Namespace = {
       ...newNamespace(),
       namespaceName,
@@ -41,6 +42,7 @@ describe('when generating output for core namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.plugin.set('edfiOds', { targetTechnologyVersion: '3.0.0', shortName: '', namespace: new Map(), config: {} });
     const namespaceName = 'EdFi';
     const namespace: Namespace = {
       ...newNamespace(),
@@ -69,6 +71,7 @@ describe('when generating output for extension namespace', () => {
 
   beforeAll(async () => {
     const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+    metaEd.plugin.set('edfiOds', { targetTechnologyVersion: '3.0.0', shortName: '', namespace: new Map(), config: {} });
     const namespace: Namespace = {
       ...newNamespace(),
       namespaceName,
