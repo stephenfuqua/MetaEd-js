@@ -1,40 +1,8 @@
 import { newMetaEdEnvironment, MetaEdTextBuilder, CommonBuilder, DomainEntityBuilder, NamespaceBuilder } from 'metaed-core';
 import { MetaEdEnvironment, ValidationFailure } from 'metaed-core';
-import { validate } from '../../../src/validator/CommonProperty/CommonPropertyMustMatchACommon';
+import { validate } from '../../../src/validator/InlineCommonProperty/InlineCommonPropertyMustMatchAnInlineCommon';
 
-describe('when common property has identifier of common', () => {
-  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
-  const domainEntityName = 'DomainEntityName';
-  const entityName = 'EntityName';
-  let failures: Array<ValidationFailure>;
-
-  beforeAll(() => {
-    MetaEdTextBuilder.build()
-      .withBeginNamespace('EdFi')
-      .withStartCommon(entityName)
-      .withDocumentation('doc')
-      .withStringProperty('StringProperty', 'doc', true, false, '100')
-      .withEndCommon()
-
-      .withStartDomainEntity(domainEntityName)
-      .withDocumentation('doc')
-      .withCommonProperty(entityName, 'doc', true, false)
-      .withEndDomainEntity()
-      .withEndNamespace()
-
-      .sendToListener(new NamespaceBuilder(metaEd, []))
-      .sendToListener(new DomainEntityBuilder(metaEd, []))
-      .sendToListener(new CommonBuilder(metaEd, []));
-
-    failures = validate(metaEd);
-  });
-
-  it('should have no validation failures()', () => {
-    expect(failures).toHaveLength(0);
-  });
-});
-
-describe('when common property has identifier of inline common', () => {
+describe('when inline common property has identifier of inline common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
@@ -50,7 +18,7 @@ describe('when common property has identifier of inline common', () => {
 
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withCommonProperty(entityName, 'doc', true, false)
+      .withInlineCommonProperty(entityName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -61,19 +29,12 @@ describe('when common property has identifier of inline common', () => {
     failures = validate(metaEd);
   });
 
-  it('should have validation failures()', () => {
-    expect(failures).toHaveLength(1);
-  });
-
-  it('should have validation failure for property', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
-    expect(failures[0].category).toBe('error');
-    expect(failures[0].message).toMatchSnapshot();
-    expect(failures[0].sourceMap).toMatchSnapshot();
+  it('should have no validation failures()', () => {
+    expect(failures).toHaveLength(0);
   });
 });
 
-describe('when common property has invalid identifier', () => {
+describe('when inline common property has identifier of common', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
@@ -82,14 +43,14 @@ describe('when common property has invalid identifier', () => {
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('EdFi')
-      .withStartCommon('WrongName')
+      .withStartCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
       .withEndCommon()
 
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withCommonProperty(entityName, 'doc', true, false)
+      .withInlineCommonProperty(entityName, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -105,14 +66,53 @@ describe('when common property has invalid identifier', () => {
   });
 
   it('should have validation failure for property', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
+    expect(failures[0].validatorName).toBe('InlineCommonPropertyMustMatchAnInlineCommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
 
-describe('when common property has identifier of common in dependency namespace', () => {
+describe('when inline common property has invalid identifier', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const domainEntityName = 'DomainEntityName';
+  const entityName = 'EntityName';
+  let failures: Array<ValidationFailure>;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartInlineCommon('WrongName')
+      .withDocumentation('doc')
+      .withStringProperty('StringProperty', 'doc', true, false, '100')
+      .withEndInlineCommon()
+
+      .withStartDomainEntity(domainEntityName)
+      .withDocumentation('doc')
+      .withInlineCommonProperty(entityName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []))
+      .sendToListener(new CommonBuilder(metaEd, []));
+
+    failures = validate(metaEd);
+  });
+
+  it('should have validation failures()', () => {
+    expect(failures).toHaveLength(1);
+  });
+
+  it('should have validation failure for property', () => {
+    expect(failures[0].validatorName).toBe('InlineCommonPropertyMustMatchAnInlineCommon');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});
+
+describe('when inline common property has identifier of inline common in dependency namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
@@ -123,16 +123,16 @@ describe('when common property has identifier of common in dependency namespace'
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('EdFi')
-      .withStartCommon(entityName)
+      .withStartInlineCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
-      .withEndCommon()
+      .withEndInlineCommon()
       .withEndNamespace()
 
       .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withCommonProperty(`EdFi.${entityName}`, 'doc', true, false)
+      .withInlineCommonProperty(`EdFi.${entityName}`, 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -152,7 +152,7 @@ describe('when common property has identifier of common in dependency namespace'
   });
 });
 
-describe('when common property has invalid identifier of common in dependency namespace', () => {
+describe('when inline common property has invalid identifier of inline common in dependency namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   const domainEntityName = 'DomainEntityName';
   const entityName = 'EntityName';
@@ -163,16 +163,16 @@ describe('when common property has invalid identifier of common in dependency na
   beforeAll(() => {
     MetaEdTextBuilder.build()
       .withBeginNamespace('EdFi')
-      .withStartCommon(entityName)
+      .withStartInlineCommon(entityName)
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
-      .withEndCommon()
+      .withEndInlineCommon()
       .withEndNamespace()
 
       .withBeginNamespace('Extension', 'ProjectExtension')
       .withStartDomainEntity(domainEntityName)
       .withDocumentation('doc')
-      .withCommonProperty('NotValid', 'doc', true, false)
+      .withInlineCommonProperty('NotValid', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
@@ -192,7 +192,7 @@ describe('when common property has invalid identifier of common in dependency na
   });
 
   it('should have validation failure for property', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
+    expect(failures[0].validatorName).toBe('InlineCommonPropertyMustMatchAnInlineCommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();
@@ -200,7 +200,7 @@ describe('when common property has invalid identifier of common in dependency na
 });
 
 // can't reference entities outside of dependency list
-describe('when common property refers to common in non-dependency namespace', () => {
+describe('when inline common property refers to inline common in non-dependency namespace', () => {
   const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
   let failures: Array<ValidationFailure>;
   let coreNamespace: any = null;
@@ -219,15 +219,15 @@ describe('when common property refers to common in non-dependency namespace', ()
       .withBeginNamespace('Extensiona', 'ProjectExtensiona')
       .withStartDomainEntity('ExtensionEntity')
       .withDocumentation('doc')
-      .withCommonProperty('CommonEntity', 'doc', true, false)
+      .withInlineCommonProperty('CommonEntity', 'doc', true, false)
       .withEndDomainEntity()
       .withEndNamespace()
 
       .withBeginNamespace('Extensionb', 'ProjectExtensionb')
-      .withStartCommon('CommonEntity')
+      .withStartInlineCommon('CommonEntity')
       .withDocumentation('doc')
       .withStringProperty('StringProperty', 'doc', true, false, '100')
-      .withEndCommon()
+      .withEndInlineCommon()
       .withEndNamespace()
 
       .sendToListener(new NamespaceBuilder(metaEd, []))
@@ -248,7 +248,7 @@ describe('when common property refers to common in non-dependency namespace', ()
   });
 
   it('should have validation failure for property', () => {
-    expect(failures[0].validatorName).toBe('CommonPropertyMustMatchACommon');
+    expect(failures[0].validatorName).toBe('InlineCommonPropertyMustMatchAnInlineCommon');
     expect(failures[0].category).toBe('error');
     expect(failures[0].message).toMatchSnapshot();
     expect(failures[0].sourceMap).toMatchSnapshot();

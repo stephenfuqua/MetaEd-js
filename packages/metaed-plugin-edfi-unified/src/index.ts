@@ -76,6 +76,7 @@ import { validate as identityExistsOnlyIfIdentityIsAllowed } from './validator/I
 import { validate as identityRenameExistsOnlyIfIdentityRenameIsAllowed } from './validator/IdentityRename/IdentityRenameExistsOnlyIfIdentityRenameIsAllowed';
 
 import { validate as inlineCommonExistsOnlyInCoreNamespace } from './validator/InlineCommon/InlineCommonExistsOnlyInCoreNamespace';
+import { validate as inlineCommonPropertyMustMatchAnInlineCommon } from './validator/InlineCommonProperty/InlineCommonPropertyMustMatchAnInlineCommon';
 
 import { validate as integerPropertyMinValueMustNotBeGreaterThanMaxValue } from './validator/IntegerProperty/IntegerPropertyMinValueMustNotBeGreaterThanMaxValue';
 import { validate as integerPropertyMustNotMatchASharedDecimal } from './validator/IntegerProperty/IntegerPropertyMustNotMatchASharedDecimal';
@@ -272,6 +273,7 @@ function validatorList(): Array<Validator> {
     identityRenameExistsOnlyIfIdentityRenameIsAllowed,
 
     inlineCommonExistsOnlyInCoreNamespace,
+    inlineCommonPropertyMustMatchAnInlineCommon,
 
     integerPropertyMinValueMustNotBeGreaterThanMaxValue,
     integerPropertyMustNotMatchASharedDecimal,

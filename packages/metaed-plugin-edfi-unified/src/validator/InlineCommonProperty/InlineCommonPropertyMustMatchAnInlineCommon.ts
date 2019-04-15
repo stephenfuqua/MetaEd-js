@@ -3,7 +3,7 @@ import { MetaEdEnvironment, ValidationFailure, ModelBase, Common, getEntityFromN
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.propertyIndex.common.forEach(property => {
+  metaEd.propertyIndex.inlineCommon.forEach(property => {
     const referencedEntity: ModelBase | null = getEntityFromNamespaceChain(
       property.metaEdName,
       property.referencedNamespaceName,
@@ -11,11 +11,11 @@ export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
       'common',
     );
 
-    if (referencedEntity == null || (referencedEntity as Common).inlineInOds) {
+    if (referencedEntity == null || !(referencedEntity as Common).inlineInOds) {
       failures.push({
-        validatorName: 'CommonPropertyMustMatchACommon',
+        validatorName: 'InlineCommonPropertyMustMatchAnInlineCommon',
         category: 'error',
-        message: `Common property '${property.metaEdName}' does not match any declared Common in namespace ${
+        message: `Inline Common property '${property.metaEdName}' does not match any declared Inline Common in namespace ${
           property.referencedNamespaceName
         }.`,
         sourceMap: property.sourceMap.metaEdName,

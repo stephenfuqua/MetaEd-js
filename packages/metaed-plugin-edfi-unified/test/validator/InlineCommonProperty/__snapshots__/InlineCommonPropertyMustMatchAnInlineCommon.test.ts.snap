@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when inline common property has identifier of common should have validation failure for property 1`] = `"Inline Common property 'EntityName' does not match any declared Inline Common in namespace EdFi."`;
+
+exports[`when inline common property has identifier of common should have validation failure for property 2`] = `
+Object {
+  "column": 18,
+  "line": 13,
+  "tokenText": "EntityName",
+}
+`;
+
+exports[`when inline common property has invalid identifier of inline common in dependency namespace should have validation failure for property 1`] = `"Inline Common property 'NotValid' does not match any declared Inline Common in namespace Extension."`;
+
+exports[`when inline common property has invalid identifier of inline common in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 18,
+  "line": 15,
+  "tokenText": "NotValid",
+}
+`;
+
+exports[`when inline common property has invalid identifier should have validation failure for property 1`] = `"Inline Common property 'EntityName' does not match any declared Inline Common in namespace EdFi."`;
+
+exports[`when inline common property has invalid identifier should have validation failure for property 2`] = `
+Object {
+  "column": 18,
+  "line": 13,
+  "tokenText": "EntityName",
+}
+`;
+
+exports[`when inline common property refers to inline common in non-dependency namespace should have validation failure for property 1`] = `"Inline Common property 'CommonEntity' does not match any declared Inline Common in namespace Extensiona."`;
+
+exports[`when inline common property refers to inline common in non-dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 18,
+  "line": 14,
+  "tokenText": "CommonEntity",
+}
+`;
