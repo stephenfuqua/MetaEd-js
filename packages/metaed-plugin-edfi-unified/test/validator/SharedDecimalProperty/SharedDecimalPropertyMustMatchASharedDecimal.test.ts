@@ -235,3 +235,51 @@ describe('when shared decimal property refers to shared decimal in non-dependenc
     expect(failures[0].sourceMap).toMatchSnapshot();
   });
 });
+
+describe('when shared decimal property has omitted namespace of shared decimal in dependency namespace', () => {
+  const metaEd: MetaEdEnvironment = newMetaEdEnvironment();
+  const sharedName = 'SharedName';
+  const entityName = 'EntityName';
+  let failures: Array<ValidationFailure>;
+  let coreNamespace: any = null;
+  let extensionNamespace: any = null;
+
+  beforeAll(() => {
+    MetaEdTextBuilder.build()
+      .withBeginNamespace('EdFi')
+      .withStartSharedDecimal(sharedName)
+      .withDocumentation('doc')
+      .withTotalDigits('10')
+      .withDecimalPlaces('2')
+      .withEndSharedDecimal()
+      .withEndNamespace()
+
+      .withBeginNamespace('Extension', 'ProjectExtension')
+      .withStartDomainEntity(entityName)
+      .withDocumentation('doc')
+      .withSharedDecimalProperty(sharedName, sharedName, 'doc', true, false)
+      .withEndDomainEntity()
+      .withEndNamespace()
+
+      .sendToListener(new NamespaceBuilder(metaEd, []))
+      .sendToListener(new SharedDecimalBuilder(metaEd, []))
+      .sendToListener(new DomainEntityBuilder(metaEd, []));
+
+    coreNamespace = metaEd.namespace.get('EdFi');
+    extensionNamespace = metaEd.namespace.get('Extension');
+    extensionNamespace.dependencies.push(coreNamespace);
+
+    failures = validate(metaEd);
+  });
+
+  it('should have validation failures()', () => {
+    expect(failures).toHaveLength(1);
+  });
+
+  it('should have validation failure for property', () => {
+    expect(failures[0].validatorName).toBe('SharedDecimalPropertyMustMatchASharedDecimal');
+    expect(failures[0].category).toBe('error');
+    expect(failures[0].message).toMatchSnapshot();
+    expect(failures[0].sourceMap).toMatchSnapshot();
+  });
+});

@@ -20,6 +20,16 @@ Object {
 }
 `;
 
+exports[`when shared decimal property has omitted namespace of shared decimal in dependency namespace should have validation failure for property 1`] = `"Shared decimal property 'SharedName' does not match any declared Shared Decimal in namespace Extension."`;
+
+exports[`when shared decimal property has omitted namespace of shared decimal in dependency namespace should have validation failure for property 2`] = `
+Object {
+  "column": 36,
+  "line": 12,
+  "tokenText": "SharedName",
+}
+`;
+
 exports[`when shared decimal property refers to shared decimal in non-dependency namespace should have validation failure for property 1`] = `"Shared decimal property 'SharedName' does not match any declared Shared Decimal in namespace Extensiona."`;
 
 exports[`when shared decimal property refers to shared decimal in non-dependency namespace should have validation failure for property 2`] = `

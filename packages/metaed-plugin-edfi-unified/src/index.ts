@@ -121,9 +121,9 @@ import { validate as stringPropertyMustNotMatchASharedInteger } from './validato
 import { validate as stringPropertyMustNotMatchASharedString } from './validator/StringProperty/StringPropertyMustNotMatchASharedString';
 
 import { validate as sharedDecimalPropertyMustMatchASharedDecimal } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
-import { validate as sharedIntegerPropertyMustMatchASharedInteger } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
-import { validate as sharedShortPropertyMustMatchASharedShort } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
-import { validate as sharedStringPropertyMustMatchASharedString } from './validator/SharedDecimalProperty/SharedDecimalPropertyMustMatchASharedDecimal';
+import { validate as sharedIntegerPropertyMustMatchASharedInteger } from './validator/SharedIntegerProperty/SharedIntegerPropertyMustMatchASharedInteger';
+import { validate as sharedShortPropertyMustMatchASharedShort } from './validator/SharedShortProperty/SharedShortPropertyMustMatchASharedShort';
+import { validate as sharedStringPropertyMustMatchASharedString } from './validator/SharedStringProperty/SharedStringPropertyMustMatchASharedString';
 
 import { validate as subdomainMustNotDuplicateDomainItems } from './validator/Subdomain/SubdomainMustNotDuplicateDomainItems';
 import { validate as subdomainParentDomainNameMustMatchADomain } from './validator/Subdomain/SubdomainParentDomainNameMustMatchADomain';
