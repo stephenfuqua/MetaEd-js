@@ -18962,7 +18962,7 @@
             "SessionName"
           ],
           "isPrimary": true,
-          "isUpdatable": false
+          "isUpdatable": true
         },
         {
           "identifierName": "UX_Session_Id",
@@ -18970,7 +18970,7 @@
             "Id"
           ],
           "isPrimary": false,
-          "isUpdatable": false
+          "isUpdatable": true
         }
       ],
       "isAbstract": false,
