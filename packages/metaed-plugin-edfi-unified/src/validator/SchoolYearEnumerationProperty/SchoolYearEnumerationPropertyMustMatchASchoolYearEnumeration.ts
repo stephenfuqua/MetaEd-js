@@ -4,17 +4,17 @@ import { getEntityFromNamespaceChain } from 'metaed-core';
 export function validate(metaEd: MetaEdEnvironment): Array<ValidationFailure> {
   const failures: Array<ValidationFailure> = [];
 
-  metaEd.propertyIndex.enumeration.forEach(property => {
+  metaEd.propertyIndex.schoolYearEnumeration.forEach(property => {
     const referencedEntity: ModelBase | null = getEntityFromNamespaceChain(
       property.metaEdName,
       property.referencedNamespaceName,
       property.namespace,
-      'enumeration',
+      'schoolYearEnumeration',
     );
 
     if (referencedEntity == null) {
       failures.push({
-        validatorName: 'EnumerationPropertyMustMatchAEnumeration',
+        validatorName: 'SchoolYearEnumerationPropertyMustMatchASchoolYearEnumeration',
         category: 'error',
         message: `Enumeration property '${property.metaEdName}' does not match any declared Enumeration in namespace ${
           property.referencedNamespaceName
