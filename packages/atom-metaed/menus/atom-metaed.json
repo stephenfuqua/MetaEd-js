@@ -8,6 +8,10 @@
           "command": "atom-metaed:createNewExtensionProject"
         },
         {
+          "label": "Open Existing Extension Project",
+          "command": "application:add-project-folder"
+        },
+        {
           "type": "separator"
         },
         {
