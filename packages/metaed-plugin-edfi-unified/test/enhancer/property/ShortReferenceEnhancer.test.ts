@@ -85,6 +85,8 @@ describe('when enhancing shared short property', () => {
 
   it('should have property with correct referenced entity', () => {
     expect(property.referencedEntity).toBe(referencedEntity);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 
   it('should have short type with correct referring properties', () => {
@@ -169,6 +171,8 @@ describe('when enhancing shared short property across namespaces', () => {
 
   it('should have property with correct referenced entity', () => {
     expect(property.referencedEntity).toBe(referencedEntity);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 
   it('should have short type with correct referring properties', () => {

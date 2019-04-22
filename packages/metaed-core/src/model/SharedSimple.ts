@@ -3,6 +3,7 @@ import { NoNamespace } from './Namespace';
 import { ModelBase } from './ModelBase';
 import { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
+import { EntityProperty } from './property/EntityProperty';
 
 /**
  *
@@ -28,6 +29,7 @@ export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
 
 export interface SharedSimple extends ModelBase {
   typeHumanizedName: string;
+  inReferences: Array<EntityProperty>;
   sourceMap: SharedSimpleSourceMap;
 }
 
@@ -42,6 +44,7 @@ export function newSharedSimple(): SharedSimple {
     metaEdName: '',
     metaEdId: '',
     namespace: NoNamespace,
+    inReferences: [],
     sourceMap: newSharedSimpleSourceMap(),
     data: {},
     config: {},

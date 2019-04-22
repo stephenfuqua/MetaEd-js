@@ -39,6 +39,8 @@ describe('when enhancing common property', () => {
     const property = R.head(metaEd.propertyIndex.common.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });
 
@@ -80,5 +82,7 @@ describe('when enhancing common property across namespaces', () => {
     const property = R.head(metaEd.propertyIndex.common.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });

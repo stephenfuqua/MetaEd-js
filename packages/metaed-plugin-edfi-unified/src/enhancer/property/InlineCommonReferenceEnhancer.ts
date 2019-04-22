@@ -11,7 +11,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.namespace,
       'common',
     ) as Common | null;
-    if (referencedEntity && referencedEntity.inlineInOds) property.referencedEntity = referencedEntity;
+    if (referencedEntity && referencedEntity.inlineInOds) {
+      property.referencedEntity = referencedEntity;
+      referencedEntity.inReferences.push(property);
+      property.parentEntity.outReferences.push(property);
+    }
   });
 
   return {

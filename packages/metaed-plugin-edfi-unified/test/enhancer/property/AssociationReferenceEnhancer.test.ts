@@ -45,6 +45,8 @@ describe('when enhancing association property referring to association', () => {
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });
 
@@ -84,6 +86,8 @@ describe('when enhancing association property referring to subclass', () => {
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });
 
@@ -125,5 +129,7 @@ describe('when enhancing association property referring to association across na
     const property = R.head(metaEd.propertyIndex.association.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });

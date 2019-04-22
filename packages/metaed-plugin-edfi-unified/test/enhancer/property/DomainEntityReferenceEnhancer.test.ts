@@ -45,6 +45,8 @@ describe('when enhancing domainEntity property referring to domainEntity', () =>
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });
 
@@ -84,6 +86,8 @@ describe('when enhancing domainEntity property referring to subclass', () => {
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });
 
@@ -125,5 +129,7 @@ describe('when enhancing domainEntity property referring to domainEntity across 
     const property = R.head(metaEd.propertyIndex.domainEntity.filter(p => p.metaEdName === referencedEntityName));
     expect(property).toBeDefined();
     expect(property.referencedEntity.metaEdName).toBe(referencedEntityName);
+    expect(property.referencedEntity.inReferences).toContain(property);
+    expect(property.parentEntity.outReferences).toContain(property);
   });
 });

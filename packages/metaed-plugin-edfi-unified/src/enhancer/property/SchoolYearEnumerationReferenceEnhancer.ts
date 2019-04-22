@@ -11,7 +11,11 @@ export function enhance(metaEd: MetaEdEnvironment): EnhancerResult {
       property.namespace,
       'schoolYearEnumeration',
     ) as TopLevelEntity | null;
-    if (referencedEntity) property.referencedEntity = referencedEntity;
+    if (referencedEntity) {
+      property.referencedEntity = referencedEntity;
+      referencedEntity.inReferences.push(property);
+      property.parentEntity.outReferences.push(property);
+    }
   });
 
   return {
