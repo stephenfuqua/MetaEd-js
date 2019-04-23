@@ -3,7 +3,7 @@ import { NoNamespace } from './Namespace';
 import { ModelBase } from './ModelBase';
 import { SourceMap } from './SourceMap';
 import { NoSourceMap } from './SourceMap';
-import { EntityProperty } from './property/EntityProperty';
+import { SimpleProperty } from './property/SimpleProperty';
 
 /**
  *
@@ -29,7 +29,7 @@ export function newSharedSimpleSourceMap(): SharedSimpleSourceMap {
 
 export interface SharedSimple extends ModelBase {
   typeHumanizedName: string;
-  inReferences: Array<EntityProperty>;
+  inReferences: Array<SimpleProperty>;
   sourceMap: SharedSimpleSourceMap;
 }
 

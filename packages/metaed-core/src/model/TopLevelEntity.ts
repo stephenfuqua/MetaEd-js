@@ -1,5 +1,7 @@
 import deepFreeze from 'deep-freeze';
 import { EntityProperty } from './property/EntityProperty';
+import { ReferentialProperty } from './property/ReferentialProperty';
+import { SimpleProperty } from './property/SimpleProperty';
 import { ModelBase, ModelBaseSourceMap, newModelBaseSourceMap } from './ModelBase';
 import { NoNamespace } from './Namespace';
 import { SourceMap } from './SourceMap';
@@ -42,9 +44,11 @@ export interface TopLevelEntity extends ModelBase {
   baseEntity: TopLevelEntity | null;
   extendedBy: Array<TopLevelEntity>;
   subclassedBy: Array<TopLevelEntity>;
-  outReferences: Array<EntityProperty>;
-  inReferences: Array<EntityProperty>;
-  outReferencePaths: Array<Array<EntityProperty>>;
+  outReferences: Array<ReferentialProperty | SimpleProperty>;
+  inReferences: Array<ReferentialProperty | SimpleProperty>;
+  outReferencePaths: Array<Array<ReferentialProperty | SimpleProperty>>;
+  // Map of entities to a list of the out reference paths the entity is in
+  outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>;
   sourceMap: TopLevelEntitySourceMap;
 }
 
@@ -73,6 +77,7 @@ export function newTopLevelEntity(): TopLevelEntity {
     outReferences: [],
     inReferences: [],
     outReferencePaths: [],
+    outReferenceEntitiesMap: new Map(),
     sourceMap: newTopLevelEntitySourceMap(),
 
     data: {},

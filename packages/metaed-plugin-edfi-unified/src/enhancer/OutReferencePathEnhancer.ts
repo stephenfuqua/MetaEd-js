@@ -3,14 +3,33 @@ import {
   MetaEdEnvironment,
   getAllEntitiesOfType,
   getAllTopLevelEntitiesForNamespaces,
-  EntityProperty,
+  ReferentialProperty,
+  SimpleProperty,
   ModelBase,
   SharedSimple,
 } from 'metaed-core';
 
 const enhancerName = 'OutReferencePathEnhancer';
 
-function buildUpPaths(inReferences: Array<EntityProperty>, pathSoFar: Array<EntityProperty>, visitList: Array<ModelBase>) {
+function addToOutReferenceEntitiesMap(
+  outReferenceEntitiesMap: Map<ModelBase, Array<Array<ReferentialProperty | SimpleProperty>>>,
+  outReferencePath: Array<ReferentialProperty | SimpleProperty>,
+) {
+  outReferencePath.forEach(property => {
+    if (!outReferenceEntitiesMap.has(property.referencedEntity)) {
+      outReferenceEntitiesMap.set(property.referencedEntity, []);
+    }
+    (outReferenceEntitiesMap.get(property.referencedEntity) as Array<Array<ReferentialProperty | SimpleProperty>>).push(
+      outReferencePath,
+    );
+  });
+}
+
+function buildUpPaths(
+  inReferences: Array<ReferentialProperty | SimpleProperty>,
+  pathSoFar: Array<ReferentialProperty | SimpleProperty>,
+  visitList: Array<ModelBase>,
+) {
   inReferences.forEach(inReference => {
     // avoid cycles
     if (visitList.includes(inReference.parentEntity)) return;
@@ -18,6 +37,7 @@ function buildUpPaths(inReferences: Array<EntityProperty>, pathSoFar: Array<Enti
     // prepend to path
     const outReferencePath = [inReference, ...pathSoFar];
     inReference.parentEntity.outReferencePaths.push(outReferencePath);
+    addToOutReferenceEntitiesMap(inReference.parentEntity.outReferenceEntitiesMap, outReferencePath);
     buildUpPaths(inReference.parentEntity.inReferences, outReferencePath, [...visitList, inReference.parentEntity]);
   });
 }
