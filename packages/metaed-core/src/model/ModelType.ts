@@ -27,7 +27,6 @@ export type ModelType =
   | 'schoolYearEnumeration'
   | 'sharedDecimal'
   | 'sharedInteger'
-  | 'sharedShort'
   | 'sharedString'
   | 'stringType'
   | 'subdomain';

@@ -44,6 +44,7 @@ export interface TopLevelEntity extends ModelBase {
   subclassedBy: Array<TopLevelEntity>;
   outReferences: Array<EntityProperty>;
   inReferences: Array<EntityProperty>;
+  outReferencePaths: Array<Array<EntityProperty>>;
   sourceMap: TopLevelEntitySourceMap;
 }
 
@@ -71,6 +72,7 @@ export function newTopLevelEntity(): TopLevelEntity {
     subclassedBy: [],
     outReferences: [],
     inReferences: [],
+    outReferencePaths: [],
     sourceMap: newTopLevelEntitySourceMap(),
 
     data: {},
