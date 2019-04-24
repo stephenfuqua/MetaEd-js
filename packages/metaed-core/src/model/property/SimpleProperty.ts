@@ -30,6 +30,7 @@ export function newSimpleProperty() {
   return {
     ...newEntityProperty(),
     referencedEntity: NoSharedSimple,
+    sourceMap: newSimplePropertySourceMap(),
   };
 }
 

@@ -168,6 +168,9 @@ import { enhance as inheritedDocumentationCopyingEnhancer } from './enhancer/Inh
 
 import { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
 
+import { enhance as outReferencePathEnhancer } from './enhancer/OutReferencePathEnhancer';
+
+export { enhance as outReferencePathEnhancer } from './enhancer/OutReferencePathEnhancer';
 export { enhance as mergeDirectiveEnhancer } from './enhancer/MergeDirectiveEnhancer';
 export { enhance as interchangeBaseItemEnhancer } from './enhancer/InterchangeBaseItemEnhancer';
 export { enhance as associationReferenceEnhancer } from './enhancer/property/AssociationReferenceEnhancer';
@@ -385,6 +388,8 @@ function enhancerList(): Array<Enhancer> {
 
     // enhance :: (referencedEntity, fullPropertyName) => mergeDirective.sourceProperty, mergeDirective.targetProperty
     mergeDirectiveEnhancer,
+
+    outReferencePathEnhancer,
   ];
 }
 
